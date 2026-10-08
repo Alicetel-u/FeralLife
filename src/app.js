@@ -1,4 +1,5 @@
 import { createGame, advance, admit, ROOMS, CHARACTERS, NEEDS, ACTIONS, dateAt, formatTime, atmosphere, validateSave } from './simulation.js';
+import { createTalk, stepTalk } from './dialogue.js';
 import { WorldRenderer, roomBounds, drawPortrait } from './renderer.js';
 import { loadCharacterArt } from './character-art.js';
 import { sampleJourney, motionLabel } from './movement.js';
@@ -14,6 +15,7 @@ try { const saved = JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(
 state ||= createGame();
 let speed = 1, paused = false, filter = 'all', profileKey = null, lastUI = 0, lastSave = 0, lastTime = performance.now(), lastEventId = 0, endingShown = false, toastTimer;
 const renderer = new WorldRenderer($('world'));
+const talk = createTalk(restored ? (state.events[0]?.id || 0) : 0);
 const modal = $('modal');
 let autoFollow = true, cameraKey = '';
 
@@ -99,7 +101,9 @@ function updateUI() {
   $('pause-button').disabled = !!state.ending;
   $('playback-state').textContent = state.ending ? '18日間の観察が終わりました' : modal.open ? 'ノートを読んでいる間は一時停止' : paused ? '時間を止めて眺めています' : speed > 1 ? `${speed}倍の速さで暮らしが進みます` : '時間はゆっくり進んでいます';
   const r = state.residents.find(r => r.room === state.selected);
+  const line = talk.bubbles[0];
   $('scene-caption').textContent = state.ending ? 'ろくでもない灯りが、今日もここに。' : r ? `${r.room}号室 · ${CHARACTERS[r.type].name.split(' ')[1]} / ${motionLabel(r,state.hour,ACTIONS[r.action].label)}` : `${state.selected}号室 · 次の住人を待っている。`;
+  $('world').setAttribute('aria-label', line ? `${line.name}「${line.text}」` : '住人の暮らしと廊下・階段・屋外の移動を観察する画面');
   for (const button of document.querySelectorAll('[data-view]')) { const active=button.dataset.view===renderer.view;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active)); }
   for (const button of document.querySelectorAll('[data-camera]')) { const active=(button.dataset.camera==='focus')===renderer.focus;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active)); }
   $('follow-button').textContent=`住人を追う ${autoFollow?'ON':'OFF'}`;$('follow-button').classList.toggle('active',autoFollow);$('follow-button').setAttribute('aria-pressed',String(autoFollow));
@@ -138,7 +142,7 @@ function showEnding() {
   openModal(header('THE END / けもの荘・観察記','18日間、見守ってくれてありがとう。')+`<div class="modal-body"><div class="ending-title">「${escape(state.ending.name)}」</div><p class="event-detail" style="text-align:center">${escape(state.ending.text)}</p><div class="ending-stats"><div>暮らした住人<strong>${state.residents.length}人</strong></div><div>受け取った家賃<strong>${yen(state.rent)}</strong></div><div>残った借金<strong>${yen(debt)}</strong></div></div></div><div class="modal-footer"><button class="text-button" data-close>最後のけもの荘を眺める</button><button class="primary-button" data-restart>別の観察記を始める →</button></div>`);
 }
 function restart() {
-  state=createGame();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();toast('新しい観察記が始まりました。101号室には、いつもの猫。');
+  state=createGame();Object.assign(talk, createTalk(0));profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
 document.addEventListener('click',e=>{
   const button=e.target.closest('button');if(!button)return;
@@ -184,8 +188,9 @@ function frame(now){
   const seconds=Math.min(.25,Math.max(0,(now-lastTime)/1000));lastTime=now;
   const stopped=paused||modal.open||document.hidden||!!state.ending;
   if(!stopped)advance(state,seconds*speed/10);
+  stepTalk(talk, state, now, stopped);
   updateCamera();
-  renderer.draw(state,now,stopped);
+  renderer.draw(state,now,stopped,talk.bubbles);
   if(now-lastUI>300){updateUI();lastUI=now;}
   if(now-lastSave>5000){save();lastSave=now;}
   if(state.ending&&!endingShown){showEnding();save();}

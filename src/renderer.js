@@ -70,8 +70,10 @@ export function drawPortrait(canvas, type) {
 export class WorldRenderer {
   constructor(canvas) { this.canvas = canvas; this.ctx = canvas.getContext('2d'); this.view = 'interior'; this.focus = true; this.focusRoom = 101; this.animTime = 0; this.last = 0; }
   reset() { this.last = 0; }
-  draw(state, timestamp, paused) {
+  draw(state, timestamp, paused, bubbles = []) {
     const ctx = this.ctx;
+    this.bubbles = bubbles;
+    this.speaking = new Set(bubbles.map(bubble => bubble.speaker));
     const dt = Math.min(.1, Math.max(0, (timestamp - this.last) / 1000)); this.last = timestamp;
     if (!paused) this.animTime += dt;
     const t = this.animTime;
@@ -82,7 +84,7 @@ export class WorldRenderer {
     const selected = state.residents.find(r => r.room === state.selected);
     const selectedPos = selected ? sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
     this.focusRoom = this.focus ? (selectedPos?.zone === 'room' ? selectedPos.room : state.selected) : null;
-    if (this.view === 'exterior') { this.drawExterior(state,selectedPos,t,darkness); return; }
+    if (this.view === 'exterior') { this.drawExterior(state,selectedPos,t,darkness); this.drawSpeech(state); return; }
     rect(ctx,0,0,1200,675,'#242b24');
     for (const room of ROOMS) {
       const b = roomBounds(room, this.focusRoom); if (!b) continue;
@@ -104,14 +106,18 @@ export class WorldRenderer {
     }
     if (!this.focus) for (const y of [313,643]) { rect(ctx,8,y,1184,16,'#333d31');rect(ctx,8,y+1,1184,2,'#697258');ctx.fillStyle='#aeb59b';ctx.font='10px "Yu Gothic UI",sans-serif';ctx.fillText('共用廊下',16,y+12);ctx.textAlign='right';ctx.fillText('階段・屋外へ →',1180,y+12);ctx.textAlign='left'; }
     for (const r of state.residents) this.drawInteriorResident(state,r,t);
+    this.drawSpeech(state);
+  }
+  exteriorCamera(selectedPos) {
+    const zoom = this.focus ? 1.65 : 1, width = 1000 / zoom, height = 562.5 / zoom;
+    const target = selectedPos?.zone === 'away' ? null : selectedPos;
+    const cx = this.focus ? Math.max(width / 2, Math.min(1000 - width / 2, target?.x ?? 740)) : 500;
+    const cy = this.focus ? Math.max(height / 2, Math.min(562.5 - height / 2, (target?.y ?? 420) - 60)) : 281.25;
+    return { zoom, ox: cx - width / 2, oy: cy - height / 2 };
   }
   drawExterior(state,selectedPos,t,darkness) {
-    const ctx=this.ctx, zoom=this.focus?1.65:1;
-    const width=1000/zoom,height=562.5/zoom;
-    const target=selectedPos?.zone==='away'?null:selectedPos;
-    const cx=this.focus?Math.max(width/2,Math.min(1000-width/2,target?.x ?? 740)):500;
-    const cy=this.focus?Math.max(height/2,Math.min(562.5-height/2,(target?.y ?? 420)-60)):281.25;
-    ctx.save();ctx.scale(1.2*zoom,1.2*zoom);ctx.translate(-(cx-width/2),-(cy-height/2));
+    const ctx=this.ctx, cam=this.exteriorCamera(selectedPos);
+    ctx.save();ctx.scale(1.2*cam.zoom,1.2*cam.zoom);ctx.translate(-cam.ox,-cam.oy);
     if(SCENE_ART.image)ctx.drawImage(SCENE_ART.image,0,0,1000,562.5);else rect(ctx,0,0,1000,562.5,'#494d42');
     rect(ctx,0,0,1000,562.5,`rgba(16,27,49,${darkness})`);
     if(darkness>.3)for(let i=0;i<36;i++)rect(ctx,noise(i,2,1)*1000,noise(i,3,2)*115,1,1,'#e9dcc277');
@@ -137,7 +143,7 @@ export class WorldRenderer {
     if(r.action==='sleep'&&!p.moving&&p.zone==='room'){ctx.save();ctx.translate(x-12,y-2);ctx.rotate(-Math.PI/2);drawSprite(ctx,r.type,0,0,t,'sleep',scale*.72);ctx.restore();ctx.fillStyle='#ddd9b7';ctx.font=`${this.focus?25:16}px monospace`;ctx.fillText('Z z',x+20,y-height*.42);}
     else drawSprite(ctx,r.type,x,y+(p.moving?Math.sin(t*11)*2:0),t,r.action,scale,p.direction);
     if(r.action==='smoke'&&!p.moving)for(let i=0;i<4;i++){const s=(t*.7+i*.65)%2.6;rect(ctx,x+height*.37*p.direction+Math.sin(s*2)*5,y-height*.64-s*height*.1,Math.max(2,height*.015),Math.max(2,height*.015),`rgba(211,212,220,${.38-s*.13})`);}
-    if(['fight','stream','chat','sell','gamble','shop','collect'].includes(r.action)&&!p.moving){ctx.fillStyle='#efe3c3';ctx.font=`${this.focus?32:20}px monospace`;ctx.fillText(ACTIONS[r.action].icon,x+height*.15,y-height);}
+    if(['fight','stream','chat','sell','gamble','shop','collect'].includes(r.action)&&!p.moving&&!this.speaking?.has(r.type)){ctx.fillStyle='#efe3c3';ctx.font=`${this.focus?32:20}px monospace`;ctx.fillText(ACTIONS[r.action].icon,x+height*.15,y-height);}
     ctx.restore();
   }
   drawRoom(room,r,t,darkness) {
@@ -175,4 +181,84 @@ export class WorldRenderer {
     rect(ctx,x,y,w,3,'#b39a6d');rect(ctx,x,y,3,h,'#4b4d3d');rect(ctx,x+w-3,y,3,h,'#4b4d3d');
     if(!r){ctx.font='9px "Yu Gothic UI",sans-serif';ctx.fillStyle='#c4b78c';ctx.textAlign='center';ctx.fillText('空 室',x+w/2,y+69);ctx.textAlign='left';}
   }
+  speechAnchor(state, type) {
+    const resident = state.residents.find(person => person.type === type);
+    if (!resident) return null;
+    const selected = state.residents.find(person => person.room === state.selected);
+    const selectedPos = selected ? sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
+    const p = sampleJourney(resident, state.hour, ACTIONS[resident.action].place);
+    const S = WORLD_WIDTH / 1200;
+    if (this.view === 'exterior') {
+      if (p.zone === 'room' || p.zone === 'away' || p.x < -45 || p.x > 1045) return null;
+      const cam = this.exteriorCamera(selectedPos), Z = 1.2 * cam.zoom;
+      return { x: (p.x - cam.ox) * Z * S, y: (p.y - 108 - cam.oy) * Z * S };
+    }
+    if (p.zone === 'away' || p.zone === 'street' || p.zone === 'stairs') return null;
+    const b = roomBounds(p.room || resident.room, this.focusRoom);
+    if (!b) return null;
+    const base = exteriorRoomBounds(p.room || resident.room);
+    const x = b.x + (p.x - base.x) / base.w * b.w;
+    const feet = p.zone === 'hall' ? b.y + b.h + 16 : b.y + (p.y - base.y) / base.h * b.h;
+    const height = this.focus ? 300 : 144;
+    return { x: x * S, y: (feet - height * 0.86) * S };
+  }
+  drawSpeech(state) {
+    if (!this.bubbles?.length) return;
+    const ctx = this.ctx;
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.imageSmoothingEnabled = false;
+    for (const bubble of this.bubbles) {
+      const anchor = this.speechAnchor(state, bubble.speaker);
+      drawPixelBubble(ctx, anchor?.x ?? 960, anchor?.y ?? 188, bubble.name, bubble.text, this.focus || !anchor);
+    }
+    ctx.restore();
+  }
+}
+
+function wrapGlyphs(ctx, text, maxWidth) {
+  const lines = [];
+  let line = '';
+  for (const glyph of text) {
+    const next = line + glyph;
+    if (line && ctx.measureText(next).width > maxWidth) { lines.push(line); line = glyph; }
+    else line = next;
+  }
+  if (line) lines.push(line);
+  return lines.slice(0, 3);
+}
+function drawPixelBubble(ctx, screenX, screenY, name, text, large) {
+  const scale = 2, font = large ? 15 : 12, maxText = large ? 196 : 148;
+  const scratch = drawPixelBubble.canvas ||= document.createElement('canvas');
+  const pen = scratch.getContext('2d');
+  pen.font = `${font}px "Yu Gothic UI", Meiryo, sans-serif`;
+  const lines = wrapGlyphs(pen, text, maxText);
+  pen.font = '11px "Yu Gothic UI", Meiryo, sans-serif';
+  const nameWidth = pen.measureText(name).width;
+  pen.font = `${font}px "Yu Gothic UI", Meiryo, sans-serif`;
+  const textWidth = Math.max(nameWidth, ...lines.map(line => pen.measureText(line).width));
+  const padX = 7, nameH = 14, lineH = font + 3;
+  const w = Math.ceil(textWidth + padX * 2), h = nameH + lines.length * lineH + 6, tail = 7;
+  const destW = (w + 4) * scale, destH = (h + tail + 3) * scale;
+  let left = Math.round(screenX - destW / 2), top = Math.round(screenY - destH + 8);
+  left = Math.max(8, Math.min(WORLD_WIDTH - destW - 8, left));
+  top = Math.max(8, Math.min(WORLD_HEIGHT - destH - 8, top));
+  const localTail = Math.max(8, Math.min(w - 16, Math.round((screenX - left) / scale) - 5));
+  scratch.width = w + 4; scratch.height = h + tail + 3;
+  pen.imageSmoothingEnabled = false;
+  pen.clearRect(0, 0, scratch.width, scratch.height);
+  pen.fillStyle = '#1c211c'; pen.fillRect(3, 3, w, h);
+  pen.fillStyle = '#f4f0e4'; pen.fillRect(0, 0, w, h);
+  pen.fillStyle = '#2a2e26';
+  pen.fillRect(0, 0, w, 2); pen.fillRect(0, h - 2, w, 2); pen.fillRect(0, 0, 2, h); pen.fillRect(w - 2, 0, 2, h);
+  pen.fillStyle = '#3d4a3c'; pen.fillRect(2, 2, w - 4, nameH);
+  pen.font = '11px "Yu Gothic UI", Meiryo, sans-serif'; pen.fillStyle = '#f3ead4'; pen.textBaseline = 'middle';
+  pen.fillText(name, 6, 2 + nameH / 2);
+  pen.font = `${font}px "Yu Gothic UI", Meiryo, sans-serif`; pen.fillStyle = '#242822'; pen.textBaseline = 'top';
+  lines.forEach((line, index) => pen.fillText(line, padX, nameH + 4 + index * lineH));
+  pen.fillStyle = '#f4f0e4';
+  pen.fillRect(localTail, h - 1, 10, 4); pen.fillRect(localTail + 3, h + 2, 5, 3);
+  pen.fillStyle = '#2a2e26';
+  pen.fillRect(localTail, h, 2, 4); pen.fillRect(localTail + 8, h, 2, 4); pen.fillRect(localTail + 3, h + 3, 2, 3); pen.fillRect(localTail + 6, h + 3, 2, 2);
+  ctx.drawImage(scratch, left, top, destW, destH);
 }

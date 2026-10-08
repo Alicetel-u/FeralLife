@@ -1,4 +1,5 @@
 import { OUTINGS, createOuting, createVisit, createRoomMove, sampleJourney, validJourney } from './movement.js';
+import { OPENING_LINES, catIncident, catDoorIncident, catOutingLines, catRentLines, catRentScene } from './dialogue.js';
 
 export const ROOMS = [101, 102, 103, 201, 202, 203];
 export const NEEDS = [['hunger', '空腹'], ['sleep', '眠気'], ['stress', 'ストレス'], ['hygiene', '衛生状態'], ['fun', '娯楽欲求'], ['alcohol', '飲酒欲求'], ['smoke', '喫煙欲求']];
@@ -34,10 +35,11 @@ const clamp = (n, low = 0, high = 100) => Math.max(low, Math.min(high, n));
 export function dateAt(hour) { return { day: Math.floor(hour / 24) + 1, hour: Math.floor(hour % 24), minute: Math.floor((hour % 1) * 60) }; }
 export function formatTime(hour) { const d = dateAt(hour); return `${d.day}日目 ${String(d.hour).padStart(2, '0')}:${String(d.minute).padStart(2, '0')}`; }
 export function createGame(seed = Date.now()) {
-  const state = { version: 1, hour: 17, seed: (seed >>> 0) || 1, residents: [], events: [], nextId: 1, remaining: ['rabbit', 'fox', 'wolf', 'bear', 'mouse', 'tanuki'], pending: null, nextArrival: 57, rent: 0, missedRent: 0, ending: null, selected: 101 };
+  const state = { version: 1, hour: 17, seed: (seed >>> 0) || 1, residents: [], events: [], nextId: 1, remaining: ['rabbit', 'fox', 'wolf', 'bear', 'mouse', 'tanuki'], pending: null, nextArrival: 57, rent: 0, missedRent: 0, ending: null, selected: 101, heard: [] };
   state.residents.push(createResident('cat', 101));
   addEvent(state, 'arrival', '101号室に、灰田 モクが住んでいる。', '親戚から引き継いだのは、築38年の古いアパート。\n\n唯一の住人は、いつも窓辺でタバコを吸っている猫獣人。「管理人？ ああ、よろしく」。それだけ言うと、また煙の向こうへ目をやった。\n\nあなたの仕事は、この暮らしを見守ること。次の入居募集は3日目の朝9時。', [101], '管理人としての観察が始まった。');
-  addEvent(state, 'life', 'モクが「明日から片づける」とつぶやいた。', 'テーブルの空き缶を一本だけ動かして、モクは片づけを終えた気になった。\n\n「今日は準備の日ってことで」。\n\n灰皿だけが、几帳面に手の届く位置にある。', [101], '101号室の散らかりが少し増えた。');
+  const opening = addEvent(state, 'life', 'モクが「明日から片づける」とつぶやいた。', 'テーブルの空き缶を一本だけ動かして、モクは片づけを終えた気になった。\n\n「今日は準備の日ってことで」。\n\n灰皿だけが、几帳面に手の届く位置にある。', [101], '101号室の散らかりが少し増えた。');
+  opening.lines = OPENING_LINES.map(line => ({ ...line }));
   return state;
 }
 function random(state) { let x = state.seed; x ^= x << 13; x ^= x >>> 17; x ^= x << 5; state.seed = x >>> 0; return state.seed / 4294967296; }
@@ -112,7 +114,8 @@ function updateHour(state) {
     const plan = OUTINGS[r.type], day = dateAt(state.hour).day;
     if (h >= plan.hour && h < plan.hour + 3 && (r.lastOutingDay || 0) !== day) {
       r.lastOutingDay = day; r.journey = createOuting(r, state.hour, start); r.previous = r.action; r.action = 'outing';
-      addEvent(state, 'life', `${CHARACTERS[r.type].name.split(' ')[1]}が「${plan.reason}」に出かけた。`, '玄関から共用廊下へ。上の階なら階段を下りて、アパートの前の道を歩いていく。\n\n外観モードなら、出かける姿も帰ってくる姿も見守れる。', [r.room], '画面外でしばらく過ごし、同じ道を通って帰宅する。');
+      const outing = addEvent(state, 'life', `${CHARACTERS[r.type].name.split(' ')[1]}が「${plan.reason}」に出かけた。`, '玄関から共用廊下へ。上の階なら階段を下りて、アパートの前の道を歩いていく。\n\n外観モードなら、出かける姿も帰ってくる姿も見守れる。', [r.room], '画面外でしばらく過ごし、同じ道を通って帰宅する。');
+      if (r.type === 'cat') { const lines = catOutingLines(state); if (lines) outing.lines = lines; }
       continue;
     }
     const sleepTime = r.type === 'wolf' ? h >= 7 && h < 16 : night;
@@ -147,6 +150,7 @@ function spend(r, amount) { r.cash -= amount; if (r.cash < 0) { r.debt -= r.cash
 function relation(a, b, delta) { a.relationships[b.id] = clamp((a.relationships[b.id] || 0) + delta, -100, 100); b.relationships[a.id] = clamp((b.relationships[a.id] || 0) + delta, -100, 100); }
 function applyAction(state, r, action, changed) {
   const n = r.needs, c = CHARACTERS[r.type];
+  let scripted = false;
   switch (action) {
     case 'eat': n.hunger = clamp(n.hunger - 57); n.stress = clamp(n.stress - 6); spend(r, r.type === 'bear' ? 1100 : 400); r.trash += 2; break;
     case 'sleep': n.sleep = clamp(n.sleep - 29); n.stress = clamp(n.stress - 7); break;
@@ -169,6 +173,10 @@ function applyAction(state, r, action, changed) {
         const target = action === 'fight' ? [...others].sort((a, b) => (r.relationships[a.id] || 0) - (r.relationships[b.id] || 0))[0] : pick(state, others);
         r.targetRoom = target.room;
         n.fun = clamp(n.fun - 34);
+        if (changed && target.type === 'cat' && r.type !== 'cat') {
+          const scene = catDoorIncident(state, r.type, action);
+          if (scene) { const event = addEvent(state, scene.kind, scene.title, scene.detail, [r.room, target.room], scene.impact); event.lines = scene.lines; scripted = true; }
+        }
         if (action === 'chat') { relation(r, target, 7); n.stress = clamp(n.stress - 9); }
         if (action === 'fight') { relation(r, target, -9); n.stress = clamp(n.stress - 12); target.needs.stress = clamp(target.needs.stress + 17); }
         if (action === 'steal') { n.hunger = clamp(n.hunger - 60); relation(r, target, -6); target.needs.stress = clamp(target.needs.stress + 12); }
@@ -181,7 +189,12 @@ function applyAction(state, r, action, changed) {
     for (const other of state.residents) if (other !== r && sampleJourney(other,state.hour,ACTIONS[other.action].place).zone === 'room') { other.needs.stress = clamp(other.needs.stress + 9); other.needs.sleep = clamp(other.needs.sleep + 6); relation(r, other, -2); }
   }
   r.trash = clamp(r.trash);
-  if (changed && !r.eventCooldown && random(state) < .43) { recordAction(state, r, action); r.eventCooldown = 4 + Math.floor(random(state) * 4); }
+  if (changed && r.type === 'cat') {
+    const other = ['chat', 'fight'].includes(action) ? state.residents.find(resident => resident.room === r.targetRoom && resident !== r) : null;
+    const scene = catIncident(state, action, other?.type || null);
+    if (scene) { const event = addEvent(state, scene.kind, scene.title, scene.detail, other ? [r.room, other.room] : [r.room], scene.impact); event.lines = scene.lines; scripted = true; }
+  }
+  if (changed && !scripted && !r.eventCooldown && random(state) < .43) { recordAction(state, r, action); r.eventCooldown = 4 + Math.floor(random(state) * 4); }
 }
 function recordAction(state, r, action) {
   const name = CHARACTERS[r.type].name.split(' ')[1];
@@ -212,7 +225,8 @@ function dailyMoney(state) {
   for (const r of state.residents) {
     r.cash += CHARACTERS[r.type].income;
     const paid = Math.min(r.cash, 1200); r.cash -= paid; state.rent += paid;
-    if (paid < 1200) { r.debt += 1200 - paid; state.missedRent++; r.needs.stress = clamp(r.needs.stress + 12); addEvent(state, 'trouble', `${r.room}号室の家賃が、少し足りない。`, '家賃用の封筒を開けると、申し訳程度の小銭が入っていた。\n\n「来週、まとめて払います」。掲示板には、何度も聞いた約束が残った。', [r.room], `本日の不足分 ${1200 - paid}円が借金に加わった。`); }
+    if (paid < 1200) { r.debt += 1200 - paid; state.missedRent++; r.needs.stress = clamp(r.needs.stress + 12); const short = addEvent(state, 'trouble', `${r.room}号室の家賃が、少し足りない。`, '家賃用の封筒を開けると、申し訳程度の小銭が入っていた。\n\n「来週、まとめて払います」。掲示板には、何度も聞いた約束が残った。', [r.room], `本日の不足分 ${1200 - paid}円が借金に加わった。`); if (r.type === 'cat') { const lines = catRentLines(state, false); if (lines) short.lines = lines; } }
+    else if (r.type === 'cat') { const lines = catRentLines(state, true); if (lines) { const scene = catRentScene(); const paidNote = addEvent(state, scene.kind, scene.title, scene.detail, [r.room], scene.impact); paidNote.lines = lines; } }
     if (r.trash >= 85 && dateAt(state.hour).day % 3 === 0) addEvent(state, 'trouble', `${r.room}号室のゴミが、廊下にはみ出した。`, '袋の山が玄関の境界を越えた。\n\n「これは一時的に置いてるだけ」。一時的、という言葉だけは毎日新しくなる。', [r.room], '散らかった部屋は、住人のストレスを増やしている。');
   }
 }

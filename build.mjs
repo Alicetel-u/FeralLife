@@ -9,7 +9,7 @@ const [html, css, artwork, catSprite, catPortrait, ...modules] = await Promise.a
   readFile(join(root, 'assets/apartments.png')),
   readFile(join(root, 'assets/characters/cat/idle.png')),
   readFile(join(root, 'assets/characters/cat/portrait.png')),
-  ...['character-art', 'movement', 'simulation', 'renderer', 'app'].map(name => readFile(join(root, 'src', name + '.js'), 'utf8'))
+  ...['dialogue', 'character-art', 'movement', 'simulation', 'renderer', 'app'].map(name => readFile(join(root, 'src', name + '.js'), 'utf8'))
 ]);
 const script = modules.map(source => source.replace(/^import .*;\r?\n/gm, '').replace(/^export /gm, '')).join('\n\n')
   .replaceAll('assets/characters/cat/idle.png', `data:image/png;base64,${catSprite.toString('base64')}`)
