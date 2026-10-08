@@ -1,0 +1,25 @@
+{
+  "character": "cat",
+  "source": "reference-original.png",
+  "method": "Built-in ImageGen background-extraction; nearest-neighbor normalization",
+  "cutout": "cutout.png",
+  "sprite": "idle.png",
+  "portrait": "portrait.png",
+  "frame": {
+    "width": 96,
+    "height": 128,
+    "origin": [
+      48,
+      126
+    ]
+  },
+  "portraitFrame": {
+    "width": 128,
+    "height": 160
+  },
+  "displayHeight": 44,
+  "supportedPoses": [
+    "base-standing"
+  ],
+  "note": "基本立ち絵。移動は位置補間・上下揺れ・左右反転、睡眠は簡略回転。専用の行動差分は未作成。"
+}

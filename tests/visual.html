@@ -1,0 +1,17 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><base href="/"><title>観察カメラ検証</title><style>body{margin:0;background:#1b241c;color:#ede4c9;font:14px sans-serif}nav{display:flex;gap:8px;padding:12px}button{padding:8px;cursor:pointer}canvas{display:block;width:min(100%,calc((100vh - 70px)*16/9));margin:auto;aspect-ratio:16/9;image-rendering:pixelated}p{margin:0 12px}</style></head><body><nav><button data-case="focus">内装・拡大</button><button data-case="six">6部屋</button><button data-case="down">階段を下る</button><button data-case="up">階段を上る</button><button data-case="away">画面外</button><button data-case="home">帰宅</button></nav><p id="status"></p><canvas id="world" width="1920" height="1080"></canvas><script type="module">
+import { createGame, ROOMS } from './src/simulation.js';
+import { createOuting, sampleJourney, WALK_SPEED } from './src/movement.js';
+import { loadCharacterArt } from './src/character-art.js';
+import { WorldRenderer } from './src/renderer.js';
+await loadCharacterArt();
+const base=createGame(1),cat=base.residents[0],renderer=new WorldRenderer(document.getElementById('world'));
+function stairHour(j){let length=0;for(let i=1;i<j.path.length;i++){const a=j.path[i-1],b=j.path[i],d=Math.hypot(a.x-b.x,a.y-b.y);if(b.zone==='stairs')return j.startedAt+(length+d*.5)/WALK_SPEED;length+=d;}}
+function show(kind){const s=structuredClone(base);s.residents[0].room=201;s.selected=201;s.hour=18;const r=s.residents[0];r.journey=createOuting(r,18);r.action='outing';renderer.view='exterior';renderer.focus=true;
+if(kind==='focus'||kind==='six'){s.hour=17;r.action='smoke';delete r.journey;renderer.view='interior';renderer.focus=kind==='focus';if(kind==='six'){s.selected=101;s.residents=ROOMS.map((room,i)=>({...structuredClone(cat),id:String(i),type:['cat','rabbit','fox','wolf','mouse','bear'][i],room,action:'idle'}));}}
+if(kind==='down')s.hour=stairHour(r.journey);
+if(kind==='up')s.hour=r.journey.endsAt-(stairHour(r.journey)-r.journey.startedAt);
+if(kind==='away')s.hour=r.journey.arriveAt+.2;
+if(kind==='home')s.hour=r.journey.endsAt+.1;
+const p=sampleJourney(r,s.hour);document.getElementById('status').textContent=`${kind} · ${p.zone} · ${p.phase}`;renderer.draw(s,0,true);}
+document.querySelectorAll('button').forEach(b=>b.onclick=()=>show(b.dataset.case));show('down');
+</script></body></html>

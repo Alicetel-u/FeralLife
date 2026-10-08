@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171916">
+  <title>けもの荘 ～クズ住人観察記～</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="masthead">
+    <div class="brand"><span class="brand-mark">🐾</span><span><strong>けもの荘</strong><small>～クズ住人観察記～</small></span></div>
+    <div class="date-display"><span class="weather-icon" id="weather-icon">☀</span><div><strong id="day-clock">1日目 <span>17:00</span></strong><small id="time-label">夕暮れ · けもの荘</small></div></div>
+    <div class="header-right"><span class="save-status" id="save-status">● 自動保存</span><button class="icon-button" id="help-button" aria-label="遊び方">?</button><button class="text-button" id="new-game">はじめから</button></div>
+  </header>
+  <main>
+    <section class="observation" aria-label="アパートの観察画面">
+      <div class="camera-bar">
+        <div class="camera-group" aria-label="表示モード"><button data-view="interior" aria-pressed="true" class="active">内装</button><button data-view="exterior" aria-pressed="false">外観</button></div>
+        <div class="camera-group" aria-label="カメラの大きさ"><button data-camera="focus" aria-pressed="true" class="active">大きく見る</button><button data-camera="overview" aria-pressed="false">全体を見る</button></div>
+        <button class="tool-button active" id="follow-button" aria-pressed="true">住人を追う ON</button>
+        <span class="camera-hint" id="camera-hint">部屋を大きく観察</span>
+        <div class="camera-tools"><button class="tool-button" id="inspector-button" aria-expanded="false" aria-controls="resident-panel">住人ノート</button><button class="tool-button" id="history-button">日誌 <span id="unread-count">0</span></button><button class="tool-button" id="fullscreen-button" aria-label="全画面表示">⛶</button></div>
+      </div>
+      <div class="scene" id="scene"><canvas id="world" width="1920" height="1080" aria-label="住人の暮らしと廊下・階段・屋外の移動を観察する画面"></canvas><div class="scene-label"><span class="label-dot"></span> LIVE <span id="scene-day">DAY 01</span></div><div class="scene-caption" id="scene-caption">101号室から、かすかにタバコの匂いがする。</div><div class="room-access" id="room-access" aria-label="画面内の部屋選択"></div><button class="scene-notice" id="scene-notice" hidden><span>✉</span><div><strong>入居希望者が来ています</strong><small>2通の申込書。どちらを迎える？</small></div><b>→</b></button></div>
+      <nav class="room-strip" id="room-strip" aria-label="観察する部屋を選択"></nav>
+      <div class="playback"><div class="playback-left"><button id="pause-button" class="pause-button" aria-label="一時停止">Ⅱ</button><div class="speed-group" aria-label="ゲーム速度"><button data-speed="1" class="active">1×</button><button data-speed="3">3×</button><button data-speed="6">6×</button></div><span id="playback-state">時間はゆっくり進んでいます</span></div><button id="sound-button" class="text-button" aria-pressed="false">♫ <span>環境音 OFF</span></button></div>
+    </section>
+    <aside class="resident-panel" id="resident-panel" inert><div class="section-bar"><strong>住人観察ノート</strong><button class="icon-button" id="inspector-close" aria-label="住人ノートを閉じる">×</button></div><div id="resident-content"></div><div class="building-stats"><div><span class="stat-icon">⌂</span><div><small>入居状況</small><strong id="occupancy">1 <span>/ 6室</span></strong></div></div><div><span class="stat-icon">¥</span><div><small>受け取った家賃</small><strong id="rent">¥0</strong></div></div><div><span class="stat-icon">♨</span><div><small>アパートの空気</small><strong id="atmosphere">まだ、穏やか</strong></div></div><div><span class="stat-icon">✉</span><div><small>次の入居募集</small><strong id="next-arrival">3日目 <span>09:00</span></strong></div></div></div><div class="note-footer">管理人は、今日も見守るだけ。</div></aside>
+    <section class="journal" hidden><div id="event-list"></div></section>
+  </main>
+  <dialog id="modal" aria-labelledby="modal-title"><div id="modal-content"></div></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
