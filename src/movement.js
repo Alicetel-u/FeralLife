@@ -2,7 +2,7 @@ export const WALK_SPEED = 430;
 export const OUTINGS = {
   cat: { hour: 18, duration: 2, reason: 'コンビニで買い出し', side: 'right' },
   rabbit: { hour: 9, duration: 6, reason: '仕事と寄り道の買い物', side: 'left' },
-  fox: { hour: 11, duration: 3, reason: '仕入れという名の商談', side: 'right' },
+  fox: { hour: 21, duration: 2, reason: '酒の買い足し', side: 'left' },
   wolf: { hour: 20, duration: 2, reason: '夜の散歩', side: 'left' },
   bear: { hour: 7, duration: 7, reason: '配送の仕事', side: 'right' },
   mouse: { hour: 16, duration: 2, reason: '街の拾い物探し', side: 'left' },

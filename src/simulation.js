@@ -24,7 +24,7 @@ export const ACTIONS = {
 export const CHARACTERS = {
   cat: { name: '灰田 モク', species: '猫', age: 29, job: '日雇い（休業中）', traits: ['だらしない', '愛煙家', '無気力'], quote: '「明日からちゃんとする。\n……明日になったら言うけど。」', color: '#929f94', shirt: '#52675e', accent: '#bac1a9', cash: 14000, habit: 'smoke', warning: '掃除も貯金も苦手。タバコだけは切らさない。', bio: 'ずっと101号室にいる、けもの荘の古株。灰皿は満杯、予定は空白。', income: 1500 },
   rabbit: { name: '桃井 ミミ', species: '兎', age: 24, job: 'アパレル店員', traits: ['浪費家', '見栄っ張り', 'ブランド好き'], quote: '「これ？ 安かったの。\n分割にしたら、ほぼ無料だし。」', color: '#e1b0a0', shirt: '#b47582', accent: '#f3d5bc', cash: 18000, habit: 'shop', warning: '通販と分割払い。借金がふくらみやすい。', bio: 'おしゃれな部屋に住みたい。でも家賃は安いほうがいい。段ボールは毎日届く。', income: 4500 },
-  fox: { name: '九条 コン', species: '狐', age: 32, job: '自称・起業家', traits: ['口がうまい', '怪しい商売', '社交的'], quote: '「今だけ特別に。\n君には成功してほしいんだよ。」', color: '#c68449', shirt: '#786d91', accent: '#f1d2a3', cash: 24000, habit: 'sell', warning: 'お隣さんを「お客様」と呼ぶ。財布に注意。', bio: '笑顔と名刺を絶やさない商売人。扱う商品にだけ、説明書がない。', income: 2200 },
+  fox: { name: '酔田 ホロ', species: '猫', age: 27, job: '無職（飲酒中）', traits: ['酒猫', '缶を捨てない', 'だらしがない'], quote: '「一杯でやめる。\n……この一杯は数えない。」', color: '#8d6a58', shirt: '#2a2a2a', accent: '#e4c2b0', cash: 8000, habit: 'drink', warning: '空き缶が家具になる。夜ほど、廊下まで声が届く。', bio: '床は缶の墓場。一杯でやめると言って、三本目を開ける。', income: 1600 },
   wolf: { name: '夜野 ウル', species: '狼', age: 26, job: '動画配信者', traits: ['昼夜逆転', '騒音主', '承認欲求'], quote: '「みんな聞こえてるー!?\n……隣には聞こえなくていい。」', color: '#8a9eaf', shirt: '#666995', accent: '#c2ced2', cash: 17000, habit: 'stream', warning: '夜中ほど声が大きい。隣人の眠りを奪う。', bio: '視聴者はまだ12人。それでもリアクションの音量は、人気配信者級。', income: 2700 },
   bear: { name: '熊谷 ゴロ', species: '熊', age: 35, job: '配送ドライバー', traits: ['大食漢', '食いしん坊', '悪気なし'], quote: '「名前、書いてなかったよ？\n……書いてあっても読めなかった。」', color: '#997354', shirt: '#a0915c', accent: '#d8b384', cash: 21000, habit: 'steal', warning: '他人の冷蔵庫も食料庫。食費と揉め事が増える。', bio: '体も胃袋も大きい、気のいい住人。「ひとくち」がひと皿になる。', income: 4200 },
   mouse: { name: '根津 チリ', species: '鼠', age: 27, job: 'リサイクル店員', traits: ['ゴミ収集家', '捨てられない', 'マイペース'], quote: '「ゴミじゃないよ、資源だよ。\n使い道は、あとで考える。」', color: '#ac9b96', shirt: '#7c8662', accent: '#d8c2aa', cash: 10000, habit: 'collect', warning: '拾い物で部屋が埋まる。共用廊下にも進出する。', bio: '街のゴミ置き場は宝の山。いつか使う「いつか」が、まだ来ない。', income: 2000 },
@@ -46,7 +46,7 @@ function random(state) { let x = state.seed; x ^= x << 13; x ^= x >>> 17; x ^= x
 const pick = (state, list) => list[Math.floor(random(state) * list.length)];
 function createResident(type, room) {
   const c = CHARACTERS[type];
-  return { id: type, type, room, cash: c.cash, debt: 0, needs: { hunger: 26, sleep: 30, stress: 21, hygiene: 68, fun: 35, alcohol: type === 'cat' ? 40 : 12, smoke: type === 'cat' ? 78 : 5 }, action: type === 'cat' ? 'smoke' : 'idle', previous: 'idle', actionAge: 0, cooldowns: {}, relationships: {}, history: [], trash: type === 'cat' ? 23 : type === 'mouse' ? 30 : 9, eventCooldown: 0, targetRoom: null };
+  return { id: type, type, room, cash: c.cash, debt: 0, needs: { hunger: 26, sleep: 30, stress: 21, hygiene: 68, fun: 35, alcohol: type === 'fox' ? 74 : type === 'cat' ? 40 : 12, smoke: type === 'cat' ? 78 : 5 }, action: type === 'cat' ? 'smoke' : 'idle', previous: 'idle', actionAge: 0, cooldowns: {}, relationships: {}, history: [], trash: type === 'cat' ? 23 : type === 'mouse' ? 30 : type === 'fox' ? 20 : 9, eventCooldown: 0, targetRoom: null };
 }
 export function addEvent(state, kind, title, detail, rooms = [], impact = '') {
   const event = { id: state.nextId++, hour: state.hour, kind, title, detail, rooms, impact, read: false };
@@ -62,7 +62,7 @@ export function admit(state, type) {
   const r = createResident(type, room);
   for (const other of state.residents) {
     let relation = 0;
-    if ([type, other.type].includes('fox')) relation = -6;
+    if (['cat', 'fox'].every(t => [type, other.type].includes(t))) relation = 8;
     if (['cat', 'wolf'].every(t => [type, other.type].includes(t))) relation = -15;
     if (['mouse', 'bear'].every(t => [type, other.type].includes(t))) relation = 14;
     r.relationships[other.id] = relation; other.relationships[r.id] = relation;
@@ -99,7 +99,7 @@ function updateHour(state) {
     n.stress = clamp(n.stress + 1 + r.trash / 45);
     n.hygiene = clamp(n.hygiene - 2);
     n.fun = clamp(n.fun + 5);
-    n.alcohol = clamp(n.alcohol + (r.type === 'cat' ? 6 : 2));
+    n.alcohol = clamp(n.alcohol + (r.type === 'fox' ? 9 : r.type === 'cat' ? 6 : 2));
     n.smoke = clamp(n.smoke + (r.type === 'cat' ? 13 : 1));
     r.trash = clamp(r.trash + (r.type === 'mouse' ? 2 : .3));
     if (r.journey && state.hour < r.journey.endsAt) continue;

@@ -1,0 +1,25 @@
+{
+  "character": "fox",
+  "source": "reference-original.png",
+  "method": "Edge flood-fill of the near-white background; nearest-neighbor normalization. Pixels of the drawing were not regenerated.",
+  "cutout": "cutout.png",
+  "sprite": "idle.png",
+  "portrait": "portrait.png",
+  "frame": {
+    "width": 96,
+    "height": 128,
+    "origin": [
+      48,
+      126
+    ]
+  },
+  "portraitFrame": {
+    "width": 128,
+    "height": 160
+  },
+  "displayHeight": 44,
+  "supportedPoses": [
+    "base-sitting"
+  ],
+  "note": "酒猫・酔田ホロの座り絵。移動は位置補間・上下揺れ・左右反転、睡眠は簡略回転。"
+}

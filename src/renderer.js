@@ -1,6 +1,7 @@
 import { ROOMS, CHARACTERS, ACTIONS, dateAt } from './simulation.js';
 import { CHARACTER_ART, SCENE_ART } from './character-art.js';
 import { exteriorRoomBounds, sampleJourney, motionLabel } from './movement.js';
+import { drawCharacterEffects, spriteMotion } from './effects.js';
 
 export const WORLD_WIDTH = 1920;
 export const WORLD_HEIGHT = 1080;
@@ -11,18 +12,52 @@ export function roomBounds(room, focusRoom = null) {
 const rect = (ctx, x, y, w, h, color) => { ctx.fillStyle = color; ctx.fillRect(Math.round(x), Math.round(y), w, h); };
 const noise = (x, y, seed) => { const v = Math.sin(x * 12.9898 + y * 78.233 + seed * 3.11) * 43758.5453; return v - Math.floor(v); };
 
-export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1, direction = 1) {
+// 行動・移動状態から表示するポーズ名を決める。hour（ゲーム内時刻）で30分ごとにパターンを切り替える。
+export function resolvePose(type, action, moving = false, tick = 0, hour = 0) {
+  const art = CHARACTER_ART[type];
+  if (!art?.poses) return 'base';
+  const ready = name => name !== 'base' && art.poses[name]?.image;
+  if (moving) { const frame = Math.floor(tick * 4) % 2 ? 'walk_b' : 'walk_a'; return ready(frame) ? frame : 'base'; }
+  let pick = art.actionPoses?.[action] ?? 'base';
+  if (Array.isArray(pick)) pick = pick[Math.floor(hour * 2) % pick.length];
+  return ready(pick) ? pick : 'base';
+}
+// 色味の重ね塗り用の作業キャンバス（スプライトの不透明部分だけを染める）
+function tintedImage(image, tint) {
+  const canvas = tintedImage.canvas ||= document.createElement('canvas');
+  canvas.width = image.width; canvas.height = image.height;
+  const pen = canvas.getContext('2d');
+  pen.imageSmoothingEnabled = false;
+  pen.globalCompositeOperation = 'source-over'; pen.clearRect(0, 0, canvas.width, canvas.height);
+  pen.drawImage(image, 0, 0);
+  pen.globalCompositeOperation = 'source-atop'; pen.fillStyle = tint; pen.fillRect(0, 0, canvas.width, canvas.height);
+  pen.globalCompositeOperation = 'source-over';
+  return canvas;
+}
+/**
+ * キャラを描画する。opts:
+ *  pose   … 差分ポーズ名（'base' または CHARACTER_ART[type].poses のキー）
+ *  tint   … スプライトに重ねる色（例：テレビの青い光、酔いの赤み）
+ *  sx, sy … 足元を基準にした伸縮（呼吸など）
+ *  rotate … 足元を軸にした傾き（ラジアン。千鳥足など）
+ */
+export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1, direction = 1, opts = {}) {
   const art = CHARACTER_ART[type];
   if (art?.image) {
-    const image = art.image;
-    const height = art.displayHeight, width = Math.round(image.width * height / image.height);
-    const ox = Math.round(art.origin[0] * width / image.width), oy = Math.round(art.origin[1] * height / image.height);
-    const bob = action === 'sleep' ? 0 : Math.sin(tick * 2) > .75 ? -1 : 0;
+    const pose = opts.pose && opts.pose !== 'base' ? art.poses?.[opts.pose] : null;
+    const image = pose?.image || art.image, origin = pose?.image ? pose.origin : art.origin;
+    // 基本立ち絵と同じ「1ドットの大きさ」で全ポーズを描く
+    const px = art.displayHeight / art.image.height;
+    const width = image.width * px, height = image.height * px;
+    const ox = origin[0] * px, oy = origin[1] * px;
+    const walking = opts.pose?.startsWith('walk');
+    const bob = action === 'sleep' || walking ? 0 : Math.sin(tick * 2) > .75 ? -1 : 0;
     ctx.save();
     ctx.translate(Math.round(x), Math.round(y + bob));
-    ctx.scale(scale * direction, scale);
+    if (opts.rotate) ctx.rotate(opts.rotate);
+    ctx.scale(scale * direction * (opts.sx || 1), scale * (opts.sy || 1));
     ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(image, -ox, -oy, width, height);
+    ctx.drawImage(opts.tint ? tintedImage(image, opts.tint) : image, -ox, -oy, width, height);
     ctx.restore();
     return;
   }
@@ -127,7 +162,11 @@ export class WorldRenderer {
       const baseHeight=CHARACTER_ART[r.type]?.image?44:r.type==='rabbit'?34:26;
       const scale=80/baseHeight;
       rect(ctx,p.x-13,p.y+1,26,3,'#17211b66');
-      drawSprite(ctx,r.type,p.x,p.y+(p.moving?Math.sin(t*11)*1.1:0),t,'idle',scale,p.direction);
+      const action=p.moving?'outing':r.action, pose=resolvePose(r.type,action,p.moving,t,state.hour), motion=spriteMotion(action,p.moving,r.needs,t,pose);
+      const fy=p.y+(p.moving?Math.sin(t*11)*1.1:0);
+      ctx.save();ctx.translate(p.x+motion.dx,fy);if(motion.rotate)ctx.rotate(motion.rotate);ctx.scale(1,motion.sy);
+      drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint});ctx.restore();
+      drawCharacterEffects(ctx,{x:p.x,y:fy,u:80/128,dir:p.direction,t,action,pose,moving:p.moving,needs:r.needs,trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip:CHARACTER_ART[r.type]?.smokeTip?.[pose]});
       ctx.font='10px "Yu Gothic UI",sans-serif';ctx.textAlign='center';ctx.fillStyle='#f2e9d2';ctx.shadowColor='#151b18';ctx.shadowBlur=3;ctx.fillText(CHARACTERS[r.type].name.split(' ')[1],p.x,p.y-86);ctx.shadowBlur=0;ctx.textAlign='left';
     }
     ctx.restore();
@@ -138,12 +177,21 @@ export class WorldRenderer {
     const base=exteriorRoomBounds(p.room||r.room), b=roomBounds(p.room||r.room,this.focusRoom);if(!b)return;
     const ctx=this.ctx,x=b.x+(p.x-base.x)/base.w*b.w,y=p.zone==='hall'?b.y+b.h+16:b.y+(p.y-base.y)/base.h*b.h;
     const height=this.focus?300:144,baseHeight=CHARACTER_ART[r.type]?.image?44:r.type==='rabbit'?34:26,scale=height/baseHeight;
+    const u=height/128, sleeping=r.action==='sleep'&&!p.moving&&p.zone==='room';
+    const pose=resolvePose(r.type,r.action,p.moving,t,state.hour), motion=spriteMotion(r.action,p.moving,r.needs,t,pose);
+    const fy=y+(p.moving?Math.sin(t*11)*2:0);
     ctx.save();ctx.beginPath();ctx.rect(b.x,b.y,b.w,b.h+27);ctx.clip();
-    rect(ctx,x-height*.18,y+3,height*.36,5,'#23302255');
-    if(r.action==='sleep'&&!p.moving&&p.zone==='room'){ctx.save();ctx.translate(x-12,y-2);ctx.rotate(-Math.PI/2);drawSprite(ctx,r.type,0,0,t,'sleep',scale*.72);ctx.restore();ctx.fillStyle='#ddd9b7';ctx.font=`${this.focus?25:16}px monospace`;ctx.fillText('Z z',x+20,y-height*.42);}
-    else drawSprite(ctx,r.type,x,y+(p.moving?Math.sin(t*11)*2:0),t,r.action,scale,p.direction);
-    if(r.action==='smoke'&&!p.moving)for(let i=0;i<4;i++){const s=(t*.7+i*.65)%2.6;rect(ctx,x+height*.37*p.direction+Math.sin(s*2)*5,y-height*.64-s*height*.1,Math.max(2,height*.015),Math.max(2,height*.015),`rgba(211,212,220,${.38-s*.13})`);}
-    if(['fight','stream','chat','sell','gamble','shop','collect'].includes(r.action)&&!p.moving&&!this.speaking?.has(r.type)){ctx.fillStyle='#efe3c3';ctx.font=`${this.focus?32:20}px monospace`;ctx.fillText(ACTIONS[r.action].icon,x+height*.15,y-height);}
+    rect(ctx,x-height*(pose==='sleep'?.26:.18),y+3,height*(pose==='sleep'?.52:.36),5,'#23302255');
+    if(sleeping&&pose!=='sleep'){
+      // 寝姿の差分がないキャラは、従来どおり立ち絵を倒して表現
+      ctx.save();ctx.translate(x-12,y-2);ctx.rotate(-Math.PI/2);ctx.scale(motion.sy,1);drawSprite(ctx,r.type,0,0,t,'sleep',scale*.72);ctx.restore();
+    } else {
+      ctx.save();ctx.translate(x+motion.dx*u,fy);if(motion.rotate)ctx.rotate(motion.rotate);ctx.scale(1,motion.sy);
+      drawSprite(ctx,r.type,0,0,t,r.action,scale,p.direction,{pose,tint:motion.tint});ctx.restore();
+    }
+    const tip=CHARACTER_ART[r.type]?.image?CHARACTER_ART[r.type].smokeTip?.[pose]:[72,-50];
+    drawCharacterEffects(ctx,{x,y:fy,u,dir:p.direction,t,action:r.action,pose,moving:p.moving,needs:r.needs,trash:p.zone==='room'?r.trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip});
+    if(['stream','sell','gamble','shop','collect'].includes(r.action)&&!p.moving&&!this.speaking?.has(r.type)){ctx.fillStyle='#efe3c3';ctx.font=`${this.focus?32:20}px monospace`;ctx.fillText(ACTIONS[r.action].icon,x+height*.15,y-height);}
     ctx.restore();
   }
   drawRoom(room,r,t,darkness) {
@@ -171,7 +219,7 @@ export class WorldRenderer {
     // Low table, can, ashtray and a perpetually unfinished meal.
     rect(ctx,x+66,y+87,33,4,'#c0a477');rect(ctx,x+68,y+91,3,8,'#62533d');rect(ctx,x+94,y+91,3,8,'#62533d');rect(ctx,x+74,y+83,5,4,'#879777');rect(ctx,x+86,y+85,7,2,'#d2c7a1');
     if(type==='cat'){rect(ctx,x+82,y+82,4,3,'#5e6454');rect(ctx,x+84,y+80,3,1,'#d3be93');}
-    if(type==='fox'){rect(ctx,x+71,y+80,5,7,'#b782bc');rect(ctx,x+72,y+78,3,2,'#d4b896');rect(ctx,x+92,y+22,15,11,'#c1ac79');rect(ctx,x+94,y+24,11,7,'#7c865b');}
+    if(type==='fox'){rect(ctx,x+74,y+76,5,9,'#2c3034');rect(ctx,x+75,y+77,3,2,'#d6b15a');rect(ctx,x+82,y+78,5,8,'#3a342f');rect(ctx,x+83,y+79,3,1,'#c9a15a');}
     if(type==='rabbit'){rect(ctx,x+7,y+27,24,27,'#4a483e');rect(ctx,x+9,y+29,20,23,'#b7aca0');rect(ctx,x+12,y+31,12,18,'#8b8382');}
     if(type==='bear'){rect(ctx,x+100,y+86,8,6,'#a2663f');rect(ctx,x+101,y+84,6,3,'#d6b96e');}
     if(r){const count=Math.floor(r.trash/6);for(let i=0;i<count;i++){const gx=x+12+Math.floor(noise(i,room,7)*(w-30));const gy=y+86+Math.floor(noise(i,room,8)*17);const col=['#9d8b63','#787e61','#b29b6d','#b28c76'][i%4];rect(ctx,gx,gy,5+i%4,3+i%3,col);rect(ctx,gx+1,gy-1,3,1,'#c6b38a');}if(type==='mouse'){for(let i=0;i<Math.floor(r.trash/12);i++){rect(ctx,x+5+(i%3)*9,y+66-Math.floor(i/3)*8,9,8,'#927849');rect(ctx,x+9+(i%3)*9,y+66-Math.floor(i/3)*8,1,8,'#b09968');}}}

@@ -11,6 +11,8 @@ test('standalone game embeds its artwork, styles and syntactically valid script'
   assert.ok(!/^import /m.test(script));
   assert.ok(!script.includes('assets/characters/cat/idle.png'));
   assert.ok(!script.includes('assets/characters/cat/portrait.png'));
+  assert.ok(!script.includes('assets/characters/fox/idle.png'));
+  assert.ok(!script.includes('assets/characters/fox/portrait.png'));
   assert.ok(!script.includes('assets/apartments.png'));
   assert.ok(html.includes('width="1920" height="1080"'));
   assert.ok(script.includes('requestFullscreen()'));

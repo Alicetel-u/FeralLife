@@ -1,4 +1,4 @@
-const NAMES = { cat: 'モク', rabbit: 'ミミ', fox: 'コン', wolf: 'ウル', bear: 'ゴロ', mouse: 'チリ', tanuki: 'ポン' };
+const NAMES = { cat: 'モク', rabbit: 'ミミ', fox: 'ホロ', wolf: 'ウル', bear: 'ゴロ', mouse: 'チリ', tanuki: 'ポン' };
 export const SPEECH_MS = { line: 5200, mutter: 7000 };
 
 const say = (speaker, text) => ({ speaker, name: NAMES[speaker] || '住人', text });
@@ -26,12 +26,12 @@ const MUTTERS = {
 const FALLBACK = ['……いま、考えてる。考えたことにする。', '管理人、まだ見てる。暇なんだ。'];
 
 const reply = {
-  chat: { rabbit: 'その煙、今日の服に入らない。', fox: '沈黙も、パッケージにできます。', wolf: '無言だと、配信の間が持たない。', bear: '無口だと、腹の音が主になる。', mouse: '沈黙、袋に詰めて保管する。', tanuki: '気まずいなら、一回賭けない。' },
-  fight: { rabbit: '匂いの話、分割でも払えない。', fox: '苦情は承ります。返金はしません。', wolf: 'それ、コメント欄の意見と一緒。', bear: '臭くても、飯の匂いは別腹。', mouse: 'その灰、資源として引き取る。', tanuki: '喧嘩、次の一回でチャラにできる。' },
-  doorChat: { rabbit: '窓、閉めて。この服、投稿用。', fox: 'その煙、商品の香りと混ざります。', wolf: '今それ、マイクが拾ってる。', bear: '煙たい。でも、なんか腹が減った。', mouse: '灰、捨てないで。あとで使う。', tanuki: 'この匂いの席、いくらで買える。' },
-  doorFight: { rabbit: '開けるか、匂いを分割にして。', fox: 'ドア越しは、契約の外です。', wolf: '壁ドン、配信的には好感度。', bear: '開けて。匂いの前に、腹だ。', mouse: '閉まってても、匂いは資源。', tanuki: '開けないなら、その態度に賭ける。' },
-  steal: { rabbit: '名前くらい、ブランド表記で書いて。', fox: '食料も、流通に乗せれば資産です。', wolf: '食ってるとこ、撮っていいか。', bear: '読めなかった。ご縁だと思った。', mouse: '残りは、私が保管する。', tanuki: 'それ、勝ち分の前借りで。' },
-  sell: { rabbit: 'その石、コーデに合わない。', fox: '今だけ特別です。灰皿の横が定位置。', wolf: 'それ、スーパーチャットで売るやつ。', bear: '食べられない石は、腹に溜まらない。', mouse: '石、まだ使える。引き取る。', tanuki: 'その石、次の一回に使える。' }
+  chat: { rabbit: 'その煙、今日の服に入らない。', fox: '飲む？ ないなら、私のがある。', wolf: '無言だと、配信の間が持たない。', bear: '無口だと、腹の音が主になる。', mouse: '沈黙、袋に詰めて保管する。', tanuki: '気まずいなら、一回賭けない。' },
+  fight: { rabbit: '匂いの話、分割でも払えない。', fox: '酔ってない。床が斜めなだけ。', wolf: 'それ、コメント欄の意見と一緒。', bear: '臭くても、飯の匂いは別腹。', mouse: 'その灰、資源として引き取る。', tanuki: '喧嘩、次の一回でチャラにできる。' },
+  doorChat: { rabbit: '窓、閉めて。この服、投稿用。', fox: '煙い。でも、缶は開ける。', wolf: '今それ、マイクが拾ってる。', bear: '煙たい。でも、なんか腹が減った。', mouse: '灰、捨てないで。あとで使う。', tanuki: 'この匂いの席、いくらで買える。' },
+  doorFight: { rabbit: '開けるか、匂いを分割にして。', fox: 'うるさい。今、いいところなのに。', wolf: '壁ドン、配信的には好感度。', bear: '開けて。匂いの前に、腹だ。', mouse: '閉まってても、匂いは資源。', tanuki: '開けないなら、その態度に賭ける。' },
+  steal: { rabbit: '名前くらい、ブランド表記で書いて。', fox: 'それ、おつまみだったの。', wolf: '食ってるとこ、撮っていいか。', bear: '読めなかった。ご縁だと思った。', mouse: '残りは、私が保管する。', tanuki: 'それ、勝ち分の前借りで。' },
+  sell: { rabbit: 'その石、コーデに合わない。', fox: '石じゃ飲めない。お酒にして。', wolf: 'それ、スーパーチャットで売るやつ。', bear: '食べられない石は、腹に溜まらない。', mouse: '石、まだ使える。引き取る。', tanuki: 'その石、次の一回に使える。' }
 };
 const answer = (table, type) => table[type] || '……いま、それどころじゃない。';
 
@@ -51,7 +51,7 @@ const DOORS = {
   chat: { id: 'door-chat', kind: 'life', title: name => `${name}が廊下に立ったら、モクは煙を席代にした。`, detail: '会話は成立している。条件が、おかしいだけだ。\n\n灰が一つ落ちるたび、相手の返事は短くなった。', impact: '立ち話で関係は動いた。席代は、服に残る煙で払われた。', lines: actor => [say('cat', '用があるなら、煙の前で言って。'), say(actor, answer(reply.doorChat, actor)), say('cat', '座ると服に残る。それが席代。')] },
   fight: { id: 'door-fight', kind: 'trouble', title: name => `${name}がドアを叩いた。モクは開けなかった。`, detail: 'ドアは閉まったまま、声だけが通った。\n\n開けていたら、灰まで廊下に出ていた。', impact: '口論で関係は悪化した。ドアの向こうに、煙が残った。', lines: actor => [say('cat', 'ドアは開けない。声は通る。'), say(actor, answer(reply.doorFight, actor)), say('cat', '開けたら、灰が向こうまで行く。')] },
   steal: { id: 'door-steal', kind: 'trouble', title: name => `${name}が、モクの棚の一番前を空けた。`, detail: '名前は書いてあった。読まれなかった。\n\n残ったのは、洗われた空の容器だけだった。', impact: '食べ物が消えた。モクのストレスと、相手との関係が悪化した。', lines: actor => [say('cat', 'それ、棚の一番前。昨日の家族。'), say(actor, answer(reply.steal, actor)), say('cat', '洗った容器は、もう食べ物じゃない。')] },
-  sell: { id: 'door-sell', kind: 'trouble', title: name => `${name}が、モクの灰皿の横を売場にした。`, detail: '石は、灰皿の足として採用された。\n\n金運が定着したかは、灰の山に聞いてみないとわからない。', impact: '所持金が動き、関係が悪化した。石は、灰皿の足になった。', lines: actor => [say('cat', '石は、灰皿の足でいい。'), say(actor, answer(reply.sell, actor)), say('cat', '定着した灰は、金になるの。'), say(actor, actor === 'fox' ? '灰は、別料金です。' : '返すなら、説明が要る。')] }
+  sell: { id: 'door-sell', kind: 'trouble', title: name => `${name}が、モクの灰皿の横を売場にした。`, detail: '石は、灰皿の足として採用された。\n\n金運が定着したかは、灰の山に聞いてみないとわからない。', impact: '所持金が動き、関係が悪化した。石は、灰皿の足になった。', lines: actor => [say('cat', '石は、灰皿の足でいい。'), say(actor, answer(reply.sell, actor)), say('cat', '定着した灰は、金になるの。'), say(actor, '返すなら、説明が要る。')] }
 };
 
 const copyLines = lines => lines.map(line => ({ ...line }));
