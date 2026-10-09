@@ -164,9 +164,12 @@ function updateHour(state) {
   if (h === 9) dailyMoney(state);
   if (!state.pending && state.residents.length < 6 && state.hour >= state.nextArrival) {
     const pool = [...state.remaining];
-    const first = state.residents.length === 1 && pool.includes('hostess') ? 'hostess' : pick(state, pool); pool.splice(pool.indexOf(first), 1);
-    state.pending = [first, pick(state, pool)];
-    addEvent(state, 'arrival', '掲示板に、2通の入居申込書が届いた。', '家賃の安さにつられて、また二人がやって来た。\n\n空いている部屋はひとつずつ埋まっていく。迎えるのは、あなたが選んだ一人だけ。', [], '観察画面の封筒、またはこの記録から入居希望者を選べる。');
+    if (pool.length) {
+      const first = state.residents.length === 1 && pool.includes('hostess') ? 'hostess' : pick(state, pool);
+      pool.splice(pool.indexOf(first), 1);
+      state.pending = pool.length ? [first, pick(state, pool)] : [first];
+      addEvent(state, 'arrival', `掲示板に、${state.pending.length}通の入居申込書が届いた。`, '空いている部屋に新しい住人を迎えられる。最後の一人なら申込書は一通だけ。', [], '観察画面の封筒、またはこの記録から入居希望者を選べる。');
+    }
   }
   if (state.hour >= 417) finish(state);
 }
@@ -344,7 +347,7 @@ export function validateSave(s) {
     if (!validJourney(r.journey)) return false;
   }
   if (s.remaining.some(t => !CHARACTERS[t] || types.has(t)) || new Set(s.remaining).size !== s.remaining.length) return false;
-  if (s.pending !== null && (!Array.isArray(s.pending) || s.pending.length !== 2 || s.pending[0] === s.pending[1] || s.pending.some(t => !s.remaining.includes(t)))) return false;
+  if (s.pending !== null && (!Array.isArray(s.pending) || (s.pending.length !== 1 && s.pending.length !== 2) || (s.pending.length === 2 && s.pending[0] === s.pending[1]) || s.pending.some(t => !s.remaining.includes(t)))) return false;
   if (s.events.some(e => !Number.isInteger(e.id) || !Number.isFinite(e.hour) || !['life', 'trouble', 'arrival'].includes(e.kind) || typeof e.title !== 'string' || typeof e.detail !== 'string' || !Array.isArray(e.rooms))) return false;
   return s.ending === null || (typeof s.ending.name === 'string' && typeof s.ending.text === 'string');
 }
