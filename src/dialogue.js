@@ -2,7 +2,7 @@ const NAMES = { cat: 'モク', rabbit: 'ミミ', fox: 'ホロ', wolf: 'ウル', 
 export const SPEECH_MS = { line: 5200, mutter: 7000 };
 
 // モク（cat）の発話だけを表示時に猫語へ統一する。旧セーブの台詞にも適用する。
-export const mokuNya = text => String(text).replace(/([^。！？!?\n]+)([。！？!?]+|$)/gm, (whole, body, ending) => {
+export const mokuNya = text => text === '明日のニャが、ちゃんとやる。たぶん。' ? text : String(text).replace(/([^。！？!?\n]+)([。！？!?]+|$)/gm, (whole, body, ending) => {
   const tail = body.match(/^(.*?)(\s*)$/);
   const words = tail[1], spaces = tail[2];
   return words && !words.endsWith('ニャ') ? words + 'ニャ' + spaces + ending : whole;
@@ -14,7 +14,7 @@ const heard = (state, id) => Array.isArray(state.heard) && state.heard.includes(
 export const OPENING_LINES = [
   say('cat', '明日から、片づける。'),
   say('cat', '今日は準備。灰皿の位置を直した。'),
-  say('cat', '明日の俺が、ちゃんとやる。たぶん。')
+  say('cat', '明日のニャが、ちゃんとやる。たぶん。')
 ];
 
 const MUTTERS = {
