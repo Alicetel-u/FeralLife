@@ -1,5 +1,9 @@
 // Add future approved character art here; unregistered residents retain their draft sprites.
 export const SCENE_ART = { src: 'assets/apartments.png', image: null };
+// 入居者ごとの部屋絵。キーは住人の type。未登録の部屋は従来の共通間取りのまま。
+export const ROOM_ART = {
+  cat: { src: 'assets/rooms/cat/interior.png', image: null }
+};
 
 // ポーズ差分の共通設定：立ち・座りは 96×128（足元 48,126）、寝姿は 160×112（体の下端中央 80,108）。
 // 単体版ビルドで画像を埋め込めるよう、パスは省略せず文字列で書く。
@@ -50,6 +54,17 @@ export const CHARACTER_ART = {
     actionPoses: {idle:['base','sit','stand','chat'],tv:'sit',eat:'eat',drink:'drink',clean:'clean',fight:'angry',chat:'chat',sleep:'sleep',outing:'stand',smoke:'stand'}
   }
 };
+
+export async function loadRoomArt() {
+  await Promise.all(Object.values(ROOM_ART).map(async art => {
+    art.image = await new Promise(resolve => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = () => { console.warn('Room image could not load:', art.src); resolve(null); };
+      image.src = art.src;
+    });
+  }));
+}
 
 export async function loadCharacterArt() {
   const load = src => new Promise(resolve => {
