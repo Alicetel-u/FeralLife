@@ -987,6 +987,9 @@ class WorldRenderer {
   draw(state, timestamp, paused, bubbles = []) {
     const ctx = this.ctx;
     this.bubbles = bubbles;
+    const speechKey = bubbles.map(b => `${b.speaker}:${b.text}`).join('|');
+    if (speechKey !== this.speechKey) { this.speechKey = speechKey; this.speechStarted = timestamp; }
+    this.speechOpacity = Math.min(1, (timestamp - (this.speechStarted || timestamp)) / 180);
     this.speaking = new Set(bubbles.map(bubble => bubble.speaker));
     const dt = Math.min(.1, Math.max(0, (timestamp - this.last) / 1000)); this.last = timestamp;
     if (!paused) this.animTime += dt;
@@ -1143,57 +1146,70 @@ class WorldRenderer {
     ctx.imageSmoothingEnabled = false;
     for (const bubble of this.bubbles) {
       const anchor = this.speechAnchor(state, bubble.speaker);
-      drawPixelBubble(ctx, anchor?.x ?? 960, anchor?.y ?? 188, bubble.name, bubble.text, this.focus || !anchor);
+      const resident = state.residents.find(r => r.type === bubble.speaker);
+      drawSpeechBubble(ctx, anchor?.x ?? 1510, anchor?.y ?? 230, bubble.name, bubble.text, {
+        large: this.focus || !anchor, accent: CHARACTERS[bubble.speaker]?.accent || '#a6ac91',
+        source: !anchor ? resident ? `${resident.room}号室の声` : 'けもの荘の声' : '',
+        tail: !!anchor, opacity: this.speechOpacity
+      });
     }
     ctx.restore();
   }
 }
 
-function wrapGlyphs(ctx, text, maxWidth) {
+function wrapSpeechText(ctx, text, maxWidth) {
   const lines = [];
   let line = '';
+  const noStart = '、。，．！？!?：；)]）】』」〉》…ー';
+  const noEnd = '([（【『「〈《';
   for (const glyph of text) {
+    if (glyph === '\n') { lines.push(line); line = ''; continue; }
     const next = line + glyph;
-    if (line && ctx.measureText(next).width > maxWidth) { lines.push(line); line = glyph; }
+    if (line && ctx.measureText(next).width > maxWidth && !noStart.includes(glyph)) {
+      const last = Array.from(line).at(-1);
+      if (noEnd.includes(last) && line.length > 1) { lines.push(line.slice(0, -last.length)); line = last + glyph; }
+      else { lines.push(line); line = glyph; }
+    }
     else line = next;
   }
   if (line) lines.push(line);
-  return lines.slice(0, 3);
+  return lines.length ? lines : [''];
 }
-function drawPixelBubble(ctx, screenX, screenY, name, text, large) {
-  const scale = 2, font = large ? 15 : 12, maxText = large ? 196 : 148;
-  const scratch = drawPixelBubble.canvas ||= document.createElement('canvas');
-  const pen = scratch.getContext('2d');
-  pen.font = `${font}px "Yu Gothic UI", Meiryo, sans-serif`;
-  const lines = wrapGlyphs(pen, text, maxText);
-  pen.font = '11px "Yu Gothic UI", Meiryo, sans-serif';
-  const nameWidth = pen.measureText(name).width;
-  pen.font = `${font}px "Yu Gothic UI", Meiryo, sans-serif`;
-  const textWidth = Math.max(nameWidth, ...lines.map(line => pen.measureText(line).width));
-  const padX = 7, nameH = 14, lineH = font + 3;
-  const w = Math.ceil(textWidth + padX * 2), h = nameH + lines.length * lineH + 6, tail = 7;
-  const destW = (w + 4) * scale, destH = (h + tail + 3) * scale;
-  let left = Math.round(screenX - destW / 2), top = Math.round(screenY - destH + 8);
-  left = Math.max(8, Math.min(WORLD_WIDTH - destW - 8, left));
-  top = Math.max(8, Math.min(WORLD_HEIGHT - destH - 8, top));
-  const localTail = Math.max(8, Math.min(w - 16, Math.round((screenX - left) / scale) - 5));
-  scratch.width = w + 4; scratch.height = h + tail + 3;
-  pen.imageSmoothingEnabled = false;
-  pen.clearRect(0, 0, scratch.width, scratch.height);
-  pen.fillStyle = '#1c211c'; pen.fillRect(3, 3, w, h);
-  pen.fillStyle = '#f4f0e4'; pen.fillRect(0, 0, w, h);
-  pen.fillStyle = '#2a2e26';
-  pen.fillRect(0, 0, w, 2); pen.fillRect(0, h - 2, w, 2); pen.fillRect(0, 0, 2, h); pen.fillRect(w - 2, 0, 2, h);
-  pen.fillStyle = '#3d4a3c'; pen.fillRect(2, 2, w - 4, nameH);
-  pen.font = '11px "Yu Gothic UI", Meiryo, sans-serif'; pen.fillStyle = '#f3ead4'; pen.textBaseline = 'middle';
-  pen.fillText(name, 6, 2 + nameH / 2);
-  pen.font = `${font}px "Yu Gothic UI", Meiryo, sans-serif`; pen.fillStyle = '#242822'; pen.textBaseline = 'top';
-  lines.forEach((line, index) => pen.fillText(line, padX, nameH + 4 + index * lineH));
-  pen.fillStyle = '#f4f0e4';
-  pen.fillRect(localTail, h - 1, 10, 4); pen.fillRect(localTail + 3, h + 2, 5, 3);
-  pen.fillStyle = '#2a2e26';
-  pen.fillRect(localTail, h, 2, 4); pen.fillRect(localTail + 8, h, 2, 4); pen.fillRect(localTail + 3, h + 3, 2, 3); pen.fillRect(localTail + 6, h + 3, 2, 2);
-  ctx.drawImage(scratch, left, top, destW, destH);
+function drawSpeechBubble(ctx, screenX, screenY, name, text, opts) {
+  const font = opts.large ? 35 : 28, pad = 26, lineH = font * 1.5;
+  ctx.save();
+  ctx.globalAlpha = opts.opacity;
+  ctx.font = `500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;
+  const lines = wrapSpeechText(ctx, text, opts.large ? 530 : 390);
+  const header = opts.source ? `${name}  ·  ${opts.source}` : name;
+  ctx.font = '700 24px "Yu Gothic UI", Meiryo, sans-serif';
+  const headerWidth = ctx.measureText(header).width + 24;
+  ctx.font = `500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;
+  const w = Math.ceil(Math.max(160, headerWidth, ...lines.map(line => ctx.measureText(line).width)) + pad * 2);
+  const h = Math.ceil(70 + lines.length * lineH), tailH = opts.tail ? 22 : 0;
+  const left = Math.max(24, Math.min(WORLD_WIDTH - w - 24, Math.round(screenX - w / 2)));
+  const top = Math.max(24, Math.min(WORLD_HEIGHT - h - tailH - 24, Math.round(screenY - h - tailH - 12)));
+  const tipX = Math.max(left + 34, Math.min(left + w - 34, screenX));
+  const paper = '#faf5e9', ink = '#2c332d';
+  const shape = () => {
+    ctx.beginPath(); ctx.roundRect(left, top, w, h, 18);
+    if (opts.tail) { ctx.moveTo(tipX-14,top+h-1);ctx.lineTo(tipX+2,top+h+tailH);ctx.lineTo(tipX+16,top+h-1);ctx.closePath(); }
+  };
+  ctx.shadowColor = '#10181155'; ctx.shadowBlur = 18; ctx.shadowOffsetY = 7;
+  shape(); ctx.fillStyle = paper; ctx.fill();
+  ctx.shadowColor = 'transparent';
+  ctx.strokeStyle = '#3b4438'; ctx.lineWidth = 2.5;
+  ctx.beginPath();ctx.roundRect(left,top,w,h,18);ctx.stroke();
+  if (opts.tail) {
+    ctx.fillStyle=paper;ctx.beginPath();ctx.moveTo(tipX-14,top+h-3);ctx.lineTo(tipX+2,top+h+tailH);ctx.lineTo(tipX+16,top+h-3);ctx.fill();
+    ctx.beginPath();ctx.moveTo(tipX-14,top+h);ctx.lineTo(tipX+2,top+h+tailH);ctx.lineTo(tipX+16,top+h);ctx.stroke();
+  }
+  ctx.strokeStyle='#ffffffb3';ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(left+5,top+5,w-10,h-10,14);ctx.stroke();
+  ctx.fillStyle=opts.accent;ctx.beginPath();ctx.roundRect(left+pad,top+22,7,24,3);ctx.fill();
+  ctx.font='700 24px "Yu Gothic UI", Meiryo, sans-serif';ctx.textBaseline='middle';ctx.fillStyle='#56604e';ctx.fillText(header,left+pad+19,top+34);
+  ctx.font=`500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;ctx.fillStyle=ink;ctx.textBaseline='top';
+  lines.forEach((line,index)=>ctx.fillText(line,left+pad,top+62+index*lineH));
+  ctx.restore();
 }
 
 
