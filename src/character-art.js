@@ -6,6 +6,12 @@ export const SCENE_ART = { src: 'assets/apartments.png', image: null };
 const catPose = (src, origin = [48, 126]) => ({ src, origin, image: null });
 
 export const CHARACTER_ART = {
+  sister: {
+    src: 'assets/characters/sister/idle.png', portraitSrc: 'assets/characters/sister/idle.png', displayHeight: 44, origin: [700, 1230], image: null, portrait: null
+  },
+  hostess: {
+    src: 'assets/characters/hostess/idle.png', portraitSrc: 'assets/characters/hostess/idle.png', displayHeight: 49, origin: [627, 1194], image: null, portrait: null
+  },
   cat: {
     src: 'assets/characters/cat/idle.png', portraitSrc: 'assets/characters/cat/portrait.png', displayHeight: 44, origin: [48, 126], image: null, portrait: null,
     // 行動ごとの差分ポーズ。読み込めなかったポーズは基本立ち絵へ自動的に戻る。
@@ -19,7 +25,7 @@ export const CHARACTER_ART = {
     smokeTip: { base: [18, -56] }
   },
   fox: {
-    src: 'assets/characters/fox/idle.png', portraitSrc: 'assets/characters/fox/portrait.png', displayHeight: 44, origin: [48, 126], image: null, portrait: null
+    src: 'assets/characters/fox/idle.png', portraitSrc: 'assets/characters/fox/portrait.png', displayHeight: 44, origin: [680, 1180], image: null, portrait: null
   }
 };
 

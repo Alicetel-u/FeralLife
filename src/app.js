@@ -10,10 +10,21 @@ const $ = id => document.getElementById(id);
 const escape = text => String(text ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen = n => '¥' + Math.round(n).toLocaleString('ja-JP');
 const STORAGE = 'feral-apartments-v1';
+const previewType = new URLSearchParams(location.search).get('preview');
+const previewResident = ['hostess', 'fox', 'sister'].includes(previewType) ? previewType : null;
 let state, restored = false;
-try { const saved = JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(saved)) { state = saved; restored = true; } } catch {}
+try { const saved = previewResident ? null : JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(saved)) { state = saved; restored = true; } } catch {}
 state ||= createGame();
-let speed = 1, paused = false, filter = 'all', profileKey = null, lastUI = 0, lastSave = 0, lastTime = performance.now(), lastEventId = 0, endingShown = false, toastTimer;
+if (previewResident) {
+  advance(state, 40);
+  if (!state.pending.includes(previewResident)) state.pending[0] = previewResident;
+  admit(state, previewResident);
+}
+// 古い観察記にも追加住人の申込書を届ける。進行・既存の住人はそのまま。
+for (const type of ['hostess', 'sister']) {
+  if (!state.ending && !state.residents.some(r => r.type === type) && !state.remaining.includes(type)) state.remaining.push(type);
+}
+let speed = 1, paused = !!previewResident, filter = 'all', profileKey = null, lastUI = 0, lastSave = 0, lastTime = performance.now(), lastEventId = 0, endingShown = false, toastTimer;
 const renderer = new WorldRenderer($('world'));
 const talk = createTalk(restored ? (state.events[0]?.id || 0) : 0);
 const modal = $('modal');
@@ -35,6 +46,7 @@ function setInspector(open) {
 }
 
 function save() {
+  if (previewResident) { $('save-status').textContent = `○ ${CHARACTERS[previewResident].name.split(' ')[1]}確認用（保存なし）`; return; }
   try { localStorage.setItem(STORAGE, JSON.stringify(state)); $('save-status').textContent = '● 自動保存'; }
   catch { $('save-status').textContent = '○ 保存できません'; }
 }

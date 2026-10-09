@@ -1,5 +1,7 @@
 export const WALK_SPEED = 430;
 export const OUTINGS = {
+  sister: { hour: 12, duration: 5, reason: '雑貨店のバイトと推しグッズ巡り', side: 'right' },
+  hostess: { hour: 19, duration: 8, reason: '夜の店へ出勤', side: 'left' },
   cat: { hour: 18, duration: 2, reason: 'コンビニで買い出し', side: 'right' },
   rabbit: { hour: 9, duration: 6, reason: '仕事と寄り道の買い物', side: 'left' },
   fox: { hour: 21, duration: 2, reason: '酒の買い足し', side: 'left' },

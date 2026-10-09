@@ -18,10 +18,14 @@ export const ACTIONS = {
   collect: { label: '拾い物を仕分け中', icon: '▤', place: 'center' },
   gamble: { label: '一発逆転を夢見てる', icon: '♤', place: 'table' },
   chat: { label: '廊下で立ち話', icon: '♡', place: 'hall' },
+  counsel: { label: '廊下で無料お悩み相談', icon: '♡', place: 'hall' },
+  checkBrother: { label: '兄の生存確認中', icon: '♡', place: 'hall' },
   fight: { label: 'お隣と口論中', icon: '!', place: 'hall' },
   outing: { label: '出かけている', icon: '↗', place: 'table' }
 };
 export const CHARACTERS = {
+  sister: { name: '灰田 ネム', species: '猫', age: 22, job: '雑貨店のアルバイト', traits: ['地雷系ファッション', '返信待ち', '兄には辛口'], quote: '「別に、お兄ちゃんのために来たんじゃないし。\n……で、今日ごはん食べた？」', color: '#423943', shirt: '#26232c', accent: '#df79a6', cash: 12000, habit: 'checkBrother', warning: '既読がつかないと落ち着かない。推しグッズは「生活必需品」。', bio: 'モクの7歳下の妹。黒とピンクで武装し、兄の「明日から」を一番信用していない。家賃の安さを理由に越してきたが、買い物袋には兄の分のおにぎりも入っている。', income: 2600 },
+  hostess: { name: '金城 ルナ', species: '猫', age: 25, job: 'キャバクラ勤務（源氏名ルナ）', traits: ['営業スマイル', '昼は省エネ', '情に弱い'], quote: '「相談は無料。延長も無料。\n……家賃まで無料にはならないか。」', color: '#d3ad83', shirt: '#302832', accent: '#e8bf70', cash: 16000, habit: 'counsel', warning: '夜は出勤、昼は爆睡。ご褒美の買い物で給料が消える。', bio: '店では聞き上手、家では既読をつけるだけで精一杯。独立資金を貯めるはずが「仕事用」のバッグが増える。廊下の相談だけは、つい無料で延長してしまう。', income: 4800 },
   cat: { name: '灰田 モク', species: '猫', age: 29, job: '日雇い（休業中）', traits: ['だらしない', '愛煙家', '無気力'], quote: '「明日からちゃんとする。\n……明日になったら言うけど。」', color: '#929f94', shirt: '#52675e', accent: '#bac1a9', cash: 14000, habit: 'smoke', warning: '掃除も貯金も苦手。タバコだけは切らさない。', bio: 'ずっと101号室にいる、けもの荘の古株。灰皿は満杯、予定は空白。', income: 1500 },
   rabbit: { name: '桃井 ミミ', species: '兎', age: 24, job: 'アパレル店員', traits: ['浪費家', '見栄っ張り', 'ブランド好き'], quote: '「これ？ 安かったの。\n分割にしたら、ほぼ無料だし。」', color: '#e1b0a0', shirt: '#b47582', accent: '#f3d5bc', cash: 18000, habit: 'shop', warning: '通販と分割払い。借金がふくらみやすい。', bio: 'おしゃれな部屋に住みたい。でも家賃は安いほうがいい。段ボールは毎日届く。', income: 4500 },
   fox: { name: '酔田 ホロ', species: '猫', age: 27, job: '無職（飲酒中）', traits: ['酒猫', '缶を捨てない', 'だらしがない'], quote: '「一杯でやめる。\n……この一杯は数えない。」', color: '#8d6a58', shirt: '#2a2a2a', accent: '#e4c2b0', cash: 8000, habit: 'drink', warning: '空き缶が家具になる。夜ほど、廊下まで声が届く。', bio: '床は缶の墓場。一杯でやめると言って、三本目を開ける。', income: 1600 },
@@ -35,7 +39,7 @@ const clamp = (n, low = 0, high = 100) => Math.max(low, Math.min(high, n));
 export function dateAt(hour) { return { day: Math.floor(hour / 24) + 1, hour: Math.floor(hour % 24), minute: Math.floor((hour % 1) * 60) }; }
 export function formatTime(hour) { const d = dateAt(hour); return `${d.day}日目 ${String(d.hour).padStart(2, '0')}:${String(d.minute).padStart(2, '0')}`; }
 export function createGame(seed = Date.now()) {
-  const state = { version: 1, hour: 17, seed: (seed >>> 0) || 1, residents: [], events: [], nextId: 1, remaining: ['rabbit', 'fox', 'wolf', 'bear', 'mouse', 'tanuki'], pending: null, nextArrival: 57, rent: 0, missedRent: 0, ending: null, selected: 101, heard: [] };
+  const state = { version: 1, hour: 17, seed: (seed >>> 0) || 1, residents: [], events: [], nextId: 1, remaining: ['rabbit', 'fox', 'wolf', 'bear', 'mouse', 'tanuki', 'hostess', 'sister'], pending: null, nextArrival: 57, rent: 0, missedRent: 0, ending: null, selected: 101, heard: [] };
   state.residents.push(createResident('cat', 101));
   addEvent(state, 'arrival', '101号室に、灰田 モクが住んでいる。', '親戚から引き継いだのは、築38年の古いアパート。\n\n唯一の住人は、いつも窓辺でタバコを吸っている猫獣人。「管理人？ ああ、よろしく」。それだけ言うと、また煙の向こうへ目をやった。\n\nあなたの仕事は、この暮らしを見守ること。次の入居募集は3日目の朝9時。', [101], '管理人としての観察が始まった。');
   const opening = addEvent(state, 'life', 'モクが「明日から片づける」とつぶやいた。', 'テーブルの空き缶を一本だけ動かして、モクは片づけを終えた気になった。\n\n「今日は準備の日ってことで」。\n\n灰皿だけが、几帳面に手の届く位置にある。', [101], '101号室の散らかりが少し増えた。');
@@ -65,6 +69,8 @@ export function admit(state, type) {
     if (['cat', 'fox'].every(t => [type, other.type].includes(t))) relation = 8;
     if (['cat', 'wolf'].every(t => [type, other.type].includes(t))) relation = -15;
     if (['mouse', 'bear'].every(t => [type, other.type].includes(t))) relation = 14;
+    if ([type, other.type].includes('hostess')) relation = other.type === 'wolf' || type === 'wolf' ? -8 : 6;
+    if (['cat', 'sister'].every(t => [type, other.type].includes(t))) relation = 25;
     r.relationships[other.id] = relation; other.relationships[r.id] = relation;
   }
   state.residents.push(r);
@@ -75,6 +81,10 @@ export function admit(state, type) {
   state.selected = room;
   const c = CHARACTERS[type];
   addEvent(state, 'arrival', `${room}号室に、${c.name}が入居した。`, `${c.bio}\n\n${c.quote}\n\n玄関で受け取った鍵は、少し錆びていた。このアパートに、またひとつ癖のある暮らしが加わる。`, [room], `入居数 ${state.residents.length}/6室。新しい相性とトラブルが生まれる。`);
+  if (type === 'sister') {
+    const event = addEvent(state, 'life', 'モクの「明日から」に、妹の監査が入った。', 'ネムは兄の部屋をひと目見て、スマホの画面を伏せた。\n\n「写真に残すと、私まで片づけてない家の子みたいじゃん」。文句を言いながら、持ってきたおにぎりをテーブルに置いた。', [101, room], '兄妹の関係は25から開始。ネムも別の部屋の住人として家賃を払う。');
+    event.lines = [{ speaker: 'sister', name: 'ネム', text: 'お兄ちゃん、まだ明日の準備してるの？' }, { speaker: 'cat', name: 'モク', text: '準備は、丁寧にするほうだから。' }, { speaker: 'sister', name: 'ネム', text: '何年かけてんの。……はい、おにぎり。' }];
+  }
   return true;
 }
 export function advance(state, hours) {
@@ -118,7 +128,7 @@ function updateHour(state) {
       if (r.type === 'cat') { const lines = catOutingLines(state); if (lines) outing.lines = lines; }
       continue;
     }
-    const sleepTime = r.type === 'wolf' ? h >= 7 && h < 16 : night;
+    const sleepTime = ['wolf', 'hostess'].includes(r.type) ? h >= 7 && h < 16 : night;
     if (r.action === 'sleep' && sleepTime && n.sleep > 12) { applyAction(state, r, 'sleep', false); continue; }
     const scores = {
       eat: n.hunger * 1.13, sleep: n.sleep + (sleepTime ? 22 : -15), smoke: n.smoke * (r.type === 'cat' ? 1.1 : .16),
@@ -126,21 +136,26 @@ function updateHour(state) {
       chat: state.residents.length > 1 ? 20 + n.fun * .24 : -100,
       fight: state.residents.length > 1 && n.stress > 65 ? n.stress * .8 : -100
     };
-    scores[CHARACTERS[r.type].habit] = Math.max(scores[CHARACTERS[r.type].habit] || 0, 40 + random(state) * 34 + (r.type === 'wolf' && night ? 28 : 0));
+    if (r.type === 'hostess') {
+      scores.counsel = state.residents.length > 1 && !sleepTime ? 48 + n.fun * .3 : -100;
+      scores.shop = 25 + n.fun * .5;
+    }
+    if (r.type === 'sister') scores.shop = 22 + n.fun * .45;
+    if (r.type !== 'hostess') scores[CHARACTERS[r.type].habit] = Math.max(scores[CHARACTERS[r.type].habit] || 0, 40 + random(state) * 34 + (r.type === 'wolf' && night ? 28 : 0));
     let best = 'idle', score = -Infinity;
     for (const [a, value] of Object.entries(scores)) {
       const v = value + random(state) * 16 - (r.cooldowns[a] ? 45 : 0) - (r.action === a && a !== 'sleep' ? 24 : 0);
       if (v > score) { best = a; score = v; }
     }
     r.previous = r.action; r.action = best; r.actionAge = 0; r.targetRoom = null;
-    r.cooldowns[best] = best === 'sleep' ? 0 : ['shop', 'sell', 'stream', 'steal', 'collect', 'gamble'].includes(best) ? 6 : 2;
+    r.cooldowns[best] = best === 'sleep' ? 0 : ['shop', 'sell', 'stream', 'steal', 'collect', 'gamble', 'checkBrother'].includes(best) ? 6 : 2;
     applyAction(state, r, best, true);
     r.journey = r.targetRoom ? createVisit(r, state.hour, start, r.targetRoom) : createRoomMove(r, state.hour, start, ACTIONS[best].place);
   }
   if (h === 9) dailyMoney(state);
   if (!state.pending && state.residents.length < 6 && state.hour >= state.nextArrival) {
     const pool = [...state.remaining];
-    const first = pick(state, pool); pool.splice(pool.indexOf(first), 1);
+    const first = state.residents.length === 1 && pool.includes('hostess') ? 'hostess' : pick(state, pool); pool.splice(pool.indexOf(first), 1);
     state.pending = [first, pick(state, pool)];
     addEvent(state, 'arrival', '掲示板に、2通の入居申込書が届いた。', '家賃の安さにつられて、また二人がやって来た。\n\n空いている部屋はひとつずつ埋まっていく。迎えるのは、あなたが選んだ一人だけ。', [], '観察画面の封筒、またはこの記録から入居希望者を選べる。');
   }
@@ -167,6 +182,47 @@ function applyAction(state, r, action, changed) {
       else { spend(r, 1800); n.stress = clamp(n.stress + 9); }
       n.fun = clamp(n.fun - 45); break;
     }
+    case 'counsel': {
+      const others = state.residents.filter(x => x !== r && sampleJourney(x, state.hour, ACTIONS[x.action].place).zone === 'room' && x.action !== 'sleep');
+      const target = others.sort((a, b) => b.needs.stress - a.needs.stress)[0];
+      n.fun = clamp(n.fun - 28);
+      if (target) {
+        r.targetRoom = target.room;
+        target.needs.stress = clamp(target.needs.stress - 22);
+        n.stress = clamp(n.stress + 5);
+        relation(r, target, 9);
+        if (changed) {
+          const name = CHARACTERS[target.type].name.split(' ')[1];
+          const event = addEvent(state, 'life', `ルナの廊下相談室、${name}が無料延長した。`, '「それ、しんどかったね」。店では時間を測る言葉も、ここでは時計を見ずに出てくる。\n\n相談が終わると、ルナは自分の部屋で無言になった。営業スマイルの充電には、ひとりの時間がいる。', [r.room, target.room], '相手のストレスが22下がり、関係が9改善。ルナのストレスは5増えた。お金のやり取りはない。');
+          event.lines = [{ speaker: 'hostess', name: 'ルナ', text: 'ここ、指名料いらないから。とりあえず座りな。' }, { speaker: target.type, name, text: '……もう少しだけ、聞いてくれる？' }, { speaker: 'hostess', name: 'ルナ', text: '延長ね。はいはい、今日も売上ゼロ。' }];
+        }
+      } else if (changed) addEvent(state, 'life', 'ルナの相談室、今日は予約ゼロ。', '廊下は静か。「じゃ、私も休憩」。スマホを裏返して、誰にも愛想を振りまかない時間を確保した。', [r.room], '娯楽欲求が下がった。相談相手がいないので関係は変わらない。');
+      scripted = true;
+      break;
+    }
+    case 'checkBrother': {
+      const brother = state.residents.find(x => x.type === 'cat');
+      n.fun = clamp(n.fun - 32);
+      if (brother && brother.action !== 'sleep' && sampleJourney(brother, state.hour, ACTIONS[brother.action].place).zone === 'room') {
+        r.targetRoom = brother.room;
+        brother.trash = clamp(brother.trash - 8);
+        brother.needs.stress = clamp(brother.needs.stress - 8);
+        n.stress = clamp(n.stress - 5);
+        relation(r, brother, 6);
+        if (changed) {
+          const event = addEvent(state, 'life', 'ネムの生存確認、ついでに空き缶を回収。', '「返信くらいしなよ。生きてるか分かんないじゃん」。\n\n文句の数だけ、袋に空き缶が入っていく。モクは「ありがと」とだけ言った。ネムはそれを聞かなかった顔をした。', [r.room, brother.room], '兄のゴミが8減り、ストレスが8低下。ネムのストレスが5低下し、兄妹の関係が6改善。');
+          event.lines = [{ speaker: 'sister', name: 'ネム', text: '生きてるなら返信して。あと、缶は家具じゃない。' }, { speaker: 'cat', name: 'モク', text: 'いま返そうとしてた。……ありがと。' }, { speaker: 'sister', name: 'ネム', text: '別に。袋が余ってただけ。' }];
+        }
+      } else {
+        n.stress = clamp(n.stress + 8);
+        if (changed) {
+          const event = addEvent(state, 'life', 'ネムが送った「生きてる？」に既読がつかない。', '兄は外出中か、夢の中。ネムはスマホを伏せて、三秒後にまた開いた。\n\n「心配じゃない。連絡のマナーの話」。廊下は静かなままだった。', [r.room], '返信待ちでネムのストレスが8増加。寝ている兄を起こしたり、外出先を追いかけたりはしない。');
+          event.lines = [{ speaker: 'sister', name: 'ネム', text: '通知ゼロ。……電波のせいってことにしとこ。' }];
+        }
+      }
+      scripted = true;
+      break;
+    }
     case 'chat': case 'fight': case 'steal': case 'sell': {
       const others = state.residents.filter(x => x !== r && sampleJourney(x, state.hour, ACTIONS[x.action].place).zone === 'room');
       if (others.length) {
@@ -189,6 +245,15 @@ function applyAction(state, r, action, changed) {
     for (const other of state.residents) if (other !== r && sampleJourney(other,state.hour,ACTIONS[other.action].place).zone === 'room') { other.needs.stress = clamp(other.needs.stress + 9); other.needs.sleep = clamp(other.needs.sleep + 6); relation(r, other, -2); }
   }
   r.trash = clamp(r.trash);
+  if (changed && r.type === 'sister' && action === 'shop') {
+    const event = addEvent(state, 'trouble', 'ネムの「生活必需品」、推しグッズが届いた。', '「これないと出勤できないから、ほぼ仕事道具」。\n\n新しいキーホルダーをバッグにつけ、支払い通知はそっと閉じた。兄のだらしなさには厳しいが、自分のカートには甘い。', [r.room], '通常の買い物代を支払い、足りない分は借金に。箱とゴミが増えた。');
+    event.lines = [{ speaker: 'sister', name: 'ネム', text: '節約？ してるよ。送料が無料になるまで買ったし。' }];
+    scripted = true;
+  }
+  if (changed && r.type === 'hostess' && action === 'shop') {
+    addEvent(state, 'trouble', 'ルナが「仕事用」のバッグをまた買った。', '「これは経費。こっちは気合い。あっちは来月の私への投資」。\n\n独立資金の封筒は薄くなったが、バッグを置く場所だけはなくなった。', [r.room], '買い物代を支払い、足りない分は借金に。空き箱とゴミが増えた。');
+    scripted = true;
+  }
   if (changed && r.type === 'cat') {
     const other = ['chat', 'fight'].includes(action) ? state.residents.find(resident => resident.room === r.targetRoom && resident !== r) : null;
     const scene = catIncident(state, action, other?.type || null);
