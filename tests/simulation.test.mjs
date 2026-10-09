@@ -23,7 +23,7 @@ test('accepts exactly one valid candidate and recruits every three days until fu
 test('needs stay bounded and behavior varies across a complete game',()=>{
   for(let seed=1;seed<=20;seed++){
     const s=createGame(seed),seen=new Set();
-    while(!s.ending){advance(s,1);if(s.pending)admit(s,s.pending[seed%2]);for(const r of s.residents){seen.add(r.action);for(const[k]of NEEDS)assert.ok(r.needs[k]>=0&&r.needs[k]<=100);assert.ok(r.cash>=0);}}
+    while(!s.ending){advance(s,1);if(s.pending)admit(s,s.pending[seed % s.pending.length]);for(const r of s.residents){seen.add(r.action);for(const[k]of NEEDS)assert.ok(r.needs[k]>=0&&r.needs[k]<=100);assert.ok(r.cash>=0);}}
     assert.equal(s.hour,417);assert.equal(s.residents.length,6);assert.ok(seen.size>=9);assert.ok(s.rent>0);assert.ok(s.events.some(e=>e.kind==='trouble'));assert.ok(validateSave(s));
     const hour=s.hour;advance(s,100);assert.equal(s.hour,hour);
   }
@@ -48,7 +48,7 @@ test('full occupancy can reach all four shared-living endings across 100 seeds',
   const endings=new Set();
   for(let seed=1;seed<=100;seed++){
     const s=createGame(seed);
-    while(!s.ending){advance(s,1);if(s.pending)admit(s,s.pending[seed%2]);}
+    while(!s.ending){advance(s,1);if(s.pending)admit(s,s.pending[seed % s.pending.length]);}
     endings.add(s.ending.name);
   }
   assert.deepEqual([...endings].sort(),['ろくでもない、ただいま','明日払いの楽園','宝の山と、獣の巣','壁の薄い戦場'].sort());
