@@ -53,3 +53,20 @@ test('full occupancy can reach all four shared-living endings across 100 seeds',
   }
   assert.deepEqual([...endings].sort(),['ろくでもない、ただいま','明日払いの楽園','宝の山と、獣の巣','壁の薄い戦場'].sort());
 });
+
+test('new games recruit only the six illustrated residents, including final single applicant',()=>{
+  const allowed = new Set(['cat', 'hostess', 'fox', 'sister', 'peko', 'ann']);
+  const s = createGame(20261009);
+  assert.deepEqual(new Set([s.residents[0].type, ...s.remaining]), allowed);
+  for (let i = 0; i < 5; i++) {
+    advance(s, i === 0 ? 40 : 72);
+    assert.ok(s.pending);
+    assert.equal(s.pending.length, i === 4 ? 1 : 2);
+    assert.ok(s.pending.every(type => allowed.has(type)));
+    assert.equal(admit(s, s.pending[0]), true);
+    assert.equal(validateSave(s), true);
+  }
+  assert.equal(s.residents.length, 6);
+  assert.equal(s.remaining.length, 0);
+  assert.equal(s.pending, null);
+});
