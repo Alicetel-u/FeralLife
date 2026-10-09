@@ -1,6 +1,6 @@
 import { ROOMS, CHARACTERS, ACTIONS, dateAt } from './simulation.js';
 import { CHARACTER_ART, SCENE_ART } from './character-art.js';
-import { exteriorRoomBounds, sampleJourney, motionLabel } from './movement.js';
+import { exteriorRoomBounds, sampleJourney, sampleCompanion, motionLabel } from './movement.js';
 import { drawCharacterEffects, spriteMotion } from './effects.js';
 
 export const WORLD_WIDTH = 1920;
@@ -61,20 +61,17 @@ export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1
     ctx.restore();
     return;
   }
-  const c = CHARACTERS[type];
+  const c = CHARACTERS[type] || { color: '#d9a486', shirt: '#353237', accent: '#8f4b50' };
   ctx.save(); ctx.translate(Math.round(x), Math.round(y)); ctx.scale(scale * direction, scale);
   const p = (x, y, w, h, col) => rect(ctx, x, y, w, h, col);
   const fur = c.color, accent = c.accent, outline = '#33352d';
   const bob = action === 'sleep' ? 0 : Math.sin(tick * 2) > .75 ? -1 : 0;
   ctx.translate(0, bob);
-  // Every resident shares a deliberately small pixel grid, with species-specific silhouettes.
-  if (type === 'rabbit') { p(-7,-31,4,16,outline);p(-6,-30,2,13,fur);p(-6,-27,1,7,'#c88e8f');p(3,-33,4,18,outline);p(4,-32,2,15,fur);p(4,-29,1,8,'#c88e8f'); }
-  else if (type === 'cat' || type === 'fox' || type === 'wolf') { p(-9,-23,6,10,outline);p(3,-23,6,10,outline);p(-8,-22,4,8,fur);p(4,-22,4,8,fur);p(-7,-20,2,3,'#b68f82');p(5,-20,2,3,'#b68f82'); }
-  else { p(-11,-20,7,7,outline);p(4,-20,7,7,outline);p(-10,-19,5,5,fur);p(5,-19,5,5,fur);p(-9,-18,3,3,'#c3958b');p(6,-18,3,3,'#c3958b'); }
-  if (type === 'fox') { p(8,-10,5,10,fur);p(12,-14,4,12,fur);p(13,-15,3,4,accent); }
-  if (type === 'cat') { p(8,-9,3,10,fur);p(10,-6,4,3,fur);p(12,-11,2,7,fur); }
-  if (type === 'mouse') { p(8,-2,7,2,'#c79992');p(14,-5,2,4,'#c79992'); }
-  if (type === 'tanuki') { p(8,-8,5,8,fur);p(10,-7,4,2,outline);p(10,-3,4,2,outline); }
+  // 専用原稿のない住人も、猫の耳と尻尾で表示する。
+  if (c.species === '猫') {
+    p(-9,-23,6,10,outline);p(3,-23,6,10,outline);p(-8,-22,4,8,fur);p(4,-22,4,8,fur);p(-7,-20,2,3,'#b68f82');p(5,-20,2,3,'#b68f82');
+    p(8,-9,3,10,fur);p(10,-6,4,3,fur);p(12,-11,2,7,fur);
+  }
   const wide = type === 'bear' ? 2 : 0;
   p(-8-wide,-16,16+wide*2,14,outline);p(-7-wide,-15,14+wide*2,12,c.shirt);p(-5,-13,3,10,c.shirt);p(-6,-3,5,4,outline);p(1,-3,5,4,outline);p(-7,0,6,2,'#534c40');p(1,0,6,2,'#534c40');
   p(-9,-20,18,13,outline);p(-8,-19,16,11,fur);p(-6,-20,12,1,fur);
@@ -159,7 +156,7 @@ export class WorldRenderer {
     const people=state.residents.map(r=>({r,p:sampleJourney(r,state.hour,ACTIONS[r.action].place)})).sort((a,b)=>a.p.y-b.p.y);
     for(const {r,p} of people) {
       if(p.zone==='room'||p.zone==='away'||p.x<-45||p.x>1045)continue;
-      const baseHeight=CHARACTER_ART[r.type]?.image?44:r.type==='rabbit'?34:26;
+      const baseHeight=CHARACTER_ART[r.type]?.image?44:26;
       const scale=80/baseHeight;
       rect(ctx,p.x-13,p.y+1,26,3,'#17211b66');
       const action=p.moving?'outing':r.action, pose=resolvePose(r.type,action,p.moving,t,state.hour), motion=spriteMotion(action,p.moving,r.needs,t,pose);
@@ -168,6 +165,12 @@ export class WorldRenderer {
       drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint});ctx.restore();
       drawCharacterEffects(ctx,{x:p.x,y:fy,u:80/128,dir:p.direction,t,action,pose,moving:p.moving,needs:r.needs,trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip:CHARACTER_ART[r.type]?.smokeTip?.[pose]});
       ctx.font='10px "Yu Gothic UI",sans-serif';ctx.textAlign='center';ctx.fillStyle='#f2e9d2';ctx.shadowColor='#151b18';ctx.shadowBlur=3;ctx.fillText(CHARACTERS[r.type].name.split(' ')[1],p.x,p.y-86);ctx.shadowBlur=0;ctx.textAlign='left';
+      const companion = sampleCompanion(r, state.hour);
+      if (companion) {
+        rect(ctx,companion.x-15,companion.y+1,30,3,'#17211b66');
+        drawSprite(ctx,'patron',companion.x,companion.y+Math.sin(t*11+1)*1.1,t,'outing',80/44,companion.direction);
+        ctx.font='10px "Yu Gothic UI",sans-serif';ctx.textAlign='center';ctx.fillStyle='#f2e9d2';ctx.fillText('トクゾウ（来訪者）',companion.x,companion.y-88);ctx.textAlign='left';
+      }
     }
     ctx.restore();
   }
@@ -176,7 +179,7 @@ export class WorldRenderer {
     if(p.zone==='away'||p.zone==='street'||p.zone==='stairs')return;
     const base=exteriorRoomBounds(p.room||r.room), b=roomBounds(p.room||r.room,this.focusRoom);if(!b)return;
     const ctx=this.ctx,x=b.x+(p.x-base.x)/base.w*b.w,y=p.zone==='hall'?b.y+b.h+16:b.y+(p.y-base.y)/base.h*b.h;
-    const height=this.focus?300:144,baseHeight=CHARACTER_ART[r.type]?.image?44:r.type==='rabbit'?34:26,scale=height/baseHeight;
+    const height=this.focus?300:144,baseHeight=CHARACTER_ART[r.type]?.image?44:26,scale=height/baseHeight;
     const u=height/128, sleeping=r.action==='sleep'&&!p.moving&&p.zone==='room';
     const pose=resolvePose(r.type,r.action,p.moving,t,state.hour), motion=spriteMotion(r.action,p.moving,r.needs,t,pose);
     const fy=y+(p.moving?Math.sin(t*11)*2:0);

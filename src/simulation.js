@@ -24,22 +24,24 @@ export const ACTIONS = {
   outing: { label: '出かけている', icon: '↗', place: 'table' }
 };
 export const CHARACTERS = {
+  ann: { name: '蜜野 アン', species: '猫', age: 27, job: '在宅の文字起こし', traits: ['愛人暮らし', '口止め上手', '約束待ち'], quote: '「一人暮らしだよ。\n……あの人は、たまに寄るだけ。」', color: '#a17d6d', shirt: '#947583', accent: '#cc9b87', cash: 10000, habit: 'shop', warning: '援助は三日おきの会食頼み。「今度」が多い相手を待つ。', bio: '既婚の会社役員・金満トクゾウ（56歳）の愛人。けもの荘では一人暮らしをしている。「いつか一緒に住もう」の約束より、今月の家賃を信用したい。ときどき二人で喫茶店へ歩いていく。', income: 1000 },
+  peko: { name: '空腹 ペコ', species: '猫', age: 23, job: 'パン屋の短時間バイト', traits: ['大食い', '財布は空', '特売ハンター'], quote: '「家賃は来週、必ず。\n……このドーナツは別予算だから。」', color: '#403e52', shirt: '#7188bb', accent: '#4177cb', cash: 300, habit: 'eat', warning: '食費が家賃を追い越す。特売弁当では、すぐにお腹が空く。', bio: '給料日だけ満腹で、翌日には財布が空っぽ。パン屋のまかない目当てに働き、帰り道でドーナツを買う。安い家賃にひかれて来たが、食べる量だけは節約できない。', income: 1800 },
   sister: { name: '灰田 ネム', species: '猫', age: 22, job: '雑貨店のアルバイト', traits: ['地雷系ファッション', '返信待ち', '兄には辛口'], quote: '「別に、お兄ちゃんのために来たんじゃないし。\n……で、今日ごはん食べた？」', color: '#423943', shirt: '#26232c', accent: '#df79a6', cash: 12000, habit: 'checkBrother', warning: '既読がつかないと落ち着かない。推しグッズは「生活必需品」。', bio: 'モクの7歳下の妹。黒とピンクで武装し、兄の「明日から」を一番信用していない。家賃の安さを理由に越してきたが、買い物袋には兄の分のおにぎりも入っている。', income: 2600 },
   hostess: { name: '金城 ルナ', species: '猫', age: 25, job: 'キャバクラ勤務（源氏名ルナ）', traits: ['営業スマイル', '昼は省エネ', '情に弱い'], quote: '「相談は無料。延長も無料。\n……家賃まで無料にはならないか。」', color: '#d3ad83', shirt: '#302832', accent: '#e8bf70', cash: 16000, habit: 'counsel', warning: '夜は出勤、昼は爆睡。ご褒美の買い物で給料が消える。', bio: '店では聞き上手、家では既読をつけるだけで精一杯。独立資金を貯めるはずが「仕事用」のバッグが増える。廊下の相談だけは、つい無料で延長してしまう。', income: 4800 },
   cat: { name: '灰田 モク', species: '猫', age: 29, job: '日雇い（休業中）', traits: ['だらしない', '愛煙家', '無気力'], quote: '「明日からちゃんとする。\n……明日になったら言うけど。」', color: '#929f94', shirt: '#52675e', accent: '#bac1a9', cash: 14000, habit: 'smoke', warning: '掃除も貯金も苦手。タバコだけは切らさない。', bio: 'ずっと101号室にいる、けもの荘の古株。灰皿は満杯、予定は空白。', income: 1500 },
-  rabbit: { name: '桃井 ミミ', species: '兎', age: 24, job: 'アパレル店員', traits: ['浪費家', '見栄っ張り', 'ブランド好き'], quote: '「これ？ 安かったの。\n分割にしたら、ほぼ無料だし。」', color: '#e1b0a0', shirt: '#b47582', accent: '#f3d5bc', cash: 18000, habit: 'shop', warning: '通販と分割払い。借金がふくらみやすい。', bio: 'おしゃれな部屋に住みたい。でも家賃は安いほうがいい。段ボールは毎日届く。', income: 4500 },
+  rabbit: { name: '桃井 ミミ', species: '猫', age: 24, job: 'アパレル店員', traits: ['浪費家', '見栄っ張り', 'ブランド好き'], quote: '「これ？ 安かったの。\n分割にしたら、ほぼ無料だし。」', color: '#e1b0a0', shirt: '#b47582', accent: '#f3d5bc', cash: 18000, habit: 'shop', warning: '通販と分割払い。借金がふくらみやすい。', bio: 'おしゃれな部屋に住みたい。でも家賃は安いほうがいい。段ボールは毎日届く。', income: 4500 },
   fox: { name: '酔田 ホロ', species: '猫', age: 27, job: '無職（飲酒中）', traits: ['酒猫', '缶を捨てない', 'だらしがない'], quote: '「一杯でやめる。\n……この一杯は数えない。」', color: '#8d6a58', shirt: '#2a2a2a', accent: '#e4c2b0', cash: 8000, habit: 'drink', warning: '空き缶が家具になる。夜ほど、廊下まで声が届く。', bio: '床は缶の墓場。一杯でやめると言って、三本目を開ける。', income: 1600 },
-  wolf: { name: '夜野 ウル', species: '狼', age: 26, job: '動画配信者', traits: ['昼夜逆転', '騒音主', '承認欲求'], quote: '「みんな聞こえてるー!?\n……隣には聞こえなくていい。」', color: '#8a9eaf', shirt: '#666995', accent: '#c2ced2', cash: 17000, habit: 'stream', warning: '夜中ほど声が大きい。隣人の眠りを奪う。', bio: '視聴者はまだ12人。それでもリアクションの音量は、人気配信者級。', income: 2700 },
-  bear: { name: '熊谷 ゴロ', species: '熊', age: 35, job: '配送ドライバー', traits: ['大食漢', '食いしん坊', '悪気なし'], quote: '「名前、書いてなかったよ？\n……書いてあっても読めなかった。」', color: '#997354', shirt: '#a0915c', accent: '#d8b384', cash: 21000, habit: 'steal', warning: '他人の冷蔵庫も食料庫。食費と揉め事が増える。', bio: '体も胃袋も大きい、気のいい住人。「ひとくち」がひと皿になる。', income: 4200 },
-  mouse: { name: '根津 チリ', species: '鼠', age: 27, job: 'リサイクル店員', traits: ['ゴミ収集家', '捨てられない', 'マイペース'], quote: '「ゴミじゃないよ、資源だよ。\n使い道は、あとで考える。」', color: '#ac9b96', shirt: '#7c8662', accent: '#d8c2aa', cash: 10000, habit: 'collect', warning: '拾い物で部屋が埋まる。共用廊下にも進出する。', bio: '街のゴミ置き場は宝の山。いつか使う「いつか」が、まだ来ない。', income: 2000 },
-  tanuki: { name: '八代 ポン', species: '狸', age: 31, job: 'フリーター', traits: ['ギャンブラー', '楽天家', '借金体質'], quote: '「負けじゃない、投資。\n次の一回でぜんぶ返せるから。」', color: '#a08a6b', shirt: '#8c6c4e', accent: '#d4bb94', cash: 16000, habit: 'gamble', warning: '大勝ちも大負けも。家賃より勝負を優先する。', bio: 'ここへ越してきた理由は「運気を変えるため」。住所より先に財布が変わる。', income: 2800 }
+  wolf: { name: '夜野 ウル', species: '猫', age: 26, job: '動画配信者', traits: ['昼夜逆転', '騒音主', '承認欲求'], quote: '「みんな聞こえてるー!?\n……隣には聞こえなくていい。」', color: '#8a9eaf', shirt: '#666995', accent: '#c2ced2', cash: 17000, habit: 'stream', warning: '夜中ほど声が大きい。隣人の眠りを奪う。', bio: '視聴者はまだ12人。それでもリアクションの音量は、人気配信者級。', income: 2700 },
+  bear: { name: '熊谷 ゴロ', species: '猫', age: 35, job: '配送ドライバー', traits: ['大食漢', '食いしん坊', '悪気なし'], quote: '「名前、書いてなかったよ？\n……書いてあっても読めなかった。」', color: '#997354', shirt: '#a0915c', accent: '#d8b384', cash: 21000, habit: 'steal', warning: '他人の冷蔵庫も食料庫。食費と揉め事が増える。', bio: '体も胃袋も大きい、気のいい住人。「ひとくち」がひと皿になる。', income: 4200 },
+  mouse: { name: '根津 チリ', species: '猫', age: 27, job: 'リサイクル店員', traits: ['ゴミ収集家', '捨てられない', 'マイペース'], quote: '「ゴミじゃないよ、資源だよ。\n使い道は、あとで考える。」', color: '#ac9b96', shirt: '#7c8662', accent: '#d8c2aa', cash: 10000, habit: 'collect', warning: '拾い物で部屋が埋まる。共用廊下にも進出する。', bio: '街のゴミ置き場は宝の山。いつか使う「いつか」が、まだ来ない。', income: 2000 },
+  tanuki: { name: '八代 ポン', species: '猫', age: 31, job: 'フリーター', traits: ['ギャンブラー', '楽天家', '借金体質'], quote: '「負けじゃない、投資。\n次の一回でぜんぶ返せるから。」', color: '#a08a6b', shirt: '#8c6c4e', accent: '#d4bb94', cash: 16000, habit: 'gamble', warning: '大勝ちも大負けも。家賃より勝負を優先する。', bio: 'ここへ越してきた理由は「運気を変えるため」。住所より先に財布が変わる。', income: 2800 }
 };
 
 const clamp = (n, low = 0, high = 100) => Math.max(low, Math.min(high, n));
 export function dateAt(hour) { return { day: Math.floor(hour / 24) + 1, hour: Math.floor(hour % 24), minute: Math.floor((hour % 1) * 60) }; }
 export function formatTime(hour) { const d = dateAt(hour); return `${d.day}日目 ${String(d.hour).padStart(2, '0')}:${String(d.minute).padStart(2, '0')}`; }
 export function createGame(seed = Date.now()) {
-  const state = { version: 1, hour: 17, seed: (seed >>> 0) || 1, residents: [], events: [], nextId: 1, remaining: ['rabbit', 'fox', 'wolf', 'bear', 'mouse', 'tanuki', 'hostess', 'sister'], pending: null, nextArrival: 57, rent: 0, missedRent: 0, ending: null, selected: 101, heard: [] };
+  const state = { version: 1, hour: 17, seed: (seed >>> 0) || 1, residents: [], events: [], nextId: 1, remaining: ['rabbit', 'fox', 'wolf', 'bear', 'mouse', 'tanuki', 'hostess', 'sister', 'peko', 'ann'], pending: null, nextArrival: 57, rent: 0, missedRent: 0, ending: null, selected: 101, heard: [] };
   state.residents.push(createResident('cat', 101));
   addEvent(state, 'arrival', '101号室に、灰田 モクが住んでいる。', '親戚から引き継いだのは、築38年の古いアパート。\n\n唯一の住人は、いつも窓辺でタバコを吸っている猫獣人。「管理人？ ああ、よろしく」。それだけ言うと、また煙の向こうへ目をやった。\n\nあなたの仕事は、この暮らしを見守ること。次の入居募集は3日目の朝9時。', [101], '管理人としての観察が始まった。');
   const opening = addEvent(state, 'life', 'モクが「明日から片づける」とつぶやいた。', 'テーブルの空き缶を一本だけ動かして、モクは片づけを終えた気になった。\n\n「今日は準備の日ってことで」。\n\n灰皿だけが、几帳面に手の届く位置にある。', [101], '101号室の散らかりが少し増えた。');
@@ -50,7 +52,7 @@ function random(state) { let x = state.seed; x ^= x << 13; x ^= x >>> 17; x ^= x
 const pick = (state, list) => list[Math.floor(random(state) * list.length)];
 function createResident(type, room) {
   const c = CHARACTERS[type];
-  return { id: type, type, room, cash: c.cash, debt: 0, needs: { hunger: 26, sleep: 30, stress: 21, hygiene: 68, fun: 35, alcohol: type === 'fox' ? 74 : type === 'cat' ? 40 : 12, smoke: type === 'cat' ? 78 : 5 }, action: type === 'cat' ? 'smoke' : 'idle', previous: 'idle', actionAge: 0, cooldowns: {}, relationships: {}, history: [], trash: type === 'cat' ? 23 : type === 'mouse' ? 30 : type === 'fox' ? 20 : 9, eventCooldown: 0, targetRoom: null };
+  return { id: type, type, room, cash: c.cash, debt: 0, needs: { hunger: type === 'peko' ? 72 : 26, sleep: 30, stress: 21, hygiene: 68, fun: 35, alcohol: type === 'fox' ? 74 : type === 'cat' ? 40 : 12, smoke: type === 'cat' ? 78 : 5 }, action: type === 'cat' ? 'smoke' : 'idle', previous: 'idle', actionAge: 0, cooldowns: {}, relationships: {}, history: [], trash: type === 'cat' ? 23 : type === 'mouse' ? 30 : type === 'fox' ? 20 : 9, eventCooldown: 0, targetRoom: null };
 }
 export function addEvent(state, kind, title, detail, rooms = [], impact = '') {
   const event = { id: state.nextId++, hour: state.hour, kind, title, detail, rooms, impact, read: false };
@@ -104,7 +106,7 @@ function updateHour(state) {
     r.actionAge++;
     r.eventCooldown = Math.max(0, r.eventCooldown - 1);
     for (const k of Object.keys(r.cooldowns)) r.cooldowns[k] = Math.max(0, r.cooldowns[k] - 1);
-    n.hunger = clamp(n.hunger + (r.type === 'bear' ? 11 : 6));
+    n.hunger = clamp(n.hunger + (r.type === 'peko' ? 16 : r.type === 'bear' ? 11 : 6));
     n.sleep = clamp(n.sleep + (night && r.type !== 'wolf' ? 10 : 5));
     n.stress = clamp(n.stress + 1 + r.trash / 45);
     n.hygiene = clamp(n.hygiene - 2);
@@ -124,6 +126,13 @@ function updateHour(state) {
     const plan = OUTINGS[r.type], day = dateAt(state.hour).day;
     if (h >= plan.hour && h < plan.hour + 3 && (r.lastOutingDay || 0) !== day) {
       r.lastOutingDay = day; r.journey = createOuting(r, state.hour, start); r.previous = r.action; r.action = 'outing';
+      if (r.type === 'ann' && day % 3 === 0) {
+        r.journey.companion = 'patron';
+        r.journey.reason = 'トクゾウと喫茶店へ';
+        r.cash += 6000;
+        const meeting = addEvent(state, 'life', 'アンがトクゾウと、少し距離を空けて歩いている。', '金満トクゾウ、56歳。既婚の会社役員で、アンの恋人でもある。\n\n「今日は時間がなくてね」。その言葉は、アンのほうが先に覚えていた。建物前で合流し、二人は喫茶店へ向かう。渡された封筒は、未来の約束より軽くない。', [r.room], '生活費の援助6000円を受け取った。外観の街路ではトクゾウが隣を歩く。彼は入居せず、アンは一人で帰宅する。');
+        meeting.lines = [{ speaker: 'ann', name: 'アン', text: '今日は「今度」じゃなくて、来てくれたんだ。' }, { speaker: 'ann', name: 'アン', text: '家賃の封筒、約束より先に出してね。' }];
+      }
       const outing = addEvent(state, 'life', `${CHARACTERS[r.type].name.split(' ')[1]}が「${plan.reason}」に出かけた。`, '玄関から共用廊下へ。上の階なら階段を下りて、アパートの前の道を歩いていく。\n\n外観モードなら、出かける姿も帰ってくる姿も見守れる。', [r.room], '画面外でしばらく過ごし、同じ道を通って帰宅する。');
       if (r.type === 'cat') { const lines = catOutingLines(state); if (lines) outing.lines = lines; }
       continue;
@@ -167,7 +176,19 @@ function applyAction(state, r, action, changed) {
   const n = r.needs, c = CHARACTERS[r.type];
   let scripted = false;
   switch (action) {
-    case 'eat': n.hunger = clamp(n.hunger - 57); n.stress = clamp(n.stress - 6); spend(r, r.type === 'bear' ? 1100 : 400); r.trash += 2; break;
+    case 'eat': {
+      const bargain = r.type === 'peko' && r.cash < 900;
+      n.hunger = clamp(n.hunger - (r.type === 'peko' ? bargain ? 38 : 65 : 57));
+      n.stress = clamp(n.stress - 6);
+      spend(r, r.type === 'peko' ? bargain ? 200 : 900 : r.type === 'bear' ? 1100 : 400);
+      r.trash += r.type === 'peko' ? 4 : 2;
+      if (r.type === 'peko' && changed) {
+        const event = addEvent(state, bargain ? 'trouble' : 'life', bargain ? 'ペコの特売弁当、満腹まであと三箱。' : 'ペコが「おやつ」のドーナツと大盛りごはんを食べた。', bargain ? '「200円なら節約。二つ買っても節約」。\n\n一箱だけ食べ終え、ペコは空になった容器と財布を見比べた。胃袋は、まだ会議を続けたがっている。' : '「ドーナツは真ん中に穴があるから、実質少なめ」。\n\n大盛りごはんも食べたところで、やっと満足げに耳が揺れた。家賃用の小銭まで、食費になっていた。', [r.room], bargain ? '特売弁当200円。空腹は38減るが、毎時16増える。支払い不足は借金になる。' : '食費900円で空腹が65減少。食べ終えた容器が増えた。');
+        event.lines = [{ speaker: 'peko', name: 'ペコ', text: bargain ? 'お財布は軽いのに、お腹は重くならない……。' : 'お腹いっぱい。……で、デザートは？' }];
+        scripted = true;
+      }
+      break;
+    }
     case 'sleep': n.sleep = clamp(n.sleep - 29); n.stress = clamp(n.stress - 7); break;
     case 'smoke': n.smoke = clamp(n.smoke - 65); n.stress = clamp(n.stress - 12); spend(r, 180); r.trash += 2; break;
     case 'drink': n.alcohol = clamp(n.alcohol - 55); n.stress = clamp(n.stress - 16); n.sleep = clamp(n.sleep + 12); spend(r, 600); r.trash += 4; break;

@@ -1,5 +1,7 @@
 export const WALK_SPEED = 430;
 export const OUTINGS = {
+  ann: { hour: 16, duration: 3, reason: '喫茶店で待ち合わせ', side: 'left' },
+  peko: { hour: 10, duration: 4, reason: 'パン屋のバイトと特売探し', side: 'left' },
   sister: { hour: 12, duration: 5, reason: '雑貨店のバイトと推しグッズ巡り', side: 'right' },
   hostess: { hour: 19, duration: 8, reason: '夜の店へ出勤', side: 'left' },
   cat: { hour: 18, duration: 2, reason: 'コンビニで買い出し', side: 'right' },
@@ -77,6 +79,14 @@ export function motionLabel(resident, hour, fallback) {
   if (p.zone === 'stairs') return p.phase === 'returning' ? '階段を通って戻っている' : '階段を上り下りしている';
   if (p.moving && resident.journey?.kind === 'visit') return p.phase === 'returning' ? '自分の部屋へ戻っている' : resident.journey.reason;
   return fallback;
+}
+
+// 待ち合わせ相手は建物前の街路だけに登場。住人として部屋や階段には入らない。
+export function sampleCompanion(resident, hour) {
+  if (resident.journey?.companion !== 'patron') return null;
+  const p = sampleJourney(resident, hour);
+  if (p.zone !== 'street' || !p.moving || p.phase !== 'outbound') return null;
+  return { ...p, x: p.x - p.direction * 55, y: p.y + 2, type: 'patron' };
 }
 export function validJourney(j) {
   if (j == null) return true;

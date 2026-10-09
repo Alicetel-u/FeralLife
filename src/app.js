@@ -11,7 +11,7 @@ const escape = text => String(text ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;'
 const yen = n => '¥' + Math.round(n).toLocaleString('ja-JP');
 const STORAGE = 'feral-apartments-v1';
 const previewType = new URLSearchParams(location.search).get('preview');
-const previewResident = ['hostess', 'fox', 'sister'].includes(previewType) ? previewType : null;
+const previewResident = ['hostess', 'fox', 'sister', 'peko', 'ann'].includes(previewType) ? previewType : null;
 let state, restored = false;
 try { const saved = previewResident ? null : JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(saved)) { state = saved; restored = true; } } catch {}
 state ||= createGame();
@@ -19,9 +19,19 @@ if (previewResident) {
   advance(state, 40);
   if (!state.pending.includes(previewResident)) state.pending[0] = previewResident;
   admit(state, previewResident);
+  if (previewResident === 'ann') {
+    advance(state, 7);
+    const ann = state.residents.find(r => r.type === 'ann');
+    for (let wait = 0; wait < 3 && ann.journey?.kind !== 'outing'; wait++) advance(state, 1);
+    const route = ann.journey;
+    // 建物前で二人が並んでいる時点で確認画面を止める。
+    const streetIndex = route.path.findIndex(p => p.zone === 'street');
+    const distance = route.path.slice(1, streetIndex + 1).reduce((sum, p, i) => sum + Math.hypot(p.x-route.path[i].x,p.y-route.path[i].y),0);
+    advance(state, route.startedAt + distance / 430 + .35 - state.hour);
+  }
 }
 // 古い観察記にも追加住人の申込書を届ける。進行・既存の住人はそのまま。
-for (const type of ['hostess', 'sister']) {
+for (const type of ['hostess', 'sister', 'peko', 'ann']) {
   if (!state.ending && !state.residents.some(r => r.type === type) && !state.remaining.includes(type)) state.remaining.push(type);
 }
 let speed = 1, paused = !!previewResident, filter = 'all', profileKey = null, lastUI = 0, lastSave = 0, lastTime = performance.now(), lastEventId = 0, endingShown = false, toastTimer;

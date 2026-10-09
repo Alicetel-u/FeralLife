@@ -6,6 +6,15 @@ export const SCENE_ART = { src: 'assets/apartments.png', image: null };
 const catPose = (src, origin = [48, 126]) => ({ src, origin, image: null });
 
 export const CHARACTER_ART = {
+  ann: {
+    src: 'assets/characters/ann/idle.png', portraitSrc: 'assets/characters/ann/idle.png', displayHeight: 44, origin: [625, 1250], image: null, portrait: null
+  },
+  patron: {
+    src: 'assets/characters/patron/idle.png', portraitSrc: 'assets/characters/patron/idle.png', displayHeight: 44, origin: [627, 1230], image: null, portrait: null
+  },
+  peko: {
+    src: 'assets/characters/peko/idle.png', portraitSrc: 'assets/characters/peko/idle.png', displayHeight: 44, origin: [680, 1240], image: null, portrait: null
+  },
   sister: {
     src: 'assets/characters/sister/idle.png', portraitSrc: 'assets/characters/sister/idle.png', displayHeight: 44, origin: [700, 1230], image: null, portrait: null
   },
