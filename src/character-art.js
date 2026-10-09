@@ -25,7 +25,20 @@ export const CHARACTER_ART = {
     smokeTip: { base: [18, -56] }
   },
   fox: {
-    src: 'assets/characters/fox/idle.png', portraitSrc: 'assets/characters/fox/portrait.png', displayHeight: 44, origin: [680, 1180], image: null, portrait: null
+    src: 'assets/characters/fox/base-game.png', portraitSrc: 'assets/characters/fox/portrait-game.png', displayHeight: 44, origin: [64, 126], image: null, portrait: null,
+    poses: {
+      stand: catPose('assets/characters/fox/poses/stand.png', [64,126]),
+      walk_a: catPose('assets/characters/fox/poses/walk_a.png', [64,126]),
+      walk_b: catPose('assets/characters/fox/poses/walk_b.png', [64,126]),
+      sit: catPose('assets/characters/fox/poses/sit.png', [64,126]),
+      sleep: catPose('assets/characters/fox/poses/sleep.png', [88,108]),
+      eat: catPose('assets/characters/fox/poses/eat.png', [64,126]),
+      drink: catPose('assets/characters/fox/poses/drink.png', [64,126]),
+      clean: catPose('assets/characters/fox/poses/clean.png', [64,126]),
+      angry: catPose('assets/characters/fox/poses/angry.png', [64,126]),
+      chat: catPose('assets/characters/fox/poses/chat.png', [64,126])
+    },
+    actionPoses: {idle:['base','sit','stand','chat'],tv:'sit',eat:'eat',drink:'drink',clean:'clean',fight:'angry',chat:'chat',sleep:'sleep',outing:'stand',smoke:'stand'}
   }
 };
 
