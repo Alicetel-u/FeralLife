@@ -1,10 +1,11 @@
 import { createGame, advance, admit, ROOMS, CHARACTERS, NEEDS, ACTIONS, dateAt, formatTime, atmosphere, validateSave } from './simulation.js';
 import { createTalk, stepTalk } from './dialogue.js';
 import { WorldRenderer, roomBounds, drawPortrait } from './renderer.js';
-import { loadCharacterArt } from './character-art.js';
+import { loadCharacterArt, loadRoomArt } from './character-art.js';
 import { sampleJourney, motionLabel } from './movement.js';
 
 await loadCharacterArt();
+await loadRoomArt();
 
 const $ = id => document.getElementById(id);
 const escape = text => String(text ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

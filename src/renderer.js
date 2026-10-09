@@ -1,5 +1,5 @@
 import { ROOMS, CHARACTERS, ACTIONS, dateAt } from './simulation.js';
-import { CHARACTER_ART, SCENE_ART } from './character-art.js';
+import { CHARACTER_ART, ROOM_ART, SCENE_ART } from './character-art.js';
 import { exteriorRoomBounds, sampleJourney, sampleCompanion, motionLabel } from './movement.js';
 import { drawCharacterEffects, spriteMotion } from './effects.js';
 import { drawExteriorForeground } from './exterior-occlusion.js';
@@ -172,7 +172,9 @@ export class WorldRenderer {
       // Limit restoration to this person's footprint so it cannot erase another resident.
       ctx.save();ctx.beginPath();ctx.rect(p.x-70,fy-115,140,120);ctx.clip();
       drawExteriorForeground(ctx,SCENE_ART.image,p,darkness);ctx.restore();
-      ctx.font='10px "Yu Gothic UI",sans-serif';ctx.textAlign='center';ctx.fillStyle='#f2e9d2';ctx.shadowColor='#151b18';ctx.shadowBlur=3;ctx.fillText(CHARACTERS[r.type].name.split(' ')[1],p.x,p.y-86);ctx.shadowBlur=0;ctx.textAlign='left';
+      if (!this.speaking?.has(r.type)) {
+        ctx.font='10px "Yu Gothic UI",sans-serif';ctx.textAlign='center';ctx.fillStyle='#f2e9d2';ctx.shadowColor='#151b18';ctx.shadowBlur=3;ctx.fillText(CHARACTERS[r.type].name.split(' ')[1],p.x,p.y-86);ctx.shadowBlur=0;ctx.textAlign='left';
+      }
       const companion = sampleCompanion(r, state.hour);
       if (companion) {
         rect(ctx,companion.x-15,companion.y+1,30,3,'#17211b66');
@@ -209,6 +211,27 @@ export class WorldRenderer {
     const ctx = this.ctx, b = exteriorRoomBounds(room), {x,y,w,h} = b;
     const type = r?.type;
     const awake = r && r.action !== 'sleep';
+    if (ROOM_ART[type]?.image) {
+      ctx.drawImage(ROOM_ART[type].image, x, y, w, h);
+      // The painted screen stays dark until this resident is actually watching.
+      if (awake && ['tv', 'stream'].includes(r.action)) rect(ctx, x+114, y+54, 22, 18, Math.sin(t*3)>0 ? '#d5e4d4' : '#8eaaa0');
+      const count = Math.floor(r.trash / 6);
+      for (let i = 0; i < count; i++) {
+        const gx = x+12+Math.floor(noise(i, room, 7)*(w-30));
+        const gy = y+86+Math.floor(noise(i, room, 8)*17);
+        rect(ctx, gx, gy, 5+i%4, 3+i%3, ['#9d8b63','#787e61','#b29b6d','#b28c76'][i%4]);
+        rect(ctx, gx+1, gy-1, 3, 1, '#c6b38a');
+      }
+      if (!awake) rect(ctx, x, y, w, h, 'rgba(22,35,45,.45)');
+      else if (darkness > 0) rect(ctx, x, y, w, h, `rgba(16,27,49,${darkness})`);
+      else {
+        const gradient = ctx.createRadialGradient(x+w/2, y+15, 0, x+w/2, y+15, 130);
+        gradient.addColorStop(0, '#ffe8a320'); gradient.addColorStop(1, '#ffb45000');
+        ctx.fillStyle = gradient; ctx.fillRect(x, y, w, h);
+      }
+      rect(ctx, x, y, w, 3, '#b39a6d'); rect(ctx, x, y, 3, h, '#4b4d3d'); rect(ctx, x+w-3, y, 3, h, '#4b4d3d');
+      return;
+    }
     const palettes = { cat:['#827452','#a18b5e','#b39e6b'],rabbit:['#987573','#b9957c','#c3a68b'],fox:['#736555','#9b8061','#b59871'],wolf:['#596575','#7a7a77','#9f9279'],bear:['#7e7555','#a18b5f','#b69b6d'],mouse:['#697359','#8c8962','#a3a16e'],tanuki:['#82735e','#9c8062','#b49b75'] };
     const p = palettes[type] || ['#444a42','#62664f','#6f7256'];
     rect(ctx,x-3,y-3,w+6,h+6,'#34372f');rect(ctx,x,y,w,h,p[0]);
@@ -240,6 +263,11 @@ export class WorldRenderer {
     rect(ctx,x,y,w,3,'#b39a6d');rect(ctx,x,y,3,h,'#4b4d3d');rect(ctx,x+w-3,y,3,h,'#4b4d3d');
     if(!r){ctx.font='9px "Yu Gothic UI",sans-serif';ctx.fillStyle='#c4b78c';ctx.textAlign='center';ctx.fillText('空 室',x+w/2,y+69);ctx.textAlign='left';}
   }
+  projectExterior(x, y, selectedPos) {
+    const cam = this.exteriorCamera(selectedPos), Z = 1.2 * cam.zoom, S = WORLD_WIDTH / 1200;
+    return { x: (x - cam.ox) * Z * S, y: (y - cam.oy) * Z * S };
+  }
+  // 外観スプライトの身長は80。吹き出しは内装と同じく、その86%上（頭）へ付ける。
   speechAnchor(state, type) {
     const resident = state.residents.find(person => person.type === type);
     if (!resident) return null;
@@ -247,19 +275,35 @@ export class WorldRenderer {
     const selectedPos = selected ? sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
     const p = sampleJourney(resident, state.hour, ACTIONS[resident.action].place);
     const S = WORLD_WIDTH / 1200;
+    const absent = p.zone === 'away' || p.zone === 'street' || p.zone === 'stairs';
     if (this.view === 'exterior') {
-      if (p.zone === 'room' || p.zone === 'away' || p.x < -45 || p.x > 1045) return null;
-      const cam = this.exteriorCamera(selectedPos), Z = 1.2 * cam.zoom;
-      return { x: (p.x - cam.ox) * Z * S, y: (p.y - 108 - cam.oy) * Z * S };
+      if (p.zone === 'room') {
+        const room = p.room || resident.room;
+        const b = exteriorRoomBounds(room);
+        const at = this.projectExterior(b.x + 113, (room >= 200 ? 300 : 440) - 28, selectedPos);
+        const visible = at.x >= 0 && at.x <= WORLD_WIDTH && at.y >= 0 && at.y <= WORLD_HEIGHT;
+        return { ...at, tail: true, source: visible ? '' : `${resident.room}号室の声` };
+      }
+      if (p.zone === 'away' || p.x < -45 || p.x > 1045) {
+        const side = p.x < 500 ? -1 : 1;
+        const at = this.projectExterior(side < 0 ? 0 : 1000, p.y - 80 * 0.86, selectedPos);
+        return { x: side < 0 ? 72 : WORLD_WIDTH - 72, y: at.y, tail: true, source: '外出中の声' };
+      }
+      return { ...this.projectExterior(p.x, p.y - 80 * 0.86, selectedPos), tail: true, source: '' };
     }
-    if (p.zone === 'away' || p.zone === 'street' || p.zone === 'stairs') return null;
-    const b = roomBounds(p.room || resident.room, this.focusRoom);
-    if (!b) return null;
-    const base = exteriorRoomBounds(p.room || resident.room);
-    const x = b.x + (p.x - base.x) / base.w * b.w;
-    const feet = p.zone === 'hall' ? b.y + b.h + 16 : b.y + (p.y - base.y) / base.h * b.h;
-    const height = this.focus ? 300 : 144;
-    return { x: x * S, y: (feet - height * 0.86) * S };
+    if (!absent) {
+      const b = roomBounds(p.room || resident.room, this.focusRoom);
+      if (!b) return { x: 1510, y: 230, tail: false, source: p.zone === 'hall' ? '廊下の声' : `${resident.room}号室の声` };
+      const base = exteriorRoomBounds(p.room || resident.room);
+      const x = b.x + (p.x - base.x) / base.w * b.w;
+      const feet = p.zone === 'hall' ? b.y + b.h + 16 : b.y + (p.y - base.y) / base.h * b.h;
+      const height = this.focus ? 300 : 144;
+      return { x: x * S, y: (feet - height * 0.86) * S, tail: true, source: '' };
+    }
+    const source = p.zone === 'stairs' ? '階段の声' : p.zone === 'street' ? '道の声' : '外出中の声';
+    const b = roomBounds(resident.room, this.focusRoom);
+    if (!b) return { x: 1510, y: 230, tail: false, source };
+    return { x: (b.x + b.w * 0.5) * S, y: (b.y + b.h * 0.4) * S, tail: false, source };
   }
   drawSpeech(state) {
     if (!this.bubbles?.length) return;
@@ -268,12 +312,14 @@ export class WorldRenderer {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.imageSmoothingEnabled = false;
     for (const bubble of this.bubbles) {
-      const anchor = this.speechAnchor(state, bubble.speaker);
       const resident = state.residents.find(r => r.type === bubble.speaker);
-      drawSpeechBubble(ctx, anchor?.x ?? 1510, anchor?.y ?? 230, bubble.name, bubble.text, {
-        large: this.focus || !anchor, accent: CHARACTERS[bubble.speaker]?.accent || '#a6ac91',
-        source: !anchor ? resident ? `${resident.room}号室の声` : 'けもの荘の声' : '',
-        tail: !!anchor, opacity: this.speechOpacity
+      const place = this.speechAnchor(state, bubble.speaker) || {
+        x: 1510, y: 230, tail: false, source: resident ? `${resident.room}号室の声` : 'けもの荘の声'
+      };
+      const visibleSpeaker = this.view === 'exterior' && place.tail && !place.source;
+      drawSpeechBubble(ctx, place.x, place.y, bubble.name, bubble.text, {
+        large: this.focus, accent: CHARACTERS[bubble.speaker]?.accent || '#a6ac91',
+        source: place.source, tail: place.tail, hideName: visibleSpeaker, opacity: this.speechOpacity
       });
     }
     ctx.restore();
@@ -304,19 +350,28 @@ function drawSpeechBubble(ctx, screenX, screenY, name, text, opts) {
   ctx.globalAlpha = opts.opacity;
   ctx.font = `500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;
   const lines = wrapSpeechText(ctx, text, opts.large ? 530 : 390);
-  const header = opts.source ? `${name}  ·  ${opts.source}` : name;
+  const header = opts.hideName ? '' : opts.source ? `${name}  ·  ${opts.source}` : name;
   ctx.font = '700 24px "Yu Gothic UI", Meiryo, sans-serif';
-  const headerWidth = ctx.measureText(header).width + 24;
+  const headerWidth = header ? ctx.measureText(header).width + 24 : 0;
   ctx.font = `500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;
   const w = Math.ceil(Math.max(160, headerWidth, ...lines.map(line => ctx.measureText(line).width)) + pad * 2);
-  const h = Math.ceil(70 + lines.length * lineH), tailH = opts.tail ? 22 : 0;
+  const h = Math.ceil((header ? 70 : 36) + lines.length * lineH);
   const left = Math.max(24, Math.min(WORLD_WIDTH - w - 24, Math.round(screenX - w / 2)));
-  const top = Math.max(24, Math.min(WORLD_HEIGHT - h - tailH - 24, Math.round(screenY - h - tailH - 12)));
+  let top = Math.max(24, Math.min(WORLD_HEIGHT - h - 24, Math.round(screenY - h - (opts.tail ? 34 : 12))));
+  let tailLen = 0;
+  if (opts.tail) {
+    tailLen = Math.max(22, Math.min(160, Math.round(screenY - 10 - (top + h))));
+    const overflow = top + h + tailLen + 24 - WORLD_HEIGHT;
+    if (overflow > 0) {
+      top = Math.max(24, top - overflow);
+      tailLen = Math.max(22, Math.min(160, Math.round(screenY - 10 - (top + h))));
+    }
+  }
   const tipX = Math.max(left + 34, Math.min(left + w - 34, screenX));
   const paper = '#faf5e9', ink = '#2c332d';
   const shape = () => {
     ctx.beginPath(); ctx.roundRect(left, top, w, h, 18);
-    if (opts.tail) { ctx.moveTo(tipX-14,top+h-1);ctx.lineTo(tipX+2,top+h+tailH);ctx.lineTo(tipX+16,top+h-1);ctx.closePath(); }
+    if (opts.tail) { ctx.moveTo(tipX-14,top+h-1);ctx.lineTo(tipX+2,top+h+tailLen);ctx.lineTo(tipX+16,top+h-1);ctx.closePath(); }
   };
   ctx.shadowColor = '#10181155'; ctx.shadowBlur = 18; ctx.shadowOffsetY = 7;
   shape(); ctx.fillStyle = paper; ctx.fill();
@@ -324,13 +379,16 @@ function drawSpeechBubble(ctx, screenX, screenY, name, text, opts) {
   ctx.strokeStyle = '#3b4438'; ctx.lineWidth = 2.5;
   ctx.beginPath();ctx.roundRect(left,top,w,h,18);ctx.stroke();
   if (opts.tail) {
-    ctx.fillStyle=paper;ctx.beginPath();ctx.moveTo(tipX-14,top+h-3);ctx.lineTo(tipX+2,top+h+tailH);ctx.lineTo(tipX+16,top+h-3);ctx.fill();
-    ctx.beginPath();ctx.moveTo(tipX-14,top+h);ctx.lineTo(tipX+2,top+h+tailH);ctx.lineTo(tipX+16,top+h);ctx.stroke();
+    ctx.fillStyle=paper;ctx.beginPath();ctx.moveTo(tipX-14,top+h-3);ctx.lineTo(tipX+2,top+h+tailLen);ctx.lineTo(tipX+16,top+h-3);ctx.fill();
+    ctx.beginPath();ctx.moveTo(tipX-14,top+h);ctx.lineTo(tipX+2,top+h+tailLen);ctx.lineTo(tipX+16,top+h);ctx.stroke();
   }
   ctx.strokeStyle='#ffffffb3';ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(left+5,top+5,w-10,h-10,14);ctx.stroke();
-  ctx.fillStyle=opts.accent;ctx.beginPath();ctx.roundRect(left+pad,top+22,7,24,3);ctx.fill();
-  ctx.font='700 24px "Yu Gothic UI", Meiryo, sans-serif';ctx.textBaseline='middle';ctx.fillStyle='#56604e';ctx.fillText(header,left+pad+19,top+34);
+  const textTop = header ? 62 : 18;
+  if (header) {
+    ctx.fillStyle=opts.accent;ctx.beginPath();ctx.roundRect(left+pad,top+22,7,24,3);ctx.fill();
+    ctx.font='700 24px "Yu Gothic UI", Meiryo, sans-serif';ctx.textBaseline='middle';ctx.fillStyle='#56604e';ctx.fillText(header,left+pad+19,top+34);
+  }
   ctx.font=`500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;ctx.fillStyle=ink;ctx.textBaseline='top';
-  lines.forEach((line,index)=>ctx.fillText(line,left+pad,top+62+index*lineH));
+  lines.forEach((line,index)=>ctx.fillText(line,left+pad,top+textTop+index*lineH));
   ctx.restore();
 }

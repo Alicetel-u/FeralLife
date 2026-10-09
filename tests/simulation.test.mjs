@@ -12,7 +12,7 @@ test('accepts exactly one valid candidate and recruits every three days until fu
   const s=createGame(456);advance(s,40);
   assert.equal(admit(s,'cat'),false);
   for(let i=0;i<5;i++){
-    assert.equal(s.pending.length,2);
+    assert.equal(s.pending.length, i === 4 ? 1 : 2);
     const chosen=s.pending[0];assert.equal(admit(s,chosen),true);assert.equal(admit(s,chosen),false);
     assert.equal(s.pending,null);assert.equal(s.residents.length,i+2);
     if(i<4){advance(s,71.9);assert.equal(s.pending,null);advance(s,.1);assert.ok(s.pending);}
@@ -44,14 +44,14 @@ test('player may observe without admitting; incomplete saves are rejected',()=>{
   assert.equal(validateSave(null),false);assert.equal(validateSave({version:1}),false);
   const invalid=JSON.parse(JSON.stringify(createGame(10)));invalid.residents[0].needs.hunger=101;assert.equal(validateSave(invalid),false);
 });
-test('full occupancy can reach all four shared-living endings across 100 seeds',()=>{
+test('a full house of the illustrated cast reaches the debt and trash endings',()=>{
   const endings=new Set();
   for(let seed=1;seed<=100;seed++){
     const s=createGame(seed);
     while(!s.ending){advance(s,1);if(s.pending)admit(s,s.pending[seed % s.pending.length]);}
     endings.add(s.ending.name);
   }
-  assert.deepEqual([...endings].sort(),['ろくでもない、ただいま','明日払いの楽園','宝の山と、獣の巣','壁の薄い戦場'].sort());
+  assert.deepEqual([...endings].sort(),['明日払いの楽園','宝の山と、獣の巣'].sort());
 });
 
 test('new games recruit only the six illustrated residents, including final single applicant',()=>{
