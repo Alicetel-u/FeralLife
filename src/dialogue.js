@@ -1,7 +1,13 @@
 const NAMES = { cat: 'モク', rabbit: 'ミミ', fox: 'ホロ', wolf: 'ウル', bear: 'ゴロ', mouse: 'チリ', tanuki: 'ポン', hostess: 'ルナ', sister: 'ネム', peko: 'ペコ', ann: 'アン' };
 export const SPEECH_MS = { line: 5200, mutter: 7000 };
 
-const say = (speaker, text) => ({ speaker, name: NAMES[speaker] || '住人', text });
+// モク（cat）の発話だけを表示時に猫語へ統一する。旧セーブの台詞にも適用する。
+export const mokuNya = text => String(text).replace(/([^。！？!?\\n]+)([。！？!?]+|$)/gm, (whole, body, ending) => {
+  const tail = body.match(/^(.*?)(\\s*)$/);
+  const words = tail[1], spaces = tail[2];
+  return words && !words.endsWith('ニャ') ? words + 'ニャ' + spaces + ending : whole;
+});
+const say = (speaker, text) => ({ speaker, name: NAMES[speaker] || '住人', text: speaker === 'cat' ? mokuNya(text) : text });
 const mark = (state, id) => { if (!Array.isArray(state.heard)) state.heard = []; if (!state.heard.includes(id)) state.heard.push(id); };
 const heard = (state, id) => Array.isArray(state.heard) && state.heard.includes(id);
 
@@ -111,11 +117,11 @@ export function stepTalk(talk, state, now, stopped) {
   }
   reading = incident();
   const line = reading?.lines?.[talk.index];
-  if (line) { talk.bubbles = [{ ...line }]; return talk; }
+  if (line) { talk.bubbles = [{ ...line, text: line.speaker === 'cat' ? mokuNya(line.text) : line.text }]; return talk; }
   const cat = state.residents.find(resident => resident.type === 'cat');
   if (!cat) { talk.bubbles = []; return talk; }
   if (cat.action !== talk.mutterAction) { talk.mutterAction = cat.action; talk.mutterIndex += 1; talk.since = now; }
   const pool = catMutters(cat.action);
-  talk.bubbles = [{ speaker: 'cat', name: 'モク', text: pool[talk.mutterIndex % pool.length] }];
+  talk.bubbles = [{ speaker: 'cat', name: 'モク', text: mokuNya(pool[talk.mutterIndex % pool.length]) }];
   return talk;
 }
