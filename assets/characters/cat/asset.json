@@ -1,7 +1,8 @@
 {
   "character": "cat",
   "source": "reference-original.png",
-  "method": "Built-in ImageGen background-extraction; nearest-neighbor normalization",
+  "method": "Built-in ImageGen background-extraction repair; preserved RGBA alpha and nearest-neighbor normalization",
+  "updated": "2026-10-09",
   "cutout": "cutout.png",
   "sprite": "idle.png",
   "portrait": "portrait.png",
@@ -19,7 +20,162 @@
   },
   "displayHeight": 44,
   "supportedPoses": [
-    "base-standing"
+    "base-standing",
+    "walk_a",
+    "walk_b",
+    "sit",
+    "sleep",
+    "eat",
+    "drink",
+    "clean",
+    "angry",
+    "chat"
   ],
-  "note": "基本立ち絵。移動は位置補間・上下揺れ・左右反転、睡眠は簡略回転。専用の行動差分は未作成。"
+  "poses": {
+    "walk_a": {
+      "source": "poses/raw/walk_a.jpg",
+      "cutout": "poses/cutouts/walk_a.png",
+      "frame": {
+        "width": 96,
+        "height": 128,
+        "origin": [
+          48,
+          126
+        ]
+      },
+      "content": {
+        "width": 77,
+        "height": 111
+      }
+    },
+    "walk_b": {
+      "source": "poses/raw/walk_b.jpg",
+      "cutout": "poses/cutouts/walk_b.png",
+      "frame": {
+        "width": 96,
+        "height": 128,
+        "origin": [
+          48,
+          126
+        ]
+      },
+      "content": {
+        "width": 72,
+        "height": 111
+      }
+    },
+    "sit": {
+      "source": "poses/raw/sit.jpg",
+      "cutout": "poses/cutouts/sit.png",
+      "frame": {
+        "width": 96,
+        "height": 128,
+        "origin": [
+          48,
+          126
+        ]
+      },
+      "content": {
+        "width": 84,
+        "height": 106
+      }
+    },
+    "sleep": {
+      "source": "poses/raw/sleep.jpg",
+      "cutout": "poses/cutouts/sleep.png",
+      "frame": {
+        "width": 160,
+        "height": 112,
+        "origin": [
+          80,
+          108
+        ]
+      },
+      "content": {
+        "width": 136,
+        "height": 95
+      }
+    },
+    "eat": {
+      "source": "poses/raw/eat.jpg",
+      "cutout": "poses/cutouts/eat.png",
+      "frame": {
+        "width": 96,
+        "height": 128,
+        "origin": [
+          48,
+          126
+        ]
+      },
+      "content": {
+        "width": 72,
+        "height": 111
+      }
+    },
+    "drink": {
+      "source": "poses/raw/drink.jpg",
+      "cutout": "poses/cutouts/drink.png",
+      "frame": {
+        "width": 96,
+        "height": 128,
+        "origin": [
+          48,
+          126
+        ]
+      },
+      "content": {
+        "width": 72,
+        "height": 112
+      }
+    },
+    "clean": {
+      "source": "poses/raw/clean.jpg",
+      "cutout": "poses/cutouts/clean.png",
+      "frame": {
+        "width": 96,
+        "height": 128,
+        "origin": [
+          48,
+          126
+        ]
+      },
+      "content": {
+        "width": 72,
+        "height": 111
+      }
+    },
+    "angry": {
+      "source": "poses/raw/angry.jpg",
+      "cutout": "poses/cutouts/angry.png",
+      "frame": {
+        "width": 96,
+        "height": 128,
+        "origin": [
+          48,
+          126
+        ]
+      },
+      "content": {
+        "width": 83,
+        "height": 106
+      }
+    },
+    "chat": {
+      "source": "poses/raw/chat.jpg",
+      "cutout": "poses/cutouts/chat.png",
+      "frame": {
+        "width": 96,
+        "height": 128,
+        "origin": [
+          48,
+          126
+        ]
+      },
+      "content": {
+        "width": 72,
+        "height": 111
+      }
+    }
+  },
+  "note": "原稿保持。白色しきい値による背景除去と輪郭の侵食は使わず、確認済み透過PNGから縮小する。生成編集のため原稿との完全なピクセル一致は保証しない。"
 }
