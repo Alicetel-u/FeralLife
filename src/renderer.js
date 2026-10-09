@@ -2,6 +2,7 @@ import { ROOMS, CHARACTERS, ACTIONS, dateAt } from './simulation.js';
 import { CHARACTER_ART, SCENE_ART } from './character-art.js';
 import { exteriorRoomBounds, sampleJourney, sampleCompanion, motionLabel } from './movement.js';
 import { drawCharacterEffects, spriteMotion } from './effects.js';
+import { drawExteriorForeground } from './exterior-occlusion.js';
 
 export const WORLD_WIDTH = 1920;
 export const WORLD_HEIGHT = 1080;
@@ -167,6 +168,10 @@ export class WorldRenderer {
       ctx.save();ctx.translate(p.x+motion.dx,fy);if(motion.rotate)ctx.rotate(motion.rotate);ctx.scale(1,motion.sy);
       drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint});ctx.restore();
       drawCharacterEffects(ctx,{x:p.x,y:fy,u:80/128,dir:p.direction,t,action,pose,moving:p.moving,needs:r.needs,trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip:CHARACTER_ART[r.type]?.smokeTip?.[pose]});
+      // Repaint foreground through its actual silhouette after the sprite and effects.
+      // Limit restoration to this person's footprint so it cannot erase another resident.
+      ctx.save();ctx.beginPath();ctx.rect(p.x-70,fy-115,140,120);ctx.clip();
+      drawExteriorForeground(ctx,SCENE_ART.image,p,darkness);ctx.restore();
       ctx.font='10px "Yu Gothic UI",sans-serif';ctx.textAlign='center';ctx.fillStyle='#f2e9d2';ctx.shadowColor='#151b18';ctx.shadowBlur=3;ctx.fillText(CHARACTERS[r.type].name.split(' ')[1],p.x,p.y-86);ctx.shadowBlur=0;ctx.textAlign='left';
       const companion = sampleCompanion(r, state.hour);
       if (companion) {
