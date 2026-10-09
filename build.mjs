@@ -6,7 +6,7 @@ const root = dirname(fileURLToPath(import.meta.url));
 const [html, css, ...modules] = await Promise.all([
   readFile(join(root, 'index.html'), 'utf8'),
   readFile(join(root, 'styles.css'), 'utf8'),
-  ...['dialogue', 'character-art', 'movement', 'simulation', 'effects', 'renderer', 'app'].map(name => readFile(join(root, 'src', name + '.js'), 'utf8'))
+  ...['dialogue', 'character-art', 'movement', 'simulation', 'effects', 'exterior-occlusion', 'renderer', 'app'].map(name => readFile(join(root, 'src', name + '.js'), 'utf8'))
 ]);
 let script = modules.map(source => source.replace(/^import .*;\r?\n/gm, '').replace(/^export /gm, '')).join('\n\n');
 // コード中の 'assets/….png' をすべて data URL として埋め込む（差分ポーズを増やしてもここの修正は不要）

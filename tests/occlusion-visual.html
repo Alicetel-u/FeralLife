@@ -1,0 +1,15 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><base href="/"><title>柵・看板の前後確認</title><style>body{margin:0;background:#1b241c;color:#eee;font:14px sans-serif}nav{padding:8px;display:flex;gap:8px}button{padding:8px}canvas{display:block;margin:auto;width:min(100%,calc((100vh - 58px)*16/9));image-rendering:pixelated}</style></head><body><nav><button data-case="upper">2階の柵</button><button data-case="lower">1階の柵</button><button data-case="stairs">階段の手すり</button><button data-case="sign">看板の裏</button><button data-case="street">柵の手前の通り</button><button id="night">昼／夜</button><button id="zoom">拡大／全体</button></nav><canvas id="world" width="1920" height="1080"></canvas><script type="module">
+import {createGame} from './src/simulation.js';
+import {loadCharacterArt} from './src/character-art.js';
+import {WorldRenderer} from './src/renderer.js';
+await loadCharacterArt();
+const base=createGame(1),renderer=new WorldRenderer(document.getElementById('world'));renderer.view='exterior';renderer.focus=true;
+const positions={upper:[500,300,'hall'],lower:[500,440,'hall'],stairs:[814,337,'stairs'],sign:[790,513,'street'],street:[500,513,'street']};
+let current='upper',night=false,s;
+function show(){s=structuredClone(base);s.hour=night?22:17;const r=s.residents[0];r.room=current==='upper'?201:101;s.selected=r.room;r.action='outing';const [x,y,zone]=positions[current],p={x,y,zone,room:r.room};r.journey={kind:'room',startedAt:s.hour,arriveAt:s.hour+1,returnAt:s.hour+1,endsAt:s.hour+1,reason:'',path:[p,{...p,x:x+1}],back:[],actionAfter:'idle'};renderer.draw(s,performance.now(),false);}
+document.querySelectorAll('[data-case]').forEach(b=>b.onclick=()=>{current=b.dataset.case;show();});
+document.getElementById('night').onclick=()=>{night=!night;show();};
+document.getElementById('zoom').onclick=()=>{renderer.focus=!renderer.focus;};
+current=new URLSearchParams(location.search).get('case')||'upper';show();
+function loop(t){renderer.draw(s,t,false);requestAnimationFrame(loop);}requestAnimationFrame(loop);
+</script></body></html>
