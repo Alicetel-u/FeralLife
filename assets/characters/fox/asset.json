@@ -1,27 +1,145 @@
 {
   "character": "fox",
+  "name": "酔田 ホロ",
   "source": "reference-original.png",
-  "method": "Built-in imagegen background extraction, transparent_background=true. Generated alpha preserved without additional resampling.",
+  "method": "Built-in ImageGen identity-preserve pose variants; reviewed RGBA alpha retained, nearest-neighbor normalization",
   "updated": "2026-10-09",
-  "prompt": "Remove only white background and gaps; preserve brown-haired cat, sleepy expression, tracksuit, white details, sandals, tail, black can, gold star and decorative bubbles. Full body, actual alpha, no new objects, text or shadows.",
-  "cutout": "cutout.png",
-  "sprite": "idle.png",
-  "portrait": "portrait.png",
+  "sprite": "base-game.png",
+  "portrait": "portrait-game.png",
   "frame": {
-    "width": 1254,
-    "height": 1254,
+    "width": 128,
+    "height": 128,
     "origin": [
-      680,
-      1180
+      64,
+      126
     ]
   },
   "portraitFrame": {
-    "width": 1254,
-    "height": 1254
+    "width": 128,
+    "height": 160
   },
   "displayHeight": 44,
-  "supportedPoses": [
-    "base-sitting"
-  ],
-  "note": "酒猫・酔田ホロの座り絵を再添付画像から透過して置換。生成編集のため原稿との完全なピクセル一致は保証しない。移動・睡眠の表現は既存設定。"
+  "poses": {
+    "stand": {
+      "source": "poses/masters/stand.png",
+      "src": "poses/stand.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "walk_a": {
+      "source": "poses/masters/walk_a.png",
+      "src": "poses/walk_a.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "walk_b": {
+      "source": "poses/masters/walk_b.png",
+      "src": "poses/walk_b.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "sit": {
+      "source": "poses/masters/sit.png",
+      "src": "poses/sit.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "sleep": {
+      "source": "poses/masters/sleep.png",
+      "src": "poses/sleep.png",
+      "frame": {
+        "width": 176,
+        "height": 112,
+        "origin": [
+          88,
+          108
+        ]
+      }
+    },
+    "eat": {
+      "source": "poses/masters/eat.png",
+      "src": "poses/eat.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "drink": {
+      "source": "poses/masters/drink.png",
+      "src": "poses/drink.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "clean": {
+      "source": "poses/masters/clean.png",
+      "src": "poses/clean.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "angry": {
+      "source": "poses/masters/angry.png",
+      "src": "poses/angry.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "chat": {
+      "source": "poses/masters/chat.png",
+      "src": "poses/chat.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    }
+  },
+  "note": "元の座り絵と原稿を保持。内部ID foxを維持してセーブ互換を保つ。生成差分は完全なピクセル一致を保証しない。"
 }
