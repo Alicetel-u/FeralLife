@@ -30,9 +30,12 @@ if (previewResident) {
     advance(state, route.startedAt + distance / 430 + .35 - state.hour);
   }
 }
-// 古い観察記にも追加住人の申込書を届ける。進行・既存の住人はそのまま。
-for (const type of ['hostess', 'sister', 'peko', 'ann']) {
-  if (!state.ending && !state.residents.some(r => r.type === type) && !state.remaining.includes(type)) state.remaining.push(type);
+// 旧セーブは保持しつつ、これからの入居候補を専用画像のある6人だけに限定する。
+const approvedResidents = ['cat', 'hostess', 'fox', 'sister', 'peko', 'ann'];
+state.remaining = approvedResidents.filter(type => !state.residents.some(r => r.type === type));
+if (state.pending) {
+  state.pending = state.pending.filter(type => state.remaining.includes(type));
+  if (!state.pending.length) state.pending = null;
 }
 let speed = 1, paused = !!previewResident, filter = 'all', profileKey = null, lastUI = 0, lastSave = 0, lastTime = performance.now(), lastEventId = 0, endingShown = false, toastTimer;
 const renderer = new WorldRenderer($('world'));
@@ -146,7 +149,7 @@ function showEvent(id) {
 }
 function showCandidates() {
   if (!state.pending || state.ending) return;
-  openModal(header('NEW NEIGHBORS / 入居申込書','空いている部屋に、誰を迎える？')+`<div class="modal-body"><p class="modal-copy">次の住人は、どちらか一人。暮らしの組み合わせが、けもの荘の未来を変えます。</p><div class="candidate-grid">${state.pending.map(type=>{
+  openModal(header('NEW NEIGHBORS / 入居申込書','空いている部屋に、誰を迎える？')+`<div class="modal-body"><p class="modal-copy">${state.pending.length === 1 ? '最後の入居候補です。' : '次の住人は、どちらか一人。暮らしの組み合わせが、けもの荘の未来を変えます。'}</p><div class="candidate-grid">${state.pending.map(type=>{
     const c=CHARACTERS[type];return `<article class="candidate-card"><div class="portrait-frame"><canvas data-portrait="${type}" aria-label="${escape(c.species)}獣人の肖像"></canvas></div><h3>${escape(c.name)}</h3><div class="candidate-sub">${escape(c.species)}獣人 · ${c.age}歳 / ${escape(c.job)}</div><div class="traits">${c.traits.map(t=>`<span class="trait">${escape(t)}</span>`).join('')}</div><p>${escape(c.bio)}</p><div class="candidate-warning">⚑ ${escape(c.warning)}</div><button class="primary-button" data-admit="${type}">この住人を迎える →</button></article>`;
   }).join('')}</div></div><div class="modal-footer"><span>一度迎えた住人は、追い出せません。</span><button class="text-button" data-close>もう少し考える</button></div>`);
   document.querySelectorAll('[data-portrait]').forEach(c=>drawPortrait(c,c.dataset.portrait));
