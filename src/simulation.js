@@ -41,7 +41,7 @@ const clamp = (n, low = 0, high = 100) => Math.max(low, Math.min(high, n));
 export function dateAt(hour) { return { day: Math.floor(hour / 24) + 1, hour: Math.floor(hour % 24), minute: Math.floor((hour % 1) * 60) }; }
 export function formatTime(hour) { const d = dateAt(hour); return `${d.day}日目 ${String(d.hour).padStart(2, '0')}:${String(d.minute).padStart(2, '0')}`; }
 export function createGame(seed = Date.now()) {
-  const state = { version: 1, hour: 17, seed: (seed >>> 0) || 1, residents: [], events: [], nextId: 1, remaining: ['rabbit', 'fox', 'wolf', 'bear', 'mouse', 'tanuki', 'hostess', 'sister', 'peko', 'ann'], pending: null, nextArrival: 57, rent: 0, missedRent: 0, ending: null, selected: 101, heard: [] };
+  const state = { version: 1, hour: 17, seed: (seed >>> 0) || 1, residents: [], events: [], nextId: 1, remaining: ['hostess', 'fox', 'sister', 'peko', 'ann'], pending: null, nextArrival: 57, rent: 0, missedRent: 0, ending: null, selected: 101, heard: [] };
   state.residents.push(createResident('cat', 101));
   addEvent(state, 'arrival', '101号室に、灰田 モクが住んでいる。', '親戚から引き継いだのは、築38年の古いアパート。\n\n唯一の住人は、いつも窓辺でタバコを吸っている猫獣人。「管理人？ ああ、よろしく」。それだけ言うと、また煙の向こうへ目をやった。\n\nあなたの仕事は、この暮らしを見守ること。次の入居募集は3日目の朝9時。', [101], '管理人としての観察が始まった。');
   const opening = addEvent(state, 'life', 'モクが「明日から片づける」とつぶやいた。', 'テーブルの空き缶を一本だけ動かして、モクは片づけを終えた気になった。\n\n「今日は準備の日ってことで」。\n\n灰皿だけが、几帳面に手の届く位置にある。', [101], '101号室の散らかりが少し増えた。');
