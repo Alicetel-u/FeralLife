@@ -39,3 +39,7 @@ export function eventStageHTML(event,residents,index=0) {
   const side=line.speaker===left?'left':line.speaker===right?'right':'narration';
   return `<div class="event-stage">${character(left,'left')}${character(right,'right')}<div class="stage-bubble ${side}" aria-live="polite" aria-atomic="true"><div class="window-ornaments" aria-hidden="true"><span class="ornament paw-one">${eventIcon('paw')}</span><span class="ornament paw-two">${eventIcon('paw')}</span><span class="ornament paw-three">${eventIcon('paw')}</span><span class="ornament paw-four">${eventIcon('paw')}</span><span class="ornament cat-bottom">${eventIcon('cat')}</span><span class="ornament heart-outline">♡</span><span class="ornament star-left">${eventIcon('spark')}</span></div><strong class="stage-speaker">${eventNameFrame()}<span class="speaker-paw">${eventIcon('paw')}</span><span class="speaker-name">${eventEscape(eventSpeakerName(line.speaker))}</span><span class="speaker-heart">${eventIcon('heart')}</span><span class="speaker-star">${eventIcon('spark')}</span></strong><p>${eventEscape(line.text)}</p></div><span class="stage-page">${cursor+1} / ${lines.length}</span></div>`;
 }
+
+export function troubleCardHTML(call, slam=false) {
+  return `<div class="trouble-card${slam?' slam':''}"><p class="trouble-bang">トラブル発生！</p><p class="trouble-name">${eventEscape(call)}</p></div>`;
+}

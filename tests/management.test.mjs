@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createGame,admit,advance,addEvent,validateSave} from '../src/simulation.js';
 import {MANAGEMENT_CASES} from '../src/event-cases.js';
 import {ensureManagement,openManagementCase,resolveManagementCase,tickManagement,managementEnding} from '../src/management.js';
-import {eventConversation,eventStageHTML} from '../src/event-stage.js';
+import {eventConversation,eventStageHTML,troubleCardHTML} from '../src/event-stage.js';
 import {createTalk,stepTalk} from '../src/dialogue.js';
 
 function fullHouse(seed=7) {
@@ -178,4 +178,17 @@ test('conflicts wait for both residents and legacy solo requests migrate without
   assert.ok(result.lines.some(l=>l.speaker==='cat')&&result.lines.some(l=>l.speaker==='hostess'));
   assert.ok(result.lines.length>=6);
   assert.ok(validateSave(s));
+});
+
+test('every consultation has a shouted trouble title and an escaped slam card',()=>{
+  for(const [id,c] of Object.entries(MANAGEMENT_CASES)){
+    assert.equal(typeof c.call,'string',id);
+    assert.ok(c.call.endsWith('！'),id);
+    assert.ok(c.call.length<=16,id+':'+c.call);
+  }
+  assert.equal(MANAGEMENT_CASES.cigarette.call,'モクのタバコがくせぇ！');
+  const html=troubleCardHTML('<script>','slam');
+  assert.ok(html.includes('トラブル発生！'));
+  assert.ok(html.includes('trouble-card slam'));
+  assert.ok(!html.includes('<script>'));
 });
