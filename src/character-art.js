@@ -29,10 +29,40 @@ export const CHARACTER_ART = {
     src: 'assets/characters/patron/idle.png', portraitSrc: 'assets/characters/patron/idle.png', displayHeight: 44, origin: [627, 1230], image: null, portrait: null
   },
   peko: {
-    src: 'assets/characters/peko/idle.png', portraitSrc: 'assets/characters/peko/idle.png', displayHeight: 44, origin: [680, 1240], image: null, portrait: null
+    src: 'assets/characters/peko/poses/stand.png', portraitSrc: 'assets/characters/peko/idle.png', displayHeight: 44, origin: [64, 126], image: null, portrait: null,
+    poses: {
+      stand: catPose('assets/characters/peko/poses/stand.png', [64, 126]),
+      walk_a: catPose('assets/characters/peko/poses/walk_a.png', [64, 126]),
+      walk_b: catPose('assets/characters/peko/poses/walk_b.png', [64, 126]),
+      sit: catPose('assets/characters/peko/poses/sit.png', [64, 126]),
+      sleep: catPose('assets/characters/peko/poses/sleep.png', [80, 110]),
+      eat: catPose('assets/characters/peko/poses/eat.png', [64, 126]),
+      drink: catPose('assets/characters/peko/poses/drink.png', [64, 126]),
+      clean: catPose('assets/characters/peko/poses/clean.png', [64, 126]),
+      angry: catPose('assets/characters/peko/poses/angry.png', [64, 126]),
+      chat: catPose('assets/characters/peko/poses/chat.png', [64, 126]),
+      phone: catPose('assets/characters/peko/poses/phone.png', [64, 126]),
+      shop: catPose('assets/characters/peko/poses/shop.png', [64, 126])
+    },
+    actionPoses: { idle: ['stand', 'sit', 'phone', 'chat'], tv: 'sit', eat: 'eat', drink: 'drink', clean: 'clean', fight: 'angry', chat: 'chat', sleep: 'sleep', outing: 'stand', shop: 'shop', checkBrother: 'phone', smoke: 'stand' }
   },
   sister: {
-    src: 'assets/characters/sister/idle.png', portraitSrc: 'assets/characters/sister/idle.png', displayHeight: 44, origin: [700, 1230], image: null, portrait: null
+    src: 'assets/characters/sister/poses/stand.png', portraitSrc: 'assets/characters/sister/idle.png', displayHeight: 44, origin: [64, 126], image: null, portrait: null,
+    poses: {
+      stand: catPose('assets/characters/sister/poses/stand.png', [64, 126]),
+      walk_a: catPose('assets/characters/sister/poses/walk_a.png', [64, 126]),
+      walk_b: catPose('assets/characters/sister/poses/walk_b.png', [64, 126]),
+      sit: catPose('assets/characters/sister/poses/sit.png', [64, 126]),
+      sleep: catPose('assets/characters/sister/poses/sleep.png', [80, 110]),
+      eat: catPose('assets/characters/sister/poses/eat.png', [64, 126]),
+      drink: catPose('assets/characters/sister/poses/drink.png', [64, 126]),
+      clean: catPose('assets/characters/sister/poses/clean.png', [64, 126]),
+      angry: catPose('assets/characters/sister/poses/angry.png', [64, 126]),
+      chat: catPose('assets/characters/sister/poses/chat.png', [64, 126]),
+      phone: catPose('assets/characters/sister/poses/phone.png', [64, 126]),
+      shop: catPose('assets/characters/sister/poses/shop.png', [64, 126])
+    },
+    actionPoses: { idle: ['stand', 'sit', 'phone', 'chat'], tv: 'sit', eat: 'eat', drink: 'drink', clean: 'clean', fight: 'angry', chat: 'chat', sleep: 'sleep', outing: 'stand', shop: 'shop', checkBrother: 'phone', smoke: 'stand' }
   },
   hostess: {
     src: 'assets/characters/hostess/idle.png', portraitSrc: 'assets/characters/hostess/portrait.png', displayHeight: 49, origin: [64, 126], image: null, portrait: null,

@@ -60,6 +60,17 @@ export function drawCharacterEffects(ctx, o) {
       glyph(ctx, 'sparkle', ...P((i % 2 ? -1 : 1) * (30 + i * 4), -38 - i * 23), .6 * u, '#efc773', Math.sin(s * Math.PI) * .8, false);
     }
   }
+  // ネムの通知待ち。スマホを見る時だけ、ピンクの通知がふわりと浮く。
+  if (o.type === 'sister' && pose === 'phone' && !moving && !sleeping) {
+    const p = frac(t0 * .55);
+    glyph(ctx, 'heart', ...P(22, -66 - p * 22), .8 * u, '#ed83b3', 1 - p);
+  }
+  // ペコは食事中に幸せハート。空腹時は青い汗でお腹の切実さを表す。
+  if (o.type === 'peko' && !moving && !sleeping) {
+    const p = frac(t0 * .6);
+    if (action === 'eat') glyph(ctx, 'heart', ...P(24, -86 - p * 26), u, '#ed9bb8', 1 - p);
+    else if ((needs.hunger ?? 0) > 70) glyph(ctx, 'drop', ...P(26, -82 + p * 12), .8 * u, '#87b8ee', 1 - p);
+  }
 
   // 1. タバコの煙：ゆらぎながら広がって消える粒＋ときどき吐き出す煙の輪
   if (action === 'smoke' && !moving) {
