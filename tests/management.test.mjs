@@ -36,7 +36,7 @@ test('18 resident cases and six chain scenes each offer three valid, persistable
 });
 
 test('pending requests do not time out or disappear when journal reaches its limit',()=>{
-  const s=createGame(1);advance(s,13);
+  const s=fullHouse(1);advance(s,13);
   const {eventId,caseId}=s.management.pending;
   const before=JSON.parse(JSON.stringify(s.management.pending));
   advance(s,200);
@@ -157,4 +157,23 @@ test('actual eighteen-day playthroughs reach all five management endings without
     assert.ok(validateSave(s),`seed ${seed}`);endings.add(s.ending.name);
   }
   for(const name of ['管理人の財布だけ、退去しました','全員、鍵を返す前夜','家主は、ご近所だった','住める炎上スポット','ろくでもない、助け合い'])assert.ok(endings.has(name),name);
+});
+
+test('conflicts wait for both residents and legacy solo requests migrate without losing the save',()=>{
+  const s=createGame(33);
+  assert.equal(openManagementCase(s,'cigarette',addEvent),false);
+  const old=addEvent(s,'trouble','旧相談','以前のモクの相談。',[101]);
+  Object.assign(old,{caseId:'cigarette',cast:['cat'],lines:[{speaker:'cat',text:'旧相談だニャ。'}],stageOnly:true});
+  s.management.pending={caseId:'cigarette',eventId:old.id,openedAt:s.hour};
+  assert.ok(validateSave(s));
+  ensureManagement(s);
+  assert.equal(s.management.pending,null);
+  assert.ok(s.management.queue.some(q=>q.caseId==='cigarette'));
+  s.pending=['hostess'];admit(s,'hostess');s.hour=40;tickManagement(s,addEvent);
+  assert.equal(s.management.pending.caseId,'cigarette');
+  const event=s.events.find(e=>e.id===s.management.pending.eventId);
+  assert.deepEqual(event.cast,['cat','hostess']);
+  const result=resolveManagementCase(s,event.id,'check',addEvent);
+  assert.deepEqual(result.lines.map(l=>l.speaker),['cat','hostess']);
+  assert.ok(validateSave(s));
 });

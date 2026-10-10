@@ -19,11 +19,12 @@ check(await page.evaluate(()=>localStorage.getItem('feral-apartments-v1'))===nul
 await page.click('#request-notice');
 await page.click('[data-dialogue-next]');
 check(await page.locator('.stage-character img').count()===2,'Two standing portraits');
-check(await page.locator('.stage-bubble.left').count()===1,'Left speech tail');
+check(await page.locator('.stage-bubble.right').count()===1,'First resident speaking');
 await page.screenshot({path:'docs/event-preview/conversation-left.png'});
 await page.click('[data-dialogue-next]');
-check(await page.locator('.stage-bubble.right').count()===1,'Right speech tail');
+check(await page.locator('.stage-bubble.left').count()===1,'Second resident speaking');
 await page.screenshot({path:'docs/event-preview/conversation-right.png'});
+await page.click('[data-dialogue-next]');
 await page.click('[data-dialogue-next]');
 check(await page.locator('[data-choice]').count()===3,'Three choices after dialogue');
 await page.screenshot({path:'docs/event-preview/choices.png'});
@@ -59,7 +60,7 @@ for(const viewport of [{width:1366,height:768},{width:390,height:844}]) {
 await page.setViewportSize({width:1440,height:1000});
 await page.goto(pathToFileURL(resolve('play.html')).href+'?preview=events&case=cigarette');
 await page.waitForSelector('#request-notice:visible');await page.click('#request-notice');
-for(let i=0;i<3;i++)await page.click('[data-dialogue-next]');
+for(let i=0;i<4;i++)await page.click('[data-dialogue-next]');
 await page.click('[data-choice="inspect"]');
 if(await page.locator('[data-dialogue-next]').count())await page.click('[data-dialogue-next]');
 check(await page.locator('.stage-bubble p').innerText(),'Standalone choices work');

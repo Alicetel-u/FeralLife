@@ -12,6 +12,19 @@ export function ensureManagement(state) {
     state.management={version:1,funds:22000,safety:70,trust:50,buzz:0,solidarity:0,repairs:0,success:0,includeSensitive:false,seed:(state.seed^0x6d2b79f5)>>>0||1,pending:null,queue:[],completed:[],decisions:[],nextAt:Math.max(30,state.hour+6),lastDay:Math.floor(state.hour/24),rentSeen:state.rent};
     for(let i=0;i<3;i++)managementRandom(state.management);
   }
+  const m=state.management,p=m.pending;
+  if(p&&p.narrativeVersion!==2){
+    const c=MANAGEMENT_CASES[p.caseId],event=state.events.find(e=>e.id===p.eventId);
+    if(c&&event){
+      if(c.cast.every(type=>state.residents.some(r=>r.type===type))){
+        Object.assign(event,{title:c.title,detail:c.detail,cast:[...c.cast],rooms:state.residents.filter(r=>c.cast.includes(r.type)).map(r=>r.room),lines:c.lines.map(([speaker,text])=>({speaker,text})),stageOnly:true});
+        p.narrativeVersion=2;
+      }else{
+        m.pending=null;
+        if(!m.queue.some(q=>q.kind==='case'&&q.caseId===p.caseId))m.queue.push({kind:'case',caseId:p.caseId,dueAt:state.hour});
+      }
+    }
+  }
   return state.management;
 }
 function managementRandom(m) {let x=m.seed;x^=x<<13;x^=x>>>17;x^=x<<5;m.seed=x>>>0;return m.seed/4294967296;}
@@ -71,7 +84,7 @@ export function openManagementCase(state,id,emit) {
   const rooms=c.cast.map(type=>state.residents.find(r=>r.type===type).room);
   const event=emit(state,'trouble',c.title,c.detail,rooms,'管理人への相談。返事を保留しても時間切れにはなりません。');
   event.caseId=id;event.cast=[...c.cast];event.stageOnly=true;event.lines=c.lines.map(([speaker,text])=>({speaker,text}));
-  m.pending={caseId:id,eventId:event.id,openedAt:state.hour};
+  m.pending={caseId:id,eventId:event.id,openedAt:state.hour,narrativeVersion:2};
   return true;
 }
 
@@ -95,7 +108,7 @@ export function resolveManagementCase(state,eventId,choiceId,emit) {
   result.stageOnly=true;
   result.cast=[...c.cast];
   const speaker=id==='collection'&&choiceId==='post'?'sister':c.cast[0];
-  result.lines=[{speaker,text:choice.reply}];
+  result.lines=choice.replyLines?choice.replyLines.map(([speaker,text])=>({speaker,text})):[{speaker,text:choice.reply}];
   if(later)result.followAt=state.hour+later.delay;
   return result;
 }
@@ -176,7 +189,7 @@ export function validManagement(state) {
   if(m.completed.some(id=>!known(id))||new Set(m.completed).size!==m.completed.length||m.decisions.length>64||m.decisions.some(d=>!d||!known(d.caseId)||!MANAGEMENT_CASES[d.caseId].choices.some(c=>c.id===d.choiceId)||!Number.isFinite(d.hour)))return false;
   if(m.pending!==null) {
     const p=m.pending,c=known(p?.caseId)?MANAGEMENT_CASES[p.caseId]:null;
-    if(!c||m.completed.includes(p.caseId)||!managementHasCast(state,c)||!Number.isFinite(p.openedAt)||!Number.isInteger(p.eventId)||!state.events.some(e=>e.id===p.eventId&&e.caseId===p.caseId))return false;
+    if(!c||m.completed.includes(p.caseId)||!managementHasCast(state,{cast:state.events.find(e=>e.id===p.eventId)?.cast||c.cast})||!Number.isFinite(p.openedAt)||!Number.isInteger(p.eventId)||!state.events.some(e=>e.id===p.eventId&&e.caseId===p.caseId))return false;
   }
   for(const q of m.queue) {
     if(!q||!Number.isFinite(q.dueAt))return false;
