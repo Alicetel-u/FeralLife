@@ -1,0 +1,116 @@
+{
+  "character": "hostess",
+  "name": "金城 ルナ",
+  "updated": "2026-10-10",
+  "source": "reference-original.png",
+  "method": "Built-in ImageGen transparent base and 3x3 pose atlas; alpha-preserving nearest-neighbor framing",
+  "frame": {
+    "width": 128,
+    "height": 128,
+    "origin": [
+      64,
+      126
+    ]
+  },
+  "poses": {
+    "walk_a": {
+      "src": "poses/walk_a.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "walk_b": {
+      "src": "poses/walk_b.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "sit": {
+      "src": "poses/sit.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "sleep": {
+      "src": "poses/sleep.png",
+      "frame": {
+        "width": 176,
+        "height": 112,
+        "origin": [
+          88,
+          108
+        ]
+      }
+    },
+    "eat": {
+      "src": "poses/eat.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "drink": {
+      "src": "poses/drink.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "clean": {
+      "src": "poses/clean.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "angry": {
+      "src": "poses/angry.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    },
+    "chat": {
+      "src": "poses/chat.png",
+      "frame": {
+        "width": 128,
+        "height": 128,
+        "origin": [
+          64,
+          126
+        ]
+      }
+    }
+  }
+}

@@ -11,7 +11,8 @@ const GLYPHS = {
   heart: ['.#.#.', '#####', '#####', '.###.', '..#..'],
   vein: ['.#...#.', '##...##', '.......', '.......', '.......', '##...##', '.#...#.'],
   drop: ['..#..', '.###.', '#####', '#####', '.###.'],
-  bubble: ['.##.', '#..#', '#..#', '.##.']
+  bubble: ['.##.', '#..#', '#..#', '.##.'],
+  sparkle: ['..#..', '..#..', '#####', '..#..', '..#..']
 };
 
 function glyph(ctx, name, cx, cy, s, color, alpha = 1, outline = true) {
@@ -44,9 +45,21 @@ export function drawCharacterEffects(ctx, o) {
   const P = (dx, dy) => [x + dx * u * dir, y + dy * u];   // 向きに合わせた相対座標
   const A = (dx, dy) => [x + dx * u, y + dy * u];         // 向きに関係ない相対座標
   const sleeping = action === 'sleep' && !moving;
-  const head = sleeping ? (pose === 'sleep' ? [40, -62] : [-70, -14]) : pose === 'sit' ? [0, -78] : [0, -84];
+  const head = sleeping ? (pose === 'sleep' ? (o.type === 'hostess' ? [-42, -42] : [40, -62]) : [-70, -14]) : pose === 'sit' ? [0, -78] : [0, -84];
   const angry = !sleeping && (action === 'fight' || (needs.stress ?? 0) >= 88);
   const t0 = t + seed * 1.37;
+
+  // ルナの無料相談と買い物。共通の生活エフェクトに重ねる。
+  if (o.type === 'hostess' && !sleeping && !moving) {
+    if (action === 'counsel') for (let i = 0; i < 3; i++) {
+      const s = frac(t0 * .32 + i / 3);
+      glyph(ctx, 'heart', ...P(24 + Math.sin(s * 7 + i) * 5, -76 - s * 38), .7 * u, '#efabc4', Math.sin(s * Math.PI) * .85);
+    }
+    if (['idle', 'shop', 'counsel', 'chat'].includes(action)) for (let i = 0; i < 3; i++) {
+      const s = frac(t0 * .45 + i / 3);
+      glyph(ctx, 'sparkle', ...P((i % 2 ? -1 : 1) * (30 + i * 4), -38 - i * 23), .6 * u, '#efc773', Math.sin(s * Math.PI) * .8, false);
+    }
+  }
 
   // 1. タバコの煙：ゆらぎながら広がって消える粒＋ときどき吐き出す煙の輪
   if (action === 'smoke' && !moving) {
@@ -73,7 +86,7 @@ export function drawCharacterEffects(ctx, o) {
     // 鼻ちょうちん（ふくらんだりしぼんだり）
     const b = .5 + .5 * Math.sin(t0 * 1.4);
     // 寝姿の鼻先（足元原点からのドット）。額の基準点から足すと髪や頬に埋もれる。
-    if (pose === 'sleep') glyph(ctx, 'bubble', ...A(22, -39), (1.2 + b * .5) * u, '#bfe2ef', .9, false);
+    if (pose === 'sleep') glyph(ctx, 'bubble', ...A(...(o.type === 'hostess' ? [-42, -28] : [22, -39])), (1.2 + b * .5) * u, '#bfe2ef', .9, false);
   }
 
   // 3. 怒り：脈打つ怒りマーク＋頭から湯気
@@ -145,7 +158,7 @@ export function drawCharacterEffects(ctx, o) {
   }
 
   // 10. おしゃべり線：吹き出しが出ていない会話中
-  if (action === 'chat' && !moving && !speaking && frac(t0 * 1.6) < .6) {
+  if (['chat', 'counsel'].includes(action) && !moving && !speaking && frac(t0 * 1.6) < .6) {
     for (let i = -1; i <= 1; i++) for (let k = 0; k < 3; k++) {
       const [lx, ly] = P(head[0] + 26 + k * 2.2, head[1] + 14 + i * (5 + k * 1.6));
       dot(ctx, lx, ly, 1.3 * u, '#f3ead2');

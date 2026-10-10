@@ -167,7 +167,7 @@ export class WorldRenderer {
       const fy=p.y+(p.moving?Math.sin(t*11)*1.1:0);
       ctx.save();ctx.translate(p.x+motion.dx,fy);if(motion.rotate)ctx.rotate(motion.rotate);ctx.scale(1,motion.sy);
       drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint});ctx.restore();
-      drawCharacterEffects(ctx,{x:p.x,y:fy,u:80/128,dir:p.direction,t,action,pose,moving:p.moving,needs:r.needs,trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip:CHARACTER_ART[r.type]?.smokeTip?.[pose]});
+      drawCharacterEffects(ctx,{type:r.type,x:p.x,y:fy,u:80/128,dir:p.direction,t,action,pose,moving:p.moving,needs:r.needs,trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip:CHARACTER_ART[r.type]?.smokeTip?.[pose]});
       // Repaint foreground through its actual silhouette after the sprite and effects.
       // Limit restoration to this person's footprint so it cannot erase another resident.
       ctx.save();ctx.beginPath();ctx.rect(p.x-70,fy-115,140,120);ctx.clip();
@@ -203,7 +203,7 @@ export class WorldRenderer {
       drawSprite(ctx,r.type,0,0,t,r.action,scale,p.direction,{pose,tint:motion.tint});ctx.restore();
     }
     const tip=CHARACTER_ART[r.type]?.image?CHARACTER_ART[r.type].smokeTip?.[pose]:[72,-50];
-    drawCharacterEffects(ctx,{x,y:fy,u,dir:p.direction,t,action:r.action,pose,moving:p.moving,needs:r.needs,trash:p.zone==='room'?r.trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip});
+    drawCharacterEffects(ctx,{type:r.type,x,y:fy,u,dir:p.direction,t,action:r.action,pose,moving:p.moving,needs:r.needs,trash:p.zone==='room'?r.trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip});
     if(['stream','sell','gamble','shop','collect'].includes(r.action)&&!p.moving&&!this.speaking?.has(r.type)){ctx.fillStyle='#efe3c3';ctx.font=`${this.focus?32:20}px monospace`;ctx.fillText(ACTIONS[r.action].icon,x+height*.15,y-height);}
     ctx.restore();
   }

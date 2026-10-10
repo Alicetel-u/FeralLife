@@ -35,7 +35,19 @@ export const CHARACTER_ART = {
     src: 'assets/characters/sister/idle.png', portraitSrc: 'assets/characters/sister/idle.png', displayHeight: 44, origin: [700, 1230], image: null, portrait: null
   },
   hostess: {
-    src: 'assets/characters/hostess/idle.png', portraitSrc: 'assets/characters/hostess/idle.png', displayHeight: 49, origin: [627, 1194], image: null, portrait: null
+    src: 'assets/characters/hostess/idle.png', portraitSrc: 'assets/characters/hostess/portrait.png', displayHeight: 49, origin: [64, 126], image: null, portrait: null,
+    poses: {
+      walk_a: catPose('assets/characters/hostess/poses/walk_a.png', [64,126]),
+      walk_b: catPose('assets/characters/hostess/poses/walk_b.png', [64,126]),
+      sit: catPose('assets/characters/hostess/poses/sit.png', [64,126]),
+      sleep: catPose('assets/characters/hostess/poses/sleep.png', [88,108]),
+      eat: catPose('assets/characters/hostess/poses/eat.png', [64,126]),
+      drink: catPose('assets/characters/hostess/poses/drink.png', [64,126]),
+      clean: catPose('assets/characters/hostess/poses/clean.png', [64,126]),
+      angry: catPose('assets/characters/hostess/poses/angry.png', [64,126]),
+      chat: catPose('assets/characters/hostess/poses/chat.png', [64,126])
+    },
+    actionPoses: { idle: ['base','sit','base','chat'], tv: 'sit', sleep: 'sleep', eat: 'eat', drink: 'drink', clean: 'clean', fight: 'angry', chat: 'chat', counsel: 'chat', shop: 'base', outing: 'base' }
   },
   cat: {
     src: 'assets/characters/cat/idle.png', portraitSrc: 'assets/characters/cat/portrait.png', displayHeight: 44, origin: [48, 126], image: null, portrait: null,
