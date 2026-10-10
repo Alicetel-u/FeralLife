@@ -49,6 +49,18 @@ export function drawCharacterEffects(ctx, o) {
   const angry = !sleeping && (action === 'fight' || (needs.stress ?? 0) >= 88);
   const t0 = t + seed * 1.37;
 
+  // アンの連絡待ちと、封筒を手にした買い物の小さな喜び。
+  if (o.type === 'ann' && !sleeping && !moving) {
+    if (pose === 'phone') for (let i = 0; i < 3; i++) {
+      const p = frac(t0 * .65 + i / 3);
+      dot(ctx, ...P(24 + i * 4, -68 - p * 5), 1.6 * u, '#d8afbd', .3 + .7 * Math.sin(p * Math.PI));
+    }
+    if (action === 'shop' || action === 'chat') {
+      const p = frac(t0 * .35);
+      glyph(ctx, 'heart', ...P(25, -82 - p * 28), .8 * u, '#dca1b4', 1 - p);
+    }
+  }
+
   // ルナの無料相談と買い物。共通の生活エフェクトに重ねる。
   if (o.type === 'hostess' && !sleeping && !moving) {
     if (action === 'counsel') for (let i = 0; i < 3; i++) {

@@ -1,0 +1,18 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><base href="/"><title>アンのモーション確認</title><style>body{margin:0;background:#1b241c;color:#eee;font:14px sans-serif}nav{padding:10px;display:flex;gap:8px}canvas{width:min(100%,calc((100vh - 60px)*16/9));display:block;margin:auto;image-rendering:pixelated}button,select{padding:8px}</style></head><body><nav><select id="character"><option value="ann">蜜野 アン</option></select><button id="gallery">6部屋で比較</button><button id="focus">大きく見る</button><select id="action"><option value="checkBrother">スマホ確認</option><option value="shop">買い物</option><option value="idle">くつろぐ</option><option value="tv">座る</option><option value="eat">食事</option><option value="drink">飲酒</option><option value="sleep">睡眠</option><option value="clean">掃除</option><option value="fight">怒る</option><option value="chat">会話</option></select><button id="walk">階段を歩く</button></nav><canvas id="world" width="1920" height="1080"></canvas><script type="module">
+import {createGame,ROOMS} from './src/simulation.js';
+import {loadCharacterArt} from './src/character-art.js';
+import {WorldRenderer} from './src/renderer.js';
+import {createOuting,WALK_SPEED} from './src/movement.js';
+await loadCharacterArt();
+const base=createGame(1),renderer=new WorldRenderer(document.getElementById('world'));
+let s,walking=false;
+function show(gallery=false){walking=false;s=structuredClone(base);s.hour=17;s.selected=101;renderer.view='interior';renderer.focus=!gallery;s.residents=(gallery?ROOMS:[101]).map((room,i)=>({...structuredClone(base.residents[0]),id:'horo-'+i,type:document.getElementById('character').value,room,action:gallery?['idle','tv','eat','drink','sleep','clean'][i]:document.getElementById('action').value}));}
+document.getElementById('character').onchange=()=>show();
+document.getElementById('gallery').onclick=()=>show(true);
+document.getElementById('focus').onclick=()=>show();
+document.getElementById('action').onchange=()=>show();
+document.getElementById('walk').onclick=()=>{show();s.selected=201;s.residents[0].room=201;s.hour=11;s.residents[0].action='outing';const j=createOuting(s.residents[0],11);s.residents[0].journey=j;let distance=0;for(let i=1;i<j.path.length;i++){const a=j.path[i-1],b=j.path[i],d=Math.hypot(b.x-a.x,b.y-a.y);if(b.zone==='stairs'){s.hour=j.startedAt+(distance+d*.5)/WALK_SPEED;break;}distance+=d;}renderer.view='exterior';renderer.focus=true;walking=true;};
+show(new URLSearchParams(location.search).get('gallery')==='1');
+let prev;
+function loop(t){if(walking&&prev)s.hour+=(t-prev)/1000*.06;prev=t;renderer.draw(s,t,false);requestAnimationFrame(loop);}requestAnimationFrame(loop);
+</script></body></html>

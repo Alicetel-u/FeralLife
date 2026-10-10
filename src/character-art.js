@@ -23,7 +23,22 @@ const catPose = (src, origin = [48, 126]) => ({ src, origin, image: null });
 
 export const CHARACTER_ART = {
   ann: {
-    src: 'assets/characters/ann/idle.png', portraitSrc: 'assets/characters/ann/idle.png', displayHeight: 44, origin: [625, 1250], image: null, portrait: null
+    src: 'assets/characters/ann/poses/stand.png', portraitSrc: 'assets/characters/ann/idle.png', displayHeight: 44, origin: [64, 126], image: null, portrait: null,
+    poses: {
+      stand: catPose('assets/characters/ann/poses/stand.png', [64, 126]),
+      walk_a: catPose('assets/characters/ann/poses/walk_a.png', [64, 126]),
+      walk_b: catPose('assets/characters/ann/poses/walk_b.png', [64, 126]),
+      sit: catPose('assets/characters/ann/poses/sit.png', [64, 126]),
+      sleep: catPose('assets/characters/ann/poses/sleep.png', [80, 110]),
+      eat: catPose('assets/characters/ann/poses/eat.png', [64, 126]),
+      drink: catPose('assets/characters/ann/poses/drink.png', [64, 126]),
+      clean: catPose('assets/characters/ann/poses/clean.png', [64, 126]),
+      angry: catPose('assets/characters/ann/poses/angry.png', [64, 126]),
+      chat: catPose('assets/characters/ann/poses/chat.png', [64, 126]),
+      phone: catPose('assets/characters/ann/poses/phone.png', [64, 126]),
+      shop: catPose('assets/characters/ann/poses/shop.png', [64, 126])
+    },
+    actionPoses: { idle: ['stand', 'phone', 'sit', 'chat'], tv: 'sit', eat: 'eat', drink: 'drink', clean: 'clean', fight: 'angry', chat: 'chat', sleep: 'sleep', outing: 'stand', shop: 'shop', checkBrother: 'phone', smoke: 'stand' }
   },
   patron: {
     src: 'assets/characters/patron/idle.png', portraitSrc: 'assets/characters/patron/idle.png', displayHeight: 44, origin: [627, 1230], image: null, portrait: null
