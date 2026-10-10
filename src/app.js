@@ -276,13 +276,18 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-restart'))restart();
   if(button.id==='empty-arrival')showCandidates();
 });
+// Native details controls also update the toolbar accessibility state.
+modal.addEventListener('toggle',e=>{
+  if(e.target.matches('.conversation-log'))modal.querySelector('[data-event-log]')?.setAttribute('aria-expanded',String(e.target.open));
+},true);
 modal.addEventListener('click',e=>{
   if(!modal.classList.contains('conversation-modal')||!e.target.closest('.stage-bubble')||!eventView)return;
   const current=state.events.find(x=>x.id===eventView.id);
   if(current&&eventView.index<eventConversation(current).length-1)showEvent(eventView.id,eventView.index+1);
 });
 document.addEventListener('keydown',e=>{
-  if(!modal.open||!modal.classList.contains('conversation-modal')||!eventView||!['Enter','Space'].includes(e.code)||document.activeElement?.tagName==='BUTTON')return;
+  if(!modal.open||!modal.classList.contains('conversation-modal')||!eventView||!['Enter','Space'].includes(e.code)||document.activeElement?.closest('button, summary, input, textarea, select, a, [contenteditable]'))return;
+  if(modal.classList.contains('event-ui-hidden')||modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden)return;
   const current=state.events.find(x=>x.id===eventView.id);
   if(current&&eventView.index<eventConversation(current).length-1){e.preventDefault();showEvent(eventView.id,eventView.index+1);}
 });
