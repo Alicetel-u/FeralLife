@@ -1,5 +1,7 @@
 # けもの荘 ～クズ住人観察記～
 
+共同開発は [日本語マニュアル](docs/collaboration.md) と [Codex向けルール](AGENTS.md) を参照してください。各PCの初回設定は `powershell -NoProfile -ExecutionPolicy Bypass -File tools/setup-collaboration.ps1` で行います。
+
 **プロジェクト全体の仕様・現在の実装・未実装・他AIへの引き継ぎは [PROJECT.md](PROJECT.md) にまとめています。** Grokなどに渡す場合は、まずこのファイルを読ませてください。キャラの見た目は [docs/character-style.md](docs/character-style.md) を参照してください。
 
 Windows / PCブラウザ向けの、2Dリアルタイム獣人生活観察ゲームの試作です。外部生成AIや追加パッケージを使わず、住人の欲求・性格・時間帯で行動を決めます。

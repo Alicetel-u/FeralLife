@@ -1,0 +1,10 @@
+#!/bin/sh
+# Git for Windows runs hooks with its bundled shell.
+while read local_ref local_sha remote_ref remote_sha
+do
+  if [ "$remote_ref" = "refs/heads/main" ]; then
+    echo "mainへの直接Pushは禁止です。作業ブランチからPRを作成してください。" >&2
+    exit 1
+  fi
+done
+exit 0
