@@ -174,6 +174,8 @@ test('conflicts wait for both residents and legacy solo requests migrate without
   const event=s.events.find(e=>e.id===s.management.pending.eventId);
   assert.deepEqual(event.cast,['cat','hostess']);
   const result=resolveManagementCase(s,event.id,'check',addEvent);
-  assert.deepEqual(result.lines.map(l=>l.speaker),['cat','hostess']);
+  assert.equal(result.lines[0].speaker,'manager');
+  assert.ok(result.lines.some(l=>l.speaker==='cat')&&result.lines.some(l=>l.speaker==='hostess'));
+  assert.ok(result.lines.length>=6);
   assert.ok(validateSave(s));
 });
