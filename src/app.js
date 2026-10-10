@@ -5,7 +5,7 @@ import { loadCharacterArt, loadRoomArt, EVENT_ART, eventParticipants } from './c
 import { sampleJourney, motionLabel } from './movement.js';
 import { MANAGEMENT_CASES } from './event-cases.js';
 import { ensureManagement, managementSummary, managementImpact, openManagementCase, resolveManagementCase } from './management.js';
-import { eventConversation, eventStageHTML, eventIcon } from './event-stage.js';
+import { eventConversation, eventStageHTML, eventIcon, troubleCardHTML } from './event-stage.js';
 
 await loadCharacterArt();
 await loadRoomArt();
@@ -52,6 +52,8 @@ if (state.pending) {
 let speed = 1, paused = !!previewResident || eventPreview, filter = 'all', profileKey = null, lastUI = 0, lastSave = 0, lastTime = performance.now(), lastEventId = 0, endingShown = false, toastTimer;
 let eventView = null;
 let eventAuto=false,eventAutoTimer=null;
+let seenStageId = 0;
+const stageQueue = [];
 const renderer = new WorldRenderer($('world'));
 const talk = createTalk(restored ? (state.events[0]?.id || 0) : 0);
 const modal = $('modal');
@@ -116,7 +118,8 @@ function updateProfile() {
   else { const worst = others[0], best = others.at(-1); const chosen = (r.relationships[worst.id]||0) < -15 ? worst : best; const n = r.relationships[chosen.id]||0; $('resident-relation').textContent = `${CHARACTERS[chosen.type].name.split(' ')[1]} / ${n < -30 ? '険悪' : n < -10 ? '苦手' : n > 25 ? '気が合う' : '顔見知り'}`; }
 }
 const kindNames = { life:'日常', trouble:'トラブル', arrival:'お知らせ' };
-function eventHTML(e) { return `<button class="event-row" data-event="${e.id}"><span class="event-time">${escape(formatTime(e.hour))}</span><span class="event-tag ${e.kind}">${kindNames[e.kind]}</span><span class="event-text">${escape(e.title)}</span>${!e.read?'<span class="event-new">NEW</span>':''}<span class="event-arrow">↗</span></button>`; }
+function eventLabel(e) { return e.kind==='trouble' && e.caseId && MANAGEMENT_CASES[e.caseId]?.call || e.title; }
+function eventHTML(e) { return `<button class="event-row" data-event="${e.id}"><span class="event-time">${escape(formatTime(e.hour))}</span><span class="event-tag ${e.kind}">${kindNames[e.kind]}</span><span class="event-text">${escape(eventLabel(e))}</span>${!e.read?'<span class="event-new">NEW</span>':''}<span class="event-arrow">↗</span></button>`; }
 function updateJournal() {
   const events = state.events.filter(e => filter === 'all' || e.kind === filter).slice(0,5);
   $('event-list').innerHTML = events.length ? events.map(eventHTML).join('') : '<div class="event-row"><span class="event-text" style="color:#999787">今のところ、トラブルはありません。静かなうちに眺めておこう。</span></div>';
@@ -127,7 +130,7 @@ function updateUI() {
   $('request-count').textContent=management.pending&&!state.ending?'1':'0';
   $('management-button').classList.toggle('has-request',!!management.pending&&!state.ending);
   $('request-notice').hidden=!management.pending||!!state.ending;
-  if(management.pending) $('request-title').textContent=MANAGEMENT_CASES[management.pending.caseId].title;
+  if(management.pending) $('request-title').textContent=MANAGEMENT_CASES[management.pending.caseId].call||MANAGEMENT_CASES[management.pending.caseId].title;
   const d = dateAt(state.hour), clock = `${String(d.hour).padStart(2,'0')}:${String(d.minute).padStart(2,'0')}`;
   $('day-clock').innerHTML = `${d.day}日目 <span>${clock}</span>`;
   const timeLabel = d.hour >= 20 || d.hour < 5 ? '夜更け' : d.hour < 10 ? '朝' : d.hour < 16 ? '昼下がり' : '夕暮れ';
@@ -160,9 +163,32 @@ function updateUI() {
 function header(eyebrow,title,closable=true) { return `<div class="modal-header"><div><p class="eyebrow">${eyebrow}</p><h2 id="modal-title">${title}</h2></div>${closable?'<button class="close-modal" data-close aria-label="閉じる">×</button>':''}</div>`; }
 function openModal(html) { clearTimeout(eventAutoTimer); $('modal-content').innerHTML = html; modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); }
 function closeModal() { eventAuto=false;clearTimeout(eventAutoTimer);modal.close(); updateUI(); }
-modal.addEventListener('close', () => { eventAuto=false;clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); });
+modal.addEventListener('close', () => { eventAuto=false;clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); });
+function syncStageCursor() {
+  seenStageId = state.events.reduce((max, event) => Math.max(max, event.id), 0);
+  stageQueue.length = 0;
+}
+function queueFreshStageEvents() {
+  const fresh = state.events.filter(event => event.stageOnly && event.id > seenStageId).sort((a, b) => a.id - b.id);
+  for (const event of fresh) {
+    seenStageId = event.id;
+    if (!stageQueue.includes(event.id)) stageQueue.push(event.id);
+  }
+}
+function openNextStageEvent() {
+  if (modal.open || state.ending || document.hidden) return;
+  while (stageQueue.length) {
+    const id = stageQueue.shift();
+    if (state.events.some(event => event.id === id)) { showEvent(id); return; }
+  }
+}
 function showEvent(id,index=0) {
   const e = state.events.find(e => e.id === Number(id)); if (!e) return;
+  if (e.stageOnly) {
+    seenStageId = Math.max(seenStageId, e.id);
+    const queued = stageQueue.indexOf(e.id);
+    if (queued >= 0) stageQueue.splice(queued, 1);
+  }
   e.read = true; save(); updateJournal();
   if (state.ending && e.id === state.events[0].id) { showEnding(); return; }
   const lines=eventConversation(e),cursor=Math.max(0,Math.min(index,lines.length-1)),last=cursor===lines.length-1;
@@ -170,9 +196,10 @@ function showEvent(id,index=0) {
   const waiting=!state.ending&&state.management.pending?.eventId===e.id;
   const c=MANAGEMENT_CASES[e.caseId];
   const choices=waiting&&last?`<div class="decision-panel" aria-label="管理人の返事">${c.choices.map((choice,i)=>`<button class="decision-choice" data-case-event="${e.id}" data-choice="${escape(choice.id)}">${eventIcon(['chat','cat','heart'][i])}<strong>${escape(choice.label)}</strong><span class="choice-paw">${eventIcon('paw')}</span></button>`).join('')}</div>`:'';
+  const trouble=c?.call&&e.kind==='trouble'?troubleCardHTML(c.call,waiting&&cursor===0):'';
   const forward=last?(waiting?'<button class="event-return" data-close>返事は後で</button>':state.pending&&e.kind==='arrival'&&!e.rooms.length?'<button class="event-return" data-show-candidates>申込書を見る</button>':`<button class="primary-button" data-close aria-label="観察に戻る">${eventIcon('next')}</button>`):`<button class="primary-button" data-dialogue-next aria-label="次のセリフ">${eventIcon('next')}</button>`;
   const toolbar=`<nav class="event-toolbar" aria-label="会話の操作"><button data-event-auto aria-pressed="${eventAuto}">${eventIcon('play')}<span>AUTO</span></button><button data-event-skip ${last?'disabled':''}>${eventIcon('skip')}<span>SKIP</span></button><button data-event-log aria-expanded="false">${eventIcon('log')}<span>LOG</span></button><button data-event-hide>${eventIcon('hide')}<span>HIDE</span></button><button data-event-menu aria-expanded="false">${eventIcon('menu')}<span>MENU</span></button></nav>`;
-  openModal(`<h2 id="modal-title" class="conversation-title">${escape(e.title)}</h2><div class="conversation-body">${eventStageHTML(e,state.residents,cursor)}${choices}${toolbar}<details class="conversation-log"><summary>会話履歴を閉じる</summary>${lines.map(l=>`<p><strong>${escape(CHARACTERS[l.speaker]?.name||(l.speaker==='manager'?'管理人':'記録'))}</strong> ${escape(l.text)}</p>`).join('')}</details><div class="event-menu" hidden><button data-dialogue-back ${cursor===0?'disabled':''}>前のセリフへ</button><button data-event-menu>会話を続ける</button><button data-close>${waiting?'返事を保留して観察へ':'観察画面に戻る'}</button></div></div><div class="modal-footer">${forward}</div><button class="event-restore" data-event-hide hidden aria-label="会話UIを再表示">${eventIcon('hide')} 表示を戻す</button>`);
+  openModal(`<h2 id="modal-title" class="conversation-title">${escape(c?.call&&e.kind==='trouble'?c.call:e.title)}</h2><div class="conversation-body">${trouble}${eventStageHTML(e,state.residents,cursor)}${choices}${toolbar}<details class="conversation-log"><summary>会話履歴を閉じる</summary>${lines.map(l=>`<p><strong>${escape(CHARACTERS[l.speaker]?.name||(l.speaker==='manager'?'管理人':'記録'))}</strong> ${escape(l.text)}</p>`).join('')}</details><div class="event-menu" hidden><button data-dialogue-back ${cursor===0?'disabled':''}>前のセリフへ</button><button data-event-menu>会話を続ける</button><button data-close>${waiting?'返事を保留して観察へ':'観察画面に戻る'}</button></div></div><div class="modal-footer">${forward}</div><button class="event-restore" data-event-hide hidden aria-label="会話UIを再表示">${eventIcon('hide')} 表示を戻す</button>`);
   scheduleEventAuto();
   document.querySelector(last&&waiting?'[data-choice]':last?'[data-close].primary-button':'[data-dialogue-next]')?.focus({preventScroll:true});
 }
@@ -194,7 +221,7 @@ function managementMeters() {
 }
 function showManagement() {
   const m=ensureManagement(state),pending=m.pending&&!state.ending;
-  const request=pending?`<button class="manager-request" data-event="${m.pending.eventId}"><small>返事を待っている住人</small><strong>${escape(MANAGEMENT_CASES[m.pending.caseId].title)}</strong><span>左右の立ち絵で話を聞く →</span></button>`:'<p class="modal-copy">今は返事を待っている相談はありません。暮らしを眺めて、次の便りを待ちましょう。</p>';
+  const request=pending?`<button class="manager-request" data-event="${m.pending.eventId}"><small>返事を待っている住人</small><strong>${escape(MANAGEMENT_CASES[m.pending.caseId].call||MANAGEMENT_CASES[m.pending.caseId].title)}</strong><span>左右の立ち絵で話を聞く →</span></button>`:'<p class="modal-copy">今は返事を待っている相談はありません。暮らしを眺めて、次の便りを待ちましょう。</p>';
   const later=m.queue.filter(q=>q.kind==='report');
   openModal(header('MANAGER’S ROOM / 管理人室','解決しても、暮らしは続く。')+`<div class="modal-body"><p class="modal-copy">管理人は住人を直接操作しません。相談が届いたとき、限られた予算と、その人の気持ちの間で返事を選びます。返事は保留できます。</p><button class="secondary-button" data-sensitive aria-pressed="${!!m.includeSensitive}">生活の重い相談も受ける ${m.includeSensitive?'ON':'OFF'}</button><p class="modal-copy">通常は日常のブラックコメディ。ONにすると、妊娠に関する生活支援の相談も登場します。本人の決断は本人がします。</p>${managementMeters()}${request}<h3 class="manager-section-title">あの返事の、その後</h3>${later.length?later.map(q=>`<div class="aftermath-note"><span>${escape(formatTime(q.dueAt))}ごろ</span><strong>${escape(MANAGEMENT_CASES[q.parentCase].title)}</strong><small>何が起きたかは、届いてから。</small></div>`).join(''):'<p class="modal-copy">後日談の便りは、まだありません。</p>'}<div class="manager-ledger">家賃の入金を管理資金へ加算。維持費は毎日 ¥1,800＋入居者1人につき¥300。支払いで資金がマイナスになった分は管理負債です。18日目の結末までに立て直せます。</div></div><div class="modal-footer"><span>相談 ${m.decisions.length}件に返事 · 助け合い ${m.solidarity}回</span><button class="primary-button" data-close>観察に戻る →</button></div>`);
 }
@@ -209,7 +236,7 @@ function showHistory() {
   openModal(header('APARTMENT ARCHIVE / 観察日誌','ろくでもない、日々の記録')+`<div class="modal-body"><p class="modal-copy">${state.events.length}件の記録。新しい出来事から順に並んでいます。（最新240件を保存）</p><div class="history-list">${state.events.map(eventHTML).join('')}</div></div><div class="modal-footer"><span>気になる出来事を選ぶと、詳細を読めます。</span><button class="primary-button" data-close>観察に戻る →</button></div>`);
 }
 function showHelp() {
-  openModal(header('HOW TO OBSERVE / 管理人の心得','あなたは、暮らしの後始末を引き受ける。')+`<div class="modal-body"><p class="modal-copy">住人は自分で暮らします。管理人室に相談が届いたら、立ち絵と吹き出しで話を聞き、返事を選びましょう。費用・信頼・安全にはそれぞれ変化があり、後日談が別の事件につながることもあります。返事は保留できます。</p><div class="help-grid"><div class="help-step"><strong><span>01</span>暮らしを眺める</strong>最初は猫の部屋を大きく表示。「全体を見る」で6部屋を一覧できます。下の部屋一覧で住人を選び、「住人ノート」で欲求や所持金を確認。衛生状態だけは、数値が高いほど良好です。</div><div class="help-step"><strong><span>02</span>記録を読む</strong>「日誌」から会話を読み返せます。管理人室には未回答の相談と後日談の予定が届きます。「次へ」で会話を読み、最後に返事を選びます。会話中は時間が止まります。</div><div class="help-step"><strong><span>03</span>次の住人を選ぶ</strong>3日目の9時から、原則3日ごとに2人の入居希望者が現れます。封筒から申込書を開き、一人を空室に迎えましょう。</div><div class="help-step"><strong><span>04</span>アパートの結末を見届ける</strong>18日目の9時に、管理資金・安全・信頼・助け合い・話題と、住人の暮らしから結末が決まります。組み合わせを変えて、別の観察記を始められます。</div></div><p class="modal-copy" style="margin-top:18px;margin-bottom:0">「住人を追う」をONにすると、選んだ住人が部屋を出たとき外観へ、帰宅すると内装へ自動で切り替わります。手動の内装／外観・大きさ切り替えは追跡をOFFにします。⛶で全画面表示。通常速度では10秒＝ゲーム内1時間。3×・6×で進行を速められます。ブラウザを閉じたり、別のタブを表示している間は進行しません。データはこのブラウザに自動保存されます。</p></div><div class="modal-footer"><span>Space：一時停止 / Esc：ノートを閉じる</span><button class="primary-button" data-close>けもの荘を眺める →</button></div>`);
+  openModal(header('HOW TO OBSERVE / 管理人の心得','あなたは、暮らしの後始末を引き受ける。')+`<div class="modal-body"><p class="modal-copy">住人は自分で暮らします。相談や後日談が発生すると、その場で立ち絵と吹き出しが開きます。費用・信頼・安全にはそれぞれ変化があり、後日談が別の事件につながることもあります。返事は保留できます。</p><div class="help-grid"><div class="help-step"><strong><span>01</span>暮らしを眺める</strong>最初は猫の部屋を大きく表示。「全体を見る」で6部屋を一覧できます。下の部屋一覧で住人を選び、「住人ノート」で欲求や所持金を確認。衛生状態だけは、数値が高いほど良好です。</div><div class="help-step"><strong><span>02</span>記録を読む</strong>「日誌」から会話を読み返せます。管理人室には未回答の相談と後日談の予定が届きます。「次へ」で会話を読み、最後に返事を選びます。会話中は時間が止まります。</div><div class="help-step"><strong><span>03</span>次の住人を選ぶ</strong>3日目の9時から、原則3日ごとに2人の入居希望者が現れます。封筒から申込書を開き、一人を空室に迎えましょう。</div><div class="help-step"><strong><span>04</span>アパートの結末を見届ける</strong>18日目の9時に、管理資金・安全・信頼・助け合い・話題と、住人の暮らしから結末が決まります。組み合わせを変えて、別の観察記を始められます。</div></div><p class="modal-copy" style="margin-top:18px;margin-bottom:0">「住人を追う」をONにすると、選んだ住人が部屋を出たとき外観へ、帰宅すると内装へ自動で切り替わります。手動の内装／外観・大きさ切り替えは追跡をOFFにします。⛶で全画面表示。通常速度では10秒＝ゲーム内1時間。3×・6×で進行を速められます。ブラウザを閉じたり、別のタブを表示している間は進行しません。データはこのブラウザに自動保存されます。</p></div><div class="modal-footer"><span>Space：一時停止 / Esc：ノートを閉じる</span><button class="primary-button" data-close>けもの荘を眺める →</button></div>`);
 }
 function showEnding() {
   if (!state.ending) return;
@@ -218,7 +245,7 @@ function showEnding() {
   openModal(header('THE END / けもの荘・観察記','18日間、見守ってくれてありがとう。')+`<div class="modal-body"><div class="ending-title">「${escape(state.ending.name)}」</div><p class="event-detail" style="text-align:center">${escape(state.ending.text)}</p>${managementMeters()}<div class="ending-stats"><div>暮らした住人<strong>${state.residents.length}人</strong></div><div>受け取った家賃<strong>${yen(state.rent)}</strong></div><div>残った借金<strong>${yen(debt)}</strong></div></div><p class="modal-copy">相談への返事 ${state.management.decisions.length}件。未回答 ${state.management.pending?1:0}件、まだ届いていない後日談 ${state.management.queue.filter(q=>q.kind==='report').length}件。最後の状態で結末を判定しています。</p></div><div class="modal-footer"><button class="text-button" data-close>最後のけもの荘を眺める</button><button class="primary-button" data-restart>別の観察記を始める →</button></div>`);
 }
 function restart() {
-  state=createGame();Object.assign(talk, createTalk(0));profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();toast('新しい観察記が始まりました。101号室には、いつもの猫。');
+  state=createGame();Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
 document.addEventListener('click',e=>{
   const button=e.target.closest('button');if(!button)return;
@@ -291,13 +318,16 @@ function frame(now){
   const seconds=Math.min(.25,Math.max(0,(now-lastTime)/1000));lastTime=now;
   const stopped=paused||modal.open||document.hidden||!!state.ending;
   if(!stopped)advance(state,seconds*speed/10);
+  queueFreshStageEvents();
   stepTalk(talk, state, now, stopped);
   updateCamera();
   renderer.draw(state,now,stopped,document.body.classList.contains('conversation-active')?[]:talk.bubbles);
   if(now-lastUI>300){updateUI();lastUI=now;}
   if(now-lastSave>5000){save();lastSave=now;}
   if(state.ending&&!endingShown){showEnding();save();}
+  else openNextStageEvent();
   requestAnimationFrame(frame);
 }
+syncStageCursor();
 updateCamera();updateRooms();updateUI();updateJournal();save();requestAnimationFrame(frame);
 if(restored)toast('前回の観察記の続きから。住人たちは、ここで待っていました。');

@@ -91,7 +91,17 @@ body.conversation-active{overflow:hidden;background:#171313}
 .conversation-active .scene>:not(canvas){visibility:hidden}
 dialog.conversation-modal{position:fixed;inset:0;margin:0;width:100vw;height:100dvh;max-width:none;max-height:none;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;color:#fff4e9;overflow:hidden;font-family:'Yu Gothic','Meiryo',sans-serif;container-type:size}
 dialog.conversation-modal::backdrop{background:transparent;backdrop-filter:none}
-.conversation-modal #modal-content,.conversation-modal .conversation-body{height:100%;padding:0}
+.conversation-modal #modal-content,.conversation-modal .conversation-body{height:100%;padding:0;position:relative}
+.trouble-card{position:absolute;z-index:8;left:50%;top:7%;width:min(92%,820px);transform:translateX(-50%);text-align:center;pointer-events:none}
+.trouble-bang{position:relative;display:inline-block;margin:0;padding:.12em .7em .08em;color:#fff8ef;background:#c4232a;border:4px solid #fff6ee;box-shadow:7px 7px 0 #3a1012;font:900 4.4cqw/1 var(--serif);letter-spacing:.18em;text-shadow:3px 3px 0 #5c1216;transform:rotate(-7deg)}
+.trouble-card.slam .trouble-bang{animation:trouble-slam .48s cubic-bezier(.15,1.35,.35,1) both}
+.trouble-name{margin:.45em 0 0;color:#fff4cc;font:900 3.3cqw/1.25 var(--serif);letter-spacing:.06em;text-shadow:0 3px 0 #4a1612,0 0 16px #000c}
+.trouble-card.slam .trouble-name{animation:trouble-title .42s .22s ease-out both}
+.trouble-card:not(.slam){top:2%}
+.trouble-card:not(.slam) .trouble-bang{font-size:1.7cqw;border-width:3px;box-shadow:4px 4px 0 #3a1012}
+.trouble-card:not(.slam) .trouble-name{margin-top:.2em;font-size:2.1cqw}
+@keyframes trouble-slam{0%{transform:rotate(-7deg) scale(1.7);opacity:0}65%{transform:rotate(-9deg) scale(.94);opacity:1}100%{transform:rotate(-7deg) scale(1);opacity:1}}
+@keyframes trouble-title{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .conversation-title,.conversation-modal .stage-page{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .conversation-modal .event-stage{position:absolute;inset:0;height:100%;margin:0;border:0;border-radius:0;background:transparent;overflow:hidden}
 .conversation-modal .event-stage::before,.conversation-modal .event-stage::after{display:none}
@@ -133,7 +143,7 @@ dialog.conversation-modal::backdrop{background:transparent;backdrop-filter:none}
 .conversation-modal .conversation-log{display:none;position:absolute;right:4.2%;top:10%;z-index:10;margin:0;width:min(620px,85vw);max-height:60%;overflow:auto;background:#1b161af5;border:1px solid #c5a576;border-radius:18px;padding:22px;box-shadow:0 8px 24px #0008;color:#edd7b6}
 .conversation-modal .conversation-log[open]{display:block}.conversation-modal .conversation-log summary{cursor:pointer;padding:8px;text-align:right}.conversation-modal .conversation-log p{color:#eee0d5;font-size:16px;line-height:1.8;padding:10px 0;border-bottom:1px solid #d9b28722}.conversation-log strong{color:#efb5c5}
 .event-menu{position:absolute;right:4.2%;bottom:27%;z-index:10;width:260px;display:grid;gap:6px;padding:18px;background:#1b161af5;border:1px solid #c5a576;border-radius:18px;box-shadow:0 8px 24px #0008}.event-menu button{padding:12px;border-radius:8px;color:#f4e5d5;text-align:left}.event-menu button:hover{background:#f2c78720}
-.event-ui-hidden .stage-bubble,.event-ui-hidden .decision-panel,.event-ui-hidden .event-toolbar,.event-ui-hidden .modal-footer,.event-ui-hidden .conversation-log,.event-ui-hidden .event-menu{visibility:hidden}
+.event-ui-hidden .stage-bubble,.event-ui-hidden .decision-panel,.event-ui-hidden .event-toolbar,.event-ui-hidden .modal-footer,.event-ui-hidden .conversation-log,.event-ui-hidden .event-menu,.event-ui-hidden .trouble-card{visibility:hidden}
 .event-restore{position:absolute;right:2%;bottom:3%;z-index:12;display:flex;align-items:center;gap:10px;background:#161217c9;color:#f1d7b0;border:1px solid #a68a67;border-radius:20px;padding:10px 16px}.event-restore .event-icon{width:20px;height:20px}
 @keyframes event-arrive{from{opacity:.8;translate:0 8px}to{opacity:1;translate:0 0}}
 @media(max-width:700px){
@@ -143,5 +153,6 @@ dialog.conversation-modal::backdrop{background:transparent;backdrop-filter:none}
 .event-toolbar{top:auto;bottom:calc(31% - 41px);right:4%;height:32px;width:68%;border-radius:10px}.event-toolbar button{font-size:9px;gap:4px;padding:3px}.event-toolbar .event-icon{width:12px;height:12px}
 .conversation-modal .decision-panel{width:75%;right:3%;bottom:36%;gap:8px}.conversation-modal .decision-choice{padding:10px 14px;gap:12px;min-height:44px}.conversation-modal .decision-choice strong{font-size:14px}.conversation-modal .decision-choice>.event-icon{width:21px;height:21px}.conversation-modal .decision-choice .choice-paw{width:19px;height:19px}
 .conversation-modal .modal-footer{bottom:5%;right:7%}.conversation-modal .modal-footer .primary-button{width:22px;height:22px}.conversation-modal .modal-footer .event-return{font-size:12px}.heart-outline{font-size:25px}.ornament{width:25px;height:25px}.cat-bottom{width:30px;height:30px}.star-left{width:10px;height:10px}
+.trouble-bang{font-size:28px;border-width:3px}.trouble-name{font-size:22px}.trouble-card:not(.slam) .trouble-bang{font-size:16px}.trouble-card:not(.slam) .trouble-name{font-size:18px}
 }
-@media(prefers-reduced-motion:reduce){.conversation-modal .stage-character.speaking{animation:none}}
+@media(prefers-reduced-motion:reduce){.conversation-modal .stage-character.speaking,.trouble-card.slam .trouble-bang,.trouble-card.slam .trouble-name{animation:none}}
