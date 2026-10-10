@@ -1,7 +1,7 @@
 import { createGame, advance, admit, ROOMS, CHARACTERS, NEEDS, ACTIONS, dateAt, formatTime, atmosphere, validateSave } from './simulation.js';
 import { createTalk, stepTalk } from './dialogue.js';
 import { WorldRenderer, roomBounds, drawPortrait } from './renderer.js';
-import { loadCharacterArt, loadRoomArt } from './character-art.js';
+import { loadCharacterArt, loadRoomArt, EVENT_ART, eventParticipants } from './character-art.js';
 import { sampleJourney, motionLabel } from './movement.js';
 
 await loadCharacterArt();
@@ -146,7 +146,9 @@ function showEvent(id) {
   const e = state.events.find(e => e.id === Number(id)); if (!e) return;
   e.read = true; save(); updateJournal();
   if (state.ending && e.id === state.events[0].id) { showEnding(); return; }
-  openModal(header('OBSERVATION NOTE / 観察記録',escape(e.title)) + `<div class="modal-body"><span class="event-tag ${e.kind} event-detail-tag">${kindNames[e.kind]}</span><p class="event-detail">${escape(e.detail)}</p>${e.impact?`<div class="event-impact">${escape(e.impact)}</div>`:''}<div class="event-detail-meta"><span>${escape(formatTime(e.hour))}</span><span>${e.rooms.map(r=>r+'号室').join(' / ') || 'けもの荘・掲示板'}</span></div></div><div class="modal-footer"><span>記録を読んでいる間、時間は止まっています。</span>${state.pending && e.kind === 'arrival' && !e.rooms.length ? '<button class="primary-button" data-show-candidates>申込書を見る →</button>' : '<button class="primary-button" data-close>観察に戻る →</button>'}</div>`);
+  const participants = eventParticipants(e, state.residents);
+  const portraits = participants.length ? `<div class="event-cast" aria-label="登場人物">${participants.map(type => `<figure class="event-standing"><img src="${EVENT_ART[type]}" alt="${escape(CHARACTERS[type].name)}の立ち絵"><figcaption>${escape(CHARACTERS[type].name)}</figcaption></figure>`).join('')}</div>` : '';
+  openModal(header('OBSERVATION NOTE / 観察記録',escape(e.title)) + `<div class="modal-body event-story ${portraits ? 'has-cast' : ''}">${portraits}<div class="event-story-copy"><span class="event-tag ${e.kind} event-detail-tag">${kindNames[e.kind]}</span><p class="event-detail">${escape(e.detail)}</p>${e.impact?`<div class="event-impact">${escape(e.impact)}</div>`:''}<div class="event-detail-meta"><span>${escape(formatTime(e.hour))}</span><span>${e.rooms.map(r=>r+'号室').join(' / ') || 'けもの荘・掲示板'}</span></div></div></div><div class="modal-footer"><span>記録を読んでいる間、時間は止まっています。</span>${state.pending && e.kind === 'arrival' && !e.rooms.length ? '<button class="primary-button" data-show-candidates>申込書を見る →</button>' : '<button class="primary-button" data-close>観察に戻る →</button>'}</div>`);
 }
 function showCandidates() {
   if (!state.pending || state.ending) return;

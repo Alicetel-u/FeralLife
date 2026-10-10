@@ -41,3 +41,12 @@ main{max-width:none;padding:8px 12px;margin:0;display:flex;justify-content:cente
 .camera-bar{min-height:38px;padding:3px 7px}.camera-group button,.tool-button{padding:5px 8px;line-height:1.3}.camera-group{padding:1px}
 .room-strip{padding:3px}.room-strip button{padding:4px 7px;line-height:1.2}.room-strip strong{font-size:12px;line-height:1.2}.room-strip span{line-height:1.2}.room-strip small{line-height:1.2;margin-top:2px}.playback{height:32px}
 .resident-panel .building-stats{grid-template-columns:1fr 1fr;gap:12px;padding:12px;background:#ecebdc;color:#3a4833}.resident-panel .building-stats>div{border:0}.resident-panel .building-stats small{color:#68795b}.resident-panel .building-stats .stat-icon{color:#68795b}
+
+/* イベントの立ち絵は全身を収め、本文と独立した展示スペースに置く。 */
+.event-story.has-cast{display:grid;grid-template-columns:minmax(200px,1fr) minmax(0,1fr);gap:24px;align-items:center}
+.event-cast{display:flex;justify-content:center;gap:8px;padding:12px 8px;background:radial-gradient(ellipse at 50% 65%,#e7ddcf 0%,#f8f4ec 70%);border:1px solid #ded5c5;border-radius:12px;min-width:0}
+.event-standing{margin:0;flex:1;min-width:0;text-align:center}
+.event-standing img{display:block;width:100%;height:340px;object-fit:contain;image-rendering:auto;filter:drop-shadow(0 6px 5px #4d35251c)}
+.event-standing figcaption{margin-top:8px;font:600 11px var(--serif);letter-spacing:1px;color:#796657}
+.event-story-copy{min-width:0}.event-story-copy .event-detail{font-size:14px;line-height:2}
+@media(max-width:600px){.event-story.has-cast{grid-template-columns:1fr;gap:20px}.event-standing img{height:270px}.event-cast{padding:10px}.event-story-copy .event-detail{font-size:14px}}

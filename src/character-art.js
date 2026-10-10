@@ -1,5 +1,17 @@
 // Add future approved character art here; unregistered residents retain their draft sprites.
 export const SCENE_ART = { src: 'assets/apartments.png', image: null };
+// イベント専用の立ち絵。観察画面のドット絵とは独立して管理する。
+export const EVENT_ART = {
+  cat: 'assets/events/cat.png', hostess: 'assets/events/hostess.png',
+  fox: 'assets/events/fox.png', ann: 'assets/events/ann.png',
+  peko: 'assets/events/peko.png', sister: 'assets/events/sister.png'
+};
+
+export function eventParticipants(event, residents) {
+  const speakers = (event.lines || []).map(line => line.speaker);
+  const occupants = (event.rooms || []).flatMap(room => residents.filter(r => r.room === room).map(r => r.type));
+  return [...new Set([...speakers, ...occupants])].filter(type => EVENT_ART[type]);
+}
 // 入居者ごとの部屋絵。キーは住人の type。未登録の部屋は従来の共通間取りのまま。
 export const ROOM_ART = {
   cat: { src: 'assets/rooms/cat/interior.png', image: null }
