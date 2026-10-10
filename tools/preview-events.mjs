@@ -1,0 +1,71 @@
+// Real browser checks; isolated preview never reads or writes the user's game save.
+import {createRequire} from 'node:module';
+import {join,resolve} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {mkdir} from 'node:fs/promises';
+const eventRequire=createRequire(join(process.env.FERAL_ASSET_MODULE_ROOT,'package.json'));
+const {chromium}=eventRequire('playwright');
+await mkdir('docs/event-preview',{recursive:true});
+await import('../server.mjs');
+const browser=await chromium.launch({headless:true,channel:'msedge'});
+const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];
+await page.route('**/favicon.ico',r=>r.fulfill({status:204}));
+page.on('pageerror',e=>errors.push(e.message));
+page.on('console',m=>{if(m.type()==='error'||m.type()==='warning')errors.push(m.text());});
+const check=(condition,text)=>{if(!condition)throw new Error(text);};
+await page.goto('http://localhost:4173/index.html?preview=events&case=roomshare');
+await page.waitForSelector('#request-notice:visible');
+check(await page.evaluate(()=>localStorage.getItem('feral-apartments-v1'))===null,'Preview must not save');
+await page.click('#request-notice');
+await page.click('[data-dialogue-next]');
+check(await page.locator('.stage-character img').count()===2,'Two standing portraits');
+check(await page.locator('.stage-bubble.left').count()===1,'Left speech tail');
+await page.screenshot({path:'docs/event-preview/conversation-left.png'});
+await page.click('[data-dialogue-next]');
+check(await page.locator('.stage-bubble.right').count()===1,'Right speech tail');
+await page.screenshot({path:'docs/event-preview/conversation-right.png'});
+await page.click('[data-dialogue-next]');
+check(await page.locator('[data-choice]').count()===3,'Three choices after dialogue');
+await page.screenshot({path:'docs/event-preview/choices.png'});
+await page.click('[data-choice="rules"]');
+check(await page.locator('[data-choice]').count()===0,'No repeat choice');
+if(await page.locator('[data-dialogue-next]').count())await page.click('[data-dialogue-next]');
+check(await page.locator('.stage-bubble p').innerText(),'Reply dialogue appears');
+await page.screenshot({path:'docs/event-preview/reply.png'});
+await page.click('.modal-footer [data-close]');
+await page.click('#management-button');
+check((await page.locator('.management-meters').innerText()).includes('管理資金'),'Management ledger');
+check((await page.locator('.aftermath-note').count())===1,'Delayed report scheduled');
+await page.screenshot({path:'docs/event-preview/manager-room.png'});
+await page.click('[data-sensitive]');
+check((await page.locator('[data-sensitive]').innerText()).includes('ON'),'Sensitive scenes opt-in');
+await page.click('.modal-footer [data-close]');
+await page.click('#history-button');
+await page.locator('#modal .event-row').first().click();
+check(await page.locator('.event-stage').count()===1,'Journal also uses dialogue stage');
+
+for(const viewport of [{width:1366,height:768},{width:390,height:844}]) {
+  await page.setViewportSize(viewport);
+  await page.goto('http://localhost:4173/index.html?preview=events&case=roomshare');
+  await page.waitForSelector('#request-notice:visible');await page.click('#request-notice');
+  await page.click('[data-dialogue-next]');
+  const layout=await page.evaluate(()=>({body:document.body.scrollWidth,view:innerWidth,modal:document.querySelector('dialog').scrollWidth,dialog:document.querySelector('dialog').clientWidth,images:[...document.querySelectorAll('.stage-character img')].map(i=>i.complete&&i.naturalWidth>0)}));
+  check(layout.body<=layout.view&&layout.modal<=layout.dialog+1,'No horizontal overflow');
+  check(layout.images.every(Boolean),'Standing art loaded');
+  await page.screenshot({path:`docs/event-preview/conversation-${viewport.width}.png`});
+}
+
+// Exercise the actual single-file artifact, including image embedding and choice dispatch.
+await page.setViewportSize({width:1440,height:1000});
+await page.goto(pathToFileURL(resolve('play.html')).href+'?preview=events&case=cigarette');
+await page.waitForSelector('#request-notice:visible');await page.click('#request-notice');
+for(let i=0;i<3;i++)await page.click('[data-dialogue-next]');
+await page.click('[data-choice="inspect"]');
+if(await page.locator('[data-dialogue-next]').count())await page.click('[data-dialogue-next]');
+check(await page.locator('.stage-bubble p').innerText(),'Standalone choices work');
+check(await page.locator('.stage-character img').evaluateAll(imgs=>imgs.every(i=>i.src.startsWith('data:image/png;base64,')&&i.complete)),'Standalone portraits embedded');
+check(await page.evaluate(()=>localStorage.getItem('feral-apartments-v1'))===null,'Standalone preview does not save');
+await browser.close();
+check(!errors.length,errors.join('\n'));
+console.log('Verified left/right dialogue, three choices, reply, ledger, sensitive toggle, journal, responsive layouts and standalone. No browser errors.');
+process.exit(0);

@@ -1,5 +1,6 @@
 import { OUTINGS, createOuting, createVisit, createRoomMove, sampleJourney, validJourney } from './movement.js';
 import { OPENING_LINES, catIncident, catDoorIncident, catOutingLines, catRentLines, catRentScene } from './dialogue.js';
+import { ensureManagement, tickManagement, managementEnding, validManagement } from './management.js';
 
 export const ROOMS = [101, 102, 103, 201, 202, 203];
 export const NEEDS = [['hunger', '空腹'], ['sleep', '眠気'], ['stress', 'ストレス'], ['hygiene', '衛生状態'], ['fun', '娯楽欲求'], ['alcohol', '飲酒欲求'], ['smoke', '喫煙欲求']];
@@ -46,6 +47,7 @@ export function createGame(seed = Date.now()) {
   addEvent(state, 'arrival', '101号室に、灰田 モクが住んでいる。', '親戚から引き継いだのは、築38年の古いアパート。\n\n唯一の住人は、いつも窓辺でタバコを吸っている猫獣人。「管理人？ ああ、よろしく」。それだけ言うと、また煙の向こうへ目をやった。\n\nあなたの仕事は、この暮らしを見守ること。次の入居募集は3日目の朝9時。', [101], '管理人としての観察が始まった。');
   const opening = addEvent(state, 'life', 'モクが「明日から片づける」とつぶやいた。', 'テーブルの空き缶を一本だけ動かして、モクは片づけを終えた気になった。\n\n「今日は準備の日ってことで」。\n\n灰皿だけが、几帳面に手の届く位置にある。', [101], '101号室の散らかりが少し増えた。');
   opening.lines = OPENING_LINES.map(line => ({ ...line }));
+  ensureManagement(state);
   return state;
 }
 function random(state) { let x = state.seed; x ^= x << 13; x ^= x >>> 17; x ^= x << 5; state.seed = x >>> 0; return state.seed / 4294967296; }
@@ -57,7 +59,12 @@ function createResident(type, room) {
 export function addEvent(state, kind, title, detail, rooms = [], impact = '') {
   const event = { id: state.nextId++, hour: state.hour, kind, title, detail, rooms, impact, read: false };
   state.events.unshift(event);
-  if (state.events.length > 240) state.events.length = 240;
+  if (state.events.length > 240) {
+    const protectedId=state.management?.pending?.eventId;
+    let drop=state.events.length-1;
+    if(state.events[drop].id===protectedId)drop--;
+    state.events.splice(drop,1);
+  }
   for (const r of state.residents) if (rooms.includes(r.room)) { r.history.unshift(event.id); r.history.length = Math.min(r.history.length, 35); }
   return event;
 }
@@ -114,6 +121,7 @@ function updateHour(state) {
     n.alcohol = clamp(n.alcohol + (r.type === 'fox' ? 9 : r.type === 'cat' ? 6 : 2));
     n.smoke = clamp(n.smoke + (r.type === 'cat' ? 13 : 1));
     r.trash = clamp(r.trash + (r.type === 'mouse' ? 2 : .3));
+    if (r.storyUntil > state.hour) continue;
     if (r.journey && state.hour < r.journey.endsAt) continue;
     if (r.journey?.kind === 'outing' && !r.journey.returned) {
       r.journey.returned = true;
@@ -171,6 +179,7 @@ function updateHour(state) {
       addEvent(state, 'arrival', `掲示板に、${state.pending.length}通の入居申込書が届いた。`, '空いている部屋に新しい住人を迎えられる。最後の一人なら申込書は一通だけ。', [], '観察画面の封筒、またはこの記録から入居希望者を選べる。');
     }
   }
+  tickManagement(state, addEvent);
   if (state.hour >= 417) finish(state);
 }
 function spend(r, amount) { r.cash -= amount; if (r.cash < 0) { r.debt -= r.cash; r.cash = 0; } }
@@ -331,7 +340,9 @@ function finish(state) {
   const relations = state.residents.flatMap(r => Object.values(r.relationships));
   const avg = relations.reduce((s, n) => s + n, 0) / Math.max(relations.length, 1);
   const worst = relations.length ? Math.min(...relations) : 0;
-  if (state.residents.length === 1) state.ending = { name: 'ひとりと、ひとつの灰皿', text: '結局、住人はあの猫だけだった。\n窓辺には煙。テーブルには空き缶。\n大きな事件はなくても、ここに暮らしはあった。' };
+  const managed=managementEnding(state);
+  if (managed) state.ending=managed;
+  else if (state.residents.length === 1) state.ending = { name: 'ひとりと、ひとつの灰皿', text: '結局、住人はあの猫だけだった。\n窓辺には煙。テーブルには空き缶。\n大きな事件はなくても、ここに暮らしはあった。' };
   else if (avg < -35 || (worst < -45 && avg < 15)) state.ending = { name: '壁の薄い戦場', text: '小さな不満は、薄い壁を越えて積もった。\n廊下ですれ違っても、誰も目を合わせない。\nそれでも、家賃の安さだけは全員の味方だった。' };
   else if (debt > 60000) state.ending = { name: '明日払いの楽園', text: '住人は増えた。約束も増えた。お金は増えなかった。\n「来週には払うから」。今日も扉の向こうから、\n似たような声が聞こえてくる。' };
   else if (trash > 40) state.ending = { name: '宝の山と、獣の巣', text: '誰かのゴミは、誰かの宝。\nけもの荘は、いつしか街でいちばん物の多い家になった。\n足の踏み場を探しながら、住人たちは意外と元気だ。' };
@@ -345,9 +356,10 @@ export function validateSave(s) {
     if (!CHARACTERS[r.type] || !ROOMS.includes(r.room) || types.has(r.type) || rooms.has(r.room) || !ACTIONS[r.action] || !r.cooldowns || !r.relationships || !Array.isArray(r.history) || !Number.isFinite(r.cash) || !Number.isFinite(r.debt) || !Number.isFinite(r.trash) || !Number.isFinite(r.eventCooldown) || !NEEDS.every(([k]) => Number.isFinite(r.needs?.[k]) && r.needs[k] >= 0 && r.needs[k] <= 100)) return false;
     types.add(r.type); rooms.add(r.room);
     if (!validJourney(r.journey)) return false;
+    if (r.storyUntil !== undefined && !Number.isFinite(r.storyUntil)) return false;
   }
   if (s.remaining.some(t => !CHARACTERS[t] || types.has(t)) || new Set(s.remaining).size !== s.remaining.length) return false;
   if (s.pending !== null && (!Array.isArray(s.pending) || (s.pending.length !== 1 && s.pending.length !== 2) || (s.pending.length === 2 && s.pending[0] === s.pending[1]) || s.pending.some(t => !s.remaining.includes(t)))) return false;
   if (s.events.some(e => !Number.isInteger(e.id) || !Number.isFinite(e.hour) || !['life', 'trouble', 'arrival'].includes(e.kind) || typeof e.title !== 'string' || typeof e.detail !== 'string' || !Array.isArray(e.rooms))) return false;
-  return s.ending === null || (typeof s.ending.name === 'string' && typeof s.ending.text === 'string');
+  return validManagement(s) && (s.ending === null || (typeof s.ending.name === 'string' && typeof s.ending.text === 'string'));
 }

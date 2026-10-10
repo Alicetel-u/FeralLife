@@ -97,7 +97,7 @@ export function createTalk(latestEventId = 0) {
 }
 export function stepTalk(talk, state, now, stopped) {
   for (const event of state.events) {
-    if (!event.lines?.length || event.id <= talk.seenEvent || event.id === talk.eventId || talk.queue.includes(event.id)) continue;
+    if (event.stageOnly || !event.lines?.length || event.id <= talk.seenEvent || event.id === talk.eventId || talk.queue.includes(event.id)) continue;
     talk.queue.push(event.id);
   }
   talk.queue.sort((a, b) => a - b);
