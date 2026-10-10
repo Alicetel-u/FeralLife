@@ -5,7 +5,7 @@ import { loadCharacterArt, loadRoomArt, EVENT_ART, eventParticipants } from './c
 import { sampleJourney, motionLabel } from './movement.js';
 import { MANAGEMENT_CASES } from './event-cases.js';
 import { ensureManagement, managementSummary, managementImpact, openManagementCase, resolveManagementCase } from './management.js';
-import { eventConversation, eventStageHTML } from './event-stage.js';
+import { eventConversation, eventStageHTML, eventIcon } from './event-stage.js';
 
 await loadCharacterArt();
 await loadRoomArt();
@@ -51,6 +51,7 @@ if (state.pending) {
 }
 let speed = 1, paused = !!previewResident || eventPreview, filter = 'all', profileKey = null, lastUI = 0, lastSave = 0, lastTime = performance.now(), lastEventId = 0, endingShown = false, toastTimer;
 let eventView = null;
+let eventAuto=false,eventAutoTimer=null;
 const renderer = new WorldRenderer($('world'));
 const talk = createTalk(restored ? (state.events[0]?.id || 0) : 0);
 const modal = $('modal');
@@ -157,9 +158,9 @@ function updateUI() {
   if (lastEventId !== state.nextId) { lastEventId = state.nextId; updateJournal(); }
 }
 function header(eyebrow,title,closable=true) { return `<div class="modal-header"><div><p class="eyebrow">${eyebrow}</p><h2 id="modal-title">${title}</h2></div>${closable?'<button class="close-modal" data-close aria-label="閉じる">×</button>':''}</div>`; }
-function openModal(html) { $('modal-content').innerHTML = html; modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); }
-function closeModal() { modal.close(); updateUI(); }
-modal.addEventListener('close', () => { document.body.classList.remove('conversation-active'); lastTime = performance.now(); updateUI(); });
+function openModal(html) { clearTimeout(eventAutoTimer); $('modal-content').innerHTML = html; modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); }
+function closeModal() { eventAuto=false;clearTimeout(eventAutoTimer);modal.close(); updateUI(); }
+modal.addEventListener('close', () => { eventAuto=false;clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); });
 function showEvent(id,index=0) {
   const e = state.events.find(e => e.id === Number(id)); if (!e) return;
   e.read = true; save(); updateJournal();
@@ -168,11 +169,23 @@ function showEvent(id,index=0) {
   eventView={id:e.id,index:cursor};
   const waiting=!state.ending&&state.management.pending?.eventId===e.id;
   const c=MANAGEMENT_CASES[e.caseId];
-  const choices=waiting&&last?`<div class="decision-panel" aria-label="管理人の返事">${c.choices.map((choice,i)=>`<button class="decision-choice" data-case-event="${e.id}" data-choice="${escape(choice.id)}"><span class="choice-symbol" aria-hidden="true">${['✦','♡','☾'][i]}</span><strong>${escape(choice.label)}</strong><span aria-hidden="true">🐾</span></button>`).join('')}</div>`:'';
-  const footer=last?(waiting?'<button data-close>返事は後で</button>':state.pending&&e.kind==='arrival'&&!e.rooms.length?'<button data-show-candidates>申込書を見る</button>':'<button class="primary-button" data-close>観察に戻る</button>'):'<button class="primary-button" data-dialogue-next aria-label="次のセリフ">次へ ▾</button>';
-  const back=cursor>0?'<button data-dialogue-back>◂ 戻る</button>':'';
-  openModal(`<h2 id="modal-title" class="conversation-title">${escape(e.title)}</h2><div class="conversation-body">${eventStageHTML(e,state.residents,cursor)}${choices}<details class="conversation-log"><summary>▤ LOG</summary>${lines.map(l=>`<p><strong>${escape(CHARACTERS[l.speaker]?.name||(l.speaker==='manager'?'管理人':'記録'))}</strong> ${escape(l.text)}</p>`).join('')}</details></div><div class="modal-footer">${back}<button data-close>閉じる</button>${footer}</div>`);
+  const choices=waiting&&last?`<div class="decision-panel" aria-label="管理人の返事">${c.choices.map((choice,i)=>`<button class="decision-choice" data-case-event="${e.id}" data-choice="${escape(choice.id)}">${eventIcon(['chat','cat','heart'][i])}<strong>${escape(choice.label)}</strong><span class="choice-paw">${eventIcon('paw')}</span></button>`).join('')}</div>`:'';
+  const forward=last?(waiting?'<button class="event-return" data-close>返事は後で</button>':state.pending&&e.kind==='arrival'&&!e.rooms.length?'<button class="event-return" data-show-candidates>申込書を見る</button>':`<button class="primary-button" data-close aria-label="観察に戻る">${eventIcon('next')}</button>`):`<button class="primary-button" data-dialogue-next aria-label="次のセリフ">${eventIcon('next')}</button>`;
+  const toolbar=`<nav class="event-toolbar" aria-label="会話の操作"><button data-event-auto aria-pressed="${eventAuto}">${eventIcon('play')}<span>AUTO</span></button><button data-event-skip ${last?'disabled':''}>${eventIcon('skip')}<span>SKIP</span></button><button data-event-log aria-expanded="false">${eventIcon('log')}<span>LOG</span></button><button data-event-hide>${eventIcon('hide')}<span>HIDE</span></button><button data-event-menu aria-expanded="false">${eventIcon('menu')}<span>MENU</span></button></nav>`;
+  openModal(`<h2 id="modal-title" class="conversation-title">${escape(e.title)}</h2><div class="conversation-body">${eventStageHTML(e,state.residents,cursor)}${choices}${toolbar}<details class="conversation-log"><summary>会話履歴を閉じる</summary>${lines.map(l=>`<p><strong>${escape(CHARACTERS[l.speaker]?.name||(l.speaker==='manager'?'管理人':'記録'))}</strong> ${escape(l.text)}</p>`).join('')}</details><div class="event-menu" hidden><button data-dialogue-back ${cursor===0?'disabled':''}>前のセリフへ</button><button data-event-menu>会話を続ける</button><button data-close>${waiting?'返事を保留して観察へ':'観察画面に戻る'}</button></div></div><div class="modal-footer">${forward}</div><button class="event-restore" data-event-hide hidden aria-label="会話UIを再表示">${eventIcon('hide')} 表示を戻す</button>`);
+  scheduleEventAuto();
   document.querySelector(last&&waiting?'[data-choice]':last?'[data-close].primary-button':'[data-dialogue-next]')?.focus({preventScroll:true});
+}
+
+function scheduleEventAuto(){
+  clearTimeout(eventAutoTimer);
+  if(!eventAuto||!modal.open||!modal.classList.contains('conversation-modal')||!eventView)return;
+  const current=state.events.find(e=>e.id===eventView.id),lines=current?eventConversation(current):[];
+  if(eventView.index>=lines.length-1)return; // Never choose an answer or leave a scene automatically.
+  eventAutoTimer=setTimeout(()=>{
+    if(document.hidden||modal.classList.contains('event-ui-hidden')||modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden){scheduleEventAuto();return;}
+    showEvent(eventView.id,eventView.index+1);
+  },Math.max(2500,(lines[eventView.index].text.length*75)+1200));
 }
 
 function managementMeters() {
@@ -215,6 +228,11 @@ document.addEventListener('click',e=>{
   if(button.dataset.camera){autoFollow=false;renderer.focus=button.dataset.camera==='focus';updateCamera();updateUI();}
   if(button.dataset.event)showEvent(button.dataset.event);
   if(button.hasAttribute('data-sensitive')){state.management.includeSensitive=!state.management.includeSensitive;save();showManagement();}
+  if(button.hasAttribute('data-event-auto')){eventAuto=!eventAuto;button.setAttribute('aria-pressed',String(eventAuto));scheduleEventAuto();}
+  if(button.hasAttribute('data-event-skip')&&eventView){eventAuto=false;const current=state.events.find(e=>e.id===eventView.id);if(current)showEvent(eventView.id,eventConversation(current).length-1);}
+  if(button.hasAttribute('data-event-log')){const log=modal.querySelector('.conversation-log');if(log){log.open=!log.open;button.setAttribute('aria-expanded',String(log.open));}}
+  if(button.hasAttribute('data-event-hide')){const hidden=modal.classList.toggle('event-ui-hidden');modal.querySelector('.event-restore').hidden=!hidden;}
+  if(button.hasAttribute('data-event-menu')){const menu=modal.querySelector('.event-menu');if(menu){menu.hidden=!menu.hidden;modal.querySelector('.event-toolbar [data-event-menu]').setAttribute('aria-expanded',String(!menu.hidden));}}
   if(button.hasAttribute('data-dialogue-next')&&eventView)showEvent(eventView.id,eventView.index+1);
   if(button.hasAttribute('data-dialogue-back')&&eventView)showEvent(eventView.id,eventView.index-1);
   if(button.dataset.choice){

@@ -5,7 +5,7 @@ import {pathToFileURL} from 'node:url';
 import {mkdir} from 'node:fs/promises';
 const eventRequire=createRequire(join(process.env.FERAL_ASSET_MODULE_ROOT,'package.json'));
 const {chromium}=eventRequire('playwright');
-await mkdir('docs/event-preview',{recursive:true});
+await mkdir('docs/event-reference',{recursive:true});
 await import('../server.mjs');
 const browser=await chromium.launch({headless:true,channel:'msedge'});
 const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];
@@ -19,25 +19,25 @@ check(await page.evaluate(()=>localStorage.getItem('feral-apartments-v1'))===nul
 await page.click('#request-notice');
 await page.click('[data-dialogue-next]');
 check(await page.locator('.stage-character img').count()===2,'Two standing portraits');
-check(await page.locator('.stage-bubble.right').count()===1,'First resident speaking');
-await page.screenshot({path:'docs/event-preview/conversation-left.png'});
+check(await page.locator('.stage-bubble.left').count()===1,'First resident speaking');
+await page.screenshot({path:'docs/event-reference/conversation-left.png'});
 await page.click('[data-dialogue-next]');
-check(await page.locator('.stage-bubble.left').count()===1,'Second resident speaking');
-await page.screenshot({path:'docs/event-preview/conversation-right.png'});
+check(await page.locator('.stage-bubble.right').count()===1,'Second resident speaking');
+await page.screenshot({path:'docs/event-reference/conversation-right.png'});
 await page.click('[data-dialogue-next]');
 await page.click('[data-dialogue-next]');
 check(await page.locator('[data-choice]').count()===3,'Three choices after dialogue');
-await page.screenshot({path:'docs/event-preview/choices.png'});
+await page.screenshot({path:'docs/event-reference/choices.png'});
 await page.click('[data-choice="rules"]');
 check(await page.locator('[data-choice]').count()===0,'No repeat choice');
 if(await page.locator('[data-dialogue-next]').count())await page.click('[data-dialogue-next]');
 check(await page.locator('.stage-bubble p').innerText(),'Reply dialogue appears');
-await page.screenshot({path:'docs/event-preview/reply.png'});
+await page.screenshot({path:'docs/event-reference/reply.png'});
 await page.click('.modal-footer [data-close]');
 await page.click('#management-button');
 check((await page.locator('.management-meters').innerText()).includes('管理資金'),'Management ledger');
 check((await page.locator('.aftermath-note').count())===1,'Delayed report scheduled');
-await page.screenshot({path:'docs/event-preview/manager-room.png'});
+await page.screenshot({path:'docs/event-reference/manager-room.png'});
 await page.click('[data-sensitive]');
 check((await page.locator('[data-sensitive]').innerText()).includes('ON'),'Sensitive scenes opt-in');
 await page.click('.modal-footer [data-close]');
@@ -53,7 +53,7 @@ for(const viewport of [{width:1366,height:768},{width:390,height:844}]) {
   const layout=await page.evaluate(()=>({body:document.body.scrollWidth,view:innerWidth,modal:document.querySelector('dialog').scrollWidth,dialog:document.querySelector('dialog').clientWidth,images:[...document.querySelectorAll('.stage-character img')].map(i=>i.complete&&i.naturalWidth>0)}));
   check(layout.body<=layout.view&&layout.modal<=layout.dialog+1,'No horizontal overflow');
   check(layout.images.every(Boolean),'Standing art loaded');
-  await page.screenshot({path:`docs/event-preview/conversation-${viewport.width}.png`});
+  await page.screenshot({path:`docs/event-reference/conversation-${viewport.width}.png`});
 }
 
 // Exercise the actual single-file artifact, including image embedding and choice dispatch.
@@ -66,6 +66,41 @@ if(await page.locator('[data-dialogue-next]').count())await page.click('[data-di
 check(await page.locator('.stage-bubble p').innerText(),'Standalone choices work');
 check(await page.locator('.stage-character img').evaluateAll(imgs=>imgs.every(i=>i.src.startsWith('data:image/png;base64,')&&i.complete)),'Standalone portraits embedded');
 check(await page.evaluate(()=>localStorage.getItem('feral-apartments-v1'))===null,'Standalone preview does not save');
+await page.setViewportSize({width:1672,height:941});
+await page.goto('http://localhost:4173/index.html?preview=events&case=cigarette');
+await page.waitForSelector('#request-notice:visible');await page.click('#request-notice');
+await page.click('[data-event-skip]');
+await page.screenshot({path:'docs/event-reference/reference-size.png'});
+
+// Reference toolbar controls must work and never resolve a choice automatically.
+await page.goto('http://localhost:4173/index.html?preview=events&case=roomshare');
+await page.waitForSelector('#request-notice:visible');await page.click('#request-notice');
+await page.click('[data-event-hide]');
+check(await page.locator('dialog').evaluate(d=>d.classList.contains('event-ui-hidden')),'Hide scene UI');
+check(await page.locator('.event-restore').isVisible(),'Restore control remains reachable');
+await page.click('.event-restore');
+await page.click('[data-event-log]');
+check(await page.locator('.conversation-log').evaluate(l=>l.open),'Log opens');
+await page.click('[data-event-log]');
+await page.click('.event-toolbar [data-event-menu]');
+check(await page.locator('.event-menu').isVisible(),'Menu opens');
+await page.click('.event-menu [data-event-menu]');
+const autoStart=await page.locator('.stage-bubble p').innerText();
+await page.click('[data-event-auto]');
+check(await page.locator('[data-event-auto]').getAttribute('aria-pressed')==='true','Auto enables');
+await page.waitForFunction(text=>document.querySelector('.stage-bubble p').textContent!==text,autoStart,{timeout:12000});
+await page.click('[data-event-auto]');
+await page.click('[data-event-skip]');
+check(await page.locator('[data-choice]').count()===3,'Skip stops at the decision');
+await page.click('[data-event-auto]');
+await page.waitForTimeout(3000);
+check(await page.locator('[data-choice]').count()===3,'Auto never selects an answer');
+await page.click('[data-choice="rules"]');
+check(await page.locator('[data-choice]').count()===0,'Choice remains explicit');
+await page.click('[data-event-skip]');
+await page.click('.modal-footer [data-close]');
+check(await page.locator('body').evaluate(b=>!b.classList.contains('conversation-active')),'Observation restored');
+
 await browser.close();
 check(!errors.length,errors.join('\n'));
 console.log('Verified left/right dialogue, three choices, reply, ledger, sensitive toggle, journal, responsive layouts and standalone. No browser errors.');
