@@ -7,6 +7,64 @@ export const EVENT_ART = {
   peko: 'assets/events/peko.png', sister: 'assets/events/sister.png'
 };
 
+// Dedicated bust portraits: each emotion has its own silhouette and gesture.
+export const EVENT_EXPRESSIONS = {
+  cat: {
+    neutral: 'assets/events/busts/cat-neutral.png',
+    happy: 'assets/events/busts/cat-happy.png',
+    angry: 'assets/events/busts/cat-angry.png',
+    sad: 'assets/events/busts/cat-sad.png',
+    surprised: 'assets/events/busts/cat-surprised.png',
+    shy: 'assets/events/busts/cat-shy.png',
+    tired: 'assets/events/busts/cat-tired.png'
+  },
+  hostess: {
+    neutral: 'assets/events/busts/hostess-neutral.png',
+    happy: 'assets/events/busts/hostess-happy.png',
+    angry: 'assets/events/busts/hostess-angry.png',
+    sad: 'assets/events/busts/hostess-sad.png',
+    surprised: 'assets/events/busts/hostess-surprised.png',
+    shy: 'assets/events/busts/hostess-shy.png',
+    tired: 'assets/events/busts/hostess-tired.png'
+  },
+  fox: {
+    neutral: 'assets/events/busts/fox-neutral.png',
+    happy: 'assets/events/busts/fox-happy.png',
+    angry: 'assets/events/busts/fox-angry.png',
+    sad: 'assets/events/busts/fox-sad.png',
+    surprised: 'assets/events/busts/fox-surprised.png',
+    shy: 'assets/events/busts/fox-shy.png',
+    tired: 'assets/events/busts/fox-tired.png'
+  },
+  ann: {
+    neutral: 'assets/events/busts/ann-neutral.png',
+    happy: 'assets/events/busts/ann-happy.png',
+    angry: 'assets/events/busts/ann-angry.png',
+    sad: 'assets/events/busts/ann-sad.png',
+    surprised: 'assets/events/busts/ann-surprised.png',
+    shy: 'assets/events/busts/ann-shy.png',
+    tired: 'assets/events/busts/ann-tired.png'
+  },
+  peko: {
+    neutral: 'assets/events/busts/peko-neutral.png',
+    happy: 'assets/events/busts/peko-happy.png',
+    angry: 'assets/events/busts/peko-angry.png',
+    sad: 'assets/events/busts/peko-sad.png',
+    surprised: 'assets/events/busts/peko-surprised.png',
+    shy: 'assets/events/busts/peko-shy.png',
+    tired: 'assets/events/busts/peko-tired.png'
+  },
+  sister: {
+    neutral: 'assets/events/busts/sister-neutral.png',
+    happy: 'assets/events/busts/sister-happy.png',
+    angry: 'assets/events/busts/sister-angry.png',
+    sad: 'assets/events/busts/sister-sad.png',
+    surprised: 'assets/events/busts/sister-surprised.png',
+    shy: 'assets/events/busts/sister-shy.png',
+    tired: 'assets/events/busts/sister-tired.png'
+  }
+};
+
 export function eventParticipants(event, residents) {
   const speakers = (event.lines || []).map(line => line.speaker);
   const occupants = (event.rooms || []).flatMap(room => residents.filter(r => r.room === room).map(r => r.type));

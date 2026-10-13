@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>会話バストアップ・感情一覧</title>
+<style>body{margin:0;background:#231e23;color:#f5e5dd;font-family:Meiryo,sans-serif}header{padding:24px;position:sticky;top:0;background:#231e23f5;z-index:2}h1{font-size:22px;margin:0 0 12px}button,select{font:inherit;background:#473540;color:inherit;border:1px solid #c7a17b;padding:8px;border-radius:8px}main{padding:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}.card{margin:0;background:radial-gradient(ellipse,#78626b,#302b34);border:1px solid #77616b;border-radius:16px;overflow:hidden}.card img{width:100%;display:block;aspect-ratio:1;object-fit:contain}.card figcaption{padding:12px;text-align:center}.error{color:#ffb0a0}p{font-size:13px}a{color:#ffd0a4}</style>
+<header><h1>会話用バストアップ・7感情</h1><select id="resident"></select> <button id="all">全員を表示</button><p>各感情で姿勢・手・耳・小道具が変わります。 <a href="play.html?preview=events&case=cigarette">ゲームの会話画面で確認</a></p></header><main id="gallery"></main>
+<script>
+const EVENT_EMOTION_NAMES={neutral:'通常',happy:'喜び',angry:'怒り',sad:'落ち込み・不安',surprised:'驚き',shy:'照れ',tired:'脱力'};
+const CHARACTERS={cat:{name:'灰田 モク'},hostess:{name:'金城 ルナ'},fox:{name:'酔田 ホロ'},ann:{name:'蜜野 アン'},peko:{name:'空腹 ペコ'},sister:{name:'灰田 ネム'}};
+const EVENT_EXPRESSIONS=Object.fromEntries(Object.keys(CHARACTERS).map(key=>[key,Object.fromEntries(Object.keys(EVENT_EMOTION_NAMES).map(emotion=>[emotion,'assets/events/busts/'+key+'-'+emotion+'.png']))]));
+const select=document.querySelector('#resident'),gallery=document.querySelector('#gallery');
+for(const key of Object.keys(EVENT_EXPRESSIONS))select.add(new Option(CHARACTERS[key].name,key));
+function show(all=false){gallery.replaceChildren();for(const [key,states] of Object.entries(EVENT_EXPRESSIONS)){if(!all&&key!==select.value)continue;for(const [emotion,src] of Object.entries(states)){const card=document.createElement('figure');card.className='card';const img=new Image();img.src=src;img.alt=CHARACTERS[key].name+'・'+EVENT_EMOTION_NAMES[emotion];img.loading='lazy';img.onerror=()=>{caption.classList.add('error');caption.textContent+='（画像を読み込めません）'};const caption=document.createElement('figcaption');caption.textContent=img.alt;card.append(img,caption);gallery.append(card);}}}
+select.onchange=()=>show();document.querySelector('#all').onclick=()=>show(true);show();
+</script></html>

@@ -1,5 +1,5 @@
 // Shared left/right conversation view for requests, replies and ordinary journal scenes.
-import { EVENT_ART, CHARACTER_ART, eventParticipants } from './character-art.js';
+import { EVENT_ART, EVENT_EXPRESSIONS, CHARACTER_ART, eventParticipants } from './character-art.js';
 import { CHARACTERS } from './simulation.js';
 const eventEscape = value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const eventSpeakerName = speaker=>speaker==='manager'?'あなた · 管理人':speaker==='narrator'?'けもの荘の記録':CHARACTERS[speaker]?.name||'住人';
@@ -28,13 +28,58 @@ export function eventConversation(event) {
   return lines.length && lines[0].text===event.detail ? lines : [{speaker:'narrator',text:event.detail},...lines];
 }
 
+// Explicit emotion wins; older saves and ordinary journal dialogue use text cues.
+export const EVENT_EMOTION_NAMES = {neutral:'通常',happy:'喜び',angry:'怒り',sad:'落ち込み・不安',surprised:'驚き',shy:'照れ',tired:'脱力'};
+// Directed reactions for the scripted disputes; index follows original event.lines.
+const EVENT_CASE_EMOTIONS = {
+  cigarette:['angry','angry','neutral','angry','tired','neutral'],
+  quit_smoking:['angry','tired','neutral','angry','neutral','surprised'],
+  collection:['angry','tired','neutral','angry','neutral','angry'],
+  karaoke:['tired','happy','neutral','angry','neutral','tired'],
+  wrong_room:['angry','sad','neutral','surprised','angry','neutral'],
+  sober:['angry','happy','neutral','angry','neutral','tired'],
+  gift:['sad','angry','neutral','angry','neutral','angry'],
+  missing_bag:['sad','angry','neutral','angry','sad','neutral'],
+  address:['sad','angry','neutral','angry','neutral','tired'],
+  expose:['sad','sad','neutral','angry','neutral','tired'],
+  limited:['sad','sad','neutral','angry','neutral','sad'],
+  insinuation:['shy','sad','neutral','angry','neutral','sad'],
+  fridge_empty:['sad','angry','shy','angry','neutral','sad','angry'],
+  contest:['neutral','happy','neutral','angry','neutral','sad'],
+  soup:['happy','happy','neutral','angry','neutral','sad'],
+  midnight:['tired','angry','neutral','angry','neutral','tired'],
+  pregnancy:['sad','sad','neutral','sad','angry','neutral'],
+  patron_secret:['angry','neutral','neutral','angry','neutral','angry'],
+  siblings:['sad','angry','neutral','angry','neutral','angry'],
+  fridge:['sad','angry','neutral','sad','neutral','angry'],
+  night_talk:['sad','sad','neutral','angry','neutral','sad'],
+  produce:['sad','neutral','neutral','tired','neutral','angry'],
+  jobs:['angry','sad','neutral','angry','neutral','angry'],
+  roomshare:['neutral','tired','neutral','shy','neutral','angry']
+};
+export function eventEmotion(line, event = {}) {
+  if (Object.hasOwn(EVENT_EMOTION_NAMES, line?.emotion)) return line.emotion;
+  const directed=EVENT_CASE_EMOTIONS[event.caseId]?.[event.lines?.indexOf(line)];
+  if (directed) return directed;
+  const text = line?.text || '';
+  if (/照れ|恥ずか|別に.*ため|好き|近いほど|いい匂い/.test(text)) return 'shy';
+  if (/えっ|ええっ|なんで|まさか|びっくり|嘘|うそ|本当|ほんと/.test(text)) return 'surprised';
+  if (/ありがとう|嬉し|うれし|楽し|よかった|好き|助か|安心|笑/.test(text)) return 'happy';
+  if (/困|ごめん|すみません|不安|心配|怖|悲し|寂し|どうしよう|済まない/.test(text)) return 'sad';
+  if (/抗議|うるさ|くせぇ|怒|ふざけ|やめ|悪いの|するな|嗅いでる場合|穴が開|匂いが移/.test(text)) return 'angry';
+  if (/眠|疲れ|明日|面倒|めんど|だる|起きてない|何もしない|数えない|一本で/.test(text)) return 'tired';
+  return 'neutral';
+}
+
 export function eventStageHTML(event,residents,index=0) {
   const lines=eventConversation(event),cursor=Math.max(0,Math.min(index,lines.length-1)),line=lines[cursor];
   const participants=Array.isArray(event.cast)?event.cast.filter(type=>CHARACTERS[type]):eventParticipants(event,residents),left=participants[0]||null;
   const right=line.speaker==='manager'&&participants[1]?participants[1]:line.speaker!=='narrator'&&line.speaker!==left?line.speaker:participants[1]||'manager';
   const character=(type,side)=> {
-    const src=EVENT_ART[type]||CHARACTER_ART[type]?.src,active=line.speaker===type;
-    return `<figure class="stage-character ${side} ${active?'speaking':''}" data-character="${eventEscape(type||'narrator')}">${src?`<img src="${src}" alt="${eventEscape(eventSpeakerName(type))}の立ち絵">`:''}<figcaption>${eventEscape(eventSpeakerName(type||'narrator'))}</figcaption></figure>`;
+    const previous=lines.slice(0,cursor+1).reverse().find(item=>item.speaker===type);
+    const emotion=eventEmotion(previous,event),expression=EVENT_EXPRESSIONS[type]?.[emotion];
+    const src=expression||EVENT_ART[type]||CHARACTER_ART[type]?.src,active=line.speaker===type;
+    return `<figure class="stage-character ${side} ${active?'speaking':''} ${expression?'expression-art':'fullbody-art'}" data-emotion="${emotion}" data-character="${eventEscape(type||'narrator')}">${src?`<img src="${src}" alt="${eventEscape(eventSpeakerName(type))}のバストアップ（${EVENT_EMOTION_NAMES[emotion]}）">`:''}<figcaption>${eventEscape(eventSpeakerName(type||'narrator'))}</figcaption></figure>`;
   };
   const side=line.speaker===left?'left':line.speaker===right?'right':'narration';
   return `<div class="event-stage">${character(left,'left')}${character(right,'right')}<div class="stage-bubble ${side}" aria-live="polite" aria-atomic="true"><div class="window-ornaments" aria-hidden="true"><span class="ornament paw-one">${eventIcon('paw')}</span><span class="ornament paw-two">${eventIcon('paw')}</span><span class="ornament paw-three">${eventIcon('paw')}</span><span class="ornament paw-four">${eventIcon('paw')}</span><span class="ornament cat-bottom">${eventIcon('cat')}</span><span class="ornament heart-outline">♡</span><span class="ornament star-left">${eventIcon('spark')}</span></div><strong class="stage-speaker">${eventNameFrame()}<span class="speaker-paw">${eventIcon('paw')}</span><span class="speaker-name">${eventEscape(eventSpeakerName(line.speaker))}</span><span class="speaker-heart">${eventIcon('heart')}</span><span class="speaker-star">${eventIcon('spark')}</span></strong><p>${eventEscape(line.text)}</p></div><span class="stage-page">${cursor+1} / ${lines.length}</span></div>`;

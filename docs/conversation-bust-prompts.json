@@ -1,0 +1,78 @@
+{
+  "finalPromptOverrides": {
+  "foxShy": "Create a new transparent PNG dialogue bust portrait of Horo, an adult 27-year-old cat person. Use reference only for identity: same long brown hair, grey eyes, brown cat ears, black striped track jacket and patterned white shirt. Everyday EMBARRASSMENT after an awkward mistake: bashful closed-mouth smile, eyes look sideways, mild cheek blush, shoulders turn away, one hand scratches back of head, other holds silver drink can near shoulder. Entirely new upper-body pose. Modest casual outfit: opaque white T-shirt with a normal high neckline covering chest, black jacket covering shoulders. Detailed painterly anime rendering matching source. Composition complete ears to just below chest, square canvas, face large, expressive hands safely within edges, leave 8 percent clear space above ears. Genuine transparent background, no scenery or text, no lower body. Friendly comic conversation game asset.",
+  "foxTired": "Create a new transparent PNG dialogue bust portrait of Horo, adult age27 cat person. Reference only for identity: same long brown hair, grey eyes, brown cat ears, black striped track jacket and patterned white shirt. Emotion TIRED: drooping eyelids, relaxed slightly open mouth suppressing a yawn, head tilts heavily and rests against palm, other arm loosely cradles silver drink can against upper torso, shoulders sag asymmetrically. Entirely new upper-body pose. Modest everyday outfit, opaque white T-shirt with normal high neckline covering chest and black jacket over shoulders. Detailed painterly anime rendering matching source. Bust portrait complete ears to just below chest, square canvas, face large, expressive hands within edges, leave 8 percent clear headroom. Actual transparent alpha background. No scenery, no text, no lower body. Friendly comic dialogue game sprite."
+},
+  "finalGraphicEdits": {
+  "foxShy": "Precise object edit of the existing transparent game sprite. Preserve the adult cat character, face, embarrassment expression, long brown hair, black striped jacket, pose, hands, drink can, crop, and actual transparent alpha exactly. Only add a distressed dark charcoal abstract jagged band graphic across the front of the white casual T-shirt, matching a worn alternative streetwear shirt. Keep the same modest high crew neckline and opaque shirt. Do not expose any additional skin. No background, no text.",
+  "foxTired": "Precise object edit of existing transparent adult cat game sprite. Keep face, sleepy yawning expression, brown hair, ears, black striped jacket, head resting on hand, can, all anatomy, composition and transparent alpha exactly. Only add a distressed dark charcoal abstract jagged band graphic across the front of the white T-shirt as alternative streetwear. Retain current modest high crew neckline and opaque shirt, no additional exposed skin. No scenery or text."
+},
+  "tool": "built-in image_gen",
+  "reference": "assets/events/<character>.png",
+  "characters": {
+    "cat": "Moku, age29 apathetic messy smoker",
+    "hostess": "Luna, age25 charismatic professional hostess, golden long curls and black white plaid dress with bows/hearts",
+    "fox": "Horo, age27 sloppy heavy drinker, brown long hair and black track jacket over distressed white shirt",
+    "ann": "Ann, age27 quiet kept lover waiting for promises, dusty rose beret and oversized knit cardigan",
+    "peko": "Peko, age23 always hungry bargain hunter, long black hair with blue ribbons and oversized blue sweatshirt",
+    "sister": "Nemu, age22 sharp-tongued younger sister, black bob, pink hair clips, black pink bone jacket"
+  },
+  "poses": {
+    "cat": {
+      "neutral": "Slouches sideways, head tilted, half-lidded indifferent eyes; elbow out and black can loosely dangling by shoulder; other hand lazily scratches back of head.",
+      "happy": "Rare crooked grin; leans back with one shoulder dropped, raises black can in an awkward little toast, other hand relaxed open toward listener.",
+      "angry": "Leans forward defensively, palm extended toward viewer arguing hold on, other hand clenches black can against chest; ears pinned, sharp retort.",
+      "sad": "Shoulders curl inward, worried downcast eyes; both hands cradle black can close to chest, ears droop, head bows.",
+      "surprised": "Reels backward diagonally, eyes wide, mouth open, free palm flung up beside face, black can tilted in other hand without spilling.",
+      "shy": "Looks sideways with flushed cheeks, shoulders hunched, fingers cover awkward smile, black can hidden against chest; ears angle outward.",
+      "tired": "Eyes almost closed, chin sunk into palm, head heavily tilted, shoulders sag, other arm drapes across chest holding can."
+    },
+    "hostess": {
+      "neutral": "Elegant welcoming leaning pose, attentive eyes, open palm inviting listener, other hand touches necklace; broad flowing blonde hair.",
+      "happy": "Bright professional hostess smile, leans toward listener, one hand raised in animated welcome, other fingertips near cheek, ears perked.",
+      "angry": "Poised stern complaint, torso turned three-quarter, one hand firmly planted at side out of frame and other index finger points toward viewer, narrowed eyes and tilted-back ears.",
+      "sad": "Professional smile breaks into worried softness, hands clasped near heart, shoulders turned inward, blonde curls fall forward, ears drooped.",
+      "surprised": "Recoils with widened eyes, fingertips over open mouth, other hand spread outward beside shoulder, hair swings with motion.",
+      "shy": "Blushing genuine smile, head tilts shyly, shoulders turn away while eyes look back at viewer, fingertips curl through a strand of blonde hair.",
+      "tired": "Daytime exhausted hostess off duty, sleepy eyes, stifles yawn with hand, opposite arm folded loosely beneath chest, head droops; same plaid outfit."
+    },
+    "fox": {
+      "neutral": "Tips torso sideways with tipsy languor, rests silver drink can by cheek, opposite hand loosely gestures, heavy-lidded eyes.",
+      "happy": "Big tipsy laugh, upper body leans toward listener, silver drink can thrust forward in toast with perspective, other palm flares outward, hair swings.",
+      "angry": "Rowdy defensive protest, leans forward, can pulled protectively against chest, other hand jabs thumb toward self, ears pinned and open arguing mouth.",
+      "sad": "Mourns empty drink can, looks down at its opening, shoulders collapsed, one hand cups forehead and other raises can uncertainly.",
+      "surprised": "Jerks back eyes wide, silver can raised beside head, free hand outstretched palm-up as if just caught, long hair arcs with movement.",
+      "shy": "Tipsy blush with sideways teasing gaze, knuckle rests beside smiling lips, silver can tucked near shoulder, head dramatically tilted.",
+      "tired": "Very sleepy tipsy slump, head propped by forearm, eyes nearly shut, silver can loosely cradled against chest, jacket hanging as original."
+    },
+    "ann": {
+      "neutral": "Quietly waiting, torso turned slightly sideways, sleeve-covered hand rests at cheek, other hand holds phone close, wistful reserved eyes; dusty rose beret and knit layers.",
+      "happy": "Relieved gentle smile after awaited message, draws phone to heart with one hand, sleeve-covered other hand waves softly, shoulders lift and ears perk.",
+      "angry": "Restrained hurt anger over broken promise, folds one arm across chest, holds phone outward in opposite hand as evidence, chin lifted, eyes narrowed.",
+      "sad": "Waiting for message that never arrives, bends over phone near chest, one oversized sleeve hand wipes corner of eye, ears droop and shoulders curl inward.",
+      "surprised": "Unexpected message, phone raised near face, other sleeve hand covers open mouth, torso twists suddenly, eyes wide and ears upright.",
+      "shy": "Private bashful smile, holds phone against cheek, turns shoulders away and glances back warmly, sleeve-covered fingers hide smile, blush.",
+      "tired": "Exhausted from waiting, cheek sinks into oversized sleeve hand, phone hangs low but within chest framing in other hand, half-closed disappointed eyes."
+    },
+    "peko": {
+      "neutral": "Long black hair with blue ribbons, oversized blue sweatshirt; distracted hungry gaze, holds a wrapped bread roll near chest, opposite palm rests on tummy at bottom edge.",
+      "happy": "Delighted food-lover grin, leans forward presenting golden bread roll toward listener with perspective, other hand raised triumphantly, ears perk.",
+      "angry": "Protective pout over food, hugs wrapped bread roll tightly against chest with one arm, other palm blocks viewer reaching for it, ears flattened.",
+      "sad": "Empty-wallet worry, shoulders folded inward, looks at open empty coin purse held at chest, other hand wipes cheek, brows arched sorrowfully.",
+      "surprised": "Sees a bargain, eyes wide and mouth round, bread roll lifted beside shoulder, other index finger points excitedly outward, torso twists.",
+      "shy": "Caught secretly eating, blushes, one hand covers cheeks/mouth, bread roll with visible bite in other hand against chest, shoulders draw inward.",
+      "tired": "Food coma, sleepy eyelids and satisfied small smile, chin rests on hand, wrapped bread cradled in other arm, relaxed sagging shoulders."
+    },
+    "sister": {
+      "neutral": "Black and pink bone-pattern jacket, black bob with pink clips; leans skeptically sideways inspecting smartphone by shoulder, other hand gestures dryly, incisive eyes.",
+      "happy": "Tries to hide relief at brother replying, small sincere grin, phone lifted near cheek, other hand makes tiny victory fist, pink accents and perked ears.",
+      "angry": "Scolds lazy brother, leans sharply toward viewer, points accusing index finger outward, other hand thrusts smartphone up by shoulder, mouth open and ears pinned.",
+      "sad": "Anxiously waiting for unread reply, both hands clasp phone to chest, shoulders raised inward, worried moist eyes, drooping ears.",
+      "surprised": "Brother finally answered, torso jerks backward, phone raised with screen toward self, opposite palm opens beside face, eyes wide.",
+      "shy": "Defensive tsundere blush, turns shoulders away but eyes glance back, sleeve-covered fingers tug collar, phone tucked against chest, embarrassed pout.",
+      "tired": "Exasperated older-brother care fatigue, facepalm with oversized black sleeve, head tilted and eyes half-closed, phone in other hand, shoulders sag."
+    }
+  },
+  "promptTemplate": "Use case: illustration-story. Create a NEW production visual novel BUST-UP character sprite from scratch. Reference is IDENTITY/COSTUME/ART STYLE only, never reuse its standing pose. Exact same adult character: {character}. Emotion {emotion}. Entirely new expressive pose: {pose} Preserve exact hair color/style, eye color, ear species and outfit design from reference, opaque original clothing; detailed painterly anime linework and shading. Dynamic asymmetrical shoulders, expressive natural five-finger hands, clear distinct silhouette and believable anatomy. Tight BUST-UP framing ONLY: all ears and hair top, large face, shoulders, chest, arms and gesture hands; lower edge at ribs just beneath chest. NO waist/hips/thighs/legs/full body. Face approximately 30 percent canvas height, shoulders span 80 percent width; keep full hands inside canvas, 4 percent transparent headroom. Square 1024x1024 composition. Genuine transparent alpha background, no background/chair/UI/text/balloons. Character should face viewer or slightly toward viewer. Do not merely change face; redraw torso, head angle and both hand gestures.",
+  "catAngryPrompt": "Use case: illustration-story. NEW production visual novel bust-up sprite, redraw from scratch. Reference image is character identity and clothing ONLY; DO NOT reuse its standing pose or full body framing. Character: Moku, adult age29 apathetic messy smoker cat person, black short bob, grey eyes, black cat ears with white tufts, oversized white T-shirt. Emotion ANGRY: lazy defensive irritation, sharply leaning upper torso toward viewer, one shoulder raised, one hand reaches forward palm-out arguing 'hold on', other hand loosely grips black cat-decorated drink can by chest, brows furrowed, lips open retorting, ears tilted back, eyes looking directly toward viewer. Dynamic asymmetric silhouette, expressive hands, natural foreshortening, original reference painterly detailed anime rendering. TIGHT BUST-UP portrait: entire ears/hair, face large, shoulders, chest and hands visible, lower edge cuts at ribs just below chest. NO waist, NO hips, NO thighs, NO full body. Face occupies about 30 percent image height; shoulders span 80 percent width. Centered with 4 percent clear headroom and hands safely inside left/right edges. Square 1024x1024 canvas. Actual transparent alpha background, isolated sprite, NO scenery/chair/UI/text/speech balloons. Keep outfit opaque and original design. Do not simply modify facial expression; create fully new pose and gesture."
+}
