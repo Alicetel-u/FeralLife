@@ -20,14 +20,14 @@ export const ACTIONS = {
   gamble: { label: '一発逆転を夢見てる', icon: '♤', place: 'table' },
   chat: { label: '廊下で立ち話', icon: '♡', place: 'hall' },
   counsel: { label: '廊下で無料お悩み相談', icon: '♡', place: 'hall' },
-  checkBrother: { label: '兄の生存確認中', icon: '♡', place: 'hall' },
+  checkBrother: { label: '姉の生存確認中', icon: '♡', place: 'hall' },
   fight: { label: 'お隣と口論中', icon: '!', place: 'hall' },
   outing: { label: '出かけている', icon: '↗', place: 'table' }
 };
 export const CHARACTERS = {
   ann: { name: '蜜野 アン', species: '猫', age: 27, job: '在宅の文字起こし', traits: ['愛人暮らし', '口止め上手', '約束待ち'], quote: '「一人暮らしだよ。\n……あの人は、たまに寄るだけ。」', color: '#a17d6d', shirt: '#947583', accent: '#cc9b87', cash: 10000, habit: 'shop', warning: '援助は三日おきの会食頼み。「今度」が多い相手を待つ。', bio: '既婚の会社役員・金満トクゾウ（56歳）の愛人。けもの荘では一人暮らしをしている。「いつか一緒に住もう」の約束より、今月の家賃を信用したい。ときどき二人で喫茶店へ歩いていく。', income: 1000 },
   peko: { name: '空腹 ペコ', species: '猫', age: 23, job: 'パン屋の短時間バイト', traits: ['大食い', '財布は空', '特売ハンター'], quote: '「家賃は来週、必ず。\n……このドーナツは別予算だから。」', color: '#403e52', shirt: '#7188bb', accent: '#4177cb', cash: 300, habit: 'eat', warning: '食費が家賃を追い越す。特売弁当では、すぐにお腹が空く。', bio: '給料日だけ満腹で、翌日には財布が空っぽ。パン屋のまかない目当てに働き、帰り道でドーナツを買う。安い家賃にひかれて来たが、食べる量だけは節約できない。', income: 1800 },
-  sister: { name: '灰田 ネム', species: '猫', age: 22, job: '雑貨店のアルバイト', traits: ['地雷系ファッション', '返信待ち', '兄には辛口'], quote: '「別に、お兄ちゃんのために来たんじゃないし。\n……で、今日ごはん食べた？」', color: '#423943', shirt: '#26232c', accent: '#df79a6', cash: 12000, habit: 'checkBrother', warning: '既読がつかないと落ち着かない。推しグッズは「生活必需品」。', bio: 'モクの7歳下の妹。黒とピンクで武装し、兄の「明日から」を一番信用していない。家賃の安さを理由に越してきたが、買い物袋には兄の分のおにぎりも入っている。', income: 2600 },
+  sister: { name: '灰田 ネム', species: '猫', age: 22, job: '雑貨店のアルバイト', traits: ['地雷系ファッション', '返信待ち', '姉には辛口'], quote: '「別に、お姉ちゃんのために来たんじゃないし。\n……で、今日ごはん食べた？」', color: '#423943', shirt: '#26232c', accent: '#df79a6', cash: 12000, habit: 'checkBrother', warning: '既読がつかないと落ち着かない。推しグッズは「生活必需品」。', bio: 'モクの7歳下の妹。黒とピンクで武装し、姉の「明日から」を一番信用していない。家賃の安さを理由に越してきたが、買い物袋には姉の分のおにぎりも入っている。', income: 2600 },
   hostess: { name: '金城 ルナ', species: '猫', age: 25, job: 'キャバクラ勤務（源氏名ルナ）', traits: ['営業スマイル', '昼は省エネ', '情に弱い'], quote: '「相談は無料。延長も無料。\n……家賃まで無料にはならないか。」', color: '#d3ad83', shirt: '#302832', accent: '#e8bf70', cash: 16000, habit: 'counsel', warning: '夜は出勤、昼は爆睡。ご褒美の買い物で給料が消える。', bio: '店では聞き上手、家では既読をつけるだけで精一杯。独立資金を貯めるはずが「仕事用」のバッグが増える。廊下の相談だけは、つい無料で延長してしまう。', income: 4800 },
   cat: { name: '灰田 モク', species: '猫', age: 29, job: '日雇い（休業中）', traits: ['だらしない', '愛煙家', '無気力'], quote: '「明日からちゃんとするニャ。\n……明日になったら言うけどニャ。」', color: '#929f94', shirt: '#52675e', accent: '#bac1a9', cash: 14000, habit: 'smoke', warning: '掃除も貯金も苦手。タバコだけは切らさない。', bio: 'ずっと101号室にいる、けもの荘の古株。灰皿は満杯、予定は空白。', income: 1500 },
   rabbit: { name: '桃井 ミミ', species: '猫', age: 24, job: 'アパレル店員', traits: ['浪費家', '見栄っ張り', 'ブランド好き'], quote: '「これ？ 安かったの。\n分割にしたら、ほぼ無料だし。」', color: '#e1b0a0', shirt: '#b47582', accent: '#f3d5bc', cash: 18000, habit: 'shop', warning: '通販と分割払い。借金がふくらみやすい。', bio: 'おしゃれな部屋に住みたい。でも家賃は安いほうがいい。段ボールは毎日届く。', income: 4500 },
@@ -91,8 +91,16 @@ export function admit(state, type) {
   const c = CHARACTERS[type];
   addEvent(state, 'arrival', `${room}号室に、${c.name}が入居した。`, `${c.bio}\n\n${c.quote}\n\n玄関で受け取った鍵は、少し錆びていた。このアパートに、またひとつ癖のある暮らしが加わる。`, [room], `入居数 ${state.residents.length}/6室。新しい相性とトラブルが生まれる。`);
   if (type === 'sister') {
-    const event = addEvent(state, 'life', 'モクの「明日から」に、妹の監査が入った。', 'ネムは兄の部屋をひと目見て、スマホの画面を伏せた。\n\n「写真に残すと、私まで片づけてない家の子みたいじゃん」。文句を言いながら、持ってきたおにぎりをテーブルに置いた。', [101, room], '兄妹の関係は25から開始。ネムも別の部屋の住人として家賃を払う。');
-    event.lines = [{ speaker: 'sister', name: 'ネム', text: 'お兄ちゃん、まだ明日の準備してるの？' }, { speaker: 'cat', name: 'モク', text: '準備は、丁寧にするほうだから。' }, { speaker: 'sister', name: 'ネム', text: '何年かけてんの。……はい、おにぎり。' }];
+    const event = addEvent(state, 'life', 'モクの「明日から」に、妹の監査が入った。', 'ネムは姉の部屋をひと目見て、スマホの画面を伏せた。\n\n「写真に残すと、私まで片づけてない家の子みたいじゃん」。文句を言いながら、持ってきたおにぎりをテーブルに置いた。', [101, room], '姉妹の関係は25から開始。ネムも別の部屋の住人として家賃を払う。');
+    event.lines = [
+      {speaker:'sister',emotion:'angry',text:'お姉ちゃん、また「明日から」？ 私が来るって言ったのに、座る場所もないじゃん。'},
+      {speaker:'cat',emotion:'sad',text:'ごめんニャ。そこ、今どかすニャ。……荷物、多いねニャ。'},
+      {speaker:'sister',emotion:'shy',text:'私の買い物。……あと、お姉ちゃんのおにぎり。どうせ食べてないでしょ。'},
+      {speaker:'cat',emotion:'happy',text:'私の分も？ ありがとうニャ。ネムが来るの、嬉しいニャ。'},
+      {speaker:'sister',emotion:'shy',text:'……そういうのいいから、先に食べて。'},
+      {speaker:'cat',emotion:'neutral',text:'食べるニャ。片づけはその後で、'},
+      {speaker:'sister',emotion:'angry',text:'明日は禁止！ 私、今ここにいるから！'}
+    ];
   }
   return true;
 }
@@ -139,7 +147,11 @@ function updateHour(state) {
         r.journey.reason = 'トクゾウと喫茶店へ';
         r.cash += 6000;
         const meeting = addEvent(state, 'life', 'アンがトクゾウと、少し距離を空けて歩いている。', '金満トクゾウ、56歳。既婚の会社役員で、アンの恋人でもある。\n\n「今日は時間がなくてね」。その言葉は、アンのほうが先に覚えていた。建物前で合流し、二人は喫茶店へ向かう。渡された封筒は、未来の約束より軽くない。', [r.room], '生活費の援助6000円を受け取った。外観の街路ではトクゾウが隣を歩く。彼は入居せず、アンは一人で帰宅する。');
-        meeting.lines = [{ speaker: 'ann', name: 'アン', text: '今日は「今度」じゃなくて、来てくれたんだ。' }, { speaker: 'ann', name: 'アン', text: '家賃の封筒、約束より先に出してね。' }];
+        meeting.lines = [
+          {speaker:'ann',emotion:'happy',text:'今日は来てくれたんだ。……ううん、責めたいんじゃない。嬉しいの。'},
+          {speaker:'ann',emotion:'sad',text:'でも、また時間がないんだね。もう少し一緒にいたかった。'},
+          {speaker:'ann',emotion:'neutral',text:'生活費はありがとう。次に会う日も、今日は決めたいな。「今度」だけだと待ちづらいから。'}
+        ];
       }
       const outing = addEvent(state, 'life', `${CHARACTERS[r.type].name.split(' ')[1]}が「${plan.reason}」に出かけた。`, '玄関から共用廊下へ。上の階なら階段を下りて、アパートの前の道を歩いていく。\n\n外観モードなら、出かける姿も帰ってくる姿も見守れる。', [r.room], '画面外でしばらく過ごし、同じ道を通って帰宅する。');
       if (r.type === 'cat') { const lines = catOutingLines(state); if (lines) outing.lines = lines; }
@@ -196,7 +208,15 @@ function applyAction(state, r, action, changed) {
       r.trash += r.type === 'peko' ? 4 : 2;
       if (r.type === 'peko' && changed) {
         const event = addEvent(state, bargain ? 'trouble' : 'life', bargain ? 'ペコの特売弁当、満腹まであと三箱。' : 'ペコが「おやつ」のドーナツと大盛りごはんを食べた。', bargain ? '「200円なら節約。二つ買っても節約」。\n\n一箱だけ食べ終え、ペコは空になった容器と財布を見比べた。胃袋は、まだ会議を続けたがっている。' : '「ドーナツは真ん中に穴があるから、実質少なめ」。\n\n大盛りごはんも食べたところで、やっと満足げに耳が揺れた。家賃用の小銭まで、食費になっていた。', [r.room], bargain ? '特売弁当200円。空腹は38減るが、毎時16増える。支払い不足は借金になる。' : '食費900円で空腹が65減少。食べ終えた容器が増えた。');
-        event.lines = [{ speaker: 'peko', name: 'ペコ', text: bargain ? 'お財布は軽いのに、お腹は重くならない……。' : 'お腹いっぱい。……で、デザートは？' }];
+        event.lines = bargain ? [
+          {speaker:'peko',emotion:'sad',text:'もう食べ終わっちゃった……。二つ買うお金はないんだよね。'},
+          {speaker:'peko',emotion:'sad',text:'おいしかったのに、まだお腹空いてる。明日のご飯も先に考えなきゃ。'},
+          {speaker:'peko',emotion:'tired',text:'空の容器を見ても増えないか。……蓋、閉めよ。お腹だけ返事しないで。'}
+        ] : [
+          {speaker:'peko',emotion:'happy',text:'おいしかった！ 大盛りって言葉、見ただけでちょっと元気になる。'},
+          {speaker:'peko',emotion:'surprised',text:'……あ。家賃に残す分まで使っちゃった。'},
+          {speaker:'peko',emotion:'sad',text:'明日は先に分けておこう。ドーナツの穴で減るの、食費じゃなかった……。'}
+        ];
         scripted = true;
       }
       break;
@@ -227,30 +247,47 @@ function applyAction(state, r, action, changed) {
         if (changed) {
           const name = CHARACTERS[target.type].name.split(' ')[1];
           const event = addEvent(state, 'life', `ルナの廊下相談室、${name}が無料延長した。`, '「それ、しんどかったね」。店では時間を測る言葉も、ここでは時計を見ずに出てくる。\n\n相談が終わると、ルナは自分の部屋で無言になった。営業スマイルの充電には、ひとりの時間がいる。', [r.room, target.room], '相手のストレスが22下がり、関係が9改善。ルナのストレスは5増えた。お金のやり取りはない。');
-          event.lines = [{ speaker: 'hostess', name: 'ルナ', text: 'ここ、指名料いらないから。とりあえず座りな。' }, { speaker: target.type, name, text: '……もう少しだけ、聞いてくれる？' }, { speaker: 'hostess', name: 'ルナ', text: '延長ね。はいはい、今日も売上ゼロ。' }];
+          event.lines = [
+            {speaker:'hostess',emotion:'sad',text:'その顔、何かあった？ 話せそうなら聞くよ。無理には聞かない。'},
+            {speaker:target.type,name,emotion:'sad',text:'……ありがとう。誰かに聞いてほしかった。でも、こんな話、迷惑じゃない？'},
+            {speaker:'hostess',emotion:'neutral',text:'迷惑なら言う。今日は少し時間あるから、座って。'},
+            {speaker:target.type,name,emotion:'sad',text:'もう少しだけ、いい？ 言ったら、ちょっと落ち着いてきた。'},
+            {speaker:'hostess',emotion:'happy',text:'うん。……お店なら延長料金だけど、今日はお茶のおかわりでいいよ。'}
+          ];
         }
       } else if (changed) addEvent(state, 'life', 'ルナの相談室、今日は予約ゼロ。', '廊下は静か。「じゃ、私も休憩」。スマホを裏返して、誰にも愛想を振りまかない時間を確保した。', [r.room], '娯楽欲求が下がった。相談相手がいないので関係は変わらない。');
       scripted = true;
       break;
     }
     case 'checkBrother': {
-      const brother = state.residents.find(x => x.type === 'cat');
+      const elderSister = state.residents.find(x => x.type === 'cat');
       n.fun = clamp(n.fun - 32);
-      if (brother && brother.action !== 'sleep' && sampleJourney(brother, state.hour, ACTIONS[brother.action].place).zone === 'room') {
-        r.targetRoom = brother.room;
-        brother.trash = clamp(brother.trash - 8);
-        brother.needs.stress = clamp(brother.needs.stress - 8);
+      if (elderSister && elderSister.action !== 'sleep' && sampleJourney(elderSister, state.hour, ACTIONS[elderSister.action].place).zone === 'room') {
+        r.targetRoom = elderSister.room;
+        elderSister.trash = clamp(elderSister.trash - 8);
+        elderSister.needs.stress = clamp(elderSister.needs.stress - 8);
         n.stress = clamp(n.stress - 5);
-        relation(r, brother, 6);
+        relation(r, elderSister, 6);
         if (changed) {
-          const event = addEvent(state, 'life', 'ネムの生存確認、ついでに空き缶を回収。', '「返信くらいしなよ。生きてるか分かんないじゃん」。\n\n文句の数だけ、袋に空き缶が入っていく。モクは「ありがと」とだけ言った。ネムはそれを聞かなかった顔をした。', [r.room, brother.room], '兄のゴミが8減り、ストレスが8低下。ネムのストレスが5低下し、兄妹の関係が6改善。');
-          event.lines = [{ speaker: 'sister', name: 'ネム', text: '生きてるなら返信して。あと、缶は家具じゃない。' }, { speaker: 'cat', name: 'モク', text: 'いま返そうとしてた。……ありがと。' }, { speaker: 'sister', name: 'ネム', text: '別に。袋が余ってただけ。' }];
+          const event = addEvent(state, 'life', 'ネムの生存確認、ついでに空き缶を回収。', '「返信くらいしなよ。生きてるか分かんないじゃん」。\n\n文句の数だけ、袋に空き缶が入っていく。モクは「ありがと」とだけ言った。ネムはそれを聞かなかった顔をした。', [r.room, elderSister.room], '姉のゴミが8減り、ストレスが8低下。ネムのストレスが5低下し、姉妹の関係が6改善。');
+          event.lines = [
+            {speaker:'sister',emotion:'angry',text:'お姉ちゃん、返信してよ！ 私、何回もスマホ見てたんだから。'},
+            {speaker:'cat',emotion:'sad',text:'ごめんニャ。後で返そうと思って、そのまま忘れたニャ。'},
+            {speaker:'sister',emotion:'sad',text:'……何もなくてよかった。でも、それを先に知りたかったの。'},
+            {speaker:'cat',emotion:'sad',text:'うんニャ。次は一言だけでも送るニャ。……缶も拾ってくれて、ありがとうニャ。'},
+            {speaker:'sister',emotion:'shy',text:'放っとくと、お姉ちゃんがどこに座ってるか分かんなくなるし。'},
+            {speaker:'cat',emotion:'happy',text:'ここニャ。ネムの分も空いたニャ。少し座っていってニャ。'}
+          ];
         }
       } else {
         n.stress = clamp(n.stress + 8);
         if (changed) {
-          const event = addEvent(state, 'life', 'ネムが送った「生きてる？」に既読がつかない。', '兄は外出中か、夢の中。ネムはスマホを伏せて、三秒後にまた開いた。\n\n「心配じゃない。連絡のマナーの話」。廊下は静かなままだった。', [r.room], '返信待ちでネムのストレスが8増加。寝ている兄を起こしたり、外出先を追いかけたりはしない。');
-          event.lines = [{ speaker: 'sister', name: 'ネム', text: '通知ゼロ。……電波のせいってことにしとこ。' }];
+          const event = addEvent(state, 'life', 'ネムが送った「生きてる？」に既読がつかない。', '姉は外出中か、夢の中。ネムはスマホを伏せて、三秒後にまた開いた。\n\n「心配じゃない。連絡のマナーの話」。廊下は静かなままだった。', [r.room], '返信待ちでネムのストレスが8増加。寝ている姉を起こしたり、外出先を追いかけたりはしない。');
+          event.lines = [
+            {speaker:'sister',emotion:'sad',text:'……まだ既読つかない。寝てるだけだよね。'},
+            {speaker:'sister',emotion:'tired',text:'また開いてる。さっきから三秒しか経ってないじゃん、私。'},
+            {speaker:'sister',emotion:'sad',text:'帰ったら一言、送ってって言おう。怒る前に、心配だったって言えたらいいんだけど。'}
+          ];
         }
       }
       scripted = true;
@@ -279,8 +316,13 @@ function applyAction(state, r, action, changed) {
   }
   r.trash = clamp(r.trash);
   if (changed && r.type === 'sister' && action === 'shop') {
-    const event = addEvent(state, 'trouble', 'ネムの「生活必需品」、推しグッズが届いた。', '「これないと出勤できないから、ほぼ仕事道具」。\n\n新しいキーホルダーをバッグにつけ、支払い通知はそっと閉じた。兄のだらしなさには厳しいが、自分のカートには甘い。', [r.room], '通常の買い物代を支払い、足りない分は借金に。箱とゴミが増えた。');
-    event.lines = [{ speaker: 'sister', name: 'ネム', text: '節約？ してるよ。送料が無料になるまで買ったし。' }];
+    const event = addEvent(state, 'trouble', 'ネムの「生活必需品」、推しグッズが届いた。', '「これないと出勤できないから、ほぼ仕事道具」。\n\n新しいキーホルダーをバッグにつけ、支払い通知はそっと閉じた。姉のだらしなさには厳しいが、自分のカートには甘い。', [r.room], '通常の買い物代を支払い、足りない分は借金に。箱とゴミが増えた。');
+    event.lines = [
+      {speaker:'sister',emotion:'happy',text:'届いた……！ このリボン、やっぱ可愛い。買ってよかった。'},
+      {speaker:'sister',emotion:'surprised',text:'……支払い、こんなに？ 送料無料にしたくて増やした分か。'},
+      {speaker:'sister',emotion:'tired',text:'お姉ちゃんには節約って言ってるのに。これ、見られたら何も言えない。'},
+      {speaker:'sister',emotion:'sad',text:'次の給料から先に分けよう。可愛いだけで家賃は払えないし……悔しいけど。'}
+    ];
     scripted = true;
   }
   if (changed && r.type === 'hostess' && action === 'shop') {
@@ -303,7 +345,7 @@ function recordAction(state, r, action) {
     smoke: ['life', `${name}が窓辺で、何本目かのタバコを吸っている。`, '夕飯のことも、家賃のことも、ひとまず煙に巻く。\n\n灰皿を見て「そろそろ捨てるか」と言ったきり、次の一本に火をつけた。', '喫煙欲求とストレスが下がった。空き箱が増えた。'],
     eat: ['life', `${name}の部屋から、夜食のいい匂いがする。`, '冷蔵庫には、半分の玉ねぎと正体不明のタッパー。\n\nとりあえず焼けば何とかなる。今日も、台所から小さな勝利の音がした。', '空腹が下がった。食費を支払い、ゴミが少し増えた。'],
     sleep: ['life', `${name}が、すべてを放り出して眠った。`, 'テレビをつけたまま、布団にもぐりこんだ。\n\nやらなければいけないことは山ほどある。それでも、寝顔だけは平和だった。', '眠気とストレスが下がっている。'],
-    drink: ['life', `${name}が空き缶に囲まれ、ひとり乾杯した。`, '「お疲れ、俺」。\n\n誰もいないテーブルに、乾杯の音だけが響く。今日の問題は明日の自分に託された。', '飲酒欲求とストレスが下がった。部屋が散らかった。'],
+    drink: ['life', `${name}が空き缶に囲まれ、ひとり乾杯した。`, '「お疲れ、私」。\n\n誰もいないテーブルに、乾杯の音だけが響く。今日の問題は明日の自分に託された。', '飲酒欲求とストレスが下がった。部屋が散らかった。'],
     tv: ['life', `${name}がテレビの前で、同じ番組を見ている。`, '再放送なのは知っている。でも、チャンネルを変えるほどの気力もない。\n\n聞き覚えのある笑い声に、つられて少しだけ笑った。', '娯楽欲求とストレスが下がった。'],
     clean: ['life', `${name}が部屋を掃除した。たぶん、気まぐれ。`, '何かを探すうちに、床が少し見えるようになった。\n\n「こんな色だったんだな」。本人がいちばん驚いている。', '衛生状態が良くなり、部屋のゴミが減った。'],
     shop: ['trouble', `${name}宛ての段ボールが、また届いた。`, '「セール最終日だったから」。昨日もそう言っていた。\n\n分割払いの明細をそっと裏返し、新しい服を鏡に合わせる。箱だけが部屋に残った。', '買い物で所持金が減った。足りない分は借金になった。'],

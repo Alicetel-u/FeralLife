@@ -25,7 +25,8 @@ test('each cat incident and door scene is spoken once', () => {
   for (const action of ['smoke', 'drink', 'idle', 'eat', 'tv', 'clean', 'sleep', 'chat', 'fight']) {
     const scene = catIncident({ heard: [] }, action, 'wolf');
     assert.ok(scene, action);
-    for (const line of scene.lines) assert.ok(line.text.length > 0 && line.text.length <= 28, line.text);
+    // Full conversation uses the larger bust dialogue window; short canvas quips are separate.
+    for (const line of scene.lines) assert.ok(line.text.length > 0 && line.text.length <= 120, line.text);
   }
   const door = catDoorIncident(state, 'bear', 'steal');
   assert.equal(door.lines[1].speaker, 'bear');

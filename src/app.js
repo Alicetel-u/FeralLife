@@ -1,11 +1,12 @@
 import { createGame, advance, admit, addEvent, ROOMS, CHARACTERS, NEEDS, ACTIONS, dateAt, formatTime, atmosphere, validateSave } from './simulation.js';
-import { createTalk, stepTalk } from './dialogue.js';
+import { createTalk, stepTalk, claimAutomaticScene, rememberReadScenes } from './dialogue.js';
 import { WorldRenderer, roomBounds, drawPortrait } from './renderer.js';
-import { loadCharacterArt, loadRoomArt, EVENT_ART, eventParticipants } from './character-art.js';
+import { loadCharacterArt, loadRoomArt, EVENT_ART, EVENT_EXPRESSIONS, eventParticipants } from './character-art.js';
 import { sampleJourney, motionLabel } from './movement.js';
 import { MANAGEMENT_CASES } from './event-cases.js';
 import { ensureManagement, managementSummary, managementImpact, openManagementCase, resolveManagementCase } from './management.js';
 import { eventConversation, eventStageHTML, eventIcon, troubleCardHTML } from './event-stage.js';
+import { ACT_ONE_TITLE, ACT_ONE_EVENTS, createActOne, advanceActOne, answerActOne, rewindActOne, validActOne, nextActOneAt } from './act-one.js';
 
 await loadCharacterArt();
 await loadRoomArt();
@@ -13,13 +14,13 @@ await loadRoomArt();
 const $ = id => document.getElementById(id);
 const escape = text => String(text ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen = n => '¥' + Math.round(n).toLocaleString('ja-JP');
-const STORAGE = 'feral-apartments-v1';
+const STORAGE = 'feral-act-one-v1';
 const previewType = new URLSearchParams(location.search).get('preview');
 const eventPreview = previewType === 'events';
 const previewResident = ['hostess', 'fox', 'sister', 'peko', 'ann'].includes(previewType) ? previewType : null;
 let state, restored = false;
-try { const saved = previewResident || eventPreview ? null : JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(saved)) { state = saved; restored = true; } } catch {}
-state ||= createGame();
+try { const saved = previewResident || eventPreview ? null : JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(saved) && validActOne(saved)) { state = saved; restored = true; } } catch {}
+state ||= previewResident || eventPreview ? createGame() : createActOne();
 ensureManagement(state);
 if(eventPreview) {
   for(const type of ['hostess','fox','sister','peko','ann']) {state.pending=[type];admit(state,type);}
@@ -57,6 +58,12 @@ const stageQueue = [];
 const renderer = new WorldRenderer($('world'));
 const talk = createTalk(restored ? (state.events[0]?.id || 0) : 0);
 const modal = $('modal');
+if(state.actOne){
+  const goal=document.createElement('section');goal.className='act-objective';goal.id='act-objective';
+  goal.innerHTML=`<div><small>けもの荘 / 第一幕</small><strong>${ACT_ONE_TITLE}</strong><span id="act-progress"></span></div><button class="act-wait" data-act-wait>次の異変まで見守る →</button>`;
+  document.querySelector('main').prepend(goal);
+  document.querySelector('.brand small').textContent='第一幕 · 二晩を、生き延びろ。';
+}
 let autoFollow = true, cameraKey = '';
 
 function updateCamera() {
@@ -126,10 +133,19 @@ function updateJournal() {
   $('unread-count').textContent = state.events.filter(e => !e.read).length;
 }
 function updateUI() {
+  if(state.actOne){
+    $('act-progress').textContent=`${state.actOne.attempt}周目 · ${state.actOne.completed.length}/2件を突破 · 目標：3日目9時`;
+    document.querySelector('[data-act-wait]').disabled=!!state.ending||!!state.actOne.pending||!state.actOne.started;
+  }
   const management=ensureManagement(state);
-  $('request-count').textContent=management.pending&&!state.ending?'1':'0';
+  if(state.actOne){
+    const p=state.actOne.pending;
+    $('request-count').textContent=p?'1':'0';$('management-button').classList.toggle('has-request',!!p);
+    $('request-notice').hidden=!p;if(p)$('request-title').textContent=ACT_ONE_EVENTS[p.scene].call;
+  }
+  if(!state.actOne){$('request-count').textContent=management.pending&&!state.ending?'1':'0';
   $('management-button').classList.toggle('has-request',!!management.pending&&!state.ending);
-  $('request-notice').hidden=!management.pending||!!state.ending;
+  $('request-notice').hidden=!management.pending||!!state.ending;}
   if(management.pending) $('request-title').textContent=MANAGEMENT_CASES[management.pending.caseId].call||MANAGEMENT_CASES[management.pending.caseId].title;
   const d = dateAt(state.hour), clock = `${String(d.hour).padStart(2,'0')}:${String(d.minute).padStart(2,'0')}`;
   $('day-clock').innerHTML = `${d.day}日目 <span>${clock}</span>`;
@@ -147,7 +163,7 @@ function updateUI() {
   $('pause-button').setAttribute('aria-label', stopped ? '再生' : '一時停止');
   $('pause-button').setAttribute('aria-pressed', String(paused));
   $('pause-button').disabled = !!state.ending;
-  $('playback-state').textContent = state.ending ? '18日間の観察が終わりました' : modal.open ? 'ノートを読んでいる間は一時停止' : paused ? '時間を止めて眺めています' : speed > 1 ? `${speed}倍の速さで暮らしが進みます` : '時間はゆっくり進んでいます';
+  $('playback-state').textContent = state.ending ? (state.actOne?'第一幕の結末に到達しました':'18日間の観察が終わりました') : modal.open ? '会話中は一時停止' : state.actOne?.pending?'モクが大家の返事を待っています' : paused ? '時間を止めて眺めています' : speed > 1 ? `${speed}倍の速さで暮らしが進みます` : '時間はゆっくり進んでいます';
   const r = state.residents.find(r => r.room === state.selected);
   const line = talk.bubbles[0];
   $('scene-caption').textContent = state.ending ? 'ろくでもない灯りが、今日もここに。' : r ? `${r.room}号室 · ${CHARACTERS[r.type].name.split(' ')[1]} / ${motionLabel(r,state.hour,ACTIONS[r.action].label)}` : `${state.selected}号室 · 次の住人を待っている。`;
@@ -161,40 +177,46 @@ function updateUI() {
   if (lastEventId !== state.nextId) { lastEventId = state.nextId; updateJournal(); }
 }
 function header(eyebrow,title,closable=true) { return `<div class="modal-header"><div><p class="eyebrow">${eyebrow}</p><h2 id="modal-title">${title}</h2></div>${closable?'<button class="close-modal" data-close aria-label="閉じる">×</button>':''}</div>`; }
-function openModal(html) { clearTimeout(eventAutoTimer); $('modal-content').innerHTML = html; modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); }
+function openModal(html) { clearTimeout(eventAutoTimer); $('modal-content').innerHTML = html; modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); }
 function closeModal() { eventAuto=false;clearTimeout(eventAutoTimer);modal.close(); updateUI(); }
 modal.addEventListener('close', () => { eventAuto=false;clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); });
 function syncStageCursor() {
+  rememberReadScenes(state);
   seenStageId = state.events.reduce((max, event) => Math.max(max, event.id), 0);
   stageQueue.length = 0;
+  // Show the opening on a new game without replaying the restored journal.
+  if (!eventPreview && !previewResident) stageQueue.push(...state.events.filter(event => !event.read && event.lines?.length && (state.actOne?event.actScene:!restored)).sort((a,b)=>a.id-b.id).map(event=>event.id));
 }
 function queueFreshStageEvents() {
-  const fresh = state.events.filter(event => event.stageOnly && event.id > seenStageId).sort((a, b) => a.id - b.id);
+  const fresh = state.events.filter(event => (event.stageOnly || event.lines?.length) && (!state.actOne||event.actScene) && event.id > seenStageId).sort((a, b) => a.id - b.id);
   for (const event of fresh) {
     seenStageId = event.id;
+    // Dialogue now belongs to the full conversation view, not a second canvas playback.
+    if(event.lines?.length)event.stageOnly=true;
     if (!stageQueue.includes(event.id)) stageQueue.push(event.id);
   }
 }
 function openNextStageEvent() {
-  if (modal.open || state.ending || document.hidden) return;
+  if (modal.open || state.ending || document.hidden || (state.actOne&&!state.actOne.started)) return;
   while (stageQueue.length) {
     const id = stageQueue.shift();
-    if (state.events.some(event => event.id === id)) { showEvent(id); return; }
+    const event=state.events.find(event=>event.id===id);
+    if (event && !event.read && claimAutomaticScene(state,event)) { showEvent(id); return; }
   }
 }
 function showEvent(id,index=0) {
   const e = state.events.find(e => e.id === Number(id)); if (!e) return;
-  if (e.stageOnly) {
+  if (e.stageOnly || e.lines?.length) {
     seenStageId = Math.max(seenStageId, e.id);
     const queued = stageQueue.indexOf(e.id);
     if (queued >= 0) stageQueue.splice(queued, 1);
   }
-  e.read = true; save(); updateJournal();
-  if (state.ending && e.id === state.events[0].id) { showEnding(); return; }
+  e.read = true; rememberReadScenes(state); save(); updateJournal();
+  if (!state.actOne && state.ending && e.id === state.events[0].id) { showEnding(); return; }
   const lines=eventConversation(e),cursor=Math.max(0,Math.min(index,lines.length-1)),last=cursor===lines.length-1;
   eventView={id:e.id,index:cursor};
-  const waiting=!state.ending&&state.management.pending?.eventId===e.id;
-  const c=MANAGEMENT_CASES[e.caseId];
+  const waiting=!state.ending&&(state.actOne?state.actOne.pending?.eventId===e.id:state.management.pending?.eventId===e.id);
+  const c=state.actOne?ACT_ONE_EVENTS[e.actScene]:MANAGEMENT_CASES[e.caseId];
   const choices=waiting&&last?`<div class="decision-panel" aria-label="管理人の返事">${c.choices.map((choice,i)=>`<button class="decision-choice" data-case-event="${e.id}" data-choice="${escape(choice.id)}">${eventIcon(['chat','cat','heart'][i])}<strong>${escape(choice.label)}</strong><span class="choice-paw">${eventIcon('paw')}</span></button>`).join('')}</div>`:'';
   const trouble=c?.call&&e.kind==='trouble'?troubleCardHTML(c.call,waiting&&cursor===0):'';
   const forward=last?(waiting?'<button class="event-return" data-close>返事は後で</button>':state.pending&&e.kind==='arrival'&&!e.rooms.length?'<button class="event-return" data-show-candidates>申込書を見る</button>':`<button class="primary-button" data-close aria-label="観察に戻る">${eventIcon('next')}</button>`):`<button class="primary-button" data-dialogue-next aria-label="次のセリフ">${eventIcon('next')}</button>`;
@@ -220,12 +242,14 @@ function managementMeters() {
   return `<div class="management-meters">${[['管理資金',yen(m.funds)],['建物の安全',`${Math.round(m.safety)} / 100`],['管理人への信頼',`${Math.round(m.trust)} / 100`],['住人の幸福',`${m.happiness} / 100`],['ご近所の仲',`${m.neighbors} / 100`],['話題になり度',`${Math.round(m.buzz)} / 100`]].map(([label,value])=>`<div><small>${label}</small><strong>${value}</strong></div>`).join('')}</div>`;
 }
 function showManagement() {
+  if(state.actOne){showActNotebook();return;}
   const m=ensureManagement(state),pending=m.pending&&!state.ending;
   const request=pending?`<button class="manager-request" data-event="${m.pending.eventId}"><small>返事を待っている住人</small><strong>${escape(MANAGEMENT_CASES[m.pending.caseId].call||MANAGEMENT_CASES[m.pending.caseId].title)}</strong><span>左右の立ち絵で話を聞く →</span></button>`:'<p class="modal-copy">今は返事を待っている相談はありません。暮らしを眺めて、次の便りを待ちましょう。</p>';
   const later=m.queue.filter(q=>q.kind==='report');
   openModal(header('MANAGER’S ROOM / 管理人室','解決しても、暮らしは続く。')+`<div class="modal-body"><p class="modal-copy">管理人は住人を直接操作しません。相談が届いたとき、限られた予算と、その人の気持ちの間で返事を選びます。返事は保留できます。</p><button class="secondary-button" data-sensitive aria-pressed="${!!m.includeSensitive}">生活の重い相談も受ける ${m.includeSensitive?'ON':'OFF'}</button><p class="modal-copy">通常は日常のブラックコメディ。ONにすると、妊娠に関する生活支援の相談も登場します。本人の決断は本人がします。</p>${managementMeters()}${request}<h3 class="manager-section-title">あの返事の、その後</h3>${later.length?later.map(q=>`<div class="aftermath-note"><span>${escape(formatTime(q.dueAt))}ごろ</span><strong>${escape(MANAGEMENT_CASES[q.parentCase].title)}</strong><small>何が起きたかは、届いてから。</small></div>`).join(''):'<p class="modal-copy">後日談の便りは、まだありません。</p>'}<div class="manager-ledger">家賃の入金を管理資金へ加算。維持費は毎日 ¥1,800＋入居者1人につき¥300。支払いで資金がマイナスになった分は管理負債です。18日目の結末までに立て直せます。</div></div><div class="modal-footer"><span>相談 ${m.decisions.length}件に返事 · 助け合い ${m.solidarity}回</span><button class="primary-button" data-close>観察に戻る →</button></div>`);
 }
 function showCandidates() {
+  if(state.actOne){if(state.actOne.status==='clear')showActReward();return;}
   if (!state.pending || state.ending) return;
   openModal(header('NEW NEIGHBORS / 入居申込書','空いている部屋に、誰を迎える？')+`<div class="modal-body"><p class="modal-copy">${state.pending.length === 1 ? '最後の入居候補です。' : '次の住人は、どちらか一人。暮らしの組み合わせが、けもの荘の未来を変えます。'}</p><div class="candidate-grid">${state.pending.map(type=>{
     const c=CHARACTERS[type];return `<article class="candidate-card"><div class="portrait-frame"><canvas data-portrait="${type}" aria-label="${escape(c.species)}獣人の肖像"></canvas></div><h3>${escape(c.name)}</h3><div class="candidate-sub">${escape(c.species)}獣人 · ${c.age}歳 / ${escape(c.job)}</div><div class="traits">${c.traits.map(t=>`<span class="trait">${escape(t)}</span>`).join('')}</div><p>${escape(c.bio)}</p><div class="candidate-warning">⚑ ${escape(c.warning)}</div><button class="primary-button" data-admit="${type}">この住人を迎える →</button></article>`;
@@ -236,19 +260,51 @@ function showHistory() {
   openModal(header('APARTMENT ARCHIVE / 観察日誌','ろくでもない、日々の記録')+`<div class="modal-body"><p class="modal-copy">${state.events.length}件の記録。新しい出来事から順に並んでいます。（最新240件を保存）</p><div class="history-list">${state.events.map(eventHTML).join('')}</div></div><div class="modal-footer"><span>気になる出来事を選ぶと、詳細を読めます。</span><button class="primary-button" data-close>観察に戻る →</button></div>`);
 }
 function showHelp() {
+  if(state.actOne){openModal(header('FIRST ACT / 遊び方','二晩を生き延びれば、次の住人が来る。')+`<div class="modal-body"><p class="modal-copy">1日目17時から3日目9時まで、住人はモクだけ。決められた時刻に2つのイベントが起きます。3択は全部変ですが、各イベントで助かるのは1つだけ。モクの言葉と、部屋の様子を覚えてください。</p><p class="modal-copy">会話中と返事を保留している間は時間が止まります。「次の異変まで見守る」で次のイベントまで進めます。AUTOは台詞だけ、SKIPは選択肢まで読み進めます。回答を勝手に選ぶことはありません。</p><p class="modal-copy">全焼すると、その時の後悔を持って1日目に戻れます。大家ノートには失敗した理由が残ります。データは自動保存されます。</p></div><div class="modal-footer"><button class="primary-button" data-close>モクの様子を見る →</button></div>`);return;}
   openModal(header('HOW TO OBSERVE / 管理人の心得','あなたは、暮らしの後始末を引き受ける。')+`<div class="modal-body"><p class="modal-copy">住人は自分で暮らします。相談や後日談が発生すると、その場で立ち絵と吹き出しが開きます。費用・信頼・安全にはそれぞれ変化があり、後日談が別の事件につながることもあります。返事は保留できます。</p><div class="help-grid"><div class="help-step"><strong><span>01</span>暮らしを眺める</strong>最初は猫の部屋を大きく表示。「全体を見る」で6部屋を一覧できます。下の部屋一覧で住人を選び、「住人ノート」で欲求や所持金を確認。衛生状態だけは、数値が高いほど良好です。</div><div class="help-step"><strong><span>02</span>記録を読む</strong>「日誌」から会話を読み返せます。管理人室には未回答の相談と後日談の予定が届きます。「次へ」で会話を読み、最後に返事を選びます。会話中は時間が止まります。</div><div class="help-step"><strong><span>03</span>次の住人を選ぶ</strong>3日目の9時から、原則3日ごとに2人の入居希望者が現れます。封筒から申込書を開き、一人を空室に迎えましょう。</div><div class="help-step"><strong><span>04</span>アパートの結末を見届ける</strong>18日目の9時に、管理資金・安全・信頼・助け合い・話題と、住人の暮らしから結末が決まります。組み合わせを変えて、別の観察記を始められます。</div></div><p class="modal-copy" style="margin-top:18px;margin-bottom:0">「住人を追う」をONにすると、選んだ住人が部屋を出たとき外観へ、帰宅すると内装へ自動で切り替わります。手動の内装／外観・大きさ切り替えは追跡をOFFにします。⛶で全画面表示。通常速度では10秒＝ゲーム内1時間。3×・6×で進行を速められます。ブラウザを閉じたり、別のタブを表示している間は進行しません。データはこのブラウザに自動保存されます。</p></div><div class="modal-footer"><span>Space：一時停止 / Esc：ノートを閉じる</span><button class="primary-button" data-close>けもの荘を眺める →</button></div>`);
 }
+function showActTitle(){
+  openModal(`<section class="act-screen act-title"><div class="act-grain"></div><img class="act-key-art" src="${EVENT_EXPRESSIONS.cat.tired}" alt="無気力な顔で缶を持つ、灰田モク"><div class="act-title-copy"><p class="act-kicker">KEMONOSOU / THE FIRST ACT</p><p class="act-number">第一幕</p><h2 id="modal-title">アパートを<br><span>火事<span class="act-moku">（モク）</span></span>から守れ！</h2><p class="act-tagline">見守るだけの、簡単なお仕事。<br>……の、はずだった。</p><div class="act-rule"><span>START <b>1日目 17:00</b></span><i>→</i><span>GOAL <b>3日目 09:00</b></span></div><button class="act-primary" data-act-start>${state.actOne.started?'物語の続きを開く':'鍵を受け取り、物語を始める'} <span>→</span></button><p class="act-title-foot">住人は一人。火種は二つ。返事は、あなた次第。</p></div></section>`);
+}
+function showActNotebook(){
+  const a=state.actOne,p=a.pending;
+  const memories=Object.values(ACT_ONE_EVENTS).flatMap(c=>c.choices.filter(x=>a.memory.includes(x.bad)).map(x=>`<article class="act-memory"><small>焼け跡に残った記憶</small><strong>${escape(x.label)}</strong><p>${escape(x.clue)}</p></article>`));
+  openModal(header('LANDLORD’S MEMORY / 大家ノート',`${a.attempt}周目 — 今度こそ、この家を残す。`)+`<div class="modal-body"><p class="modal-copy">目標：3日目9時。モクの返事と、部屋の様子が手がかり。変な回答にも、生き残る理由が一つだけあります。</p>${p?`<button class="manager-request" data-event="${p.eventId}"><strong>${escape(ACT_ONE_EVENTS[p.scene].call)}</strong><span>返事をする →</span></button>`:''}${memories.join('')||'<p class="modal-copy">まだ失敗の記憶はありません。まずはモクの話を聞いてみましょう。</p>'}</div><div class="modal-footer"><button class="primary-button" data-close>観察に戻る →</button></div>`);
+}
+function showActEnding(){
+  endingShown=true;
+  const a=state.actOne,bad=a.status==='bad';
+  const choice=Object.values(ACT_ONE_EVENTS).flatMap(c=>c.choices).find(c=>c.bad===a.failure);
+  openModal(`<section class="act-screen ${bad?'act-burn':'act-clear'}"><div class="act-ending-copy"><p class="act-kicker">${bad?'BAD END / '+a.attempt+'周目':'FIRST ACT / COMPLETE'}</p><h2 id="modal-title">${bad?'全 焼':'この家は、<br>まだここにある。'}</h2><p class="act-ending-story">${escape(state.ending.text)}</p>${bad?`<p class="act-clue">${escape(choice?.clue||'今度は、モクの言葉を聞こう。')}</p><div class="act-loop-reveal"><small>${a.attempt===1?'初めて、時間が巻き戻る。':'また、時計が逆に進む。'}</small><p>火の音が遠ざかる。手の中に、受け取ったばかりの鍵。<br>「新しい大家さん？」——モクの声が、もう一度。</p></div><button class="act-primary" data-act-rewind>後悔を持って、1日目17時へ <span>↶</span></button>`:`<p class="act-clue">${a.attempt}周目で二つの火種を突破。3日目9時、入居募集が解放されました。</p><blockquote>「大家さん、なんでそんなに必死だったニャ。<br>……でも、いてくれて助かったニャ。」<cite>灰田 モク</cite></blockquote><button class="act-primary" data-act-reward>届いた入居申込書を開く <span>→</span></button><button class="act-secondary" data-act-replay>第一幕をもう一度遊ぶ</button>`}</div></section>`);
+}
+function showActReward(){
+  const a=state.actOne;
+  openModal(header('FIRST ACT CLEAR / 入居募集解放',a.reward?`${CHARACTERS[a.reward].name}を、次の住人に。`:'守った家に、誰を迎える？',false)+`<div class="modal-body"><p class="modal-copy">3日目9時。焦げていない封筒に、二人の申込書が入っています。${a.reward?'入居予約が決まりました。モクだけだった家に、新しい暮らしが加わります。':'最初の攻略を突破した報酬です。次に迎える一人を選びましょう。'}</p><div class="candidate-grid">${['hostess','fox'].map(type=>`<article class="candidate-card"><img class="act-reward-art" src="${EVENT_EXPRESSIONS[type].neutral}" alt="${CHARACTERS[type].name}"><h3>${CHARACTERS[type].name}</h3><p>${escape(CHARACTERS[type].bio)}</p><button class="primary-button" data-act-admit="${type}" ${a.reward?'disabled':''}>${a.reward===type?'入居予約済み':a.reward?'次の周回で迎える':CHARACTERS[type].name.split(' ')[1]+'を迎える →'}</button></article>`).join('')}</div></div><div class="modal-footer"><button class="primary-button" data-act-replay>第一幕をもう一度遊ぶ →</button></div>`);
+}
+function resetActState(next){
+  state=next;restored=false;Object.assign(talk,createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;
+  renderer.reset();closeModal();updateCamera();updateRooms();updateUI();save();
+  if(state.actOne.started)openNextStageEvent();else showActTitle();
+}
+modal.addEventListener('cancel',e=>{if(state.actOne&&modal.classList.contains('act-modal'))e.preventDefault();});
 function showEnding() {
   if (!state.ending) return;
+  if(state.actOne){showActEnding();return;}
   endingShown=true;
   const debt=state.residents.reduce((s,r)=>s+r.debt,0);
   openModal(header('THE END / けもの荘・観察記','18日間、見守ってくれてありがとう。')+`<div class="modal-body"><div class="ending-title">「${escape(state.ending.name)}」</div><p class="event-detail" style="text-align:center">${escape(state.ending.text)}</p>${managementMeters()}<div class="ending-stats"><div>暮らした住人<strong>${state.residents.length}人</strong></div><div>受け取った家賃<strong>${yen(state.rent)}</strong></div><div>残った借金<strong>${yen(debt)}</strong></div></div><p class="modal-copy">相談への返事 ${state.management.decisions.length}件。未回答 ${state.management.pending?1:0}件、まだ届いていない後日談 ${state.management.queue.filter(q=>q.kind==='report').length}件。最後の状態で結末を判定しています。</p></div><div class="modal-footer"><button class="text-button" data-close>最後のけもの荘を眺める</button><button class="primary-button" data-restart>別の観察記を始める →</button></div>`);
 }
 function restart() {
-  state=createGame();Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();toast('新しい観察記が始まりました。101号室には、いつもの猫。');
+  state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne)showActTitle();else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
 document.addEventListener('click',e=>{
   const button=e.target.closest('button');if(!button)return;
+  if(button.hasAttribute('data-act-start')){state.actOne.started=true;save();closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();}
+  if(button.hasAttribute('data-act-wait')&&state.actOne?.status==='playing'&&!state.actOne.pending){advanceActOne(state,nextActOneAt(state)-state.hour);queueFreshStageEvents();updateUI();save();if(state.ending)showActEnding();else openNextStageEvent();}
+  if(button.hasAttribute('data-act-rewind')&&state.actOne?.status==='bad')resetActState(rewindActOne(state));
+  if(button.hasAttribute('data-act-reward')&&state.actOne?.status==='clear')showActReward();
+  if(button.hasAttribute('data-act-replay'))resetActState(createActOne());
+  if(button.dataset.actAdmit&&state.actOne?.status==='clear'&&!state.actOne.reward&&['hostess','fox'].includes(button.dataset.actAdmit)){state.actOne.reward=button.dataset.actAdmit;save();showActReward();}
   if(button.hasAttribute('data-close')) closeModal();
   if(button.dataset.room){state.selected=Number(button.dataset.room);updateCamera();updateRooms();updateProfile();updateUI();save();}
   if(button.dataset.view){autoFollow=false;renderer.view=button.dataset.view;updateCamera();updateUI();}
@@ -265,7 +321,7 @@ document.addEventListener('click',e=>{
   if(button.dataset.choice){
     const current=state.events.find(e=>e.id===Number(button.dataset.caseEvent));
     if(eventView?.id===current?.id&&eventView.index===eventConversation(current).length-1){
-      const result=resolveManagementCase(state,button.dataset.caseEvent,button.dataset.choice,addEvent);
+      const result=state.actOne?answerActOne(state,button.dataset.caseEvent,button.dataset.choice):resolveManagementCase(state,button.dataset.caseEvent,button.dataset.choice,addEvent);
       if(result){save();updateUI();showEvent(result.id);}
     }
   }
@@ -296,7 +352,7 @@ $('help-button').onclick=showHelp;
 $('scene-notice').onclick=showCandidates;
 $('history-button').onclick=showHistory;
 $('management-button').onclick=showManagement;
-$('request-notice').onclick=()=>{if(state.management.pending)showEvent(state.management.pending.eventId);};
+$('request-notice').onclick=()=>{const p=state.actOne?state.actOne.pending:state.management.pending;if(p)showEvent(p.eventId);};
 $('follow-button').onclick=()=>{autoFollow=!autoFollow;updateCamera();updateUI();};
 $('inspector-button').onclick=()=>setInspector(!document.body.classList.contains('inspector-open'));
 $('inspector-close').onclick=()=>setInspector(false);
@@ -322,17 +378,18 @@ $('sound-button').onclick=async()=>{
 function frame(now){
   const seconds=Math.min(.25,Math.max(0,(now-lastTime)/1000));lastTime=now;
   const stopped=paused||modal.open||document.hidden||!!state.ending;
-  if(!stopped)advance(state,seconds*speed/10);
+  if(!stopped){if(state.actOne)advanceActOne(state,seconds*speed/10);else advance(state,seconds*speed/10);}
   queueFreshStageEvents();
   stepTalk(talk, state, now, stopped);
   updateCamera();
   renderer.draw(state,now,stopped,document.body.classList.contains('conversation-active')?[]:talk.bubbles);
   if(now-lastUI>300){updateUI();lastUI=now;}
   if(now-lastSave>5000){save();lastSave=now;}
-  if(state.ending&&!endingShown){showEnding();save();}
+  if(state.ending&&!endingShown&&(!state.actOne||!modal.open)){showEnding();save();}
   else openNextStageEvent();
   requestAnimationFrame(frame);
 }
 syncStageCursor();
 updateCamera();updateRooms();updateUI();updateJournal();save();requestAnimationFrame(frame);
 if(restored)toast('前回の観察記の続きから。住人たちは、ここで待っていました。');
+if(state.actOne)showActTitle();

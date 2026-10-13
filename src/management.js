@@ -6,6 +6,8 @@ const MANAGEMENT_TYPES = ['cat','fox','hostess','sister','peko','ann'];
 const MANAGEMENT_ACTIONS = ['idle','eat','sleep','smoke','drink','tv','clean','shop','chat','counsel','fight'];
 const MANAGEMENT_METRICS = ['funds','safety','trust','buzz','solidarity','repairs','success'];
 const MANAGEMENT_NEEDS = ['hunger','sleep','stress','hygiene','fun','alcohol','smoke'];
+const NARRATIVE_VERSION = 3;
+const managementDialogue = lines => lines.map(([speaker,text,emotion])=>({speaker,text,...(emotion?{emotion}:{})}));
 
 export function ensureManagement(state) {
   if (!state.management) {
@@ -13,12 +15,12 @@ export function ensureManagement(state) {
     for(let i=0;i<3;i++)managementRandom(state.management);
   }
   const m=state.management,p=m.pending;
-  if(p&&p.narrativeVersion!==2){
+  if(p&&p.narrativeVersion!==NARRATIVE_VERSION){
     const c=MANAGEMENT_CASES[p.caseId],event=state.events.find(e=>e.id===p.eventId);
     if(c&&event){
       if(c.cast.every(type=>state.residents.some(r=>r.type===type))){
-        Object.assign(event,{title:c.title,detail:c.detail,cast:[...c.cast],rooms:state.residents.filter(r=>c.cast.includes(r.type)).map(r=>r.room),lines:c.lines.map(([speaker,text])=>({speaker,text})),stageOnly:true});
-        p.narrativeVersion=2;
+        Object.assign(event,{title:c.title,detail:c.detail,cast:[...c.cast],rooms:state.residents.filter(r=>c.cast.includes(r.type)).map(r=>r.room),lines:managementDialogue(c.lines),stageOnly:true});
+        p.narrativeVersion=NARRATIVE_VERSION;
       }else{
         m.pending=null;
         if(!m.queue.some(q=>q.kind==='case'&&q.caseId===p.caseId))m.queue.push({kind:'case',caseId:p.caseId,dueAt:state.hour});
@@ -83,8 +85,8 @@ export function openManagementCase(state,id,emit) {
   if(state.ending||m.pending||!c||m.completed.includes(id)||!managementHasCast(state,c))return false;
   const rooms=c.cast.map(type=>state.residents.find(r=>r.type===type).room);
   const event=emit(state,'trouble',c.title,c.detail,rooms,'管理人への相談。返事を保留しても時間切れにはなりません。');
-  event.caseId=id;event.cast=[...c.cast];event.stageOnly=true;event.lines=c.lines.map(([speaker,text])=>({speaker,text}));
-  m.pending={caseId:id,eventId:event.id,openedAt:state.hour,narrativeVersion:2};
+  event.caseId=id;event.cast=[...c.cast];event.stageOnly=true;event.lines=managementDialogue(c.lines);
+  m.pending={caseId:id,eventId:event.id,openedAt:state.hour,narrativeVersion:NARRATIVE_VERSION};
   return true;
 }
 
@@ -108,7 +110,7 @@ export function resolveManagementCase(state,eventId,choiceId,emit) {
   result.stageOnly=true;
   result.cast=[...c.cast];
   const speaker=id==='collection'&&choiceId==='post'?'sister':c.cast[0];
-  result.lines=choice.replyLines?choice.replyLines.map(([speaker,text])=>({speaker,text})):[{speaker,text:choice.reply}];
+  result.lines=choice.replyLines?managementDialogue(choice.replyLines):[{speaker,text:choice.reply}];
   if(later)result.followAt=state.hour+later.delay;
   return result;
 }

@@ -1,95 +1,98 @@
 const NAMES = { cat: 'モク', rabbit: 'ミミ', fox: 'ホロ', wolf: 'ウル', bear: 'ゴロ', mouse: 'チリ', tanuki: 'ポン', hostess: 'ルナ', sister: 'ネム', peko: 'ペコ', ann: 'アン' };
 export const SPEECH_MS = { line: 5200, mutter: 7000 };
 
-// モク（cat）の発話だけを表示時に猫語へ統一する。旧セーブの台詞にも適用する。
-export const mokuNya = text => text === '明日のニャが、ちゃんとやる。たぶん。' ? text : String(text).replace(/([^。！？!?\n]+)([。！？!?]+|$)/gm, (whole, body, ending) => {
+// Old saves use the same voice as new dialogue. Punctuation-only pauses stay pauses.
+export const mokuNya = text => String(text).replace(/([^。！？!?\n]+)([。！？!?]+|$)/gm, (whole, body, ending) => {
   const tail = body.match(/^(.*?)(\s*)$/);
   const words = tail[1], spaces = tail[2];
-  return words && !words.endsWith('ニャ') ? words + 'ニャ' + spaces + ending : whole;
+  return words && /[\p{L}\p{N}]/u.test(words) && !words.endsWith('ニャ') ? words + 'ニャ' + spaces + ending : whole;
 });
-const say = (speaker, text) => ({ speaker, name: NAMES[speaker] || '住人', text: speaker === 'cat' ? mokuNya(text) : text });
+const say = (speaker, text, emotion = 'neutral') => ({ speaker, name: NAMES[speaker] || '住人', text: speaker === 'cat' ? mokuNya(text) : text, emotion });
 const mark = (state, id) => { if (!Array.isArray(state.heard)) state.heard = []; if (!state.heard.includes(id)) state.heard.push(id); };
 const heard = (state, id) => Array.isArray(state.heard) && state.heard.includes(id);
 
+// Event IDs change every meal/visit; identical ordinary dialogue is still the same scene.
+export const dialogueSceneKey = event => event.lines?.length && !event.caseId && !event.caseResult && !event.followupOf
+  ? 'scene:'+JSON.stringify(event.lines.map(({speaker,text})=>[speaker,text])) : null;
+export function claimAutomaticScene(state,event) {
+  const key=dialogueSceneKey(event);
+  if(!key)return true;
+  if(heard(state,key))return false;
+  mark(state,key);return true;
+}
+export function rememberReadScenes(state) {
+  for(const event of state.events)if(event.read){const key=dialogueSceneKey(event);if(key)mark(state,key);}
+}
+
 export const OPENING_LINES = [
-  say('cat', '明日から、片づける。'),
-  say('cat', '今日は準備。灰皿の位置を直した。'),
-  say('cat', '明日のニャが、ちゃんとやる。たぶん。')
+  say('cat', '……新しい大家さん？ モクです。よろしくニャ。', 'neutral'),
+  say('cat', '部屋、散らかっててごめんニャ。いま座る場所を……あ、そこも缶があったニャ。', 'sad'),
+  say('cat', '明日から片づけるつもりニャ。今日は、その準備をしたところニャ。', 'tired'),
+  say('cat', '何を準備したかって？ ……ゴミ袋の値段、調べたニャ。', 'shy'),
+  say('cat', '買ってないニャ。そこまで聞かれるとは思ってなかったニャ。', 'tired')
 ];
-
 const MUTTERS = {
-  smoke: ['換気？ 窓、開いてるから。煙は外。', '灰皿、溢れてない。山になってるだけ。', '一本でやめる。この一本は数えない。', '家賃の封筒、灰の下で守られてる。', '肺が文句言うなら、肺が出ていけばいい。'],
-  drink: ['乾杯の相手は、昨日の俺。来なかった。', '空き缶は家具。捨てると部屋が減る。', '明日から減らす。明日の俺に言っといて。', 'これ栄養。液体の、夜ごはん。'],
-  idle: ['天井の染み、昨日より偉そう。', '動くと疲れる。考えてるだけで仕事。', '何もしないのが、今日の成果。', '管理人、見てるなら家賃を見て。'],
-  eat: ['期限は目安。匂いは、まだ家族。', '玉ねぎと謎。焼けば、どっちも飯。', '皿を洗う前に、次の皿がいる。'],
-  tv: ['再放送。俺の人生と一緒。', '笑うところ、一緒に笑っといた。楽。', 'リモコンは遠い。番組は近い。'],
-  clean: ['床、この色だった。知らなかった。', '一本どかした。片づけ、完了。', 'きれいな場所ができた。灰皿を置こう。'],
-  sleep: ['起きてない。見学は静かに。', '夢の中なら、家賃ない。'],
-  outing: ['コンビニ、歩く分だけ運動。', '袋は、タバコが本体。', '食料はおまけ。帰りに一本。'],
-  chat: ['別に用はない。沈黙が気まずいだけ。', '相手の話、半分は煙の向こう。'],
-  fight: ['悪いのは、壁が薄いほう。', '謝る気はない。説明なら、する。']
+  smoke: ['一本だけにしよう……。あ、また火つけちゃった。', 'ネムに咳のこと聞かれたら、怒られるかな。', '窓、もうちょっと開けるか。隣に匂いが行くと悪いし。', '灰皿、洗わないとな。……その前に火は消そう。'],
+  drink: ['今日も仕事探すページだけ見て終わっちゃった。', 'ネムから返信来た。……あとで返すと、また忘れるな。', 'もう一本はやめとこう。明日起きられなくなるし。'],
+  idle: ['動くの面倒……。でも、このまま夕方になるのも嫌だな。', 'ゴミの日、今日だった？ ……昨日か。', '大家さん、見てるなら一緒に片づけてくれてもいいのに。'],
+  eat: ['これ、昨日の残りか。匂いは……やめとこう。', 'ちゃんと食べたって言える物、作っとかないと。', 'お腹は空くのに、料理する気力は湧かないんだよな。'],
+  tv: ['この回、前にも見た。……でも最後は忘れた。', 'ここで笑ったら、少し元気になる気がする。', 'リモコン遠い……。隣の缶よりは遠くないか。'],
+  clean: ['床、こんな色だったんだ。ちょっと気持ちいい。', '一本ずつでも、捨てれば減る……はず。', 'ここまでやったら休憩。いや、もう一袋だけ。'],
+  sleep: ['五分だけ……。ネムには起きてから返す。', '寝る前はやる気あったのに……明日は覚えてるかな。'],
+  outing: ['食料買って帰ろう。タバコだけだとまた怒られる。', '袋、重い。ちゃんとご飯買った証拠だな。'],
+  chat: ['一人も楽だけど、たまに誰かの声があると安心する。', 'いまの話、もう少し聞いてもいいかな。'],
+  fight: ['言い方、きつかったかな……。でも全部私が悪いのは違う。', '謝るなら、落ち着いてからちゃんと言いたい。']
 };
-const FALLBACK = ['……いま、考えてる。考えたことにする。', '管理人、まだ見てる。暇なんだ。'];
-
+const FALLBACK = ['……いま何しようとしてたっけ。', '大家さん、暇なら声かけてくれてもいいのに。'];
+// Active residents each answer the preceding line, rather than a shared poetic fallback.
 const reply = {
-  chat: { rabbit: 'その煙、今日の服に入らない。', fox: '飲む？ ないなら、私のがある。', wolf: '無言だと、配信の間が持たない。', bear: '無口だと、腹の音が主になる。', mouse: '沈黙、袋に詰めて保管する。', tanuki: '気まずいなら、一回賭けない。' },
-  fight: { rabbit: '匂いの話、分割でも払えない。', fox: '酔ってない。床が斜めなだけ。', wolf: 'それ、コメント欄の意見と一緒。', bear: '臭くても、飯の匂いは別腹。', mouse: 'その灰、資源として引き取る。', tanuki: '喧嘩、次の一回でチャラにできる。' },
-  doorChat: { rabbit: '窓、閉めて。この服、投稿用。', fox: '煙い。でも、缶は開ける。', wolf: '今それ、マイクが拾ってる。', bear: '煙たい。でも、なんか腹が減った。', mouse: '灰、捨てないで。あとで使う。', tanuki: 'この匂いの席、いくらで買える。' },
-  doorFight: { rabbit: '開けるか、匂いを分割にして。', fox: 'うるさい。今、いいところなのに。', wolf: '壁ドン、配信的には好感度。', bear: '開けて。匂いの前に、腹だ。', mouse: '閉まってても、匂いは資源。', tanuki: '開けないなら、その態度に賭ける。' },
-  steal: { rabbit: '名前くらい、ブランド表記で書いて。', fox: 'それ、おつまみだったの。', wolf: '食ってるとこ、撮っていいか。', bear: '読めなかった。ご縁だと思った。', mouse: '残りは、私が保管する。', tanuki: 'それ、勝ち分の前借りで。' },
-  sell: { rabbit: 'その石、コーデに合わない。', fox: '石じゃ飲めない。お酒にして。', wolf: 'それ、スーパーチャットで売るやつ。', bear: '食べられない石は、腹に溜まらない。', mouse: '石、まだ使える。引き取る。', tanuki: 'その石、次の一回に使える。' }
+  chat: { hostess:'いいよ。愚痴でも聞く？ 私も今日はちょっと疲れた。', sister:'お姉ちゃんから話しかけるの、珍しいね。聞くよ。', fox:'話すのはいいけど、その煙、こっちに来てる。', peko:'うん！ ご飯の話じゃなくても、聞くよ。', ann:'私も、一人だと考えすぎちゃう日がある。', rabbit:'うん。ただ、その服に煙がつくのは嫌だから窓際はやめよう。', wolf:'今は配信切ってる。普通に話していいよ。', bear:'いいよ。ご飯食べながらでもよければ。', mouse:'聞いてるよ。これだけ先にしまわせて。', tanuki:'たまには賭けの話じゃないのも聞きたい。' },
+  fight: { hostess:'苦情を言っただけ。追い返す前に聞いてよ。', sister:'お姉ちゃん、怒鳴ると何が嫌か分かんない。', fox:'私も言い方は悪かった。でも、その匂いは嫌。', peko:'私にも言いたいことあるの！ 最後まで聞いて！', ann:'言い返す前に、何が困ってるかだけ聞いて。', rabbit:'その言い方で、もっと話したくなくなる。', wolf:'分かった。声は落とすから、そっちも怒鳴らないで。', bear:'勝手に食べたのは悪かった。ごめん。', mouse:'いきなり怒られたら、説明もできないよ。', tanuki:'ごめん。でも、全部こっちのせいにしないで。' },
+  doorChat: { hostess:'私も休憩中。煙が少ない所なら座るよ。', sister:'お姉ちゃん、ご飯食べた？ 話の前にそれ聞きたい。', fox:'座る。……その缶、飲んでいいやつ？', peko:'お邪魔します！ ご飯の匂いにつられたわけじゃないよ！', ann:'ありがとう。少しだけ話したくて。', rabbit:'お邪魔するね。窓、もう少し開けてもいい？', wolf:'今日はカメラ持ってない。心配しなくていいよ。', bear:'少しだけ。今、食べてたところだった？', mouse:'ありがとう。足元、どこに置いたらいい？', tanuki:'お邪魔する。今日は何も売らないから安心して。' },
+  doorFight: { hostess:'閉めても匂いは出てるの。返事だけじゃなく対策して！', sister:'お姉ちゃん、ちゃんと顔見て話したい。', fox:'煙でむせたんだよ。怒りたいわけじゃない。', peko:'追い返さないで。私の話も聞いてよ！', ann:'今、落ち着いて言ってる。無視しないで。', rabbit:'服に匂いがついて困ってるの。話くらい聞いて。', wolf:'声は抑えるから、ドア越しでも聞いて。', bear:'食べ物のことで謝りに来たんだけど。', mouse:'取りに来た物があるだけ。怒らないで。', tanuki:'ごめん。でも今は確認したいだけ。' },
+  steal: { hostess:'……ごめん。もらっていいと思い込んだ。買い直す。', sister:'お姉ちゃんの分だった？ ごめん、聞けばよかった。', fox:'おつまみに合いそうで……。いや、ごめん。言い訳。', peko:'ごめん！ すごくお腹空いてて……でも勝手に食べちゃ駄目だよね。', ann:'すみません。残り物だからいいと思ってしまった。', rabbit:'名前、見てなかった。ごめん。', wolf:'悪かった。代わりの物、ちゃんと持ってくる。', bear:'ごめん。食べる前に聞くべきだった。', mouse:'片づける物と間違えた。ごめん。', tanuki:'ごめん。少しくらいならって、勝手に決めた。' },
+  sell: { hostess:'いらない物を、断りづらく売らないでよ。', sister:'お姉ちゃん、それ本当に必要なの？', fox:'縁起物より飲み物が欲しくて……でも断ればよかった。', peko:'これ買ったら、ご飯買えないんだけど。', ann:'説明を聞いただけで、買うとは言ってないよ。', rabbit:'服に合わせる物じゃないから、私は買わない。', wolf:'紹介はできるけど、効果まで約束はしないよ。', bear:'食べられる物だと勘違いした。返してもいい？', mouse:'置く場所がないから、今回はやめておく。', tanuki:'運が良くなると思ったんだけど……分からないな。' }
 };
-const answer = (table, type) => table[type] || '……いま、それどころじゃない。';
-
+const answer = (table,type) => table[type] || 'ちょっと待って。私の話も聞いて。';
 const INCIDENTS = {
-  smoke: { id: 'ash-vent', kind: 'life', title: 'モクが、換気は終わっていると言った。', detail: '窓は、指一本ぶん開いていた。\n\n煙のほとんどは部屋に残っている。本人はそれを「外の仕事」と呼んだ。', impact: '喫煙でモクのストレスは下がった。部屋の空気は、下がっていない。', lines: [say('cat', '換気はしてる。窓、開いてる。'), say('cat', '開いてないように見えるなら、見方が悪い。'), say('cat', '煙は外の責任。部屋は通り道。')] },
-  drink: { id: 'toast-can', kind: 'life', title: 'モクが、いない自分と乾杯した。', detail: 'テーブルの空き缶が、聴衆だった。\n\n「お疲れ」のあと、返事をした缶はひとつもない。そのぶん、缶は増えた。', impact: '飲酒でストレスは下がった。空き缶は、家具のまま残った。', lines: [say('cat', 'お疲れ、俺。昨日の俺は来ない。'), say('cat', '返事がない。缶は否定しない。'), say('cat', 'じゃあ、缶だけでいい。いい相棒。')] },
-  idle: { id: 'stain-boss', kind: 'life', title: 'モクが、天井の染みに負けた。', detail: '染みは昨日と同じ形をしていた。\n\n動いたら負けだと思ったらしい。一時間後も、モクは染みの下にいた。', impact: '何もしない一時間が、本人の中では成果になった。', lines: [say('cat', 'あの染み、昨日より上から見てくる。'), say('cat', '動けって顔してる。動いたら負け。'), say('cat', '今日は、染みの下で暮らす。')] },
-  eat: { id: 'expiry-family', kind: 'trouble', title: 'モクが、期限切れを家族と呼んだ。', detail: '冷蔵庫の奥から、昨日の残りが出てきた。\n\n匂いは反対していた。モクは火をつけて、反対を黙らせた。', impact: '空腹は下がった。冷蔵庫の奥は、明日の家族のまま。', lines: [say('cat', '期限は昨日。昨日は家族。'), say('cat', '匂いが反対しても、焼けば黙る。'), say('cat', '残ったら、明日の家族。')] },
-  tv: { id: 'rerun-life', kind: 'life', title: 'モクが、再放送に今日の参加を済ませた。', detail: 'オチは知っている。リモコンは遠い。\n\n笑うところだけ一緒に笑って、モクは今日を終えた気になった。', impact: '娯楽欲求は下がった。番組表は、明日も同じところから始まる。', lines: [say('cat', 'この回、前にも見た。オチも知ってる。'), say('cat', 'リモコンまで、往復が遠い。'), say('cat', '笑っとけば、今日は参加したことになる。')] },
-  clean: { id: 'clean-ash', kind: 'life', title: 'モクが、空いた床に灰皿を戻した。', detail: '床の色が、少しだけ見えた。\n\nモクはそこをしばらく見て、灰皿を元の位置に置いた。片づけは、それで完了した。', impact: '床は一瞬見えた。灰皿が、その証拠を隠した。', lines: [say('cat', '床、この色だった。知らなかった。'), say('cat', '空いた。ここに置くもの、決まってる。'), say('cat', '灰皿。片づけ、完了。')] },
-  sleep: { id: 'sleep-rent', kind: 'life', title: 'モクが、夢の中の家賃を踏み倒した。', detail: '寝息だけが規則正しい。\n\n起きているあいだの約束は、枕の向こうに置いてきた。', impact: '眠気は下がっていく。家賃の約束は、枕の下のまま。', lines: [say('cat', '起きてない。見学は、静かに。'), say('cat', '夢の中なら、家賃がない。'), say('cat', '起こすなら、灰皿を持ってきて。')] },
-  chat: { id: 'fill-silence', kind: 'life', title: 'モクが、沈黙を煙で埋めた。', detail: '話の続きは、特にない。\n\n煙が代わりに廊下へ出て、二人のあいだを埋めた。', impact: '立ち話で関係は少し動いた。空気は、モクのほうに寄った。', lines: other => [say('cat', '別に用はない。沈黙が気まずい。'), ...(other ? [say(other, answer(reply.chat, other))] : []), say('cat', 'じゃあ、煙で埋めておく。')] },
-  fight: { id: 'smell-follows', kind: 'trouble', title: 'モクが、匂いだけ相手に付けて返した。', detail: '文句は廊下で受け取った。\n\nモクは部屋の側に残り、煙だけを相手に付けて返した。', impact: '口論で関係は悪化した。煙は、モクの部屋を本籍のまま出た。', lines: other => [say('cat', '文句なら、外で聞いた。'), ...(other ? [say(other, answer(reply.fight, other))] : []), say('cat', '帰れ。煙は、ついていく。')] }
+ smoke: { id:'ash-vent',kind:'life',title:'モクが、換気の言い訳を飲み込んだ。',detail:'窓は指一本ぶん開いていた。大家に顔をしかめられ、モクは窓をもう少し開ける。灰皿を隠すより、その方が早かった。',impact:'一服でストレスは下がった。火の始末も確認した。',lines:[say('cat','……煙い？ ごめん。自分だと慣れちゃって分からなくなるニャ。','sad'),say('cat','窓、開けてたつもりだったけど……これじゃ隙間だニャ。','shy'),say('cat','次はちゃんと開けるニャ。タバコやめる約束まで、いま押し込まないでニャ。','tired')] },
+ drink: { id:'toast-can',kind:'life',title:'モクの乾杯に、返信が来た。',detail:'一人で缶を開けたモクのスマホに、ネムから「ご飯は？」と届く。夕飯の写真を撮るため、姉は缶を画面の外へどかした。',impact:'飲酒でストレスは下がった。空き缶が増えた。',lines:[say('cat','お疲れ、私。……何に疲れたんだろうニャ。','tired'),say('cat','ネムから「ご飯は？」って。缶の写真送ったら怒るよねニャ。','sad'),say('cat','何か食べてから返すニャ。心配されるの、嫌なわけじゃないニャ。','shy')] },
+ idle: { id:'stain-boss',kind:'life',title:'モクが、動かない理由を探した。',detail:'モクは天井を見上げていた。やることは分かっている。でも立ち上がるまでが遠い。大家の足音が近づくと、空き缶を一本だけ拾った。',impact:'何もしない時間が過ぎた。片づけは一本だけ進んだ。',lines:[say('cat','ずっと天井見てたニャ。考え事……って言うほど、何も考えてないニャ。','tired'),say('cat','やらなきゃって思うほど、動きづらい日もあるニャ。','sad'),say('cat','……今日は一本捨てるニャ。二本目は、褒められたら考えるニャ。','shy')] },
+ eat: { id:'expiry-family',kind:'trouble',title:'モクが、昨日の残りと目を合わせた。',detail:'冷蔵庫から出した容器は、開けた瞬間に食欲を奪った。モクは箸を止める。節約のつもりで体調を崩すと、ネムの説教まで追加される。',impact:'食事で空腹は下がった。怪しい残り物は捨てた。',lines:[say('cat','これ、いつのだっけ。……匂い、ちょっとまずいニャ。','surprised'),say('cat','もったいないけど捨てるニャ。ネムに心配かける方が嫌ニャ。','sad'),say('cat','ちゃんと食べる物を作るニャ。まず鍋……あ、洗うところからニャ。','tired')] },
+ tv: { id:'rerun-life',kind:'life',title:'モクが、知っている話で笑った。',detail:'再放送だと気づいたのに、モクは最後まで見た。笑う場所も同じだった。番組が終わると、一瞬だけ部屋が静かすぎた。',impact:'テレビで娯楽欲求が下がった。',lines:[say('cat','この回、前も笑ったニャ。分かってても笑っちゃうニャ。','happy'),say('cat','一人で笑ってると、たまにちょっと恥ずかしいニャ。','shy'),say('cat','……大家さんも見る？ あ、そこは缶どかしてから座ってニャ。','neutral')] },
+ clean: { id:'clean-ash',kind:'life',title:'モクが、空いた床を守ろうとした。',detail:'ゴミ袋が一つ満杯になった。久しぶりに床が見える。モクは喜んで灰皿を置きかけ、いま片づけた意味を思い出した。',impact:'片づけでゴミが減った。',lines:[say('cat','見て、床が見えたニャ。……褒めるには遅すぎる？','happy'),say('cat','ここに灰皿を置けば……いや、それで散らかったんだったニャ。','surprised'),say('cat','綺麗なままにするニャ。今日はここ、ネムが座れるようにニャ。','shy')] },
+ sleep: { id:'sleep-rent',kind:'life',title:'モクが、五分だけを延長した。',detail:'起こされたモクは、枕を抱いて五分だけ待ってほしいと言う。机のスマホには未読の通知があった。寝ぼけた手が、画面の手前で止まる。',impact:'眠気は下がっていく。返信はまだ送れていない。',lines:[say('cat','……起きてるニャ。目だけ、まだ寝てるニャ。','tired'),say('cat','ネムに返事しないと。五分だけ待ってニャ。','sad'),say('cat','五分前にも言った？ ……それはごめんニャ。時計、こっちに置いてニャ。','shy')] },
+ chat: { id:'fill-silence',kind:'life',title:'モクが、用のない立ち話に誘った。',detail:'モクは用事があるわけではなかった。通りかかった相手を呼び止めてから、何を話すか考える。灰皿は、相手から遠い方へ動かした。',impact:'立ち話で関係が少し改善した。',lines:other=>[say('cat','あ、ちょっといい？ 用はないんだけど……誰かと話したくてニャ。','shy'),...(other?[say(other,answer(reply.chat,other),'neutral')]:[]),say('cat','ありがとうニャ。私から呼んだのに話題ないの、ちょっと気まずいニャ。','shy')] },
+ fight: { id:'smell-follows',kind:'trouble',title:'モクが、強く言った後で口を閉じた。',detail:'廊下からの苦情に、モクは先に言い返した。相手の顔を見てから、問題は煙だけではなく、自分の言い方にも増えたと気づいた。',impact:'口論で関係が悪化した。',lines:other=>[say('cat','私ばっかり言われても困るニャ。そっちだって……。','angry'),...(other?[say(other,answer(reply.fight,other),'angry')]:[]),say('cat','……うん。先に聞くニャ。怒鳴ったのは、ごめんニャ。','sad')] }
 };
-
 const DOORS = {
-  chat: { id: 'door-chat', kind: 'life', title: name => `${name}が廊下に立ったら、モクは煙を席代にした。`, detail: '会話は成立している。条件が、おかしいだけだ。\n\n灰が一つ落ちるたび、相手の返事は短くなった。', impact: '立ち話で関係は動いた。席代は、服に残る煙で払われた。', lines: actor => [say('cat', '用があるなら、煙の前で言って。'), say(actor, answer(reply.doorChat, actor)), say('cat', '座ると服に残る。それが席代。')] },
-  fight: { id: 'door-fight', kind: 'trouble', title: name => `${name}がドアを叩いた。モクは開けなかった。`, detail: 'ドアは閉まったまま、声だけが通った。\n\n開けていたら、灰まで廊下に出ていた。', impact: '口論で関係は悪化した。ドアの向こうに、煙が残った。', lines: actor => [say('cat', 'ドアは開けない。声は通る。'), say(actor, answer(reply.doorFight, actor)), say('cat', '開けたら、灰が向こうまで行く。')] },
-  steal: { id: 'door-steal', kind: 'trouble', title: name => `${name}が、モクの棚の一番前を空けた。`, detail: '名前は書いてあった。読まれなかった。\n\n残ったのは、洗われた空の容器だけだった。', impact: '食べ物が消えた。モクのストレスと、相手との関係が悪化した。', lines: actor => [say('cat', 'それ、棚の一番前。昨日の家族。'), say(actor, answer(reply.steal, actor)), say('cat', '洗った容器は、もう食べ物じゃない。')] },
-  sell: { id: 'door-sell', kind: 'trouble', title: name => `${name}が、モクの灰皿の横を売場にした。`, detail: '石は、灰皿の足として採用された。\n\n金運が定着したかは、灰の山に聞いてみないとわからない。', impact: '所持金が動き、関係が悪化した。石は、灰皿の足になった。', lines: actor => [say('cat', '石は、灰皿の足でいい。'), say(actor, answer(reply.sell, actor)), say('cat', '定着した灰は、金になるの。'), say(actor, '返すなら、説明が要る。')] }
+ chat:{id:'door-chat',kind:'life',title:name=>`${name}が、モクの部屋で足の置き場を探した。`,detail:'モクは訪ねてきた相手を部屋へ誘った。しかし椅子にも床にも缶がある。「座って」と言ってから、姉は慌てて片づけた。',impact:'立ち話で関係が動いた。',lines:actor=>[say('cat','どうぞニャ。……座る前に待って。そこ、缶が転がるニャ。','shy'),say(actor,answer(reply.doorChat,actor),'neutral'),say('cat','片づけ途中ニャ。「途中」は、昨日から続いてるニャ。','tired')]},
+ fight:{id:'door-fight',kind:'trouble',title:name=>`${name}の苦情に、モクがドア越しで言い返した。`,detail:'ドアを開けずに答えたモクへ、廊下から困っている理由が返った。姉はドアノブに手をかける。逃げたままでは、話も終わらない。',impact:'口論で関係が悪化した。',lines:actor=>[say('cat','いま開けたら、もっと煙が出るニャ。ここで聞くニャ。','tired'),say(actor,answer(reply.doorFight,actor),'angry'),say('cat','……分かったニャ。ドア閉めて、話まで閉めたのは悪かったニャ。','sad')]},
+ steal:{id:'door-steal',kind:'trouble',title:name=>`${name}が、モクの夕飯を先に食べていた。`,detail:'夕飯にするはずの容器が空になっていた。モクが名前の札を見せると、食べた相手はようやく箸を置いた。洗った容器では、お腹は満たせない。',impact:'食べ物がなくなり、モクのストレスと関係が悪化した。',lines:actor=>[say('cat','それ、私の夕飯だったニャ。名前も書いたのにニャ。','angry'),say(actor,answer(reply.steal,actor),'sad'),say('cat','次は先に聞いてニャ。……容器を洗ったのは嬉しいけど、ご飯も返してほしいニャ。','sad')]},
+ sell:{id:'door-sell',kind:'trouble',title:name=>`${name}が、買った石より先に財布を見た。`,detail:'縁起物の石の話は、いつの間にか代金の話になっていた。相手の顔を見て、モクは石を引っ込める。今のままでは、運より関係が悪くなる。',impact:'所持金が動き、関係が悪化した。',lines:actor=>[say('cat','買った物の話かと思ってたニャ。お金が絡むなら、先に言ってニャ。','angry'),say(actor,answer(reply.sell,actor),'sad'),say('cat','いらないなら返そうニャ。運が良くなる前に、気まずくなってるニャ。','tired'),say(actor,'うん。次は値段も、先に確認する。','sad')]}
 };
-
 const copyLines = lines => lines.map(line => ({ ...line }));
 export function catMutters(action) { return MUTTERS[action] || FALLBACK; }
-export function catIncident(state, action, otherType = null) {
-  const scene = INCIDENTS[action];
-  if (!scene || heard(state, scene.id)) return null;
-  mark(state, scene.id);
-  const lines = typeof scene.lines === 'function' ? scene.lines(otherType) : copyLines(scene.lines);
-  return { kind: scene.kind, title: scene.title, detail: scene.detail, impact: scene.impact, lines };
+export function catIncident(state,action,otherType=null) {
+  const scene=INCIDENTS[action];if(!scene||heard(state,scene.id))return null;mark(state,scene.id);
+  return {kind:scene.kind,title:scene.title,detail:scene.detail,impact:scene.impact,lines:typeof scene.lines==='function'?scene.lines(otherType):copyLines(scene.lines)};
 }
-export function catDoorIncident(state, actorType, action) {
-  const scene = DOORS[action];
-  if (!scene || actorType === 'cat' || !NAMES[actorType] || heard(state, scene.id)) return null;
-  mark(state, scene.id);
-  return { kind: scene.kind, title: scene.title(NAMES[actorType]), detail: scene.detail, impact: scene.impact, lines: scene.lines(actorType) };
+export function catDoorIncident(state,actorType,action) {
+  const scene=DOORS[action];if(!scene||actorType==='cat'||!NAMES[actorType]||heard(state,scene.id))return null;mark(state,scene.id);
+  return {kind:scene.kind,title:scene.title(NAMES[actorType]),detail:scene.detail,impact:scene.impact,lines:scene.lines(actorType)};
 }
 export function catOutingLines(state) {
-  if (heard(state, 'first-outing')) return null;
-  mark(state, 'first-outing');
-  return [say('cat', '買い出し。歩いたから、運動した。'), say('cat', '袋の本体は、タバコ。'), say('cat', '食料はおまけ。帰りに一本。')];
+  if(heard(state,'first-outing'))return null;mark(state,'first-outing');
+  return [say('cat','買い出し、行ってくるニャ。今日は食料もちゃんと買うニャ。','neutral'),say('cat','……タバコだけじゃないニャ。最初から疑わないでニャ。','angry'),say('cat','卵とパン、メモしたニャ。メモを忘れたら、帰りに思い出させてニャ。','shy')];
 }
-export function catRentLines(state, paid) {
-  const id = paid ? 'rent-ok' : 'rent-short';
-  if (heard(state, id)) return null;
-  mark(state, id);
+export function catRentLines(state,paid) {
+  const id=paid?'rent-ok':'rent-short';if(heard(state,id))return null;mark(state,id);
   return paid
-    ? [say('cat', '払った。偉い。褒めなくていい。'), say('cat', 'タバコ代は削ってない。家賃を削った。'), say('cat', '足りてる。今日は。見てたなら、それでいい。')]
-    : [say('cat', '封筒が軽い。灰が重いだけ。'), say('cat', '来週まとめて。今週は、煙がある。'), say('cat', '足りない分は、壁に貸しとく。')];
+    ? [say('cat','家賃、入ってるニャ。数えたから、たぶん足りるニャ。','neutral'),say('cat','……ちゃんと足りた？ よかったニャ。食費を少し調整したニャ。','happy'),say('cat','偉いって言われると、次も払わなきゃって思うニャ。いや、最初から払うけどニャ。','shy')]
+    : [say('cat','封筒、足りないニャ。ごめん、買い物の順番を間違えたニャ。','sad'),say('cat','来週、仕事に入れたら返すニャ。……入れなかったら先に連絡するニャ。','sad'),say('cat','タバコ代から減らせって顔してるニャ。分かってるニャ。それは私も思ったニャ。','tired')];
 }
 export function catRentScene() {
-  return { kind: 'life', title: 'モクが、家賃を払ってタバコ代は守った。', detail: '封筒には、足りる金額が入っていた。\n\n何を削ったのかと聞く相手はいない。タバコは、いつもどおり灰皿にある。', impact: '家賃は払われた。タバコの本数は、減っていない。' };
+  return {kind:'life',title:'モクが、家賃の封筒を少し誇らしそうに出した。',detail:'モクが封筒を差し出し、足りるか大家の顔を見た。全部入っていると分かると、隠していた息を吐く。次も同じように払うため、仕事の予定を確認した。',impact:'家賃は払われた。'};
 }
 
 export function createTalk(latestEventId = 0) {
@@ -97,7 +100,7 @@ export function createTalk(latestEventId = 0) {
 }
 export function stepTalk(talk, state, now, stopped) {
   for (const event of state.events) {
-    if (event.stageOnly || !event.lines?.length || event.id <= talk.seenEvent || event.id === talk.eventId || talk.queue.includes(event.id)) continue;
+    if (event.read || event.stageOnly || !event.lines?.length || event.id <= talk.seenEvent || event.id === talk.eventId || talk.queue.includes(event.id)) continue;
     talk.queue.push(event.id);
   }
   talk.queue.sort((a, b) => a - b);
@@ -105,6 +108,7 @@ export function stepTalk(talk, state, now, stopped) {
   if (!talk.eventId && talk.queue.length) { talk.eventId = talk.queue.shift(); talk.index = 0; talk.since = now; }
   const incident = () => talk.eventId ? state.events.find(event => event.id === talk.eventId) : null;
   let reading = incident();
+  if(reading?.read){talk.seenEvent=Math.max(talk.seenEvent,talk.eventId);talk.eventId=0;talk.index=0;reading=null;}
   if (!talk.since) talk.since = now;
   if (!stopped && now - talk.since >= (reading?.lines?.[talk.index] ? SPEECH_MS.line : SPEECH_MS.mutter)) {
     talk.since = now;

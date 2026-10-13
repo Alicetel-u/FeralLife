@@ -30,7 +30,7 @@ for(const viewport of [{width:1672,height:941},{width:1366,height:768},{width:39
   check(await page.evaluate(()=>document.body.scrollWidth<=innerWidth),'No horizontal overflow');
   await page.screenshot({path:`docs/bust-preview/conversation-${viewport.width}.png`});
   await page.click('[data-dialogue-next]');
-  check(await page.locator('.stage-character[data-character="cat"]').getAttribute('data-emotion')==='angry','Moku switches pose');
+  check(await page.locator('.stage-character[data-character="cat"]').getAttribute('data-emotion')==='tired','Moku switches to her evasive reaction');
   check(await page.locator('.stage-character[data-character="hostess"]').getAttribute('data-emotion')==='angry','Listener retains anger');
 }
 // Verify the actual double-click game artifact, including the decision flow.
