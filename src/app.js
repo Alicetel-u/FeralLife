@@ -263,9 +263,20 @@ function showHelp() {
   if(state.actOne){openModal(header('FIRST ACT / 遊び方','二晩を生き延びれば、次の住人が来る。')+`<div class="modal-body"><p class="modal-copy">1日目17時から3日目9時まで、住人はモクだけ。決められた時刻に2つのイベントが起きます。3択は全部変ですが、各イベントで助かるのは1つだけ。モクの言葉と、部屋の様子を覚えてください。</p><p class="modal-copy">会話中と返事を保留している間は時間が止まります。「次の異変まで見守る」で次のイベントまで進めます。AUTOは台詞だけ、SKIPは選択肢まで読み進めます。回答を勝手に選ぶことはありません。</p><p class="modal-copy">全焼すると、その時の後悔を持って1日目に戻れます。大家ノートには失敗した理由が残ります。データは自動保存されます。</p></div><div class="modal-footer"><button class="primary-button" data-close>モクの様子を見る →</button></div>`);return;}
   openModal(header('HOW TO OBSERVE / 管理人の心得','あなたは、暮らしの後始末を引き受ける。')+`<div class="modal-body"><p class="modal-copy">住人は自分で暮らします。相談や後日談が発生すると、その場で立ち絵と吹き出しが開きます。費用・信頼・安全にはそれぞれ変化があり、後日談が別の事件につながることもあります。返事は保留できます。</p><div class="help-grid"><div class="help-step"><strong><span>01</span>暮らしを眺める</strong>最初は猫の部屋を大きく表示。「全体を見る」で6部屋を一覧できます。下の部屋一覧で住人を選び、「住人ノート」で欲求や所持金を確認。衛生状態だけは、数値が高いほど良好です。</div><div class="help-step"><strong><span>02</span>記録を読む</strong>「日誌」から会話を読み返せます。管理人室には未回答の相談と後日談の予定が届きます。「次へ」で会話を読み、最後に返事を選びます。会話中は時間が止まります。</div><div class="help-step"><strong><span>03</span>次の住人を選ぶ</strong>3日目の9時から、原則3日ごとに2人の入居希望者が現れます。封筒から申込書を開き、一人を空室に迎えましょう。</div><div class="help-step"><strong><span>04</span>アパートの結末を見届ける</strong>18日目の9時に、管理資金・安全・信頼・助け合い・話題と、住人の暮らしから結末が決まります。組み合わせを変えて、別の観察記を始められます。</div></div><p class="modal-copy" style="margin-top:18px;margin-bottom:0">「住人を追う」をONにすると、選んだ住人が部屋を出たとき外観へ、帰宅すると内装へ自動で切り替わります。手動の内装／外観・大きさ切り替えは追跡をOFFにします。⛶で全画面表示。通常速度では10秒＝ゲーム内1時間。3×・6×で進行を速められます。ブラウザを閉じたり、別のタブを表示している間は進行しません。データはこのブラウザに自動保存されます。</p></div><div class="modal-footer"><span>Space：一時停止 / Esc：ノートを閉じる</span><button class="primary-button" data-close>けもの荘を眺める →</button></div>`);
 }
-function showActTitle(){
-  openModal(`<section class="act-screen act-title"><div class="act-grain"></div><img class="act-key-art" src="${EVENT_EXPRESSIONS.cat.tired}" alt="無気力な顔で缶を持つ、灰田モク"><div class="act-title-copy"><p class="act-kicker">KEMONOSOU / THE FIRST ACT</p><p class="act-number">第一幕</p><h2 id="modal-title">アパートを<br><span>火事<span class="act-moku">（モク）</span></span>から守れ！</h2><p class="act-tagline">見守るだけの、簡単なお仕事。<br>……の、はずだった。</p><div class="act-rule"><span>START <b>1日目 17:00</b></span><i>→</i><span>GOAL <b>3日目 09:00</b></span></div><button class="act-primary" data-act-start>${state.actOne.started?'物語の続きを開く':'鍵を受け取り、物語を始める'} <span>→</span></button><p class="act-title-foot">住人は一人。火種は二つ。返事は、あなた次第。</p></div></section>`);
+function showGameTitle(){
+  const continuing=state.actOne.started;
+  openModal(`<section class="act-screen game-title"><img class="game-title-apartment" src="assets/apartments.png" alt="個性豊かな住人たちが暮らす、けもの荘"><div class="game-title-shade"></div><div class="game-title-stars" aria-hidden="true"></div><div class="game-title-neighbors" aria-label="けもの荘の住人たち">${[['sister','happy','おおやさーん！'],['cat','tired','あと5分……ニャ。'],['hostess','happy','今日もにぎやか♪']].map(([type,emotion,line],i)=>`<figure class="title-neighbor neighbor-${i}"><span>${line}</span><div><img src="${EVENT_EXPRESSIONS[type][emotion]}" alt="${CHARACTERS[type].name}"></div></figure>`).join('')}</div><div class="game-title-content"><p class="game-title-eyebrow">本日より、あなたが大家さん！</p><h2 id="modal-title" class="game-logo"><span class="game-logo-roof" aria-hidden="true">★</span><span class="logo-letter">け</span><span class="logo-letter">も</span><span class="logo-letter">の</span><span class="logo-letter">荘</span><small>どたばた！ アパートライフ</small></h2><p class="game-title-tagline">クセつよ住人、トラブル大歓迎!?</p><nav class="game-title-menu" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><i>▶</i>つづきから<small>CONTINUE</small></button>':''}<button data-game-new><i>▶</i>はじめから<small>NEW GAME</small></button><button data-title-help><i>?</i>遊び方<small>HOW TO PLAY</small></button></nav><p class="game-title-save">${continuing?'前回の記録は自動保存されています。':'あなたが、今日からこの家の大家さん。'}</p></div><footer class="game-title-footer"><span>住人観察 × 会話選択アドベンチャー</span><span>けもの荘 / KEMONOSOU</span></footer></section>`);
 }
+function showActTitle(){
+  openModal(`<section class="act-screen act-title"><div class="title-embers" aria-hidden="true"></div><img class="act-key-art" src="${EVENT_EXPRESSIONS.cat.tired}" alt="灰田モク"><div class="act-title-copy"><p class="act-kicker">KEMONOSOU / CHAPTER 01</p><p class="act-number">第一幕</p><h2 id="modal-title">アパートを<br><span>火事<span class="act-moku">（モク）</span></span>から守れ！</h2><p class="act-tagline">たった一人の住人。たった三日間。<br>なのに、この家は何度でも燃える。</p><div class="act-rule"><span>START <b>1日目 17:00</b></span><i>→</i><span>GOAL <b>3日目 09:00</b></span></div><button class="act-primary" data-act-start>大家さんの一日を始める <span>→</span></button><button class="act-secondary" data-act-title>ゲームタイトルに戻る</button></div></section>`);
+}
+function continueGame(){
+  closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();
+}
+function showTitleHelp(){
+  openModal(header('HOW TO PLAY / けもの荘','この家を、三日目の朝まで守る。',false)+`<div class="modal-body title-help"><p>大家になったあなたを待っていたのは、のんびり暮らす灰田モク。悪気はない。けれど、放っておくとアパートは全焼する。</p><ol><li><strong>モクの暮らしを見守る</strong><p>1日目17時から3日目9時まで。「次の異変まで見守る」でイベントまで進めます。</p></li><li><strong>三つの変な返事から、一つを選ぶ</strong><p>トラブルは二つ。各3択のうち、助かる返事は一つだけ。会話中は時間が止まります。</p></li><li><strong>燃えたら、後悔を持ってやり直す</strong><p>全焼すると1日目へ。失敗の手がかりは大家ノートに残ります。次の周回で役立てましょう。</p></li></ol><p>進行は自動保存。次回はタイトルの「つづきから」で再開できます。</p></div><div class="modal-footer"><button class="primary-button" data-act-title>タイトルに戻る →</button></div>`);
+}
+
 function showActNotebook(){
   const a=state.actOne,p=a.pending;
   const memories=Object.values(ACT_ONE_EVENTS).flatMap(c=>c.choices.filter(x=>a.memory.includes(x.bad)).map(x=>`<article class="act-memory"><small>焼け跡に残った記憶</small><strong>${escape(x.label)}</strong><p>${escape(x.clue)}</p></article>`));
@@ -299,6 +310,11 @@ function restart() {
 }
 document.addEventListener('click',e=>{
   const button=e.target.closest('button');if(!button)return;
+  if(button.hasAttribute('data-act-title'))showGameTitle();
+  if(button.hasAttribute('data-title-help'))showTitleHelp();
+  if(button.hasAttribute('data-game-continue')&&state.actOne.started)continueGame();
+  if(button.hasAttribute('data-game-new')){if(state.actOne.started)button.setAttribute('data-title-new','');else showActTitle();}
+  if(button.hasAttribute('data-title-new'))openModal(header('NEW GAME / はじめから','一日目から、やり直しますか？',false)+'<div class="modal-body"><p class="modal-copy">今の進行と、タイムループで集めた失敗の記憶をリセットします。</p></div><div class="modal-footer"><button class="secondary-button" data-act-title>タイトルに戻る</button><button class="primary-button" data-restart>新しく始める →</button></div>');
   if(button.hasAttribute('data-act-start')){state.actOne.started=true;save();closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();}
   if(button.hasAttribute('data-act-wait')&&state.actOne?.status==='playing'&&!state.actOne.pending){advanceActOne(state,nextActOneAt(state)-state.hour);queueFreshStageEvents();updateUI();save();if(state.ending)showActEnding();else openNextStageEvent();}
   if(button.hasAttribute('data-act-rewind')&&state.actOne?.status==='bad')resetActState(rewindActOne(state));
@@ -392,4 +408,4 @@ function frame(now){
 syncStageCursor();
 updateCamera();updateRooms();updateUI();updateJournal();save();requestAnimationFrame(frame);
 if(restored)toast('前回の観察記の続きから。住人たちは、ここで待っていました。');
-if(state.actOne)showActTitle();
+if(state.actOne)showGameTitle();
