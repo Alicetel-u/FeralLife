@@ -2,15 +2,15 @@ import { createRoomMove, sampleJourney } from './movement.js';
 
 // First-act daily blocking; story deadlines and authored conversations stay unchanged.
 export const MOKU_DAY = [
-  [17,'idle','table','ひと休み'],[17.25,'walk','hall','廊下で気分転換'],
+  [17,'idle','table','ひと休み'],[17.25,'idle','window','窓辺で換気'],
   [18,'tv','tv','夕方のテレビ'],[18.5,'smoke','window','灰皿の前で一服'],
   [19.25,'eat','fridge','遅めの夕食'],[20,'tv','tv','テレビをだらだら見る'],
   [23,'tv','tv','夜更かし'],[28,'tv','tv','動画の続きを見る'],
   [32,'idle','table','徹夜明けの休憩'],[34,'clean','center','空き缶を少し片づける'],
   [35,'idle','table','空腹をこらえる'],[36.5,'eat','fridge','昼食の準備'],
   [37.25,'eat','table','カップ麺で昼食'],[38,'sleep','bed','食後のうたた寝'],
-  [42,'walk','hall','夕方の気分転換'],[43,'eat','fridge','夕食'],
-  [44,'tv','tv','夜のテレビ'],[47,'tv','tv','また夜更かし'],
+  [41,'walk','hall','夕方の気分転換'],[46,'eat','fridge','夕食'],
+  [47,'tv','tv','また夜更かし'],
   [54,'idle','table','朝まで起きていた'],[56.5,'drink','table','朝の缶を開ける']
 ];
 const places={smoke:'window',eat:'fridge',sleep:'bed',tv:'tv',clean:'center',drink:'table',idle:'table'};
@@ -28,7 +28,7 @@ export function firstActLife(state, delta=0){
       const path=[start,{x:331,y:440,zone:'hall',room:101},end];
       const travel=path.slice(1).reduce((n,p,i)=>n+Math.hypot(p.x-path[i].x,p.y-path[i].y),0)/430;
       // Use real path timing; the return is complete before the following home activity.
-      r.journey={kind:'visit',startedAt:state.hour,arriveAt:state.hour+travel,returnAt:state.hour+travel+.08,endsAt:state.hour+travel*2+.08,path,back:[...path].reverse(),reason:'廊下で気分転換',actionAfter:'idle',returned:false};
+      r.journey={kind:'visit',startedAt:state.hour,arriveAt:state.hour+travel,returnAt:state.hour+travel+3.5,endsAt:state.hour+travel*2+3.5,path,back:[...path].reverse(),reason:'廊下で気分転換',actionAfter:'idle',returned:false};
     }else r.journey=createRoomMove(r,state.hour,start,beat[2]);
   }
   if(r.action==='sleep')r.needs.sleep=Math.max(0,r.needs.sleep-delta*18);
@@ -49,6 +49,7 @@ export function firstActMutters(state){
   if(r.action==='eat')return h<37?['冷蔵庫に何か残ってたはずニャ。まず中を見てみるニャ。','食べ終わったら、容器だけでも片づけるニャ。']:['火を使わずに済むご飯、楽でいいニャ。洗い物も少ないニャ。'];
   if(r.action==='drink')return ['もう朝ニャ。寝てないから、まだ昨日のつもりニャ。'];
   if(r.action==='smoke'&&state.actOne.completed.includes('ash'))return ['吸い殻の火は消したニャ。大家にまた怒鳴られるのはごめんニャ。'];
+  if(r.lifeBeat===17.25)return ['窓を少し開けるニャ。部屋の空気が煙たくなってきたニャ。'];
   if(h<19)return r.action==='smoke'?['灰皿、そろそろいっぱいニャ。捨てる場所を考えないとニャ。']:['テレビの続きが気になるニャ。あと一本だけ見たら動くニャ。','新しい大家、声が大きいニャ。静かすぎるよりはいいかニャ。'];
   if(h<32)return ['次の動画を見たら終わりニャ。……また次が出てきたニャ。','時計、見なきゃよかったニャ。もうこんな時間ニャ。'];
   if(h<37)return r.action==='clean'?['缶を三本拾ったニャ。今日はもう、かなり働いたニャ。']:['朝まで動画を見てしまったニャ。目を閉じたら、そのまま寝そうニャ。','お腹が鳴ったニャ。何か食べたいけど、立つのが面倒ニャ。'];

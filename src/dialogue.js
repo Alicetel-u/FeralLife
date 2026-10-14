@@ -97,7 +97,7 @@ export function catRentScene() {
 }
 
 export function createTalk(latestEventId = 0) {
-  return { seenEvent: latestEventId, eventId: 0, index: 0, since: 0, queue: [], mutterIndex: 0, mutterAction: '', bubbles: [] };
+  return { seenEvent: latestEventId, eventId: 0, index: 0, since: 0, queue: [], mutterIndex: 0, mutterAction: '', mutterShownAt: null, currentMutter: null, bubbles: [] };
 }
 export function stepTalk(talk, state, now, stopped) {
   for (const event of state.events) {
@@ -122,11 +122,13 @@ export function stepTalk(talk, state, now, stopped) {
   }
   reading = incident();
   const line = reading?.lines?.[talk.index];
-  if (line) { talk.bubbles = [{ ...line, text: line.speaker === 'cat' ? mokuNya(line.text) : line.text }]; return talk; }
+  if (line) { talk.currentMutter=null;talk.mutterShownAt=null;talk.bubbles = [{ ...line, text: line.speaker === 'cat' ? mokuNya(line.text) : line.text }]; return talk; }
   const cat = state.residents.find(resident => resident.type === 'cat');
   if (!cat) { talk.bubbles = []; return talk; }
+  if(talk.currentMutter&&(stopped||now-talk.mutterShownAt<Math.max(SPEECH_MS.mutter,talk.currentMutter.text.length*100))){talk.bubbles=[talk.currentMutter];return talk;}
   if (cat.action !== talk.mutterAction) { talk.mutterAction = cat.action; talk.mutterIndex += 1; talk.since = now; }
   const pool = state.actOne&&state.actOne.chapter!==2 ? firstActMutters(state) : catMutters(cat.action);
-  talk.bubbles = [{ speaker: 'cat', name: 'モク', text: mokuNya(pool[talk.mutterIndex % pool.length]) }];
+  talk.currentMutter={ speaker:'cat',name:'モク',text:mokuNya(pool[talk.mutterIndex % pool.length]) };
+  talk.mutterShownAt=now;talk.since=now;talk.bubbles=[talk.currentMutter];
   return talk;
 }

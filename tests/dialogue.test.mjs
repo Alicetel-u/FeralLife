@@ -48,3 +48,11 @@ test('a resumed observation does not replay old lines, and new speech still arri
   stepTalk(talk, state, 2000, false);
   assert.ok(talk.bubbles[0].text.length > 0);
 });
+
+test('fast action changes cannot replace a mutter before real-time reading duration',()=>{
+ const state=createGame(7);state.events.forEach(e=>e.read=true);const talk=createTalk(state.events[0].id);
+ stepTalk(talk,state,1000,false);const first=talk.bubbles[0].text;
+ state.residents[0].action='sleep';stepTalk(talk,state,2000,false);assert.equal(talk.bubbles[0].text,first);
+ stepTalk(talk,state,7999,false);assert.equal(talk.bubbles[0].text,first);
+ stepTalk(talk,state,8000,false);assert.notEqual(talk.bubbles[0].text,first);
+});

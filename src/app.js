@@ -63,7 +63,7 @@ if (state.pending) {
   state.pending = state.pending.filter(type => state.remaining.includes(type));
   if (!state.pending.length) state.pending = null;
 }
-let speed = 1, paused = !!previewResident || eventPreview, filter = 'all', profileKey = null, lastUI = 0, lastSave = 0, lastTime = performance.now(), lastEventId = 0, endingShown = false, toastTimer;
+let speed = 6, paused = !!previewResident || eventPreview, filter = 'all', profileKey = null, lastUI = 0, lastSave = 0, lastTime = performance.now(), lastEventId = 0, endingShown = false, toastTimer;
 let eventView = null;
 let eventAuto=false,eventAutoTimer=null;
 let seenStageId = 0;

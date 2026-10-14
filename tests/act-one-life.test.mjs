@@ -6,12 +6,13 @@ import {sampleJourney,createOuting} from '../src/movement.js';
 import {firstActMutters} from '../src/act-one-life.js';
 const start=()=>createActOne(42,[],2,true);
 test('first act walks the hall, returns before ash, stays awake until lunch and rests after safety',()=>{
- const s=start();advanceActOne(s,.6);const m=s.residents[0];assert.equal(sampleJourney(m,s.hour).zone,'hall');
+ const s=start();advanceActOne(s,.6);const m=s.residents[0];assert.equal(sampleJourney(m,s.hour).zone,'room');
  advanceActOne(s,10);assert.equal(s.hour,19);assert.equal(s.actOne.pending.scene,'ash');assert.equal(sampleJourney(m,s.hour,'window').zone,'room');assert.equal(m.action,'smoke');
  answerActOne(s,s.actOne.pending.eventId,'water');
  while(s.hour<36.5){advanceActOne(s,Math.min(.25,36.5-s.hour));assert.notEqual(m.action,'sleep');}
  advanceActOne(s,10);assert.equal(s.hour,37);assert.equal(sampleJourney(m,s.hour,'fridge').zone,'room');assert.equal(m.action,'eat');
  answerActOne(s,s.actOne.pending.eventId,'coronation');advanceActOne(s,1.5);assert.equal(m.action,'sleep');assert.match(firstActMutters(s)[0],/五分/);
+ advanceActOne(s,4);assert.equal(sampleJourney(m,s.hour).zone,'hall');assert.equal(sampleJourney(m,s.hour).phase,'visiting');
  advanceActOne(s,100);assert.equal(s.hour,57);assert.equal(s.actOne.status,'clear');assert.equal(m.storyUntil,undefined);
 });
 test('small steps and jump-to-event keep identical story pacing; mid-walk saves resume deterministically',()=>{
