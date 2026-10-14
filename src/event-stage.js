@@ -20,7 +20,7 @@ export function eventIcon(name) {
   };
   return `<svg class="event-icon icon-${name}" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">${paths[name]||paths.paw}</svg>`;
 }
-const eventNameFrame=()=>`<svg class="name-frame" viewBox="0 0 360 92" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="nameGold" x2="0" y2="1"><stop stop-color="#fff0bb"/><stop offset=".5" stop-color="#b29265"/><stop offset="1" stop-color="#f8d79a"/></linearGradient></defs><path d="M3 76Q3 42 27 40L34 5Q36 0 42 5L72 27Q119 10 170 18L221 27 264 1Q269-2 272 5L286 43H328Q355 44 355 64L344 82H28Q3 83 3 76Z" fill="#151315" fill-opacity=".94" stroke="url(#nameGold)" stroke-width="2.4"/><path d="M27 79h315" stroke="#9e7756" stroke-width=".6"/></svg>`;
+const eventNameFrame=()=>`<svg class="name-frame" viewBox="0 0 360 92" preserveAspectRatio="none" aria-hidden="true"><path d="M15 9 354 0 338 83 0 92Z" fill="#f6edde" stroke="#121016" stroke-width="5"/></svg>`;
 
 export function eventConversation(event) {
   const lines=(event.lines||[]).filter(l=>l&&typeof l.text==='string');

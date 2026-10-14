@@ -6,6 +6,7 @@ test('letter text stays intact across cuts and insert art contains no embedded U
  for(const text of ['おめでとうございます。','あなたは本日から「けもの荘」の大家です。','現在の入居者は1名。','家賃収入は期待しないでください。','なお、私はもう関わりたくありません。','前大家より'])assert.ok(letter.includes(text));
  assert.equal(new Set(PROLOGUE_CUTS.filter(c=>c.image).map(c=>c.image)).size,3);
  assert.ok(openingPrologueHTML().includes('data-prologue-skip'));
+ assert.ok(PROLOGUE_CUTS.every(c=>!prologueCutHTML(c).includes('ink-typography')));
  assert.ok(prologueCutHTML(PROLOGUE_CUTS[2]).includes('aria-live="polite"'));
 });
 test('skip finishes once and cleanup cancels pending narration and transition',t=>{
