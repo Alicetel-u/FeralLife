@@ -30,7 +30,7 @@ test('first bad ending restores a playable checkpoint with memory',()=>{
 });
 test('safe route reaches chapter-two epilogue at day five',()=>{
  const s=create();start(s);
- advanceActTwo(s,5);answer(s,'return');
+ advanceActTwo(s,5);answer(s,'loan');
  advanceActTwo(s,100);assert.equal(s.actOne.pending.scene,'contract');
  answer(s,'refuse');advanceActTwo(s,100);
  assert.equal(s.actOne.status,'clear');
@@ -40,7 +40,7 @@ test('safe route reaches chapter-two epilogue at day five',()=>{
 });
 test('second contract bad end returns to contract checkpoint',()=>{
  const s=create();start(s);
- advanceActTwo(s,5);answer(s,'return');advanceActTwo(s,100);
+ advanceActTwo(s,5);answer(s,'loan');advanceActTwo(s,100);
  answer(s,'sign');assert.equal(s.actOne.status,'bad');
  const next=rewindActTwo(s);
  assert.equal(next.hour,80.5);assert.deepEqual(next.actOne.completed,['bag']);
