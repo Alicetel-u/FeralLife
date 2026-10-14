@@ -463,3 +463,7 @@ body.game-ink{height:100dvh;overflow:hidden}
 
 /* Rewind dialogue takes place inside room 101, not over the outdoor apartment view. */
 .conversation-modal .conversation-body[data-rewind-intro]{background:#272322 url('assets/rooms/cat/interior-v2.png') center center / cover no-repeat}
+/* Speaker identities keep names visible as well as distinct text colors. */
+.game-ink .conversation-modal .stage-bubble p,.game-ink .conversation-modal .stage-bubble.inner-voice p{color:var(--speech-color,#eee5d7)}
+.game-ink .conversation-modal .stage-bubble .speaker-name{color:var(--speech-day,#514b43)}
+.game-ink .conversation-log p{color:var(--speech-color,#eee5d7)}.game-ink .conversation-log p strong{color:inherit}

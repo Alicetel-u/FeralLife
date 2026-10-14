@@ -1,3 +1,4 @@
+import { speakerColors } from './speaker-colors.js';
 import { ROOM_LAYOUTS } from './room-layouts.js';
 import { ROOMS, CHARACTERS, ACTIONS, dateAt } from './simulation.js';
 import { CHARACTER_ART, ROOM_ART, SCENE_ART } from './character-art.js';
@@ -327,7 +328,7 @@ export class WorldRenderer {
       };
       const visibleSpeaker = this.view === 'exterior' && place.tail && !place.source;
       drawSpeechBubble(ctx, place.x, place.y, bubble.name, bubble.text, {
-        large: this.focus, accent: CHARACTERS[bubble.speaker]?.accent || '#a6ac91',
+        large: this.focus, accent: speakerColors(bubble)[1], ink: speakerColors(bubble)[1],
         source: place.source, tail: place.tail, hideName: visibleSpeaker, opacity: this.speechOpacity
       });
     }
@@ -377,7 +378,7 @@ function drawSpeechBubble(ctx, screenX, screenY, name, text, opts) {
     }
   }
   const tipX = Math.max(left + 34, Math.min(left + w - 34, screenX));
-  const paper = '#faf5e9', ink = '#2c332d';
+  const paper = '#faf5e9', ink = opts.ink || '#2c332d';
   const shape = () => {
     ctx.beginPath(); ctx.roundRect(left, top, w, h, 18);
     if (opts.tail) { ctx.moveTo(tipX-14,top+h-1);ctx.lineTo(tipX+2,top+h+tailLen);ctx.lineTo(tipX+16,top+h-1);ctx.closePath(); }
@@ -395,7 +396,7 @@ function drawSpeechBubble(ctx, screenX, screenY, name, text, opts) {
   const textTop = header ? 62 : 18;
   if (header) {
     ctx.fillStyle=opts.accent;ctx.beginPath();ctx.roundRect(left+pad,top+22,7,24,3);ctx.fill();
-    ctx.font='700 24px "Yu Gothic UI", Meiryo, sans-serif';ctx.textBaseline='middle';ctx.fillStyle='#56604e';ctx.fillText(header,left+pad+19,top+34);
+    ctx.font='700 24px "Yu Gothic UI", Meiryo, sans-serif';ctx.textBaseline='middle';ctx.fillStyle=ink;ctx.fillText(header,left+pad+19,top+34);
   }
   ctx.font=`500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;ctx.fillStyle=ink;ctx.textBaseline='top';
   lines.forEach((line,index)=>ctx.fillText(line,left+pad,top+textTop+index*lineH));
