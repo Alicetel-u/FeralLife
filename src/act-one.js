@@ -237,6 +237,31 @@ export function rewindBeforeFire(s){
   next.actOne.rewindIntroPending=false;next.actOne.rewindTitlePending=false;
   next.ending=null;next.pending=null;
   next.events.forEach(e=>e.read=true);
+  const firstLoop=s.actOne.attempt===1;
+  const at=ACT_ONE_EVENTS[scene].at;
+  const intro=addEvent(next,'life',firstLoop?'初めての巻き戻し':'また、火事の前へ',
+    firstLoop?'焼け落ちたはずの101号室が、何事もなかったように戻っている。':'また時間が戻った。火災まで、あと30分。',[101]);
+  intro.actScene='rewind';intro.cast=['cat'];intro.stageOnly=true;intro.read=false;
+  intro.lines=firstLoop?[
+    an('火の音が消える。気づけば101号室。さっきまで燃えていた壁も、モクも、元のままだ。'),
+    ac('neutral','大家さん？ どうしたニャ？'),
+    {...am('……は？ ここ、燃えたはずだろ！？'),emotion:'surprised'},
+    ac('surprised','何言ってるニャ？ まだ何も燃えてないニャ。'),
+    {...am('夢じゃねぇ……あの熱さも覚えてる。'),innerVoice:true},
+    an('時計は火事の30分前を示していた。'),
+    {...am('戻ったのか……？ 今度こそ、あんな目には遭わせねぇ。'),innerVoice:true},
+    ac('tired','大家さん、顔色悪いニャ。'),
+    am('……気にすんな。今度はちゃんと話を聞く。')
+  ]:[
+    an('炎の音が遠ざかる。見慣れた101号室と、火事の30分前の時計。'),
+    {...am('……また戻った。今度こそ大丈夫だと思ったのに。'),innerVoice:true},
+    ac('neutral','大家さん？ 何かあったニャ？'),
+    am('いや。今度こそ、このアパートを燃やさせねぇ。'),
+    ac('surprised','ニャ！？ 急にどうしたニャ？'),
+    {...am('同じ失敗はもうしねぇ。次こそは……！'),innerVoice:true}
+  ];
+  next.actOne.rewindIntroPending=true;
+  next.actOne.rewindIntroCursor=0;
   return next;
 }
 export function rewindActOne(s){
