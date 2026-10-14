@@ -479,7 +479,7 @@ function advanceConversation(){
   forward.click();return true;
 }
 modal.addEventListener('click',e=>{
-  if(e.target.closest('.stage-bubble')&&!e.target.closest('button,a,input,summary'))advanceConversation();
+  if(e.target.closest('.stage-bubble,.memory-whiteout')&&!e.target.closest('button,a,input,summary'))advanceConversation();
 });
 document.addEventListener('keydown',e=>{
   if(e.repeat||e.altKey||e.ctrlKey||e.metaKey||!['Enter','Space'].includes(e.code)||document.activeElement?.closest('button, summary, input, textarea, select, a, [contenteditable]'))return;

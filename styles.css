@@ -452,14 +452,7 @@ body.game-ink{height:100dvh;overflow:hidden}
 /* Mobile game: keep taps and scrolling, disable double-tap zoom. */
 @media (pointer:coarse){html,body,button,a,canvas,.scene,dialog{touch-action:manipulation}}
 
-/* Act One epilogue: short, disorienting memory-whiteout, with dialogue kept legible. */
-.event-stage.memory-whiteout{background:#fff;animation:memory-dizzy .35s ease-out both}
-.event-stage.memory-whiteout::before{content:none}
-.event-stage.memory-whiteout .stage-character{opacity:0}
-.event-stage.memory-whiteout .stage-bubble{position:relative;z-index:2}
-.event-stage.memory-whiteout .stage-page{position:relative;z-index:2}
-@keyframes memory-dizzy{0%{filter:blur(5px);background:#f3ede1}35%{filter:blur(1px);background:#fff}100%{filter:none;background:#fff}}
-@media (prefers-reduced-motion:reduce){.event-stage.memory-whiteout{animation:none}}
+
 
 /* Rewind dialogue takes place inside room 101, not over the outdoor apartment view. */
 .conversation-modal .conversation-body[data-rewind-intro]{background:#272322 url('assets/rooms/cat/interior-v2.png') center center / cover no-repeat}
@@ -467,3 +460,17 @@ body.game-ink{height:100dvh;overflow:hidden}
 .game-ink .conversation-modal .stage-bubble p,.game-ink .conversation-modal .stage-bubble.inner-voice p{color:var(--speech-color,#eee5d7)}
 .game-ink .conversation-modal .stage-bubble .speaker-name{color:var(--speech-day,#514b43)}
 .game-ink .conversation-log p{color:var(--speech-color,#eee5d7)}.game-ink .conversation-log p strong{color:inherit}
+/* Memory is a separate full-white stage, never a repositioned dialogue window. */
+.game-ink dialog.conversation-modal:has(.memory-whiteout){background:#fff;background-image:none!important}
+.game-ink .conversation-modal:has(.memory-whiteout) .conversation-body{background:#fff}
+.game-ink .conversation-modal .event-stage.memory-whiteout{position:absolute;inset:0;width:100%;height:100%;display:grid;place-items:center;padding:80px 7vw 110px;margin:0;background:#fff;border:0;box-shadow:none;filter:none;animation:none}
+.game-ink .memory-whiteout::before,.game-ink .memory-whiteout::after{display:none}
+.memory-text{width:min(900px,100%);max-height:100%;overflow-y:auto;padding:20px 6px;cursor:pointer;text-align:center;animation:memory-text-appear .65s ease-out both}
+.memory-text p{margin:0;color:var(--speech-day,#514b43);font:500 clamp(20px,2.4vw,36px)/2.1 var(--serif);letter-spacing:.09em;white-space:pre-wrap;overflow-wrap:anywhere}
+.memory-prompt{position:absolute;left:0;right:0;bottom:5%;text-align:center;font:10px var(--sans);letter-spacing:3px;color:#8b818a;pointer-events:none}
+.game-ink .conversation-modal:has(.memory-whiteout) .event-toolbar{opacity:0;transition:opacity .15s;background:#fff;color:#514b43;border-color:#ccc}.game-ink .conversation-modal:has(.memory-whiteout) .event-toolbar:hover,.game-ink .conversation-modal:has(.memory-whiteout) .event-toolbar:focus-within{opacity:1}
+.game-ink .conversation-modal:has(.memory-whiteout) .modal-footer .primary-button{background:#fff;color:#777;border:1px solid #ddd;box-shadow:none}
+.event-ui-hidden .memory-text,.event-ui-hidden .memory-prompt{visibility:hidden}
+@keyframes memory-text-appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){.game-ink .conversation-modal .event-stage.memory-whiteout{padding:70px 8vw 100px}.memory-text p{font-size:21px;line-height:2;letter-spacing:.06em}}
+@media(prefers-reduced-motion:reduce){.memory-text{animation:none}}

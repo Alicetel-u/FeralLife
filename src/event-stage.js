@@ -74,6 +74,10 @@ export function eventEmotion(line, event = {}) {
 
 export function eventStageHTML(event,residents,index=0) {
   const lines=eventConversation(event),cursor=Math.max(0,Math.min(index,lines.length-1)),line=lines[cursor];
+  if(line.flashbackEffect==='whiteout'){
+    const name=line.memoryVoice?'大家（過去の声）':line.innerVoice?'大家（心の声）':eventSpeakerName(line.speaker);
+    return `<div class="event-stage memory-whiteout"><div class="memory-text" style="${speakerColorStyle(line)}" aria-live="polite" aria-atomic="true"><span class="visually-hidden">${eventEscape(name)}：</span><p>${eventEscape(line.text)}</p></div><span class="memory-prompt" aria-hidden="true">CLICK / ENTER</span></div>`;
+  }
   const participants=Array.isArray(event.cast)?event.cast.filter(type=>CHARACTERS[type]):eventParticipants(event,residents),left=participants[0]||null;
   const right=line.speaker==='manager'&&participants[1]?participants[1]:line.speaker!=='narrator'&&line.speaker!=='mystery'&&line.speaker!==left?line.speaker:participants[1]||'manager';
   const character=(type,side)=> {
