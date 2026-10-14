@@ -5,7 +5,7 @@ import { WorldRenderGate } from './render-policy.js';
 import { openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
-import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
+import { rewindTransitionHTML, startRewindTransition, automaticFirstRewind } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
 import { createGame, advance, admit, addEvent, ROOMS, CHARACTERS, NEEDS, ACTIONS, dateAt, formatTime, atmosphere, validateSave } from './simulation.js';
 import { createTalk, stepTalk, claimAutomaticScene, rememberReadScenes } from './dialogue.js';
@@ -364,6 +364,7 @@ function showActEnding(afterFire=false){
     stopFireEnding=startFireEnding(modal.querySelector('.fire-cinematic'),a.failure,()=>showActEnding(true));
     return;
   }
+  if(bad&&afterFire&&automaticFirstRewind(state)){beginRewind(true);return;}
   if(bad){
     const choice=Object.values(ACT_ONE_EVENTS).flatMap(c=>c.choices).find(c=>c.bad===a.failure);
     openModal(`<section class="act-screen act-burn"><div class="burned-apartment" aria-hidden="true"><img src="assets/apartments.png" alt=""><div class="burned-rubble"></div></div><div class="act-ending-copy"><p class="act-kicker">BAD END / ${a.attempt}周目</p><h2 id="modal-title">全 焼</h2><p class="act-ending-story">${escape(state.ending.text)}</p><p class="act-clue">${escape(choice?.clue||'今度こそ、火元を確認しよう。')}</p><div class="act-loop-reveal"><small>${a.attempt===1?'初めて、時間が巻き戻る。':'また、時計が逆に進む。'}</small><p>${a.attempt===1?'炎に包まれたけもの荘。大家は呆然と立ち尽くす。':'大家「くそっ！！ またかよ！！」<br>大家「今度こそ大丈夫だと思ったのに……！」'}<br>大家「……もう一度、やり直せるなら。」</p></div><button class="act-primary" data-act-rewind>後悔を持って、火事の30分前へ <span>↶</span></button></div></section>`);
@@ -384,13 +385,13 @@ function showActTwoEnding(){
 function showActReward(){
   openModal(header('第二幕 PROLOGUE / 新しい住人','一枚の申込書が、けもの荘に届いた。',false)+`<div class="modal-body"><p class="modal-copy">けもの荘に届いた、一枚の入居申込書。</p><p class="modal-copy">果たして、新たな住人はどんな人物なのか。そして、モクとの共同生活はどうなってしまうのか——。</p><p class="modal-copy">第二幕の物語は、これから始まる。</p></div><div class="modal-footer"><button class="primary-button" data-act-replay>第一幕をもう一度遊ぶ →</button></div>`);
 }
-function beginRewind(){
+function beginRewind(afterFire=false){
   const failure=state.actOne.failure;
   const rollbackHour=(Object.values(ACT_ONE_EVENTS).find(e=>e.choices.some(c=>c.bad===failure))?.at||19)-.5;
-  openModal(rewindTransitionHTML(failure,state.actOne.attempt));
+  openModal(rewindTransitionHTML(failure,state.actOne.attempt,afterFire));
   const sound=$('sound-button').getAttribute('aria-pressed')==='true';
   if(audio?.state==='running')audio.suspend().catch(()=>{});
-  const stopTransition=startRewindTransition(modal.querySelector('.rewind-screen'),failure,()=>resetActState(rewindBeforeFire(state),true),sound,state.actOne.attempt,rollbackHour);
+  const stopTransition=startRewindTransition(modal.querySelector('.rewind-screen'),failure,()=>resetActState(rewindBeforeFire(state),true),sound,state.actOne.attempt,rollbackHour,afterFire);
   stopFireEnding=()=>{stopTransition();if(sound&&audio?.state==='suspended')audio.resume().catch(()=>{});};
 }
 function resetActState(next,resume=false){
