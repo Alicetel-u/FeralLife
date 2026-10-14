@@ -455,16 +455,25 @@ document.addEventListener('click',e=>{
 modal.addEventListener('toggle',e=>{
   if(e.target.matches('.conversation-log'))modal.querySelector('[data-event-log]')?.setAttribute('aria-expanded',String(e.target.open));
 },true);
-modal.addEventListener('click',e=>{
-  if(!modal.classList.contains('conversation-modal')||!e.target.closest('.stage-bubble')||!eventView)return;
+function advanceConversation(){
+  if(!modal.open||!modal.classList.contains('conversation-modal')||!eventView)return false;
+  if(modal.classList.contains('event-ui-hidden')||modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden)return false;
   const current=state.events.find(x=>x.id===eventView.id);
-  if(current&&eventView.index<eventConversation(current).length-1)showEvent(eventView.id,eventView.index+1);
+  if(!current)return false;
+  if(eventView.index<eventConversation(current).length-1){showEvent(eventView.id,eventView.index+1);return true;}
+  // A final line uses the same action as the visible next button. Choices stay manual.
+  const waiting=state.actOne?state.actOne.pending?.eventId===current.id:state.management.pending?.eventId===current.id;
+  if(waiting)return false;
+  const forward=modal.querySelector('.modal-footer .primary-button');
+  if(!forward||forward.disabled)return false;
+  forward.click();return true;
+}
+modal.addEventListener('click',e=>{
+  if(e.target.closest('.stage-bubble')&&!e.target.closest('button,a,input,summary'))advanceConversation();
 });
 document.addEventListener('keydown',e=>{
-  if(!modal.open||!modal.classList.contains('conversation-modal')||!eventView||!['Enter','Space'].includes(e.code)||document.activeElement?.closest('button, summary, input, textarea, select, a, [contenteditable]'))return;
-  if(modal.classList.contains('event-ui-hidden')||modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden)return;
-  const current=state.events.find(x=>x.id===eventView.id);
-  if(current&&eventView.index<eventConversation(current).length-1){e.preventDefault();showEvent(eventView.id,eventView.index+1);}
+  if(e.repeat||e.altKey||e.ctrlKey||e.metaKey||!['Enter','Space'].includes(e.code)||document.activeElement?.closest('button, summary, input, textarea, select, a, [contenteditable]'))return;
+  if(advanceConversation())e.preventDefault();
 });
 $('pause-button').onclick=()=>{paused=!paused;updateUI();};
 $('help-button').onclick=showHelp;
