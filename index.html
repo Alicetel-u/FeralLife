@@ -5,10 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#131118">
   <title>けもの荘 第一幕「アパートを火事（モク）から守れ！」</title>
-  <style>html.game-booting body{visibility:hidden}</style>
+  <style>
+#boot-screen{position:fixed;inset:0;z-index:99999;display:grid;place-content:center;gap:16px;text-align:center;background:#131118;color:#f4ecdd;font:600 22px system-ui,sans-serif}
+#boot-screen small{font-size:13px;font-weight:400;opacity:.72}
+</style>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="game-ink">
+  <div id="boot-screen" role="status" aria-live="polite">🐾 けもの荘<small>ゲームを準備しています…</small></div>
   <header class="masthead">
     <div class="brand"><span class="brand-mark">🐾</span><span><strong>けもの荘</strong><small>～クズ住人観察記～</small></span></div>
     <div class="date-display"><span class="weather-icon" id="weather-icon">☀</span><div><strong id="day-clock">1日目 <span>17:00</span></strong><small id="time-label">夕暮れ · けもの荘</small></div></div>
