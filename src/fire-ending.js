@@ -7,7 +7,7 @@ export function fireEndingHTML(failure) {
   return `<section class="act-screen fire-cinematic" data-fire-phase="room"><div class="fire-camera"><img class="fire-room-background" src="assets/rooms/cat/interior.png" alt="炎に包まれる101号室"><img class="fire-building-background" src="assets/apartments.png" alt="炎が広がるけもの荘"><canvas class="fire-canvas" width="960" height="540" aria-hidden="true"></canvas><div class="fire-soot"></div></div><div class="fire-letterbox top"></div><div class="fire-letterbox bottom"></div><h2 id="modal-title" class="visually-hidden">けもの荘の火災</h2><p class="fire-narration" aria-live="polite">昨日まで、ただ散らかっているだけの部屋だった。</p><button class="fire-skip" data-fire-finish>スキップ</button></section>`;
 }
 
-export function startFireEnding(root, failure, finish) {
+export function startFireEnding(root, failure, finish, options = {}) {
   const canvas = root.querySelector('.fire-canvas'), ctx = canvas.getContext('2d');
   const camera = root.querySelector('.fire-camera');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -79,7 +79,7 @@ export function startFireEnding(root, failure, finish) {
     if (!root.isConnected) return;
     const dt = Math.min(.1, (now - previous) / 1000); previous = now;
     if (!document.hidden) elapsed += dt;
-    const next = fireEndingPhase(elapsed);
+    const next = options.ambient ? 'building' : fireEndingPhase(elapsed);
     if (next !== phase) {
       phase = next; root.dataset.firePhase = phase;
       const narration = phase === 'building' ? '誰もいない部屋まで、炎だけが律儀に訪ねていった。' : phase === 'ruins' ? '家賃は、一円も入らなかった。帰る場所も、なくなった。' : '昨日まで、ただ散らかっているだけの部屋だった。';
@@ -87,10 +87,10 @@ export function startFireEnding(root, failure, finish) {
     }
     if (!document.hidden) {
       draw(reduced ? (phase === 'room' ? 3 : phase === 'building' ? 8 : 12) : elapsed, phase);
-      const shake = !reduced && phase !== 'ruins' ? (phase === 'building' ? 5 : 3) : 0;
+      const shake = !options.ambient && !reduced && phase !== 'ruins' ? (phase === 'building' ? 5 : 3) : 0;
       camera.style.transform = `translate(${Math.sin(elapsed * 29) * shake}px,${Math.cos(elapsed * 23) * shake * .6}px) scale(1.025)`;
     }
-    if (elapsed >= 15) { finish(); return; }
+    if (!options.ambient && elapsed >= 15) { finish(); return; }
     frameId = requestAnimationFrame(tick);
   }
   frameId = requestAnimationFrame(tick);

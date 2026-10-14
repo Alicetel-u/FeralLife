@@ -6,7 +6,8 @@ import assert from 'node:assert/strict';
 import {createActOne,advanceActOne,answerActOne} from '../src/act-one.js';
 const require=createRequire(join(process.env.FERAL_ASSET_MODULE_ROOT,'package.json'));
 const {chromium}=require('playwright');
-const fixture=createActOne(42,[],1,true);advanceActOne(fixture,2);answerActOne(fixture,fixture.actOne.pending.eventId,'trash');fixture.events.forEach(e=>e.read=true);
+const repeat=process.env.FERAL_PREVIEW_REPEAT==='1';
+const fixture=createActOne(42,[],repeat?2:1,true);advanceActOne(fixture,2);answerActOne(fixture,fixture.actOne.pending.eventId,'trash');fixture.events.forEach(e=>e.read=true);
 const browser=await chromium.launch({headless:true,channel:'chrome',timeout:20000});
 try{
   const page=await browser.newPage({viewport:{width:1366,height:768}});
@@ -19,13 +20,15 @@ try{
   await mkdir('docs/rewind-preview',{recursive:true});
   const shot=name=>page.screenshot({path:'docs/rewind-preview/'+name+'.png'});
   await page.goto('http://game.local/');await page.click('[data-game-continue]');await page.click('[data-fire-finish]');
+  assert.equal(await page.locator('.act-loop-reveal').count(),0);
   await page.click('[data-act-rewind]');await page.waitForSelector('[data-rewind-phase="fire"]');
-  await page.waitForTimeout(2200);assert.match(await page.locator('.rewind-voice').innerText(),/俺が/);await shot('01-regret');
+  await page.waitForTimeout(2200);assert.match(await page.locator('.rewind-voice').innerText(),repeat?/大丈夫/:/俺が/);await shot('01-regret');
   await page.waitForSelector('[data-rewind-phase="dark"]');await shot('02-dark');
-  await page.waitForSelector('[data-rewind-phase="clock"]');await page.waitForTimeout(1000);await shot('03-clock');
+  await page.waitForSelector('[data-rewind-phase="clock"]');await page.waitForTimeout(1000);if(repeat)assert.match(await page.locator('.rewind-voice').innerText(),/次こそは……絶対に守ってやる！/);await shot('03-clock');
   await page.waitForSelector('[data-rewind-intro]');
   const save=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('feral-act-one-v1')));
-  assert.equal((await save()).actOne.attempt,2);assert.equal((await save()).hour,17);
+  assert.equal((await save()).actOne.attempt,repeat?3:2);assert.equal((await save()).hour,17);
+  if(!repeat){
   await page.click('[data-dialogue-next]');assert.match(await page.locator('.stage-bubble').innerText(),/新しい大家さん/);
   await page.click('[data-dialogue-next]');assert.match(await page.locator('.stage-bubble').innerText(),/…………は？/);await shot('04-reunion');
   for(let i=0;i<6;i++)await page.click('[data-dialogue-next]');
@@ -35,8 +38,10 @@ try{
   assert.equal((await save()).actOne.rewindIntroCursor,8);
   await page.setViewportSize({width:390,height:844});await shot('05-mobile-inner-voice');
   await page.click('[data-event-skip]');assert.match(await page.locator('.stage-bubble').innerText(),/もう二度と/);
+  }else{await shot('04-reunion');await page.click('[data-event-skip]');assert.match(await page.locator('.stage-bubble').innerText(),/今度こそ/);}
   await page.click('[data-rewind-title].primary-button');await page.waitForSelector('[data-act-start]');
   assert.match(await page.locator('#modal-title').innerText(),/火事/);
+  await page.waitForSelector('.act-title-fire [data-fire-phase="building"]');await page.waitForTimeout(1500);await shot('06-burning-chapter');
   await page.reload();await page.click('[data-game-continue]');await page.waitForSelector('[data-act-start]');
   await page.click('[data-act-start]');await page.waitForFunction(()=>!document.getElementById('modal').open);
   await page.click('[data-act-wait]');await page.click('[data-event-skip]');assert.equal(await page.locator('[data-choice="trash"].previously-chosen').count(),1);

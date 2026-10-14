@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {ACT_ONE_EVENTS,getActOneChoices,actOneChosenChoices,createActOne,advanceActOne,answerActOne,rewindActOne,validActOne} from '../src/act-one.js';
+import {ACT_ONE_EVENTS,getActOneChoices,actOneChosenChoices,createActOne,advanceActOne,answerActOne,rewindActOne,rewindBeforeFire,validActOne} from '../src/act-one.js';
 import {validateSave} from '../src/simulation.js';
 const start=(attempt=2)=>createActOne(42,[],attempt,true);
 const answer=(s,id)=>answerActOne(s,s.actOne.pending.eventId,id);
@@ -77,4 +77,20 @@ test('rewind has its own reunion scene, preserves choices and resumes at day 1 1
   assert.ok(!scene.lines.some(l=>l.text==='うわっくっせぇ！！煙だらけじゃねーか！'));
   loop.actOne.rewindIntroCursor=8;assert.ok(validActOne(JSON.parse(JSON.stringify(loop))));
   assert.deepEqual(loop.actOne.chosenChoices,['ash:trash']);
+});
+
+test('automatic fire rewind restores 30 minutes before the failed incident and preserves earlier success',()=>{
+  const first=createActOne(42,[],1,true);advanceActOne(first,2);answer(first,'trash');
+  const saved=JSON.parse(JSON.stringify(first));assert.ok(validActOne(saved));
+  const recovered=rewindBeforeFire(saved);assert.equal(recovered.hour,18.5);assert.equal(recovered.actOne.attempt,2);
+  assert.equal(recovered.actOne.pending,null);assert.equal(recovered.ending,null);assert.equal(recovered.actOne.rewindIntroPending,false);
+  assert.deepEqual(recovered.actOne.chosenChoices,['ash:trash']);assert.deepEqual(recovered.actOne.memory,['ash-trash']);
+  advanceActOne(recovered,.5);assert.equal(recovered.actOne.pending.scene,'ash');answer(recovered,'water');
+  advanceActOne(recovered,100);const checkpoint=JSON.parse(JSON.stringify(recovered.actOne.rollbackPoint.state));answer(recovered,'turbo');
+  const next=rewindBeforeFire(JSON.parse(JSON.stringify(recovered)));assert.equal(next.hour,36.5);assert.deepEqual(next.actOne.completed,['ash']);
+  assert.deepEqual(next.residents,checkpoint.residents);assert.equal(next.rent,checkpoint.rent);assert.ok(validateSave(next)&&validActOne(next));
+  advanceActOne(next,.5);assert.equal(next.actOne.pending.scene,'dinner');answer(next,'coronation');advanceActOne(next,100);assert.equal(next.actOne.status,'clear');
+  const old=JSON.parse(JSON.stringify(recovered));delete old.actOne.rollbackPoint;
+  const migrated=rewindBeforeFire(old);assert.equal(migrated.hour,36.5);assert.deepEqual(migrated.actOne.completed,['ash']);assert.ok(validActOne(migrated));
+  saved.actOne.rollbackPoint.state.hour=20;assert.equal(validActOne(saved),false);
 });

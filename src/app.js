@@ -8,7 +8,7 @@ import { sampleJourney, motionLabel } from './movement.js';
 import { MANAGEMENT_CASES } from './event-cases.js';
 import { ensureManagement, managementSummary, managementImpact, openManagementCase, resolveManagementCase } from './management.js';
 import { eventConversation, eventStageHTML, eventIcon, troubleCardHTML } from './event-stage.js';
-import { actOneTitle, ACT_ONE_EVENTS, getActOneChoices, actOneChosenChoices, createActOne, advanceActOne, answerActOne, rewindActOne, validActOne, nextActOneAt } from './act-one.js';
+import { actOneTitle, ACT_ONE_EVENTS, getActOneChoices, actOneChosenChoices, createActOne, advanceActOne, answerActOne, rewindBeforeFire, validActOne, nextActOneAt } from './act-one.js';
 
 await loadCharacterArt();
 await loadRoomArt();
@@ -183,8 +183,8 @@ function header(eyebrow,title,closable=true) { return `<div class="modal-header"
 let stopFireEnding = null;
 function clearFireEnding(){stopFireEnding?.();stopFireEnding=null;}
 function openModal(html) { clearFireEnding();clearTimeout(eventAutoTimer); $('modal-content').innerHTML = html; modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); }
-function closeModal() { clearFireEnding();eventAuto=false;clearTimeout(eventAutoTimer);modal.close(); updateUI(); }
-modal.addEventListener('close', () => { if(modal.open)return;clearFireEnding();eventAuto=false;clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); });
+function closeModal() { clearFireEnding();clearTimeout(eventAutoTimer);modal.close(); updateUI(); }
+modal.addEventListener('close', () => { if(modal.open)return;clearFireEnding();clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); });
 function syncStageCursor() {
   rememberReadScenes(state);
   seenStageId = state.events.reduce((max, event) => Math.max(max, event.id), 0);
@@ -237,10 +237,15 @@ function scheduleEventAuto(){
   clearTimeout(eventAutoTimer);
   if(!eventAuto||!modal.open||!modal.classList.contains('conversation-modal')||!eventView)return;
   const current=state.events.find(e=>e.id===eventView.id),lines=current?eventConversation(current):[];
-  if(eventView.index>=lines.length-1)return; // Never choose an answer or leave a scene automatically.
+  if(!lines.length)return;
+  const last=eventView.index>=lines.length-1;
+  const waiting=state.actOne?state.actOne.pending?.eventId===current.id:state.management.pending?.eventId===current.id;
+  if(last&&waiting)return;
   eventAutoTimer=setTimeout(()=>{
     if(document.hidden||modal.classList.contains('event-ui-hidden')||modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden){scheduleEventAuto();return;}
-    showEvent(eventView.id,eventView.index+1);
+    if(last){
+      modal.querySelector('.modal-footer .primary-button')?.click();
+    }else showEvent(eventView.id,eventView.index+1);
   },Math.max(2500,(lines[eventView.index].text.length*75)+1200));
 }
 
@@ -291,7 +296,8 @@ function showGameTitle(){
   openModal(`<section class="act-screen game-title"><img class="game-title-apartment" src="assets/apartments.png" alt="個性豊かな住人たちが暮らす、けもの荘"><div class="game-title-shade"></div><div class="game-title-stars" aria-hidden="true"></div><div class="game-title-neighbors" aria-label="けもの荘の住人たち">${[['sister','happy','おおやさーん！'],['cat','tired','あと5分……ニャ。'],['hostess','happy','今日もにぎやか♪']].map(([type,emotion,line],i)=>`<figure class="title-neighbor neighbor-${i}"><span>${line}</span><div><img src="${EVENT_EXPRESSIONS[type][emotion]}" alt="${CHARACTERS[type].name}"></div></figure>`).join('')}</div><div class="game-title-content"><p class="game-title-eyebrow">本日より、あなたが大家さん！</p><h2 id="modal-title" class="game-logo"><span class="game-logo-roof" aria-hidden="true">★</span><span class="logo-letter">け</span><span class="logo-letter">も</span><span class="logo-letter">の</span><span class="logo-letter">荘</span><small>～クズ住人観察記～</small></h2><p class="game-title-tagline">クセつよ住人、トラブル大歓迎!?</p><nav class="game-title-menu" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><i>▶</i>つづきから<small>CONTINUE</small></button>':''}<button data-game-new><i>▶</i>はじめから<small>NEW GAME</small></button><button data-title-help><i>?</i>遊び方<small>HOW TO PLAY</small></button></nav><p class="game-title-save">${continuing?'前回の記録は自動保存されています。':'あなたが、今日からこの家の大家さん。'}</p></div><footer class="game-title-footer"><span>住人観察 × 会話選択アドベンチャー</span><span>けもの荘 / KEMONOSOU</span></footer></section>`);
 }
 function showActTitle(){
-  openModal(`<section class="act-screen act-title"><div class="title-embers" aria-hidden="true"></div><img class="act-key-art" src="${EVENT_EXPRESSIONS.cat.tired}" alt="灰田モク"><div class="act-title-copy"><p class="act-kicker">KEMONOSOU / CHAPTER 01</p><p class="act-number">第一幕</p><h2 id="modal-title">${state.actOne.attempt > 1 ? 'アパートを<br><span>火事<span class="act-moku">（モク）</span></span>から守れ！' : 'アパートを<br><span>モク</span>から守れ！'}</h2><p class="act-tagline">${state.actOne.attempt > 1 ? 'たった一人の住人。たった三日間。<br>なのに、この家は何度でも燃える。' : 'たった一人の住人。たった三日間。<br>訳ありアパートの大家生活が、いま始まる。'}</p><div class="act-rule"><span>START <b>1日目 17:00</b></span><i>→</i><span>GOAL <b>3日目 09:00</b></span></div><button class="act-primary" data-act-start>大家さんの一日を始める <span>→</span></button></div></section>`);
+  openModal(`<section class="act-screen act-title ${state.actOne.attempt>1?'act-title-burning':''}">${state.actOne.attempt>1?'<div class="act-title-fire" aria-hidden="true">'+fireEndingHTML(null).replace('id="modal-title"','')+'</div>':''}<div class="title-embers" aria-hidden="true"></div><img class="act-key-art" src="${EVENT_EXPRESSIONS.cat.tired}" alt="灰田モク"><div class="act-title-copy"><p class="act-kicker">KEMONOSOU / CHAPTER 01</p><p class="act-number">第一幕</p><h2 id="modal-title">${state.actOne.attempt > 1 ? 'アパートを<br><span>火事<span class="act-moku">（モク）</span></span>から守れ！' : 'アパートを<br><span>モク</span>から守れ！'}</h2><p class="act-tagline">${state.actOne.attempt > 1 ? 'たった一人の住人。たった三日間。<br>なのに、この家は何度でも燃える。' : 'たった一人の住人。たった三日間。<br>訳ありアパートの大家生活が、いま始まる。'}</p><div class="act-rule"><span>START <b>1日目 17:00</b></span><i>→</i><span>GOAL <b>3日目 09:00</b></span></div><button class="act-primary" data-act-start>大家さんの一日を始める <span>→</span></button></div></section>`);
+  if(state.actOne.attempt>1)stopFireEnding=startFireEnding(modal.querySelector('.act-title-fire .fire-cinematic'),null,()=>{},{ambient:true});
 }
 function continueGame(){
   if(state.actOne.rewindIntroPending){showEvent(state.events.find(e=>e.actScene==='rewind').id,state.actOne.rewindIntroCursor||0);return;}
@@ -315,8 +321,8 @@ function showActEnding(afterFire=false){
     stopFireEnding=startFireEnding(modal.querySelector('.fire-cinematic'),a.failure,()=>showActEnding(true));
     return;
   }
-  const choice=Object.values(ACT_ONE_EVENTS).flatMap(c=>c.choices).find(c=>c.bad===a.failure);
-  openModal(`<section class="act-screen ${bad?'act-burn':'act-clear'}">${bad?'<div class="burned-apartment" aria-hidden="true"><img src="assets/apartments.png" alt=""><div class="burned-rubble"></div></div>':''}<div class="act-ending-copy"><p class="act-kicker">${bad?'BAD END / '+a.attempt+'周目':'FIRST ACT / COMPLETE'}</p><h2 id="modal-title">${bad?'全 焼':'この家は、<br>まだここにある。'}</h2><p class="act-ending-story">${escape(state.ending.text)}</p>${bad?`<p class="act-clue">${escape(choice?.clue||'今度は、モクの言葉を聞こう。')}</p><div class="act-loop-reveal"><small>${a.attempt===1?'初めて、時間が巻き戻る。':'また、時計が逆に進む。'}</small><p>${a.attempt===1?'火の音が遠ざかる。手の中に、受け取ったばかりの鍵。<br>「新しい大家さん？」——モクの声が、もう一度。':'再び炎に包まれる、けもの荘。<br>大家「くそっ！！ またかよ！！」<br>大家「今度こそ大丈夫だと思ったのに……！」<br>燃え落ちる101号室を前に、大家は拳を握りしめる。<br>大家「……また、戻れるんだよな？」<br>時計の針が逆回転を始める。<br>大家（心の声）「次こそは……絶対に守ってやる！」'}</p></div><button class="act-primary" data-act-rewind>後悔を持って、1日目17時へ <span>↶</span></button>`:`<p class="act-clue">${a.attempt}周目で二つの火種を突破。3日目9時、入居募集が解放されました。</p><blockquote>「大家さん、なんでそんなに必死だったニャ。<br>……でも、いてくれて助かったニャ。」<cite>灰田 モク</cite></blockquote><button class="act-primary" data-act-reward>届いた入居申込書を開く <span>→</span></button><button class="act-secondary" data-act-replay>第一幕をもう一度遊ぶ</button>`}</div></section>`);
+  if(bad){beginRewind();return;}
+  openModal(`<section class="act-screen act-clear"><div class="act-ending-copy"><p class="act-kicker">FIRST ACT / COMPLETE</p><h2 id="modal-title">この家は、<br>まだここにある。</h2><p class="act-ending-story">${escape(state.ending.text)}</p><p class="act-clue">${a.attempt}周目で二つの火種を突破。3日目9時、入居募集が解放されました。</p><blockquote>「大家さん、なんでそんなに必死だったニャ。<br>……でも、いてくれて助かったニャ。」<cite>灰田 モク</cite></blockquote><button class="act-primary" data-act-reward>届いた入居申込書を開く <span>→</span></button><button class="act-secondary" data-act-replay>第一幕をもう一度遊ぶ</button></div></section>`);
 }
 function showActReward(){
   const a=state.actOne;
@@ -324,15 +330,17 @@ function showActReward(){
 }
 function beginRewind(){
   const failure=state.actOne.failure;
-  openModal(rewindTransitionHTML(failure));
+  const rollbackHour=(Object.values(ACT_ONE_EVENTS).find(e=>e.choices.some(c=>c.bad===failure))?.at||19)-.5;
+  openModal(rewindTransitionHTML(failure,state.actOne.attempt));
   const sound=$('sound-button').getAttribute('aria-pressed')==='true';
   if(audio?.state==='running')audio.suspend().catch(()=>{});
-  const stopTransition=startRewindTransition(modal.querySelector('.rewind-screen'),failure,()=>resetActState(rewindActOne(state)),sound);
+  const stopTransition=startRewindTransition(modal.querySelector('.rewind-screen'),failure,()=>resetActState(rewindBeforeFire(state),true),sound,state.actOne.attempt,rollbackHour);
   stopFireEnding=()=>{stopTransition();if(sound&&audio?.state==='suspended')audio.resume().catch(()=>{});};
 }
-function resetActState(next){
+function resetActState(next,resume=false){
   state=next;restored=false;Object.assign(talk,createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;
   renderer.reset();closeModal();updateCamera();updateRooms();updateUI();save();
+  if(resume)return;
   if(state.actOne.rewindIntroPending)showEvent(state.events.find(e=>e.actScene==='rewind').id,state.actOne.rewindIntroCursor||0);else showActTitle();
 }
 modal.addEventListener('cancel',e=>{if(state.actOne&&(modal.classList.contains('act-modal')||modal.querySelector('[data-prologue],[data-rewind-intro]')))e.preventDefault();});
@@ -358,8 +366,7 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-title-new'))openModal(header('NEW GAME / はじめから','一日目から、やり直しますか？',false)+'<div class="modal-body"><p class="modal-copy">今の進行と、タイムループで集めた失敗の記憶をリセットします。</p></div><div class="modal-footer"><button class="secondary-button" data-act-title>タイトルに戻る</button><button class="primary-button" data-restart>新しく始める →</button></div>');
   if(button.hasAttribute('data-act-start')){state.actOne.started=true;state.actOne.rewindTitlePending=false;save();closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();}
   if(button.hasAttribute('data-act-wait')&&state.actOne?.status==='playing'&&!state.actOne.pending){advanceActOne(state,nextActOneAt(state)-state.hour);queueFreshStageEvents();updateUI();save();if(state.ending)showActEnding();else openNextStageEvent();}
-  if(button.hasAttribute('data-act-rewind')&&state.actOne?.status==='bad')beginRewind();
-  if(button.hasAttribute('data-rewind-skip')&&state.actOne?.status==='bad')resetActState(rewindActOne(state));
+  if(button.hasAttribute('data-rewind-skip')&&state.actOne?.status==='bad')resetActState(rewindBeforeFire(state),true);
   if(button.hasAttribute('data-rewind-title')&&state.actOne?.rewindIntroPending){state.actOne.rewindIntroPending=false;state.actOne.rewindTitlePending=true;save();showActTitle();}
   if(button.hasAttribute('data-act-reward')&&state.actOne?.status==='clear')showActReward();
   if(button.hasAttribute('data-act-replay'))resetActState(createActOne());

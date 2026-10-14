@@ -264,3 +264,11 @@ dialog.act-modal:has(.rewind-screen){width:100vw;height:100dvh;max-width:100vw;m
 @keyframes clock-approach{from{opacity:0;transform:perspective(1000px) rotateX(22deg) scale(.78)}70%{opacity:1}to{opacity:1;transform:perspective(1000px) rotateX(0deg) scale(1.04)}}
 @media(max-width:700px){.rewind-clock-dial{width:94vw}}
 @media(prefers-reduced-motion:reduce){.rewind-screen[data-rewind-phase="clock"] .rewind-clock-dial{animation:none;transform:none}}
+
+/* Dialogue clicks must not select text while advancing the scene. */
+.stage-bubble,.stage-bubble *,.event-toolbar,.decision-panel,.conversation-modal .modal-footer{-webkit-user-select:none;user-select:none}
+
+.rewind-voice[data-voice-kind="narration"]{font-size:clamp(15px,1.65vw,23px);color:#d4c9c1}.rewind-voice[data-voice-kind="inner"]{font-style:italic;color:#e3d8d3}
+
+.act-title-fire{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}.act-title-fire .fire-cinematic{height:100%;width:100%;overflow:hidden}.act-title-fire .fire-narration,.act-title-fire .fire-skip,.act-title-fire .fire-letterbox{display:none}.act-title-burning .act-title-copy{position:relative;z-index:3;background:linear-gradient(90deg,#100a11eb,#120a11c9 72%,#120a1140)}.act-title-burning .act-key-art{z-index:2;filter:drop-shadow(-20px 10px 35px #0009)}.act-title-burning .title-embers{z-index:1}
+@media(max-width:700px){.act-title-burning .act-title-copy{background:linear-gradient(90deg,#100a11df,#120a1190)}}

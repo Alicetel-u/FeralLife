@@ -1,4 +1,4 @@
-import {createGame,advance,addEvent} from './simulation.js';
+import {createGame,advance,addEvent,validateSave} from './simulation.js';
 
 export const ACT_ONE_TITLE='アパートをモクから守れ！';
 export const ACT_ONE_LOOP_TITLE='アパートを火事（モク）から守れ！';
@@ -173,6 +173,14 @@ export function nextActOneAt(s){return Object.entries(ACT_ONE_EVENTS).find(([id]
 export function advanceActOne(s,hours){
   const a=s.actOne;if(!a?.started||a.status!=='playing'||a.pending||!Number.isFinite(hours)||hours<=0)return;
   const at=nextActOneAt(s),end=Math.min(s.hour+hours,at);
+  const checkpointScene=Object.keys(ACT_ONE_EVENTS).find(id=>!a.completed.includes(id));
+  const checkpointAt=at-.5;
+  if(checkpointScene&&s.hour<=checkpointAt&&end>=checkpointAt){
+    advance(s,Math.max(0,checkpointAt-s.hour));
+    s.pending=null;s.management.pending=null;s.management.queue=[];
+    const snapshot=JSON.parse(JSON.stringify({...s,actOne:{...a,rollbackPoint:undefined}}));
+    a.rollbackPoint={scene:checkpointScene,state:snapshot};
+  }
   advance(s,Math.max(0,end-s.hour));
   // Admission is the reward, never a resident during the act.
   s.pending=null;s.management.pending=null;s.management.queue=[];
@@ -204,6 +212,33 @@ export function answerActOne(s,eventId,choiceId){
   }
   return result;
 }
+export function rewindBeforeFire(s){
+  if(s.actOne?.status!=='bad')return null;
+  const scene=Object.keys(ACT_ONE_EVENTS).find(id=>ACT_ONE_EVENTS[id].choices.some(c=>c.bad===s.actOne.failure))||'ash';
+  let next;
+  if(s.actOne.rollbackPoint?.scene===scene){
+    next=JSON.parse(JSON.stringify(s.actOne.rollbackPoint.state));
+  }else{
+    // Older saves lack a checkpoint. Rebuild the completed decisions deterministically.
+    next=createActOne(s.actOne.seed,[],s.actOne.attempt,true);
+    for(const id of Object.keys(ACT_ONE_EVENTS)){
+      if(id===scene)break;
+      advanceActOne(next,ACT_ONE_EVENTS[id].at-next.hour);
+      const recorded=s.events.find(e=>e.actScene===id&&e.actChoice)?.actChoice;
+      const safe=ACT_ONE_EVENTS[id].choices.find(c=>!c.bad);
+      answerActOne(next,next.actOne.pending.eventId,recorded||safe.id);
+    }
+    advanceActOne(next,ACT_ONE_EVENTS[scene].at-.5-next.hour);
+  }
+  next.actOne.attempt=s.actOne.attempt+1;
+  next.actOne.memory=[...s.actOne.memory];
+  next.actOne.chosenChoices=actOneChosenChoices(s);
+  next.actOne.started=true;next.actOne.status='playing';next.actOne.pending=null;
+  next.actOne.rewindIntroPending=false;next.actOne.rewindTitlePending=false;
+  next.ending=null;next.pending=null;
+  next.events.forEach(e=>e.read=true);
+  return next;
+}
 export function rewindActOne(s){
   const next=createActOne(s.actOne.seed,s.actOne.memory,s.actOne.attempt+1,true,actOneChosenChoices(s));
   const opening=next.events[0];opening.actScene='rewind';
@@ -230,6 +265,10 @@ export function rewindActOne(s){
 }
 export function validActOne(s){
   const a=s?.actOne;if(!a||a.version!==1||typeof a.started!=='boolean'||!Number.isInteger(a.attempt)||a.attempt<1||!Number.isInteger(a.seed)||!Array.isArray(a.memory)||!Array.isArray(a.completed)||!['playing','bad','clear'].includes(a.status))return false;
+  if(a.rollbackPoint!==undefined){
+    const point=a.rollbackPoint,event=ACT_ONE_EVENTS[point?.scene],saved=point?.state;
+    if(!event||saved?.actOne?.rollbackPoint!==undefined||saved?.hour!==event.at-.5||saved?.actOne?.pending!==null||saved?.actOne?.status!=='playing'||!validateSave(saved)||!validActOne(saved))return false;
+  }
   const failures=[...Object.values(ACT_ONE_EVENTS).flatMap(e=>e.choices.map(c=>c.bad).filter(Boolean)),'ash-laundry','ash-wind'];
   if(a.chosenChoices!==undefined){
     const known=Object.entries(ACT_ONE_EVENTS).flatMap(([scene,e])=>e.choices.map(c=>`${scene}:${c.id}`));
