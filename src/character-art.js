@@ -182,27 +182,52 @@ export const CHARACTER_ART = {
   }
 };
 
-export async function loadRoomArt() {
-  await Promise.all(Object.values(ROOM_ART).map(async art => {
-    art.image = await new Promise(resolve => {
-      const image = new Image();
-      image.onload = () => resolve(image);
-      image.onerror = () => { console.warn('Room image could not load:', art.src); resolve(null); };
-      image.src = art.src;
-    });
+// 起動時に全画像の完了を待たない。表示に必要な画像から順番に読み込む。
+const imageCache = new Map();
+function loadImage(src) {
+  if (!imageCache.has(src)) imageCache.set(src,new Promise(resolve=>{
+    const image=new Image();
+    image.onload=()=>resolve(image);
+    image.onerror=()=>{console.warn('Image could not load:',src);resolve(null);};
+    image.src=src;
   }));
+  return imageCache.get(src);
 }
-
-export async function loadCharacterArt() {
-  const load = src => new Promise(resolve => {
-    const image = new Image();
-    image.onload = () => resolve(image);
-    image.onerror = () => { console.warn('Character image could not load:', src); resolve(null); };
-    image.src = src;
+async function assignImage(art,property,src,onReady) {
+  if (!src) return;
+  const image=await loadImage(src);
+  art[property]=image;
+  if (image) onReady?.();
+}
+export function loadRoomArt(onReady) {
+  return Promise.all(Object.values(ROOM_ART).map(art=>assignImage(art,'image',art.src,onReady)));
+}
+export function loadCharacterArt(onReady) {
+  // 初期画面の背景とモクだけを優先。それ以外はブラウザのアイドル時間に少しずつ。
+  const first=[
+    assignImage(SCENE_ART,'image',SCENE_ART.src,onReady),
+    ...['cat'].flatMap(type=>{
+      const art=CHARACTER_ART[type];
+      return [assignImage(art,'image',art.src,onReady),assignImage(art,'portrait',art.portraitSrc,onReady)];
+    })
+  ];
+  const remaining=[];
+  for (const [type,art] of Object.entries(CHARACTER_ART)) {
+    if (type!=='cat') {
+      remaining.push(()=>assignImage(art,'image',art.src,onReady));
+      remaining.push(()=>assignImage(art,'portrait',art.portraitSrc,onReady));
+    }
+    for (const pose of Object.values(art.poses||{})) remaining.push(()=>assignImage(pose,'image',pose.src,onReady));
+  }
+  Promise.all(first).then(()=>{
+    // 同時接続と画像デコードの集中を避ける。起動画面をブロックしない。
+    const schedule=window.requestIdleCallback||((fn)=>setTimeout(fn,40));
+    let index=0;
+    const batch=()=>{
+      const tasks=remaining.slice(index,index+3);index+=tasks.length;
+      Promise.all(tasks.map(task=>task())).finally(()=>{if(index<remaining.length)schedule(batch);});
+    };
+    schedule(batch);
   });
-  await Promise.all([load(SCENE_ART.src).then(image => { SCENE_ART.image = image; }), ...Object.values(CHARACTER_ART).map(async art => {
-    [art.image, art.portrait] = await Promise.all([load(art.src), load(art.portraitSrc)]);
-    // 差分ポーズも起動時にまとめて読み込む
-    await Promise.all(Object.values(art.poses || {}).map(async pose => { pose.image = await load(pose.src); }));
-  })]);
+  return Promise.all(first);
 }
