@@ -17,7 +17,7 @@ export function prologueCutHTML(cut){
 export function startOpeningPrologue(root,onContinue){
  const content=root.querySelector('.ink-cut-content'),next=root.querySelector('.ink-next'),progress=root.querySelector('.ink-progress');
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
- let cursor=0,typing=false,leaving=false,destroyed=false,lineTimer,exitTimer,unlockAt=0;
+ let cursor=0,typing=false,leaving=false,destroyed=false,lineTimer,exitTimer;
  // Retain only this scene's small CG set; no polling or permanent animation loop.
  const preload=PROLOGUE_CUTS.filter(c=>c.image).map(c=>c.image);
  for(const src of new Set(preload)){const image=new Image();image.src=src;}
@@ -26,15 +26,15 @@ export function startOpeningPrologue(root,onContinue){
   content.innerHTML=prologueCutHTML(cut);progress.textContent=String(cursor+1).padStart(2,'0')+' / '+String(PROLOGUE_CUTS.length).padStart(2,'0');
   next.setAttribute('aria-label',cursor===PROLOGUE_CUTS.length-1?'101号室へ':'次へ');
   const line=content.querySelector('.ink-line'),chars=Array.from(cut.text);let count=0;
-  const tick=()=>{if(destroyed)return;count=reduced?chars.length:Math.min(chars.length,count+2);line.textContent=chars.slice(0,count).join('');typing=count<chars.length;root.classList.toggle('ink-typing',typing);if(typing)lineTimer=setTimeout(tick,35);};
-  tick();unlockAt=performance.now()+(reduced?0:220);
+  const tick=()=>{if(destroyed)return;count=reduced?chars.length:Math.min(chars.length,count+2);line.textContent=chars.slice(0,count).join('');typing=count<chars.length;root.classList.toggle('ink-typing',typing);if(typing)lineTimer=setTimeout(tick,25);};
+  tick();
  };
  const advance=()=>{
-  if(leaving||performance.now()<unlockAt)return;
-  if(typing){clearTimeout(lineTimer);content.querySelector('.ink-line').textContent=PROLOGUE_CUTS[cursor].text;typing=false;root.classList.remove('ink-typing');unlockAt=performance.now()+180;return;}
+  if(leaving||destroyed)return;
+  if(typing){clearTimeout(lineTimer);content.querySelector('.ink-line').textContent=PROLOGUE_CUTS[cursor].text;typing=false;root.classList.remove('ink-typing');return;}
   if(cursor<PROLOGUE_CUTS.length-1){cursor++;show();}else finish();
  };
- const finish=()=>{if(leaving)return;leaving=true;next.disabled=true;root.querySelector('.ink-skip').disabled=true;root.classList.add('ink-leaving');clearTimeout(lineTimer);exitTimer=setTimeout(()=>{if(!destroyed)onContinue();},reduced?0:450);};
+ const finish=()=>{if(leaving)return;leaving=true;next.disabled=true;root.querySelector('.ink-skip').disabled=true;root.classList.add('ink-leaving');clearTimeout(lineTimer);exitTimer=setTimeout(()=>{if(!destroyed)onContinue();},reduced?0:180);};
  const click=e=>{e.preventDefault();e.stopImmediatePropagation();if(e.target.closest('[data-prologue-skip]'))finish();else advance();};
  const key=e=>{if(e.altKey||e.ctrlKey||e.metaKey||e.shiftKey||!['Enter',' '].includes(e.key))return;if(e.target.closest('[data-prologue-skip]'))return;e.preventDefault();e.stopPropagation();if(!e.repeat)advance();};
  root.addEventListener('click',click,true);root.addEventListener('keydown',key);show();next.focus({preventScroll:true});
