@@ -29,7 +29,7 @@ test('loop scenes have one safe answer and two full-burn endings; first-run ash 
       const loop=rewindActOne(loaded);assert.equal(loop.hour,17);assert.equal(loop.actOne.attempt,s.actOne.attempt+1);assert.equal(loop.actOne.started,true);
       assert.deepEqual(loop.actOne.memory,[bad.bad]);assert.equal(loop.actOne.completed.length,0);assert.equal(loop.ending,null);assert.equal(loop.residents.length,1);
       assert.ok(validateSave(loop)&&validActOne(loop));
-      assert.ok(loop.events[0].lines.some(l=>l.text.includes('全部、覚えてる')));
+      assert.ok(loop.events[0].lines.some(l=>l.text.includes(s.actOne.attempt===1?'全部、覚えてる':'嫌ってほどな')));
     }
   }
 });
