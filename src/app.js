@@ -16,6 +16,13 @@ import { eventConversation, eventStageHTML, eventIcon, troubleCardHTML } from '.
 import { actOneTitle, ACT_ONE_EVENTS, getActOneChoices, actOneChosenChoices, createActOne, advanceActOne, answerActOne, rewindBeforeFire, validActOne, nextActOneAt } from './act-one.js';
 
 
+// iOS Safari may ignore viewport zoom restrictions: intercept only native page magnification gestures.
+if ('ontouchstart' in window) {
+  for (const eventName of ['gesturestart','gesturechange']) {
+    document.addEventListener(eventName,event=>event.preventDefault(),{passive:false});
+  }
+}
+
 const $ = id => document.getElementById(id);
 const escape = text => String(text ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen = n => '¥' + Math.round(n).toLocaleString('ja-JP');
