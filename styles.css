@@ -462,4 +462,4 @@ body.game-ink{height:100dvh;overflow:hidden}
 @media (prefers-reduced-motion:reduce){.event-stage.memory-whiteout{animation:none}}
 
 /* Rewind dialogue takes place inside room 101, not over the outdoor apartment view. */
-.conversation-modal .conversation-body[data-rewind-intro]{background:#272322 url('assets/rooms/cat/interior.png') center center / cover no-repeat}
+.conversation-modal .conversation-body[data-rewind-intro]{background:#272322 url('assets/rooms/cat/interior-v2.png') center center / cover no-repeat}

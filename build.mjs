@@ -24,7 +24,10 @@ for (const [index, path] of assetPaths.entries()) {
   if (script.includes(path)) throw new Error(`Unsupported embedded asset reference: ${path}`);
 }
 script = 'const standaloneAssets = '+JSON.stringify(embeddedAssets)+';\n'+script;
-const stylesheet = css.replace("url('assets/apartments.png')", 'none');
+let stylesheet = css.replace("url('assets/apartments.png')", 'none');
+for(const [index,path] of assetPaths.entries()){
+  stylesheet=stylesheet.replaceAll("url('"+path+"')",'url("'+embeddedAssets[index]+'")').replaceAll('url("'+path+'")','url("'+embeddedAssets[index]+'")');
+}
 const standalone = html.replace('<link rel="stylesheet" href="styles.css">', () => `<style>${stylesheet}</style>`).replace('<script type="module" src="src/app.js"></script>', () => `<script type="module">\n${script}\n</script>`);
 await writeFile(join(root, 'play.html'), standalone, 'utf8');
 console.log(`Built standalone game: play.html (${assetPaths.length} images embedded, no server or install required)`);
