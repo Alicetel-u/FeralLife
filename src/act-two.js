@@ -77,7 +77,7 @@ export function answerActTwo(s,eventId,choiceId){
  const original=s.events.find(e=>e.id===p.eventId);original.read=true;original.actChoice=choiceId;
  a.chosenChoices=actTwoChosen(s);a.pending=null;a.completed.push(p.scene);
  const r=addEvent(s,'life','返事：'+choice.label,choice.lines[0].text,[102]);r.actScene='reply';r.cast=['hostess','cat'];r.stageOnly=true;r.lines=choice.lines;
- if(choice.bad){a.status='bad';a.failure=choice.bad;if(!a.memory.includes(choice.bad))a.memory.push(choice.bad);s.ending={name:'差し押さえ — '+event.title,text:choice.regret};}
+ if(choice.bad){a.status='bad';a.failure=choice.bad;if(!a.memory.includes(choice.bad))a.memory.push(choice.bad);s.ending={name:(p.scene==='bag'?'経営破綻':'差し押さえ')+' — '+event.title,text:choice.regret};}
  return r;
 }
 export function rewindActTwo(s){
