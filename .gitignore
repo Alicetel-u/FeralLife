@@ -1,2 +1,5 @@
 # Generated standalone game; built locally and by the Pages workflow.
 /play.html
+
+# Generated deployment staging folders.
+/.pages-build-*/

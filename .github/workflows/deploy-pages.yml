@@ -31,14 +31,15 @@ jobs:
         run: npm run build
       - name: Test
         run: npm test
-      - name: Keep the built standalone game
-        run: printf '\n!/play.html\n' >> .gitignore
+      - name: Package game files only
+        id: site
+        run: node build-pages.mjs
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: ${{ steps.site.outputs.path }}
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
