@@ -463,3 +463,4 @@ syncStageCursor();
 updateCamera();updateRooms();updateUI();updateJournal();save();requestAnimationFrame(frame);
 if(restored)toast('前回の観察記の続きから。住人たちは、ここで待っていました。');
 if(state.actOne){if(restored && state.actOne.started)showGameTitle();else showOpening();}
+document.documentElement.classList.remove('game-booting');
