@@ -351,7 +351,7 @@ export function rewindActOne(s){
 export function validActOne(s){
   const a=s?.actOne;if(!a||a.version!==1||typeof a.started!=='boolean'||!Number.isInteger(a.attempt)||a.attempt<1||!Number.isInteger(a.seed)||!Array.isArray(a.memory)||!Array.isArray(a.completed)||!['playing','bad','clear'].includes(a.status))return false;
   if(a.rollbackPoint!==undefined){
-    const point=a.rollbackPoint,event=ACT_ONE_EVENTS[point?.scene],saved=point?.state;
+    const point=a.rollbackPoint,event=(a.chapter===2?{'bag':{at:62},'contract':{at:81}}:ACT_ONE_EVENTS)[point?.scene],saved=point?.state;
     if(!event||saved?.actOne?.rollbackPoint!==undefined||saved?.hour!==event.at-.5||saved?.actOne?.pending!==null||saved?.actOne?.status!=='playing'||!validateSave(saved)||!validActOne(saved))return false;
   }
   const failures=[...Object.values(ACT_ONE_EVENTS).flatMap(e=>e.choices.map(c=>c.bad).filter(Boolean)),'ash-laundry','ash-wind'];
