@@ -1,3 +1,4 @@
+import { storyCheckpointTarget } from './story-checkpoints.js';
 import { replaceConversationContent } from './conversation-dom.js';
 import { speakerColorStyle } from './speaker-colors.js';
 import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './trouble-victory.js';
@@ -367,7 +368,7 @@ function showActEnding(afterFire=false){
   if(bad&&afterFire&&automaticFirstRewind(state)){beginRewind(true);return;}
   if(bad){
     const choice=Object.values(ACT_ONE_EVENTS).flatMap(c=>c.choices).find(c=>c.bad===a.failure);
-    openModal(`<section class="act-screen act-burn"><div class="burned-apartment" aria-hidden="true"><img src="assets/apartments.png" alt=""><div class="burned-rubble"></div></div><div class="act-ending-copy"><p class="act-kicker">BAD END / ${a.attempt}周目</p><h2 id="modal-title">全 焼</h2><p class="act-ending-story">${escape(state.ending.text)}</p><p class="act-clue">${escape(choice?.clue||'今度こそ、火元を確認しよう。')}</p><div class="act-loop-reveal"><small>${a.attempt===1?'初めて、時間が巻き戻る。':'また、時計が逆に進む。'}</small><p>${a.attempt===1?'炎に包まれたけもの荘。大家は呆然と立ち尽くす。':'大家「くそっ！！ またかよ！！」<br>大家「今度こそ大丈夫だと思ったのに……！」'}<br>大家「……もう一度、やり直せるなら。」</p></div><button class="act-primary" data-act-rewind>後悔を持って、火事の30分前へ <span>↶</span></button></div></section>`);
+    openModal(`<section class="act-screen act-burn"><div class="burned-apartment" aria-hidden="true"><img src="assets/apartments.png" alt=""><div class="burned-rubble"></div></div><div class="act-ending-copy"><p class="act-kicker">BAD END / ${a.attempt}周目</p><h2 id="modal-title">全 焼</h2><p class="act-ending-story">${escape(state.ending.text)}</p><p class="act-clue">${escape(choice?.clue||'今度こそ、火元を確認しよう。')}</p><div class="act-loop-reveal"><small>${a.attempt===1?'初めて、時間が巻き戻る。':'また、時計が逆に進む。'}</small><p>${a.attempt===1?'炎に包まれたけもの荘。大家は呆然と立ち尽くす。':'大家「くそっ！！ またかよ！！」<br>大家「今度こそ大丈夫だと思ったのに……！」'}<br>大家「……もう一度、やり直せるなら。」</p></div><button class="act-primary" data-act-rewind>直前のチェックポイントへ戻る <span>↶</span></button></div></section>`);
     return;
   }
   if(!a.epilogueSeen){const epilogue=state.events.find(e=>e.actScene==='epilogue');if(epilogue){showEvent(epilogue.id,a.epilogueCursor||0);return;}}
@@ -377,7 +378,7 @@ function showActTwoEnding(){
  const a=state.actOne;
  if(a.status==='bad'){
   const choice=Object.values(ACT_TWO_EVENTS).flatMap(v=>v.choices).find(v=>v.bad===a.failure);
-  openModal(`<section class="act-screen act-burn" data-chapter="2"><div class="ending-building" aria-hidden="true"><img src="assets/apartments.png" alt=""></div><img class="ending-character" src="${EVENT_EXPRESSIONS.hostess.sad}" alt="金城ルナ"><div class="act-ending-copy"><p class="act-kicker">BAD END / 第二幕 · ${a.attempt}周目</p><h2 id="modal-title">${a.failure?.startsWith("bag-")?"夜 逃 げ":"差 し 押 さ え"}</h2><p class="act-ending-story">${escape(state.ending.text)}</p><p class="act-clue">${escape(choice?.clue||'契約書はよく読む。')}</p><p>大家「……アパートまで失ってたまるか！ 次こそは！」</p><button class="act-primary" data-act2-rewind>契約の30分前へ戻る ↶</button></div></section>`);return;
+  openModal(`<section class="act-screen act-burn" data-chapter="2"><div class="ending-building" aria-hidden="true"><img src="assets/apartments.png" alt=""></div><img class="ending-character" src="${EVENT_EXPRESSIONS.hostess.sad}" alt="金城ルナ"><div class="act-ending-copy"><p class="act-kicker">BAD END / 第二幕 · ${a.attempt}周目</p><h2 id="modal-title">${a.failure?.startsWith("bag-")?"夜 逃 げ":"差 し 押 さ え"}</h2><p class="act-ending-story">${escape(state.ending.text)}</p><p class="act-clue">${escape(choice?.clue||'契約書はよく読む。')}</p><p>大家「……アパートまで失ってたまるか！ 次こそは！」</p><button class="act-primary" data-act2-rewind>直前のチェックポイントへ戻る ↶</button></div></section>`);return;
  }
  if(!a.epilogueSeen){const e=state.events.find(e=>e.actScene==='act2-epilogue');if(e){showEvent(e.id,a.epilogueCursor||0);return;}}
  openModal(`<section class="act-screen act-clear" data-chapter="2"><img class="ending-character" src="${EVENT_EXPRESSIONS.hostess.happy}" alt="金城ルナ"><div class="act-ending-copy"><p class="act-kicker">SECOND ACT COMPLETE</p><h2 id="modal-title">第二幕・完</h2><p class="act-ending-story">けもの荘は、借金のカタにならずに済んだ。</p><button class="act-primary" data-act2-finish>次章へ続く →</button></div></section>`);
@@ -387,7 +388,7 @@ function showActReward(){
 }
 function beginRewind(afterFire=false){
   const failure=state.actOne.failure;
-  const rollbackHour=(Object.values(ACT_ONE_EVENTS).find(e=>e.choices.some(c=>c.bad===failure))?.at||19)-.5;
+  const rollbackHour=storyCheckpointTarget(state).hour;
   openModal(rewindTransitionHTML(failure,state.actOne.attempt,afterFire));
   const sound=$('sound-button').getAttribute('aria-pressed')==='true';
   if(audio?.state==='running')audio.suspend().catch(()=>{});

@@ -1,3 +1,4 @@
+import { saveStoryCheckpoint, validStoryCheckpoint, storyCheckpointTarget } from './story-checkpoints.js';
 import { firstActLife } from './act-one-life.js';
 import {createGame,advance,addEvent,validateSave} from './simulation.js';
 
@@ -168,6 +169,7 @@ export function createActOne(seed=Date.now(),memory=[],attempt=1,started=false,c
     am('……まぁ、家賃さえ払ってくれりゃいいか。'),
     ...(attempt===2?[an('同じ声。同じ灰皿。同じ「明日から」。焼けた廊下を覚えているのは、大家だけだった。')]:[])
   ];
+  saveStoryCheckpoint(s,'ash','物語の開始時点');
   return s;
 }
 export function nextActOneAt(s){
@@ -188,14 +190,6 @@ export function advanceActOne(s,hours){
   const a=s.actOne;if(!a?.started||a.status!=='playing'||a.pending||!Number.isFinite(hours)||hours<=0)return;
   firstActLife(s);
   const at=nextActOneAt(s),end=Math.min(s.hour+hours,at);
-  const checkpointScene=Object.keys(ACT_ONE_EVENTS).find(id=>!a.completed.includes(id));
-  const checkpointAt=at-.5;
-  if(checkpointScene&&s.hour<=checkpointAt&&end>=checkpointAt){
-    advanceFirstActLife(s,Math.max(0,checkpointAt-s.hour));
-    s.pending=null;s.management.pending=null;s.management.queue=[];
-    const snapshot=JSON.parse(JSON.stringify({...s,actOne:{...a,rollbackPoint:undefined}}));
-    a.rollbackPoint={scene:checkpointScene,state:snapshot};
-  }
   advanceFirstActLife(s,Math.max(0,end-s.hour));
   // Admission is the reward, never a resident during the act.
   s.pending=null;s.management.pending=null;s.management.queue=[];
@@ -297,13 +291,14 @@ export function answerActOne(s,eventId,choiceId){
     if(!a.memory.includes(choice.bad))a.memory.push(choice.bad);
     s.ending={name:'全焼 — '+c.title,text:choice.regret};
   }
+  if(!choice.bad&&p.scene==='ash')saveStoryCheckpoint(s,'dinner','灰皿の火事を回避した直後');
   return result;
 }
 export function rewindBeforeFire(s){
   if(s.actOne?.status!=='bad')return null;
   const scene=Object.keys(ACT_ONE_EVENTS).find(id=>ACT_ONE_EVENTS[id].choices.some(c=>c.bad===s.actOne.failure))||'ash';
   let next;
-  if(s.actOne.rollbackPoint?.scene===scene){
+  if(s.actOne.rollbackPoint?.kind==='story'&&s.actOne.rollbackPoint.scene===scene){
     next=JSON.parse(JSON.stringify(s.actOne.rollbackPoint.state));
   }else{
     // Older saves lack a checkpoint. Rebuild the completed decisions deterministically.
@@ -315,8 +310,9 @@ export function rewindBeforeFire(s){
       const safe=ACT_ONE_EVENTS[id].choices.find(c=>!c.bad);
       answerActOne(next,next.actOne.pending.eventId,recorded||safe.id);
     }
-    advanceActOne(next,ACT_ONE_EVENTS[scene].at-.5-next.hour);
+
   }
+  if(s.actOne.rollbackPoint?.kind==='story')next.actOne.rollbackPoint=JSON.parse(JSON.stringify(s.actOne.rollbackPoint));
   next.actOne.attempt=s.actOne.attempt+1;
   next.actOne.memory=[...s.actOne.memory];
   next.actOne.chosenChoices=actOneChosenChoices(s);
@@ -325,9 +321,8 @@ export function rewindBeforeFire(s){
   next.ending=null;next.pending=null;
   next.events.forEach(e=>e.read=true);
   const firstLoop=s.actOne.attempt===1;
-  const at=ACT_ONE_EVENTS[scene].at;
   const intro=addEvent(next,'life',firstLoop?'初めての巻き戻し':'また、火事の前へ',
-    firstLoop?'焼け落ちたはずの101号室が、何事もなかったように戻っている。':'また時間が戻った。火災まで、あと30分。',[101]);
+    firstLoop?'焼け落ちたはずの101号室が、何事もなかったように戻っている。':'また時間が戻った。'+storyCheckpointTarget(s).label+'だ。',[101]);
   intro.actScene='rewind';intro.cast=['cat'];intro.stageOnly=true;intro.read=false;
   intro.lines=firstLoop?[
     an('火の音が消える。気づけば101号室。さっきまで燃えていた壁も、モクも、元のままだ。'),
@@ -335,12 +330,12 @@ export function rewindBeforeFire(s){
     {...am('……は？ ここ、燃えたはずだろ！？'),emotion:'surprised'},
     ac('surprised','何言ってるニャ？ まだ何も燃えてないニャ。'),
     {...am('夢じゃねぇ……あの熱さも覚えてる。'),innerVoice:true},
-    an('時計は火事の30分前を示していた。'),
+    an('時計は1日目17時。この家での暮らしが始まった時刻を示していた。'),
     {...am('戻ったのか……？ 今度こそ、あんな目には遭わせねぇ。'),innerVoice:true},
     ac('tired','大家、顔色悪いニャ。'),
     am('……気にすんな。今度はちゃんと話を聞く。')
   ]:[
-    an('炎の音が遠ざかる。見慣れた101号室と、火事の30分前の時計。'),
+    an('炎の音が遠ざかる。見慣れた101号室。'+storyCheckpointTarget(s).label+'に戻っていた。'),
     {...am('……また戻った。今度こそ大丈夫だと思ったのに。'),innerVoice:true},
     ac('neutral','大家？ 何かあったニャ？'),
     am('いや。今度こそ、このアパートを燃やさせねぇ。'),
@@ -384,12 +379,12 @@ export function validActOne(s){
     if(!Array.isArray(a.chosenChoices)||a.chosenChoices.some(x=>!chosen.includes(x))||a.memory.some(x=>!failures.includes(x))||a.completed.some(x=>!Object.hasOwn(scenes,x)))return false;
     if(s.hour<57||s.hour>105||s.residents.length!==2||!s.residents.some(r=>r.type==='hostess'))return false;
     if(a.pending!==null&&(!scenes[a.pending?.scene]||!s.events.some(e=>e.id===a.pending.eventId&&e.actScene===a.pending.scene)))return false;
-    if(a.rollbackPoint!==undefined){const p=a.rollbackPoint,saved=p?.state;if(!scenes[p?.scene]||saved?.hour!==scenes[p.scene].at-.5||saved?.actOne?.rollbackPoint!==undefined||saved?.actOne?.pending!==null||saved?.actOne?.status!=='playing'||!validateSave(saved)||!validActOne(saved))return false;}
+    if(a.rollbackPoint!==undefined){const p=a.rollbackPoint,saved=p?.state;if(!scenes[p?.scene]||(p.kind==='story'?!validStoryCheckpoint(p,2):saved?.hour!==scenes[p.scene].at-.5)||saved?.actOne?.rollbackPoint!==undefined||saved?.actOne?.pending!==null||saved?.actOne?.status!=='playing'||!validateSave(saved)||!validActOne(saved))return false;}
     return a.status==='playing'?!s.ending:a.status==='clear'?s.hour===105&&a.completed.length===2&&!!s.ending:failures.includes(a.failure)&&!!s.ending;
   }if(!a||a.version!==1||typeof a.started!=='boolean'||!Number.isInteger(a.attempt)||a.attempt<1||!Number.isInteger(a.seed)||!Array.isArray(a.memory)||!Array.isArray(a.completed)||!['playing','bad','clear'].includes(a.status))return false;
   if(a.rollbackPoint!==undefined){
     const point=a.rollbackPoint,event=(a.chapter===2?{'bag':{at:62},'contract':{at:81}}:ACT_ONE_EVENTS)[point?.scene],saved=point?.state;
-    if(!event||saved?.actOne?.rollbackPoint!==undefined||saved?.hour!==event.at-.5||saved?.actOne?.pending!==null||saved?.actOne?.status!=='playing'||!validateSave(saved)||!validActOne(saved))return false;
+    if(!event||saved?.actOne?.rollbackPoint!==undefined||(point.kind==='story'?!validStoryCheckpoint(point,1):saved?.hour!==event.at-.5)||saved?.actOne?.pending!==null||saved?.actOne?.status!=='playing'||!validateSave(saved)||!validActOne(saved))return false;
   }
   const failures=[...Object.values(ACT_ONE_EVENTS).flatMap(e=>e.choices.map(c=>c.bad).filter(Boolean)),'ash-laundry','ash-wind'];
   if(a.chosenChoices!==undefined){

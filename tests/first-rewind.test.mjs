@@ -5,7 +5,7 @@ test('only the unavoidable first ash fire bypasses the results page and keeps ch
  for(const answer of ['trash','balcony','freezer']){
   const s=createActOne(42,[],1,true);advanceActOne(s,100);answerActOne(s,s.actOne.pending.eventId,answer);assert.equal(automaticFirstRewind(s),true);
   const saved=JSON.parse(JSON.stringify(s));assert.equal(automaticFirstRewind(saved),true);
-  const next=rewindBeforeFire(saved);assert.equal(next.hour,18.5);assert.equal(next.actOne.attempt,2);assert.ok(next.actOne.memory.includes(s.actOne.failure));assert.ok(validActOne(next));
+  const next=rewindBeforeFire(saved);assert.equal(next.hour,17);assert.equal(next.actOne.attempt,2);assert.ok(next.actOne.memory.includes(s.actOne.failure));assert.ok(validActOne(next));
   assert.equal(automaticFirstRewind({...s,actOne:{...s.actOne,attempt:2}}),false);assert.equal(automaticFirstRewind({...s,actOne:{...s.actOne,chapter:2}}),false);
  }
 });

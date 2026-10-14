@@ -20,12 +20,12 @@ test('first bad ending restores a playable checkpoint with memory',()=>{
  const s=create();start(s);advanceActTwo(s,5);
  assert.equal(s.actOne.pending.scene,'bag');
  answer(s,'guarantee');assert.equal(s.actOne.status,'bad');
- const next=rewindActTwo(s);assert.equal(next.hour,61.5);
+ const next=rewindActTwo(s);assert.equal(next.hour,57);
  assert.equal(next.actOne.status,'playing');assert.equal(next.actOne.attempt,2);
  assert.ok(next.actOne.memory.includes('bag-guarantee'));
  assert.equal(next.actOne.rewindIntroPending,true);
  assert.ok(validActOne(next)&&validateSave(next));
- next.actOne.rewindIntroPending=false;advanceActTwo(next,.5);
+ next.actOne.rewindIntroPending=false;advanceActTwo(next,5);
  assert.equal(next.actOne.pending.scene,'bag');
 });
 test('safe route reaches chapter-two epilogue at day five',()=>{
@@ -43,6 +43,6 @@ test('second contract bad end returns to contract checkpoint',()=>{
  advanceActTwo(s,5);answer(s,'loan');advanceActTwo(s,100);
  answer(s,'sign');assert.equal(s.actOne.status,'bad');
  const next=rewindActTwo(s);
- assert.equal(next.hour,80.5);assert.deepEqual(next.actOne.completed,['bag']);
+ assert.equal(next.hour,62);assert.deepEqual(next.actOne.completed,['bag']);
  assert.ok(next.actOne.memory.includes('contract-sign'));assert.ok(validActOne(next)&&validateSave(next));
 });
