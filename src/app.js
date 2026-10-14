@@ -1,3 +1,4 @@
+import { openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
@@ -183,11 +184,12 @@ function updateUI() {
 }
 function header(eyebrow,title,closable=true) { return `<div class="modal-header"><div><p class="eyebrow">${eyebrow}</p><h2 id="modal-title">${title}</h2></div>${closable?'<button class="close-modal" data-close aria-label="閉じる">×</button>':''}</div>`; }
 let stopFireEnding = null;
+let stopOpeningPrologue = () => {};
 let cleanupChoiceUI = () => {};
 function clearFireEnding(){stopFireEnding?.();stopFireEnding=null;}
-function openModal(html) { cleanupChoiceUI();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); $('modal-content').innerHTML = html; modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); }
-function closeModal() { cleanupChoiceUI(); clearFireEnding();clearTimeout(eventAutoTimer);modal.close(); updateUI(); }
-modal.addEventListener('close', () => { if(modal.open)return;cleanupChoiceUI();clearFireEnding();clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); });
+function openModal(html) { stopOpeningPrologue(); cleanupChoiceUI();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); $('modal-content').innerHTML = html; modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); }
+function closeModal() { stopOpeningPrologue(); cleanupChoiceUI(); clearFireEnding();clearTimeout(eventAutoTimer);modal.close(); updateUI(); }
+modal.addEventListener('close', () => { if(modal.open)return;stopOpeningPrologue();cleanupChoiceUI();clearFireEnding();clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); });
 function syncStageCursor() {
   rememberReadScenes(state);
   seenStageId = state.events.reduce((max, event) => Math.max(max, event.id), 0);
@@ -284,7 +286,8 @@ function showHelp() {
 }
 function showOpening(step = 0) {
   if (step === 0) {
-    openModal(`<section class="act-screen opening-letter"><article class="inheritance-letter"><p class="letter-context">訳ありのボロアパートを引き継いだあなたに、<br>前の大家から一通の手紙が届いた。</p><h2 id="modal-title" class="letter-heading">前大家からの手紙</h2><p>おめでとうございます。</p><p>あなたは本日から「けもの荘」の大家です。</p><figure class="letter-illustration"><img src="assets/apartments.png" alt="古びた二階建てアパート、けもの荘のイラスト"><figcaption>けもの荘</figcaption></figure><p>現在の入居者は1名。</p><p>家賃収入は期待しないでください。</p><p>なお、私はもう関わりたくありません。</p><p class="letter-signature">前大家より</p><button class="opening-next" data-opening="1">101号室へ →</button></article></section>`);
+    openModal(openingPrologueHTML());
+    stopOpeningPrologue=startOpeningPrologue(modal.querySelector('.cinematic-prologue'),()=>showOpening(1));
   } else if (step < 3) {
     let prologue=state.events.find(event=>event.actScene==='prologue');
     if(!prologue){
