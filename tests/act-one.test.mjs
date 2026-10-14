@@ -83,12 +83,15 @@ test('automatic fire rewind restores 30 minutes before the failed incident and p
   const first=createActOne(42,[],1,true);advanceActOne(first,2);answer(first,'trash');
   const saved=JSON.parse(JSON.stringify(first));assert.ok(validActOne(saved));
   const recovered=rewindBeforeFire(saved);assert.equal(recovered.hour,18.5);assert.equal(recovered.actOne.attempt,2);
-  assert.equal(recovered.actOne.pending,null);assert.equal(recovered.ending,null);assert.equal(recovered.actOne.rewindIntroPending,false);
+  assert.equal(recovered.actOne.pending,null);assert.equal(recovered.ending,null);assert.equal(recovered.actOne.rewindIntroPending,true);
+  assert.ok(recovered.events.some(e=>e.actScene==='rewind'&&e.lines.some(l=>l.text.includes('燃えたはずだろ'))));
   assert.deepEqual(recovered.actOne.chosenChoices,['ash:trash']);assert.deepEqual(recovered.actOne.memory,['ash-trash']);
   advanceActOne(recovered,.5);assert.equal(recovered.actOne.pending.scene,'ash');answer(recovered,'water');
   advanceActOne(recovered,100);const checkpoint=JSON.parse(JSON.stringify(recovered.actOne.rollbackPoint.state));answer(recovered,'turbo');
   const next=rewindBeforeFire(JSON.parse(JSON.stringify(recovered)));assert.equal(next.hour,36.5);assert.deepEqual(next.actOne.completed,['ash']);
-  assert.deepEqual(next.residents,checkpoint.residents);assert.equal(next.rent,checkpoint.rent);assert.ok(validateSave(next)&&validActOne(next));
+  const reprise=next.events.find(e=>e.actScene==='rewind'&&e.lines.some(l=>l.text.includes('また戻った')));
+  assert.ok(reprise);
+  assert.deepEqual(next.residents.map(r=>({...r,history:r.history.filter(id=>id!==reprise.id)})),checkpoint.residents);assert.equal(next.rent,checkpoint.rent);assert.ok(validateSave(next)&&validActOne(next));
   advanceActOne(next,.5);assert.equal(next.actOne.pending.scene,'dinner');answer(next,'coronation');advanceActOne(next,100);assert.equal(next.actOne.status,'clear');
   const old=JSON.parse(JSON.stringify(recovered));delete old.actOne.rollbackPoint;
   const migrated=rewindBeforeFire(old);assert.equal(migrated.hour,36.5);assert.deepEqual(migrated.actOne.completed,['ash']);assert.ok(validActOne(migrated));
