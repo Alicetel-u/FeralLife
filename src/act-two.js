@@ -41,7 +41,7 @@ export const actTwoChoices=(s,scene)=>ACT_TWO_EVENTS[scene]?.choices||[];
 export const actTwoChosen=s=>[...new Set([...(s.actOne.chosenChoices||[]),...s.events.filter(e=>e.actChoice&&ACT_TWO_EVENTS[e.actScene]).map(e=>e.actScene+':'+e.actChoice)])];
 export function beginActTwo(s){
   s.ending=null;s.pending=['hostess'];admit(s,'hostess');s.hour=57;
-  s.actOne={version:1,chapter:2,started:true,attempt:1,status:'playing',completed:[],pending:null,memory:[],chosenChoices:[],seed:s.seed,prologuePending:true};
+  s.actOne={version:1,chapter:2,started:false,titlePending:true,attempt:1,status:'playing',completed:[],pending:null,memory:[],chosenChoices:[],seed:s.seed,prologuePending:true};
   const e=addEvent(s,'life','第二幕 プロローグ「新しい住人」','3日目の午後。けもの荘の玄関。',[102]);
   e.actScene='act2-prologue';e.cast=['hostess','cat'];e.stageOnly=true;
   e.lines=[n('けもの荘、3日目の午後。申込書の差出人が、キャリーバッグを引いて現れた。'),l('happy','こんにちは！ 今日からお世話になります、金城ルナです。'),m('……あんたが新しい入居者か。'),l('happy','夜は仕事で留守が多いけど、家賃はちゃんと払うよ。'),c('tired','モクですニャ。タバコは吸うニャ。'),l('surprised','わ、すごい煙。火災報知器は大丈夫？'),m('その話は俺の前でするな……！'),l('shy','あはは。ところで荷物、あと三箱届くから。'),m('……三箱！？'),n('燃えなかったけもの荘に、新しい火種ではなく、新しい請求書がやって来た。'),m('頼むから、家だけは取られないでくれよ……。')];
