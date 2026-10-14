@@ -451,3 +451,12 @@ body.game-ink{height:100dvh;overflow:hidden}
 
 /* Mobile game: keep taps and scrolling, disable double-tap zoom. */
 @media (pointer:coarse){html,body,button,a,canvas,.scene,dialog{touch-action:manipulation}}
+
+/* Act One epilogue: short, disorienting memory-whiteout, with dialogue kept legible. */
+.event-stage.memory-whiteout{background:#fff;animation:memory-dizzy .35s ease-out both}
+.event-stage.memory-whiteout::before{content:none}
+.event-stage.memory-whiteout .stage-character{opacity:0}
+.event-stage.memory-whiteout .stage-bubble{position:relative;z-index:2}
+.event-stage.memory-whiteout .stage-page{position:relative;z-index:2}
+@keyframes memory-dizzy{0%{filter:blur(5px);background:#f3ede1}35%{filter:blur(1px);background:#fff}100%{filter:none;background:#fff}}
+@media (prefers-reduced-motion:reduce){.event-stage.memory-whiteout{animation:none}}
