@@ -2,7 +2,7 @@
 import { EVENT_ART, EVENT_EXPRESSIONS, CHARACTER_ART, eventParticipants } from './character-art.js';
 import { CHARACTERS } from './simulation.js';
 const eventEscape = value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const eventSpeakerName = speaker=>speaker==='manager'?'あなた · 管理人':speaker==='narrator'?'けもの荘の記録':CHARACTERS[speaker]?.name||'住人';
+const eventSpeakerName = speaker=>speaker==='manager'?'あなた · 管理人':speaker==='narrator'?'けもの荘の記録':speaker==='mystery'?'謎の声':CHARACTERS[speaker]?.name||'住人';
 
 // Vector ornaments keep their shape at any display size, without platform emoji.
 export function eventIcon(name) {
@@ -74,7 +74,7 @@ export function eventEmotion(line, event = {}) {
 export function eventStageHTML(event,residents,index=0) {
   const lines=eventConversation(event),cursor=Math.max(0,Math.min(index,lines.length-1)),line=lines[cursor];
   const participants=Array.isArray(event.cast)?event.cast.filter(type=>CHARACTERS[type]):eventParticipants(event,residents),left=participants[0]||null;
-  const right=line.speaker==='manager'&&participants[1]?participants[1]:line.speaker!=='narrator'&&line.speaker!==left?line.speaker:participants[1]||'manager';
+  const right=line.speaker==='manager'&&participants[1]?participants[1]:line.speaker!=='narrator'&&line.speaker!=='mystery'&&line.speaker!==left?line.speaker:participants[1]||'manager';
   const character=(type,side)=> {
     const previous=lines.slice(0,cursor+1).reverse().find(item=>item.speaker===type);
     const emotion=eventEmotion(previous,event),expression=EVENT_EXPRESSIONS[type]?.[emotion];
@@ -82,7 +82,7 @@ export function eventStageHTML(event,residents,index=0) {
     return `<figure class="stage-character ${side} ${active?'speaking':''} ${expression?'expression-art':'fullbody-art'}" data-emotion="${emotion}" data-character="${eventEscape(type||'narrator')}">${src?`<img src="${src}" alt="${eventEscape(eventSpeakerName(type))}のバストアップ（${EVENT_EMOTION_NAMES[emotion]}）">`:''}<figcaption>${eventEscape(eventSpeakerName(type||'narrator'))}</figcaption></figure>`;
   };
   const side=line.speaker===left?'left':line.speaker===right?'right':'narration';
-  return `<div class="event-stage ${participants.length===1?'solo':''}">${character(left,'left')}${character(right,'right')}<div class="stage-bubble ${side} ${line.innerVoice?'inner-voice':''}" aria-live="polite" aria-atomic="true"><div class="window-ornaments" aria-hidden="true"><span class="ornament paw-one">${eventIcon('paw')}</span><span class="ornament paw-two">${eventIcon('paw')}</span><span class="ornament paw-three">${eventIcon('paw')}</span><span class="ornament paw-four">${eventIcon('paw')}</span><span class="ornament cat-bottom">${eventIcon('cat')}</span><span class="ornament heart-outline">♡</span><span class="ornament star-left">${eventIcon('spark')}</span></div><strong class="stage-speaker">${eventNameFrame()}<span class="speaker-paw">${eventIcon('paw')}</span><span class="speaker-name">${eventEscape(line.innerVoice?'大家（心の声）':eventSpeakerName(line.speaker))}</span><span class="speaker-heart">${eventIcon('heart')}</span><span class="speaker-star">${eventIcon('spark')}</span></strong><p>${eventEscape(line.text)}</p></div><span class="stage-page">${cursor+1} / ${lines.length}</span></div>`;
+  return `<div class="event-stage ${participants.length===1?'solo':''} ${line.flashbackEffect==='whiteout'?'memory-whiteout':''}">${character(left,'left')}${character(right,'right')}<div class="stage-bubble ${side} ${line.innerVoice?'inner-voice':''}" aria-live="polite" aria-atomic="true"><div class="window-ornaments" aria-hidden="true"><span class="ornament paw-one">${eventIcon('paw')}</span><span class="ornament paw-two">${eventIcon('paw')}</span><span class="ornament paw-three">${eventIcon('paw')}</span><span class="ornament paw-four">${eventIcon('paw')}</span><span class="ornament cat-bottom">${eventIcon('cat')}</span><span class="ornament heart-outline">♡</span><span class="ornament star-left">${eventIcon('spark')}</span></div><strong class="stage-speaker">${eventNameFrame()}<span class="speaker-paw">${eventIcon('paw')}</span><span class="speaker-name">${eventEscape(line.innerVoice?'大家（心の声）':eventSpeakerName(line.speaker))}</span><span class="speaker-heart">${eventIcon('heart')}</span><span class="speaker-star">${eventIcon('spark')}</span></strong><p>${eventEscape(line.text)}</p></div><span class="stage-page">${cursor+1} / ${lines.length}</span></div>`;
 }
 
 export function troubleCardHTML(call, slam=false) {
