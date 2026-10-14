@@ -1,3 +1,4 @@
+import { firstActMutters } from './act-one-life.js';
 const NAMES = { cat: 'モク', rabbit: 'ミミ', fox: 'ホロ', wolf: 'ウル', bear: 'ゴロ', mouse: 'チリ', tanuki: 'ポン', hostess: 'ルナ', sister: 'ネム', peko: 'ペコ', ann: 'アン' };
 export const SPEECH_MS = { line: 5200, mutter: 7000 };
 
@@ -125,7 +126,7 @@ export function stepTalk(talk, state, now, stopped) {
   const cat = state.residents.find(resident => resident.type === 'cat');
   if (!cat) { talk.bubbles = []; return talk; }
   if (cat.action !== talk.mutterAction) { talk.mutterAction = cat.action; talk.mutterIndex += 1; talk.since = now; }
-  const pool = catMutters(cat.action);
+  const pool = state.actOne&&state.actOne.chapter!==2 ? firstActMutters(state) : catMutters(cat.action);
   talk.bubbles = [{ speaker: 'cat', name: 'モク', text: mokuNya(pool[talk.mutterIndex % pool.length]) }];
   return talk;
 }

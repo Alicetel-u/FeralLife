@@ -83,6 +83,7 @@ if(state.actOne){
 let autoFollow = true, cameraKey = '';
 
 function updateCamera() {
+  if(autoFollow&&state.actOne&&state.actOne.chapter!==2){const moku=state.residents.find(r=>r.type==='cat');if(moku)state.selected=moku.room;}
   const r = state.residents.find(r => r.room === state.selected);
   const p = r ? sampleJourney(r,state.hour,ACTIONS[r.action].place) : null;
   if (autoFollow) { renderer.view = p && p.zone !== 'room' ? 'exterior' : 'interior'; renderer.focus = true; }

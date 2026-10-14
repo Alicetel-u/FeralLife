@@ -1,3 +1,4 @@
+import { firstActLife } from './act-one-life.js';
 import {createGame,advance,addEvent,validateSave} from './simulation.js';
 
 export const ACT_ONE_TITLE='アパートをモクから守れ！';
@@ -169,22 +170,36 @@ export function createActOne(seed=Date.now(),memory=[],attempt=1,started=false,c
   ];
   return s;
 }
-export function nextActOneAt(s){return Object.entries(ACT_ONE_EVENTS).find(([id])=>!s.actOne.completed.includes(id))?.[1].at??57;}
+export function nextActOneAt(s){
+  const at=Object.entries(ACT_ONE_EVENTS).find(([id])=>!s.actOne.completed.includes(id))?.[1].at??57;
+  const moku=s.residents.find(r=>r.type==='cat');
+  return s.hour>=at-.5?Math.max(at,moku?.journey?.endsAt||0):at;
+}
+function advanceFirstActLife(s,hours){
+  const end=s.hour+hours;
+  firstActLife(s);
+  while(s.hour<end){
+    const next=Math.min(end,(Math.floor(s.hour*4+1e-7)+1)/4);
+    const delta=next-s.hour;
+    advance(s,delta);firstActLife(s,delta);
+  }
+}
 export function advanceActOne(s,hours){
   const a=s.actOne;if(!a?.started||a.status!=='playing'||a.pending||!Number.isFinite(hours)||hours<=0)return;
+  firstActLife(s);
   const at=nextActOneAt(s),end=Math.min(s.hour+hours,at);
   const checkpointScene=Object.keys(ACT_ONE_EVENTS).find(id=>!a.completed.includes(id));
   const checkpointAt=at-.5;
   if(checkpointScene&&s.hour<=checkpointAt&&end>=checkpointAt){
-    advance(s,Math.max(0,checkpointAt-s.hour));
+    advanceFirstActLife(s,Math.max(0,checkpointAt-s.hour));
     s.pending=null;s.management.pending=null;s.management.queue=[];
     const snapshot=JSON.parse(JSON.stringify({...s,actOne:{...a,rollbackPoint:undefined}}));
     a.rollbackPoint={scene:checkpointScene,state:snapshot};
   }
-  advance(s,Math.max(0,end-s.hour));
+  advanceFirstActLife(s,Math.max(0,end-s.hour));
   // Admission is the reward, never a resident during the act.
   s.pending=null;s.management.pending=null;s.management.queue=[];
-  if(s.hour<at)return;
+  if(s.hour<at||s.residents.find(r=>r.type==='cat')?.journey?.endsAt>s.hour)return;
   const id=Object.keys(ACT_ONE_EVENTS).find(id=>!a.completed.includes(id));
   if(id){
     const moku=s.residents[0];moku.journey=null;moku.targetRoom=null;moku.action=id==='ash'?'smoke':'eat';moku.actionAge=0;
@@ -193,6 +208,7 @@ export function advanceActOne(s,hours){
     a.pending={scene:id,eventId:e.id};
   }else{
     a.status='clear';s.pending=null;
+    const moku=s.residents.find(r=>r.type==='cat');if(moku){delete moku.storyUntil;delete moku.lifeBeat;}
     a.epilogueSeen=false;
     const epilogue=addEvent(s,'life','第一幕 エピローグ「燃えなかった朝」','3日目9時。燃えなかった朝、101号室で。',[101]);
     epilogue.actScene='epilogue';epilogue.cast=['cat'];epilogue.stageOnly=true;
