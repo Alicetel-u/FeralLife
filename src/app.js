@@ -6,7 +6,7 @@ import { sampleJourney, motionLabel } from './movement.js';
 import { MANAGEMENT_CASES } from './event-cases.js';
 import { ensureManagement, managementSummary, managementImpact, openManagementCase, resolveManagementCase } from './management.js';
 import { eventConversation, eventStageHTML, eventIcon, troubleCardHTML } from './event-stage.js';
-import { ACT_ONE_TITLE, ACT_ONE_EVENTS, createActOne, advanceActOne, answerActOne, rewindActOne, validActOne, nextActOneAt } from './act-one.js';
+import { ACT_ONE_TITLE, ACT_ONE_EVENTS, getActOneChoices, createActOne, advanceActOne, answerActOne, rewindActOne, validActOne, nextActOneAt } from './act-one.js';
 
 await loadCharacterArt();
 await loadRoomArt();
@@ -217,7 +217,7 @@ function showEvent(id,index=0) {
   eventView={id:e.id,index:cursor};
   const waiting=!state.ending&&(state.actOne?state.actOne.pending?.eventId===e.id:state.management.pending?.eventId===e.id);
   const c=state.actOne?ACT_ONE_EVENTS[e.actScene]:MANAGEMENT_CASES[e.caseId];
-  const choices=waiting&&last?`<div class="decision-panel" aria-label="管理人の返事">${c.choices.map((choice,i)=>`<button class="decision-choice" data-case-event="${e.id}" data-choice="${escape(choice.id)}">${eventIcon(['chat','cat','heart'][i])}<strong>${escape(choice.label)}</strong><span class="choice-paw">${eventIcon('paw')}</span></button>`).join('')}</div>`:'';
+  const choices=waiting&&last?`<div class="decision-panel" aria-label="管理人の返事">${(state.actOne?getActOneChoices(state,e.actScene):c.choices).map((choice,i)=>`<button class="decision-choice" data-case-event="${e.id}" data-choice="${escape(choice.id)}">${eventIcon(['chat','cat','heart'][i])}<strong>${escape(choice.label)}</strong><span class="choice-paw">${eventIcon('paw')}</span></button>`).join('')}</div>`:'';
   const trouble=c?.call&&e.kind==='trouble'?troubleCardHTML(c.call,waiting&&cursor===0):'';
   const forward=last?(waiting?'<button class="event-return" data-close>返事は後で</button>':state.pending&&e.kind==='arrival'&&!e.rooms.length?'<button class="event-return" data-show-candidates>申込書を見る</button>':`<button class="primary-button" data-close aria-label="観察に戻る">${eventIcon('next')}</button>`):`<button class="primary-button" data-dialogue-next aria-label="次のセリフ">${eventIcon('next')}</button>`;
   const toolbar=`<nav class="event-toolbar" aria-label="会話の操作"><button data-event-auto aria-pressed="${eventAuto}">${eventIcon('play')}<span>AUTO</span></button><button data-event-skip ${last?'disabled':''}>${eventIcon('skip')}<span>SKIP</span></button><button data-event-log aria-expanded="false">${eventIcon('log')}<span>LOG</span></button><button data-event-hide>${eventIcon('hide')}<span>HIDE</span></button><button data-event-menu aria-expanded="false">${eventIcon('menu')}<span>MENU</span></button></nav>`;

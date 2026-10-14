@@ -6,11 +6,59 @@ const ac=(emotion,text)=>actLine('cat',emotion,text);
 const am=text=>actLine('manager','neutral',text);
 const an=text=>actLine('narrator','neutral',text);
 export const ACT_ONE_EVENTS={
-  ash:{at:19,title:'第一の火種：灰皿にも人権を',call:'灰皿がもう限界ニャ！',detail:'1日目19時。モクの部屋は、夕飯の匂いより煙が濃い。山盛りの灰皿の隣に、紙袋と洗濯物。「片づけるつもり」という言葉だけが、いつも綺麗に並んでいる。',lines:[
-    ac('tired','大家さん。灰皿、いっぱいニャ。いま捨てたら、ちゃんと片づけたことになるニャ？'),am('一本も床に落とさず積んだのか。才能の使い道が狭いな。'),ac('angry','褒めるか怒るか、どっちかにしてニャ。……袋にまとめたら早いかなニャ。'),an('モクが紙袋へ手を伸ばす。灰皿の底には、消したつもりの一本。触れた指を引っ込めて、モクは耳を伏せた。'),ac('surprised','……あ、まだ熱いニャ。袋は後かニャ。'),am('面倒な灰皿だ。わしが画期的な方針を決めてやろう。'),ac('sad','画期的じゃなくてもいいニャ。私、ここ気に入ってるから、部屋なくなるのは嫌ニャ。')],choices:[
-    {id:'laundry',label:'吸い殻を洗濯物の里子に出す',bad:'ash-laundry',lines:[am('洗濯物が柔らかい。吸い殻をそっちへ里子に出せ。灰皿も独り立ちだ。'),an('モクの手が止まった。紙袋を抱いたまま、大家との間に半歩の距離を作る。'),ac('surprised','……里子？ タバコの親、洗濯物ニャ？'),am('包んでおけば見えん。片づけは見た目が九割。'),ac('angry','残り一割で死にそうなこと言ってるニャ。'),an('それでもモクは、大家の指示なら大丈夫だと思ってしまった。見えなくなった熱が、少しずつ布へ移る。'),ac('sad','……焦げ臭いニャ。さっきより、変な匂いニャ。'),an('「ちゃんと片づけた」部屋から煙が上がった。大家は、見えない物ほど危ないという当たり前を、燃える廊下で思い出した。')],regret:'見た目が九割。残りの一割が、建物を全部持っていった。',clue:'見えなくしても、熱はなくならない。モクが「まだ熱い」と言っていた。'},
-    {id:'landlord',label:'灰皿を101号室の臨時大家に任命する',lines:[am('灰皿を臨時大家に任命する。役職付きなら、布の上ではなく専用の金属トレーへ引っ越しだ。'),an('モクが真顔になった。灰皿を見る。大家を見る。もう一度、灰皿を見る。'),ac('surprised','……私、灰皿に家賃払うニャ？'),am('まずは消えたか確認して、冷めるまで袋には入れん。灰皿の仕事場は散らかった机から離して固定する。役職は重い。'),ac('tired','途中から普通のこと言ってるのに、肩書きだけ全部邪魔ニャ。'),an('モクは文句を言いながら、安定した専用の置き場へ灰皿を動かした。周りの紙と布も遠ざける。'),ac('neutral','……まあ、ここなら物がぶつからないニャ。袋に捨てるのは冷めてからにするニャ。'),am('わしより仕事のできる大家になったな。'),ac('tired','初日に抜かれてるニャ。……でも、熱いって言ったの、聞いてくれたのは助かったニャ。')],clue:'肩書きは意味不明。でも灰皿の置き場と、熱いまま捨てない約束は残った。'},
-    {id:'wind',label:'煙に退去命令！ 扇風機で強制執行',bad:'ash-wind',lines:[am('煙は家賃を払ってない。扇風機で強制退去だ。散らかった机ごと風に任せろ。'),an('モクは扇風機ではなく、大家を先に見た。期待していた説明は、待っても増えなかった。'),ac('surprised','……煙に家賃って、どう請求するニャ。'),am('払えないなら出ていけ。簡単だ。'),ac('angry','灰皿も紙もあるニャ。片づける前に風、当てていいニャ？'),am('風が片づける。わしの発明だ。'),an('大家が風を起こした。紙が舞い、灰皿が傾く。煙だけを追い出すつもりが、火種まで部屋へ招いてしまった。'),ac('sad','大家さん！ 退去するの、煙じゃなくて私たちニャ！')],regret:'煙を追い出したかった。それより先に、住む場所がなくなった。',clue:'灰皿の隣には紙と布。先に動かすべきは、空気ではなく物だった。'}
+  ash:{at:19,title:'第一の火種：灰皿がもう限界ニャ！',call:'灰皿がもう限界ニャ！',detail:'1日目19時。101号室。テーブルにはストロング缶、灰皿には山盛りの吸い殻。まだ熱い吸い殻をどうするか、モクが大家へ相談してきた。',lines:[
+    an('夜の101号室。モクはテレビを見ながらタバコを吸っている。テーブルにはストロング缶。灰皿には吸い殻が山盛りだ。'),
+    ac('tired','大家さ〜ん。ちょっといいかニャ？'),
+    am('なんだよ、今度は。'),
+    ac('neutral','灰皿いっぱいになったニャ。'),
+    am('捨てろよ。'),
+    ac('surprised','それが……さっき吸ったやつ、まだ熱いニャ。'),
+    am('だったらちゃんと火を消せよ！'),
+    ac('tired','めんどくさいから、大家さんが決めてニャ。'),
+    am('なんで俺が決めるんだよ……。')
+  ],choices:[
+    {id:'trash',label:'ゴミと一緒に捨てちまえ！',bad:'ash-trash',lines:[
+      am('もうゴミと一緒に捨てちまえ！'),
+      ac('tired','まだ熱いけど……まぁいいかニャ。'),
+      an('モクは吸い殻をゴミ袋に放り込んだ。'),
+      ac('happy','よし！ 部屋が片づいたニャ！'),
+      an('数分後。ゴミ袋から白い煙が立ち上る。'),
+      ac('surprised','……あれ？ ゴミって自分で燃えるんだっけニャ？'),
+      an('101号室から出火。けもの荘は全焼した。')
+    ],regret:'ゴミと一緒に捨てろなんて……火が残ってるって言ってたのに。',clue:'消えていない吸い殻をゴミ袋に入れてはいけない。',ending:'燃えるゴミの日'},
+    {id:'balcony',label:'ベランダからポイしとけ！',bad:'ash-balcony',lines:[
+      am('ベランダからポイしとけ！'),
+      ac('happy','おっ、証拠隠滅ニャ！'),
+      an('モクは吸い殻をベランダから投げ捨てた。'),
+      ac('happy','これで灰皿スッキリニャ！'),
+      an('しかし、吸い殻は階下のゴミ置き場へ落下。'),
+      ac('surprised','……なんか下が明るいニャ。'),
+      an('火は建物へ燃え広がり、けもの荘は全焼した。')
+    ],regret:'外に捨てれば済むと思った。火種まで外へ落とすことになった。',clue:'熱い吸い殻を外に捨てても火は消えない。',ending:'ポイ捨ての代償'},
+    {id:'freezer',label:'灰皿を冷凍庫にぶち込め！',bad:'ash-freezer',lines:[
+      am('灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！'),
+      ac('surprised','えっ！？ 冷凍チャーハンと一緒でいいニャ？'),
+      am('チャーハンより先に冷やせ！ 緊急事態だ！'),
+      ac('tired','了解ニャ！ ……でも冷凍庫パンパンだニャ。'),
+      am('じゃあ中のもん出せばいいだろ！'),
+      an('モクは冷凍食品を取り出し、灰皿を冷凍庫に入れようとする。ところが手を滑らせて灰皿をひっくり返す。'),
+      an('まだ熱い吸い殻が、床に積まれた紙くずの中へ。'),
+      ac('surprised','……あっ。'),
+      am('……何やってんだ？'),
+      ac('tired','チャーハンは無事ニャ。'),
+      an('101号室から火が広がり、けもの荘は全焼した。')
+    ],regret:'冷やす前に、火を消せばよかった……。',clue:'冷凍庫へ運ぶ前に、吸い殻の火を確実に消すべきだった。',ending:'冷凍失敗、建物はこんがり'},
+    {id:'water',label:'灰皿ごと水に沈めろ！',lines:[
+      am('灰皿ごと水に沈めろ！'),
+      ac('surprised','灰皿を溺れさせるニャ！？'),
+      am('火を消すんだよ！'),
+      ac('angry','……最初からそう言えニャ！'),
+      an('モクは吸い殻を水で確実に消火し、灰皿を安定した安全な場所へ置いた。'),
+      ac('happy','ふぅ……これで安心ニャ。'),
+      am('最初からやれよ！'),
+      ac('neutral','明日からちゃんとするニャ。'),
+      am('今日やれ！！')
+    ],clue:'前の周回で失ったものを思い出した。吸い殻は水で確実に消火する。'}
   ]},
   dinner:{at:37,title:'第二の火種：夕飯王、即位',call:'夕飯中に寝そうニャ！',detail:'2日目13時。モクは昨夜、動画を見て夜更かしした。いまは空腹と眠気が同時に襲っている。コンロの前でフライパンを出しかけて、欠伸を一つ。「夕飯の準備を先に」と言う目は、半分閉じていた。',lines:[
     ac('tired','いま夕飯まで作れば、あとは寝るだけニャ。昨日ちょっと、動画見すぎたニャ。'),am('ちょっと、とは何時間だ。'),ac('shy','次の一本だけ、を……何本かニャ。動画って続くようにできてるニャ。'),an('欠伸のたびに、手が止まる。使うつもりのフライパンだけが、コンロの上で先に待っていた。'),ac('sad','ちゃんとご飯作らないと、ネムにまた心配されるニャ。手抜きって言われるのも嫌ニャ。'),am('妹の前で見栄を張って、家まで消す必要はなかろう。'),ac('surprised','家まで？ 大げさニャ。……寝ないで済む妙案、あるニャ？')],choices:[
@@ -20,13 +68,33 @@ export const ACT_ONE_EVENTS={
   ]}
 };
 
+export function getActOneChoices(s,scene){
+  const choices=ACT_ONE_EVENTS[scene]?.choices||[];
+  return scene==='ash'&&s.actOne?.attempt===1?choices.filter(c=>c.id!=='water'):choices.filter(c=>scene!=='ash'||c.id!=='freezer');
+}
+
 export function createActOne(seed=Date.now(),memory=[],attempt=1,started=false){
   const s=createGame(seed);
   s.events=[];s.nextId=1;s.residents[0].history=[];s.heard=[];
   s.actOne={version:1,started,attempt,memory:[...memory],status:'playing',completed:[],pending:null,seed:s.seed};
-  const e=addEvent(s,'life','1日目17時。まだ、何も燃えていない。','引き継いだのは築38年のアパートと、101号室の猫。3日目9時には新しい入居希望者が来る。それまでの二晩くらい、何も起きないはずだった。',[101]);
+  const e=addEvent(s,'life','1日目17時。101号室の新しい大家。','築38年の古びたアパート「けもの荘」。夕暮れの101号室。窓から大量の煙が漂っている。',[101]);
   e.actScene='opening';e.cast=['cat'];e.stageOnly=true;
-  e.lines=[ac('neutral','新しい大家さん？ モクですニャ。よろしくニャ。'),am(attempt>1?'……知ってる。いや、今度こそよろしく。':'よろしく。三日後には新しい住人も来る。少しは片づけとけ。'),ac('tired','明日からやるニャ。今日は準備の日ニャ。'),...(attempt>1?[an('同じ声。同じ灰皿。同じ「明日から」。焼けた廊下を覚えているのは、大家だけだった。'),am('明日が来るように、今日はわしが見ている。'),ac('surprised','……初対面で重いニャ。大家さん、何かあったニャ？')]:[ac('shy','家賃は払うニャ。できれば説教より、先に名前覚えてニャ。'),an('その時の大家は、火事より滞納の方を心配していた。')])];
+  e.lines=[
+    an('築38年の古びたアパート「けもの荘」。夕暮れの101号室。窓から大量の煙が漂っている。'),
+    ac('neutral','新しい大家さん？ モクですニャ。よろしくニャ。'),
+    am('うわっくっせぇ！！煙だらけじゃねーか！'),
+    ac('happy','大丈夫ニャ。換気扇は昨日から回してるニャ。'),
+    am('換気扇より先にタバコ止めろよ！'),
+    am('まぁよろしく。……ずいぶん自由に暮らしてるな。'),
+    ac('tired','他に誰もいないからニャ。静かで最高ニャ。'),
+    am('部屋、少しは片づけたらどうだ？'),
+    ac('neutral','明日からやるニャ。今日は準備の日ニャ。'),
+    am('……何の準備だ？'),
+    ac('shy','明日から頑張るために、今日は休む準備ニャ。'),
+    an('モクは満足そうに寝転がった。テーブルにはストロング缶。灰皿にはおびただしい吸い殻。大家は部屋を見渡し、小さくため息をついた。'),
+    am('……まぁ、家賃さえ払ってくれりゃいいか。'),
+    ...(attempt>1?[an('同じ声。同じ灰皿。同じ「明日から」。焼けた廊下を覚えているのは、大家だけだった。')]:[])
+  ];
   return s;
 }
 export function nextActOneAt(s){return Object.entries(ACT_ONE_EVENTS).find(([id])=>!s.actOne.completed.includes(id))?.[1].at??57;}
@@ -50,7 +118,7 @@ export function advanceActOne(s,hours){
 }
 export function answerActOne(s,eventId,choiceId){
   const a=s.actOne,p=a?.pending,c=ACT_ONE_EVENTS[p?.scene];
-  const choice=c?.choices.find(x=>x.id===choiceId);
+  const choice=getActOneChoices(s,p?.scene).find(x=>x.id===choiceId);
   if(a?.status!=='playing'||p?.eventId!==Number(eventId)||!choice)return null;
   const original=s.events.find(e=>e.id===p.eventId);original.read=true;original.actChoice=choiceId;
   a.pending=null;a.completed.push(p.scene);
@@ -66,7 +134,7 @@ export function answerActOne(s,eventId,choiceId){
 export function rewindActOne(s){return createActOne(s.actOne.seed,s.actOne.memory,s.actOne.attempt+1,true);}
 export function validActOne(s){
   const a=s?.actOne;if(!a||a.version!==1||typeof a.started!=='boolean'||!Number.isInteger(a.attempt)||a.attempt<1||!Number.isInteger(a.seed)||!Array.isArray(a.memory)||!Array.isArray(a.completed)||!['playing','bad','clear'].includes(a.status))return false;
-  const failures=Object.values(ACT_ONE_EVENTS).flatMap(e=>e.choices.map(c=>c.bad).filter(Boolean));
+  const failures=[...Object.values(ACT_ONE_EVENTS).flatMap(e=>e.choices.map(c=>c.bad).filter(Boolean)),'ash-laundry','ash-wind'];
   if(a.memory.some(x=>!failures.includes(x))||new Set(a.memory).size!==a.memory.length||a.completed.some(x=>!Object.hasOwn(ACT_ONE_EVENTS,x))||new Set(a.completed).size!==a.completed.length)return false;
   if(s.hour<17||s.hour>57||s.residents.length!==1||s.residents[0].type!=='cat')return false;
   if(a.pending!==null&&(!Object.hasOwn(ACT_ONE_EVENTS,a.pending?.scene)||!s.events.some(e=>e.id===a.pending.eventId&&e.actScene===a.pending.scene)||a.completed.includes(a.pending.scene)))return false;
