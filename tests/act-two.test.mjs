@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createGame,validateSave} from '../src/simulation.js';
 import {validActOne} from '../src/act-one.js';
 import {ACT_TWO_EVENTS,beginActTwo,advanceActTwo,answerActTwo,rewindActTwo} from '../src/act-two.js';
-const create=()=>beginActTwo(createGame(42));
+const create=()=>{const s=beginActTwo(createGame(42));s.actOne.started=true;s.actOne.titlePending=false;return s;};
 const start=s=>{s.actOne.started=true;s.actOne.titlePending=false;s.actOne.prologuePending=false;};
 const answer=(s,id)=>answerActTwo(s,s.actOne.pending.eventId,id);
 test('Luna joins automatically and opening is queued',()=>{
