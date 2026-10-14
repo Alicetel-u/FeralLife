@@ -14,10 +14,14 @@ test('building flames retain 38 smoke puffs and 108 three-layer tongues while gr
 test('reduced motion paints an unchanged phase once, and cleanup cancels its animation callback',()=>{
  const {canvas,counts}=fixture(),callbacks=new Map();let nextId=0;const old={requestAnimationFrame:globalThis.requestAnimationFrame,cancelAnimationFrame:globalThis.cancelAnimationFrame,matchMedia:globalThis.matchMedia,document:globalThis.document};
  globalThis.requestAnimationFrame=fn=>{callbacks.set(++nextId,fn);return nextId;};globalThis.cancelAnimationFrame=id=>callbacks.delete(id);globalThis.matchMedia=()=>({matches:true});globalThis.document={hidden:false};
- const camera={style:{}},narration={textContent:''};const root={isConnected:true,dataset:{},querySelector:s=>s==='.fire-canvas'?canvas:s==='.fire-camera'?camera:narration};
+ const camera={style:{}},narration={textContent:''};const root=Object.assign(new EventTarget(),{isConnected:true,dataset:{},querySelector:s=>s==='.fire-canvas'?canvas:s==='.fire-camera'?camera:narration});
  try{
   const stop=startFireEnding(root,'ash-trash',()=>{throw Error('must not finish early');});let now=performance.now();
   for(let i=0;i<20;i++){const [id,callback]=callbacks.entries().next().value;callbacks.delete(id);now+=100;callback(now);}
   assert.equal(counts.smoke,38);assert.equal(root.dataset.firePhase,'room');assert.equal(camera.style.transform,'scale(1.025)');assert.equal(callbacks.size,1);stop();assert.equal(callbacks.size,0);
+  let finished=0;const end=startFireEnding(root,'ash-trash',()=>finished++);
+  root.dispatchEvent(new Event('click'));assert.equal(root.dataset.firePhase,'building');assert.equal(finished,0);assert.match(narration.textContent,/炎だけ/);
+  root.dispatchEvent(new Event('click'));assert.equal(root.dataset.firePhase,'ruins');assert.equal(finished,0);assert.match(narration.textContent,/家賃/);
+  root.dispatchEvent(new Event('click'));root.dispatchEvent(new Event('click'));assert.equal(finished,1);assert.equal(callbacks.size,0);end();
  }finally{for(const [key,value]of Object.entries(old)){if(value===undefined)delete globalThis[key];else globalThis[key]=value;}}
 });

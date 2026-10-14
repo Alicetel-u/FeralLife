@@ -79,9 +79,15 @@ export function startFireEnding(root, failure, finish, options = {}) {
   let elapsed = 0, previous = performance.now(), frameId, phase = '', paintedPhase='';
   const draw=createFirePainter(canvas,kitchen);
   let stopped=false;
-  function stop(){stopped=true;cancelAnimationFrame(frameId);root.removeEventListener('click',complete);}
+  function stop(){stopped=true;cancelAnimationFrame(frameId);root.removeEventListener('click',nextMessage);}
   function complete(){if(stopped)return;stop();finish();}
-  if(!options.ambient)root.addEventListener('click',complete);
+  function nextMessage(){
+    if(stopped)return;
+    if(elapsed>=11){complete();return;}
+    elapsed=elapsed<5?5:11;
+    cancelAnimationFrame(frameId);previous=performance.now();tick(previous);
+  }
+  if(!options.ambient)root.addEventListener('click',nextMessage);
   function tick(now) {
     if(stopped||!root.isConnected){stop();return;}
     const dt = Math.min(.1, (now - previous) / 1000); previous = now;
