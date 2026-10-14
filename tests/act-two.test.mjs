@@ -4,6 +4,7 @@ import {createGame,validateSave} from '../src/simulation.js';
 import {validActOne} from '../src/act-one.js';
 import {ACT_TWO_EVENTS,beginActTwo,advanceActTwo,answerActTwo,rewindActTwo} from '../src/act-two.js';
 const create=()=>beginActTwo(createGame(42));
+const start=s=>{s.actOne.started=true;s.actOne.titlePending=false;s.actOne.prologuePending=false;};
 const answer=(s,id)=>answerActTwo(s,s.actOne.pending.eventId,id);
 test('Luna joins automatically and opening is queued',()=>{
  const s=create();assert.equal(s.actOne.chapter,2);
@@ -16,7 +17,7 @@ test('each act-two trouble offers one safe option and two bad options',()=>{
  for(const event of Object.values(ACT_TWO_EVENTS)){assert.equal(event.choices.length,3);assert.equal(event.choices.filter(c=>!!c.bad).length,2);}
 });
 test('first bad ending restores a playable checkpoint with memory',()=>{
- const s=create();s.actOne.prologuePending=false;advanceActTwo(s,5);
+ const s=create();start(s);advanceActTwo(s,5);
  assert.equal(s.actOne.pending.scene,'bag');
  answer(s,'guarantee');assert.equal(s.actOne.status,'bad');
  const next=rewindActTwo(s);assert.equal(next.hour,61.5);
@@ -28,7 +29,7 @@ test('first bad ending restores a playable checkpoint with memory',()=>{
  assert.equal(next.actOne.pending.scene,'bag');
 });
 test('safe route reaches chapter-two epilogue at day five',()=>{
- const s=create();s.actOne.prologuePending=false;
+ const s=create();start(s);
  advanceActTwo(s,5);answer(s,'return');
  advanceActTwo(s,100);assert.equal(s.actOne.pending.scene,'contract');
  answer(s,'refuse');advanceActTwo(s,100);
@@ -38,7 +39,7 @@ test('safe route reaches chapter-two epilogue at day five',()=>{
  assert.ok(validActOne(s)&&validateSave(s));
 });
 test('second contract bad end returns to contract checkpoint',()=>{
- const s=create();s.actOne.prologuePending=false;
+ const s=create();start(s);
  advanceActTwo(s,5);answer(s,'return');advanceActTwo(s,100);
  answer(s,'sign');assert.equal(s.actOne.status,'bad');
  const next=rewindActTwo(s);
