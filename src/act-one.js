@@ -352,7 +352,7 @@ export function validActOne(s){
   const a=s?.actOne;
   if(a?.chapter===2){
     if(a.version!==1||!Number.isInteger(a.attempt)||a.attempt<1||!Number.isInteger(a.seed)||!Array.isArray(a.memory)||!Array.isArray(a.completed)||!['playing','bad','clear'].includes(a.status))return false;
-    const scenes={bag:{at:62},contract:{at:81}},failures=['bag-guarantee','bag-loan','contract-sign','contract-stamp'];
+    const scenes={bag:{at:62},contract:{at:81}},failures=['bag-guarantee','bag-loan','bag-return','contract-sign','contract-stamp'];
     const chosen=['bag:guarantee','bag:loan','bag:return','contract:sign','contract:stamp','contract:refuse'];
     if(!Array.isArray(a.chosenChoices)||a.chosenChoices.some(x=>!chosen.includes(x))||a.memory.some(x=>!failures.includes(x))||a.completed.some(x=>!Object.hasOwn(scenes,x)))return false;
     if(s.hour<57||s.hour>105||s.residents.length!==2||!s.residents.some(r=>r.type==='hostess'))return false;
