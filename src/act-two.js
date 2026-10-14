@@ -44,7 +44,27 @@ export function beginActTwo(s){
   s.actOne={version:1,chapter:2,started:false,titlePending:true,attempt:1,status:'playing',completed:[],pending:null,memory:[],chosenChoices:[],seed:s.seed,prologuePending:true};
   const e=addEvent(s,'life','第二幕 プロローグ「新しい住人」','3日目の午後。けもの荘の玄関。',[102]);
   e.actScene='act2-prologue';e.cast=['hostess','cat'];e.stageOnly=true;
-  e.lines=[n('けもの荘、3日目の午後。申込書の差出人が、キャリーバッグを引いて現れた。'),l('happy','こんにちは！ 今日からお世話になります、金城ルナです。'),m('……あんたが新しい入居者か。'),l('happy','夜は仕事で留守が多いけど、家賃はちゃんと払うよ。'),c('tired','モクですニャ。タバコは吸うニャ。'),l('surprised','わ、すごい煙。火災報知器は大丈夫？'),m('その話は俺の前でするな……！'),l('shy','あはは。ところで荷物、あと三箱届くから。'),m('……三箱！？'),n('燃えなかったけもの荘に、新しい火種ではなく、新しい請求書がやって来た。'),m('頼むから、家だけは取られないでくれよ……。')];
+  e.lines=[
+    n('けもの荘、3日目の午後。一人の女性が、大きなキャリーバッグを引いてやって来た。'),
+    l('happy','こんにちは！ 今日からお世話になります、金城ルナです。'),
+    m('ああ、入居申込書の人ね。よろしく。'),
+    l('neutral','よろしくね！ 夜の仕事だから、帰りが遅くなることもあるけど。'),
+    m('騒がなきゃ別に構わないよ。'),
+    c('neutral','モクですニャ。101号室に住んでるニャ。'),
+    l('happy','あ、隣の人？ よろしくね！'),
+    c('neutral','タバコの煙が来ても気にしないでほしいニャ。'),
+    m('そこはお前が気にしろよ！'),
+    l('happy','あはは！ にぎやかなアパートだね。'),
+    m('今までは静かだったんだけどな……。'),
+    c('neutral','モクは静かに暮らしてるニャ。'),
+    m('お前が一番うるせぇんだよ！'),
+    n('こうして、けもの荘に二人目の住人がやって来た。これから少しずつ、アパートの暮らしも変わっていく。'),
+    l('happy','あっ、そうだ。今日の午後、ちょっと荷物届くからよろしくね！'),
+    m('おう、わかった。'),
+    c('neutral','何が届くニャ？'),
+    l('shy','んー、仕事で使うものかな♡'),
+    n('ルナはにっこり笑った。大家はまだ、その笑顔の裏に隠れた金銭事情を知らない。')
+  ];
   return s;
 }
 export const nextActTwoAt=s=>Object.entries(ACT_TWO_EVENTS).find(([id])=>!s.actOne.completed.includes(id))?.[1].at??105;
