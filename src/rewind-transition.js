@@ -26,7 +26,7 @@ export function rewindBeat(t,attempt=1){
   return {phase,text,kind,clockStart,finished:t>=clockStart+5.5};
 }
 export function rewindTransitionHTML(failure,attempt=1){
-  return `<section class="act-screen rewind-screen" data-rewind-phase="fire">${fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="assets/rooms/cat/interior.png" alt="元に戻った101号室"><button class="rewind-skip" data-rewind-skip>スキップ</button></section>`;
+  return `<section class="act-screen rewind-screen" data-rewind-phase="fire">${fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="assets/rooms/cat/interior-v2.png" alt="元に戻った101号室"><button class="rewind-skip" data-rewind-skip>スキップ</button></section>`;
 }
 
 export function startRewindTransition(root,failure,finish,sound,attempt=1,targetTime=17){

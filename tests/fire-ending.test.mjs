@@ -12,7 +12,7 @@ test('fire presents quiet narration without website-style headings or panels',()
     assert.match(html,/class="fire-narration"/);
     assert.doesNotMatch(html,/fire-caption|<small>|<h2[^>]*>消し忘れ/);
     assert.match(html,/data-fire-finish/);
-    assert.match(html,/assets\/rooms\/cat\/interior.png/);
+    assert.match(html,/assets\/rooms\/cat\/interior-v2.png/);
     assert.match(html,/assets\/apartments.png/);
   }
 });

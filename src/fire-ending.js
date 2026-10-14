@@ -4,7 +4,7 @@ export function fireEndingPhase(seconds) {
 }
 
 export function fireEndingHTML(failure) {
-  return `<section class="act-screen fire-cinematic" data-fire-phase="room"><div class="fire-camera"><img class="fire-room-background" src="assets/rooms/cat/interior.png" alt="炎に包まれる101号室"><img class="fire-building-background" src="assets/apartments.png" alt="炎が広がるけもの荘"><canvas class="fire-canvas" width="960" height="540" aria-hidden="true"></canvas><div class="fire-soot"></div></div><div class="fire-letterbox top"></div><div class="fire-letterbox bottom"></div><h2 id="modal-title" class="visually-hidden">けもの荘の火災</h2><p class="fire-narration" aria-live="polite">昨日まで、ただ散らかっているだけの部屋だった。</p><button class="fire-skip" data-fire-finish>クリックで次へ</button></section>`;
+  return `<section class="act-screen fire-cinematic" data-fire-phase="room"><div class="fire-camera"><img class="fire-room-background" src="assets/rooms/cat/interior-v2.png" alt="炎に包まれる101号室"><img class="fire-building-background" src="assets/apartments.png" alt="炎が広がるけもの荘"><canvas class="fire-canvas" width="960" height="540" aria-hidden="true"></canvas><div class="fire-soot"></div></div><div class="fire-letterbox top"></div><div class="fire-letterbox bottom"></div><h2 id="modal-title" class="visually-hidden">けもの荘の火災</h2><p class="fire-narration" aria-live="polite">昨日まで、ただ散らかっているだけの部屋だった。</p><button class="fire-skip" data-fire-finish>クリックで次へ</button></section>`;
 }
 
 // Gradients use local coordinates and inherit the same transform as the path.

@@ -1,3 +1,4 @@
+import { ROOM_SPOTS } from './room-layouts.js';
 export const WALK_SPEED = 430;
 export const OUTINGS = {
   ann: { hour: 16, duration: 3, reason: '喫茶店で待ち合わせ', side: 'left' },
@@ -16,7 +17,7 @@ export function exteriorRoomBounds(room) { return { x: 218 + ((room % 100) - 1) 
 const point = (x, y, zone, room = null) => ({ x, y, zone, room });
 export function homeSpot(room, place = 'table') {
   const b = exteriorRoomBounds(room);
-  const spots = { table: [82, 104], bed: [48, 92], window: [65, 94], fridge: [137, 98], tv: [105, 104], center: [55, 105], hall: [113, 108] };
+  const spots = ROOM_SPOTS;
   const [x, y] = spots[place] || spots.table;
   return point(b.x + x, b.y + y, 'room', room);
 }

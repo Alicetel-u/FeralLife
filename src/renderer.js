@@ -1,3 +1,4 @@
+import { ROOM_LAYOUTS } from './room-layouts.js';
 import { ROOMS, CHARACTERS, ACTIONS, dateAt } from './simulation.js';
 import { CHARACTER_ART, ROOM_ART, SCENE_ART } from './character-art.js';
 import { exteriorRoomBounds, sampleJourney, sampleCompanion, motionLabel } from './movement.js';
@@ -219,7 +220,10 @@ export class WorldRenderer {
     if (ROOM_ART[type]?.image) {
       ctx.drawImage(ROOM_ART[type].image, x, y, w, h);
       // The painted screen stays dark until this resident is actually watching.
-      if (awake && ['tv', 'stream'].includes(r.action)) rect(ctx, x+114, y+54, 22, 18, Math.sin(t*3)>0 ? '#d5e4d4' : '#8eaaa0');
+      if (awake && ['tv', 'stream'].includes(r.action)) {
+        const [sx,sy,sw,sh]=ROOM_LAYOUTS[type]?.screen||[114,54,22,18];
+        rect(ctx,x+sx,y+sy,sw,sh,Math.sin(t*3)>0?'#a5b9b8':'#596a79');
+      }
       const count = Math.floor(r.trash / 6);
       for (let i = 0; i < count; i++) {
         const gx = x+12+Math.floor(noise(i, room, 7)*(w-30));
