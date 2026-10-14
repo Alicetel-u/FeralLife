@@ -33,11 +33,12 @@ test('loop scenes have one safe answer and two full-burn endings; first-run ash 
     }
   }
 });
-test('survival reaches exactly day 3 at 09:00 and unlocks admission without admitting during the act',()=>{
+test('survival reaches exactly day 3 at 09:00 and queues the epilogue without admitting anyone',()=>{
   const s=start();advanceActOne(s,100);answer(s,'water');advanceActOne(s,100);answer(s,'coronation');advanceActOne(s,100);
-  assert.equal(s.hour,57);assert.equal(s.actOne.status,'clear');assert.deepEqual(s.pending,['hostess','fox']);assert.equal(s.residents.length,1);
+  assert.equal(s.hour,57);assert.equal(s.actOne.status,'clear');assert.equal(s.pending,null);assert.equal(s.residents.length,1);
+  assert.equal(s.actOne.epilogueSeen,false);assert.ok(s.events.some(e=>e.actScene==='epilogue'&&e.lines.some(l=>l.text.includes('生き残った'))));
   advanceActOne(s,100);assert.equal(s.hour,57);
-  assert.ok(validateSave(s)&&validActOne(s));assert.ok(s.ending.text.includes('焼けずに届いた'));
+  assert.ok(validateSave(s)&&validActOne(s));assert.ok(s.ending.text.includes('燃えずに済んだ'));
 });
 test('read conversation and pending choice survive reload without replaying or advancing past the decision',()=>{
   const s=start();advanceActOne(s,2);s.events[0].read=true;

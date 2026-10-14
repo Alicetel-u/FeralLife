@@ -192,7 +192,7 @@ export function advanceActOne(s,hours){
     e.actScene=id;e.cast=['cat'];e.stageOnly=true;e.lines=c.lines.map(l=>({...l}));
     a.pending={scene:id,eventId:e.id};
   }else{
-    a.status='clear';s.pending=[];
+    a.status='clear';s.pending=null;
     a.epilogueSeen=false;
     const epilogue=addEvent(s,'life','第一幕 エピローグ「燃えなかった朝」','3日目9時。燃えなかった朝、101号室で。',[101]);
     epilogue.actScene='epilogue';epilogue.cast=['cat'];epilogue.stageOnly=true;
