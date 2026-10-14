@@ -1,3 +1,4 @@
+import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './trouble-victory.js';
 import { WorldRenderGate } from './render-policy.js';
 import { openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
@@ -189,7 +190,15 @@ let stopOpeningPrologue = () => {};
 let cleanupChoiceUI = () => {};
 function clearFireEnding(){stopFireEnding?.();stopFireEnding=null;}
 function openModal(html) { stopOpeningPrologue(); cleanupChoiceUI();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); $('modal-content').innerHTML = html; modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); }
-function closeModal() { stopOpeningPrologue(); cleanupChoiceUI(); clearFireEnding();clearTimeout(eventAutoTimer);modal.close(); updateUI(); }
+function closeModal() {
+  const event=modal.classList.contains('conversation-modal')&&state.actOne?state.events.find(e=>e.id===eventView?.id):null;
+  if(event&&eventView.index===eventConversation(event).length-1&&avoidedTrouble(event,state.actOne.chapter)){
+    event.avoidanceSeen=true;save();
+    openModal(troubleAvoidedHTML(state.actOne.chapter));
+    stopFireEnding=startTroubleVictory(modal.querySelector('.trouble-victory'),()=>{closeModal();$('pause-button')?.focus({preventScroll:true});});
+    return;
+  }
+  stopOpeningPrologue(); cleanupChoiceUI(); clearFireEnding();clearTimeout(eventAutoTimer);modal.close(); updateUI(); }
 modal.addEventListener('close', () => { if(modal.open)return;stopOpeningPrologue();cleanupChoiceUI();clearFireEnding();clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); });
 function syncStageCursor() {
   rememberReadScenes(state);
@@ -378,7 +387,7 @@ function resetActState(next,resume=false){
   if(state.actOne.chapter===2){if(state.actOne.titlePending){showActTwoTitle();return;}const e=state.events.find(e=>e.actScene===(state.actOne.prologuePending?'act2-prologue':'act2-rewind'));if(e&&(state.actOne.prologuePending||state.actOne.rewindIntroPending)){showEvent(e.id,state.actOne.rewindIntroCursor||0);return;}showActTwoTitle();return;}
   if(state.actOne.rewindIntroPending)showEvent(state.events.find(e=>e.actScene==='rewind').id,state.actOne.rewindIntroCursor||0);else showActTitle();
 }
-modal.addEventListener('cancel',e=>{if(state.actOne&&(modal.classList.contains('act-modal')||modal.querySelector('[data-prologue],[data-rewind-intro]')))e.preventDefault();});
+modal.addEventListener('cancel',e=>{const current=state.events.find(x=>x.id===eventView?.id);if(modal.classList.contains('conversation-modal')&&state.actOne&&eventView?.index===eventConversation(current||{}).length-1&&avoidedTrouble(current,state.actOne.chapter)){e.preventDefault();closeModal();return;}if(state.actOne&&(modal.classList.contains('act-modal')||modal.querySelector('[data-prologue],[data-rewind-intro]')))e.preventDefault();});
 function showEnding() {
   if (!state.ending) return;
   if(state.actOne){showActEnding();return;}
