@@ -1,6 +1,8 @@
 import {createGame,advance,addEvent} from './simulation.js';
 
-export const ACT_ONE_TITLE='アパートを火事（モク）から守れ！';
+export const ACT_ONE_TITLE='アパートをモクから守れ！';
+export const ACT_ONE_LOOP_TITLE='アパートを火事（モク）から守れ！';
+export function actOneTitle(state){return state.actOne.attempt > 1 ? ACT_ONE_LOOP_TITLE : ACT_ONE_TITLE;}
 const actLine=(speaker,emotion,text)=>({speaker,emotion,text});
 const ac=(emotion,text)=>actLine('cat',emotion,text);
 const am=text=>actLine('manager','neutral',text);
@@ -73,10 +75,17 @@ export function getActOneChoices(s,scene){
   return scene==='ash'&&s.actOne?.attempt===1?choices.filter(c=>c.id!=='water'):choices.filter(c=>scene!=='ash'||c.id!=='freezer');
 }
 
-export function createActOne(seed=Date.now(),memory=[],attempt=1,started=false){
+export function actOneChosenChoices(s){
+  const chosen=new Set(s.actOne.chosenChoices||[]);
+  for(const [scene,event] of Object.entries(ACT_ONE_EVENTS))for(const choice of event.choices){
+    if((choice.bad&&s.actOne.memory.includes(choice.bad))||s.events.some(e=>e.actScene===scene&&e.actChoice===choice.id))chosen.add(`${scene}:${choice.id}`);
+  }
+  return [...chosen];
+}
+export function createActOne(seed=Date.now(),memory=[],attempt=1,started=false,chosenChoices=[]){
   const s=createGame(seed);
   s.events=[];s.nextId=1;s.residents[0].history=[];s.heard=[];
-  s.actOne={version:1,started,attempt,memory:[...memory],status:'playing',completed:[],pending:null,seed:s.seed};
+  s.actOne={version:1,started,attempt,memory:[...memory],chosenChoices:[...chosenChoices],status:'playing',completed:[],pending:null,seed:s.seed};
   const e=addEvent(s,'life','1日目17時。101号室の新しい大家。','築38年の古びたアパート「けもの荘」。夕暮れの101号室。窓から大量の煙が漂っている。',[101]);
   e.actScene='opening';e.cast=['cat'];e.stageOnly=true;
   e.lines=[
@@ -121,6 +130,7 @@ export function answerActOne(s,eventId,choiceId){
   const choice=getActOneChoices(s,p?.scene).find(x=>x.id===choiceId);
   if(a?.status!=='playing'||p?.eventId!==Number(eventId)||!choice)return null;
   const original=s.events.find(e=>e.id===p.eventId);original.read=true;original.actChoice=choiceId;
+  a.chosenChoices=actOneChosenChoices(s);
   a.pending=null;a.completed.push(p.scene);
   const result=addEvent(s,'life','返事：'+choice.label,choice.lines[0].text,[101]);
   result.actScene='reply';result.cast=['cat'];result.stageOnly=true;result.lines=choice.lines.map(l=>({...l}));
@@ -131,10 +141,34 @@ export function answerActOne(s,eventId,choiceId){
   }
   return result;
 }
-export function rewindActOne(s){return createActOne(s.actOne.seed,s.actOne.memory,s.actOne.attempt+1,true);}
+export function rewindActOne(s){
+  const next=createActOne(s.actOne.seed,s.actOne.memory,s.actOne.attempt+1,true,actOneChosenChoices(s));
+  const opening=next.events[0];opening.actScene='rewind';opening.title='夕暮れの101号室';
+  opening.detail='夕暮れの101号室。先ほどまで炎に包まれていた部屋が、何事もなかったように元に戻っている。';
+  opening.lines=[
+    an(opening.detail),ac('neutral','新しい大家さん？ モクですニャ。よろしくニャ。'),
+    {...am('…………は？'),emotion:'surprised'},ac('surprised','……ニャ？'),
+    {...am('お、お前……生きてるのか！？'),emotion:'surprised'},ac('surprised','えっ！？ 勝手に殺さないでニャ！？'),
+    am('いや、だって……ここ、燃えて……！'),
+    an('大家は部屋を見渡す。焦げ跡ひとつない壁。いつものストロング缶。山盛りの吸い殻。そして、目の前でタバコを吸うモク。'),
+    {...am('……夢？'),innerVoice:true},{...am('いや、違う。あの熱さも、煙の臭いも……。'),innerVoice:true},{...am('全部、覚えてる。'),innerVoice:true},
+    ac('tired','大家さん？ 顔色悪いニャ。'),am('……お前、さっき灰皿どうした？'),ac('surprised','灰皿？ そこにあるニャ。'),am('いや、そうじゃなくて……！'),
+    an('大家は言葉を飲み込んだ。まだ、灰皿はいっぱいになっていない。時計を見る。'),an('1日目 17:00。'),
+    {...am('……時間が、戻ってる？'),innerVoice:true},{...am('あのとき俺が、まともな指示を出していれば……。'),innerVoice:true},{...am('今度こそ……。'),innerVoice:true},
+    ac('neutral','大家さん？'),am('……いや、なんでもない。'),am('とりあえず……生きててよかった。'),ac('shy','ニャ？ なんか知らんけど、ありがとニャ。'),
+    an('モクは何事もなかったようにタバコを吸い始める。大家はその様子を黙って見つめていた。'),
+    {...am('……もう二度と、あんな光景は見たくねぇ。'),innerVoice:true}
+  ];
+  next.actOne.rewindIntroPending=true;next.actOne.rewindIntroCursor=0;
+  return next;
+}
 export function validActOne(s){
   const a=s?.actOne;if(!a||a.version!==1||typeof a.started!=='boolean'||!Number.isInteger(a.attempt)||a.attempt<1||!Number.isInteger(a.seed)||!Array.isArray(a.memory)||!Array.isArray(a.completed)||!['playing','bad','clear'].includes(a.status))return false;
   const failures=[...Object.values(ACT_ONE_EVENTS).flatMap(e=>e.choices.map(c=>c.bad).filter(Boolean)),'ash-laundry','ash-wind'];
+  if(a.chosenChoices!==undefined){
+    const known=Object.entries(ACT_ONE_EVENTS).flatMap(([scene,e])=>e.choices.map(c=>`${scene}:${c.id}`));
+    if(!Array.isArray(a.chosenChoices)||a.chosenChoices.some(key=>!known.includes(key))||new Set(a.chosenChoices).size!==a.chosenChoices.length)return false;
+  }
   if(a.memory.some(x=>!failures.includes(x))||new Set(a.memory).size!==a.memory.length||a.completed.some(x=>!Object.hasOwn(ACT_ONE_EVENTS,x))||new Set(a.completed).size!==a.completed.length)return false;
   if(s.hour<17||s.hour>57||s.residents.length!==1||s.residents[0].type!=='cat')return false;
   if(a.pending!==null&&(!Object.hasOwn(ACT_ONE_EVENTS,a.pending?.scene)||!s.events.some(e=>e.id===a.pending.eventId&&e.actScene===a.pending.scene)||a.completed.includes(a.pending.scene)))return false;

@@ -1,3 +1,5 @@
+import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
+import { fireEndingHTML, startFireEnding } from './fire-ending.js';
 import { createGame, advance, admit, addEvent, ROOMS, CHARACTERS, NEEDS, ACTIONS, dateAt, formatTime, atmosphere, validateSave } from './simulation.js';
 import { createTalk, stepTalk, claimAutomaticScene, rememberReadScenes } from './dialogue.js';
 import { WorldRenderer, roomBounds, drawPortrait } from './renderer.js';
@@ -6,7 +8,7 @@ import { sampleJourney, motionLabel } from './movement.js';
 import { MANAGEMENT_CASES } from './event-cases.js';
 import { ensureManagement, managementSummary, managementImpact, openManagementCase, resolveManagementCase } from './management.js';
 import { eventConversation, eventStageHTML, eventIcon, troubleCardHTML } from './event-stage.js';
-import { ACT_ONE_TITLE, ACT_ONE_EVENTS, getActOneChoices, createActOne, advanceActOne, answerActOne, rewindActOne, validActOne, nextActOneAt } from './act-one.js';
+import { actOneTitle, ACT_ONE_EVENTS, getActOneChoices, actOneChosenChoices, createActOne, advanceActOne, answerActOne, rewindActOne, validActOne, nextActOneAt } from './act-one.js';
 
 await loadCharacterArt();
 await loadRoomArt();
@@ -60,7 +62,7 @@ const talk = createTalk(restored ? (state.events[0]?.id || 0) : 0);
 const modal = $('modal');
 if(state.actOne){
   const goal=document.createElement('section');goal.className='act-objective';goal.id='act-objective';
-  goal.innerHTML=`<div><small>けもの荘 / 第一幕</small><strong>${ACT_ONE_TITLE}</strong><span id="act-progress"></span></div><button class="act-wait" data-act-wait>次の異変まで見守る →</button>`;
+  goal.innerHTML=`<div><small>けもの荘 / 第一幕</small><strong>${actOneTitle(state)}</strong><span id="act-progress"></span></div><button class="act-wait" data-act-wait>次の異変まで見守る →</button>`;
   document.querySelector('main').prepend(goal);
   document.querySelector('.brand small').textContent='第一幕 · 二晩を、生き延びろ。';
 }
@@ -134,6 +136,7 @@ function updateJournal() {
 }
 function updateUI() {
   if(state.actOne){
+    $('act-objective').querySelector('strong').textContent=actOneTitle(state);
     $('act-progress').textContent=`${state.actOne.attempt}周目 · ${state.actOne.completed.length}/2件を突破 · 目標：3日目9時`;
     document.querySelector('[data-act-wait]').disabled=!!state.ending||!!state.actOne.pending||!state.actOne.started;
   }
@@ -177,9 +180,11 @@ function updateUI() {
   if (lastEventId !== state.nextId) { lastEventId = state.nextId; updateJournal(); }
 }
 function header(eyebrow,title,closable=true) { return `<div class="modal-header"><div><p class="eyebrow">${eyebrow}</p><h2 id="modal-title">${title}</h2></div>${closable?'<button class="close-modal" data-close aria-label="閉じる">×</button>':''}</div>`; }
-function openModal(html) { clearTimeout(eventAutoTimer); $('modal-content').innerHTML = html; modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); }
-function closeModal() { eventAuto=false;clearTimeout(eventAutoTimer);modal.close(); updateUI(); }
-modal.addEventListener('close', () => { eventAuto=false;clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); });
+let stopFireEnding = null;
+function clearFireEnding(){stopFireEnding?.();stopFireEnding=null;}
+function openModal(html) { clearFireEnding();clearTimeout(eventAutoTimer); $('modal-content').innerHTML = html; modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); }
+function closeModal() { clearFireEnding();eventAuto=false;clearTimeout(eventAutoTimer);modal.close(); updateUI(); }
+modal.addEventListener('close', () => { if(modal.open)return;clearFireEnding();eventAuto=false;clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); });
 function syncStageCursor() {
   rememberReadScenes(state);
   seenStageId = state.events.reduce((max, event) => Math.max(max, event.id), 0);
@@ -215,15 +220,17 @@ function showEvent(id,index=0) {
   if (!state.actOne && state.ending && e.id === state.events[0].id) { showEnding(); return; }
   const lines=eventConversation(e),cursor=Math.max(0,Math.min(index,lines.length-1)),last=cursor===lines.length-1;
   eventView={id:e.id,index:cursor};
+  if(e.actScene==='rewind'&&state.actOne.rewindIntroPending){state.actOne.rewindIntroCursor=cursor;save();}
   const waiting=!state.ending&&(state.actOne?state.actOne.pending?.eventId===e.id:state.management.pending?.eventId===e.id);
   const c=state.actOne?ACT_ONE_EVENTS[e.actScene]:MANAGEMENT_CASES[e.caseId];
-  const choices=waiting&&last?`<div class="decision-panel" aria-label="管理人の返事">${(state.actOne?getActOneChoices(state,e.actScene):c.choices).map((choice,i)=>`<button class="decision-choice" data-case-event="${e.id}" data-choice="${escape(choice.id)}">${eventIcon(['chat','cat','heart'][i])}<strong>${escape(choice.label)}</strong><span class="choice-paw">${eventIcon('paw')}</span></button>`).join('')}</div>`:'';
+  const chosenChoices=new Set(state.actOne?actOneChosenChoices(state):[]);
+  const choices=waiting&&last?`<div class="decision-panel" aria-label="管理人の返事">${(state.actOne?getActOneChoices(state,e.actScene):c.choices).map((choice,i)=>`<button class="decision-choice ${chosenChoices.has(`${e.actScene}:${choice.id}`)?'previously-chosen':''}" data-case-event="${e.id}" data-choice="${escape(choice.id)}">${eventIcon(['chat','cat','heart'][i])}<strong>${escape(choice.label)}</strong>${chosenChoices.has(`${e.actScene}:${choice.id}`)?'<span class="choice-history-badge">✓ 選択済み</span>':''}<span class="choice-paw">${eventIcon('paw')}</span></button>`).join('')}</div>`:'';
   const trouble=c?.call&&e.kind==='trouble'?troubleCardHTML(c.call,waiting&&cursor===0):'';
-  const forward=last?(waiting?'<button class="event-return" data-close>返事は後で</button>':state.pending&&e.kind==='arrival'&&!e.rooms.length?'<button class="event-return" data-show-candidates>申込書を見る</button>':`<button class="primary-button" data-close aria-label="観察に戻る">${eventIcon('next')}</button>`):`<button class="primary-button" data-dialogue-next aria-label="次のセリフ">${eventIcon('next')}</button>`;
+  const forward=last&&e.actScene==='rewind'&&state.actOne.rewindIntroPending?'<button class="primary-button" data-rewind-title aria-label="第一幕へ進む">'+eventIcon('next')+'</button>':last&&e.actScene==='prologue'?'<button class="primary-button" data-opening="3" aria-label="タイトル演出へ進む">'+eventIcon('next')+'</button>':last?(waiting?'<button class="event-return" data-close>返事は後で</button>':state.pending&&e.kind==='arrival'&&!e.rooms.length?'<button class="event-return" data-show-candidates>申込書を見る</button>':`<button class="primary-button" data-close aria-label="観察に戻る">${eventIcon('next')}</button>`):`<button class="primary-button" data-dialogue-next aria-label="次のセリフ">${eventIcon('next')}</button>`;
   const toolbar=`<nav class="event-toolbar" aria-label="会話の操作"><button data-event-auto aria-pressed="${eventAuto}">${eventIcon('play')}<span>AUTO</span></button><button data-event-skip ${last?'disabled':''}>${eventIcon('skip')}<span>SKIP</span></button><button data-event-log aria-expanded="false">${eventIcon('log')}<span>LOG</span></button><button data-event-hide>${eventIcon('hide')}<span>HIDE</span></button><button data-event-menu aria-expanded="false">${eventIcon('menu')}<span>MENU</span></button></nav>`;
-  openModal(`<h2 id="modal-title" class="conversation-title">${escape(c?.call&&e.kind==='trouble'?c.call:e.title)}</h2><div class="conversation-body">${trouble}${eventStageHTML(e,state.residents,cursor)}${choices}${toolbar}<details class="conversation-log"><summary>会話履歴を閉じる</summary>${lines.map(l=>`<p><strong>${escape(CHARACTERS[l.speaker]?.name||(l.speaker==='manager'?'管理人':'記録'))}</strong> ${escape(l.text)}</p>`).join('')}</details><div class="event-menu" hidden><button data-dialogue-back ${cursor===0?'disabled':''}>前のセリフへ</button><button data-event-menu>会話を続ける</button><button data-close>${waiting?'返事を保留して観察へ':'観察画面に戻る'}</button></div></div><div class="modal-footer">${forward}</div><button class="event-restore" data-event-hide hidden aria-label="会話UIを再表示">${eventIcon('hide')} 表示を戻す</button>`);
+  openModal(`<h2 id="modal-title" class="conversation-title">${escape(c?.call&&e.kind==='trouble'?c.call:e.title)}</h2><div class="conversation-body" ${e.actScene==='prologue'?'data-prologue':e.actScene==='rewind'&&state.actOne.rewindIntroPending?'data-rewind-intro':''}>${trouble}${eventStageHTML(e,state.residents,cursor)}${choices}${toolbar}<details class="conversation-log"><summary>会話履歴を閉じる</summary>${lines.map(l=>`<p><strong>${escape(l.innerVoice?'大家（心の声）':CHARACTERS[l.speaker]?.name||(l.speaker==='manager'?'管理人':'記録'))}</strong> ${escape(l.text)}</p>`).join('')}</details><div class="event-menu" hidden><button data-dialogue-back ${cursor===0?'disabled':''}>前のセリフへ</button><button data-event-menu>会話を続ける</button><button ${e.actScene==='prologue'?'data-opening="3"':e.actScene==='rewind'&&state.actOne.rewindIntroPending?'data-rewind-title':'data-close'}>${e.actScene==='prologue'?'タイトル演出へ進む':e.actScene==='rewind'&&state.actOne.rewindIntroPending?'第一幕へ進む':waiting?'返事を保留して観察へ':'観察画面に戻る'}</button></div></div><div class="modal-footer">${forward}</div><button class="event-restore" data-event-hide hidden aria-label="会話UIを再表示">${eventIcon('hide')} 表示を戻す</button>`);
   scheduleEventAuto();
-  document.querySelector(last&&waiting?'[data-choice]':last?'[data-close].primary-button':'[data-dialogue-next]')?.focus({preventScroll:true});
+  document.querySelector(last&&waiting?'[data-choice]':last?(e.actScene==='rewind'&&state.actOne.rewindIntroPending?'[data-rewind-title].primary-button':e.actScene==='prologue'?'[data-opening="3"].primary-button':'[data-close].primary-button'):'[data-dialogue-next]')?.focus({preventScroll:true});
 }
 
 function scheduleEventAuto(){
@@ -263,14 +270,32 @@ function showHelp() {
   if(state.actOne){openModal(header('FIRST ACT / 遊び方','二晩を生き延びれば、次の住人が来る。')+`<div class="modal-body"><p class="modal-copy">1日目17時から3日目9時まで、住人はモクだけ。決められた時刻に2つのイベントが起きます。3択は全部変ですが、各イベントで助かるのは1つだけ。モクの言葉と、部屋の様子を覚えてください。</p><p class="modal-copy">会話中と返事を保留している間は時間が止まります。「次の異変まで見守る」で次のイベントまで進めます。AUTOは台詞だけ、SKIPは選択肢まで読み進めます。回答を勝手に選ぶことはありません。</p><p class="modal-copy">全焼すると、その時の後悔を持って1日目に戻れます。大家ノートには失敗した理由が残ります。データは自動保存されます。</p></div><div class="modal-footer"><button class="primary-button" data-close>モクの様子を見る →</button></div>`);return;}
   openModal(header('HOW TO OBSERVE / 管理人の心得','あなたは、暮らしの後始末を引き受ける。')+`<div class="modal-body"><p class="modal-copy">住人は自分で暮らします。相談や後日談が発生すると、その場で立ち絵と吹き出しが開きます。費用・信頼・安全にはそれぞれ変化があり、後日談が別の事件につながることもあります。返事は保留できます。</p><div class="help-grid"><div class="help-step"><strong><span>01</span>暮らしを眺める</strong>最初は猫の部屋を大きく表示。「全体を見る」で6部屋を一覧できます。下の部屋一覧で住人を選び、「住人ノート」で欲求や所持金を確認。衛生状態だけは、数値が高いほど良好です。</div><div class="help-step"><strong><span>02</span>記録を読む</strong>「日誌」から会話を読み返せます。管理人室には未回答の相談と後日談の予定が届きます。「次へ」で会話を読み、最後に返事を選びます。会話中は時間が止まります。</div><div class="help-step"><strong><span>03</span>次の住人を選ぶ</strong>3日目の9時から、原則3日ごとに2人の入居希望者が現れます。封筒から申込書を開き、一人を空室に迎えましょう。</div><div class="help-step"><strong><span>04</span>アパートの結末を見届ける</strong>18日目の9時に、管理資金・安全・信頼・助け合い・話題と、住人の暮らしから結末が決まります。組み合わせを変えて、別の観察記を始められます。</div></div><p class="modal-copy" style="margin-top:18px;margin-bottom:0">「住人を追う」をONにすると、選んだ住人が部屋を出たとき外観へ、帰宅すると内装へ自動で切り替わります。手動の内装／外観・大きさ切り替えは追跡をOFFにします。⛶で全画面表示。通常速度では10秒＝ゲーム内1時間。3×・6×で進行を速められます。ブラウザを閉じたり、別のタブを表示している間は進行しません。データはこのブラウザに自動保存されます。</p></div><div class="modal-footer"><span>Space：一時停止 / Esc：ノートを閉じる</span><button class="primary-button" data-close>けもの荘を眺める →</button></div>`);
 }
+function showOpening(step = 0) {
+  if (step === 0) {
+    openModal(`<section class="act-screen opening-letter"><article class="inheritance-letter"><p class="letter-context">訳ありのボロアパートを引き継いだあなたに、<br>前の大家から一通の手紙が届いた。</p><h2 id="modal-title" class="letter-heading">前大家からの手紙</h2><p>おめでとうございます。</p><p>あなたは本日から「けもの荘」の大家です。</p><figure class="letter-illustration"><img src="assets/apartments.png" alt="古びた二階建てアパート、けもの荘のイラスト"><figcaption>けもの荘</figcaption></figure><p>現在の入居者は1名。</p><p>家賃収入は期待しないでください。</p><p>なお、私はもう関わりたくありません。</p><p class="letter-signature">前大家より</p><button class="opening-next" data-opening="1">101号室へ →</button></article></section>`);
+  } else if (step < 3) {
+    let prologue=state.events.find(event=>event.actScene==='prologue');
+    if(!prologue){
+      prologue=addEvent(state,'life','101号室 · 大家就任','お、新しい大家かニャ？',[101]);
+      prologue.actScene='prologue';prologue.cast=['cat'];prologue.stageOnly=true;
+      prologue.lines=[{speaker:'cat',emotion:'neutral',text:'お、新しい大家かニャ？'},{speaker:'cat',emotion:'neutral',text:'よろしく頼むニャ。家賃は来月から払うニャ。'}];
+    }
+    showEvent(prologue.id,step-1);
+  } else {
+    openModal(`<section class="act-screen opening-reveal"><img src="assets/apartments.png" class="opening-reveal-art" alt="夕暮れのけもの荘"><div class="opening-reveal-shade"></div><div class="opening-logo"><p>あなたは本日から、この家の大家です。</p><h2 id="modal-title">けもの荘<span>～クズ住人観察記～</span></h2></div><button class="opening-next opening-reveal-next" data-opening-continue>第一幕へ →</button></section>`);
+  }
+}
+
 function showGameTitle(){
   const continuing=state.actOne.started;
-  openModal(`<section class="act-screen game-title"><img class="game-title-apartment" src="assets/apartments.png" alt="個性豊かな住人たちが暮らす、けもの荘"><div class="game-title-shade"></div><div class="game-title-stars" aria-hidden="true"></div><div class="game-title-neighbors" aria-label="けもの荘の住人たち">${[['sister','happy','おおやさーん！'],['cat','tired','あと5分……ニャ。'],['hostess','happy','今日もにぎやか♪']].map(([type,emotion,line],i)=>`<figure class="title-neighbor neighbor-${i}"><span>${line}</span><div><img src="${EVENT_EXPRESSIONS[type][emotion]}" alt="${CHARACTERS[type].name}"></div></figure>`).join('')}</div><div class="game-title-content"><p class="game-title-eyebrow">本日より、あなたが大家さん！</p><h2 id="modal-title" class="game-logo"><span class="game-logo-roof" aria-hidden="true">★</span><span class="logo-letter">け</span><span class="logo-letter">も</span><span class="logo-letter">の</span><span class="logo-letter">荘</span><small>どたばた！ アパートライフ</small></h2><p class="game-title-tagline">クセつよ住人、トラブル大歓迎!?</p><nav class="game-title-menu" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><i>▶</i>つづきから<small>CONTINUE</small></button>':''}<button data-game-new><i>▶</i>はじめから<small>NEW GAME</small></button><button data-title-help><i>?</i>遊び方<small>HOW TO PLAY</small></button></nav><p class="game-title-save">${continuing?'前回の記録は自動保存されています。':'あなたが、今日からこの家の大家さん。'}</p></div><footer class="game-title-footer"><span>住人観察 × 会話選択アドベンチャー</span><span>けもの荘 / KEMONOSOU</span></footer></section>`);
+  openModal(`<section class="act-screen game-title"><img class="game-title-apartment" src="assets/apartments.png" alt="個性豊かな住人たちが暮らす、けもの荘"><div class="game-title-shade"></div><div class="game-title-stars" aria-hidden="true"></div><div class="game-title-neighbors" aria-label="けもの荘の住人たち">${[['sister','happy','おおやさーん！'],['cat','tired','あと5分……ニャ。'],['hostess','happy','今日もにぎやか♪']].map(([type,emotion,line],i)=>`<figure class="title-neighbor neighbor-${i}"><span>${line}</span><div><img src="${EVENT_EXPRESSIONS[type][emotion]}" alt="${CHARACTERS[type].name}"></div></figure>`).join('')}</div><div class="game-title-content"><p class="game-title-eyebrow">本日より、あなたが大家さん！</p><h2 id="modal-title" class="game-logo"><span class="game-logo-roof" aria-hidden="true">★</span><span class="logo-letter">け</span><span class="logo-letter">も</span><span class="logo-letter">の</span><span class="logo-letter">荘</span><small>～クズ住人観察記～</small></h2><p class="game-title-tagline">クセつよ住人、トラブル大歓迎!?</p><nav class="game-title-menu" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><i>▶</i>つづきから<small>CONTINUE</small></button>':''}<button data-game-new><i>▶</i>はじめから<small>NEW GAME</small></button><button data-title-help><i>?</i>遊び方<small>HOW TO PLAY</small></button></nav><p class="game-title-save">${continuing?'前回の記録は自動保存されています。':'あなたが、今日からこの家の大家さん。'}</p></div><footer class="game-title-footer"><span>住人観察 × 会話選択アドベンチャー</span><span>けもの荘 / KEMONOSOU</span></footer></section>`);
 }
 function showActTitle(){
-  openModal(`<section class="act-screen act-title"><div class="title-embers" aria-hidden="true"></div><img class="act-key-art" src="${EVENT_EXPRESSIONS.cat.tired}" alt="灰田モク"><div class="act-title-copy"><p class="act-kicker">KEMONOSOU / CHAPTER 01</p><p class="act-number">第一幕</p><h2 id="modal-title">アパートを<br><span>火事<span class="act-moku">（モク）</span></span>から守れ！</h2><p class="act-tagline">たった一人の住人。たった三日間。<br>なのに、この家は何度でも燃える。</p><div class="act-rule"><span>START <b>1日目 17:00</b></span><i>→</i><span>GOAL <b>3日目 09:00</b></span></div><button class="act-primary" data-act-start>大家さんの一日を始める <span>→</span></button><button class="act-secondary" data-act-title>ゲームタイトルに戻る</button></div></section>`);
+  openModal(`<section class="act-screen act-title"><div class="title-embers" aria-hidden="true"></div><img class="act-key-art" src="${EVENT_EXPRESSIONS.cat.tired}" alt="灰田モク"><div class="act-title-copy"><p class="act-kicker">KEMONOSOU / CHAPTER 01</p><p class="act-number">第一幕</p><h2 id="modal-title">${state.actOne.attempt > 1 ? 'アパートを<br><span>火事<span class="act-moku">（モク）</span></span>から守れ！' : 'アパートを<br><span>モク</span>から守れ！'}</h2><p class="act-tagline">${state.actOne.attempt > 1 ? 'たった一人の住人。たった三日間。<br>なのに、この家は何度でも燃える。' : 'たった一人の住人。たった三日間。<br>訳ありアパートの大家生活が、いま始まる。'}</p><div class="act-rule"><span>START <b>1日目 17:00</b></span><i>→</i><span>GOAL <b>3日目 09:00</b></span></div><button class="act-primary" data-act-start>大家さんの一日を始める <span>→</span></button></div></section>`);
 }
 function continueGame(){
+  if(state.actOne.rewindIntroPending){showEvent(state.events.find(e=>e.actScene==='rewind').id,state.actOne.rewindIntroCursor||0);return;}
+  if(state.actOne.rewindTitlePending){showActTitle();return;}
   closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();
 }
 function showTitleHelp(){
@@ -282,22 +307,35 @@ function showActNotebook(){
   const memories=Object.values(ACT_ONE_EVENTS).flatMap(c=>c.choices.filter(x=>a.memory.includes(x.bad)).map(x=>`<article class="act-memory"><small>焼け跡に残った記憶</small><strong>${escape(x.label)}</strong><p>${escape(x.clue)}</p></article>`));
   openModal(header('LANDLORD’S MEMORY / 大家ノート',`${a.attempt}周目 — 今度こそ、この家を残す。`)+`<div class="modal-body"><p class="modal-copy">目標：3日目9時。モクの返事と、部屋の様子が手がかり。変な回答にも、生き残る理由が一つだけあります。</p>${p?`<button class="manager-request" data-event="${p.eventId}"><strong>${escape(ACT_ONE_EVENTS[p.scene].call)}</strong><span>返事をする →</span></button>`:''}${memories.join('')||'<p class="modal-copy">まだ失敗の記憶はありません。まずはモクの話を聞いてみましょう。</p>'}</div><div class="modal-footer"><button class="primary-button" data-close>観察に戻る →</button></div>`);
 }
-function showActEnding(){
+function showActEnding(afterFire=false){
   endingShown=true;
   const a=state.actOne,bad=a.status==='bad';
+  if(bad&&!afterFire){
+    openModal(fireEndingHTML(a.failure));
+    stopFireEnding=startFireEnding(modal.querySelector('.fire-cinematic'),a.failure,()=>showActEnding(true));
+    return;
+  }
   const choice=Object.values(ACT_ONE_EVENTS).flatMap(c=>c.choices).find(c=>c.bad===a.failure);
-  openModal(`<section class="act-screen ${bad?'act-burn':'act-clear'}"><div class="act-ending-copy"><p class="act-kicker">${bad?'BAD END / '+a.attempt+'周目':'FIRST ACT / COMPLETE'}</p><h2 id="modal-title">${bad?'全 焼':'この家は、<br>まだここにある。'}</h2><p class="act-ending-story">${escape(state.ending.text)}</p>${bad?`<p class="act-clue">${escape(choice?.clue||'今度は、モクの言葉を聞こう。')}</p><div class="act-loop-reveal"><small>${a.attempt===1?'初めて、時間が巻き戻る。':'また、時計が逆に進む。'}</small><p>火の音が遠ざかる。手の中に、受け取ったばかりの鍵。<br>「新しい大家さん？」——モクの声が、もう一度。</p></div><button class="act-primary" data-act-rewind>後悔を持って、1日目17時へ <span>↶</span></button>`:`<p class="act-clue">${a.attempt}周目で二つの火種を突破。3日目9時、入居募集が解放されました。</p><blockquote>「大家さん、なんでそんなに必死だったニャ。<br>……でも、いてくれて助かったニャ。」<cite>灰田 モク</cite></blockquote><button class="act-primary" data-act-reward>届いた入居申込書を開く <span>→</span></button><button class="act-secondary" data-act-replay>第一幕をもう一度遊ぶ</button>`}</div></section>`);
+  openModal(`<section class="act-screen ${bad?'act-burn':'act-clear'}">${bad?'<div class="burned-apartment" aria-hidden="true"><img src="assets/apartments.png" alt=""><div class="burned-rubble"></div></div>':''}<div class="act-ending-copy"><p class="act-kicker">${bad?'BAD END / '+a.attempt+'周目':'FIRST ACT / COMPLETE'}</p><h2 id="modal-title">${bad?'全 焼':'この家は、<br>まだここにある。'}</h2><p class="act-ending-story">${escape(state.ending.text)}</p>${bad?`<p class="act-clue">${escape(choice?.clue||'今度は、モクの言葉を聞こう。')}</p><div class="act-loop-reveal"><small>${a.attempt===1?'初めて、時間が巻き戻る。':'また、時計が逆に進む。'}</small><p>火の音が遠ざかる。手の中に、受け取ったばかりの鍵。<br>「新しい大家さん？」——モクの声が、もう一度。</p></div><button class="act-primary" data-act-rewind>後悔を持って、1日目17時へ <span>↶</span></button>`:`<p class="act-clue">${a.attempt}周目で二つの火種を突破。3日目9時、入居募集が解放されました。</p><blockquote>「大家さん、なんでそんなに必死だったニャ。<br>……でも、いてくれて助かったニャ。」<cite>灰田 モク</cite></blockquote><button class="act-primary" data-act-reward>届いた入居申込書を開く <span>→</span></button><button class="act-secondary" data-act-replay>第一幕をもう一度遊ぶ</button>`}</div></section>`);
 }
 function showActReward(){
   const a=state.actOne;
   openModal(header('FIRST ACT CLEAR / 入居募集解放',a.reward?`${CHARACTERS[a.reward].name}を、次の住人に。`:'守った家に、誰を迎える？',false)+`<div class="modal-body"><p class="modal-copy">3日目9時。焦げていない封筒に、二人の申込書が入っています。${a.reward?'入居予約が決まりました。モクだけだった家に、新しい暮らしが加わります。':'最初の攻略を突破した報酬です。次に迎える一人を選びましょう。'}</p><div class="candidate-grid">${['hostess','fox'].map(type=>`<article class="candidate-card"><img class="act-reward-art" src="${EVENT_EXPRESSIONS[type].neutral}" alt="${CHARACTERS[type].name}"><h3>${CHARACTERS[type].name}</h3><p>${escape(CHARACTERS[type].bio)}</p><button class="primary-button" data-act-admit="${type}" ${a.reward?'disabled':''}>${a.reward===type?'入居予約済み':a.reward?'次の周回で迎える':CHARACTERS[type].name.split(' ')[1]+'を迎える →'}</button></article>`).join('')}</div></div><div class="modal-footer"><button class="primary-button" data-act-replay>第一幕をもう一度遊ぶ →</button></div>`);
 }
+function beginRewind(){
+  const failure=state.actOne.failure;
+  openModal(rewindTransitionHTML(failure));
+  const sound=$('sound-button').getAttribute('aria-pressed')==='true';
+  if(audio?.state==='running')audio.suspend().catch(()=>{});
+  const stopTransition=startRewindTransition(modal.querySelector('.rewind-screen'),failure,()=>resetActState(rewindActOne(state)),sound);
+  stopFireEnding=()=>{stopTransition();if(sound&&audio?.state==='suspended')audio.resume().catch(()=>{});};
+}
 function resetActState(next){
   state=next;restored=false;Object.assign(talk,createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;
   renderer.reset();closeModal();updateCamera();updateRooms();updateUI();save();
-  if(state.actOne.started)openNextStageEvent();else showActTitle();
+  if(state.actOne.rewindIntroPending)showEvent(state.events.find(e=>e.actScene==='rewind').id,state.actOne.rewindIntroCursor||0);else showActTitle();
 }
-modal.addEventListener('cancel',e=>{if(state.actOne&&modal.classList.contains('act-modal'))e.preventDefault();});
+modal.addEventListener('cancel',e=>{if(state.actOne&&(modal.classList.contains('act-modal')||modal.querySelector('[data-prologue],[data-rewind-intro]')))e.preventDefault();});
 function showEnding() {
   if (!state.ending) return;
   if(state.actOne){showActEnding();return;}
@@ -306,18 +344,23 @@ function showEnding() {
   openModal(header('THE END / けもの荘・観察記','18日間、見守ってくれてありがとう。')+`<div class="modal-body"><div class="ending-title">「${escape(state.ending.name)}」</div><p class="event-detail" style="text-align:center">${escape(state.ending.text)}</p>${managementMeters()}<div class="ending-stats"><div>暮らした住人<strong>${state.residents.length}人</strong></div><div>受け取った家賃<strong>${yen(state.rent)}</strong></div><div>残った借金<strong>${yen(debt)}</strong></div></div><p class="modal-copy">相談への返事 ${state.management.decisions.length}件。未回答 ${state.management.pending?1:0}件、まだ届いていない後日談 ${state.management.queue.filter(q=>q.kind==='report').length}件。最後の状態で結末を判定しています。</p></div><div class="modal-footer"><button class="text-button" data-close>最後のけもの荘を眺める</button><button class="primary-button" data-restart>別の観察記を始める →</button></div>`);
 }
 function restart() {
-  state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne)showActTitle();else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
+  state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
 document.addEventListener('click',e=>{
   const button=e.target.closest('button');if(!button)return;
+  if(button.hasAttribute('data-fire-finish')&&state.actOne?.status==='bad')showActEnding(true);
+  if(button.dataset.opening)showOpening(Number(button.dataset.opening));
+  if(button.hasAttribute('data-opening-continue'))showActTitle();
   if(button.hasAttribute('data-act-title'))showGameTitle();
   if(button.hasAttribute('data-title-help'))showTitleHelp();
   if(button.hasAttribute('data-game-continue')&&state.actOne.started)continueGame();
-  if(button.hasAttribute('data-game-new')){if(state.actOne.started)button.setAttribute('data-title-new','');else showActTitle();}
+  if(button.hasAttribute('data-game-new')){if(state.actOne.started)button.setAttribute('data-title-new','');else showOpening();}
   if(button.hasAttribute('data-title-new'))openModal(header('NEW GAME / はじめから','一日目から、やり直しますか？',false)+'<div class="modal-body"><p class="modal-copy">今の進行と、タイムループで集めた失敗の記憶をリセットします。</p></div><div class="modal-footer"><button class="secondary-button" data-act-title>タイトルに戻る</button><button class="primary-button" data-restart>新しく始める →</button></div>');
-  if(button.hasAttribute('data-act-start')){state.actOne.started=true;save();closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();}
+  if(button.hasAttribute('data-act-start')){state.actOne.started=true;state.actOne.rewindTitlePending=false;save();closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();}
   if(button.hasAttribute('data-act-wait')&&state.actOne?.status==='playing'&&!state.actOne.pending){advanceActOne(state,nextActOneAt(state)-state.hour);queueFreshStageEvents();updateUI();save();if(state.ending)showActEnding();else openNextStageEvent();}
-  if(button.hasAttribute('data-act-rewind')&&state.actOne?.status==='bad')resetActState(rewindActOne(state));
+  if(button.hasAttribute('data-act-rewind')&&state.actOne?.status==='bad')beginRewind();
+  if(button.hasAttribute('data-rewind-skip')&&state.actOne?.status==='bad')resetActState(rewindActOne(state));
+  if(button.hasAttribute('data-rewind-title')&&state.actOne?.rewindIntroPending){state.actOne.rewindIntroPending=false;state.actOne.rewindTitlePending=true;save();showActTitle();}
   if(button.hasAttribute('data-act-reward')&&state.actOne?.status==='clear')showActReward();
   if(button.hasAttribute('data-act-replay'))resetActState(createActOne());
   if(button.dataset.actAdmit&&state.actOne?.status==='clear'&&!state.actOne.reward&&['hostess','fox'].includes(button.dataset.actAdmit)){state.actOne.reward=button.dataset.actAdmit;save();showActReward();}
@@ -408,4 +451,4 @@ function frame(now){
 syncStageCursor();
 updateCamera();updateRooms();updateUI();updateJournal();save();requestAnimationFrame(frame);
 if(restored)toast('前回の観察記の続きから。住人たちは、ここで待っていました。');
-if(state.actOne)showGameTitle();
+if(state.actOne){if(restored && state.actOne.started)showGameTitle();else showOpening();}

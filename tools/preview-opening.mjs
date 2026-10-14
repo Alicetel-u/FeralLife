@@ -1,0 +1,58 @@
+import {createRequire} from 'node:module';
+import {readFile,mkdir} from 'node:fs/promises';
+import {resolve,join} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import assert from 'node:assert/strict';
+const require=createRequire(join(process.env.FERAL_ASSET_MODULE_ROOT,'package.json'));
+const {chromium}=require('playwright');
+const browser=await chromium.launch({headless:true,channel:'chrome',timeout:20000});
+try {
+  const page=await browser.newPage({viewport:{width:1366,height:768}});
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.route('http://game.local/**',async route=>{
+    const p=new URL(route.request().url()).pathname;
+    await route.fulfill({body:await readFile(resolve('.'+(p==='/'?'/index.html':p))),contentType:p.endsWith('.js')?'application/javascript':p.endsWith('.css')?'text/css':p.endsWith('.png')?'image/png':'text/html'});
+  });
+  await mkdir('docs/opening-flow-preview',{recursive:true});
+  const begin=async()=>{
+    await page.waitForSelector('[data-opening="1"]');
+    await page.click('[data-opening="1"]');
+    await page.waitForSelector('.conversation-modal[open] [data-prologue]');
+    assert.equal(await page.locator('.opening-dialogue').count(),0);
+    assert.match(await page.locator('.stage-bubble').innerText(),/お、新しい大家かニャ？/);
+    assert.equal(await page.locator('.event-toolbar button').count(),5);
+    await page.keyboard.press('Escape');
+    assert.equal(await page.locator('#modal').evaluate(m=>m.open),true);
+    await page.click('[data-event-log]');assert.equal(await page.locator('.conversation-log').evaluate(el=>el.open),true);
+    await page.click('[data-event-log]');
+    await page.click('[data-dialogue-next]');
+    assert.match(await page.locator('.stage-bubble').innerText(),/家賃は来月から払うニャ/);
+    await page.screenshot({path:'docs/opening-flow-preview/prologue.png'});
+    await page.click('[data-opening="3"]:visible');
+    await page.waitForSelector('[data-opening-continue]',{state:'visible'});
+    assert.equal(await page.locator('[data-opening-title]').count(),0);
+    await page.click('[data-opening-continue]');
+    await page.waitForSelector('[data-act-start]');
+    assert.equal(await page.locator('.act-title [data-act-title]').count(),0);
+    assert.equal(await page.locator('.game-title').count(),0);
+    assert.match(await page.locator('#modal-title').innerText(),/モク/);
+    await page.click('[data-act-start]');
+    await page.waitForSelector('.conversation-modal[open]');
+    assert.equal(await page.locator('[data-prologue]').count(),0);
+    const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('feral-act-one-v1')));
+    assert.equal(saved.actOne.started,true);
+    assert.equal(saved.hour,17);
+    assert.equal(saved.events.filter(e=>e.actScene==='prologue').length,1);
+    await page.click('[data-event-skip]');await page.click('[data-close].primary-button');
+    await page.waitForFunction(()=>!document.getElementById('modal').open);
+  };
+  await page.goto('http://game.local/');await begin();
+  await page.reload();await page.waitForSelector('[data-game-continue]');await page.click('[data-game-continue]');
+  await page.waitForFunction(()=>!document.getElementById('modal').open);
+  await page.click('#new-game');await page.click('[data-restart]');await page.waitForSelector('[data-opening="1"]');
+  await page.setViewportSize({width:390,height:844});await page.emulateMedia({reducedMotion:'reduce'});
+  await begin();assert.equal(await page.evaluate(()=>document.body.scrollWidth<=innerWidth),true);
+  await page.goto(pathToFileURL(resolve('play.html')).href,{timeout:60000});await begin();
+  assert.deepEqual(errors,[]);
+  console.log('Verified letter -> shared conversation -> logo -> chapter -> intro -> observation, no title detour; escape, log, mobile, restart, save reload and standalone.');
+} finally {await browser.close();}
