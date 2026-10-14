@@ -475,6 +475,7 @@ document.addEventListener('keydown',e=>{
   if(e.repeat||e.altKey||e.ctrlKey||e.metaKey||!['Enter','Space'].includes(e.code)||document.activeElement?.closest('button, summary, input, textarea, select, a, [contenteditable]'))return;
   if(advanceConversation())e.preventDefault();
 });
+$('camera-toggle').onclick=()=>{const open=document.body.classList.toggle('controls-expanded');$('camera-toggle').setAttribute('aria-expanded',String(open));};
 $('pause-button').onclick=()=>{paused=!paused;updateUI();};
 $('help-button').onclick=showHelp;
 $('scene-notice').onclick=showCandidates;

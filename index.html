@@ -16,7 +16,8 @@
   </header>
   <main>
     <section class="observation" aria-label="アパートの観察画面">
-      <div class="camera-bar">
+      <button class="camera-toggle" id="camera-toggle" aria-expanded="false" aria-controls="camera-controls">画面・操作</button>
+      <div class="camera-bar" id="camera-controls">
         <div class="camera-group" aria-label="表示モード"><button data-view="interior" aria-pressed="true" class="active">内装</button><button data-view="exterior" aria-pressed="false">外観</button></div>
         <div class="camera-group" aria-label="カメラの大きさ"><button data-camera="focus" aria-pressed="true" class="active">大きく見る</button><button data-camera="overview" aria-pressed="false">全体を見る</button></div>
         <button class="tool-button active" id="follow-button" aria-pressed="true">住人を追う ON</button>
