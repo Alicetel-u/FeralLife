@@ -313,6 +313,12 @@ function showTitleHelp(){
 }
 
 function showActNotebook(){
+  if(state.actOne.chapter===2){
+    const a=state.actOne,p=a.pending;
+    const choices=Object.values(ACT_TWO_EVENTS).flatMap(e=>e.choices.filter(c=>c.bad&&a.memory.includes(c.bad)).map(c=>`<article class="act-memory"><small>差し押さえの記憶</small><strong>${escape(c.label)}</strong><p>${escape(c.clue)}</p></article>`));
+    openModal(header('大家ノート / 第二幕',`${a.attempt}周目 — 建物を担保にしない。`)+`<div class="modal-body"><p class="modal-copy">ルナの借金と契約に要注意。危ない署名を避けよう。</p>${p?`<button class="manager-request" data-event="${p.eventId}"><strong>${escape(ACT_TWO_EVENTS[p.scene].call)}</strong><span>返事をする →</span></button>`:''}${choices.join('')||'<p class="modal-copy">失敗の記憶はまだありません。</p>'}</div><div class="modal-footer"><button class="primary-button" data-close>観察に戻る →</button></div>`);
+    return;
+  }
   const a=state.actOne,p=a.pending;
   const memories=Object.values(ACT_ONE_EVENTS).flatMap(c=>c.choices.filter(x=>a.memory.includes(x.bad)).map(x=>`<article class="act-memory"><small>焼け跡に残った記憶</small><strong>${escape(x.label)}</strong><p>${escape(x.clue)}</p></article>`));
   openModal(header('LANDLORD’S MEMORY / 大家ノート',`${a.attempt}周目 — 今度こそ、この家を残す。`)+`<div class="modal-body"><p class="modal-copy">目標：3日目9時。モクの返事と、部屋の様子が手がかり。変な回答にも、生き残る理由が一つだけあります。</p>${p?`<button class="manager-request" data-event="${p.eventId}"><strong>${escape(ACT_ONE_EVENTS[p.scene].call)}</strong><span>返事をする →</span></button>`:''}${memories.join('')||'<p class="modal-copy">まだ失敗の記憶はありません。まずはモクの話を聞いてみましょう。</p>'}</div><div class="modal-footer"><button class="primary-button" data-close>観察に戻る →</button></div>`);
