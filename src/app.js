@@ -15,8 +15,6 @@ import { ensureManagement, managementSummary, managementImpact, openManagementCa
 import { eventConversation, eventStageHTML, eventIcon, troubleCardHTML } from './event-stage.js';
 import { actOneTitle, ACT_ONE_EVENTS, getActOneChoices, actOneChosenChoices, createActOne, advanceActOne, answerActOne, rewindBeforeFire, validActOne, nextActOneAt } from './act-one.js';
 
-await loadCharacterArt();
-await loadRoomArt();
 
 const $ = id => document.getElementById(id);
 const escape = text => String(text ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -63,6 +61,10 @@ let eventAuto=false,eventAutoTimer=null;
 let seenStageId = 0;
 const stageQueue = [];
 const renderer = new WorldRenderer($('world'));
+let artVersion=0;
+const onArtReady=()=>{artVersion++;worldRenderGate.state=null;};
+// 最初の画面を描いてから画像を読み込み始める（画像の欠損中は代替描画）。
+requestAnimationFrame(()=>{loadCharacterArt(onArtReady);loadRoomArt(onArtReady);});
 const talk = createTalk(restored ? (state.events[0]?.id || 0) : 0);
 const modal = $('modal');
 if(state.actOne){
@@ -527,3 +529,4 @@ updateCamera();updateRooms();updateUI();updateJournal();save();requestAnimationF
 if(restored)toast('前回の観察記の続きから。住人たちは、ここで待っていました。');
 if(state.actOne)showGameTitle();
 document.documentElement.classList.remove('game-booting');
+document.getElementById('boot-screen')?.remove();
