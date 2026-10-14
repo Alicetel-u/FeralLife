@@ -294,7 +294,7 @@ function showOpening(step = 0) {
 }
 
 function showGameTitle(){
-  const continuing=state.actOne.started;
+  const continuing=state.actOne.started||state.actOne.chapter===2;
   openModal(`<section class="act-screen game-title"><img class="game-title-apartment" src="assets/apartments.png" alt="個性豊かな住人たちが暮らす、けもの荘"><div class="game-title-shade"></div><div class="game-title-stars" aria-hidden="true"></div><div class="game-title-neighbors" aria-label="けもの荘の住人たち">${[['sister','happy','おおやさーん！'],['cat','tired','あと5分……ニャ。'],['hostess','happy','今日もにぎやか♪']].map(([type,emotion,line],i)=>`<figure class="title-neighbor neighbor-${i}"><span>${line}</span><div><img src="${EVENT_EXPRESSIONS[type][emotion]}" alt="${CHARACTERS[type].name}"></div></figure>`).join('')}</div><div class="game-title-content"><p class="game-title-eyebrow">本日より、あなたが大家さん！</p><h2 id="modal-title" class="game-logo"><span class="game-logo-roof" aria-hidden="true">★</span><span class="logo-letter">け</span><span class="logo-letter">も</span><span class="logo-letter">の</span><span class="logo-letter">荘</span><small>～クズ住人観察記～</small></h2><p class="game-title-tagline">クセつよ住人、トラブル大歓迎!?</p><nav class="game-title-menu" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><i>▶</i>つづきから<small>CONTINUE</small></button>':''}<button data-game-new><i>▶</i>はじめから<small>NEW GAME</small></button><button data-title-help><i>?</i>遊び方<small>HOW TO PLAY</small></button></nav><p class="game-title-save">${continuing?'前回の記録は自動保存されています。':'あなたが、今日からこの家の大家さん。'}</p></div><footer class="game-title-footer"><span>住人観察 × 会話選択アドベンチャー</span><span>けもの荘 / KEMONOSOU</span></footer></section>`);
 }
 function showActTwoTitle(){openModal(`<section class="act-screen act-title"><div class="act-title-copy"><p class="act-kicker">KEMONOSOU / CHAPTER 02</p><h2 id="modal-title">アパートを<br><span>借金（ルナ）</span>から守れ！</h2><p class="act-tagline">燃えなかったアパート。次は借金のカタに取られるな。</p><button class="act-primary" data-act2-start>第二幕を始める →</button></div><img class="act-key-art" src="${EVENT_EXPRESSIONS.hostess.neutral}" alt="金城ルナ"></section>`);}
@@ -386,7 +386,7 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-opening-continue'))showActTitle();
   if(button.hasAttribute('data-act-title'))showGameTitle();
   if(button.hasAttribute('data-title-help'))showTitleHelp();
-  if(button.hasAttribute('data-game-continue')&&state.actOne.started)continueGame();
+  if(button.hasAttribute('data-game-continue')&&(state.actOne.started||state.actOne.chapter===2))continueGame();
   if(button.hasAttribute('data-game-new')){if(state.actOne.started)button.setAttribute('data-title-new','');else showOpening();}
   if(button.hasAttribute('data-title-new'))openModal(header('NEW GAME / はじめから','一日目から、やり直しますか？',false)+'<div class="modal-body"><p class="modal-copy">今の進行と、タイムループで集めた失敗の記憶をリセットします。</p></div><div class="modal-footer"><button class="secondary-button" data-act-title>タイトルに戻る</button><button class="primary-button" data-restart>新しく始める →</button></div>');
   if(button.hasAttribute('data-act2-start')&&state.actOne?.chapter===2){state.actOne.started=true;state.actOne.titlePending=false;save();const intro=state.events.find(e=>e.actScene==='act2-prologue');if(state.actOne.prologuePending&&intro)showEvent(intro.id);else{closeModal();openNextStageEvent();}}
@@ -489,5 +489,5 @@ function frame(now){
 syncStageCursor();
 updateCamera();updateRooms();updateUI();updateJournal();save();requestAnimationFrame(frame);
 if(restored)toast('前回の観察記の続きから。住人たちは、ここで待っていました。');
-if(state.actOne){if(restored && state.actOne.started)showGameTitle();else showOpening();}
+if(state.actOne){if(restored && (state.actOne.started||state.actOne.chapter===2))showGameTitle();else showOpening();}
 document.documentElement.classList.remove('game-booting');
