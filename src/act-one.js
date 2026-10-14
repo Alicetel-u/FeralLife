@@ -349,7 +349,17 @@ export function rewindActOne(s){
   return next;
 }
 export function validActOne(s){
-  const a=s?.actOne;if(!a||a.version!==1||typeof a.started!=='boolean'||!Number.isInteger(a.attempt)||a.attempt<1||!Number.isInteger(a.seed)||!Array.isArray(a.memory)||!Array.isArray(a.completed)||!['playing','bad','clear'].includes(a.status))return false;
+  const a=s?.actOne;
+  if(a?.chapter===2){
+    if(a.version!==1||!Number.isInteger(a.attempt)||a.attempt<1||!Number.isInteger(a.seed)||!Array.isArray(a.memory)||!Array.isArray(a.completed)||!['playing','bad','clear'].includes(a.status))return false;
+    const scenes={bag:{at:62},contract:{at:81}},failures=['bag-guarantee','bag-loan','contract-sign','contract-stamp'];
+    const chosen=['bag:guarantee','bag:loan','bag:return','contract:sign','contract:stamp','contract:refuse'];
+    if(!Array.isArray(a.chosenChoices)||a.chosenChoices.some(x=>!chosen.includes(x))||a.memory.some(x=>!failures.includes(x))||a.completed.some(x=>!Object.hasOwn(scenes,x)))return false;
+    if(s.hour<57||s.hour>105||s.residents.length!==2||!s.residents.some(r=>r.type==='hostess'))return false;
+    if(a.pending!==null&&(!scenes[a.pending?.scene]||!s.events.some(e=>e.id===a.pending.eventId&&e.actScene===a.pending.scene)))return false;
+    if(a.rollbackPoint!==undefined){const p=a.rollbackPoint,saved=p?.state;if(!scenes[p?.scene]||saved?.hour!==scenes[p.scene].at-.5||saved?.actOne?.rollbackPoint!==undefined||saved?.actOne?.pending!==null||saved?.actOne?.status!=='playing'||!validateSave(saved)||!validActOne(saved))return false;}
+    return a.status==='playing'?!s.ending:a.status==='clear'?s.hour===105&&a.completed.length===2&&!!s.ending:failures.includes(a.failure)&&!!s.ending;
+  }if(!a||a.version!==1||typeof a.started!=='boolean'||!Number.isInteger(a.attempt)||a.attempt<1||!Number.isInteger(a.seed)||!Array.isArray(a.memory)||!Array.isArray(a.completed)||!['playing','bad','clear'].includes(a.status))return false;
   if(a.rollbackPoint!==undefined){
     const point=a.rollbackPoint,event=(a.chapter===2?{'bag':{at:62},'contract':{at:81}}:ACT_ONE_EVENTS)[point?.scene],saved=point?.state;
     if(!event||saved?.actOne?.rollbackPoint!==undefined||saved?.hour!==event.at-.5||saved?.actOne?.pending!==null||saved?.actOne?.status!=='playing'||!validateSave(saved)||!validActOne(saved))return false;
