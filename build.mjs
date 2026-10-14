@@ -6,15 +6,24 @@ const root = dirname(fileURLToPath(import.meta.url));
 const [html, css, ...modules] = await Promise.all([
   readFile(join(root, 'index.html'), 'utf8'),
   readFile(join(root, 'styles.css'), 'utf8'),
-  ...['dialogue', 'character-art', 'movement', 'event-cases', 'management', 'simulation', 'act-one', 'act-two', 'fire-ending', 'rewind-transition', 'effects', 'exterior-occlusion', 'renderer', 'event-stage', 'choice-ui', 'opening-prologue', 'app'].map(name => readFile(join(root, 'src', name + '.js'), 'utf8'))
+  ...['dialogue', 'character-art', 'movement', 'event-cases', 'management', 'simulation', 'act-one', 'act-two', 'fire-ending', 'rewind-transition', 'effects', 'exterior-occlusion', 'renderer', 'event-stage', 'choice-ui', 'opening-prologue', 'render-policy', 'app'].map(name => readFile(join(root, 'src', name + '.js'), 'utf8'))
 ]);
 let script = modules.map(source => source.replace(/^import .*;\r?\n/gm, '').replace(/^export /gm, '')).join('\n\n');
 // コード中の 'assets/….png' をすべて data URL として埋め込む（差分ポーズを増やしてもここの修正は不要）
 const assetPaths = [...new Set(script.match(/assets\/[\w\-./]+\.(?:png|svg)/g) || [])];
-for (const path of assetPaths) {
+// Store each unchanged asset once, then share its URL across all references.
+const embeddedAssets = await Promise.all(assetPaths.map(async path => {
   const data = await readFile(join(root, path));
-  script = script.replaceAll(path, `data:image/${path.endsWith('.svg')?'svg+xml':'png'};base64,${data.toString('base64')}`);
+  return `data:image/${path.endsWith('.svg')?'svg+xml':'png'};base64,${data.toString('base64')}`;
+}));
+for (const [index, path] of assetPaths.entries()) {
+  const reference = `standaloneAssets[${index}]`;
+  // Static HTML images live in template literals; JS asset definitions are strings.
+  script = script.replaceAll(`src="${path}"`, `src="${'${'+reference+'}'}"`);
+  script = script.replaceAll(`'${path}'`, reference).replaceAll(`"${path}"`, reference);
+  if (script.includes(path)) throw new Error(`Unsupported embedded asset reference: ${path}`);
 }
+script = 'const standaloneAssets = '+JSON.stringify(embeddedAssets)+';\n'+script;
 const stylesheet = css.replace("url('assets/apartments.png')", 'none');
 const standalone = html.replace('<link rel="stylesheet" href="styles.css">', () => `<style>${stylesheet}</style>`).replace('<script type="module" src="src/app.js"></script>', () => `<script type="module">\n${script}\n</script>`);
 await writeFile(join(root, 'play.html'), standalone, 'utf8');

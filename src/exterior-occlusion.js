@@ -39,16 +39,35 @@ export function foregroundKeys(position) {
   // The street is in front of the hallway rails, but passes behind the bulletin board.
   return keys;
 }
+const foregroundPathCache = new Map();
 export function drawExteriorForeground(ctx,image,position,darkness=0) {
   const keys=foregroundKeys(position);
   if(!image||!keys.length)return;
   ctx.save();
   ctx.scale(1000/SOURCE_WIDTH,562.5/SOURCE_HEIGHT);
-  ctx.beginPath();
-  for(const key of keys)for(const polygon of EXTERIOR_OCCLUDERS[key]) {
-    ctx.moveTo(...polygon[0]);for(const point of polygon.slice(1))ctx.lineTo(...point);ctx.closePath();
+  if (typeof Path2D !== 'undefined') {
+    const cacheKey = keys.join('|');
+    let path = foregroundPathCache.get(cacheKey);
+    if (!path) {
+      path = new Path2D();
+      for (const key of keys) for (const polygon of EXTERIOR_OCCLUDERS[key]) {
+        path.moveTo(...polygon[0]);
+        for (let i=1;i<polygon.length;i++) path.lineTo(...polygon[i]);
+        path.closePath();
+      }
+      foregroundPathCache.set(cacheKey,path);
+    }
+    ctx.clip(path);
+  } else {
+    // Test contexts and browsers without Path2D retain the identical traced outline.
+    ctx.beginPath();
+    for (const key of keys) for (const polygon of EXTERIOR_OCCLUDERS[key]) {
+      ctx.moveTo(...polygon[0]);
+      for (let i=1;i<polygon.length;i++) ctx.lineTo(...polygon[i]);
+      ctx.closePath();
+    }
+    ctx.clip();
   }
-  ctx.clip();
   ctx.drawImage(image,0,0,SOURCE_WIDTH,SOURCE_HEIGHT);
   // Match the same night tint applied to the background, preventing bright rails at night.
   if(darkness>0){ctx.fillStyle=`rgba(16,27,49,${darkness})`;ctx.fillRect(0,0,SOURCE_WIDTH,SOURCE_HEIGHT);}

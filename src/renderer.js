@@ -24,15 +24,20 @@ export function resolvePose(type, action, moving = false, tick = 0, hour = 0) {
   return ready(pick) ? pick : 'base';
 }
 // 色味の重ね塗り用の作業キャンバス（スプライトの不透明部分だけを染める）
+const spriteTintCache = new WeakMap();
 function tintedImage(image, tint) {
-  const canvas = tintedImage.canvas ||= document.createElement('canvas');
-  canvas.width = image.width; canvas.height = image.height;
+  let cached = spriteTintCache.get(image);
+  if (cached?.tint === tint) return cached.canvas;
+  const canvas = cached?.canvas || document.createElement('canvas');
+  if (canvas.width !== image.width) canvas.width = image.width;
+  if (canvas.height !== image.height) canvas.height = image.height;
   const pen = canvas.getContext('2d');
   pen.imageSmoothingEnabled = false;
   pen.globalCompositeOperation = 'source-over'; pen.clearRect(0, 0, canvas.width, canvas.height);
   pen.drawImage(image, 0, 0);
   pen.globalCompositeOperation = 'source-atop'; pen.fillStyle = tint; pen.fillRect(0, 0, canvas.width, canvas.height);
   pen.globalCompositeOperation = 'source-over';
+  spriteTintCache.set(image, {tint, canvas});
   return canvas;
 }
 /**

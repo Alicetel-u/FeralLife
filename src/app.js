@@ -1,3 +1,4 @@
+import { WorldRenderGate } from './render-policy.js';
 import { openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
@@ -483,15 +484,20 @@ $('sound-button').onclick=async()=>{
     await audio.resume();$('sound-button').setAttribute('aria-pressed','true');$('sound-button').innerHTML='♫ <span>環境音 ON</span>';
   }catch{audio=null;toast('このブラウザでは環境音を再生できません。');}
 };
+const worldRenderGate = new WorldRenderGate();
 function frame(now){
   const seconds=Math.min(.25,Math.max(0,(now-lastTime)/1000));lastTime=now;
-  const stopped=paused||modal.open||document.hidden||!!state.ending;
+  if(document.hidden){renderer.last=now;requestAnimationFrame(frame);return;}
+  const stopped=paused||modal.open||!!state.ending;
   if(!stopped){if(state.actOne)(state.actOne.chapter===2?advanceActTwo(state,seconds*speed/10):advanceActOne(state,seconds*speed/10));else advance(state,seconds*speed/10);}
   queueFreshStageEvents();
   stepTalk(talk, state, now, stopped);
   updateCamera();
-  renderer.draw(state,now,stopped,document.body.classList.contains('conversation-active')?[]:talk.bubbles);
-  if(now-lastUI>300){updateUI();lastUI=now;}
+  const bubbles=document.body.classList.contains('conversation-active')?[]:talk.bubbles;
+  const drawWorld=worldRenderGate.shouldDraw(state,now,stopped,cameraKey,bubbles);
+  if(drawWorld)renderer.draw(state,now,stopped,bubbles);
+  else renderer.last=now;
+  if(now-lastUI>300&&(!stopped||drawWorld)){updateUI();lastUI=now;}
   if(now-lastSave>5000){save();lastSave=now;}
   if(state.ending&&!endingShown&&(!state.actOne||!modal.open)){showEnding();save();}
   else openNextStageEvent();
