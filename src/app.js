@@ -1,3 +1,4 @@
+import { replaceConversationContent } from './conversation-dom.js';
 import { speakerColorStyle } from './speaker-colors.js';
 import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './trouble-victory.js';
 import { WorldRenderGate } from './render-policy.js';
@@ -200,7 +201,7 @@ let stopFireEnding = null;
 let stopOpeningPrologue = () => {};
 let cleanupChoiceUI = () => {};
 function clearFireEnding(){stopFireEnding?.();stopFireEnding=null;}
-function openModal(html) { stopOpeningPrologue(); cleanupChoiceUI();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); $('modal-content').innerHTML = html; modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); }
+function openModal(html) { stopOpeningPrologue(); cleanupChoiceUI();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); replaceConversationContent($('modal-content'),html); modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); }
 function closeModal() {
   const event=modal.classList.contains('conversation-modal')&&state.actOne?state.events.find(e=>e.id===eventView?.id):null;
   if(event&&eventView.index===eventConversation(event).length-1&&avoidedTrouble(event,state.actOne.chapter)){
