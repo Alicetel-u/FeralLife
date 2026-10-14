@@ -4,7 +4,7 @@ export function fireEndingPhase(seconds) {
 }
 
 export function fireEndingHTML(failure) {
-  return `<section class="act-screen fire-cinematic" data-fire-phase="room"><div class="fire-camera"><img class="fire-room-background" src="assets/rooms/cat/interior.png" alt="炎に包まれる101号室"><img class="fire-building-background" src="assets/apartments.png" alt="炎が広がるけもの荘"><canvas class="fire-canvas" width="960" height="540" aria-hidden="true"></canvas><div class="fire-soot"></div></div><div class="fire-letterbox top"></div><div class="fire-letterbox bottom"></div><h2 id="modal-title" class="visually-hidden">けもの荘の火災</h2><p class="fire-narration" aria-live="polite">昨日まで、ただ散らかっているだけの部屋だった。</p><button class="fire-skip" data-fire-finish>スキップ</button></section>`;
+  return `<section class="act-screen fire-cinematic" data-fire-phase="room"><div class="fire-camera"><img class="fire-room-background" src="assets/rooms/cat/interior.png" alt="炎に包まれる101号室"><img class="fire-building-background" src="assets/apartments.png" alt="炎が広がるけもの荘"><canvas class="fire-canvas" width="960" height="540" aria-hidden="true"></canvas><div class="fire-soot"></div></div><div class="fire-letterbox top"></div><div class="fire-letterbox bottom"></div><h2 id="modal-title" class="visually-hidden">けもの荘の火災</h2><p class="fire-narration" aria-live="polite">昨日まで、ただ散らかっているだけの部屋だった。</p><button class="fire-skip" data-fire-finish>クリックで次へ</button></section>`;
 }
 
 // Gradients use local coordinates and inherit the same transform as the path.
@@ -78,8 +78,12 @@ export function startFireEnding(root, failure, finish, options = {}) {
   const kitchen = failure?.startsWith('dinner-');
   let elapsed = 0, previous = performance.now(), frameId, phase = '', paintedPhase='';
   const draw=createFirePainter(canvas,kitchen);
+  let stopped=false;
+  function stop(){stopped=true;cancelAnimationFrame(frameId);root.removeEventListener('click',complete);}
+  function complete(){if(stopped)return;stop();finish();}
+  if(!options.ambient)root.addEventListener('click',complete);
   function tick(now) {
-    if (!root.isConnected) return;
+    if(stopped||!root.isConnected){stop();return;}
     const dt = Math.min(.1, (now - previous) / 1000); previous = now;
     if (!document.hidden) elapsed += dt;
     const next = options.ambient ? 'building' : fireEndingPhase(elapsed);
@@ -94,9 +98,9 @@ export function startFireEnding(root, failure, finish, options = {}) {
       if(shake)camera.style.transform = `translate(${Math.sin(elapsed * 29) * shake}px,${Math.cos(elapsed * 23) * shake * .6}px) scale(1.025)`;
       else if(camera.style.transform!=='scale(1.025)')camera.style.transform='scale(1.025)';
     }
-    if (!options.ambient && elapsed >= 15) { finish(); return; }
+    if (!options.ambient && elapsed >= 15) { complete(); return; }
     frameId = requestAnimationFrame(tick);
   }
   frameId = requestAnimationFrame(tick);
-  return () => cancelAnimationFrame(frameId);
+  return stop;
 }

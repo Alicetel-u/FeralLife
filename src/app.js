@@ -400,7 +400,6 @@ function restart() {
 }
 document.addEventListener('click',e=>{
   const button=e.target.closest('button');if(!button)return;
-  if(button.hasAttribute('data-fire-finish')&&state.actOne?.status==='bad')showActEnding(true);
   if(button.dataset.opening)showOpening(Number(button.dataset.opening));
   if(button.hasAttribute('data-opening-continue'))showActTitle();
   if(button.hasAttribute('data-act-title'))showGameTitle();
