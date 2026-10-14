@@ -134,7 +134,15 @@ export function createActOne(seed=Date.now(),memory=[],attempt=1,started=false){
   s.actOne={version:1,started,attempt,memory:[...memory],status:'playing',completed:[],pending:null,seed:s.seed};
   const e=addEvent(s,'life','1日目17時。101号室の新しい大家。','築38年の古びたアパート「けもの荘」。夕暮れの101号室。窓から大量の煙が漂っている。',[101]);
   e.actScene='opening';e.cast=['cat'];e.stageOnly=true;
-  e.lines=[
+  e.lines=attempt>=3?[
+    an('1日目17時。見覚えのある101号室。何事もなかったように、また煙が漂っている。'),
+    ac('neutral','新しい大家さん？ モクですニャ。よろしくニャ。'),
+    am('……ああ、知ってるよ。嫌ってほどな。'),
+    ac('surprised','ニャ？ 初めて会ったはずニャ。'),
+    am('こっちは何回も会ってんだよ……。'),
+    ac('tired','……大家さん、変な人ニャ。'),
+    an('また最初からか……。今度こそ、このボロアパートを守ってやる。')
+  ]:[
     an('築38年の古びたアパート「けもの荘」。夕暮れの101号室。窓から大量の煙が漂っている。'),
     ac('neutral','新しい大家さん？ モクですニャ。よろしくニャ。'),
     am('うわっくっせぇ！！煙だらけじゃねーか！'),
@@ -148,7 +156,7 @@ export function createActOne(seed=Date.now(),memory=[],attempt=1,started=false){
     ac('shy','明日から頑張るために、今日は休む準備ニャ。'),
     an('モクは満足そうに寝転がった。テーブルにはストロング缶。灰皿にはおびただしい吸い殻。大家は部屋を見渡し、小さくため息をついた。'),
     am('……まぁ、家賃さえ払ってくれりゃいいか。'),
-    ...(attempt>1?[an('同じ声。同じ灰皿。同じ「明日から」。焼けた廊下を覚えているのは、大家だけだった。')]:[])
+    ...(attempt===2?[an('同じ声。同じ灰皿。同じ「明日から」。焼けた廊下を覚えているのは、大家だけだった。')]:[])
   ];
   return s;
 }
