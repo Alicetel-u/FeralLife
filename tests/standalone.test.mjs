@@ -17,6 +17,8 @@ test('standalone game embeds its artwork, styles and syntactically valid script'
   assert.ok(html.includes('width="1920" height="1080"'));
   assert.ok(script.includes('requestFullscreen()'));
   assert.ok(script.includes('createOuting'));
-  assert.ok(script.includes('await loadCharacterArt()'));
+  assert.ok(script.includes('loadCharacterArt(onArtReady)'));
+  assert.ok(!script.includes('await loadCharacterArt()'));
+  assert.ok(html.includes('id="boot-screen"'));
   execFileSync(process.execPath,['--input-type=module','--check'],{input:script,encoding:'utf8'});
 });
