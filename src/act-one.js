@@ -24,9 +24,24 @@ export function createActOne(seed=Date.now(),memory=[],attempt=1,started=false){
   const s=createGame(seed);
   s.events=[];s.nextId=1;s.residents[0].history=[];s.heard=[];
   s.actOne={version:1,started,attempt,memory:[...memory],status:'playing',completed:[],pending:null,seed:s.seed};
-  const e=addEvent(s,'life','1日目17時。まだ、何も燃えていない。','引き継いだのは築38年のアパートと、101号室の猫。3日目9時には新しい入居希望者が来る。それまでの二晩くらい、何も起きないはずだった。',[101]);
+  const e=addEvent(s,'life','1日目17時。101号室の新しい大家。','築38年の古びたアパート「けもの荘」。夕暮れの101号室。窓から大量の煙が漂っている。',[101]);
   e.actScene='opening';e.cast=['cat'];e.stageOnly=true;
-  e.lines=[ac('neutral','新しい大家さん？ モクですニャ。よろしくニャ。'),am(attempt>1?'……知ってる。いや、今度こそよろしく。':'よろしく。三日後には新しい住人も来る。少しは片づけとけ。'),ac('tired','明日からやるニャ。今日は準備の日ニャ。'),...(attempt>1?[an('同じ声。同じ灰皿。同じ「明日から」。焼けた廊下を覚えているのは、大家だけだった。'),am('明日が来るように、今日はわしが見ている。'),ac('surprised','……初対面で重いニャ。大家さん、何かあったニャ？')]:[ac('shy','家賃は払うニャ。できれば説教より、先に名前覚えてニャ。'),an('その時の大家は、火事より滞納の方を心配していた。')])];
+  e.lines=[
+    an('築38年の古びたアパート「けもの荘」。夕暮れの101号室。窓から大量の煙が漂っている。'),
+    ac('neutral','新しい大家さん？ モクですニャ。よろしくニャ。'),
+    am('うわっくっせぇ！！煙だらけじゃねーか！'),
+    ac('happy','大丈夫ニャ。換気扇は昨日から回してるニャ。'),
+    am('換気扇より先にタバコ止めろよ！'),
+    am('まぁよろしく。……ずいぶん自由に暮らしてるな。'),
+    ac('tired','他に誰もいないからニャ。静かで最高ニャ。'),
+    am('部屋、少しは片づけたらどうだ？'),
+    ac('neutral','明日からやるニャ。今日は準備の日ニャ。'),
+    am('……何の準備だ？'),
+    ac('shy','明日から頑張るために、今日は休む準備ニャ。'),
+    an('モクは満足そうに寝転がった。テーブルにはストロング缶。灰皿にはおびただしい吸い殻。大家は部屋を見渡し、小さくため息をついた。'),
+    am('……まぁ、家賃さえ払ってくれりゃいいか。'),
+    ...(attempt>1?[an('同じ声。同じ灰皿。同じ「明日から」。焼けた廊下を覚えているのは、大家だけだった。')]:[])
+  ];
   return s;
 }
 export function nextActOneAt(s){return Object.entries(ACT_ONE_EVENTS).find(([id])=>!s.actOne.completed.includes(id))?.[1].at??57;}
