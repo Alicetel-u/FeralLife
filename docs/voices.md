@@ -57,3 +57,7 @@ Voice ID設定は既存の `characters.<id>.voiceId` 形式と簡易の `<id>: v
 主な更新: `tools/voice-script.mjs`（第一幕全体の独り言抽出・Voice ID形式対応）、`tools/voices.mjs`（第一幕モク限定生成）、`config/voice-ids.json`（確定したモクのVoice ID）、`tests/voice.test.mjs`、`src/voice-manifest.js`、`assets/voices/`。試遊時はページ再読み込み後「はじめから」を選ぶ。古いセーブには修正前の会話が残っている可能性がある。
 
 本番公開前に、巻き戻しの期待セリフとルナの承認済み画像に合わせてテストのみを更新。全141テスト成功。ゲーム本文・画像は変更していない。公開用パッケージの秘密情報スキャンも成功。
+
+## Haruの序盤採用（2026-10-16）
+
+大家をユーザー選定のHaru（`vY4PC2kSleyw73YRUOI6`）に変更。`--speaker=manager` はintro範囲だけ許可。プロローグ心の声2本を含む序盤12本を生成し反映した。心の声はthoughtful/softlyの専用設定を保ち、stabilityは0.5で表情を抑えすぎないようにした。モクの既存音声は維持。API character-cost合計179、全12本のデコード・台本対応確認、全141テスト成功。

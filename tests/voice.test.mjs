@@ -39,7 +39,7 @@ test('intro includes only real opening, ambient and pre-choice ash lines; inner 
  const ids=JSON.parse(await readFile(new URL('../config/voice-ids.json',import.meta.url)));
  const config=JSON.parse(await readFile(new URL('../config/voice-performance.json',import.meta.url)));
  const plan=planVoices(rows,ids,config);
- const modified=structuredClone(config);modified.profiles.inner.settings.stability=0.5;
+ const modified=structuredClone(config);modified.profiles.inner.settings.stability=0;
  assert.notEqual(plan[0].hash,planVoices(rows,ids,modified)[0].hash);
  assert.equal(plan[2].hash,planVoices(rows,ids,modified)[2].hash);
  assert.notEqual(voiceLineKey({speaker:'manager',text:'同じ'}),voiceLineKey({speaker:'manager',text:'同じ',innerVoice:true}));

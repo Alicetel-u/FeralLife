@@ -1,8 +1,8 @@
 // Generated clips only.
 export const VOICE_MANIFEST = {
   "[\"manager\",\"古びた鍵と、一通の手紙。\\n……今日から、ここを俺が預かるのか。\",\"inner\",false]": {
-    "file": "assets/voices/430233fb4013098b565a75ce030131c8adea12656e565092e9a85670fcda68ba.mp3",
-    "hash": "430233fb4013098b565a75ce030131c8adea12656e565092e9a85670fcda68ba",
+    "file": "assets/voices/bb53c6265ef59f894e9e6022c1145b257c66e0f66daf5e6f149ef93ce1037211.mp3",
+    "hash": "bb53c6265ef59f894e9e6022c1145b257c66e0f66daf5e6f149ef93ce1037211",
     "source": "prologue:1",
     "speaker": "manager",
     "text": "古びた鍵と、一通の手紙。\n……今日から、ここを俺が預かるのか。",
@@ -10,8 +10,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……何があったんだよ、この家。\\nまずは、たった一人の住人に会ってみるか。\",\"inner\",false]": {
-    "file": "assets/voices/59fcfc4f3a2c80808bcecae5b49508862e74a1020c85e483876b3ec0158248ca.mp3",
-    "hash": "59fcfc4f3a2c80808bcecae5b49508862e74a1020c85e483876b3ec0158248ca",
+    "file": "assets/voices/bed2b5b84a86f09b3c6ad1434770c231ee8fd3f45d4ee5469ac112638bbd9897.mp3",
+    "hash": "bed2b5b84a86f09b3c6ad1434770c231ee8fd3f45d4ee5469ac112638bbd9897",
     "source": "prologue:5",
     "speaker": "manager",
     "text": "……何があったんだよ、この家。\nまずは、たった一人の住人に会ってみるか。",
@@ -46,8 +46,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"うわっくっせぇ！！煙だらけじゃねーか！\",\"retort\",false]": {
-    "file": "assets/voices/99a82b08abb3258067fb24f78ae518e14da08a934fe8366fc24548562d975f50.mp3",
-    "hash": "99a82b08abb3258067fb24f78ae518e14da08a934fe8366fc24548562d975f50",
+    "file": "assets/voices/49b23cc4f57b0829c3c7316148b21963a01dc12ae98e33e700a88800c67ca409.mp3",
+    "hash": "49b23cc4f57b0829c3c7316148b21963a01dc12ae98e33e700a88800c67ca409",
     "source": "act1/opening:2",
     "speaker": "manager",
     "text": "うわっくっせぇ！！煙だらけじゃねーか！",
@@ -64,8 +64,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"換気扇より先にタバコ止めろよ！\",\"retort\",false]": {
-    "file": "assets/voices/3204be1a1017aa53850ab0f729d7a8fae85e20f0ab8c857b0af27a859ba65582.mp3",
-    "hash": "3204be1a1017aa53850ab0f729d7a8fae85e20f0ab8c857b0af27a859ba65582",
+    "file": "assets/voices/ace538507517e5e5b7054dc650b2f42922c565923390212e4e2ddd2d11f32312.mp3",
+    "hash": "ace538507517e5e5b7054dc650b2f42922c565923390212e4e2ddd2d11f32312",
     "source": "act1/opening:4",
     "speaker": "manager",
     "text": "換気扇より先にタバコ止めろよ！",
@@ -73,8 +73,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"まぁよろしく。……ずいぶん自由に暮らしてるな。\",\"normal\",false]": {
-    "file": "assets/voices/639202fd444460b4dec16953390d26b55656d43805b25e83d49071da59c8e0b4.mp3",
-    "hash": "639202fd444460b4dec16953390d26b55656d43805b25e83d49071da59c8e0b4",
+    "file": "assets/voices/72d904fdc996d038823d0285e669dff69e31e9ab420ea4644bb0fc6eb8c71416.mp3",
+    "hash": "72d904fdc996d038823d0285e669dff69e31e9ab420ea4644bb0fc6eb8c71416",
     "source": "act1/opening:5",
     "speaker": "manager",
     "text": "まぁよろしく。……ずいぶん自由に暮らしてるな。",
@@ -91,8 +91,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"部屋、少しは片づけたらどうだ？\",\"normal\",false]": {
-    "file": "assets/voices/15426c13c4daf1cf3c42599428af1653a92c875296775cfce34f4fcaef5efed5.mp3",
-    "hash": "15426c13c4daf1cf3c42599428af1653a92c875296775cfce34f4fcaef5efed5",
+    "file": "assets/voices/a8a61ce9d3c5eef95a9d65db4afbed770b9cc9fe297fdeb5524bd0cc87e63f5c.mp3",
+    "hash": "a8a61ce9d3c5eef95a9d65db4afbed770b9cc9fe297fdeb5524bd0cc87e63f5c",
     "source": "act1/opening:7",
     "speaker": "manager",
     "text": "部屋、少しは片づけたらどうだ？",
@@ -109,8 +109,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……何の準備だ？\",\"normal\",false]": {
-    "file": "assets/voices/c907928f3a5b7ae0baff0cbef9ef6647181620355273b6f0de054f0a650194c9.mp3",
-    "hash": "c907928f3a5b7ae0baff0cbef9ef6647181620355273b6f0de054f0a650194c9",
+    "file": "assets/voices/c35167595d0263ca32e547cf8ed4e0b49ab17588c610eef8bed1ab2195b6e192.mp3",
+    "hash": "c35167595d0263ca32e547cf8ed4e0b49ab17588c610eef8bed1ab2195b6e192",
     "source": "act1/opening:9",
     "speaker": "manager",
     "text": "……何の準備だ？",
@@ -127,8 +127,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……まぁ、家賃さえ払ってくれりゃいいか。\",\"normal\",false]": {
-    "file": "assets/voices/624bad7306a25561cd0ae84db30b267c723b68c3b1d1d7bdce4c7654d5a57604.mp3",
-    "hash": "624bad7306a25561cd0ae84db30b267c723b68c3b1d1d7bdce4c7654d5a57604",
+    "file": "assets/voices/9f9c03217332f8a7f4a88833505b8c3694d0a142a99ee6d4a08998dcf2458163.mp3",
+    "hash": "9f9c03217332f8a7f4a88833505b8c3694d0a142a99ee6d4a08998dcf2458163",
     "source": "act1/opening:12",
     "speaker": "manager",
     "text": "……まぁ、家賃さえ払ってくれりゃいいか。",
@@ -199,8 +199,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"なんだよ、今度は。\",\"normal\",false]": {
-    "file": "assets/voices/1984760ece990f49039a52a04a0e08965c0518170a7a2e6648b8b4ae673991d8.mp3",
-    "hash": "1984760ece990f49039a52a04a0e08965c0518170a7a2e6648b8b4ae673991d8",
+    "file": "assets/voices/a13b35a855eb7332708bc8835b8f3957ecaf10675109aa7c6c6a00311109e9b7.mp3",
+    "hash": "a13b35a855eb7332708bc8835b8f3957ecaf10675109aa7c6c6a00311109e9b7",
     "source": "act1/ash:2",
     "speaker": "manager",
     "text": "なんだよ、今度は。",
@@ -217,8 +217,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"捨てろよ。\",\"normal\",false]": {
-    "file": "assets/voices/834ce59e92892350fcad67aeae8190377eff55ee7c8513cbc6d497075ba9e7d2.mp3",
-    "hash": "834ce59e92892350fcad67aeae8190377eff55ee7c8513cbc6d497075ba9e7d2",
+    "file": "assets/voices/c1595cb092ba97417ae6be1e73c7acbb771030de94e2e291ac404287372c6b8e.mp3",
+    "hash": "c1595cb092ba97417ae6be1e73c7acbb771030de94e2e291ac404287372c6b8e",
     "source": "act1/ash:4",
     "speaker": "manager",
     "text": "捨てろよ。",
@@ -235,8 +235,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"だったらちゃんと火を消せよ！\",\"retort\",false]": {
-    "file": "assets/voices/de72e04e8f14d10e7abe92855862bfe63e4c0113a1e179702677ed4cec17aff2.mp3",
-    "hash": "de72e04e8f14d10e7abe92855862bfe63e4c0113a1e179702677ed4cec17aff2",
+    "file": "assets/voices/6d2da846dc4fb9eaa58a9ce53315b127c34584a015ebc36f698c9bc372226566.mp3",
+    "hash": "6d2da846dc4fb9eaa58a9ce53315b127c34584a015ebc36f698c9bc372226566",
     "source": "act1/ash:6",
     "speaker": "manager",
     "text": "だったらちゃんと火を消せよ！",
@@ -253,8 +253,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"なんで俺が決めるんだよ……。\",\"retort\",false]": {
-    "file": "assets/voices/49a4db1d6e9af4e33294cfc069e923766374c2c9b1f5a736306e16388f2bc9ff.mp3",
-    "hash": "49a4db1d6e9af4e33294cfc069e923766374c2c9b1f5a736306e16388f2bc9ff",
+    "file": "assets/voices/367a6f1750d2c3c60a3c2e86a2bfb34027650ea726f9cdab2e21d24b58e43239.mp3",
+    "hash": "367a6f1750d2c3c60a3c2e86a2bfb34027650ea726f9cdab2e21d24b58e43239",
     "source": "act1/ash:8",
     "speaker": "manager",
     "text": "なんで俺が決めるんだよ……。",

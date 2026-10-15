@@ -20,7 +20,7 @@
         "[softly]"
       ],
       "settings": {
-        "stability": 1,
+        "stability": 0.5,
         "similarity_boost": 0.75
       }
     },
