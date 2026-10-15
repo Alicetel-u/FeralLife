@@ -15,10 +15,8 @@ function prepare(audio) {
 
 const STINGS = new Set(['trouble', 'bad', 'title', 'clock', 'victory']);
 
-// Pop until the first rewind. After that, chapter 1's everyday bed is the uneasy air.
-// Chapter two keeps the pop bed. Title, trouble, bad endings, and the clock stay on their own cues.
+// Everyday scenes always use the pop bed; the first-rewind dialogue selects uneasy explicitly.
 export function bedCue(actOne) {
-  if (actOne && actOne.chapter !== 2 && actOne.attempt >= 2) return 'uneasy';
   return 'normal';
 }
 
