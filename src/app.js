@@ -98,6 +98,7 @@ function updateCamera() {
   const p = r ? sampleJourney(r,state.hour,ACTIONS[r.action].place) : null;
   if (autoFollow) { renderer.view = p && p.zone !== 'room' ? 'exterior' : 'interior'; renderer.focus = true; }
   renderer.focusRoom = renderer.focus ? (p?.zone === 'room' ? p.room : state.selected) : null;
+  document.body.classList.toggle('camera-focused',renderer.focus);
   const key = `${renderer.view}-${renderer.focus}-${renderer.focusRoom}-${state.selected}-${state.residents.length}`;
   if (key !== cameraKey) { cameraKey = key; updateRooms(); }
 }
