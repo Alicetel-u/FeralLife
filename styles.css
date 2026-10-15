@@ -627,3 +627,14 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
   .game-ink .conversation-modal .stage-bubble,
   .game-ink .conversation-modal .stage-speaker{transition:none}
 }
+
+/* Rewind completion: white bloom, then a gentle scene reveal. */
+.rewind-white-fade{position:absolute;inset:0;z-index:12;background:#fff;opacity:0;pointer-events:none;transition:opacity .85s ease-in-out}
+.rewind-screen.rewind-fading .rewind-white-fade{opacity:1}
+.rewind-screen.rewind-fading .rewind-restored-room{opacity:1}
+.rewind-screen.rewind-fading .rewind-skip,.rewind-screen.rewind-fading .rewind-continue{display:none!important}
+.rewind-continue{position:absolute;z-index:9;bottom:7%;right:5%;color:#fff0df;background:#201523d9;border-left:4px solid #e03a57;padding:12px 18px;font:800 14px/1.5 var(--sans);pointer-events:none;animation:rewind-prompt-pulse 1.6s ease-in-out infinite}
+.rewind-continue[hidden]{display:none!important}
+.rewind-screen[data-rewind-ready="true"]{cursor:pointer}
+@keyframes rewind-prompt-pulse{50%{opacity:.55}}
+@media(prefers-reduced-motion:reduce){.rewind-white-fade{transition:none}.rewind-continue{animation:none}}
