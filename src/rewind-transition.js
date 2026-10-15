@@ -35,7 +35,7 @@ export function rewindBeat(t,attempt=1,afterFire=false){
 }
 export function rewindTransitionHTML(failure,attempt=1,afterFire=false,chapter=1){
   const restored=chapter===2?'assets/apartments.png':'assets/rooms/cat/interior-v2.png';
-  return `<section class="act-screen rewind-screen" data-rewind-phase="${afterFire?'dark':'fire'}" ${afterFire?'data-after-fire':''}>${afterFire?'':fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${afterFire?'……もう一度、やり直せるなら。':attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="${restored}" alt="${chapter===2?'元に戻ったけもの荘':'元に戻った101号室'}"><button class="rewind-skip" data-rewind-skip>クリックでスキップ →</button></section>`;
+  return `<section class="act-screen rewind-screen" data-rewind-phase="${afterFire?'dark':'fire'}" ${afterFire?'data-after-fire':''}>${afterFire?'':fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${afterFire?'……もう一度、やり直せるなら。':attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="${restored}" alt="${chapter===2?'元に戻ったけもの荘':'元に戻った101号室'}"><button class="rewind-skip" data-rewind-skip>スキップ →</button></section>`;
 }
 
 export function startRewindTransition(root,failure,finish,sound,attempt=1,targetTime=17,afterFire=false){
@@ -92,8 +92,9 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
     }
     complete();
   }
-  function cleanup(){finished=true;root.removeEventListener('click',clicked);cancelAnimationFrame(frameId);stopFire();mute();if(audioContext&&audioContext.state!=='closed')audioContext.close().catch(()=>{});}
-  root.addEventListener('click',clicked);
-  root.querySelector('[data-rewind-skip]')?.focus({preventScroll:true});
+  const skipButton=root.querySelector('[data-rewind-skip]');
+  function cleanup(){finished=true;skipButton?.removeEventListener('click',clicked);cancelAnimationFrame(frameId);stopFire();mute();if(audioContext&&audioContext.state!=='closed')audioContext.close().catch(()=>{});}
+  skipButton?.addEventListener('click',clicked);
+  skipButton?.focus({preventScroll:true});
   frameId=requestAnimationFrame(tick);return cleanup;
 }
