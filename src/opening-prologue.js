@@ -22,7 +22,7 @@ export function startOpeningPrologue(root,onContinue,voice=null){
  const preload=PROLOGUE_CUTS.filter(c=>c.image).map(c=>c.image);
  for(const src of new Set(preload)){const image=new Image();image.src=src;}
  const show=()=>{
-  clearTimeout(lineTimer);const cut=PROLOGUE_CUTS[cursor];root.dataset.cut=cut.shot;voice?.play(cut,'prologue:'+cursor);
+  clearTimeout(lineTimer);const cut=PROLOGUE_CUTS[cursor];root.dataset.cut=cut.shot;voice?.play(cut,'prologue:'+cursor);voice?.prepare(PROLOGUE_CUTS[cursor+1]||null);
   content.innerHTML=prologueCutHTML(cut);progress.textContent=String(cursor+1).padStart(2,'0')+' / '+String(PROLOGUE_CUTS.length).padStart(2,'0');
   next.setAttribute('aria-label',cursor===PROLOGUE_CUTS.length-1?'101号室へ':'次へ');
   const line=content.querySelector('.ink-line'),chars=Array.from(cut.text);let count=0;
