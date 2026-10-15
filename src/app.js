@@ -408,7 +408,7 @@ function beginRewind(afterFire=false){
   const rollbackHour=storyCheckpointTarget(state).hour;
   openModal(rewindTransitionHTML(failure,state.actOne.attempt,afterFire,secondAct?2:1));
   const sound=$('sound-button').getAttribute('aria-pressed')==='true';
-  const stopTransition=startRewindTransition(modal.querySelector('.rewind-screen'),failure,()=>resetActState(secondAct?rewindActTwo(state):rewindBeforeFire(state),true),sound,state.actOne.attempt,rollbackHour,afterFire);
+  const stopTransition=startRewindTransition(modal.querySelector('.rewind-screen'),failure,()=>resetActState(secondAct?rewindActTwo(state):rewindBeforeFire(state),true),sound,state.actOne.attempt,rollbackHour,afterFire,normalBgm.clockAudio);
   stopFireEnding=()=>stopTransition();
 }
 function resetActState(next,resume=false){
@@ -550,6 +550,7 @@ function syncNormalBgm(){
   return normalBgm.setScene(document.hidden, clock?'clock':bad?'bad':title?'title':trouble?'trouble':'normal');
 }
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
+modal.addEventListener('rewind-fade',()=>{normalBgm.setSuppressed(true);});
 function unlockNormalBgm(event){if(event.target.closest?.('#sound-button'))return;normalBgm.unlock().catch(()=>{});}
 document.addEventListener('pointerdown',unlockNormalBgm,true);
 document.addEventListener('keydown',unlockNormalBgm,true);
