@@ -4,7 +4,8 @@ export function voiceSpeaker(line) {
 }
 export function voicePerformance(line) {
   if(line.innerVoice||line.speaker==='大家（心の声）')return 'inner';
-  if(voiceSpeaker(line)==='manager'&&/火を消せよ|なんで俺が決める|箱のせい|換気扇より先|煙だらけ/.test(line.text))return 'retort';
+  if(voiceSpeaker(line)==='manager'&&/なんで俺が決める|結局、俺が決める|誰のせいだと思って/.test(line.text))return 'weary';
+  if(voiceSpeaker(line)==='manager'&&/火を消せよ|誰のせいだよ|箱のせい|換気扇より先|煙だらけ/.test(line.text))return 'retort';
   if(voiceSpeaker(line)==='cat')return line.emotion==='happy'?'moku-happy':line.emotion==='surprised'?'moku-surprised':'moku';
   return 'normal';
 }

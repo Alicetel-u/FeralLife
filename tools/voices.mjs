@@ -13,7 +13,7 @@ if(sampleMoku&&scope!=='intro')throw Error('Moku sample requires intro scope');
 const script=extractVoiceScript(scope);
 const speaker=args.find(a=>a.startsWith('--speaker='))?.slice('--speaker='.length);
 if(speaker&&!['cat','manager'].includes(speaker))throw Error('Unknown speaker filter');
-if(speaker==='manager'&&scope!=='intro')throw Error('Landlord generation is limited to intro');
+if(speaker==='manager'&&!['intro','act1'].includes(scope))throw Error('Landlord generation is limited to act1');
 const pronunciationIssues=(await json('config/voice-pronunciation-issues.json')).issues;
 const pronunciationOnly=args.includes('--pronunciation-only');
 if(pronunciationOnly&&(sampleMoku||scope!=='intro'))throw Error('Pronunciation repair requires intro scope without sample mode');
@@ -33,7 +33,7 @@ await atomic('.local/voice-plan.md',[
   '# 序盤ボイス・生成前確認',
   '',`対象: ${scope} / ${rows.length}件 / 新規 ${pending.length}件 / 推定 ${estimate}クレジット（実残高とは別）`,
   `モデル: ${config.model} / 承認ID: ${planId}`,
-  '', '独り言は移動・操作のタイミングで順序や表示有無が変わります。ナレーション・手紙・選択肢後の返答は含みません。',
+  '', scope==='intro'?'独り言は操作タイミングで表示順や有無が変わります。ナレーション・手紙・選択肢後の返答は含みません。':'選択肢の全分岐・周回・エピローグを含みます。ナレーション・手紙は除外します。',
   '', '|順|話者|演技|本文文字数|台詞|','|---:|---|---|---:|---|',
   ...rows.map((r,i)=>`|${i+1}|${r.speaker}|${r.performance}|${r.characters}|${r.text.replaceAll('\n',' / ').replaceAll('|','\\|')}|`),
   '', '## 生成設定', '```json',JSON.stringify(config,null,2),'```',''
@@ -42,8 +42,8 @@ console.table(report.rows.map((r,i)=>({no:i+1,source:r.source,speaker:r.speaker,
 if(pronunciationReview.length)console.table(pronunciationReview.map(issue=>({term:issue.term,reading:issue.reading,status:issue.status,lines:issue.sources.length})));
 console.log(JSON.stringify({scope,planId,model:config.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true}));
 if(!args.includes('--verify')&&!args.includes('--generate'))process.exit(0);
-const allowedGeneration=scope==='intro'||(scope==='act1'&&speaker==='cat'&&!sampleMoku&&!pronunciationOnly);
-if(args.includes('--generate')&&(!allowedGeneration||!args.includes('--approve='+planId)))throw Error('Generation requires intro or act1 cat-only scope and explicit approval of current plan hash');
+const allowedGeneration=scope==='intro'||(scope==='act1'&&['cat','manager'].includes(speaker)&&!sampleMoku&&!pronunciationOnly);
+if(args.includes('--generate')&&(!allowedGeneration||!args.includes('--approve='+planId)))throw Error('Generation requires intro or act1 with a single speaker and explicit approval of current plan hash');
 let key;
 try{key=(await json('.local/elevenlabs.json')).apiKey;}catch{throw Error('Local API key missing. Run npm run voice:setup (do not paste key into chat).');}
 if(typeof key!=='string'||!key.trim())throw Error('Empty API key');

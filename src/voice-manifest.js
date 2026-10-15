@@ -46,8 +46,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"うわっくっせぇ！！煙だらけじゃねーか！\",\"retort\",false]": {
-    "file": "assets/voices/49b23cc4f57b0829c3c7316148b21963a01dc12ae98e33e700a88800c67ca409.mp3",
-    "hash": "49b23cc4f57b0829c3c7316148b21963a01dc12ae98e33e700a88800c67ca409",
+    "file": "assets/voices/3b2440161b32c00eeff53f9f554394dc8153aaa30cfd9dbe0fc99dd1498135b8.mp3",
+    "hash": "3b2440161b32c00eeff53f9f554394dc8153aaa30cfd9dbe0fc99dd1498135b8",
     "source": "act1/opening:2",
     "speaker": "manager",
     "text": "うわっくっせぇ！！煙だらけじゃねーか！",
@@ -64,8 +64,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"換気扇より先にタバコ止めろよ！\",\"retort\",false]": {
-    "file": "assets/voices/ace538507517e5e5b7054dc650b2f42922c565923390212e4e2ddd2d11f32312.mp3",
-    "hash": "ace538507517e5e5b7054dc650b2f42922c565923390212e4e2ddd2d11f32312",
+    "file": "assets/voices/b54a502d337f0804c4d755449ce44d00989b7eaf3be459fc5fce10badb0ed7ea.mp3",
+    "hash": "b54a502d337f0804c4d755449ce44d00989b7eaf3be459fc5fce10badb0ed7ea",
     "source": "act1/opening:4",
     "speaker": "manager",
     "text": "換気扇より先にタバコ止めろよ！",
@@ -73,8 +73,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"まぁよろしく。……ずいぶん自由に暮らしてるな。\",\"normal\",false]": {
-    "file": "assets/voices/72d904fdc996d038823d0285e669dff69e31e9ab420ea4644bb0fc6eb8c71416.mp3",
-    "hash": "72d904fdc996d038823d0285e669dff69e31e9ab420ea4644bb0fc6eb8c71416",
+    "file": "assets/voices/ec29ca7d0d4e3b2da109aab697b1ca2e56835b5b5550e1da457da295fdc64922.mp3",
+    "hash": "ec29ca7d0d4e3b2da109aab697b1ca2e56835b5b5550e1da457da295fdc64922",
     "source": "act1/opening:5",
     "speaker": "manager",
     "text": "まぁよろしく。……ずいぶん自由に暮らしてるな。",
@@ -91,8 +91,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"部屋、少しは片づけたらどうだ？\",\"normal\",false]": {
-    "file": "assets/voices/a8a61ce9d3c5eef95a9d65db4afbed770b9cc9fe297fdeb5524bd0cc87e63f5c.mp3",
-    "hash": "a8a61ce9d3c5eef95a9d65db4afbed770b9cc9fe297fdeb5524bd0cc87e63f5c",
+    "file": "assets/voices/b272e30f6e5637773e29c8c515b52140edfec6b5aa1a23d8f14b4528c6c00eba.mp3",
+    "hash": "b272e30f6e5637773e29c8c515b52140edfec6b5aa1a23d8f14b4528c6c00eba",
     "source": "act1/opening:7",
     "speaker": "manager",
     "text": "部屋、少しは片づけたらどうだ？",
@@ -109,8 +109,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……何の準備だ？\",\"normal\",false]": {
-    "file": "assets/voices/c35167595d0263ca32e547cf8ed4e0b49ab17588c610eef8bed1ab2195b6e192.mp3",
-    "hash": "c35167595d0263ca32e547cf8ed4e0b49ab17588c610eef8bed1ab2195b6e192",
+    "file": "assets/voices/d6e64e1249d1dd5d677c1b6634ece1441651d7994b394d8b3d0090b36c30e587.mp3",
+    "hash": "d6e64e1249d1dd5d677c1b6634ece1441651d7994b394d8b3d0090b36c30e587",
     "source": "act1/opening:9",
     "speaker": "manager",
     "text": "……何の準備だ？",
@@ -127,8 +127,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……まぁ、家賃さえ払ってくれりゃいいか。\",\"normal\",false]": {
-    "file": "assets/voices/9f9c03217332f8a7f4a88833505b8c3694d0a142a99ee6d4a08998dcf2458163.mp3",
-    "hash": "9f9c03217332f8a7f4a88833505b8c3694d0a142a99ee6d4a08998dcf2458163",
+    "file": "assets/voices/4968b228677461d3dee14c7221d76ab2706662c5b2ff7a8e86678841f7955a4c.mp3",
+    "hash": "4968b228677461d3dee14c7221d76ab2706662c5b2ff7a8e86678841f7955a4c",
     "source": "act1/opening:12",
     "speaker": "manager",
     "text": "……まぁ、家賃さえ払ってくれりゃいいか。",
@@ -199,8 +199,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"なんだよ、今度は。\",\"normal\",false]": {
-    "file": "assets/voices/a13b35a855eb7332708bc8835b8f3957ecaf10675109aa7c6c6a00311109e9b7.mp3",
-    "hash": "a13b35a855eb7332708bc8835b8f3957ecaf10675109aa7c6c6a00311109e9b7",
+    "file": "assets/voices/0552ea23f62a0aa5660e53330c95b794bde3334da1a062ba3e29b0a3362849be.mp3",
+    "hash": "0552ea23f62a0aa5660e53330c95b794bde3334da1a062ba3e29b0a3362849be",
     "source": "act1/ash:2",
     "speaker": "manager",
     "text": "なんだよ、今度は。",
@@ -217,8 +217,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"捨てろよ。\",\"normal\",false]": {
-    "file": "assets/voices/c1595cb092ba97417ae6be1e73c7acbb771030de94e2e291ac404287372c6b8e.mp3",
-    "hash": "c1595cb092ba97417ae6be1e73c7acbb771030de94e2e291ac404287372c6b8e",
+    "file": "assets/voices/f63fb12e4e8d2181c02571528e7c0df27713afdd82883afa6d61342b6766f90b.mp3",
+    "hash": "f63fb12e4e8d2181c02571528e7c0df27713afdd82883afa6d61342b6766f90b",
     "source": "act1/ash:4",
     "speaker": "manager",
     "text": "捨てろよ。",
@@ -235,8 +235,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"だったらちゃんと火を消せよ！\",\"retort\",false]": {
-    "file": "assets/voices/6d2da846dc4fb9eaa58a9ce53315b127c34584a015ebc36f698c9bc372226566.mp3",
-    "hash": "6d2da846dc4fb9eaa58a9ce53315b127c34584a015ebc36f698c9bc372226566",
+    "file": "assets/voices/a4017f5933540f1cdad5bf915bc6915b6d5b64a834c80c2e90dd32e06464b0e2.mp3",
+    "hash": "a4017f5933540f1cdad5bf915bc6915b6d5b64a834c80c2e90dd32e06464b0e2",
     "source": "act1/ash:6",
     "speaker": "manager",
     "text": "だったらちゃんと火を消せよ！",
@@ -1384,6 +1384,1374 @@ export const VOICE_MANIFEST = {
     "speaker": "cat",
     "text": "じゃあ酒買ってきてニャ。",
     "performance": "moku-happy",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"なんで俺が決めるんだよ……。\",\"weary\",false]": {
+    "file": "assets/voices/bc92f4c5b694db15e16f3efb497a15d72fb58492cdf709bde7c92d9b6fe007ca.mp3",
+    "hash": "bc92f4c5b694db15e16f3efb497a15d72fb58492cdf709bde7c92d9b6fe007ca",
+    "source": "act1/ash:8",
+    "speaker": "manager",
+    "text": "なんで俺が決めるんだよ……。",
+    "performance": "weary",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"もうゴミと一緒に捨てちまえ！\",\"normal\",false]": {
+    "file": "assets/voices/f3bc58c438440ab0811d576c51db3a7f6e057f269d0c8ba82373cc0ad308392a.mp3",
+    "hash": "f3bc58c438440ab0811d576c51db3a7f6e057f269d0c8ba82373cc0ad308392a",
+    "source": "act1/ash/trash:0",
+    "speaker": "manager",
+    "text": "もうゴミと一緒に捨てちまえ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……は？ 何言ってんだ、お前。\",\"normal\",false]": {
+    "file": "assets/voices/da70093a706fcbca54b8c7af05fa07548488e985259ffcb0a4a730f625ba75b8.mp3",
+    "hash": "da70093a706fcbca54b8c7af05fa07548488e985259ffcb0a4a730f625ba75b8",
+    "source": "act1/ash/trash:6",
+    "speaker": "manager",
+    "text": "……は？ 何言ってんだ、お前。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"煙……？\",\"normal\",false]": {
+    "file": "assets/voices/ed2e0d8ab89d25fa533407b51edd0570cb20238cb61b0993517e87b6a394648a.mp3",
+    "hash": "ed2e0d8ab89d25fa533407b51edd0570cb20238cb61b0993517e87b6a394648a",
+    "source": "act1/ash/trash:8",
+    "speaker": "manager",
+    "text": "煙……？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……って、おい！！ 燃えてんじゃねぇか！！\",\"normal\",false]": {
+    "file": "assets/voices/f699b3ad00992d9ee1422a6da410619628ea13cc00a41dc0894b678539b3ded4.mp3",
+    "hash": "f699b3ad00992d9ee1422a6da410619628ea13cc00a41dc0894b678539b3ded4",
+    "source": "act1/ash/trash:9",
+    "speaker": "manager",
+    "text": "……って、おい！！ 燃えてんじゃねぇか！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"くそっ、もう無理だ！ モク、逃げるぞ！！\",\"normal\",false]": {
+    "file": "assets/voices/7f4a68cc738e62620874c326104e473aac89ad6d62ec266c153d91095cf19e96.mp3",
+    "hash": "7f4a68cc738e62620874c326104e473aac89ad6d62ec266c153d91095cf19e96",
+    "source": "act1/ash/trash:12",
+    "speaker": "manager",
+    "text": "くそっ、もう無理だ！ モク、逃げるぞ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"テレビなんかどうでもいい！！ 命が先だろ！！\",\"normal\",false]": {
+    "file": "assets/voices/bead20bc3dec5ba0dfd655251bf846f56ce29c37aa8207bf1d367d394570c927.mp3",
+    "hash": "bead20bc3dec5ba0dfd655251bf846f56ce29c37aa8207bf1d367d394570c927",
+    "source": "act1/ash/trash:14",
+    "speaker": "manager",
+    "text": "テレビなんかどうでもいい！！ 命が先だろ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"なんだよ！ 今度は！！\",\"normal\",false]": {
+    "file": "assets/voices/d38254631e1e006cf3020f0aa01c434dcfe49b88a714e20a330d89e3301293eb.mp3",
+    "hash": "d38254631e1e006cf3020f0aa01c434dcfe49b88a714e20a330d89e3301293eb",
+    "source": "act1/ash/trash:17",
+    "speaker": "manager",
+    "text": "なんだよ！ 今度は！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"だから今日やれって言ってんだろぉぉ！！\",\"normal\",false]": {
+    "file": "assets/voices/85ac3846c62f45540446868073b7ca9cd454bf2042c3a1b9abe6e275254f12c2.mp3",
+    "hash": "85ac3846c62f45540446868073b7ca9cd454bf2042c3a1b9abe6e275254f12c2",
+    "source": "act1/ash/trash:19",
+    "speaker": "manager",
+    "text": "だから今日やれって言ってんだろぉぉ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ベランダからポイしとけ！\",\"normal\",false]": {
+    "file": "assets/voices/ea4058c69a9f1be32d13bdb8be88b306f3a39351eabbc1314bee88e4bcf5d9b1.mp3",
+    "hash": "ea4058c69a9f1be32d13bdb8be88b306f3a39351eabbc1314bee88e4bcf5d9b1",
+    "source": "act1/ash/balcony:0",
+    "speaker": "manager",
+    "text": "ベランダからポイしとけ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……は！？ おいおいおい！ 下、燃えてんじゃねぇか！！\",\"normal\",false]": {
+    "file": "assets/voices/31d49fb1d9550f1524914cd8358e4f4ef889dd4ed02bc356d3ef43ea1db56cfc.mp3",
+    "hash": "31d49fb1d9550f1524914cd8358e4f4ef889dd4ed02bc356d3ef43ea1db56cfc",
+    "source": "act1/ash/balcony:7",
+    "speaker": "manager",
+    "text": "……は！？ おいおいおい！ 下、燃えてんじゃねぇか！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"キャンプじゃねぇよ！！ お前、まだ火ついてたのか！？\",\"normal\",false]": {
+    "file": "assets/voices/a130a7f450783ba0da7af4cc911262b734866a2515b6b6587f11cb0ecb8b9ec7.mp3",
+    "hash": "a130a7f450783ba0da7af4cc911262b734866a2515b6b6587f11cb0ecb8b9ec7",
+    "source": "act1/ash/balcony:9",
+    "speaker": "manager",
+    "text": "キャンプじゃねぇよ！！ お前、まだ火ついてたのか！？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……あ。\",\"normal\",false]": {
+    "file": "assets/voices/7241553cdd53834f98e57b19c3f9217f4db22a02ad1e1d4b7a099dcd9b0eff58.mp3",
+    "hash": "7241553cdd53834f98e57b19c3f9217f4db22a02ad1e1d4b7a099dcd9b0eff58",
+    "source": "act1/ash/freezer:14",
+    "speaker": "manager",
+    "text": "……あ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……待てよ。外に捨てろって言ったの、俺じゃねぇか。\",\"inner\",false]": {
+    "file": "assets/voices/ec49142d4c50c2cd7403a8c1369f8e71c6ce3acfe142d0711977eb64796babbc.mp3",
+    "hash": "ec49142d4c50c2cd7403a8c1369f8e71c6ce3acfe142d0711977eb64796babbc",
+    "source": "act1/ash/balcony:12",
+    "speaker": "manager",
+    "text": "……待てよ。外に捨てろって言ったの、俺じゃねぇか。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……くそっ。とにかく逃げるぞ、モク！\",\"normal\",false]": {
+    "file": "assets/voices/bab9e1cd6f53112fda0b02ffd77da1742902a6ac387d9868325c12ded07b0063.mp3",
+    "hash": "bab9e1cd6f53112fda0b02ffd77da1742902a6ac387d9868325c12ded07b0063",
+    "source": "act1/ash/balcony:14",
+    "speaker": "manager",
+    "text": "……くそっ。とにかく逃げるぞ、モク！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"いいから来い！ 今は命が先だ！！\",\"normal\",false]": {
+    "file": "assets/voices/1dfba2906dbb59c30fc0eceaf5ae9c7b05b3da195e89242f975a94b92a970b98.mp3",
+    "hash": "1dfba2906dbb59c30fc0eceaf5ae9c7b05b3da195e89242f975a94b92a970b98",
+    "source": "act1/ash/balcony:16",
+    "speaker": "manager",
+    "text": "いいから来い！ 今は命が先だ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"何やってんだ、俺……。こんなことになるって、少し考えりゃ分かっただろ……。\",\"inner\",false]": {
+    "file": "assets/voices/3a9e519d6c1cf1bd5f199a0d173d54e168803e2760ed2e6f5b5bcd8ec2786967.mp3",
+    "hash": "3a9e519d6c1cf1bd5f199a0d173d54e168803e2760ed2e6f5b5bcd8ec2786967",
+    "source": "act1/ash/balcony:18",
+    "speaker": "manager",
+    "text": "何やってんだ、俺……。こんなことになるって、少し考えりゃ分かっただろ……。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……。\",\"normal\",false]": {
+    "file": "assets/voices/ad70469508bd2e54100162d7aecd51ad21786b7dafdcbbc5b36bf1b4b72d37af.mp3",
+    "hash": "ad70469508bd2e54100162d7aecd51ad21786b7dafdcbbc5b36bf1b4b72d37af",
+    "source": "act1/ash/balcony:21",
+    "speaker": "manager",
+    "text": "……。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！\",\"normal\",false]": {
+    "file": "assets/voices/24f305628118faf5d8ed6ead1b6c65b97f4fc5e477c5f5b1957e0cdf24339081.mp3",
+    "hash": "24f305628118faf5d8ed6ead1b6c65b97f4fc5e477c5f5b1957e0cdf24339081",
+    "source": "act1/ash/freezer:0",
+    "speaker": "manager",
+    "text": "灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"チャーハンより先に冷やせ！ 緊急事態だ！\",\"normal\",false]": {
+    "file": "assets/voices/30439d26d78bd09c1ce4d43e2192f1243f6a82bfb5c65fa788c19cd685b72f75.mp3",
+    "hash": "30439d26d78bd09c1ce4d43e2192f1243f6a82bfb5c65fa788c19cd685b72f75",
+    "source": "act1/ash/freezer:2",
+    "speaker": "manager",
+    "text": "チャーハンより先に冷やせ！ 緊急事態だ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"じゃあ中のもん出せばいいだろ！\",\"normal\",false]": {
+    "file": "assets/voices/2f5def8a7faabc0fbbbecdedb1fa662b1415082a9cdcd844c63e7734c03c0a1d.mp3",
+    "hash": "2f5def8a7faabc0fbbbecdedb1fa662b1415082a9cdcd844c63e7734c03c0a1d",
+    "source": "act1/ash/freezer:4",
+    "speaker": "manager",
+    "text": "じゃあ中のもん出せばいいだろ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……何やってんだ？\",\"normal\",false]": {
+    "file": "assets/voices/80df7278174eea338a68bb0ceb570cd2f13968f6e9f482341d2e3138e206954d.mp3",
+    "hash": "80df7278174eea338a68bb0ceb570cd2f13968f6e9f482341d2e3138e206954d",
+    "source": "act1/ash/freezer:8",
+    "speaker": "manager",
+    "text": "……何やってんだ？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"チャーハンの心配してる場合かよ！ 火！ 火がついてんぞ！！\",\"normal\",false]": {
+    "file": "assets/voices/8a9156bcc2c4c5dace27cc40bbeb34e6067addadc0bc2d4f5d616a991dac7677.mp3",
+    "hash": "8a9156bcc2c4c5dace27cc40bbeb34e6067addadc0bc2d4f5d616a991dac7677",
+    "source": "act1/ash/freezer:10",
+    "speaker": "manager",
+    "text": "チャーハンの心配してる場合かよ！ 火！ 火がついてんぞ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"とにかく水！ 早く持ってこい！\",\"normal\",false]": {
+    "file": "assets/voices/9a5f4baf3d3fbc3106d38fc14a24434bef237ff475b47b542173f81e48a6823e.mp3",
+    "hash": "9a5f4baf3d3fbc3106d38fc14a24434bef237ff475b47b542173f81e48a6823e",
+    "source": "act1/ash/freezer:12",
+    "speaker": "manager",
+    "text": "とにかく水！ 早く持ってこい！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……確かに。なんで冷凍庫なんて言ったんだ、俺。\",\"inner\",false]": {
+    "file": "assets/voices/92748f35bc6e5d329118943f51e88af76fb460c401f0269df2f0cc7bdf275e74.mp3",
+    "hash": "92748f35bc6e5d329118943f51e88af76fb460c401f0269df2f0cc7bdf275e74",
+    "source": "act1/ash/freezer:15",
+    "speaker": "manager",
+    "text": "……確かに。なんで冷凍庫なんて言ったんだ、俺。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"くそっ、もう間に合わねぇ！ モク、逃げるぞ！\",\"normal\",false]": {
+    "file": "assets/voices/d1f6c5d6dce3443a8f1799f945f370c523e43eaec3790e4fabe973ba711a3167.mp3",
+    "hash": "d1f6c5d6dce3443a8f1799f945f370c523e43eaec3790e4fabe973ba711a3167",
+    "source": "act1/ash/freezer:17",
+    "speaker": "manager",
+    "text": "くそっ、もう間に合わねぇ！ モク、逃げるぞ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"もうチャーハンは諦めろ！ 命の方が大事だろ！！\",\"normal\",false]": {
+    "file": "assets/voices/38173a5a09d076c1d56ff43a49e8f908dcd469031fb07e15be93ca13828cd513.mp3",
+    "hash": "38173a5a09d076c1d56ff43a49e8f908dcd469031fb07e15be93ca13828cd513",
+    "source": "act1/ash/freezer:19",
+    "speaker": "manager",
+    "text": "もうチャーハンは諦めろ！ 命の方が大事だろ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……モクは言われたとおりにしただけだ。俺がちゃんと考えてりゃ、こんなことには……。\",\"inner\",false]": {
+    "file": "assets/voices/17cc6a4835d9652c1d87af4d880f01f07c0987a79707306ef5d0f966345d5f8f.mp3",
+    "hash": "17cc6a4835d9652c1d87af4d880f01f07c0987a79707306ef5d0f966345d5f8f",
+    "source": "act1/ash/freezer:21",
+    "speaker": "manager",
+    "text": "……モクは言われたとおりにしただけだ。俺がちゃんと考えてりゃ、こんなことには……。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……なんだ？\",\"normal\",false]": {
+    "file": "assets/voices/071e43ba92ff69f9c000a65f0df756c40144a58517b6181b6d06126a25774cb2.mp3",
+    "hash": "071e43ba92ff69f9c000a65f0df756c40144a58517b6181b6d06126a25774cb2",
+    "source": "act1/ash/freezer:23",
+    "speaker": "manager",
+    "text": "……なんだ？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……帰る場所もなくなりそうなんだぞ。\",\"normal\",false]": {
+    "file": "assets/voices/7422ba381ffa196bf7ec8b014f4f8deccd46592ebf7d0d9d402da4b8e6e2b722.mp3",
+    "hash": "7422ba381ffa196bf7ec8b014f4f8deccd46592ebf7d0d9d402da4b8e6e2b722",
+    "source": "act1/ash/freezer:25",
+    "speaker": "manager",
+    "text": "……帰る場所もなくなりそうなんだぞ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"灰皿ごと水に沈めろ！\",\"normal\",false]": {
+    "file": "assets/voices/c74cd6a8db0df469a0f71122f571ca2ed7de398671faa0f79a3580017884b689.mp3",
+    "hash": "c74cd6a8db0df469a0f71122f571ca2ed7de398671faa0f79a3580017884b689",
+    "source": "act1/ash/water:0",
+    "speaker": "manager",
+    "text": "灰皿ごと水に沈めろ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"火を消すんだよ！\",\"normal\",false]": {
+    "file": "assets/voices/244aafc2a473397185a79a4da949a0244b823e2618b757c66a1ef4268bfdcd18.mp3",
+    "hash": "244aafc2a473397185a79a4da949a0244b823e2618b757c66a1ef4268bfdcd18",
+    "source": "act1/ash/water:2",
+    "speaker": "manager",
+    "text": "火を消すんだよ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"最初からやれよ！\",\"normal\",false]": {
+    "file": "assets/voices/e7b66726d585e52e9e27c818a72499e8a370e46fdc17d45d5452f8cca32bb71e.mp3",
+    "hash": "e7b66726d585e52e9e27c818a72499e8a370e46fdc17d45d5452f8cca32bb71e",
+    "source": "act1/ash/water:6",
+    "speaker": "manager",
+    "text": "最初からやれよ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"こんなことで毎回呼ぶなよ……。\",\"normal\",false]": {
+    "file": "assets/voices/85b974086b44b491645aaa7f17377904d049e3fd93c884645b8b38fb2de81843.mp3",
+    "hash": "85b974086b44b491645aaa7f17377904d049e3fd93c884645b8b38fb2de81843",
+    "source": "act1/ash/water:8",
+    "speaker": "manager",
+    "text": "こんなことで毎回呼ぶなよ……。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……それはそうだけどよ。\",\"normal\",false]": {
+    "file": "assets/voices/51f68874edb05fc3e6a89aba2102c695ec8534e6b168f0689c335d370bc8a3fc.mp3",
+    "hash": "51f68874edb05fc3e6a89aba2102c695ec8534e6b168f0689c335d370bc8a3fc",
+    "source": "act1/ash/water:10",
+    "speaker": "manager",
+    "text": "……それはそうだけどよ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"なんかうまいこと使われてる気がする……。\",\"normal\",false]": {
+    "file": "assets/voices/97bc5279a53bb0407ba8517760605388a4c1561682c512f536dd1b3cae389fbc.mp3",
+    "hash": "97bc5279a53bb0407ba8517760605388a4c1561682c512f536dd1b3cae389fbc",
+    "source": "act1/ash/water:12",
+    "speaker": "manager",
+    "text": "なんかうまいこと使われてる気がする……。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"今日やれ！！\",\"normal\",false]": {
+    "file": "assets/voices/bebd4297851154ed252383736b0fb5d8e07df1bb54fc13bf33ea2704561895dd.mp3",
+    "hash": "bebd4297851154ed252383736b0fb5d8e07df1bb54fc13bf33ea2704561895dd",
+    "source": "act1/ash/water:14",
+    "speaker": "manager",
+    "text": "今日やれ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"うわっ、なんだその顔！ ゾンビかよ！\",\"normal\",false]": {
+    "file": "assets/voices/76895660bccf0ad333c5e585cec3f43a047dfc31a9a215d8041b9c98d3052c41.mp3",
+    "hash": "76895660bccf0ad333c5e585cec3f43a047dfc31a9a215d8041b9c98d3052c41",
+    "source": "act1/dinner:2",
+    "speaker": "manager",
+    "text": "うわっ、なんだその顔！ ゾンビかよ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ちょっと？ 何時まで起きてたんだよ。\",\"normal\",false]": {
+    "file": "assets/voices/8796ed4120802d1ece7c035ae9c7cbdb488af71f20d18c01171c4aee0b8ee7e7.mp3",
+    "hash": "8796ed4120802d1ece7c035ae9c7cbdb488af71f20d18c01171c4aee0b8ee7e7",
+    "source": "act1/dinner:4",
+    "speaker": "manager",
+    "text": "ちょっと？ 何時まで起きてたんだよ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"それもう夜更かしじゃねぇだろ！ 朝まで何やってたんだ！？\",\"normal\",false]": {
+    "file": "assets/voices/3e20fab5b55d651250c25dba9e13238c3e90b4a904b951015631e50d3c8b498a.mp3",
+    "hash": "3e20fab5b55d651250c25dba9e13238c3e90b4a904b951015631e50d3c8b498a",
+    "source": "act1/dinner:6",
+    "speaker": "manager",
+    "text": "それもう夜更かしじゃねぇだろ！ 朝まで何やってたんだ！？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"何本見たんだよ……。\",\"normal\",false]": {
+    "file": "assets/voices/4bd7e5f204a5e069ebb4ae6d5dfeb9db4cbeaa6b09a0b808a2af9e1c24a1229e.mp3",
+    "hash": "4bd7e5f204a5e069ebb4ae6d5dfeb9db4cbeaa6b09a0b808a2af9e1c24a1229e",
+    "source": "act1/dinner:8",
+    "speaker": "manager",
+    "text": "何本見たんだよ……。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"そこまで見たらもう修行だろ！！\",\"normal\",false]": {
+    "file": "assets/voices/887d3ea9a0616837ac81d37ed21d9b559de0ef1df5ffde6bdd01632d5a168589.mp3",
+    "hash": "887d3ea9a0616837ac81d37ed21d9b559de0ef1df5ffde6bdd01632d5a168589",
+    "source": "act1/dinner:10",
+    "speaker": "manager",
+    "text": "そこまで見たらもう修行だろ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"おい待て。その状態で火使う気か！？\",\"normal\",false]": {
+    "file": "assets/voices/afbd0314260ec66f29ed26829c20d61142f84f3e42103c5689c2736912fbe1b1.mp3",
+    "hash": "afbd0314260ec66f29ed26829c20d61142f84f3e42103c5689c2736912fbe1b1",
+    "source": "act1/dinner:13",
+    "speaker": "manager",
+    "text": "おい待て。その状態で火使う気か！？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"目つぶるな！！ 寝るだろ！！\",\"normal\",false]": {
+    "file": "assets/voices/a216cb8a756444d1e5bff976c8663a267b1bf03ebe47be0a399803b0aecfb977.mp3",
+    "hash": "a216cb8a756444d1e5bff976c8663a267b1bf03ebe47be0a399803b0aecfb977",
+    "source": "act1/dinner:15",
+    "speaker": "manager",
+    "text": "目つぶるな！！ 寝るだろ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"そういう問題じゃねぇ！！\",\"normal\",false]": {
+    "file": "assets/voices/de330a27d4177e074c28c00e99652ff931b474ac0a765f6ffd1d002bf6a97c39.mp3",
+    "hash": "de330a27d4177e074c28c00e99652ff931b474ac0a765f6ffd1d002bf6a97c39",
+    "source": "act1/dinner:17",
+    "speaker": "manager",
+    "text": "そういう問題じゃねぇ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"誰のせいだよ！！\",\"retort\",false]": {
+    "file": "assets/voices/d537fbfaa8d790c53bf766d698af94c7e165331321c54cc41ad32d2805f3b565.mp3",
+    "hash": "d537fbfaa8d790c53bf766d698af94c7e165331321c54cc41ad32d2805f3b565",
+    "source": "act1/dinner:19",
+    "speaker": "manager",
+    "text": "誰のせいだよ！！",
+    "performance": "retort",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"はぁ……結局、俺が決めるのかよ……。\",\"weary\",false]": {
+    "file": "assets/voices/f72e6dce5167abc889d3d92c60db9cdcf3cce7e123e8cfbb91b9320cba4606a7.mp3",
+    "hash": "f72e6dce5167abc889d3d92c60db9cdcf3cce7e123e8cfbb91b9320cba4606a7",
+    "source": "act1/dinner:21",
+    "speaker": "manager",
+    "text": "はぁ……結局、俺が決めるのかよ……。",
+    "performance": "weary",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"先にタバコでも吸って落ち着け！\",\"normal\",false]": {
+    "file": "assets/voices/528ef892859cec05d8d31d70cd3af9baef17beb0a72d4c8c4f9441bf62c0721d.mp3",
+    "hash": "528ef892859cec05d8d31d70cd3af9baef17beb0a72d4c8c4f9441bf62c0721d",
+    "source": "act1/dinner/coronation:0",
+    "speaker": "manager",
+    "text": "先にタバコでも吸って落ち着け！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ただしコンロには触るなよ！ まずその眠気をどうにかしろ！\",\"normal\",false]": {
+    "file": "assets/voices/5f901465b3433f9fce5f0da49a2f88c617a4abadf66c55370302d9b251d3ec21.mp3",
+    "hash": "5f901465b3433f9fce5f0da49a2f88c617a4abadf66c55370302d9b251d3ec21",
+    "source": "act1/dinner/coronation:2",
+    "speaker": "manager",
+    "text": "ただしコンロには触るなよ！ まずその眠気をどうにかしろ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……おい、目が閉じかけてるぞ。\",\"normal\",false]": {
+    "file": "assets/voices/964bce19730bf9416876bd3fbcc35a8e353a087872a4bc8f33c900006df73057.mp3",
+    "hash": "964bce19730bf9416876bd3fbcc35a8e353a087872a4bc8f33c900006df73057",
+    "source": "act1/dinner/coronation:6",
+    "speaker": "manager",
+    "text": "……おい、目が閉じかけてるぞ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"だからタバコ持ったまま寝るなって……。\",\"normal\",false]": {
+    "file": "assets/voices/881ff05a0312146fcc2a8bd74717ad6bf44b80cfba616e20e45fcfb51990f115.mp3",
+    "hash": "881ff05a0312146fcc2a8bd74717ad6bf44b80cfba616e20e45fcfb51990f115",
+    "source": "act1/dinner/coronation:8",
+    "speaker": "manager",
+    "text": "だからタバコ持ったまま寝るなって……。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"寝てんじゃねぇか！！\",\"normal\",false]": {
+    "file": "assets/voices/91ad2684c5628f634b7dd5a792fce7a7dcd083ac6bb8eca6b4d2dad437776eb3.mp3",
+    "hash": "91ad2684c5628f634b7dd5a792fce7a7dcd083ac6bb8eca6b4d2dad437776eb3",
+    "source": "act1/dinner/coronation:10",
+    "speaker": "manager",
+    "text": "寝てんじゃねぇか！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……っ！！ 危ねぇ！！\",\"normal\",false]": {
+    "file": "assets/voices/5b9b18d23e552416216f9e0088c78ac22c8cf9a90e74f5dc51dcf32d23ee8ad5.mp3",
+    "hash": "5b9b18d23e552416216f9e0088c78ac22c8cf9a90e74f5dc51dcf32d23ee8ad5",
+    "source": "act1/dinner/coronation:12",
+    "speaker": "manager",
+    "text": "……っ！！ 危ねぇ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"あっっっっちぃぃぃぃ！！！！\",\"normal\",false]": {
+    "file": "assets/voices/ed9d4deec0d1d56f6ebd20e9dfcb36d2e3a1cda15f720aadccc4301e9531f729.mp3",
+    "hash": "ed9d4deec0d1d56f6ebd20e9dfcb36d2e3a1cda15f720aadccc4301e9531f729",
+    "source": "act1/dinner/coronation:14",
+    "speaker": "manager",
+    "text": "あっっっっちぃぃぃぃ！！！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"何してんだこのバカ猫！！ 火事になるだろうがぁぁ！！\",\"normal\",false]": {
+    "file": "assets/voices/94e4b293775dbefc124aa74f141f6c0fc958bca2032758790e70660e15d9de1e.mp3",
+    "hash": "94e4b293775dbefc124aa74f141f6c0fc958bca2032758790e70660e15d9de1e",
+    "source": "act1/dinner/coronation:15",
+    "speaker": "manager",
+    "text": "何してんだこのバカ猫！！ 火事になるだろうがぁぁ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"誰のせいで騒いでると思ってんだよ！！\",\"normal\",false]": {
+    "file": "assets/voices/e678e78a00eae24f6014a69df9791323586d2baa0eaa41432216854b5ea9e5bf.mp3",
+    "hash": "e678e78a00eae24f6014a69df9791323586d2baa0eaa41432216854b5ea9e5bf",
+    "source": "act1/dinner/coronation:18",
+    "speaker": "manager",
+    "text": "誰のせいで騒いでると思ってんだよ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"五分で足りるか！！ 今日はもう寝てろ！！ 料理は禁止だ！！\",\"normal\",false]": {
+    "file": "assets/voices/a31a07abb48be601b0263b8c6245cf67e04d82a0de71b77aef58101c40b16e95.mp3",
+    "hash": "a31a07abb48be601b0263b8c6245cf67e04d82a0de71b77aef58101c40b16e95",
+    "source": "act1/dinner/coronation:20",
+    "speaker": "manager",
+    "text": "五分で足りるか！！ 今日はもう寝てろ！！ 料理は禁止だ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ったく。手のかかる猫だな。\",\"normal\",false]": {
+    "file": "assets/voices/e49efe927dae4fca7fae5b104aed80c53cc212d4fa52e5bbdc4bb890bf1da2b1.mp3",
+    "hash": "e49efe927dae4fca7fae5b104aed80c53cc212d4fa52e5bbdc4bb890bf1da2b1",
+    "source": "act1/dinner/coronation:23",
+    "speaker": "manager",
+    "text": "……ったく。手のかかる猫だな。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……腹減ってんのは俺もなんだけどな。\",\"normal\",false]": {
+    "file": "assets/voices/4287f607f3b4ef5fadd3f83029a9521e1199cb278aaa1540a9909be6bf3fff81.mp3",
+    "hash": "4287f607f3b4ef5fadd3f83029a9521e1199cb278aaa1540a9909be6bf3fff81",
+    "source": "act1/dinner/coronation:25",
+    "speaker": "manager",
+    "text": "……腹減ってんのは俺もなんだけどな。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"俺が見張ってるから好きに作れ！\",\"normal\",false]": {
+    "file": "assets/voices/bdd74a34bfcaece04adb86ea1502a9b4dd1e88ff82c755d8afab1aa0a290b4e5.mp3",
+    "hash": "bdd74a34bfcaece04adb86ea1502a9b4dd1e88ff82c755d8afab1aa0a290b4e5",
+    "source": "act1/dinner/turbo:0",
+    "speaker": "manager",
+    "text": "俺が見張ってるから好きに作れ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ただし、寝そうになったら即中止だからな！\",\"normal\",false]": {
+    "file": "assets/voices/075cb203b85f6e11e141d413ca4f75154971bd358fada2506474722e4adc6914.mp3",
+    "hash": "075cb203b85f6e11e141d413ca4f75154971bd358fada2506474722e4adc6914",
+    "source": "act1/dinner/turbo:2",
+    "speaker": "manager",
+    "text": "ただし、寝そうになったら即中止だからな！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"お前、冷凍チャーハン持ってただろ。あれでいいじゃねぇか。\",\"normal\",false]": {
+    "file": "assets/voices/12845014bc22dd12f8ccd587e67323549915a1c9f4b878b6a7240c3555800d94.mp3",
+    "hash": "12845014bc22dd12f8ccd587e67323549915a1c9f4b878b6a7240c3555800d94",
+    "source": "act1/dinner/turbo:6",
+    "speaker": "manager",
+    "text": "お前、冷凍チャーハン持ってただろ。あれでいいじゃねぇか。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"非常事態みてぇな顔してんだろうが！\",\"normal\",false]": {
+    "file": "assets/voices/ea9706ee8b9335f7fae347c8b288579d6f3ee3cf8eee164136bde0db619d4ad3.mp3",
+    "hash": "ea9706ee8b9335f7fae347c8b288579d6f3ee3cf8eee164136bde0db619d4ad3",
+    "source": "act1/dinner/turbo:8",
+    "speaker": "manager",
+    "text": "非常事態みてぇな顔してんだろうが！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"今度はなんだよ。\",\"normal\",false]": {
+    "file": "assets/voices/08d87d9a604c53788657a0af327e4c9a16c66f072f07613c8e0f1f3ba69f43be.mp3",
+    "hash": "08d87d9a604c53788657a0af327e4c9a16c66f072f07613c8e0f1f3ba69f43be",
+    "source": "act1/dinner/turbo:10",
+    "speaker": "manager",
+    "text": "今度はなんだよ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"自分で取れよ……。ったく。\",\"normal\",false]": {
+    "file": "assets/voices/159b7d3d72aee7814a23cedbeab9b37f6c0708a5ccae5c36f69345642c8f7297.mp3",
+    "hash": "159b7d3d72aee7814a23cedbeab9b37f6c0708a5ccae5c36f69345642c8f7297",
+    "source": "act1/dinner/turbo:12",
+    "speaker": "manager",
+    "text": "自分で取れよ……。ったく。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"おい、麦茶……って、寝てんじゃねぇか！！\",\"normal\",false]": {
+    "file": "assets/voices/9d18dc74ca6c844120f6c7af11e810b22ab43b8a7df43eb92f05ecf9e7c38949.mp3",
+    "hash": "9d18dc74ca6c844120f6c7af11e810b22ab43b8a7df43eb92f05ecf9e7c38949",
+    "source": "act1/dinner/turbo:16",
+    "speaker": "manager",
+    "text": "おい、麦茶……って、寝てんじゃねぇか！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"うわっ！？ おい！！ 火！ 火が出てんぞ！！\",\"normal\",false]": {
+    "file": "assets/voices/b605d5685e628673b6533d4f3b128ac35e1979642da74510995a476636214916.mp3",
+    "hash": "b605d5685e628673b6533d4f3b128ac35e1979642da74510995a476636214916",
+    "source": "act1/dinner/turbo:18",
+    "speaker": "manager",
+    "text": "うわっ！？ おい！！ 火！ 火が出てんぞ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"できてねぇよ！！ 部屋が燃えてんだよ！！\",\"normal\",false]": {
+    "file": "assets/voices/4795ff8e9e1f8bd91d17c1245e04ea075f75a4e39cf384e08fbac000ee3472da.mp3",
+    "hash": "4795ff8e9e1f8bd91d17c1245e04ea075f75a4e39cf384e08fbac000ee3472da",
+    "source": "act1/dinner/turbo:20",
+    "speaker": "manager",
+    "text": "できてねぇよ！！ 部屋が燃えてんだよ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"くそっ……！ 見張ってるって言ったのに、何やってんだ俺！！\",\"inner\",false]": {
+    "file": "assets/voices/84f8688add424e980e06ed419b6370867dd9b37b8e7a0a98e70ee86d3fcb75db.mp3",
+    "hash": "84f8688add424e980e06ed419b6370867dd9b37b8e7a0a98e70ee86d3fcb75db",
+    "source": "act1/dinner/turbo:22",
+    "speaker": "manager",
+    "text": "くそっ……！ 見張ってるって言ったのに、何やってんだ俺！！",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"モク！！ もういい、逃げるぞ！！\",\"normal\",false]": {
+    "file": "assets/voices/b78732d440997b80f1434dcf126c16322c7fb3f1f63384d395ed24ac94805ec0.mp3",
+    "hash": "b78732d440997b80f1434dcf126c16322c7fb3f1f63384d395ed24ac94805ec0",
+    "source": "act1/dinner/turbo:23",
+    "speaker": "manager",
+    "text": "モク！！ もういい、逃げるぞ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"こんな時に飯の心配すんな！！\",\"normal\",false]": {
+    "file": "assets/voices/7754334cf198ddaf3a50362b140cd1fbf87332e8710a398bafc8ab1066181280.mp3",
+    "hash": "7754334cf198ddaf3a50362b140cd1fbf87332e8710a398bafc8ab1066181280",
+    "source": "act1/dinner/turbo:25",
+    "speaker": "manager",
+    "text": "こんな時に飯の心配すんな！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"腹減ってんなら俺をパシれ！\",\"normal\",false]": {
+    "file": "assets/voices/637e19d8617218ae7f3351df73703c9b6a99a60fb4080e9dc5f694c829b396be.mp3",
+    "hash": "637e19d8617218ae7f3351df73703c9b6a99a60fb4080e9dc5f694c829b396be",
+    "source": "act1/dinner/show:0",
+    "speaker": "manager",
+    "text": "腹減ってんなら俺をパシれ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"お前にコンロ使わせるよりマシだろ。何食いたい？\",\"normal\",false]": {
+    "file": "assets/voices/7b523eedd80e53356a059a807986379e99a626a1dd32b82fbe2078c7bfb9d2f5.mp3",
+    "hash": "7b523eedd80e53356a059a807986379e99a626a1dd32b82fbe2078c7bfb9d2f5",
+    "source": "act1/dinner/show:2",
+    "speaker": "manager",
+    "text": "お前にコンロ使わせるよりマシだろ。何食いたい？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"遠慮って言葉、知ってるか？\",\"normal\",false]": {
+    "file": "assets/voices/fa22f6ea53e951f7f649427537a97fe9890bf407834c787693373a425ea93cdc.mp3",
+    "hash": "fa22f6ea53e951f7f649427537a97fe9890bf407834c787693373a425ea93cdc",
+    "source": "act1/dinner/show:4",
+    "speaker": "manager",
+    "text": "遠慮って言葉、知ってるか？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ったく。絶対に火使うなよ！ 弁当買ってくるから！\",\"normal\",false]": {
+    "file": "assets/voices/6a65bb1c5ed9b7241f7acf238b4e9bebdac272a2561cb774b614f0e442b97ebc.mp3",
+    "hash": "6a65bb1c5ed9b7241f7acf238b4e9bebdac272a2561cb774b614f0e442b97ebc",
+    "source": "act1/dinner/show:6",
+    "speaker": "manager",
+    "text": "……ったく。絶対に火使うなよ！ 弁当買ってくるから！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ん？ なんだ、あの煙……。\",\"normal\",false]": {
+    "file": "assets/voices/26d649920d4e0db523de397bdadc5d9270d8976c9040fb794db2b5029ded208c.mp3",
+    "hash": "26d649920d4e0db523de397bdadc5d9270d8976c9040fb794db2b5029ded208c",
+    "source": "act1/dinner/show:19",
+    "speaker": "manager",
+    "text": "……ん？ なんだ、あの煙……。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……って、おい！！ 俺のアパートじゃねぇか！！\",\"normal\",false]": {
+    "file": "assets/voices/1f65a763aac71cc99984d68fadca6045bf756bc3954e2bbbb33c0748f0f390db.mp3",
+    "hash": "1f65a763aac71cc99984d68fadca6045bf756bc3954e2bbbb33c0748f0f390db",
+    "source": "act1/dinner/show:20",
+    "speaker": "manager",
+    "text": "……って、おい！！ 俺のアパートじゃねぇか！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"モク！！ 起きろ！！ 火事だぞ！！\",\"normal\",false]": {
+    "file": "assets/voices/1a2c0f66e30ea6da658b1dcd885d30144a31a650013e57b29e6ba3433694ffa6.mp3",
+    "hash": "1a2c0f66e30ea6da658b1dcd885d30144a31a650013e57b29e6ba3433694ffa6",
+    "source": "act1/dinner/show:22",
+    "speaker": "manager",
+    "text": "モク！！ 起きろ！！ 火事だぞ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"買い物すら行けてねぇよ！！ お前、火使ったな！？\",\"normal\",false]": {
+    "file": "assets/voices/8ddd8b8f1f114aee70cf18b4558e578ce68143186ea4f04ac3c6456fac8afcd1.mp3",
+    "hash": "8ddd8b8f1f114aee70cf18b4558e578ce68143186ea4f04ac3c6456fac8afcd1",
+    "source": "act1/dinner/show:24",
+    "speaker": "manager",
+    "text": "買い物すら行けてねぇよ！！ お前、火使ったな！？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"あれだけ使うなって言っただろうが！！\",\"normal\",false]": {
+    "file": "assets/voices/afc17642be1f554e5fde90231fd47c4ddde37a0ba4356a53a09a1bbd3e5796c9.mp3",
+    "hash": "afc17642be1f554e5fde90231fd47c4ddde37a0ba4356a53a09a1bbd3e5796c9",
+    "source": "act1/dinner/show:26",
+    "speaker": "manager",
+    "text": "あれだけ使うなって言っただろうが！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"アパート燃やしといて弁当の心配かよ！！\",\"normal\",false]": {
+    "file": "assets/voices/16622ffb74333345644a1e8e6906534ed9b755ecb10d0d283cde329c51daaebf.mp3",
+    "hash": "16622ffb74333345644a1e8e6906534ed9b755ecb10d0d283cde329c51daaebf",
+    "source": "act1/dinner/show:29",
+    "speaker": "manager",
+    "text": "アパート燃やしといて弁当の心配かよ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"くそっ……！ モク！ 走れ！！ 早く！！\",\"normal\",false]": {
+    "file": "assets/voices/022cbdaa9a66daf25069a4e7ac164b2de1e8e01b72e44e9ed24132376432c36b.mp3",
+    "hash": "022cbdaa9a66daf25069a4e7ac164b2de1e8e01b72e44e9ed24132376432c36b",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:1",
+    "speaker": "manager",
+    "text": "くそっ……！ モク！ 走れ！！ 早く！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……なんだ？ 何が起きた……？\",\"inner\",false]": {
+    "file": "assets/voices/5ebccbac2fb72f1ca95489332d64bb96f06af2b3b44b665bbec7fba2270e16f4.mp3",
+    "hash": "5ebccbac2fb72f1ca95489332d64bb96f06af2b3b44b665bbec7fba2270e16f4",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:4",
+    "speaker": "manager",
+    "text": "……なんだ？ 何が起きた……？",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……はっ！ はぁっ……はぁっ……！\",\"normal\",false]": {
+    "file": "assets/voices/c1e0f49cc398c30ebd35a01034dbfe929383d6483fbca9fffddce0f1f523b0ff.mp3",
+    "hash": "c1e0f49cc398c30ebd35a01034dbfe929383d6483fbca9fffddce0f1f523b0ff",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:6",
+    "speaker": "manager",
+    "text": "……はっ！ はぁっ……はぁっ……！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……火は！？ モクはどこだ！？\",\"normal\",false]": {
+    "file": "assets/voices/e3990c3b41e15c1449e140cea7a7ee129e96de7835ae17680e7218fc41fa5d65.mp3",
+    "hash": "e3990c3b41e15c1449e140cea7a7ee129e96de7835ae17680e7218fc41fa5d65",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:7",
+    "speaker": "manager",
+    "text": "……火は！？ モクはどこだ！？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……モク！？\",\"normal\",false]": {
+    "file": "assets/voices/9f10211e2aeee065034fb0b324eb25956665c0f4744b316ae4f027477ed4f43f.mp3",
+    "hash": "9f10211e2aeee065034fb0b324eb25956665c0f4744b316ae4f027477ed4f43f",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:9",
+    "speaker": "manager",
+    "text": "……モク！？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"お前……無事なのか！？\",\"normal\",false]": {
+    "file": "assets/voices/625606ad9ef1c028b9eb7dc78ccd1dfb5bd859f2bcbee7b83cb03321050f46cd.mp3",
+    "hash": "625606ad9ef1c028b9eb7dc78ccd1dfb5bd859f2bcbee7b83cb03321050f46cd",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:11",
+    "speaker": "manager",
+    "text": "お前……無事なのか！？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"いや、だって……さっきまで火事で……！\",\"normal\",false]": {
+    "file": "assets/voices/00482ce7cb0b73b4592a51f39d810808ff3f4492d8330a5b35d9171da4cf0f20.mp3",
+    "hash": "00482ce7cb0b73b4592a51f39d810808ff3f4492d8330a5b35d9171da4cf0f20",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:13",
+    "speaker": "manager",
+    "text": "いや、だって……さっきまで火事で……！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……っ。\",\"normal\",false]": {
+    "file": "assets/voices/19e56f8f7a69f4f921e95b5fa5268b351a49805e4d15efd625199d15f069e83e.mp3",
+    "hash": "19e56f8f7a69f4f921e95b5fa5268b351a49805e4d15efd625199d15f069e83e",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:15",
+    "speaker": "manager",
+    "text": "……っ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"なんでだ……？ あんなに熱かったのに。煙も、炎も……全部覚えてる。\",\"inner\",false]": {
+    "file": "assets/voices/7f03c630c1a4c85318d9faa879459aeb171bd50417e47fb6b242bd2747c35426.mp3",
+    "hash": "7f03c630c1a4c85318d9faa879459aeb171bd50417e47fb6b242bd2747c35426",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:16",
+    "speaker": "manager",
+    "text": "なんでだ……？ あんなに熱かったのに。煙も、炎も……全部覚えてる。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"夢……？ いや、違う。あれが夢なわけ……。\",\"inner\",false]": {
+    "file": "assets/voices/e284d20282ac94f83a30b8685b503321ab5bc45a1fd04ef01ca3f30aaa6b6d49.mp3",
+    "hash": "e284d20282ac94f83a30b8685b503321ab5bc45a1fd04ef01ca3f30aaa6b6d49",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:18",
+    "speaker": "manager",
+    "text": "夢……？ いや、違う。あれが夢なわけ……。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……17時？\",\"normal\",false]": {
+    "file": "assets/voices/c213e2d5b3c69885a2a47039ec4cd6841e4e57464b8011e94f01a9300c2b6ee9.mp3",
+    "hash": "c213e2d5b3c69885a2a47039ec4cd6841e4e57464b8011e94f01a9300c2b6ee9",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:20",
+    "speaker": "manager",
+    "text": "……17時？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……嘘だろ。\",\"normal\",false]": {
+    "file": "assets/voices/de0b724caad974963aaea614b559106885086f86ef61e67740b78a5792492f40.mp3",
+    "hash": "de0b724caad974963aaea614b559106885086f86ef61e67740b78a5792492f40",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:22",
+    "speaker": "manager",
+    "text": "……嘘だろ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……戻ってる？ 時間が……？\",\"inner\",false]": {
+    "file": "assets/voices/d2f349d1dfcc9f08a870be169952ba8d8599db69a914073bf70533d33d6cc006.mp3",
+    "hash": "d2f349d1dfcc9f08a870be169952ba8d8599db69a914073bf70533d33d6cc006",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:23",
+    "speaker": "manager",
+    "text": "……戻ってる？ 時間が……？",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ああ。そうだな……。\",\"normal\",false]": {
+    "file": "assets/voices/c88a0427c81f105660bad2748ceaf1de9ed0702d3d8763e121a449cdf9a212d3.mp3",
+    "hash": "c88a0427c81f105660bad2748ceaf1de9ed0702d3d8763e121a449cdf9a212d3",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:25",
+    "speaker": "manager",
+    "text": "……ああ。そうだな……。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……もし、また同じことが起きたら？\",\"inner\",false]": {
+    "file": "assets/voices/3545ad885184272fcb9c2f4f0eba99ee88c1ed28da8c678d66cb59212e5cba55.mp3",
+    "hash": "3545ad885184272fcb9c2f4f0eba99ee88c1ed28da8c678d66cb59212e5cba55",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:27",
+    "speaker": "manager",
+    "text": "……もし、また同じことが起きたら？",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……もし、今度は逃げられなかったら？\",\"inner\",false]": {
+    "file": "assets/voices/e2d484bf9f1000c63f6e50713ae83ab9e575e155c61957c2c63023b8defc662c.mp3",
+    "hash": "e2d484bf9f1000c63f6e50713ae83ab9e575e155c61957c2c63023b8defc662c",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:28",
+    "speaker": "manager",
+    "text": "……もし、今度は逃げられなかったら？",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……あいつは覚えてない。俺だけが、あの火事を覚えてる。\",\"inner\",false]": {
+    "file": "assets/voices/63a0813e168ecbcfb2dc353a32ab514a811c18da4bd03e81c65d7c6684e24897.mp3",
+    "hash": "63a0813e168ecbcfb2dc353a32ab514a811c18da4bd03e81c65d7c6684e24897",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:30",
+    "speaker": "manager",
+    "text": "……あいつは覚えてない。俺だけが、あの火事を覚えてる。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"だったら……今度こそ、間違えられねぇ。\",\"inner\",false]": {
+    "file": "assets/voices/e55012bf931e7fe51dcfd38870d9e75a3ef8a84d65985d05279ad2543ab02a1a.mp3",
+    "hash": "e55012bf931e7fe51dcfd38870d9e75a3ef8a84d65985d05279ad2543ab02a1a",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:31",
+    "speaker": "manager",
+    "text": "だったら……今度こそ、間違えられねぇ。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……なあ、モク。\",\"normal\",false]": {
+    "file": "assets/voices/5e37e8114bb39c24644604a7272bee2272c6b2424eb1be97bad323914b1e26a7.mp3",
+    "hash": "5e37e8114bb39c24644604a7272bee2272c6b2424eb1be97bad323914b1e26a7",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:33",
+    "speaker": "manager",
+    "text": "……なあ、モク。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……火の始末だけは、ちゃんとしてくれよ。\",\"normal\",false]": {
+    "file": "assets/voices/696301b0e525ced24285a6c0eec7be93a6c819ab4096b654d3a945e543ebfde8.mp3",
+    "hash": "696301b0e525ced24285a6c0eec7be93a6c819ab4096b654d3a945e543ebfde8",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:35",
+    "speaker": "manager",
+    "text": "……火の始末だけは、ちゃんとしてくれよ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……そうかよ。\",\"normal\",false]": {
+    "file": "assets/voices/5bd94286149b404c50eae77f4ba147d69826e31fe471e8bc71bf0beb0100f94d.mp3",
+    "hash": "5bd94286149b404c50eae77f4ba147d69826e31fe471e8bc71bf0beb0100f94d",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:37",
+    "speaker": "manager",
+    "text": "……そうかよ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……絶対に、もう燃やさせねぇ。\",\"inner\",false]": {
+    "file": "assets/voices/9154a73680c1d53532261d24e639ca94a570698e4cf6ba707679f9871eddc384.mp3",
+    "hash": "9154a73680c1d53532261d24e639ca94a570698e4cf6ba707679f9871eddc384",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:38",
+    "speaker": "manager",
+    "text": "……絶対に、もう燃やさせねぇ。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"…………は？\",\"normal\",false]": {
+    "file": "assets/voices/7fea3445fce839dfacff475427922149574d99461bb89ae126f4d520d7cb30f5.mp3",
+    "hash": "7fea3445fce839dfacff475427922149574d99461bb89ae126f4d520d7cb30f5",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:1",
+    "speaker": "manager",
+    "text": "…………は？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"お、お前……生きてるのか！？\",\"normal\",false]": {
+    "file": "assets/voices/c40a8436775ab8bab3792a899f78359cf9e7a772e59d449ecfad38617885cbe6.mp3",
+    "hash": "c40a8436775ab8bab3792a899f78359cf9e7a772e59d449ecfad38617885cbe6",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:3",
+    "speaker": "manager",
+    "text": "お、お前……生きてるのか！？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"いや、だって……ここ、燃えて……！\",\"normal\",false]": {
+    "file": "assets/voices/59a3e87d48c28b60e03552684894b0b12642f34b7fc07a7b01d35513bd2b2066.mp3",
+    "hash": "59a3e87d48c28b60e03552684894b0b12642f34b7fc07a7b01d35513bd2b2066",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:5",
+    "speaker": "manager",
+    "text": "いや、だって……ここ、燃えて……！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……夢？\",\"inner\",false]": {
+    "file": "assets/voices/ac0c58f1768aad04f6addb5f73c9f75ff08f31e5a64493d39af9c909b103b81a.mp3",
+    "hash": "ac0c58f1768aad04f6addb5f73c9f75ff08f31e5a64493d39af9c909b103b81a",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:7",
+    "speaker": "manager",
+    "text": "……夢？",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"いや、違う。あの熱さも、煙の臭いも……。\",\"inner\",false]": {
+    "file": "assets/voices/8e8d4d28c7620a5331399696ce6b8373ab2421466235dfffc9e2136430317e51.mp3",
+    "hash": "8e8d4d28c7620a5331399696ce6b8373ab2421466235dfffc9e2136430317e51",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:8",
+    "speaker": "manager",
+    "text": "いや、違う。あの熱さも、煙の臭いも……。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"全部、覚えてる。\",\"inner\",false]": {
+    "file": "assets/voices/ef608c623b330391dc6a29f1b0b6f350d91d4f1a904fea9993deac64b58d13bd.mp3",
+    "hash": "ef608c623b330391dc6a29f1b0b6f350d91d4f1a904fea9993deac64b58d13bd",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:9",
+    "speaker": "manager",
+    "text": "全部、覚えてる。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……お前、さっき灰皿どうした？\",\"normal\",false]": {
+    "file": "assets/voices/3a51ae8832e18167c508aecb336a3656877612148e31abc2c8045169920765d1.mp3",
+    "hash": "3a51ae8832e18167c508aecb336a3656877612148e31abc2c8045169920765d1",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:11",
+    "speaker": "manager",
+    "text": "……お前、さっき灰皿どうした？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"いや、そうじゃなくて……！\",\"normal\",false]": {
+    "file": "assets/voices/05b963e6b2bae4192a6a4e81f6a7706824b9af6346cb4491c0a485ec88c8d9b6.mp3",
+    "hash": "05b963e6b2bae4192a6a4e81f6a7706824b9af6346cb4491c0a485ec88c8d9b6",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:13",
+    "speaker": "manager",
+    "text": "いや、そうじゃなくて……！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……時間が、戻ってる？\",\"inner\",false]": {
+    "file": "assets/voices/2a48040dc9a56f89828357011c2f8544fb7c09a67e25b38fa588b934ce11927b.mp3",
+    "hash": "2a48040dc9a56f89828357011c2f8544fb7c09a67e25b38fa588b934ce11927b",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:16",
+    "speaker": "manager",
+    "text": "……時間が、戻ってる？",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"あのとき俺が、まともな指示を出していれば……。\",\"inner\",false]": {
+    "file": "assets/voices/b8029cd44de089633bf111deb6c1b7ee9a18ca99b72cb79b815820451ce00a21.mp3",
+    "hash": "b8029cd44de089633bf111deb6c1b7ee9a18ca99b72cb79b815820451ce00a21",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:17",
+    "speaker": "manager",
+    "text": "あのとき俺が、まともな指示を出していれば……。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"今度こそ……。\",\"inner\",false]": {
+    "file": "assets/voices/22be4d70ebf6008cefa8681896a93bed10efdc694bc6febb7d3c69dff1af3e09.mp3",
+    "hash": "22be4d70ebf6008cefa8681896a93bed10efdc694bc6febb7d3c69dff1af3e09",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:18",
+    "speaker": "manager",
+    "text": "今度こそ……。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……いや、なんでもない。\",\"normal\",false]": {
+    "file": "assets/voices/738c145f01d50996495aee72b1e3df568a5c56e2cbb013ec8ab607034cd8514f.mp3",
+    "hash": "738c145f01d50996495aee72b1e3df568a5c56e2cbb013ec8ab607034cd8514f",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:20",
+    "speaker": "manager",
+    "text": "……いや、なんでもない。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"とりあえず……生きててよかった。\",\"normal\",false]": {
+    "file": "assets/voices/572071fb6d20dc904faf5ee9e5e0ae241e25bbccb50f6e6b668f95119756b674.mp3",
+    "hash": "572071fb6d20dc904faf5ee9e5e0ae241e25bbccb50f6e6b668f95119756b674",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:21",
+    "speaker": "manager",
+    "text": "とりあえず……生きててよかった。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……もう二度と、あんな光景は見たくねぇ。\",\"inner\",false]": {
+    "file": "assets/voices/5d1630a6145d7311efef91ea7e179c4fee064383875955d7d572b53e688e6fdb.mp3",
+    "hash": "5d1630a6145d7311efef91ea7e179c4fee064383875955d7d572b53e688e6fdb",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:24",
+    "speaker": "manager",
+    "text": "……もう二度と、あんな光景は見たくねぇ。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……また戻った。今度こそ大丈夫だと思ったのに。\",\"inner\",false]": {
+    "file": "assets/voices/92de8e5bb2d5656139b1b5c329d2b56fe6fd1aa028ac6b28858f2cfad7201165.mp3",
+    "hash": "92de8e5bb2d5656139b1b5c329d2b56fe6fd1aa028ac6b28858f2cfad7201165",
+    "source": "act1/runtime/attempt-2/ash/trash/rewind/rewind:1",
+    "speaker": "manager",
+    "text": "……また戻った。今度こそ大丈夫だと思ったのに。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"いや。今度こそ、このアパートを燃やさせねぇ。\",\"normal\",false]": {
+    "file": "assets/voices/872035f72a78bfc4debbb25e0c3ba670a7b123a73bb18b817f68a4ba134bc190.mp3",
+    "hash": "872035f72a78bfc4debbb25e0c3ba670a7b123a73bb18b817f68a4ba134bc190",
+    "source": "act1/runtime/attempt-2/ash/trash/rewind/rewind:3",
+    "speaker": "manager",
+    "text": "いや。今度こそ、このアパートを燃やさせねぇ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"同じ失敗はもうしねぇ。次こそは……！\",\"inner\",false]": {
+    "file": "assets/voices/020ec2b9732203b31f48102c4a37824be54e503205aa485efe7fcd146c99f21f.mp3",
+    "hash": "020ec2b9732203b31f48102c4a37824be54e503205aa485efe7fcd146c99f21f",
+    "source": "act1/runtime/attempt-2/ash/trash/rewind/rewind:5",
+    "speaker": "manager",
+    "text": "同じ失敗はもうしねぇ。次こそは……！",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ああ、知ってるよ。嫌ってほどな。\",\"normal\",false]": {
+    "file": "assets/voices/375029fb4abe7471bc8119ccf0734b2e4943109422f4999f3ca75218129ca4f4.mp3",
+    "hash": "375029fb4abe7471bc8119ccf0734b2e4943109422f4999f3ca75218129ca4f4",
+    "source": "act1/runtime/attempt-2/ash/trash/restart/rewind:1",
+    "speaker": "manager",
+    "text": "……ああ、知ってるよ。嫌ってほどな。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"こっちは何回も会ってんだよ……。\",\"normal\",false]": {
+    "file": "assets/voices/62f8b8a76f912ca0e5a53465a574a5fba583dccce405d9fb71e81cc369953849.mp3",
+    "hash": "62f8b8a76f912ca0e5a53465a574a5fba583dccce405d9fb71e81cc369953849",
+    "source": "act1/runtime/attempt-2/ash/trash/restart/rewind:3",
+    "speaker": "manager",
+    "text": "こっちは何回も会ってんだよ……。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……生き残った。\",\"normal\",false]": {
+    "file": "assets/voices/d551a3b35d7b3cbc9fa83bc9f8f61cf598d3ba7a6ad94293be12db1a35a5a171.mp3",
+    "hash": "d551a3b35d7b3cbc9fa83bc9f8f61cf598d3ba7a6ad94293be12db1a35a5a171",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:1",
+    "speaker": "manager",
+    "text": "……生き残った。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"このアパートだよ！\",\"normal\",false]": {
+    "file": "assets/voices/33ab3a0461422dfd376819b874b74fb85f126515c9cc93d0ad56dbe8e3cc8a79.mp3",
+    "hash": "33ab3a0461422dfd376819b874b74fb85f126515c9cc93d0ad56dbe8e3cc8a79",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:3",
+    "speaker": "manager",
+    "text": "このアパートだよ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"そういう意味じゃねぇよ……。\",\"normal\",false]": {
+    "file": "assets/voices/3093249211336a888606c68cde9ee3c328521747e3df78a449332579b2f71ffd.mp3",
+    "hash": "3093249211336a888606c68cde9ee3c328521747e3df78a449332579b2f71ffd",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:5",
+    "speaker": "manager",
+    "text": "そういう意味じゃねぇよ……。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……朝9時だぞ。\",\"normal\",false]": {
+    "file": "assets/voices/fa9a372a326c640fc875e878c3c8b8962209bc7fe27e94dd4fb77bcb95fa655b.mp3",
+    "hash": "fa9a372a326c640fc875e878c3c8b8962209bc7fe27e94dd4fb77bcb95fa655b",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:7",
+    "speaker": "manager",
+    "text": "……朝9時だぞ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"じゃあなんで酒飲んでんだよ！\",\"normal\",false]": {
+    "file": "assets/voices/08b154484aa36c887e28ab897f3dda972ddab7f857cf6522330bed6c74afa178.mp3",
+    "hash": "08b154484aa36c887e28ab897f3dda972ddab7f857cf6522330bed6c74afa178",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:9",
+    "speaker": "manager",
+    "text": "じゃあなんで酒飲んでんだよ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"誰のせいだと思ってんだ……。\",\"weary\",false]": {
+    "file": "assets/voices/60e56e578bcb22f70dfac704810dec6e0778461e506b98564a146e706c537ec8.mp3",
+    "hash": "60e56e578bcb22f70dfac704810dec6e0778461e506b98564a146e706c537ec8",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:12",
+    "speaker": "manager",
+    "text": "誰のせいだと思ってんだ……。",
+    "performance": "weary",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ぶっ飛ばすぞ！！\",\"normal\",false]": {
+    "file": "assets/voices/55c5e1463d9fe44a99c2c1831b387a1c942bdded3129d4100a0d177e012784c1.mp3",
+    "hash": "55c5e1463d9fe44a99c2c1831b387a1c942bdded3129d4100a0d177e012784c1",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:14",
+    "speaker": "manager",
+    "text": "ぶっ飛ばすぞ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……まぁ、いいか。\",\"inner\",false]": {
+    "file": "assets/voices/75c8b66c7e69593eae1246fff5e6dd537d09012fdadba9a948787136e853f5f8.mp3",
+    "hash": "75c8b66c7e69593eae1246fff5e6dd537d09012fdadba9a948787136e853f5f8",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:16",
+    "speaker": "manager",
+    "text": "……まぁ、いいか。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"こいつがこうしてバカなこと言ってられるなら。\",\"inner\",false]": {
+    "file": "assets/voices/e9c7791ce748f4721724f36f51b21f40c4db0cb006c546413a9fd1a17ced20ed.mp3",
+    "hash": "e9c7791ce748f4721724f36f51b21f40c4db0cb006c546413a9fd1a17ced20ed",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:17",
+    "speaker": "manager",
+    "text": "こいつがこうしてバカなこと言ってられるなら。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"笑ってねぇよ。\",\"normal\",false]": {
+    "file": "assets/voices/79ba4a5c9f340ef1ae00f2a846427b94ea6f2adf531cb08a1ca1a164a0b74406.mp3",
+    "hash": "79ba4a5c9f340ef1ae00f2a846427b94ea6f2adf531cb08a1ca1a164a0b74406",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:19",
+    "speaker": "manager",
+    "text": "笑ってねぇよ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"せっかくいい気分だったのに台無しだよ！\",\"normal\",false]": {
+    "file": "assets/voices/7b83eb8938f6b69809b7e6be510b8fba9fc38851ff45d9bd179cff502ab4a2b0.mp3",
+    "hash": "7b83eb8938f6b69809b7e6be510b8fba9fc38851ff45d9bd179cff502ab4a2b0",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:21",
+    "speaker": "manager",
+    "text": "せっかくいい気分だったのに台無しだよ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ん？ 郵便？\",\"normal\",false]": {
+    "file": "assets/voices/c6ae81816dd40957bfebc2f852aa338d09d5751de07a78ca3ea6ee8ee3606562.mp3",
+    "hash": "c6ae81816dd40957bfebc2f852aa338d09d5751de07a78ca3ea6ee8ee3606562",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:24",
+    "speaker": "manager",
+    "text": "ん？ 郵便？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"わかったよ。ちょっと行ってくる。\",\"normal\",false]": {
+    "file": "assets/voices/adb9e7c244ea15a74b34d47040b9fbbafab61132f00097cea44fc0d74b23fc80.mp3",
+    "hash": "adb9e7c244ea15a74b34d47040b9fbbafab61132f00097cea44fc0d74b23fc80",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:26",
+    "speaker": "manager",
+    "text": "わかったよ。ちょっと行ってくる。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"どうもー。\",\"normal\",false]": {
+    "file": "assets/voices/6f0ded09bfb77732fae3caa3ebc4ccac08b4de6ad6b84cf08213313e192d8239.mp3",
+    "hash": "6f0ded09bfb77732fae3caa3ebc4ccac08b4de6ad6b84cf08213313e192d8239",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:28",
+    "speaker": "manager",
+    "text": "どうもー。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……入居申込書？\",\"normal\",false]": {
+    "file": "assets/voices/8bb9026331ed1c99bb52eac62aeac527b57cbaa80ae6a69b75e364e3281c20cd.mp3",
+    "hash": "8bb9026331ed1c99bb52eac62aeac527b57cbaa80ae6a69b75e364e3281c20cd",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:30",
+    "speaker": "manager",
+    "text": "……入居申込書？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"こんなボロアパートに？\",\"normal\",false]": {
+    "file": "assets/voices/5151854ffbc6e33e1fbf4d5887d9dc3724d6322921c2b415dea1539aeb12573a.mp3",
+    "hash": "5151854ffbc6e33e1fbf4d5887d9dc3724d6322921c2b415dea1539aeb12573a",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:31",
+    "speaker": "manager",
+    "text": "こんなボロアパートに？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"入居希望者だってさ。\",\"normal\",false]": {
+    "file": "assets/voices/19f2523ea3a6ad7bb95fd755825c669bc7afe17488cbfda2e81ca5a58541a235.mp3",
+    "hash": "19f2523ea3a6ad7bb95fd755825c669bc7afe17488cbfda2e81ca5a58541a235",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:34",
+    "speaker": "manager",
+    "text": "入居希望者だってさ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"お前も住んでんだろ！！\",\"normal\",false]": {
+    "file": "assets/voices/b6b015d13da5b596f51b73f76f6f9acc512686d2694eb8048aeda33c7f0791db.mp3",
+    "hash": "b6b015d13da5b596f51b73f76f6f9acc512686d2694eb8048aeda33c7f0791db",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:36",
+    "speaker": "manager",
+    "text": "お前も住んでんだろ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"自覚あったのかよ！\",\"normal\",false]": {
+    "file": "assets/voices/a30a66260a7cb375a8396e160aa7dbea378fbf80bc583ac5f459796700fea94a.mp3",
+    "hash": "a30a66260a7cb375a8396e160aa7dbea378fbf80bc583ac5f459796700fea94a",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:38",
+    "speaker": "manager",
+    "text": "自覚あったのかよ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……入居希望者か。\",\"normal\",false]": {
+    "file": "assets/voices/eee16f88c762e5b6ad6ab552fe64fdac05f6b08220ccefb63018876654e62409.mp3",
+    "hash": "eee16f88c762e5b6ad6ab552fe64fdac05f6b08220ccefb63018876654e62409",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:40",
+    "speaker": "manager",
+    "text": "……入居希望者か。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ああ。どうやら、ここに住みたい奴がいるらしい。\",\"normal\",false]": {
+    "file": "assets/voices/925b898760a53b59dce607983f58c673a3d058409c8edd4f4e73c34540429eb0.mp3",
+    "hash": "925b898760a53b59dce607983f58c673a3d058409c8edd4f4e73c34540429eb0",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:42",
+    "speaker": "manager",
+    "text": "ああ。どうやら、ここに住みたい奴がいるらしい。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"お前が一番うるせぇよ。\",\"normal\",false]": {
+    "file": "assets/voices/1b25a71aceff4b190307b30a371546d12d42e0da91ba074835d3cf81ff1a820c.mp3",
+    "hash": "1b25a71aceff4b190307b30a371546d12d42e0da91ba074835d3cf81ff1a820c",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:44",
+    "speaker": "manager",
+    "text": "お前が一番うるせぇよ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"もっと無理だろ！\",\"normal\",false]": {
+    "file": "assets/voices/25c47f3ac2f7574ac6e4555d374da5268653dcde83d8730e27ff2bcd3bc8112b.mp3",
+    "hash": "25c47f3ac2f7574ac6e4555d374da5268653dcde83d8730e27ff2bcd3bc8112b",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:46",
+    "speaker": "manager",
+    "text": "もっと無理だろ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……頼むから、まともな奴であってくれ。\",\"inner\",false]": {
+    "file": "assets/voices/a35d4dc144156edcf084eb032e6b1720369f5d316d397a9904fdf807c4c93258.mp3",
+    "hash": "a35d4dc144156edcf084eb032e6b1720369f5d316d397a9904fdf807c4c93258",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:47",
+    "speaker": "manager",
+    "text": "……頼むから、まともな奴であってくれ。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"お、珍しくまともなこと言うじゃねぇか。\",\"normal\",false]": {
+    "file": "assets/voices/4c4629cb6a8a72e38c3425a18b9b4bdec4d8c613cfe50f281e9dcf1ad4871479.mp3",
+    "hash": "4c4629cb6a8a72e38c3425a18b9b4bdec4d8c613cfe50f281e9dcf1ad4871479",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:49",
+    "speaker": "manager",
+    "text": "お、珍しくまともなこと言うじゃねぇか。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"やっぱりお前は黙ってろ！！\",\"normal\",false]": {
+    "file": "assets/voices/bb5f77db0a56301084561d2707df60cca186eebf58f4e99929388cf63412272b.mp3",
+    "hash": "bb5f77db0a56301084561d2707df60cca186eebf58f4e99929388cf63412272b",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:51",
+    "speaker": "manager",
+    "text": "やっぱりお前は黙ってろ！！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……っ！？\",\"normal\",false]": {
+    "file": "assets/voices/d83e1ea3799ad1b20de1d455d6db9f88bb126f25ff61d8a9ac3d42a1b7eb9e17.mp3",
+    "hash": "d83e1ea3799ad1b20de1d455d6db9f88bb126f25ff61d8a9ac3d42a1b7eb9e17",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:54",
+    "speaker": "manager",
+    "text": "……っ！？",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……誰だ？ 今の声……。\",\"normal\",false]": {
+    "file": "assets/voices/c075ff3c33fa4ab2491b6c10217b4bbc795372e7d33548b3a9dc536a14acff69.mp3",
+    "hash": "c075ff3c33fa4ab2491b6c10217b4bbc795372e7d33548b3a9dc536a14acff69",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:57",
+    "speaker": "manager",
+    "text": "……誰だ？ 今の声……。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……いや、なんでもねぇ。\",\"normal\",false]": {
+    "file": "assets/voices/dc7c6eb026b07099d92291cf23063163cd8ea6b964e271158787da6ff93a5200.mp3",
+    "hash": "dc7c6eb026b07099d92291cf23063163cd8ea6b964e271158787da6ff93a5200",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:60",
+    "speaker": "manager",
+    "text": "……いや、なんでもねぇ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"お前はそればっかりか！！\",\"normal\",false]": {
+    "file": "assets/voices/5624bc003fc7b55546322f7db8250acd7cee814477361e4f04f065360a19b113.mp3",
+    "hash": "5624bc003fc7b55546322f7db8250acd7cee814477361e4f04f065360a19b113",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:62",
+    "speaker": "manager",
+    "text": "お前はそればっかりか！！",
+    "performance": "normal",
     "model": "eleven_v3"
   }
 };

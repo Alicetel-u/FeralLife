@@ -8,7 +8,7 @@
 2. `npm run voice:verify` は Voice ID・日本語モデル・実残高をGETで確認する。音声は生成しない。
 3. `npm run voice:plan` は通信なしのドライラン。話者・演技・文字数・設定・推定消費量は `.local/voice-plan.json` にも保存する。
 4. 対象と消費量をユーザーに提示し、本番生成の承認を得る。
-5. 承認後のみ `node tools/voices.mjs --generate --approve=<planId>` を実行する。現在の計画ハッシュが一致する場合のみ送信可能。第一幕のモク全体は `--scope=act1 --speaker=cat` を計画・生成の両方に指定する。大家と第二幕全体の一括生成は許可しない。
+5. 承認後のみ `node tools/voices.mjs --generate --approve=<planId>` を実行する。現在の計画ハッシュが一致する場合のみ送信可能。第一幕のモク全体は `--scope=act1 --speaker=cat` を計画・生成の両方に指定する。第一幕の大家全体は `--scope=act1 --speaker=manager` を指定する。第二幕全体の一括生成は許可しない。
 6. `npm run build` でマニフェストを反映する。生成MP3と `src/voice-manifest.js` を一緒に配布する。音声は発話時のみ読み込む。play.html単体を移動した場合もassets/voicesを隣に置く。
 
 キーは `.local/elevenlabs.json` に平文でローカル保存される。共有PCではOSアカウントのアクセス権で保護する。`.local/` 全体はGit対象外で、ローカルHTTPサーバーも配信しない。公開ビルドにはソースJS・表示用アセットだけを含める。削除する場合はこのファイルを削除し、失効はElevenLabsのAPIキー管理画面で行う。キーをチャットやログに貼らない。
@@ -43,7 +43,7 @@ Eleven v3の公式に対応する音声タグとvoice_settingsを使用する。
 
 `--pronunciation-only` は序盤の読み指定語を含むセリフだけを抽出する。生成入力の置換後テキストをキャッシュに含めるため、同じ補正済み音声は再利用できる。`.local/voice-plan.json` の `spokenInput` で生成入力も確認できる。
 
-Voice ID設定は既存の `characters.<id>.voiceId` 形式と簡易の `<id>: voiceId` 形式に対応する。モクはユーザー確定の `0ptCJp0xgdabdcpVtCB5`。大家の新規生成は保留。
+Voice ID設定は既存の `characters.<id>.voiceId` 形式と簡易の `<id>: voiceId` 形式に対応する。モクはユーザー確定の `0ptCJp0xgdabdcpVtCB5`。大家はHaru（`vY4PC2kSleyw73YRUOI6`）を採用。
 
 
 ## 第一幕モクの生成結果（2026-10-16）
@@ -60,4 +60,10 @@ Voice ID設定は既存の `characters.<id>.voiceId` 形式と簡易の `<id>: v
 
 ## Haruの序盤採用（2026-10-16）
 
-大家をユーザー選定のHaru（`vY4PC2kSleyw73YRUOI6`）に変更。`--speaker=manager` はintro範囲だけ許可。プロローグ心の声2本を含む序盤12本を生成し反映した。心の声はthoughtful/softlyの専用設定を保ち、stabilityは0.5で表情を抑えすぎないようにした。モクの既存音声は維持。API character-cost合計179、全12本のデコード・台本対応確認、全141テスト成功。
+大家をユーザー選定のHaru（`vY4PC2kSleyw73YRUOI6`）に変更。この時点では `--speaker=manager` はintro範囲だけを生成した。現在はユーザーの追加依頼で第一幕全体にも対応。プロローグ心の声2本を含む序盤12本を生成し反映した。心の声はthoughtful/softlyの専用設定を保ち、stabilityは0.5で表情を抑えすぎないようにした。モクの既存音声は維持。API character-cost合計179、全12本のデコード・台本対応確認、全141テスト成功。
+
+## 大家のテンション調整
+
+ユーザーが試聴・採用したHaruのテンション高め試作を基本に、通常会話はanimated/conversational/lighthearted、ツッコミはexcited/lighthearted、ぼやきはexasperated/lightheartedで生成する。いずれもstability=0、speed=1.05。怒りタグは使わず、感嘆符だけで怒りを分類しない。心の声は別の静かな演技設定を維持。ASMR寄りの心の声はローカル試聴用のみで、採用前に本番へ混ぜない。
+
+第一幕の大家164発話箇所・163種類を対象に、心の声2本を再利用し161本を生成。追加分のcharacter-cost合計3,508。全163本のMP3デコード・マニフェスト照合、全142テスト、ビルド成功。ASMR試作1本（26クレジット）は別管理で、本番未採用。

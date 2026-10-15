@@ -4,13 +4,16 @@
   "estimatedCreditsPerCharacter": 1,
   "profiles": {
     "normal": {
-      "direction": "親しみやすい青年。低音や威圧を強調しない",
+      "direction": "親しみやすい青年。少し明るくテンポよく、威圧しない",
       "tags": [
-        "[conversational]"
+        "[animated]",
+        "[conversational]",
+        "[lighthearted]"
       ],
       "settings": {
-        "stability": 0.5,
-        "similarity_boost": 0.75
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.05
       }
     },
     "inner": {
@@ -25,14 +28,15 @@
       }
     },
     "retort": {
-      "direction": "呆れ・困惑・苦笑いのコメディ。怒鳴らない",
+      "direction": "テンション高めのコミカルなツッコミ。怒鳴り・威嚇にしない",
       "tags": [
-        "[lighthearted]",
-        "[sighs]"
+        "[excited]",
+        "[lighthearted]"
       ],
       "settings": {
-        "stability": 0.5,
-        "similarity_boost": 0.75
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.05
       }
     },
     "moku": {
@@ -66,6 +70,18 @@
         "stability": 0.5,
         "similarity_boost": 0.75,
         "speed": 0.98
+      }
+    },
+    "weary": {
+      "direction": "困惑や呆れのぼやき。軽いコメディの抑揚を残し、威圧しない",
+      "tags": [
+        "[exasperated]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.05
       }
     }
   }

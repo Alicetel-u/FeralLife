@@ -5,6 +5,23 @@ import {extractVoiceScript,planVoices} from '../tools/voice-script.mjs';
 import {voiceLineKey,voicePerformance} from '../src/voice-policy.js';
 import {createVoicePlayer} from '../src/voice-player.js';
 
+test('lively landlord keeps inner voice separate, uses audition settings and preserves Moku caches',async()=>{
+ const rows=extractVoiceScript('act1');
+ const ids=JSON.parse(await readFile(new URL('../config/voice-ids.json',import.meta.url)));
+ const config=JSON.parse(await readFile(new URL('../config/voice-performance.json',import.meta.url)));
+ const {issues}=JSON.parse(await readFile(new URL('../config/voice-pronunciation-issues.json',import.meta.url)));
+ const plan=planVoices(rows,ids,config,issues);
+ assert.equal(voicePerformance({speaker:'manager',text:'なんで俺が決めるんだよ……。'}),'weary');
+ assert.equal(voicePerformance({speaker:'manager',text:'誰のせいだよ！！'}),'retort');
+ for(const r of plan.filter(r=>r.speaker==='manager')){
+  assert.equal(r.voiceId,'vY4PC2kSleyw73YRUOI6');
+  assert.equal(r.request.voice_settings.stability,r.performance==='inner'?0.5:0);
+  if(r.performance!=='inner')assert.equal(r.request.voice_settings.speed,1.05);
+ }
+ const {VOICE_MANIFEST}=await import('../src/voice-manifest.js');
+ for(const r of plan.filter(r=>r.speaker==='cat'))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
+});
+
 test('act1 extraction covers revised branches, epilogue and the complete daily schedule',async()=>{
  const rows=extractVoiceScript('act1').filter(row=>row.speaker==='cat');
  const texts=new Set(rows.map(row=>row.text||row.line.text));
