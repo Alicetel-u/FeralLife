@@ -591,3 +591,14 @@ if(firstRewindPreview)showActEnding();
 else if(state.actOne&&!actTwoPreview)showGameTitle();
 document.documentElement.classList.remove('game-booting');
 document.getElementById('boot-screen')?.remove();
+const entryGate=$('entry-gate');
+if(entryGate && !previewType){
+  entryGate.hidden=false;
+  entryGate.querySelector('#entry-start').addEventListener('click',()=>{
+    normalBgm.unlock().catch(()=>{});
+    entryGate.classList.add('entry-gate-exit');
+    entryGate.addEventListener('transitionend',()=>entryGate.remove(),{once:true});
+    setTimeout(()=>entryGate.remove(),650);
+  },{once:true});
+}else entryGate?.remove();
+
