@@ -1,0 +1,13 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="../"><title>第一幕・第二幕 表情確認</title><link rel="stylesheet" href="styles.css"><style>.expression-controls{position:fixed;top:12px;left:12px;z-index:10000;display:flex;gap:8px;flex-wrap:wrap}.expression-controls button{padding:12px;background:#211727;color:#fff0db;border:1px solid #d33550;cursor:pointer}.expression-controls button[aria-pressed=true]{background:#b52743}</style><body class="game-ink"><dialog class="conversation-modal" id="expression-preview"><nav class="expression-controls" aria-label="確認する表情"></nav><div id="expression-content"></div></dialog><script type="module">
+import {ACT_TWO_EVENTS} from './src/act-two.js';
+import {createActOne,advanceActOne,answerActOne} from './src/act-one.js';
+import {eventStageHTML,eventConversation} from './src/event-stage.js';
+import {replaceConversationContent} from './src/conversation-dom.js';
+const state=createActOne(42,[],2,true);advanceActOne(state,100);answerActOne(state,state.actOne.pending.eventId,'water');advanceActOne(state,100);answerActOne(state,state.actOne.pending.eventId,'coronation');advanceActOne(state,100);
+const epilogue=state.events.find(e=>e.actScene==='epilogue');
+const bag={actScene:'reply',stageOnly:true,cast:['hostess','cat'],detail:ACT_TWO_EVENTS.bag.choices[1].lines[0].text,lines:ACT_TWO_EVENTS.bag.choices[1].lines};
+const samples=[['第一幕・驚き',epilogue,'ニャ？ 誰がニャ？'],['第一幕・怒り',epilogue,'気持ち悪いニャ。'],['第一幕・喜び',epilogue,'大家。歓迎会するニャ？'],['第二幕・驚き',bag,'……軽っ！？'],['第二幕・落胆',bag,'箱に裏切られたニャ……。'],['ルナ・不安',bag,'え？ ネットで知り合った人からだけど……。'],['第二幕・喜び',bag,'モクのおかげで助かったニャ！']];
+const modal=document.querySelector('dialog'),content=document.querySelector('#expression-content');
+for(const [label,event,text] of samples){const button=document.createElement('button');button.textContent=label;button.onclick=()=>{document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));replaceConversationContent(content,'<h2 class="visually-hidden">表情確認</h2>'+eventStageHTML(event,state.residents,eventConversation(event).findIndex(l=>l.text===text)));};document.querySelector('nav').append(button);}
+document.querySelector('nav button').click();modal.showModal();
+</script></body></html>

@@ -80,9 +80,11 @@ export const ROOM_ART = {
 // 単体版ビルドで画像を埋め込めるよう、パスは省略せず文字列で書く。
 const catPose = (src, origin = [48, 126]) => ({ src, origin, image: null });
 
+// Presentation sizes, not canonical physical heights. Keep the same correction
+// across every pose; ears, hair and seated silhouettes remain part of the art.
 export const CHARACTER_ART = {
   ann: {
-    src: 'assets/characters/ann/poses/stand.png', portraitSrc: 'assets/characters/ann/idle.png', displayHeight: 44, origin: [64, 126], image: null, portrait: null,
+    src: 'assets/characters/ann/poses/stand.png', portraitSrc: 'assets/characters/ann/idle.png', displayHeight: 43, origin: [64, 126], image: null, portrait: null,
     poses: {
       stand: catPose('assets/characters/ann/poses/stand.png', [64, 126]),
       walk_a: catPose('assets/characters/ann/poses/walk_a.png', [64, 126]),
@@ -103,7 +105,7 @@ export const CHARACTER_ART = {
     src: 'assets/characters/patron/idle.png', portraitSrc: 'assets/characters/patron/idle.png', displayHeight: 44, origin: [627, 1230], image: null, portrait: null
   },
   peko: {
-    src: 'assets/characters/peko/poses/stand.png', portraitSrc: 'assets/characters/peko/idle.png', displayHeight: 44, origin: [64, 126], image: null, portrait: null,
+    src: 'assets/characters/peko/poses/stand.png', portraitSrc: 'assets/characters/peko/idle.png', displayHeight: 42, origin: [64, 126], image: null, portrait: null,
     poses: {
       stand: catPose('assets/characters/peko/poses/stand.png', [64, 126]),
       walk_a: catPose('assets/characters/peko/poses/walk_a.png', [64, 126]),
@@ -121,7 +123,7 @@ export const CHARACTER_ART = {
     actionPoses: { idle: ['stand', 'sit', 'phone', 'chat'], tv: 'sit', eat: 'eat', drink: 'drink', clean: 'clean', fight: 'angry', chat: 'chat', sleep: 'sleep', outing: 'stand', shop: 'shop', checkBrother: 'phone', smoke: 'stand' }
   },
   sister: {
-    src: 'assets/characters/sister/poses/stand.png', portraitSrc: 'assets/characters/sister/idle.png', displayHeight: 44, origin: [64, 126], image: null, portrait: null,
+    src: 'assets/characters/sister/poses/stand.png', portraitSrc: 'assets/characters/sister/idle.png', displayHeight: 42, origin: [64, 126], image: null, portrait: null,
     poses: {
       stand: catPose('assets/characters/sister/poses/stand.png', [64, 126]),
       walk_a: catPose('assets/characters/sister/poses/walk_a.png', [64, 126]),
@@ -139,7 +141,7 @@ export const CHARACTER_ART = {
     actionPoses: { idle: ['stand', 'sit', 'phone', 'chat'], tv: 'sit', eat: 'eat', drink: 'drink', clean: 'clean', fight: 'angry', chat: 'chat', sleep: 'sleep', outing: 'stand', shop: 'shop', checkBrother: 'phone', smoke: 'stand' }
   },
   hostess: {
-    src: 'assets/characters/hostess/idle.png', portraitSrc: 'assets/characters/hostess/portrait.png', displayHeight: 49, origin: [64, 126], image: null, portrait: null,
+    src: 'assets/characters/hostess/idle.png', portraitSrc: 'assets/characters/hostess/portrait.png', displayHeight: 45, origin: [64, 126], image: null, portrait: null,
     poses: {
       walk_a: catPose('assets/characters/hostess/poses/walk_a.png', [64,126]),
       walk_b: catPose('assets/characters/hostess/poses/walk_b.png', [64,126]),

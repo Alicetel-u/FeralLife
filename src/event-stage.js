@@ -1,4 +1,6 @@
 import { speakerColorStyle } from './speaker-colors.js';
+import { savedActExpression } from './act-expressions.js';
+import { messagePages } from './message-pages.js';
 // Shared left/right conversation view for requests, replies and ordinary journal scenes.
 import { EVENT_ART, EVENT_EXPRESSIONS, CHARACTER_ART, eventParticipants } from './character-art.js';
 import { CHARACTERS } from './simulation.js';
@@ -59,6 +61,8 @@ const EVENT_CASE_EMOTIONS = {
   roomshare:['neutral','tired','neutral','shy','neutral','angry']
 };
 export function eventEmotion(line, event = {}) {
+  const chapterEmotion=savedActExpression(line,event);
+  if (Object.hasOwn(EVENT_EMOTION_NAMES,chapterEmotion))return chapterEmotion;
   if (Object.hasOwn(EVENT_EMOTION_NAMES, line?.emotion)) return line.emotion;
   const directed=EVENT_CASE_EMOTIONS[event.caseId]?.[event.lines?.indexOf(line)];
   if (directed) return directed;
@@ -72,11 +76,12 @@ export function eventEmotion(line, event = {}) {
   return 'neutral';
 }
 
-export function eventStageHTML(event,residents,index=0) {
+export function eventStageHTML(event,residents,index=0,page=0) {
   const lines=eventConversation(event),cursor=Math.max(0,Math.min(index,lines.length-1)),line=lines[cursor];
+  const pages=messagePages(line.text),pageIndex=Math.max(0,Math.min(page,pages.length-1)),pageText=pages[pageIndex];
   if(line.flashbackEffect==='whiteout'){
     const name=line.memoryVoice?'大家（過去の声）':line.innerVoice?'大家（心の声）':eventSpeakerName(line.speaker);
-    return `<div class="event-stage memory-whiteout"><div class="memory-text" style="${speakerColorStyle(line)}" aria-live="polite" aria-atomic="true"><span class="visually-hidden">${eventEscape(name)}：</span><p>${eventEscape(line.text)}</p></div><span class="memory-prompt" aria-hidden="true">CLICK / ENTER</span></div>`;
+    return `<div class="event-stage memory-whiteout"><div class="memory-text" style="${speakerColorStyle(line)}" aria-live="polite" aria-atomic="true"><span class="visually-hidden">${eventEscape(name)}：</span><p>${eventEscape(pageText)}</p></div><span class="memory-prompt" aria-hidden="true">CLICK / ENTER</span></div>`;
   }
   const participants=Array.isArray(event.cast)?event.cast.filter(type=>CHARACTERS[type]):eventParticipants(event,residents),left=participants[0]||null;
   const right=line.speaker==='manager'&&participants[1]?participants[1]:line.speaker!=='narrator'&&line.speaker!=='mystery'&&line.speaker!==left?line.speaker:participants[1]||'manager';
@@ -87,7 +92,7 @@ export function eventStageHTML(event,residents,index=0) {
     return `<figure class="stage-character ${side} ${active?'speaking':''} ${expression?'expression-art':'fullbody-art'}" data-emotion="${emotion}" data-character="${eventEscape(type||'narrator')}">${src?`<img src="${src}" alt="${eventEscape(eventSpeakerName(type))}のバストアップ（${EVENT_EMOTION_NAMES[emotion]}）">`:''}<figcaption>${eventEscape(eventSpeakerName(type||'narrator'))}</figcaption></figure>`;
   };
   const side=line.speaker===left?'left':line.speaker===right?'right':'narration';
-  return `<div class="event-stage ${participants.length===1?'solo':''} ${line.flashbackEffect==='whiteout'?'memory-whiteout':''}">${character(left,'left')}${character(right,'right')}<div style="${speakerColorStyle(line)}" class="stage-bubble ${side} ${line.innerVoice?'inner-voice':''}" aria-live="polite" aria-atomic="true"><div class="window-ornaments" aria-hidden="true"><span class="ornament paw-one">${eventIcon('paw')}</span><span class="ornament paw-two">${eventIcon('paw')}</span><span class="ornament paw-three">${eventIcon('paw')}</span><span class="ornament paw-four">${eventIcon('paw')}</span><span class="ornament cat-bottom">${eventIcon('cat')}</span><span class="ornament heart-outline">♡</span><span class="ornament star-left">${eventIcon('spark')}</span></div><strong class="stage-speaker">${eventNameFrame()}<span class="speaker-paw">${eventIcon('paw')}</span><span class="speaker-name">${eventEscape(line.memoryVoice?'大家（過去の声）':line.innerVoice?'大家（心の声）':eventSpeakerName(line.speaker))}</span><span class="speaker-heart">${eventIcon('heart')}</span><span class="speaker-star">${eventIcon('spark')}</span></strong><p>${eventEscape(line.text)}</p></div><span class="stage-page">${cursor+1} / ${lines.length}</span></div>`;
+  return `<div class="event-stage ${participants.length===1?'solo':''} ${line.flashbackEffect==='whiteout'?'memory-whiteout':''}">${character(left,'left')}${character(right,'right')}<div style="${speakerColorStyle(line)}" class="stage-bubble ${side} ${line.innerVoice?'inner-voice':''}" aria-live="polite" aria-atomic="true"><div class="window-ornaments" aria-hidden="true"><span class="ornament paw-one">${eventIcon('paw')}</span><span class="ornament paw-two">${eventIcon('paw')}</span><span class="ornament paw-three">${eventIcon('paw')}</span><span class="ornament paw-four">${eventIcon('paw')}</span><span class="ornament cat-bottom">${eventIcon('cat')}</span><span class="ornament heart-outline">♡</span><span class="ornament star-left">${eventIcon('spark')}</span></div><strong class="stage-speaker">${eventNameFrame()}<span class="speaker-paw">${eventIcon('paw')}</span><span class="speaker-name">${eventEscape(line.memoryVoice?'大家（過去の声）':line.innerVoice?'大家（心の声）':eventSpeakerName(line.speaker))}</span><span class="speaker-heart">${eventIcon('heart')}</span><span class="speaker-star">${eventIcon('spark')}</span></strong><p>${eventEscape(pageText)}</p></div><span class="stage-page">${cursor+1} / ${lines.length}</span>${pages.length>1?`<span class="message-continuation">${pageIndex+1} / ${pages.length}　${pageIndex<pages.length-1?'クリックで続き →':'次へ →'}</span>`:''}</div>`;
 }
 
 export function troubleCardHTML(call, slam=false) {

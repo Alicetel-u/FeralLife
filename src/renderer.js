@@ -54,7 +54,7 @@ export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1
   if (art?.image) {
     const pose = opts.pose && opts.pose !== 'base' ? art.poses?.[opts.pose] : null;
     const image = pose?.image || art.image, origin = pose?.image ? pose.origin : art.origin;
-    // 基本立ち絵と同じ「1ドットの大きさ」で全ポーズを描く
+    // 基本立ち絵と同じ比率で全ポーズを描く。
     const px = art.displayHeight / art.image.height;
     const width = image.width * px, height = image.height * px;
     const ox = origin[0] * px, oy = origin[1] * px;
@@ -64,6 +64,7 @@ export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1
     ctx.translate(Math.round(x), Math.round(y + bob));
     if (opts.rotate) ctx.rotate(opts.rotate);
     ctx.scale(scale * direction * (opts.sx || 1), scale * (opts.sy || 1));
+    // Miniature sprites use crisp scaling; conversation busts render separately.
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(opts.tint ? tintedImage(image, opts.tint) : image, -ox, -oy, width, height);
     ctx.restore();
@@ -97,7 +98,8 @@ export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1
 }
 export function drawPortrait(canvas, type) {
   const ctx = canvas.getContext('2d'); canvas.width = 64; canvas.height = 68;
-  ctx.imageSmoothingEnabled = false;
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
   rect(ctx,0,0,64,68,'#e1ded0');
   rect(ctx,9,52,46,5,'#cdcdbb');
   if (CHARACTER_ART[type]?.portrait) {
@@ -128,7 +130,9 @@ export class WorldRenderer {
     const selectedPos = selected ? sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
     this.focusRoom = this.focus ? (selectedPos?.zone === 'room' ? selectedPos.room : state.selected) : null;
     if (this.view === 'exterior') { this.drawExterior(state,selectedPos,t,darkness); this.drawSpeech(state); return; }
-    rect(ctx,0,0,1200,675,'#242b24');
+    rect(ctx,0,0,1200,675,'#100d15');
+    rect(ctx,4,28,4,610,'#db2946');
+    rect(ctx,1192,36,4,594,'#eee0c7');
     for (const room of ROOMS) {
       const b = roomBounds(room, this.focusRoom); if (!b) continue;
       const base = exteriorRoomBounds(room), r = state.residents.find(r => r.room === room);
@@ -137,17 +141,18 @@ export class WorldRenderer {
       this.drawRoom(room,r,t,darkness); ctx.restore();
       const current = r ? sampleJourney(r,state.hour,ACTIONS[r.action].place) : null;
       const status = !r ? '空室' : current.zone === 'away' ? '外出中' : current.zone !== 'room' ? '移動中' : ACTIONS[r.action].label;
-      rect(ctx,b.x,b.y-23,b.w,23,r?'#48513c':'#353f34');
+      rect(ctx,b.x,b.y-23,b.w,23,'#17111d');
+      rect(ctx,b.x,b.y-23,4,23,r?'#e43250':'#665368');
       ctx.font='12px "Yu Gothic UI",sans-serif';ctx.fillStyle='#f0e7ca';ctx.textAlign='left';
       ctx.fillText(`${room}  ${r ? CHARACTERS[r.type].name : '次の住人を待っている部屋'}`,b.x+12,b.y-7);
-      ctx.textAlign='right';ctx.fillStyle='#b7c29e';ctx.fillText(status,b.x+b.w-12,b.y-7);ctx.textAlign='left';
+      ctx.textAlign='right';ctx.fillStyle='#d4bec9';ctx.fillText(status,b.x+b.w-12,b.y-7);ctx.textAlign='left';
       if(r && current.zone !== 'room') {
         ctx.font=`${this.focus?22:14}px "Yu Gothic UI",sans-serif`;ctx.fillStyle='#e9dfbd';ctx.textAlign='center';
         ctx.fillText(current.zone==='away'?'外出中。帰りを待っている。':'今は部屋の外にいる。',b.x+b.w/2,b.y+b.h*.52);
         ctx.font=`${this.focus?15:11}px "Yu Gothic UI",sans-serif`;ctx.fillStyle='#bbb897';ctx.fillText('外観モードで廊下・階段・道を見られます',b.x+b.w/2,b.y+b.h*.52+27);ctx.textAlign='left';
       }
     }
-    if (!this.focus) for (const y of [313,643]) { rect(ctx,8,y,1184,16,'#333d31');rect(ctx,8,y+1,1184,2,'#697258');ctx.fillStyle='#aeb59b';ctx.font='10px "Yu Gothic UI",sans-serif';ctx.fillText('共用廊下',16,y+12);ctx.textAlign='right';ctx.fillText('階段・屋外へ →',1180,y+12);ctx.textAlign='left'; }
+    if (!this.focus) for (const y of [313,643]) { rect(ctx,8,y,1184,16,'#17111d');rect(ctx,8,y+1,1184,2,'#b32a43');ctx.fillStyle='#e0cbbd';ctx.font='10px "Yu Gothic UI",sans-serif';ctx.fillText('共用廊下',16,y+12);ctx.textAlign='right';ctx.fillText('階段・屋外へ →',1180,y+12);ctx.textAlign='left'; }
     for (const r of state.residents) this.drawInteriorResident(state,r,t);
     this.drawSpeech(state);
   }
@@ -239,12 +244,12 @@ export class WorldRenderer {
         gradient.addColorStop(0, '#ffe8a320'); gradient.addColorStop(1, '#ffb45000');
         ctx.fillStyle = gradient; ctx.fillRect(x, y, w, h);
       }
-      rect(ctx, x, y, w, 3, '#b39a6d'); rect(ctx, x, y, 3, h, '#4b4d3d'); rect(ctx, x+w-3, y, 3, h, '#4b4d3d');
+      rect(ctx, x, y, w, 2, '#e6d6bd'); rect(ctx, x, y, 2, h, '#19111e'); rect(ctx, x+w-2, y, 2, h, '#19111e');
       return;
     }
     const palettes = { cat:['#827452','#a18b5e','#b39e6b'],rabbit:['#987573','#b9957c','#c3a68b'],fox:['#736555','#9b8061','#b59871'],wolf:['#596575','#7a7a77','#9f9279'],bear:['#7e7555','#a18b5f','#b69b6d'],mouse:['#697359','#8c8962','#a3a16e'],tanuki:['#82735e','#9c8062','#b49b75'] };
     const p = palettes[type] || ['#444a42','#62664f','#6f7256'];
-    rect(ctx,x-3,y-3,w+6,h+6,'#34372f');rect(ctx,x,y,w,h,p[0]);
+    rect(ctx,x-3,y-3,w+6,h+6,'#17111d');rect(ctx,x,y,w,h,p[0]);
     rect(ctx,x+3,y+3,w-6,73,p[1]);
     for(let i=0;i<34;i++){const px=x+4+Math.floor(noise(i,room,1)*(w-10));const py=y+5+Math.floor(noise(i,room,2)*65);rect(ctx,px,py,1,2,p[0]);}
     rect(ctx,x+2,y+3,4,74,'#73684c');rect(ctx,x+w-7,y+3,4,75,'#544f40');
@@ -299,7 +304,7 @@ export class WorldRenderer {
         const at = this.projectExterior(side < 0 ? 0 : 1000, p.y - 80 * 0.86, selectedPos);
         return { x: side < 0 ? 72 : WORLD_WIDTH - 72, y: at.y, tail: true, source: '外出中の声' };
       }
-      return { ...this.projectExterior(p.x, p.y - 80 * 0.86, selectedPos), tail: true, source: '' };
+      return { ...this.projectExterior(p.x, p.y - 80 * ((CHARACTER_ART[type]?.displayHeight||44)/44) * 0.86, selectedPos), tail: true, source: '' };
     }
     if (!absent) {
       const b = roomBounds(p.room || resident.room, this.focusRoom);
@@ -307,7 +312,7 @@ export class WorldRenderer {
       const base = exteriorRoomBounds(p.room || resident.room);
       const x = b.x + (p.x - base.x) / base.w * b.w;
       const feet = p.zone === 'hall' ? b.y + b.h + 16 : b.y + (p.y - base.y) / base.h * b.h;
-      const height = this.focus ? 300 : 144;
+      const height = (this.focus ? 300 : 144) * ((CHARACTER_ART[type]?.displayHeight||44)/44);
       return { x: x * S, y: (feet - height * 0.86) * S, tail: true, source: '' };
     }
     const source = p.zone === 'stairs' ? '階段の声' : p.zone === 'street' ? '道の声' : '外出中の声';
@@ -378,24 +383,24 @@ function drawSpeechBubble(ctx, screenX, screenY, name, text, opts) {
     }
   }
   const tipX = Math.max(left + 34, Math.min(left + w - 34, screenX));
-  const paper = '#faf5e9', ink = opts.ink || '#2c332d';
+  const paper = '#f7edd9', ink = '#241725';
   const shape = () => {
-    ctx.beginPath(); ctx.roundRect(left, top, w, h, 18);
+    ctx.beginPath();ctx.moveTo(left+10,top);ctx.lineTo(left+w,top+4);ctx.lineTo(left+w-6,top+h);ctx.lineTo(left,top+h-4);ctx.closePath();
     if (opts.tail) { ctx.moveTo(tipX-14,top+h-1);ctx.lineTo(tipX+2,top+h+tailLen);ctx.lineTo(tipX+16,top+h-1);ctx.closePath(); }
   };
-  ctx.shadowColor = '#10181155'; ctx.shadowBlur = 18; ctx.shadowOffsetY = 7;
+  ctx.shadowColor = '#100a16aa'; ctx.shadowBlur = 0; ctx.shadowOffsetX=7;ctx.shadowOffsetY = 8;
   shape(); ctx.fillStyle = paper; ctx.fill();
   ctx.shadowColor = 'transparent';
-  ctx.strokeStyle = '#3b4438'; ctx.lineWidth = 2.5;
-  ctx.beginPath();ctx.roundRect(left,top,w,h,18);ctx.stroke();
+  ctx.strokeStyle = '#17101c'; ctx.lineWidth = 3;
+  shape();ctx.stroke();
   if (opts.tail) {
     ctx.fillStyle=paper;ctx.beginPath();ctx.moveTo(tipX-14,top+h-3);ctx.lineTo(tipX+2,top+h+tailLen);ctx.lineTo(tipX+16,top+h-3);ctx.fill();
     ctx.beginPath();ctx.moveTo(tipX-14,top+h);ctx.lineTo(tipX+2,top+h+tailLen);ctx.lineTo(tipX+16,top+h);ctx.stroke();
   }
-  ctx.strokeStyle='#ffffffb3';ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(left+5,top+5,w-10,h-10,14);ctx.stroke();
+  rect(ctx,left+10,top+8,w-22,4,'#da2948');
   const textTop = header ? 62 : 18;
   if (header) {
-    ctx.fillStyle=opts.accent;ctx.beginPath();ctx.roundRect(left+pad,top+22,7,24,3);ctx.fill();
+    ctx.fillStyle='#d42645';ctx.beginPath();ctx.moveTo(left+pad+4,top+22);ctx.lineTo(left+pad+11,top+22);ctx.lineTo(left+pad+7,top+46);ctx.lineTo(left+pad,top+46);ctx.closePath();ctx.fill();
     ctx.font='700 24px "Yu Gothic UI", Meiryo, sans-serif';ctx.textBaseline='middle';ctx.fillStyle=ink;ctx.fillText(header,left+pad+19,top+34);
   }
   ctx.font=`500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;ctx.fillStyle=ink;ctx.textBaseline='top';

@@ -1,0 +1,10 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="../"><title>長文メッセージ確認</title><link rel="stylesheet" href="styles.css"><body class="game-ink"><dialog class="conversation-modal"><div id="pages-preview"></div></dialog><script type="module">
+import {eventStageHTML} from './src/event-stage.js';
+import {messagePages} from './src/message-pages.js';
+import {ACT_TWO_EVENTS} from './src/act-two.js';
+const line=ACT_TWO_EVENTS.bag.choices[0].lines.find(l=>l.text.startsWith('ルナの置き手紙'));
+const event={detail:line.text,cast:['hostess','cat'],lines:[line]},pages=messagePages(line.text);let page=0;
+const root=document.querySelector('#pages-preview');
+function draw(){root.innerHTML=eventStageHTML(event,[],0,page);}
+document.querySelector('dialog').addEventListener('click',()=>{page=(page+1)%pages.length;draw();});draw();document.querySelector('dialog').showModal();
+</script></body></html>

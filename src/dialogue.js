@@ -1,4 +1,5 @@
 import { firstActMutters } from './act-one-life.js';
+import { secondActChat,lunaMutters,lunaNearby } from './act-two-life.js';
 const NAMES = { cat: 'モク', rabbit: 'ミミ', fox: 'ホロ', wolf: 'ウル', bear: 'ゴロ', mouse: 'チリ', tanuki: 'ポン', hostess: 'ルナ', sister: 'ネム', peko: 'ペコ', ann: 'アン' };
 export const SPEECH_MS = { line: 5200, mutter: 7000 };
 
@@ -100,6 +101,7 @@ export function createTalk(latestEventId = 0) {
   return { seenEvent: latestEventId, eventId: 0, index: 0, since: 0, queue: [], mutterIndex: 0, mutterAction: '', mutterShownAt: null, currentMutter: null, bubbles: [] };
 }
 export function stepTalk(talk, state, now, stopped) {
+  if(state.actOne?.chapter===2)return stepSecondActTalk(talk,state,now,stopped);
   for (const event of state.events) {
     if (event.read || event.stageOnly || !event.lines?.length || event.id <= talk.seenEvent || event.id === talk.eventId || talk.queue.includes(event.id)) continue;
     talk.queue.push(event.id);
@@ -131,4 +133,24 @@ export function stepTalk(talk, state, now, stopped) {
   talk.currentMutter={ speaker:'cat',name:'モク',text:mokuNya(pool[talk.mutterIndex % pool.length]) };
   talk.mutterShownAt=now;talk.since=now;talk.bubbles=[talk.currentMutter];
   return talk;
+}
+
+function stepSecondActTalk(talk,state,now,stopped){
+ const delta=talk.chapterLastTime===undefined?0:Math.max(0,now-talk.chapterLastTime);talk.chapterLastTime=now;
+ if(stopped){if(talk.chapterChat)talk.chapterChat.since+=delta;if(talk.mutterShownAt!==null)talk.mutterShownAt+=delta;return talk;}
+ const scene=secondActChat(state);
+ if(talk.chapterChat&&(!scene||scene.key!==talk.chapterChat.key))talk.chapterChat=null;
+ if(!talk.chapterChat&&scene&&!heard(state,scene.key))talk.chapterChat={...scene,index:0,since:now};
+ if(talk.chapterChat){
+  const chat=talk.chapterChat;
+  if(now-chat.since>=SPEECH_MS.line){chat.index++;chat.since=now;}
+  if(chat.index<chat.lines.length){const [speaker,text]=chat.lines[chat.index];talk.bubbles=[say(speaker,text)];return talk;}
+  mark(state,chat.key);talk.chapterChat=null;talk.currentMutter=null;
+ }
+ // Never keep a remote Moku bubble after a meeting ends.
+ if(talk.currentMutter?.speaker==='cat'&&!lunaNearby(state))talk.currentMutter=null;
+ const pool=lunaMutters(state);
+ if(!pool.length){talk.currentMutter=null;talk.bubbles=[];return talk;}
+ if(talk.currentMutter&&now-talk.mutterShownAt<Math.max(SPEECH_MS.mutter,talk.currentMutter.text.length*100)){talk.bubbles=[talk.currentMutter];return talk;}
+ talk.mutterIndex++;talk.currentMutter=say('hostess',pool[talk.mutterIndex%pool.length]);talk.mutterShownAt=now;talk.bubbles=[talk.currentMutter];return talk;
 }

@@ -1,0 +1,8 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="../"><title>ミニキャラ 身長比較</title><style>body{margin:0;background:#201b25;color:#f5e8d0;font:15px sans-serif}header{padding:14px 24px}button{padding:10px 18px;margin-right:8px;cursor:pointer}canvas{display:block;width:100%;height:auto}</style><header>同じ床・同じ拡大率で比較　<button data-pose="base">基本姿勢</button><button data-pose="walk_a">歩行</button><button data-pose="chat">会話</button><button data-pose="sit">座る</button></header><canvas width="1400" height="620"></canvas><script type="module">
+import {CHARACTER_ART,loadCharacterArt} from './src/character-art.js';
+import {drawSprite} from './src/renderer.js';
+const types=['cat','hostess','fox','sister','peko','ann','patron'],names=['モク','ルナ','ホロ','ネム','ペコ','アン','トクゾウ'];let pose='base';
+const ctx=document.querySelector('canvas').getContext('2d');
+function draw(){ctx.clearRect(0,0,1400,620);ctx.fillStyle='#201b25';ctx.fillRect(0,0,1400,620);ctx.strokeStyle='#766877';for(const y of [140,240,340,440,500]){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(1400,y);ctx.stroke();}types.forEach((type,i)=>{drawSprite(ctx,type,100+i*200,500,0,'idle',300/44,1,{pose});ctx.fillStyle='#f5e8d0';ctx.textAlign='center';ctx.font='20px sans-serif';ctx.fillText(names[i],100+i*200,550);ctx.font='14px sans-serif';ctx.fillText('高さ設定 '+CHARACTER_ART[type].displayHeight,100+i*200,580);});}
+document.querySelectorAll('button').forEach(b=>b.onclick=()=>{pose=b.dataset.pose;draw();});loadCharacterArt(draw);draw();
+</script></html>

@@ -1,0 +1,11 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第二幕 バッドエンド演出確認</title><link rel="stylesheet" href="../styles.css"><body class="game-ink"><dialog class="act-modal" id="preview"></dialog><script type="module">
+import {debtEndingHTML,startDebtEnding} from '../src/debt-ending.js';
+import {rewindTransitionHTML,startRewindTransition} from '../src/rewind-transition.js';
+const modal=document.querySelector('dialog');
+modal.innerHTML=debtEndingHTML(new URLSearchParams(location.search).get('kind')==='seized'?'contract-sign':'bag-loan').replaceAll('src="assets/','src="../assets/');
+modal.showModal();
+startDebtEnding(modal.firstElementChild,()=>{
+ modal.innerHTML=rewindTransitionHTML('contract-sign',1,true,2).replaceAll('src="assets/','src="../assets/');
+ startRewindTransition(modal.firstElementChild,'contract-sign',()=>{modal.innerHTML='<section class="act-screen" style="padding:12%;color:#f6e7d0;background:#17111d"><h2 id="modal-title">巻き戻し完了</h2><p>本編では第二幕のチェックポイントに戻ります。</p><p>再読み込みで演出をもう一度確認できます。</p></section>';},false,1,57,true);
+});
+</script></body></html>

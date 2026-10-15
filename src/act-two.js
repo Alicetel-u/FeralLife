@@ -1,10 +1,12 @@
 import { saveStoryCheckpoint, storyCheckpointTarget } from './story-checkpoints.js';
 import { createActOne,advanceActOne,answerActOne } from './act-one.js';
 import {advance,addEvent,admit} from './simulation.js';
+import { actExpression } from './act-expressions.js';
+import { secondActLife } from './act-two-life.js';
 const n=text=>({speaker:'narrator',emotion:'neutral',text});
 const m=text=>({speaker:'manager',emotion:'neutral',text});
-const l=(emotion,text)=>({speaker:'hostess',emotion,text});
-const c=(emotion,text)=>({speaker:'cat',emotion,text});
+const l=(emotion,text)=>({speaker:'hostess',emotion:actExpression('hostess',text,emotion),text});
+const c=(emotion,text)=>({speaker:'cat',emotion:actExpression('cat',text,emotion),text});
 export const ACT_TWO_TITLE='第二幕「アパートを借金（ルナ）から守れ！」';
 export const ACT_TWO_EVENTS={
   bag:{at:62,title:'第一の事件：謎の届け物',call:'謎の届け物をどう受け取る？',detail:'3日目14時。金城ルナ宛てに、大きな段ボール箱が一つ届いた。',lines:[
@@ -148,6 +150,7 @@ export function beginActTwo(s){
     n('ルナはにっこり笑った。大家はまだ、その笑顔の裏に隠れた金銭事情を知らない。')
   ];
   saveStoryCheckpoint(s,'bag','第二幕の開始時点');
+ secondActLife(s);
   return s;
 }
 export const nextActTwoAt=s=>Object.entries(ACT_TWO_EVENTS).find(([id])=>!s.actOne.completed.includes(id))?.[1].at??105;
@@ -156,7 +159,9 @@ export function advanceActTwo(s,hours){
  const at=nextActTwoAt(s),end=Math.min(at,s.hour+hours);
  const scene=Object.keys(ACT_TWO_EVENTS).find(id=>!a.completed.includes(id));
 
- advance(s,Math.max(0,end-s.hour));s.pending=null;s.management.pending=null;s.management.queue=[];
+ secondActLife(s);
+ while(s.hour<end){const next=Math.min(end,(Math.floor(s.hour*4+1e-7)+1)/4),delta=next-s.hour;advance(s,delta);secondActLife(s,delta);}
+ s.pending=null;s.management.pending=null;s.management.queue=[];
  if(s.hour<at)return;
  if(scene){const ev=ACT_TWO_EVENTS[scene],e=addEvent(s,'trouble',ev.title,ev.detail,[102]);e.actScene=scene;e.cast=['hostess','cat'];e.stageOnly=true;e.lines=ev.lines.map(x=>({...x}));a.pending={scene,eventId:e.id};}
  else{a.status='clear';a.epilogueSeen=false;const e=addEvent(s,'life','第二幕 エピローグ「残った鍵」','5日目9時。アパートは今日も大家のものだった。',[102]);e.actScene='act2-epilogue';e.cast=['hostess','cat'];e.stageOnly=true;e.lines=[

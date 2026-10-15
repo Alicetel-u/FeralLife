@@ -1,11 +1,12 @@
 import { saveStoryCheckpoint, validStoryCheckpoint, storyCheckpointTarget } from './story-checkpoints.js';
 import { firstActLife } from './act-one-life.js';
+import { actExpression } from './act-expressions.js';
 import {createGame,advance,addEvent,validateSave} from './simulation.js';
 
 export const ACT_ONE_TITLE='アパートをモクから守れ！';
 export const ACT_ONE_LOOP_TITLE='アパートを火事（モク）から守れ！';
 export function actOneTitle(state){return state.actOne.attempt > 1 ? ACT_ONE_LOOP_TITLE : ACT_ONE_TITLE;}
-const actLine=(speaker,emotion,text)=>({speaker,emotion,text});
+const actLine=(speaker,emotion,text)=>({speaker,emotion:actExpression(speaker,text,emotion),text});
 const ac=(emotion,text)=>actLine('cat',emotion,text);
 const am=text=>actLine('manager','neutral',text);
 const an=text=>actLine('narrator','neutral',text);

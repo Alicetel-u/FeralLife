@@ -477,3 +477,85 @@ body.game-ink{height:100dvh;overflow:hidden}
 /* The first unavoidable fire flows into darkness without replaying the flames. */
 .rewind-screen[data-after-fire] .rewind-dark{transition:none;opacity:1}
 .rewind-screen[data-after-fire] .fire-cinematic{visibility:hidden}
+
+/* Quiet observation HUD: an angular digital clock and a single control drawer. */
+.game-ink .masthead{inset:22px 28px auto auto;width:auto;height:auto;padding:0;background:none;border:0;box-shadow:none;pointer-events:none;transform:rotate(-3deg)}
+.game-ink .masthead .brand,.game-ink .weather-icon,.game-ink .scene-label,.game-ink .scene-caption,.game-ink #playback-state{display:none}
+.game-ink .date-display{margin:0;width:auto;position:relative;padding:10px 24px 14px 18px;background:#111016;color:#fff5df;filter:drop-shadow(6px 7px 0 #0007);clip-path:polygon(5% 0,100% 4%,95% 100%,0 92%);border-top:5px solid #ee334c}
+.game-ink #day-clock{display:flex;align-items:center;gap:18px;white-space:nowrap;font-family:Arial,sans-serif}
+.game-ink #day-clock .clock-day{display:grid;grid-template-columns:auto auto;align-items:baseline;column-gap:5px;font-size:13px;font-weight:900;letter-spacing:1px;color:#f23c53;line-height:1}
+.game-ink #day-clock .clock-day em{font-size:32px;font-style:italic;color:#fff5df;letter-spacing:-2px}
+.game-ink #day-clock .clock-day small{display:block;grid-column:1 / -1;margin:5px 0 0;font:700 10px/1 sans-serif;letter-spacing:2px;color:#c7bac1}
+.game-ink #day-clock .clock-digits{font:900 italic clamp(38px,4.3vw,66px)/1 'Arial Black',Arial,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-3px;margin:0;text-shadow:3px 3px 0 #73303e}
+.game-ink .camera-toggle{display:block;position:absolute;inset:24px 24px auto auto;z-index:6;min-height:44px;padding:10px 22px;background:#151219;color:#f8edd9;border:0;border-left:5px solid #ed334d;font:900 13px/1.5 sans-serif;letter-spacing:2px;transform:skew(-8deg);box-shadow:4px 4px 0 #0005}
+.game-ink .camera-toggle:hover,.game-ink .camera-toggle[aria-expanded=true]{background:#cc263f;color:white}
+.game-ink .camera-bar,.game-ink .room-strip,.game-ink .observation-options{display:none}
+.game-ink.controls-expanded .camera-bar{display:flex;inset:86px 24px auto auto;width:min(420px,calc(100vw - 48px));padding:16px;gap:10px;z-index:6;background:#151219f5;border-left:4px solid #ed334d;box-sizing:border-box}
+.game-ink.controls-expanded .camera-tools{width:100%;margin:0;flex-wrap:wrap}
+.game-ink.controls-expanded .room-strip{display:grid;inset:250px 24px auto auto;transform:none;width:min(420px,calc(100vw - 48px));grid-template-columns:repeat(3,minmax(0,1fr));z-index:6;background:#151219f5;box-sizing:border-box}
+.game-ink.controls-expanded .observation-options{display:flex;position:absolute;inset:370px 24px auto auto;width:min(420px,calc(100vw - 48px));padding:16px;gap:16px;flex-wrap:wrap;align-items:center;z-index:6;background:#151219f5;border-left:4px solid #ed334d;box-sizing:border-box}
+.game-ink .observation-options .header-right{display:flex;width:100%;gap:16px;padding:0;border:0}.game-ink .observation-options .save-status,.game-ink .observation-options #new-game{display:inline-flex}
+.game-ink .playback{inset:113px 39px auto auto;width:44px;height:44px;padding:0;background:#151219;transform:skew(-6deg);box-shadow:3px 3px 0 #0005}
+.game-ink .playback-left{gap:0}.game-ink .pause-button{width:44px;height:44px;color:#f9edd8;font-size:18px}
+.game-ink .act-objective{inset:auto 28px 26px auto;max-width:calc(100% - 56px);padding:0;background:none;border:0;box-shadow:none;transform:rotate(-2deg)}
+.game-ink .act-objective>div{display:none}.game-ink .act-wait{padding:14px 24px;font-size:13px;background:#f4e8d1;color:#17121b;box-shadow:5px 5px 0 #c82d43;clip-path:polygon(3% 0,100% 5%,97% 100%,0 92%)}
+.game-ink .request-notice{bottom:100px}.game-ink .resident-panel{top:86px}
+.game-ink button:focus-visible{outline:3px solid #ffce6a;outline-offset:4px}
+@media(max-width:700px){.game-ink .masthead{inset:14px 12px auto auto;gap:0}.game-ink .date-display{padding:8px 15px 10px 12px}.game-ink #day-clock{gap:10px}.game-ink #day-clock .clock-digits{font-size:38px;letter-spacing:-2px}.game-ink #day-clock .clock-day em{font-size:24px}.game-ink #day-clock .clock-day{font-size:10px}.game-ink .camera-toggle{inset:18px 12px auto auto;padding:10px 14px;font-size:11px}.game-ink .playback{inset:98px 22px auto auto}.game-ink .act-objective{inset:auto 16px 22px auto;max-width:calc(100% - 32px)}.game-ink .act-wait{width:auto;min-height:44px}.game-ink.controls-expanded .camera-bar{left:auto;right:12px;top:76px}.game-ink.controls-expanded .room-strip{left:auto;right:12px;top:252px;overflow:visible}.game-ink.controls-expanded .observation-options{left:auto;right:12px;top:370px}.game-ink .request-notice{bottom:90px}}
+@media(max-height:500px){.game-ink.controls-expanded .camera-bar{width:calc(100% - 48px);top:76px}.game-ink.controls-expanded .room-strip{top:188px;width:calc(100% - 48px);grid-template-columns:repeat(6,minmax(0,1fr))}.game-ink.controls-expanded .observation-options{top:250px;width:calc(100% - 48px);padding:8px 16px;gap:8px}.game-ink .observation-options .header-right{width:auto}.game-ink .act-objective{bottom:16px}}
+/* Clock anchors the upper left; the menu opens from the upper right. */
+.game-ink .masthead{inset:22px auto auto 28px}
+.game-ink .playback{inset:113px auto auto 39px}
+@media(max-width:700px){.game-ink .masthead{inset:14px auto auto 16px}.game-ink .playback{inset:98px auto auto 22px}}
+
+/* Chapter two: paper replaces fire. Ten finite compositor-only paper motions. */
+dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;max-height:100dvh;margin:0;border:0;border-radius:0}
+.debt-cinematic{position:relative;height:100dvh;overflow:hidden;isolation:isolate;background:#110f16;color:#f9edd8}
+.debt-building{position:absolute;inset:0;animation:debt-camera 8.5s ease-out both}.debt-building img{width:100%;height:100%;object-fit:contain;filter:grayscale(.75) brightness(.7)}
+.debt-dusk{position:absolute;inset:0;background:linear-gradient(0deg,#100c18ed,#17101b30 80%);animation:debt-lights 6s steps(6,end) both}
+.debt-cinematic::before,.debt-cinematic::after{content:'';position:absolute;left:0;right:0;height:7%;background:#100d14;z-index:4}.debt-cinematic::before{top:0}.debt-cinematic::after{bottom:0}
+.debt-papers{position:absolute;inset:0;pointer-events:none}.debt-papers i{position:absolute;left:var(--x);top:-25%;width:clamp(45px,6vw,100px);height:clamp(65px,9vw,140px);padding:10px;background:#e8dcc8;border-top:6px solid #b62e44;color:#85243a;box-shadow:5px 7px 0 #0004;font:800 10px sans-serif;font-style:normal;animation:debt-paper 4s cubic-bezier(.3,.1,.6,1) both;animation-delay:calc(.4s + var(--paper)*.16s)}
+.debt-papers i:nth-child(even){background:#b92a43;color:#f6dfce;animation-name:debt-paper-reverse}.debt-papers span{display:block;height:3px;margin-top:9px;background:currentColor;opacity:.4}.debt-papers span:last-child{width:60%}
+.debt-sign{position:absolute;left:50%;top:46%;width:min(72vw,820px);padding:25px 30px;text-align:center;background:#e9dfca;color:#a72039;border:7px solid #171019;box-shadow:12px 15px 0 #0008;transform:translate(-50%,-50%) rotate(-9deg);animation:debt-stamp .5s 2.8s both cubic-bezier(.16,.85,.25,1.1)}
+.debt-sign small{font:900 clamp(8px,1vw,12px)/1.5 sans-serif;letter-spacing:.3em;color:#211725}.debt-sign h2{font:900 italic clamp(42px,10vw,130px)/1.1 'Arial Black',sans-serif;letter-spacing:-.04em;margin:8px 0;border-block:3px solid #a72039}.debt-sign p{font:900 clamp(16px,2.4vw,30px)/1.5 sans-serif;margin:5px}.debt-sign>span{display:block;font:800 12px sans-serif;letter-spacing:.5em;color:#211725}
+.debt-seal{position:absolute;right:10%;bottom:20%;padding:10px 25px;background:#b72a42;color:#fff0d9;border:3px double #f1dec8;font:900 clamp(18px,3vw,38px)/1.3 sans-serif;letter-spacing:.15em;transform:rotate(8deg);animation:debt-seal .3s 5.5s both}
+.debt-caption{position:absolute;left:8%;bottom:10%;margin:0;font:800 12px sans-serif;letter-spacing:.3em;animation:debt-seal .5s 6s both}
+.debt-next{position:absolute;right:4%;bottom:3%;z-index:5;background:#17121d;color:#fff0dc;border:1px solid #a68c92;padding:12px 20px;font:700 12px sans-serif;min-height:44px;cursor:pointer}
+.debt-hidden *{animation-play-state:paused!important}
+@keyframes debt-camera{from{transform:scale(1.035)}to{transform:scale(1)}}
+@keyframes debt-lights{from{opacity:0}to{opacity:1}}
+@keyframes debt-paper{0%{transform:translate3d(-30vw,0,0) rotate(-35deg);opacity:0}12%{opacity:1}to{transform:translate3d(20vw,145vh,0) rotate(190deg);opacity:0}}
+@keyframes debt-paper-reverse{0%{transform:translate3d(30vw,0,0) rotate(30deg);opacity:0}12%{opacity:1}to{transform:translate3d(-25vw,145vh,0) rotate(-150deg);opacity:0}}
+@keyframes debt-stamp{0%{opacity:0;transform:translate(-50%,-50%) rotate(-17deg) scale(2)}65%{opacity:1;transform:translate(-50%,-50%) rotate(-8deg) scale(.97)}to{opacity:1;transform:translate(-50%,-50%) rotate(-9deg) scale(1)}}
+@keyframes debt-seal{from{opacity:0;scale:1.2}to{opacity:1;scale:1}}
+@media(max-width:700px){.debt-sign{width:86vw;padding:15px;border-width:5px}.debt-sign h2{font-size:clamp(38px,12vw,80px)}.debt-seal{right:8%;bottom:25%}.debt-caption{bottom:15%;font-size:10px}}
+@media(prefers-reduced-motion:reduce){.debt-cinematic *{animation:none!important}.debt-papers{display:none}.debt-dusk{opacity:1}}
+@media(max-width:400px){.game-ink .date-display{padding:8px 12px}.game-ink #day-clock{gap:8px}.game-ink #day-clock .clock-digits{font-size:30px}.game-ink #day-clock .clock-day em{font-size:21px}.game-ink .camera-toggle{padding:10px;font-size:10px;letter-spacing:1px}}
+/* Larger observation clock, with compact sizing retained on narrow screens. */
+.game-ink #day-clock{gap:22px}
+.game-ink #day-clock .clock-digits{font-size:clamp(58px,6vw,92px);letter-spacing:-4px}
+.game-ink #day-clock .clock-day{font-size:16px}
+.game-ink #day-clock .clock-day em{font-size:42px}
+.game-ink #day-clock .clock-day small{font-size:12px}
+.game-ink .date-display{padding:14px 30px 18px 22px}
+.game-ink .playback{top:150px}
+@media(max-width:700px){.game-ink #day-clock{gap:12px}.game-ink #day-clock .clock-digits{font-size:48px;letter-spacing:-2px}.game-ink #day-clock .clock-day{font-size:12px}.game-ink #day-clock .clock-day em{font-size:29px}.game-ink #day-clock .clock-day small{font-size:10px}.game-ink .date-display{padding:10px 18px 12px 14px}.game-ink .playback{top:116px}}
+@media(max-width:400px){.game-ink #day-clock{gap:8px}.game-ink #day-clock .clock-digits{font-size:38px}.game-ink #day-clock .clock-day{font-size:10px}.game-ink #day-clock .clock-day em{font-size:24px}.game-ink .date-display{padding:8px 12px}.game-ink .playback{top:104px}}
+/* Dialogue advances directly; keep the auxiliary toolbar out of the scene. */
+.game-ink .conversation-modal .event-toolbar{display:none}
+/* Message text is paged, never scrollable. */
+.game-ink .conversation-modal .stage-bubble p{overflow:hidden;max-height:none}
+.message-continuation{position:absolute;right:12%;bottom:5.5%;z-index:5;color:#f5dfc0;font:700 11px/1.4 sans-serif;letter-spacing:.06em;pointer-events:none}
+@media(max-width:700px) and (min-height:501px){.game-ink .conversation-modal .stage-bubble,.game-ink .conversation-modal .stage-bubble.narration{height:max(33%,210px);padding-bottom:30px}}
+@media(max-height:500px){.game-ink .conversation-modal .stage-bubble,.game-ink .conversation-modal .stage-bubble.narration{height:42%;padding:36px 24px 24px}.game-ink .conversation-modal .stage-bubble p{font-size:16px;line-height:1.5}.message-continuation{bottom:5%;font-size:10px}}
+/* Event headings sit to the right of the observation clock. */
+.game-ink .conversation-modal .trouble-card,.game-ink .conversation-modal .trouble-card:not(.slam){left:auto;right:4%;top:clamp(86px,12vh,125px);width:min(520px,46%);max-width:none;transform:none;text-align:right}
+.game-ink .conversation-modal .trouble-card .trouble-bang{display:inline-block;font-size:clamp(12px,1.4vw,20px);margin:0 8px 10px 0}
+.game-ink .conversation-modal .trouble-card .trouble-name{font-size:clamp(16px,2vw,30px);line-height:1.5;margin:0;padding:8px 16px;background:#17121de8;border-right:4px solid #df304c;text-shadow:none;overflow-wrap:anywhere}
+@media(max-width:700px) and (min-height:501px){.game-ink .conversation-modal .trouble-card,.game-ink .conversation-modal .trouble-card:not(.slam){top:150px;left:5%;right:5%;width:90%;text-align:center}.game-ink .conversation-modal .trouble-card .trouble-name{font-size:16px}.game-ink .conversation-modal .trouble-card .trouble-bang{font-size:12px}}
+@media(max-height:500px){.game-ink .conversation-modal .trouble-card,.game-ink .conversation-modal .trouble-card:not(.slam){top:76px;right:3%;width:43%}.game-ink .conversation-modal .trouble-card .trouble-name{font-size:14px;padding:6px 10px}.game-ink .conversation-modal .trouble-card .trouble-bang{font-size:11px;margin-bottom:6px}}
+/* Observation surround shares the clock's ink-and-paper visual language. */
+.game-ink .scene{background:#100d15}
+.game-ink .scene::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,#d7284638 0 1.2%,transparent 1.2% 98.7%,#f3dfbf24 98.7%);z-index:1}
+.game-ink .room-strip,.game-ink .camera-bar,.game-ink .observation-options{color:#f5e7cf}
+.game-ink .act-wait{border-left:4px solid #e22e4b;letter-spacing:.04em}

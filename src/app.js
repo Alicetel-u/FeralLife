@@ -1,4 +1,5 @@
 import { storyCheckpointTarget } from './story-checkpoints.js';
+import { messagePages } from './message-pages.js';
 import { replaceConversationContent } from './conversation-dom.js';
 import { speakerColorStyle } from './speaker-colors.js';
 import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './trouble-victory.js';
@@ -8,6 +9,7 @@ import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition, automaticFirstRewind } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
+import { debtEndingHTML, startDebtEnding } from './debt-ending.js';
 import { createGame, advance, admit, addEvent, ROOMS, CHARACTERS, NEEDS, ACTIONS, dateAt, formatTime, atmosphere, validateSave } from './simulation.js';
 import { createTalk, stepTalk, claimAutomaticScene, rememberReadScenes } from './dialogue.js';
 import { WorldRenderer, roomBounds, drawPortrait } from './renderer.js';
@@ -32,11 +34,15 @@ const yen = n => '¥' + Math.round(n).toLocaleString('ja-JP');
 const STORAGE = 'feral-act-one-v1';
 const previewType = new URLSearchParams(location.search).get('preview');
 const eventPreview = previewType === 'events';
+const actTwoPreview = previewType === 'act-two';
+const firstRewindPreview = previewType === 'first-rewind';
 const previewResident = ['hostess', 'fox', 'sister', 'peko', 'ann'].includes(previewType) ? previewType : null;
 let state, restored = false;
-try { const saved = previewResident || eventPreview ? null : JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(saved) && validActOne(saved)) { state = saved; restored = true; } } catch {}
+try { const saved = previewResident || eventPreview || actTwoPreview || firstRewindPreview ? null : JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(saved) && validActOne(saved)) { state = saved; restored = true; } } catch {}
 state ||= previewResident || eventPreview ? createGame() : createActOne();
 ensureManagement(state);
+if(firstRewindPreview){state.actOne.started=true;advanceActOne(state,100);answerActOne(state,state.actOne.pending.eventId,'trash');state.events.forEach(e=>e.read=true);}
+if(actTwoPreview){beginActTwo(state);state.actOne.started=true;state.actOne.titlePending=false;state.actOne.prologuePending=false;advanceActTwo(state,2.25);state.events.forEach(e=>e.read=true);}
 if(eventPreview) {
   for(const type of ['hostess','fox','sister','peko','ann']) {state.pending=[type];admit(state,type);}
   state.hour=100;
@@ -86,7 +92,7 @@ if(state.actOne){
 let autoFollow = true, cameraKey = '';
 
 function updateCamera() {
-  if(autoFollow&&state.actOne&&state.actOne.chapter!==2){const moku=state.residents.find(r=>r.type==='cat');if(moku)state.selected=moku.room;}
+  if(autoFollow&&state.actOne){const lead=state.residents.find(r=>r.type===(state.actOne.chapter===2?'hostess':'cat'));if(lead)state.selected=lead.room;}
   const r = state.residents.find(r => r.room === state.selected);
   const p = r ? sampleJourney(r,state.hour,ACTIONS[r.action].place) : null;
   if (autoFollow) { renderer.view = p && p.zone !== 'room' ? 'exterior' : 'interior'; renderer.focus = true; }
@@ -102,6 +108,8 @@ function setInspector(open) {
 }
 
 function save() {
+  if(firstRewindPreview){$('save-status').textContent='○ 第一幕巻き戻し確認用（保存なし）';return;}
+  if(actTwoPreview){$('save-status').textContent='○ 第二幕観察確認用（保存なし）';return;}
   if(eventPreview) { $('save-status').textContent='○ イベント確認用（保存なし）';return; }
   if (previewResident) { $('save-status').textContent = `○ ${CHARACTERS[previewResident].name.split(' ')[1]}確認用（保存なし）`; return; }
   try { localStorage.setItem(STORAGE, JSON.stringify(state)); $('save-status').textContent = '● 自動保存'; }
@@ -169,7 +177,7 @@ function updateUI() {
   $('request-notice').hidden=!management.pending||!!state.ending;}
   if(management.pending) $('request-title').textContent=MANAGEMENT_CASES[management.pending.caseId].call||MANAGEMENT_CASES[management.pending.caseId].title;
   const d = dateAt(state.hour), clock = `${String(d.hour).padStart(2,'0')}:${String(d.minute).padStart(2,'0')}`;
-  $('day-clock').innerHTML = `${d.day}日目 <span>${clock}</span>`;
+  $('day-clock').innerHTML = `<b class="clock-day">DAY <em>${String(d.day).padStart(2,'0')}</em><small>${d.day}日目</small></b><span class="clock-digits">${clock}</span>`;
   const timeLabel = d.hour >= 20 || d.hour < 5 ? '夜更け' : d.hour < 10 ? '朝' : d.hour < 16 ? '昼下がり' : '夕暮れ';
   $('time-label').textContent = `${timeLabel} · ${state.ending ? '観察終了' : 'けもの荘'}`;
   $('weather-icon').textContent = d.hour >= 19 || d.hour < 6 ? '☾' : '☀';
@@ -237,7 +245,7 @@ function openNextStageEvent() {
     if (event && !event.read && claimAutomaticScene(state,event)) { showEvent(id); return; }
   }
 }
-function showEvent(id,index=null) {
+function showEvent(id,index=null,page=0) {
   const e = state.events.find(e => e.id === Number(id)); if (!e) return;
   if (e.stageOnly || e.lines?.length) {
     seenStageId = Math.max(seenStageId, e.id);
@@ -246,8 +254,9 @@ function showEvent(id,index=null) {
   }
   e.read = true; rememberReadScenes(state); save(); updateJournal();
   if (!state.actOne && state.ending && e.id === state.events[0].id) { showEnding(); return; }
-  const lines=eventConversation(e),cursor=Math.max(0,Math.min(index ?? (e.choicePresented?lines.length-1:0),lines.length-1)),last=cursor===lines.length-1;
-  eventView={id:e.id,index:cursor};
+  const lines=eventConversation(e),cursor=Math.max(0,Math.min(index ?? (e.choicePresented?lines.length-1:0),lines.length-1));
+  const pages=messagePages(lines[cursor].text),pageIndex=Math.min(page,pages.length-1),last=cursor===lines.length-1&&pageIndex===pages.length-1;
+  eventView={id:e.id,index:cursor,page:pageIndex};
   if(['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending){state.actOne.rewindIntroCursor=cursor;save();}
   if(['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen){state.actOne.epilogueCursor=cursor;save();}
   const waiting=!state.ending&&(state.actOne?state.actOne.pending?.eventId===e.id:state.management.pending?.eventId===e.id);
@@ -257,7 +266,7 @@ function showEvent(id,index=null) {
   const trouble=c?.call&&e.kind==='trouble'?troubleCardHTML(c.call,waiting&&cursor===0):'';
   const forward=last&&e.actScene==='act2-prologue'&&state.actOne.prologuePending?'<button class="primary-button" data-act2-prologue-done aria-label="第二幕へ">'+eventIcon('next')+'</button>':last&&['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'<button class="primary-button" data-epilogue-done aria-label="第一幕を終える">'+eventIcon('next')+'</button>':last&&['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'<button class="primary-button" data-rewind-resume aria-label="観察を再開">'+eventIcon('next')+'</button>':last&&e.actScene==='prologue'?'<button class="primary-button" data-opening="3" aria-label="タイトル演出へ進む">'+eventIcon('next')+'</button>':last?(waiting?'<button class="event-return" data-close>返事は後で</button>':state.pending&&e.kind==='arrival'&&!e.rooms.length?'<button class="event-return" data-show-candidates>申込書を見る</button>':`<button class="primary-button" data-close aria-label="観察に戻る">${eventIcon('next')}</button>`):`<button class="primary-button" data-dialogue-next aria-label="次のセリフ">${eventIcon('next')}</button>`;
   const toolbar=`<nav class="event-toolbar" aria-label="会話の操作"><button data-event-auto aria-pressed="${eventAuto}">${eventIcon('play')}<span>AUTO</span></button><button data-event-skip ${last?'disabled':''}>${eventIcon('skip')}<span>SKIP</span></button><button data-event-log aria-expanded="false">${eventIcon('log')}<span>LOG</span></button><button data-event-hide>${eventIcon('hide')}<span>HIDE</span></button><button data-event-menu aria-expanded="false">${eventIcon('menu')}<span>MENU</span></button></nav>`;
-  openModal(`<h2 id="modal-title" class="conversation-title">${escape(c?.call&&e.kind==='trouble'?c.call:e.title)}</h2><div class="conversation-body" ${e.actScene==='prologue'?'data-prologue':e.actScene==='rewind'&&state.actOne.rewindIntroPending?'data-rewind-intro':''}>${trouble}${eventStageHTML(e,state.residents,cursor)}${choices}${toolbar}<details class="conversation-log"><summary>会話履歴を閉じる</summary>${lines.map(l=>`<p style="${speakerColorStyle(l)}"><strong>${escape(l.memoryVoice?'大家（過去の声）':l.innerVoice?'大家（心の声）':l.speaker==='mystery'?'謎の声':CHARACTERS[l.speaker]?.name||(l.speaker==='manager'?'管理人':'記録'))}</strong> ${escape(l.text)}</p>`).join('')}</details><div class="event-menu" hidden><button data-dialogue-back ${cursor===0?'disabled':''}>前のセリフへ</button><button data-event-menu>会話を続ける</button><button ${e.actScene==='act2-prologue'&&state.actOne.prologuePending?'data-act2-prologue-done':e.actScene==='prologue'?'data-opening="3"':['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'data-epilogue-done':['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'data-rewind-resume':'data-close'}>${e.actScene==='act2-prologue'&&state.actOne.prologuePending?'第二幕へ進む':e.actScene==='prologue'?'タイトル演出へ進む':['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'幕を終える':e.actScene==='rewind'&&state.actOne.rewindIntroPending?'観察を再開':waiting?'返事を保留して観察へ':'観察画面に戻る'}</button></div></div><div class="modal-footer">${forward}</div><button class="event-restore" data-event-hide hidden aria-label="会話UIを再表示">${eventIcon('hide')} 表示を戻す</button>`);
+  openModal(`<h2 id="modal-title" class="conversation-title">${escape(c?.call&&e.kind==='trouble'?c.call:e.title)}</h2><div class="conversation-body" ${e.actScene==='prologue'?'data-prologue':e.actScene==='rewind'&&state.actOne.rewindIntroPending?'data-rewind-intro':''}>${trouble}${eventStageHTML(e,state.residents,cursor,pageIndex)}${choices}${toolbar}<details class="conversation-log"><summary>会話履歴を閉じる</summary>${lines.map(l=>`<p style="${speakerColorStyle(l)}"><strong>${escape(l.memoryVoice?'大家（過去の声）':l.innerVoice?'大家（心の声）':l.speaker==='mystery'?'謎の声':CHARACTERS[l.speaker]?.name||(l.speaker==='manager'?'管理人':'記録'))}</strong> ${escape(l.text)}</p>`).join('')}</details><div class="event-menu" hidden><button data-dialogue-back ${cursor===0?'disabled':''}>前のセリフへ</button><button data-event-menu>会話を続ける</button><button ${e.actScene==='act2-prologue'&&state.actOne.prologuePending?'data-act2-prologue-done':e.actScene==='prologue'?'data-opening="3"':['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'data-epilogue-done':['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'data-rewind-resume':'data-close'}>${e.actScene==='act2-prologue'&&state.actOne.prologuePending?'第二幕へ進む':e.actScene==='prologue'?'タイトル演出へ進む':['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'幕を終える':e.actScene==='rewind'&&state.actOne.rewindIntroPending?'観察を再開':waiting?'返事を保留して観察へ':'観察画面に戻る'}</button></div></div><div class="modal-footer">${forward}</div><button class="event-restore" data-event-hide hidden aria-label="会話UIを再表示">${eventIcon('hide')} 表示を戻す</button>`);
   modal.classList.toggle('choice-mode',Boolean(choices));
   if(choices){e.choicePresented=true;save();}
   cleanupChoiceUI=mountChoiceUI(modal,state.actOne?.chapter===2?'hostess':'cat');
@@ -270,15 +279,15 @@ function scheduleEventAuto(){
   if(!eventAuto||!modal.open||!modal.classList.contains('conversation-modal')||!eventView)return;
   const current=state.events.find(e=>e.id===eventView.id),lines=current?eventConversation(current):[];
   if(!lines.length)return;
-  const last=eventView.index>=lines.length-1;
+  const last=eventView.index>=lines.length-1&&eventView.page>=messagePages(lines[eventView.index].text).length-1;
   const waiting=state.actOne?state.actOne.pending?.eventId===current.id:state.management.pending?.eventId===current.id;
   if(last&&waiting)return;
   eventAutoTimer=setTimeout(()=>{
     if(document.hidden||modal.classList.contains('event-ui-hidden')||modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden){scheduleEventAuto();return;}
     if(last){
       modal.querySelector('.modal-footer .primary-button')?.click();
-    }else showEvent(eventView.id,eventView.index+1);
-  },Math.max(2500,(lines[eventView.index].text.length*75)+1200));
+    }else advanceConversation();
+  },Math.max(2500,(messagePages(lines[eventView.index].text)[eventView.page].length*75)+1200));
 }
 
 function managementMeters() {
@@ -374,9 +383,14 @@ function showActEnding(afterFire=false){
   if(!a.epilogueSeen){const epilogue=state.events.find(e=>e.actScene==='epilogue');if(epilogue){showEvent(epilogue.id,a.epilogueCursor||0);return;}}
   openModal(`<section class="act-screen act-clear" data-chapter="1"><img class="ending-character" src="${EVENT_EXPRESSIONS.cat.happy}" alt="灰田モク"><div class="act-ending-copy"><p class="act-kicker">FIRST ACT COMPLETE</p><h2 id="modal-title">第一幕・完</h2><p class="act-ending-story">けもの荘は、今日も燃えずに済んだ。</p><button class="act-primary" data-act-reward>第二幕プロローグへ <span>→</span></button><button class="act-secondary" data-act-replay>第一幕をもう一度遊ぶ</button></div></section>`);
 }
-function showActTwoEnding(){
+function showActTwoEnding(afterCinematic=false){
  const a=state.actOne;
  if(a.status==='bad'){
+  if(!afterCinematic){
+   openModal(debtEndingHTML(a.failure));
+   stopFireEnding=startDebtEnding(modal.querySelector('.debt-cinematic'),()=>showActTwoEnding(true));
+   return;
+  }
   const choice=Object.values(ACT_TWO_EVENTS).flatMap(v=>v.choices).find(v=>v.bad===a.failure);
   openModal(`<section class="act-screen act-burn" data-chapter="2"><div class="ending-building" aria-hidden="true"><img src="assets/apartments.png" alt=""></div><img class="ending-character" src="${EVENT_EXPRESSIONS.hostess.sad}" alt="金城ルナ"><div class="act-ending-copy"><p class="act-kicker">BAD END / 第二幕 · ${a.attempt}周目</p><h2 id="modal-title">${a.failure?.startsWith("bag-")?"夜 逃 げ":"差 し 押 さ え"}</h2><p class="act-ending-story">${escape(state.ending.text)}</p><p class="act-clue">${escape(choice?.clue||'契約書はよく読む。')}</p><p>大家「……アパートまで失ってたまるか！ 次こそは！」</p><button class="act-primary" data-act2-rewind>直前のチェックポイントへ戻る ↶</button></div></section>`);return;
  }
@@ -387,12 +401,14 @@ function showActReward(){
   openModal(header('第二幕 PROLOGUE / 新しい住人','一枚の申込書が、けもの荘に届いた。',false)+`<div class="modal-body"><p class="modal-copy">けもの荘に届いた、一枚の入居申込書。</p><p class="modal-copy">果たして、新たな住人はどんな人物なのか。そして、モクとの共同生活はどうなってしまうのか——。</p><p class="modal-copy">第二幕の物語は、これから始まる。</p></div><div class="modal-footer"><button class="primary-button" data-act-replay>第一幕をもう一度遊ぶ →</button></div>`);
 }
 function beginRewind(afterFire=false){
+  const secondAct=state.actOne.chapter===2;
+  afterFire=afterFire||secondAct;
   const failure=state.actOne.failure;
   const rollbackHour=storyCheckpointTarget(state).hour;
-  openModal(rewindTransitionHTML(failure,state.actOne.attempt,afterFire));
+  openModal(rewindTransitionHTML(failure,state.actOne.attempt,afterFire,secondAct?2:1));
   const sound=$('sound-button').getAttribute('aria-pressed')==='true';
   if(audio?.state==='running')audio.suspend().catch(()=>{});
-  const stopTransition=startRewindTransition(modal.querySelector('.rewind-screen'),failure,()=>resetActState(rewindBeforeFire(state),true),sound,state.actOne.attempt,rollbackHour,afterFire);
+  const stopTransition=startRewindTransition(modal.querySelector('.rewind-screen'),failure,()=>resetActState(secondAct?rewindActTwo(state):rewindBeforeFire(state),true),sound,state.actOne.attempt,rollbackHour,afterFire);
   stopFireEnding=()=>{stopTransition();if(sound&&audio?.state==='suspended')audio.resume().catch(()=>{});};
 }
 function resetActState(next,resume=false){
@@ -425,12 +441,11 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-act-start')){state.actOne.started=true;state.actOne.rewindTitlePending=false;save();closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();}
   if(button.hasAttribute('data-act-wait')&&state.actOne?.status==='playing'&&!state.actOne.pending){(state.actOne.chapter===2?advanceActTwo(state,nextActTwoAt(state)-state.hour):advanceActOne(state,nextActOneAt(state)-state.hour));queueFreshStageEvents();updateUI();save();if(state.ending)showActEnding();else openNextStageEvent();}
   if(button.hasAttribute('data-act-rewind')&&state.actOne?.status==='bad')beginRewind();
-  if(button.hasAttribute('data-rewind-skip')&&state.actOne?.status==='bad')resetActState(rewindBeforeFire(state),true);
   if(button.hasAttribute('data-act2-prologue-done')&&state.actOne?.chapter===2){state.actOne.prologuePending=false;const intro=state.events.find(e=>e.actScene==='act2-prologue');if(intro)intro.read=true;save();closeModal();openNextStageEvent();}
   if(button.hasAttribute('data-rewind-resume')&&state.actOne?.rewindIntroPending){state.actOne.rewindIntroPending=false;const intro=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-rewind':'rewind'));if(intro)intro.read=true;save();closeModal();}
   if(button.hasAttribute('data-epilogue-done')&&state.actOne?.status==='clear'){state.actOne.epilogueSeen=true;const ep=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-epilogue':'epilogue'));if(ep)ep.read=true;save();showActEnding();}
   if(button.hasAttribute('data-act-reward')&&state.actOne?.status==='clear')resetActState(beginActTwo(state));
-  if(button.hasAttribute('data-act2-rewind')&&state.actOne?.chapter===2&&state.actOne.status==='bad')resetActState(rewindActTwo(state));
+  if(button.hasAttribute('data-act2-rewind')&&state.actOne?.chapter===2&&state.actOne.status==='bad')beginRewind(true);
   if(button.hasAttribute('data-act2-finish'))openModal(header('TO BE CONTINUED','第三幕、準備中。',false)+'<div class="modal-footer"><button class="primary-button" data-act-replay>最初から遊ぶ</button></div>');
   if(button.hasAttribute('data-act-replay'))resetActState(createActOne());
   if(button.dataset.actAdmit&&state.actOne?.status==='clear'&&!state.actOne.reward&&['hostess','fox'].includes(button.dataset.actAdmit)){state.actOne.reward=button.dataset.actAdmit;save();showActReward();}
@@ -445,8 +460,11 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-event-log')){const log=modal.querySelector('.conversation-log');if(log){log.open=!log.open;button.setAttribute('aria-expanded',String(log.open));}}
   if(button.hasAttribute('data-event-hide')){const hidden=modal.classList.toggle('event-ui-hidden');modal.querySelector('.event-restore').hidden=!hidden;}
   if(button.hasAttribute('data-event-menu')){const menu=modal.querySelector('.event-menu');if(menu){menu.hidden=!menu.hidden;modal.querySelector('.event-toolbar [data-event-menu]').setAttribute('aria-expanded',String(!menu.hidden));}}
-  if(button.hasAttribute('data-dialogue-next')&&eventView)showEvent(eventView.id,eventView.index+1);
-  if(button.hasAttribute('data-dialogue-back')&&eventView)showEvent(eventView.id,eventView.index-1);
+  if(button.hasAttribute('data-dialogue-next')&&eventView)advanceConversation();
+  if(button.hasAttribute('data-dialogue-back')&&eventView){
+    if(eventView.page>0)showEvent(eventView.id,eventView.index,eventView.page-1);
+    else showEvent(eventView.id,eventView.index-1);
+  }
   if(button.dataset.choice){
     const current=state.events.find(e=>e.id===Number(button.dataset.caseEvent));
     if(eventView?.id===current?.id&&eventView.index===eventConversation(current).length-1){
@@ -473,6 +491,8 @@ function advanceConversation(){
   if(modal.classList.contains('event-ui-hidden')||modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden)return false;
   const current=state.events.find(x=>x.id===eventView.id);
   if(!current)return false;
+  const pages=messagePages(eventConversation(current)[eventView.index].text);
+  if(eventView.page<pages.length-1){showEvent(eventView.id,eventView.index,eventView.page+1);return true;}
   if(eventView.index<eventConversation(current).length-1){showEvent(eventView.id,eventView.index+1);return true;}
   // A final line uses the same action as the visible next button. Choices stay manual.
   const waiting=state.actOne?state.actOne.pending?.eventId===current.id:state.management.pending?.eventId===current.id;
@@ -488,7 +508,20 @@ document.addEventListener('keydown',e=>{
   if(e.repeat||e.altKey||e.ctrlKey||e.metaKey||!['Enter','Space'].includes(e.code)||document.activeElement?.closest('button, summary, input, textarea, select, a, [contenteditable]'))return;
   if(advanceConversation())e.preventDefault();
 });
-$('camera-toggle').onclick=()=>{const open=document.body.classList.toggle('controls-expanded');$('camera-toggle').setAttribute('aria-expanded',String(open));};
+const observationOptions=document.createElement('div');
+observationOptions.id='observation-options';
+observationOptions.className='observation-options';
+document.querySelector('.observation').append(observationOptions);
+observationOptions.append(document.querySelector('.header-right'),document.querySelector('.speed-group'),$('sound-button'));
+const setObservationMenu=open=>{
+  document.body.classList.toggle('controls-expanded',open);
+  $('camera-toggle').setAttribute('aria-expanded',String(open));
+  $('camera-toggle').textContent=open?'× CLOSE':'☰ MENU';
+  [$('camera-controls'),$('room-strip'),observationOptions].forEach(panel=>{panel.inert=!open;});
+};
+setObservationMenu(false);
+$('camera-toggle').onclick=()=>setObservationMenu(!document.body.classList.contains('controls-expanded'));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('controls-expanded')){setObservationMenu(false);$('camera-toggle').focus();}});
 $('pause-button').onclick=()=>{paused=!paused;updateUI();};
 $('help-button').onclick=showHelp;
 $('scene-notice').onclick=showCandidates;
@@ -522,7 +555,7 @@ function frame(now){
   const seconds=Math.min(.25,Math.max(0,(now-lastTime)/1000));lastTime=now;
   if(document.hidden){renderer.last=now;requestAnimationFrame(frame);return;}
   const stopped=paused||modal.open||!!state.ending;
-  if(!stopped){if(state.actOne)(state.actOne.chapter===2?advanceActTwo(state,seconds*speed/10):advanceActOne(state,seconds*speed/10));else advance(state,seconds*speed/10);}
+  if(!stopped&&!talk.chapterChat){if(state.actOne)(state.actOne.chapter===2?advanceActTwo(state,seconds*speed/10):advanceActOne(state,seconds*speed/10));else advance(state,seconds*speed/10);}
   queueFreshStageEvents();
   stepTalk(talk, state, now, stopped);
   updateCamera();
@@ -539,6 +572,7 @@ function frame(now){
 syncStageCursor();
 updateCamera();updateRooms();updateUI();updateJournal();save();requestAnimationFrame(frame);
 if(restored)toast('前回の観察記の続きから。住人たちは、ここで待っていました。');
-if(state.actOne)showGameTitle();
+if(firstRewindPreview)showActEnding();
+else if(state.actOne&&!actTwoPreview)showGameTitle();
 document.documentElement.classList.remove('game-booting');
 document.getElementById('boot-screen')?.remove();
