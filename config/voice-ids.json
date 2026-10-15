@@ -1,0 +1,18 @@
+{
+  "provider": "elevenlabs",
+  "characters": {
+    "cat": {
+      "name": "モク",
+      "voiceId": "LKxkO9LRDlHs9Bn5f0J2",
+      "status": "selected-unverified"
+    },
+    "manager": {
+      "name": "大家",
+      "voiceId": null
+    },
+    "hostess": {
+      "name": "ルナ",
+      "voiceId": null
+    }
+  }
+}
