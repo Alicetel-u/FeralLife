@@ -94,7 +94,6 @@ dialog.conversation-modal::backdrop{background:transparent;backdrop-filter:none}
 .conversation-modal #modal-content,.conversation-modal .conversation-body{height:100%;padding:0;position:relative}
 .trouble-card{position:absolute;z-index:8;left:50%;top:7%;width:min(92%,820px);transform:translateX(-50%);text-align:center;pointer-events:none}
 .trouble-bang{position:relative;display:inline-block;margin:0;padding:.12em .7em .08em;color:#fff8ef;background:#c4232a;border:4px solid #fff6ee;box-shadow:7px 7px 0 #3a1012;font:900 4.4cqw/1 var(--serif);letter-spacing:.18em;text-shadow:3px 3px 0 #5c1216;transform:rotate(-7deg)}
-.trouble-card.slam{top:50%;transform:translate(-50%,-50%)}
 .trouble-card.slam .trouble-bang{animation:trouble-slam .48s cubic-bezier(.15,1.35,.35,1) both}
 .trouble-name{margin:.45em 0 0;color:#fff4cc;font:900 3.3cqw/1.25 var(--serif);letter-spacing:.06em;text-shadow:0 3px 0 #4a1612,0 0 16px #000c}
 .trouble-card.slam .trouble-name{animation:trouble-title .42s .22s ease-out both}
