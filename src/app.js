@@ -10,7 +10,7 @@ import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo
 import { rewindTransitionHTML, startRewindTransition, automaticFirstRewind } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
 import { debtEndingHTML, startDebtEnding } from './debt-ending.js';
-import { createNormalBgm } from './bgm.js';
+import { bedCue, createNormalBgm } from './bgm.js';
 import { createGame, advance, admit, addEvent, ROOMS, CHARACTERS, NEEDS, ACTIONS, dateAt, formatTime, atmosphere, validateSave } from './simulation.js';
 import { createTalk, stepTalk, claimAutomaticScene, rememberReadScenes } from './dialogue.js';
 import { WorldRenderer, roomBounds, drawPortrait } from './renderer.js';
@@ -551,8 +551,8 @@ function syncNormalBgm(){
   const bad=!clock&&modal.open&&!modal.querySelector('.act-title')&&!!modal.querySelector('.fire-cinematic,.debt-cinematic,.act-burn,.rewind-screen');
   const title=!bad&&!clock&&modal.open&&!!modal.querySelector('.game-title,.title-help');
   const activeDialogue=modal.open&&modal.classList.contains('conversation-modal')?state.events.find(e=>e.id===eventView?.id):null;
-   const trouble=!bad&&!clock&&!title&&modal.open&&(!!modal.querySelector('.trouble-card')||activeDialogue?.actScene==='reply'||!!modal.querySelector('.trouble-victory'));
-  return normalBgm.setScene(document.hidden, clock?'clock':bad?'bad':title?'title':trouble?'trouble':'normal');
+  const trouble=!bad&&!clock&&!title&&modal.open&&(!!modal.querySelector('.trouble-card')||activeDialogue?.actScene==='reply'||!!modal.querySelector('.trouble-victory'));
+  return normalBgm.setScene(document.hidden, clock?'clock':bad?'bad':title?'title':trouble?'trouble':bedCue(state?.actOne));
 }
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
 modal.addEventListener('rewind-fade',()=>{rewindWhiteoutPending=true;normalBgm.setSuppressed(true);});

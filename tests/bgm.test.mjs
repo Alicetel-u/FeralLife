@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { createNormalBgm } from '../src/bgm.js';
+import { bedCue, createNormalBgm } from '../src/bgm.js';
 
 function fakeAudio() {
   return {
@@ -13,7 +13,7 @@ function fakeAudio() {
 
 test('normal bgm waits for a gesture, then loops until a cinematic', async () => {
   const audio = fakeAudio();
-  const bgm = createNormalBgm(audio, fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio());
+  const bgm = createNormalBgm(audio, fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio());
   assert.equal(audio.loop, true);
   assert.equal(audio.volume, 0.35);
   assert.equal(await bgm.setSuppressed(false), false);
@@ -36,7 +36,7 @@ test('normal bgm waits for a gesture, then loops until a cinematic', async () =>
 test('trouble cue replaces the pop loop and restarts only when trouble begins', async () => {
   const normal = fakeAudio();
   const trouble = fakeAudio();
-  const bgm = createNormalBgm(normal, trouble, fakeAudio(), fakeAudio(), fakeAudio());
+  const bgm = createNormalBgm(normal, trouble, fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio());
   await bgm.unlock();
   assert.equal(normal.paused, false);
   assert.equal(trouble.paused, true);
@@ -61,7 +61,7 @@ test('trouble cue replaces the pop loop and restarts only when trouble begins', 
 test('bad ending cue uses the fire track and continues through the same ending', async () => {
   const normal = fakeAudio();
   const bad = fakeAudio();
-  const bgm = createNormalBgm(normal, fakeAudio(), bad, fakeAudio(), fakeAudio());
+  const bgm = createNormalBgm(normal, fakeAudio(), bad, fakeAudio(), fakeAudio(), fakeAudio());
   await bgm.unlock();
   normal.currentTime = 4;
   await bgm.setScene(false, 'bad');
@@ -81,7 +81,7 @@ test('bad ending cue uses the fire track and continues through the same ending',
 test('game title cue uses the countdown and restarts only when the title returns', async () => {
   const normal = fakeAudio();
   const title = fakeAudio();
-  const bgm = createNormalBgm(normal, fakeAudio(), fakeAudio(), title, fakeAudio());
+  const bgm = createNormalBgm(normal, fakeAudio(), fakeAudio(), title, fakeAudio(), fakeAudio());
   await bgm.unlock();
   normal.currentTime = 9;
   await bgm.setScene(false, 'title');
@@ -101,7 +101,7 @@ test('game title cue uses the countdown and restarts only when the title returns
 test('clock cue starts when the rewind dial appears and does not restart mid-dial', async () => {
   const bad = fakeAudio();
   const clock = fakeAudio();
-  const bgm = createNormalBgm(fakeAudio(), fakeAudio(), bad, fakeAudio(), clock);
+  const bgm = createNormalBgm(fakeAudio(), fakeAudio(), bad, fakeAudio(), clock, fakeAudio());
   await bgm.unlock();
   await bgm.setScene(false, 'bad');
   assert.equal(bad.paused, false);
@@ -115,8 +115,42 @@ test('clock cue starts when the rewind dial appears and does not restart mid-dia
   assert.equal(clock.currentTime, 3);
 });
 
+test('uneasy air replaces pop after the first leap and resumes across other cues', async () => {
+  const normal = fakeAudio();
+  const trouble = fakeAudio();
+  const uneasy = fakeAudio();
+  const bgm = createNormalBgm(normal, trouble, fakeAudio(), fakeAudio(), fakeAudio(), uneasy);
+  await bgm.unlock();
+  normal.currentTime = 7;
+  await bgm.setScene(false, 'uneasy');
+  assert.equal(bgm.cue, 'uneasy');
+  assert.equal(uneasy.paused, false);
+  assert.equal(uneasy.currentTime, 0);
+  assert.equal(normal.paused, true);
+  uneasy.currentTime = 11;
+  await bgm.setScene(false, 'uneasy');
+  assert.equal(uneasy.currentTime, 11);
+  await bgm.setScene(false, 'trouble');
+  await bgm.setScene(false, 'uneasy');
+  assert.equal(uneasy.paused, false);
+  assert.equal(uneasy.currentTime, 11);
+  assert.equal(trouble.paused, true);
+  await bgm.setScene(false, 'normal');
+  assert.equal(normal.paused, false);
+  assert.equal(normal.currentTime, 7);
+});
+
+test('everyday bed stays pop until chapter one has rewound once', () => {
+  assert.equal(bedCue({ attempt: 1 }), 'normal');
+  assert.equal(bedCue({ attempt: 2 }), 'uneasy');
+  assert.equal(bedCue({ attempt: 5 }), 'uneasy');
+  assert.equal(bedCue({ chapter: 2, attempt: 1 }), 'normal');
+  assert.equal(bedCue({ chapter: 2, attempt: 4 }), 'normal');
+  assert.equal(bedCue(undefined), 'normal');
+});
+
 test('packaged bgm files are mp3s', async () => {
-  for (const name of ['normal-pop.mp3', 'trouble-persona.mp3', 'bad-end-fire.mp3', 'title-countdown.mp3', 'clock-rewind.mp3']) {
+  for (const name of ['normal-pop.mp3', 'trouble-persona.mp3', 'bad-end-fire.mp3', 'title-countdown.mp3', 'clock-rewind.mp3', 'uneasy-air.mp3']) {
     const file = await readFile(new URL('../assets/audio/' + name, import.meta.url));
     assert.ok(file.length > 100000);
     assert.ok(file[0] === 0xff || file.subarray(0, 3).toString() === 'ID3');
