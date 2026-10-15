@@ -17,14 +17,16 @@
       }
     },
     "inner": {
-      "direction": "静かな独り言。内省的で自然な間。声を張らない",
+      "direction": "ASMR寄りの静かな心の声。少し息を混ぜ、ゆっくり内省的に囁く。声を張らない",
       "tags": [
-        "[thoughtful]",
-        "[softly]"
+        "[softly]",
+        "[whispers]",
+        "[thoughtful]"
       ],
       "settings": {
         "stability": 0.5,
-        "similarity_boost": 0.75
+        "similarity_boost": 0.75,
+        "speed": 0.95
       }
     },
     "retort": {

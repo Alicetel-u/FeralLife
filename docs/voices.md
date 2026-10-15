@@ -64,6 +64,12 @@ Voice ID設定は既存の `characters.<id>.voiceId` 形式と簡易の `<id>: v
 
 ## 大家のテンション調整
 
-ユーザーが試聴・採用したHaruのテンション高め試作を基本に、通常会話はanimated/conversational/lighthearted、ツッコミはexcited/lighthearted、ぼやきはexasperated/lightheartedで生成する。いずれもstability=0、speed=1.05。怒りタグは使わず、感嘆符だけで怒りを分類しない。心の声は別の静かな演技設定を維持。ASMR寄りの心の声はローカル試聴用のみで、採用前に本番へ混ぜない。
+ユーザーが試聴・採用したHaruのテンション高め試作を基本に、通常会話はanimated/conversational/lighthearted、ツッコミはexcited/lighthearted、ぼやきはexasperated/lightheartedで生成する。いずれもstability=0、speed=1.05。怒りタグは使わず、感嘆符だけで怒りを分類しない。心の声は別の静かな演技設定を維持。ASMR寄りの心の声は試聴後にユーザーが採用したため、第一幕全体へ適用する。
 
 第一幕の大家164発話箇所・163種類を対象に、心の声2本を再利用し161本を生成。追加分のcharacter-cost合計3,508。全163本のMP3デコード・マニフェスト照合、全142テスト、ビルド成功。ASMR試作1本（26クレジット）は別管理で、本番未採用。
+
+## 心の声のASMR寄り演技を採用
+
+ユーザー試聴・採用済みの `[softly] [whispers] [thoughtful]`、stability=0.5、similarity_boost=0.75、speed=0.95を使用。第一幕の心の声28本に適用する。冒頭の試作1本は要求内容と設定の一致を確認して再利用し、27本だけを新規生成。通常会話・ツッコミ・モクのキャッシュは維持する。
+
+ASMR心の声の追加27本はcharacter-cost合計577。28本すべてデコード成功、第一幕の大家全163種類のマニフェスト整合確認、全142テスト・ビルド成功。

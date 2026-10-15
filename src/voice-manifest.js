@@ -1,8 +1,8 @@
 // Generated clips only.
 export const VOICE_MANIFEST = {
   "[\"manager\",\"古びた鍵と、一通の手紙。\\n……今日から、ここを俺が預かるのか。\",\"inner\",false]": {
-    "file": "assets/voices/bb53c6265ef59f894e9e6022c1145b257c66e0f66daf5e6f149ef93ce1037211.mp3",
-    "hash": "bb53c6265ef59f894e9e6022c1145b257c66e0f66daf5e6f149ef93ce1037211",
+    "file": "assets/voices/df2d20cae084400ea8f6a7cecd34467eaf54961054c426221b6a3ccfec21c134.mp3",
+    "hash": "df2d20cae084400ea8f6a7cecd34467eaf54961054c426221b6a3ccfec21c134",
     "source": "prologue:1",
     "speaker": "manager",
     "text": "古びた鍵と、一通の手紙。\n……今日から、ここを俺が預かるのか。",
@@ -10,8 +10,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……何があったんだよ、この家。\\nまずは、たった一人の住人に会ってみるか。\",\"inner\",false]": {
-    "file": "assets/voices/bed2b5b84a86f09b3c6ad1434770c231ee8fd3f45d4ee5469ac112638bbd9897.mp3",
-    "hash": "bed2b5b84a86f09b3c6ad1434770c231ee8fd3f45d4ee5469ac112638bbd9897",
+    "file": "assets/voices/7f1baa7805f1a5352c8588b401a76226a26f0d22804517a53a30eee0a57497ee.mp3",
+    "hash": "7f1baa7805f1a5352c8588b401a76226a26f0d22804517a53a30eee0a57497ee",
     "source": "prologue:5",
     "speaker": "manager",
     "text": "……何があったんだよ、この家。\nまずは、たった一人の住人に会ってみるか。",
@@ -1504,8 +1504,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……待てよ。外に捨てろって言ったの、俺じゃねぇか。\",\"inner\",false]": {
-    "file": "assets/voices/ec49142d4c50c2cd7403a8c1369f8e71c6ce3acfe142d0711977eb64796babbc.mp3",
-    "hash": "ec49142d4c50c2cd7403a8c1369f8e71c6ce3acfe142d0711977eb64796babbc",
+    "file": "assets/voices/1ccb5ea27ca9d11f4c3cb87d95bf4675a1039afc31dc8973957a68e6a29d97aa.mp3",
+    "hash": "1ccb5ea27ca9d11f4c3cb87d95bf4675a1039afc31dc8973957a68e6a29d97aa",
     "source": "act1/ash/balcony:12",
     "speaker": "manager",
     "text": "……待てよ。外に捨てろって言ったの、俺じゃねぇか。",
@@ -1531,8 +1531,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"何やってんだ、俺……。こんなことになるって、少し考えりゃ分かっただろ……。\",\"inner\",false]": {
-    "file": "assets/voices/3a9e519d6c1cf1bd5f199a0d173d54e168803e2760ed2e6f5b5bcd8ec2786967.mp3",
-    "hash": "3a9e519d6c1cf1bd5f199a0d173d54e168803e2760ed2e6f5b5bcd8ec2786967",
+    "file": "assets/voices/cd8e043df968ae19906eddc242329a3ae5aa8e93911c2c6931c12de761b11376.mp3",
+    "hash": "cd8e043df968ae19906eddc242329a3ae5aa8e93911c2c6931c12de761b11376",
     "source": "act1/ash/balcony:18",
     "speaker": "manager",
     "text": "何やってんだ、俺……。こんなことになるって、少し考えりゃ分かっただろ……。",
@@ -1603,8 +1603,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……確かに。なんで冷凍庫なんて言ったんだ、俺。\",\"inner\",false]": {
-    "file": "assets/voices/92748f35bc6e5d329118943f51e88af76fb460c401f0269df2f0cc7bdf275e74.mp3",
-    "hash": "92748f35bc6e5d329118943f51e88af76fb460c401f0269df2f0cc7bdf275e74",
+    "file": "assets/voices/3d72446613ae5db0a67dfc7e215923442388a5c5ca2d7c8a88d28f1a71c89b95.mp3",
+    "hash": "3d72446613ae5db0a67dfc7e215923442388a5c5ca2d7c8a88d28f1a71c89b95",
     "source": "act1/ash/freezer:15",
     "speaker": "manager",
     "text": "……確かに。なんで冷凍庫なんて言ったんだ、俺。",
@@ -1630,8 +1630,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……モクは言われたとおりにしただけだ。俺がちゃんと考えてりゃ、こんなことには……。\",\"inner\",false]": {
-    "file": "assets/voices/17cc6a4835d9652c1d87af4d880f01f07c0987a79707306ef5d0f966345d5f8f.mp3",
-    "hash": "17cc6a4835d9652c1d87af4d880f01f07c0987a79707306ef5d0f966345d5f8f",
+    "file": "assets/voices/d829e8e2e066395f613cc26a28dc9eb805961ad87d2b9d0c114c26be398b4776.mp3",
+    "hash": "d829e8e2e066395f613cc26a28dc9eb805961ad87d2b9d0c114c26be398b4776",
     "source": "act1/ash/freezer:21",
     "speaker": "manager",
     "text": "……モクは言われたとおりにしただけだ。俺がちゃんと考えてりゃ、こんなことには……。",
@@ -1999,8 +1999,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"くそっ……！ 見張ってるって言ったのに、何やってんだ俺！！\",\"inner\",false]": {
-    "file": "assets/voices/84f8688add424e980e06ed419b6370867dd9b37b8e7a0a98e70ee86d3fcb75db.mp3",
-    "hash": "84f8688add424e980e06ed419b6370867dd9b37b8e7a0a98e70ee86d3fcb75db",
+    "file": "assets/voices/6793b4c3f269cdb1e89bc62dc12bef1d826cddcbf4ef0ce3f436ba118549b789.mp3",
+    "hash": "6793b4c3f269cdb1e89bc62dc12bef1d826cddcbf4ef0ce3f436ba118549b789",
     "source": "act1/dinner/turbo:22",
     "speaker": "manager",
     "text": "くそっ……！ 見張ってるって言ったのに、何やってんだ俺！！",
@@ -2125,8 +2125,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……なんだ？ 何が起きた……？\",\"inner\",false]": {
-    "file": "assets/voices/5ebccbac2fb72f1ca95489332d64bb96f06af2b3b44b665bbec7fba2270e16f4.mp3",
-    "hash": "5ebccbac2fb72f1ca95489332d64bb96f06af2b3b44b665bbec7fba2270e16f4",
+    "file": "assets/voices/9c5a65cbe20d60ce73f67dcedfbf58d72c090d255552ec39cb9fb75c383edb99.mp3",
+    "hash": "9c5a65cbe20d60ce73f67dcedfbf58d72c090d255552ec39cb9fb75c383edb99",
     "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:4",
     "speaker": "manager",
     "text": "……なんだ？ 何が起きた……？",
@@ -2188,8 +2188,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"なんでだ……？ あんなに熱かったのに。煙も、炎も……全部覚えてる。\",\"inner\",false]": {
-    "file": "assets/voices/7f03c630c1a4c85318d9faa879459aeb171bd50417e47fb6b242bd2747c35426.mp3",
-    "hash": "7f03c630c1a4c85318d9faa879459aeb171bd50417e47fb6b242bd2747c35426",
+    "file": "assets/voices/f41d5319453c4e45143fa5673b21f9636d7e051484341e1af2cc104df854ee21.mp3",
+    "hash": "f41d5319453c4e45143fa5673b21f9636d7e051484341e1af2cc104df854ee21",
     "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:16",
     "speaker": "manager",
     "text": "なんでだ……？ あんなに熱かったのに。煙も、炎も……全部覚えてる。",
@@ -2197,8 +2197,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"夢……？ いや、違う。あれが夢なわけ……。\",\"inner\",false]": {
-    "file": "assets/voices/e284d20282ac94f83a30b8685b503321ab5bc45a1fd04ef01ca3f30aaa6b6d49.mp3",
-    "hash": "e284d20282ac94f83a30b8685b503321ab5bc45a1fd04ef01ca3f30aaa6b6d49",
+    "file": "assets/voices/92013a76a6f6f1b957b61ff27f2327efcf5e2316c334e2139e283baee2e07da1.mp3",
+    "hash": "92013a76a6f6f1b957b61ff27f2327efcf5e2316c334e2139e283baee2e07da1",
     "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:18",
     "speaker": "manager",
     "text": "夢……？ いや、違う。あれが夢なわけ……。",
@@ -2224,8 +2224,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……戻ってる？ 時間が……？\",\"inner\",false]": {
-    "file": "assets/voices/d2f349d1dfcc9f08a870be169952ba8d8599db69a914073bf70533d33d6cc006.mp3",
-    "hash": "d2f349d1dfcc9f08a870be169952ba8d8599db69a914073bf70533d33d6cc006",
+    "file": "assets/voices/1fc171d81c66cdb13f233c018bd0351ece21f504bfcf460ac2b42e4655ff363f.mp3",
+    "hash": "1fc171d81c66cdb13f233c018bd0351ece21f504bfcf460ac2b42e4655ff363f",
     "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:23",
     "speaker": "manager",
     "text": "……戻ってる？ 時間が……？",
@@ -2242,8 +2242,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……もし、また同じことが起きたら？\",\"inner\",false]": {
-    "file": "assets/voices/3545ad885184272fcb9c2f4f0eba99ee88c1ed28da8c678d66cb59212e5cba55.mp3",
-    "hash": "3545ad885184272fcb9c2f4f0eba99ee88c1ed28da8c678d66cb59212e5cba55",
+    "file": "assets/voices/792ed5f238759ddec9696d626cd7e74a71c7956b8c7fdbd73b793362dce3d74f.mp3",
+    "hash": "792ed5f238759ddec9696d626cd7e74a71c7956b8c7fdbd73b793362dce3d74f",
     "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:27",
     "speaker": "manager",
     "text": "……もし、また同じことが起きたら？",
@@ -2251,8 +2251,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……もし、今度は逃げられなかったら？\",\"inner\",false]": {
-    "file": "assets/voices/e2d484bf9f1000c63f6e50713ae83ab9e575e155c61957c2c63023b8defc662c.mp3",
-    "hash": "e2d484bf9f1000c63f6e50713ae83ab9e575e155c61957c2c63023b8defc662c",
+    "file": "assets/voices/eabb8beacec3b6017fa9e4c9217df0bc575ec879d60c5606dcd41c8d759771ec.mp3",
+    "hash": "eabb8beacec3b6017fa9e4c9217df0bc575ec879d60c5606dcd41c8d759771ec",
     "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:28",
     "speaker": "manager",
     "text": "……もし、今度は逃げられなかったら？",
@@ -2260,8 +2260,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……あいつは覚えてない。俺だけが、あの火事を覚えてる。\",\"inner\",false]": {
-    "file": "assets/voices/63a0813e168ecbcfb2dc353a32ab514a811c18da4bd03e81c65d7c6684e24897.mp3",
-    "hash": "63a0813e168ecbcfb2dc353a32ab514a811c18da4bd03e81c65d7c6684e24897",
+    "file": "assets/voices/7f78c15166681ef886a7ef9afb07fea35525a98da58d13b161444c58e7b73e50.mp3",
+    "hash": "7f78c15166681ef886a7ef9afb07fea35525a98da58d13b161444c58e7b73e50",
     "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:30",
     "speaker": "manager",
     "text": "……あいつは覚えてない。俺だけが、あの火事を覚えてる。",
@@ -2269,8 +2269,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"だったら……今度こそ、間違えられねぇ。\",\"inner\",false]": {
-    "file": "assets/voices/e55012bf931e7fe51dcfd38870d9e75a3ef8a84d65985d05279ad2543ab02a1a.mp3",
-    "hash": "e55012bf931e7fe51dcfd38870d9e75a3ef8a84d65985d05279ad2543ab02a1a",
+    "file": "assets/voices/029071a6547d5fb546d3f5bfb3ea996e5053b28cf139e977af5a544b7c9d7713.mp3",
+    "hash": "029071a6547d5fb546d3f5bfb3ea996e5053b28cf139e977af5a544b7c9d7713",
     "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:31",
     "speaker": "manager",
     "text": "だったら……今度こそ、間違えられねぇ。",
@@ -2305,8 +2305,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……絶対に、もう燃やさせねぇ。\",\"inner\",false]": {
-    "file": "assets/voices/9154a73680c1d53532261d24e639ca94a570698e4cf6ba707679f9871eddc384.mp3",
-    "hash": "9154a73680c1d53532261d24e639ca94a570698e4cf6ba707679f9871eddc384",
+    "file": "assets/voices/8b1793d7cc1bc01cbce0ec37a6b09b1b1e1e868492f824ae7c66c0dcd37333ec.mp3",
+    "hash": "8b1793d7cc1bc01cbce0ec37a6b09b1b1e1e868492f824ae7c66c0dcd37333ec",
     "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:38",
     "speaker": "manager",
     "text": "……絶対に、もう燃やさせねぇ。",
@@ -2341,8 +2341,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……夢？\",\"inner\",false]": {
-    "file": "assets/voices/ac0c58f1768aad04f6addb5f73c9f75ff08f31e5a64493d39af9c909b103b81a.mp3",
-    "hash": "ac0c58f1768aad04f6addb5f73c9f75ff08f31e5a64493d39af9c909b103b81a",
+    "file": "assets/voices/7c567329daa46122304a9f8cbc751f97d68eeb3f9862fb7149d295e8ae820e1b.mp3",
+    "hash": "7c567329daa46122304a9f8cbc751f97d68eeb3f9862fb7149d295e8ae820e1b",
     "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:7",
     "speaker": "manager",
     "text": "……夢？",
@@ -2350,8 +2350,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"いや、違う。あの熱さも、煙の臭いも……。\",\"inner\",false]": {
-    "file": "assets/voices/8e8d4d28c7620a5331399696ce6b8373ab2421466235dfffc9e2136430317e51.mp3",
-    "hash": "8e8d4d28c7620a5331399696ce6b8373ab2421466235dfffc9e2136430317e51",
+    "file": "assets/voices/28dec1c758f30a76d562ca403ff8a3a315e1b90d5e4fdcf8ac45ec554f6d699b.mp3",
+    "hash": "28dec1c758f30a76d562ca403ff8a3a315e1b90d5e4fdcf8ac45ec554f6d699b",
     "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:8",
     "speaker": "manager",
     "text": "いや、違う。あの熱さも、煙の臭いも……。",
@@ -2359,8 +2359,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"全部、覚えてる。\",\"inner\",false]": {
-    "file": "assets/voices/ef608c623b330391dc6a29f1b0b6f350d91d4f1a904fea9993deac64b58d13bd.mp3",
-    "hash": "ef608c623b330391dc6a29f1b0b6f350d91d4f1a904fea9993deac64b58d13bd",
+    "file": "assets/voices/cf06ceaa66c08d83d8697f60c908991477c48fb8aa2b1bfc0e30c8266dce5599.mp3",
+    "hash": "cf06ceaa66c08d83d8697f60c908991477c48fb8aa2b1bfc0e30c8266dce5599",
     "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:9",
     "speaker": "manager",
     "text": "全部、覚えてる。",
@@ -2386,8 +2386,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……時間が、戻ってる？\",\"inner\",false]": {
-    "file": "assets/voices/2a48040dc9a56f89828357011c2f8544fb7c09a67e25b38fa588b934ce11927b.mp3",
-    "hash": "2a48040dc9a56f89828357011c2f8544fb7c09a67e25b38fa588b934ce11927b",
+    "file": "assets/voices/2eb8b5941fcf5a88b2057daafa8f54cbed861cb1845424fc57430c03c4a6d22f.mp3",
+    "hash": "2eb8b5941fcf5a88b2057daafa8f54cbed861cb1845424fc57430c03c4a6d22f",
     "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:16",
     "speaker": "manager",
     "text": "……時間が、戻ってる？",
@@ -2395,8 +2395,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"あのとき俺が、まともな指示を出していれば……。\",\"inner\",false]": {
-    "file": "assets/voices/b8029cd44de089633bf111deb6c1b7ee9a18ca99b72cb79b815820451ce00a21.mp3",
-    "hash": "b8029cd44de089633bf111deb6c1b7ee9a18ca99b72cb79b815820451ce00a21",
+    "file": "assets/voices/e714a1e427585ff2b01703dc726cb81de43335ae6c1af0efb8f65d856111afee.mp3",
+    "hash": "e714a1e427585ff2b01703dc726cb81de43335ae6c1af0efb8f65d856111afee",
     "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:17",
     "speaker": "manager",
     "text": "あのとき俺が、まともな指示を出していれば……。",
@@ -2404,8 +2404,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"今度こそ……。\",\"inner\",false]": {
-    "file": "assets/voices/22be4d70ebf6008cefa8681896a93bed10efdc694bc6febb7d3c69dff1af3e09.mp3",
-    "hash": "22be4d70ebf6008cefa8681896a93bed10efdc694bc6febb7d3c69dff1af3e09",
+    "file": "assets/voices/8fbea641550110a38e4a16cbf2c3b433bc7f20d4672c0c96e11b6c991d70ac43.mp3",
+    "hash": "8fbea641550110a38e4a16cbf2c3b433bc7f20d4672c0c96e11b6c991d70ac43",
     "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:18",
     "speaker": "manager",
     "text": "今度こそ……。",
@@ -2431,8 +2431,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……もう二度と、あんな光景は見たくねぇ。\",\"inner\",false]": {
-    "file": "assets/voices/5d1630a6145d7311efef91ea7e179c4fee064383875955d7d572b53e688e6fdb.mp3",
-    "hash": "5d1630a6145d7311efef91ea7e179c4fee064383875955d7d572b53e688e6fdb",
+    "file": "assets/voices/626982746163ba94fa0c1c7925f3002ce9b75995ab69e60c0fb6ec3841581309.mp3",
+    "hash": "626982746163ba94fa0c1c7925f3002ce9b75995ab69e60c0fb6ec3841581309",
     "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:24",
     "speaker": "manager",
     "text": "……もう二度と、あんな光景は見たくねぇ。",
@@ -2440,8 +2440,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……また戻った。今度こそ大丈夫だと思ったのに。\",\"inner\",false]": {
-    "file": "assets/voices/92de8e5bb2d5656139b1b5c329d2b56fe6fd1aa028ac6b28858f2cfad7201165.mp3",
-    "hash": "92de8e5bb2d5656139b1b5c329d2b56fe6fd1aa028ac6b28858f2cfad7201165",
+    "file": "assets/voices/2417a13508bbad65ad1ca1215c3ad7cec13207d82cee4fba6ec25000528523bf.mp3",
+    "hash": "2417a13508bbad65ad1ca1215c3ad7cec13207d82cee4fba6ec25000528523bf",
     "source": "act1/runtime/attempt-2/ash/trash/rewind/rewind:1",
     "speaker": "manager",
     "text": "……また戻った。今度こそ大丈夫だと思ったのに。",
@@ -2458,8 +2458,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"同じ失敗はもうしねぇ。次こそは……！\",\"inner\",false]": {
-    "file": "assets/voices/020ec2b9732203b31f48102c4a37824be54e503205aa485efe7fcd146c99f21f.mp3",
-    "hash": "020ec2b9732203b31f48102c4a37824be54e503205aa485efe7fcd146c99f21f",
+    "file": "assets/voices/a16f9ece107557216cf30134b0067468052fd5934e9aee9959444c6be798f46e.mp3",
+    "hash": "a16f9ece107557216cf30134b0067468052fd5934e9aee9959444c6be798f46e",
     "source": "act1/runtime/attempt-2/ash/trash/rewind/rewind:5",
     "speaker": "manager",
     "text": "同じ失敗はもうしねぇ。次こそは……！",
@@ -2548,8 +2548,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……まぁ、いいか。\",\"inner\",false]": {
-    "file": "assets/voices/75c8b66c7e69593eae1246fff5e6dd537d09012fdadba9a948787136e853f5f8.mp3",
-    "hash": "75c8b66c7e69593eae1246fff5e6dd537d09012fdadba9a948787136e853f5f8",
+    "file": "assets/voices/8537190fdad7ad9c4013a794e7be441323f7daee17bc741a4781b2fecb3d332d.mp3",
+    "hash": "8537190fdad7ad9c4013a794e7be441323f7daee17bc741a4781b2fecb3d332d",
     "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:16",
     "speaker": "manager",
     "text": "……まぁ、いいか。",
@@ -2557,8 +2557,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"こいつがこうしてバカなこと言ってられるなら。\",\"inner\",false]": {
-    "file": "assets/voices/e9c7791ce748f4721724f36f51b21f40c4db0cb006c546413a9fd1a17ced20ed.mp3",
-    "hash": "e9c7791ce748f4721724f36f51b21f40c4db0cb006c546413a9fd1a17ced20ed",
+    "file": "assets/voices/1c6b954982f5c4fd31b2e92579f7e6124f8fc2eacd6df49f441248d4964e6af2.mp3",
+    "hash": "1c6b954982f5c4fd31b2e92579f7e6124f8fc2eacd6df49f441248d4964e6af2",
     "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:17",
     "speaker": "manager",
     "text": "こいつがこうしてバカなこと言ってられるなら。",
@@ -2692,8 +2692,8 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……頼むから、まともな奴であってくれ。\",\"inner\",false]": {
-    "file": "assets/voices/a35d4dc144156edcf084eb032e6b1720369f5d316d397a9904fdf807c4c93258.mp3",
-    "hash": "a35d4dc144156edcf084eb032e6b1720369f5d316d397a9904fdf807c4c93258",
+    "file": "assets/voices/a58ca7c7c533c3e3feedcab8502e8ddaff5e2cff30dbbd19388680239ba51e29.mp3",
+    "hash": "a58ca7c7c533c3e3feedcab8502e8ddaff5e2cff30dbbd19388680239ba51e29",
     "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:47",
     "speaker": "manager",
     "text": "……頼むから、まともな奴であってくれ。",

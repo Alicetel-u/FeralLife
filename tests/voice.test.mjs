@@ -17,9 +17,14 @@ test('lively landlord keeps inner voice separate, uses audition settings and pre
   assert.equal(r.voiceId,'vY4PC2kSleyw73YRUOI6');
   assert.equal(r.request.voice_settings.stability,r.performance==='inner'?0.5:0);
   if(r.performance!=='inner')assert.equal(r.request.voice_settings.speed,1.05);
+  else {
+   assert.equal(r.request.voice_settings.speed,0.95);
+   assert.ok(r.request.text.startsWith('[softly] [whispers] [thoughtful] '));
+  }
  }
  const {VOICE_MANIFEST}=await import('../src/voice-manifest.js');
  for(const r of plan.filter(r=>r.speaker==='cat'))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
+ for(const r of plan.filter(r=>r.speaker==='manager'&&r.performance!=='inner'))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
 });
 
 test('act1 extraction covers revised branches, epilogue and the complete daily schedule',async()=>{
