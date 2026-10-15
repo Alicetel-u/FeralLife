@@ -557,7 +557,12 @@ function syncNormalBgm(){
 }
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
 modal.addEventListener('rewind-fade',()=>{rewindWhiteoutPending=true;normalBgm.setSuppressed(true);});
-function unlockNormalBgm(event){if(event.target.closest?.('#sound-button'))return;normalBgm.unlock().catch(()=>{});}
+function unlockNormalBgm(event){
+  // The START button owns the first gesture. Unlocking on its pointerdown
+  // would briefly play the default room track before the title cue is selected.
+  if(document.getElementById('entry-gate') || event.target.closest?.('#sound-button'))return;
+  normalBgm.unlock().catch(()=>{});
+}
 document.addEventListener('pointerdown',unlockNormalBgm,true);
 document.addEventListener('keydown',unlockNormalBgm,true);
 $('sound-button').onclick=async()=>{
