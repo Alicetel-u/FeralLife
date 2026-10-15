@@ -545,7 +545,8 @@ function syncNormalBgm(){
   const clock=modal.open&&!!rewind&&(rewind.dataset.rewindPhase==='clock'||rewind.dataset.rewindPhase==='return');
   const bad=!clock&&modal.open&&!modal.querySelector('.act-title')&&!!modal.querySelector('.fire-cinematic,.debt-cinematic,.act-burn,.rewind-screen');
   const title=!bad&&!clock&&modal.open&&!!modal.querySelector('.game-title,.title-help');
-  const trouble=!bad&&!clock&&!title&&modal.open&&!!modal.querySelector('.trouble-card');
+  const activeDialogue=modal.open&&modal.classList.contains('conversation-modal')?state.events.find(e=>e.id===eventView?.id):null;
+   const trouble=!bad&&!clock&&!title&&modal.open&&(!!modal.querySelector('.trouble-card')||activeDialogue?.actScene==='reply'||!!modal.querySelector('.trouble-victory'));
   return normalBgm.setScene(document.hidden, clock?'clock':bad?'bad':title?'title':trouble?'trouble':'normal');
 }
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
