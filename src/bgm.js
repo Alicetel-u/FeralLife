@@ -30,6 +30,7 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
     const active = tracks[cue];
     for (const audio of Object.values(tracks)) if (audio !== active) audio.pause();
     if (!unlocked || !enabled || suppressed) { active.pause(); return false; }
+    if (active.ended && cue === 'clock') return true;
     if (!active.paused) return true;
     try { await active.play(); return true; }
     catch { return false; }
