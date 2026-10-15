@@ -35,6 +35,8 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
   };
   tracks.clock.loop = false;
   let enabled = true;
+  let voiceActive = false;
+  const syncLevel = () => { for(const audio of Object.values(tracks)) audio.volume = voiceActive ? 0.10 : 0.35; };
   let suppressed = false;
   let unlocked = false;
   let cue = 'normal';
@@ -49,6 +51,7 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
   };
   return {
     get enabled() { return enabled; },
+    setVoiceActive(value) { voiceActive = !!value; syncLevel(); },
     get cue() { return cue; },
     get clockAudio() { return tracks.clock; },
     label() { return enabled ? '♫ <span>BGM ON</span>' : '♫ <span>BGM OFF</span>'; },
