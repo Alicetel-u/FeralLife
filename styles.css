@@ -850,6 +850,13 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
     box-shadow:none;opacity:1;z-index:2;cursor:pointer;
     touch-action:manipulation;pointer-events:auto;
   }
+  /* The transparent tap target must never draw a visible focus rectangle on iOS. */
+  .game-ink .conversation-modal .mobile-dialogue-tap,
+  .game-ink .conversation-modal .mobile-dialogue-tap:focus,
+  .game-ink .conversation-modal .mobile-dialogue-tap:focus-visible{
+    outline:none!important;outline-offset:0;box-shadow:none!important;
+    -webkit-tap-highlight-color:transparent;appearance:none;
+  }
   .game-ink .conversation-modal.choice-mode .mobile-dialogue-tap,
   .game-ink .conversation-modal.event-ui-hidden .mobile-dialogue-tap{display:none}
 }
