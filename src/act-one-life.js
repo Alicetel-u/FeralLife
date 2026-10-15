@@ -2,10 +2,10 @@ import { createRoomMove, sampleJourney } from './movement.js';
 
 // First-act daily blocking; story deadlines and authored conversations stay unchanged.
 export const MOKU_DAY = [
-  [17,'idle','table','ひと休み'],[17.25,'idle','window','窓辺で換気'],
-  [18,'tv','tv','夕方のテレビ'],[18.5,'smoke','window','灰皿の前で一服'],
-  [19.25,'eat','fridge','遅めの夕食'],[20,'tv','tv','テレビをだらだら見る'],
-  [23,'tv','tv','夜更かし'],[28,'tv','tv','動画の続きを見る'],
+  [17,'clean','center','通り道を片づける'],[17.25,'outside','street','建物の前で気分転換'],
+  [22,'tv','tv','帰宅後のテレビ'],[22.5,'smoke','window','灰皿の前で一服'],
+  [23.25,'eat','fridge','遅めの夕食'],[24,'tv','tv','テレビをだらだら見る'],
+  [28,'tv','tv','動画の続きを見る'],
   [32,'idle','table','徹夜明けの休憩'],[34,'clean','center','空き缶を少し片づける'],
   [35,'idle','table','空腹をこらえる'],[36.5,'eat','fridge','昼食の準備'],
   [37.25,'eat','table','カップ麺で昼食'],[38,'sleep','bed','食後のうたた寝'],
@@ -17,13 +17,17 @@ const places={smoke:'window',eat:'fridge',sleep:'bed',tv:'tv',clean:'center',dri
 export function firstActLife(state, delta=0){
   if(!state.actOne||state.actOne.chapter===2||state.actOne.status!=='playing')return;
   const r=state.residents.find(r=>r.type==='cat');if(!r)return;
-  const preparing=state.hour>=18.5&&!state.actOne.completed.includes('ash')?18.5:state.hour>=36.5&&!state.actOne.completed.includes('dinner')?36.5:null;
+  const preparing=state.hour>=22.5&&!state.actOne.completed.includes('ash')?22.5:state.hour>=36.5&&!state.actOne.completed.includes('dinner')?36.5:null;
   const beat=preparing?MOKU_DAY.find(([at])=>at===preparing):MOKU_DAY.findLast(([at])=>at<=state.hour)||MOKU_DAY[0];
   r.storyUntil=58;
   if(r.lifeBeat!==beat[0]){
     const start=sampleJourney(r,state.hour,places[r.action]||'table');
-    r.previous=r.action;r.action=beat[1]==='walk'?'idle':beat[1];r.actionAge=0;r.targetRoom=null;r.lifeBeat=beat[0];
-    if(beat[1]==='walk'){
+    r.previous=r.action;r.action=['walk','outside'].includes(beat[1])?'idle':beat[1];r.actionAge=0;r.targetRoom=null;r.lifeBeat=beat[0];
+    if(beat[1]==='outside'){
+      const path=[start,{x:331,y:440,zone:'hall',room:101},{x:777,y:440,zone:'hall',room:103},{x:815,y:513,zone:'street'},{x:600,y:513,zone:'street'}];
+      const travel=path.slice(1).reduce((n,p,i)=>n+Math.hypot(p.x-path[i].x,p.y-path[i].y),0)/430;
+      r.journey={kind:'visit',startedAt:state.hour,arriveAt:state.hour+travel,returnAt:state.hour+travel+.8,endsAt:state.hour+travel*2+.8,path,back:[...path].reverse(),reason:'建物の前で気分転換',actionAfter:'idle',returned:false};
+    }else if(beat[1]==='walk'){
       const end={x:410,y:440,zone:'hall',room:101};
       const path=[start,{x:331,y:440,zone:'hall',room:101},end];
       const travel=path.slice(1).reduce((n,p,i)=>n+Math.hypot(p.x-path[i].x,p.y-path[i].y),0)/430;

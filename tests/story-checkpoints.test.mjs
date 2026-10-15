@@ -7,7 +7,7 @@ const finishFirst=()=>{const s=one();advanceActOne(s,100);answerActOne(s,s.actOn
 test('repeated failure retains the same exact success snapshot without nesting',()=>{
  const s=one();advanceActOne(s,100);answerActOne(s,s.actOne.pending.eventId,'water');const saved=JSON.stringify(s.actOne.rollbackPoint.state);
  advanceActOne(s,100);answerActOne(s,s.actOne.pending.eventId,'turbo');let next=rewindBeforeFire(s);
- for(let i=0;i<2;i++){assert.equal(next.hour,19);assert.equal(JSON.stringify(next.actOne.rollbackPoint.state),saved);assert.equal(next.actOne.rollbackPoint.state.actOne.rollbackPoint,undefined);assert.ok(validActOne(next)&&validateSave(next));advanceActOne(next,100);answerActOne(next,next.actOne.pending.eventId,'show');next=rewindBeforeFire(next);}
+ for(let i=0;i<2;i++){assert.equal(next.hour,23);assert.equal(JSON.stringify(next.actOne.rollbackPoint.state),saved);assert.equal(next.actOne.rollbackPoint.state.actOne.rollbackPoint,undefined);assert.ok(validActOne(next)&&validateSave(next));advanceActOne(next,100);answerActOne(next,next.actOne.pending.eventId,'show');next=rewindBeforeFire(next);}
 });
 test('second act restores chapter entry or bag success, including old saves without milestones',()=>{
  for(const late of [false,true]){

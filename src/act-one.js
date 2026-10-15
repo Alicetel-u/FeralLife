@@ -11,7 +11,7 @@ const ac=(emotion,text)=>actLine('cat',emotion,text);
 const am=text=>actLine('manager','neutral',text);
 const an=text=>actLine('narrator','neutral',text);
 export const ACT_ONE_EVENTS={
-  ash:{at:19,title:'第一の火種：灰皿がもう限界ニャ！',call:'灰皿がもう限界ニャ！',detail:'1日目19時。101号室。テーブルにはストロング缶、灰皿には山盛りの吸い殻。まだ熱い吸い殻をどうするか、モクが大家へ相談してきた。',lines:[
+  ash:{at:23,title:'第一の火種：灰皿がもう限界ニャ！',call:'灰皿がもう限界ニャ！',detail:'1日目23時。101号室。テーブルにはストロング缶、灰皿には山盛りの吸い殻。まだ熱い吸い殻をどうするか、モクが大家へ相談してきた。',lines:[
     an('夜の101号室。モクはテレビを見ながらタバコを吸っている。テーブルにはストロング缶。灰皿には吸い殻が山盛りだ。'),
     ac('tired','大家さ〜ん。ちょっといいかニャ？'),
     am('なんだよ、今度は。'),

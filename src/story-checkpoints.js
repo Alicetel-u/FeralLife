@@ -14,5 +14,5 @@ export function validStoryCheckpoint(point,chapter){
 export function storyCheckpointTarget(state){
  const a=state.actOne,second=a.chapter===2,late=second?a.failure?.startsWith('contract-'):a.failure?.startsWith('dinner-');
  const point=a.rollbackPoint;
- return {hour:point?.kind==='story'&&validStoryCheckpoint(point,second?2:1)?point.state.hour:second?(late?62:57):(late?19:17),label:second?(late?'バッグの事件を回避した直後':'第二幕の開始時点'):(late?'灰皿の火事を回避した直後':'1日目17時・物語の開始時点')};
+ return {hour:point?.kind==='story'&&validStoryCheckpoint(point,second?2:1)?point.state.hour:second?(late?62:57):(late?23:17),label:second?(late?'バッグの事件を回避した直後':'第二幕の開始時点'):(late?'灰皿の火事を回避した直後':'1日目17時・物語の開始時点')};
 }

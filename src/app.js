@@ -1,4 +1,4 @@
-import {observationActive,observationView,observationClockLimit,tickObservation,finishObservationLine,inspectObservation,canSkipObservation,skipObservation,inheritObservation} from './act-one-observation.js';
+import {clearLegacyObservationMemo,observationActive,observationView,observationClockLimit,tickObservation,finishObservationLine,canSkipObservation,skipObservation,inheritObservation} from './act-one-observation.js';
 import {createVoicePlayer} from './voice-player.js';
 const characterVoice=createVoicePlayer({onPlaybackChange:active=>normalBgm.setVoiceActive(active)});
 document.addEventListener('pointerdown',()=>characterVoice.unlock(),{capture:true});
@@ -47,6 +47,7 @@ const previewResident = ['hostess', 'fox', 'sister', 'peko', 'ann'].includes(pre
 let state, restored = false;
 try { const saved = previewResident || eventPreview || actTwoPreview || firstRewindPreview || observationPreview ? null : JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(saved) && validActOne(saved)) { state = saved; restored = true; } } catch {}
 state ||= previewResident || eventPreview ? createGame() : createActOne();
+clearLegacyObservationMemo(state);
 ensureManagement(state);
 if(observationPreview){state.actOne.started=true;observationView(state);state.hour=17.08;state.events.forEach(e=>e.read=true);tickObservation(state,0);}
 if(firstRewindPreview){state.actOne.started=true;advanceActOne(state,100);answerActOne(state,state.actOne.pending.eventId,'trash');state.events.forEach(e=>e.read=true);}
@@ -100,23 +101,18 @@ if(state.actOne){
 const observationPanel=document.createElement('section');
 observationPanel.className='observation-story';observationPanel.hidden=true;
 observationPanel.setAttribute('aria-label','暮らしの観察');
-observationPanel.innerHTML='<div class="observation-heading"><span data-obs-phase></span><small data-obs-count></small></div><h2 data-obs-title></h2><div aria-live="polite"><strong data-obs-speaker></strong><p data-obs-line></p></div><div class="observation-actions"><button data-obs-inspect></button><button data-obs-next>次へ →</button></div><p class="observation-note" data-obs-note hidden></p><details><summary data-obs-summary>観察メモ</summary><ol data-obs-notebook></ol></details>';
+observationPanel.innerHTML='<div class="observation-heading"><span data-obs-phase></span><small data-obs-count></small></div><h2 data-obs-title></h2><div aria-live="polite"><strong data-obs-speaker></strong><p data-obs-line></p></div><div class="observation-actions"><button data-obs-next>次へ →</button></div>';
 document.querySelector('main').append(observationPanel);
 let observationRenderKey='';
 function renderObservation(){
  const v=observationView(state);
  observationPanel.hidden=!observationActive(state)||modal.open||!v?.beat;
  if(observationPanel.hidden){observationRenderKey='';return;}
- const key=JSON.stringify([v.identity,v.inspected,v.notes.map(b=>b.id)]);
+ const key=v.identity;
  if(key===observationRenderKey)return;observationRenderKey=key;
  const set=(name,text)=>observationPanel.querySelector('[data-obs-'+name+']').textContent=text;
  set('phase',v.phaseTitle);set('count',(v.done+1)+' / '+v.total);set('title',v.beat.title);
- set('speaker',v.line.name);set('line',v.line.text);set('inspect',v.inspected?'✓ 調べた':v.beat.object);
- observationPanel.querySelector('[data-obs-inspect]').disabled=v.inspected;
- set('note',v.beat.note);observationPanel.querySelector('[data-obs-note]').hidden=!v.inspected;
- set('summary','観察メモ · '+v.notes.length+'件');
- const list=observationPanel.querySelector('[data-obs-notebook]');list.replaceChildren();
- for(const beat of v.notes){const item=document.createElement('li');item.textContent=beat.title+'：'+beat.note;list.append(item);}
+ set('speaker',v.line.name);set('line',v.line.text);
 }
 let autoFollow = true, cameraKey = '';
 
@@ -348,15 +344,13 @@ function showCandidates() {
   document.querySelectorAll('[data-portrait]').forEach(c=>drawPortrait(c,c.dataset.portrait));
 }
 function showHistory() {
-  const notes=observationView(state)?.notes||[];
-  const noteHTML=notes.length?'<section class="observation-archive"><h3>暮らしの観察メモ</h3>'+notes.map(b=>'<p><strong>'+escape(b.title)+'</strong><br>'+escape(b.note)+'</p>').join('')+'</section>':'';
-  openModal(header('APARTMENT ARCHIVE / 観察日誌','ろくでもない、日々の記録')+`<div class="modal-body"><p class="modal-copy">${state.events.length}件の記録。新しい出来事から順に並んでいます。（最新240件を保存）</p>${noteHTML}<div class="history-list">${state.events.map(eventHTML).join('')}</div></div><div class="modal-footer"><span>気になる出来事を選ぶと、詳細を読めます。</span><button class="primary-button" data-close>観察に戻る →</button></div>`);
+  openModal(header('APARTMENT ARCHIVE / 観察日誌','ろくでもない、日々の記録')+`<div class="modal-body"><p class="modal-copy">${state.events.length}件の記録。新しい出来事から順に並んでいます。（最新240件を保存）</p><div class="history-list">${state.events.map(eventHTML).join('')}</div></div><div class="modal-footer"><span>気になる出来事を選ぶと、詳細を読めます。</span><button class="primary-button" data-close>観察に戻る →</button></div>`);
 }
 function storyHelpContent(){
   return `<div class="persona-help">
     <div class="persona-help-hero"><span>HOW TO PLAY</span><strong>遊び方<span class="persona-help-paw">✦</span></strong><p>このアパートの運命は、大家の選択で変わる。</p></div>
     <div class="persona-help-steps">
-      <section class="persona-help-step"><b>01</b><div><h3>住人たちを見守ろう</h3><p>暮らしの掛け合いを眺め、気になる物は「見る」で調べましょう。調べた内容は日誌にも残ります。会話は自動で進み、「次へ」でも送れます。調べている間は自動送りが止まります。</p></div></section>
+      <section class="persona-help-step"><b>01</b><div><h3>住人たちを見守ろう</h3><p>部屋ではモクの行動と独り言を見守りましょう。外や廊下では大家と顔を合わせて会話することも。セリフは自動で進み、「次へ」でも送れます。</p></div></section>
       <section class="persona-help-step"><b>02</b><div><h3>大家として返事を選ぼう</h3><p>トラブルが起きたら会話を読み、3つの選択肢から返事を決めます。選び方によって、その後の展開が変わります。会話中はゲーム内の時間が止まります。</p></div></section>
       <section class="persona-help-step"><b>03</b><div><h3>失敗を次の挑戦に生かそう</h3><p>選択を間違えると、アパートを失う結末になることも。時間を巻き戻せばもう一度挑戦できます。前の周回で分かったことを手がかりに、別の選択を試しましょう。</p></div></section>
       <section class="persona-help-step"><b>04</b><div><h3>再挑戦はテンポよく</h3><p>第一幕では、一度見た区間を「見た暮らしを早送り」で進められます。初めての区間では、住人の様子を見てから相談を迎えましょう。第二幕では巻き戻し後に「次のトラブルまで進む」を使えます。</p></div></section>
@@ -500,7 +494,6 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-act2-start')&&state.actOne?.chapter===2){state.actOne.started=true;state.actOne.titlePending=false;save();const intro=state.events.find(e=>e.actScene==='act2-prologue');if(state.actOne.prologuePending&&intro)showEvent(intro.id);else{closeModal();openNextStageEvent();}}
   if(button.hasAttribute('data-act-start')){state.actOne.started=true;state.actOne.rewindTitlePending=false;save();closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();}
   if(button.hasAttribute('data-obs-next')&&observationActive(state)&&!modal.open){if(finishObservationLine(state))characterVoice.stop();updateUI();save();}
-  if(button.hasAttribute('data-obs-inspect')&&observationActive(state)&&!modal.open){inspectObservation(state);updateUI();save();}
   if(button.hasAttribute('data-act-wait')&&!button.hidden&&state.actOne?.status==='playing'&&!state.actOne.pending&&(state.actOne.chapter===2||skipObservation(state))){(state.actOne.chapter===2?advanceActTwo(state,nextActTwoAt(state)-state.hour):advanceActOne(state,nextActOneAt(state)-state.hour));queueFreshStageEvents();updateUI();save();if(state.ending)showActEnding();else openNextStageEvent();}
   if(button.hasAttribute('data-act-rewind')&&state.actOne?.status==='bad')beginRewind();
   if(button.hasAttribute('data-act2-prologue-done')&&state.actOne?.chapter===2){state.actOne.prologuePending=false;const intro=state.events.find(e=>e.actScene==='act2-prologue');if(intro)intro.read=true;save();closeModal();openNextStageEvent();}
@@ -644,7 +637,7 @@ function frame(now){
   const seconds=Math.min(.25,Math.max(0,(now-lastTime)/1000));lastTime=now;
   if(document.hidden){renderer.last=now;requestAnimationFrame(frame);return;}
   const stopped=paused||modal.open||!!state.ending||!!document.querySelector('#entry-gate:not([hidden])');
-  const observationStopped=stopped||observationPanel.querySelector('details').open||document.body.classList.contains('controls-expanded');
+  const observationStopped=stopped||document.body.classList.contains('controls-expanded');
   tickObservation(state,seconds,{stopped:observationStopped,voiceBusy:characterVoice.busy});
   if(!stopped&&!talk.chapterChat){if(state.actOne)(state.actOne.chapter===2?advanceActTwo(state,seconds*speed/10):advanceActOne(state,Math.min(seconds*speed/10,Math.max(0,observationClockLimit(state)-state.hour))));else advance(state,seconds*speed/10);}
   tickObservation(state,0,{stopped:observationStopped,voiceBusy:characterVoice.busy});
