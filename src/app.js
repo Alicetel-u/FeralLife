@@ -569,7 +569,7 @@ const worldRenderGate = new WorldRenderGate();
 function frame(now){
   const seconds=Math.min(.25,Math.max(0,(now-lastTime)/1000));lastTime=now;
   if(document.hidden){renderer.last=now;requestAnimationFrame(frame);return;}
-  const stopped=paused||modal.open||!!state.ending;
+  const stopped=paused||modal.open||!!state.ending||!!document.querySelector('#entry-gate:not([hidden])');
   if(!stopped&&!talk.chapterChat){if(state.actOne)(state.actOne.chapter===2?advanceActTwo(state,seconds*speed/10):advanceActOne(state,seconds*speed/10));else advance(state,seconds*speed/10);}
   queueFreshStageEvents();
   stepTalk(talk, state, now, stopped);
@@ -587,18 +587,22 @@ function frame(now){
 syncStageCursor();
 updateCamera();updateRooms();updateUI();updateJournal();save();requestAnimationFrame(frame);
 if(restored)toast('前回の観察記の続きから。住人たちは、ここで待っていました。');
-if(firstRewindPreview)showActEnding();
-else if(state.actOne&&!actTwoPreview)showGameTitle();
 document.documentElement.classList.remove('game-booting');
 document.getElementById('boot-screen')?.remove();
 const entryGate=$('entry-gate');
 if(entryGate && !previewType){
+  // Show the audio-unlock gate BEFORE opening the modal title screen.
+  // A modal dialog lives in the browser's top layer, above ordinary overlays.
   entryGate.hidden=false;
   entryGate.querySelector('#entry-start').addEventListener('click',()=>{
+    // Open the title and unlock its soundtrack in the same trusted click.
+    entryGate.remove();
+    if(state.actOne)showGameTitle();
     normalBgm.unlock().catch(()=>{});
-    entryGate.classList.add('entry-gate-exit');
-    entryGate.addEventListener('transitionend',()=>entryGate.remove(),{once:true});
-    setTimeout(()=>entryGate.remove(),650);
   },{once:true});
-}else entryGate?.remove();
+}else{
+  entryGate?.remove();
+  if(firstRewindPreview)showActEnding();
+  else if(state.actOne&&!actTwoPreview)showGameTitle();
+}
 
