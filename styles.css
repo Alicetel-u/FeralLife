@@ -741,3 +741,71 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
   .game-ink .conversation-modal:has(.trouble-card:not(.slam)) .stage-character.expression-art{top:68px;height:calc(66% - 55px)}
   .game-ink .conversation-modal:has(.trouble-card:not(.slam)) .stage-character.fullbody-art{height:calc(83% - 55px)}
 }
+
+/* Portrait observation mode: a closer room view, clean thumb controls,
+   and a scrollable drawer. Desktop and dialogue screens are untouched. */
+@media(max-width:700px) and (orientation:portrait){
+  .game-ink .scene #world,
+  .game-ink .room-access{
+    width:100vw;height:56.25vw;
+    max-width:none;max-height:none;
+  }
+  .game-ink.camera-focused .scene #world,
+  .game-ink.camera-focused .room-access{
+    width:max(100vw,114dvh);
+    height:max(56.25vw,64.125dvh);
+  }
+  .game-ink .masthead{inset:8px auto auto 8px;z-index:5;transform:none}
+  .game-ink .date-display{padding:7px 10px 9px;background:#17121de8}
+  .game-ink #day-clock{gap:6px}
+  .game-ink #day-clock .clock-digits{font-size:clamp(26px,8vw,36px);letter-spacing:-1px}
+  .game-ink #day-clock .clock-day{font-size:9px}
+  .game-ink #day-clock .clock-day em{font-size:21px}
+  .game-ink #day-clock .clock-day small{font-size:8px;margin-top:3px}
+  .game-ink .camera-toggle{inset:9px 8px auto auto;min-height:42px;padding:9px 12px;font-size:11px;z-index:8}
+  .game-ink .playback{
+    inset:auto auto calc(env(safe-area-inset-bottom,0px) + 12px) 10px;
+    width:auto;height:46px;transform:none;z-index:5;
+    background:#17121df0;box-shadow:3px 3px 0 #0008;
+    padding:2px;display:flex;
+  }
+  .game-ink .pause-button{width:46px;height:42px;font-size:21px}
+  .game-ink .playback .speed-group{display:flex}
+  .game-ink .playback .speed-group button{min-height:42px;padding:5px 10px;font-size:11px}
+  .game-ink .playback #sound-button{min-height:42px;padding:4px 7px;font-size:10px}
+  .game-ink .act-objective{
+    inset:auto 10px calc(env(safe-area-inset-bottom,0px) + 72px) auto;
+    max-width:calc(100vw - 20px);z-index:5;
+  }
+  .game-ink .act-wait{min-height:44px;padding:10px 14px;font-size:11px}
+  .game-ink .request-notice{bottom:calc(env(safe-area-inset-bottom,0px) + 132px);z-index:5}
+  .game-ink.controls-expanded .camera-bar,
+  .game-ink.controls-expanded .room-strip,
+  .game-ink.controls-expanded .observation-options{
+    inset:auto 8px auto 8px;
+    width:auto;max-width:none;transform:none;
+    box-sizing:border-box;
+  }
+  .game-ink.controls-expanded .camera-bar{
+    top:60px;max-height:calc(100dvh - 132px);overflow-y:auto;
+    gap:6px;padding:12px;z-index:8;
+  }
+  .game-ink.controls-expanded .camera-group{flex:1;justify-content:center}
+  .game-ink.controls-expanded .camera-group button{flex:1;font-size:11px}
+  .game-ink.controls-expanded .camera-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  .game-ink.controls-expanded .camera-tools button{min-width:0;white-space:normal}
+  .game-ink.controls-expanded .room-strip{
+    top:268px;grid-template-columns:repeat(3,minmax(0,1fr));
+    overflow-x:visible;gap:5px;padding:8px;z-index:8;
+  }
+  .game-ink.controls-expanded .room-strip button{min-width:0;min-height:44px}
+  .game-ink.controls-expanded .observation-options{
+    top:390px;max-height:calc(100dvh - 400px);overflow-y:auto;z-index:8;
+  }
+  .game-ink .resident-panel{top:62px;bottom:8px;max-height:calc(100dvh - 70px)}
+}
+@media(max-width:700px) and (orientation:portrait) and (max-height:670px){
+  .game-ink.controls-expanded .camera-bar{max-height:155px}
+  .game-ink.controls-expanded .room-strip{top:222px}
+  .game-ink.controls-expanded .observation-options{top:345px;max-height:calc(100dvh - 355px)}
+}
