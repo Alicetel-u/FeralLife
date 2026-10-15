@@ -140,10 +140,10 @@ test('uneasy air replaces pop after the first leap and resumes across other cues
   assert.equal(normal.currentTime, 7);
 });
 
-test('everyday bed stays pop until chapter one has rewound once', () => {
+test('everyday bed stays pop after a rewind; uneasy is reserved for the intro scene', () => {
   assert.equal(bedCue({ attempt: 1 }), 'normal');
-  assert.equal(bedCue({ attempt: 2 }), 'uneasy');
-  assert.equal(bedCue({ attempt: 5 }), 'uneasy');
+  assert.equal(bedCue({ attempt: 2 }), 'normal');
+  assert.equal(bedCue({ attempt: 5 }), 'normal');
   assert.equal(bedCue({ chapter: 2, attempt: 1 }), 'normal');
   assert.equal(bedCue({ chapter: 2, attempt: 4 }), 'normal');
   assert.equal(bedCue(undefined), 'normal');
