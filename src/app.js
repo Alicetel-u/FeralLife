@@ -316,8 +316,23 @@ function showCandidates() {
 function showHistory() {
   openModal(header('APARTMENT ARCHIVE / 観察日誌','ろくでもない、日々の記録')+`<div class="modal-body"><p class="modal-copy">${state.events.length}件の記録。新しい出来事から順に並んでいます。（最新240件を保存）</p><div class="history-list">${state.events.map(eventHTML).join('')}</div></div><div class="modal-footer"><span>気になる出来事を選ぶと、詳細を読めます。</span><button class="primary-button" data-close>観察に戻る →</button></div>`);
 }
+function storyHelpContent(){
+  return `<div class="persona-help">
+    <div class="persona-help-hero"><span>HOW TO PLAY</span><strong>遊び方<span class="persona-help-paw">✦</span></strong><p>このアパートの運命は、大家の選択で変わる。</p></div>
+    <div class="persona-help-steps">
+      <section class="persona-help-step"><b>01</b><div><h3>住人たちを見守ろう</h3><p>時間とともに住人が行動し、トラブルが発生します。最初はそのまま見守り、モクの言動や部屋の様子を覚えておきましょう。</p></div></section>
+      <section class="persona-help-step"><b>02</b><div><h3>大家として返事を選ぼう</h3><p>トラブルが起きたら会話を読み、3つの選択肢から返事を決めます。選び方によって、その後の展開が変わります。会話中はゲーム内の時間が止まります。</p></div></section>
+      <section class="persona-help-step"><b>03</b><div><h3>失敗を次の挑戦に生かそう</h3><p>選択を間違えると、アパートを失う結末になることも。時間を巻き戻せばもう一度挑戦できます。前の周回で分かったことを手がかりに、別の選択を試しましょう。</p></div></section>
+      <section class="persona-help-step"><b>04</b><div><h3>再挑戦はテンポよく</h3><p>各トラブルを初めて迎えるときは、時間の経過とともに発生します。一度失敗して巻き戻した後は「次のトラブルまで進む」で、同じトラブルの直前まで進めます。</p></div></section>
+    </div>
+    <div class="persona-help-note"><strong>操作のヒント</strong><p>AUTO：セリフを自動で進める　／　SKIP：選択肢まで会話を送る<br>進行状況は自動保存。タイトルの「つづきから」で再開できます。</p></div>
+  </div>`;
+}
 function showHelp() {
-  if(state.actOne){openModal(header('FIRST ACT / 遊び方','二晩を生き延びれば、次の住人が来る。')+`<div class="modal-body"><p class="modal-copy">1日目17時から3日目9時まで、住人はモクだけ。決められた時刻に2つのイベントが起きます。3択は全部変ですが、各イベントで助かるのは1つだけ。モクの言葉と、部屋の様子を覚えてください。</p><p class="modal-copy">会話中と返事を保留している間は時間が止まります。失敗してループした後は「次のトラブルまで進む」で再挑戦まで進めます。AUTOは台詞だけ、SKIPは選択肢まで読み進めます。回答を勝手に選ぶことはありません。</p><p class="modal-copy">全焼すると、その時の後悔を持って1日目に戻れます。大家ノートには失敗した理由が残ります。データは自動保存されます。</p></div><div class="modal-footer"><button class="primary-button" data-close>モクの様子を見る →</button></div>`);return;}
+  if(state.actOne){
+    openModal(header('HOW TO PLAY / 遊び方','けもの荘での暮らし方を覚えよう。')+`<div class="modal-body persona-help-body">${storyHelpContent()}</div><div class="modal-footer"><button class="primary-button" data-close>観察に戻る →</button></div>`);
+    return;
+  }
   openModal(header('HOW TO OBSERVE / 管理人の心得','あなたは、暮らしの後始末を引き受ける。')+`<div class="modal-body"><p class="modal-copy">住人は自分で暮らします。相談や後日談が発生すると、その場で立ち絵と吹き出しが開きます。費用・信頼・安全にはそれぞれ変化があり、後日談が別の事件につながることもあります。返事は保留できます。</p><div class="help-grid"><div class="help-step"><strong><span>01</span>暮らしを眺める</strong>最初は猫の部屋を大きく表示。「全体を見る」で6部屋を一覧できます。下の部屋一覧で住人を選び、「住人ノート」で欲求や所持金を確認。衛生状態だけは、数値が高いほど良好です。</div><div class="help-step"><strong><span>02</span>記録を読む</strong>「日誌」から会話を読み返せます。管理人室には未回答の相談と後日談の予定が届きます。「次へ」で会話を読み、最後に返事を選びます。会話中は時間が止まります。</div><div class="help-step"><strong><span>03</span>次の住人を選ぶ</strong>3日目の9時から、原則3日ごとに2人の入居希望者が現れます。封筒から申込書を開き、一人を空室に迎えましょう。</div><div class="help-step"><strong><span>04</span>アパートの結末を見届ける</strong>18日目の9時に、管理資金・安全・信頼・助け合い・話題と、住人の暮らしから結末が決まります。組み合わせを変えて、別の観察記を始められます。</div></div><p class="modal-copy" style="margin-top:18px;margin-bottom:0">「住人を追う」をONにすると、選んだ住人が部屋を出たとき外観へ、帰宅すると内装へ自動で切り替わります。手動の内装／外観・大きさ切り替えは追跡をOFFにします。⛶で全画面表示。通常速度では10秒＝ゲーム内1時間。3×・6×で進行を速められます。ブラウザを閉じたり、別のタブを表示している間は進行しません。データはこのブラウザに自動保存されます。</p></div><div class="modal-footer"><span>Space：一時停止 / Esc：ノートを閉じる</span><button class="primary-button" data-close>けもの荘を眺める →</button></div>`);
 }
 function showOpening(step = 0) {
@@ -355,7 +370,7 @@ function continueGame(){
   closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();
 }
 function showTitleHelp(){
-  openModal(header('HOW TO PLAY / けもの荘','この家を、三日目の朝まで守る。',false)+`<div class="modal-body title-help"><p>大家になったあなたを待っていたのは、のんびり暮らす灰田モク。悪気はない。けれど、放っておくとアパートは全焼する。</p><ol><li><strong>モクの暮らしを見守る</strong><p>1日目17時から3日目9時まで。失敗してループした後は「次のトラブルまで進む」で再挑戦まで進めます。</p></li><li><strong>三つの変な返事から、一つを選ぶ</strong><p>トラブルは二つ。各3択のうち、助かる返事は一つだけ。会話中は時間が止まります。</p></li><li><strong>燃えたら、後悔を持ってやり直す</strong><p>全焼すると1日目へ。失敗の手がかりは大家ノートに残ります。次の周回で役立てましょう。</p></li></ol><p>進行は自動保存。次回はタイトルの「つづきから」で再開できます。</p></div><div class="modal-footer"><button class="primary-button" data-act-title>タイトルに戻る →</button></div>`);
+  openModal(header('HOW TO PLAY / 遊び方','この家の平穏は、あなたの選択次第。',false)+`<div class="modal-body persona-help-body">${storyHelpContent()}</div><div class="modal-footer"><button class="primary-button" data-act-title>タイトルに戻る →</button></div>`);
 }
 
 function showActNotebook(){
