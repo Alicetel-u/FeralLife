@@ -10,7 +10,11 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
   const AudioContextType=mobile&&(globalThis.AudioContext||globalThis.webkitAudioContext);
   let context=null,source=null,gain=null,limiter=null;
   const disconnect=()=>{
-    try{source?.disconnect();}catch{}
+    // Disconnect EVERY Web Audio node. Otherwise each old compressor remains
+    // connected to the destination, retaining a graph per dialogue line on iOS.
+    for(const node of [source,gain,limiter]){
+      try{node?.disconnect();}catch{}
+    }
     source=null;gain=null;limiter=null;
   };
   const connectMobile=element=>{
