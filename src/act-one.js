@@ -315,6 +315,7 @@ export function rewindBeforeFire(s){
   }
   if(s.actOne.rollbackPoint?.kind==='story')next.actOne.rollbackPoint=JSON.parse(JSON.stringify(s.actOne.rollbackPoint));
   next.actOne.attempt=s.actOne.attempt+1;
+  next.actOne.skipUnlockedScene=scene;
   next.actOne.memory=[...s.actOne.memory];
   next.actOne.chosenChoices=actOneChosenChoices(s);
   next.actOne.started=true;next.actOne.status='playing';next.actOne.pending=null;
