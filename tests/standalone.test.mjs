@@ -20,6 +20,7 @@ test('standalone game embeds its artwork, styles and syntactically valid script'
   assert.ok(!script.includes('assets/audio/title-countdown.mp3'));
   assert.ok(!script.includes('assets/audio/clock-rewind.mp3'));
   assert.ok(!script.includes('assets/audio/uneasy-air.mp3'));
+  assert.ok(!script.includes('assets/audio/victory-fanfare.mp3'));
   assert.ok(script.includes('data:audio/mpeg;base64,'));
   assert.ok(html.includes('width="1920" height="1080"'));
   assert.ok(script.includes('requestFullscreen()'));

@@ -551,8 +551,9 @@ function syncNormalBgm(){
   const bad=!clock&&modal.open&&!modal.querySelector('.act-title')&&!!modal.querySelector('.fire-cinematic,.debt-cinematic,.act-burn,.rewind-screen');
   const title=!bad&&!clock&&modal.open&&!!modal.querySelector('.game-title,.title-help');
   const activeDialogue=modal.open&&modal.classList.contains('conversation-modal')?state.events.find(e=>e.id===eventView?.id):null;
-  const trouble=!bad&&!clock&&!title&&modal.open&&(!!modal.querySelector('.trouble-card')||activeDialogue?.actScene==='reply'||!!modal.querySelector('.trouble-victory'));
-  return normalBgm.setScene(document.hidden, clock?'clock':bad?'bad':title?'title':trouble?'trouble':bedCue(state?.actOne));
+  const victory=!bad&&!clock&&!title&&modal.open&&!!modal.querySelector('.trouble-victory');
+  const trouble=!victory&&!bad&&!clock&&!title&&modal.open&&(!!modal.querySelector('.trouble-card')||activeDialogue?.actScene==='reply');
+  return normalBgm.setScene(document.hidden, clock?'clock':bad?'bad':title?'title':victory?'victory':trouble?'trouble':bedCue(state?.actOne));
 }
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
 modal.addEventListener('rewind-fade',()=>{rewindWhiteoutPending=true;normalBgm.setSuppressed(true);});

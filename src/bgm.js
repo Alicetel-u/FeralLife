@@ -4,6 +4,7 @@ export const BAD_END_BGM_SRC = 'assets/audio/bad-end-fire.mp3';
 export const TITLE_BGM_SRC = 'assets/audio/title-countdown.mp3';
 export const CLOCK_BGM_SRC = 'assets/audio/clock-rewind.mp3';
 export const UNEASY_BGM_SRC = 'assets/audio/uneasy-air.mp3';
+export const VICTORY_BGM_SRC = 'assets/audio/victory-fanfare.mp3';
 
 function prepare(audio) {
   audio.loop = true;
@@ -12,7 +13,7 @@ function prepare(audio) {
   return audio;
 }
 
-const STINGS = new Set(['trouble', 'bad', 'title', 'clock']);
+const STINGS = new Set(['trouble', 'bad', 'title', 'clock', 'victory']);
 
 // Pop until the first rewind. After that, chapter 1's everyday bed is the uneasy air.
 // Chapter two keeps the pop bed. Title, trouble, bad endings, and the clock stay on their own cues.
@@ -22,8 +23,9 @@ export function bedCue(actOne) {
 }
 
 // Pop during ordinary play, the uneasy air after the first time leap, the countdown on the game title,
-// a persona sting on a trouble card, the fire track through a bad ending, and the clock piece once the rewind dial appears.
-export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio, uneasyAudio) {
+// a persona sting on a trouble card, the result fanfare on a cleared trouble,
+// the fire track through a bad ending, and the clock piece once the rewind dial appears.
+export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio, uneasyAudio, victoryAudio) {
   const tracks = {
     normal: prepare(normalAudio || new Audio(NORMAL_BGM_SRC)),
     trouble: prepare(troubleAudio || new Audio(TROUBLE_BGM_SRC)),
@@ -31,6 +33,7 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
     title: prepare(titleAudio || new Audio(TITLE_BGM_SRC)),
     clock: prepare(clockAudio || new Audio(CLOCK_BGM_SRC)),
     uneasy: prepare(uneasyAudio || new Audio(UNEASY_BGM_SRC)),
+    victory: prepare(victoryAudio || new Audio(VICTORY_BGM_SRC)),
   };
   tracks.clock.loop = false;
   let enabled = true;
