@@ -526,7 +526,16 @@ function advanceConversation(){
   forward.click();return true;
 }
 modal.addEventListener('click',e=>{
-  if(e.target.closest('.stage-bubble,.memory-whiteout')&&!e.target.closest('button,a,input,summary'))advanceConversation();
+  if(e.target.closest('button,a,input,summary,textarea,select,[contenteditable],.decision-panel,.graphic-choice,.event-toolbar,.event-menu,.conversation-log,.modal-footer'))return;
+  if(e.target.closest('.stage-bubble,.memory-whiteout')){
+    advanceConversation();
+    return;
+  }
+  // On phones, the open middle of the scene is an easier one-handed tap target.
+  // Never bypass a choice screen or the existing explicit controls.
+  if(window.matchMedia('(max-width:700px) and (pointer:coarse)').matches
+    &&!modal.classList.contains('choice-mode')
+    &&e.target.closest('.event-stage:not(.memory-whiteout)'))advanceConversation();
 });
 document.addEventListener('keydown',e=>{
   if(e.repeat||e.altKey||e.ctrlKey||e.metaKey||!['Enter','Space'].includes(e.code)||document.activeElement?.closest('button, summary, input, textarea, select, a, [contenteditable]'))return;
