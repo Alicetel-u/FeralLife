@@ -7,7 +7,7 @@ const siteRoot=await mkdtemp(join(projectRoot,'.pages-build-'));
 const moduleNames=(await readdir(join(projectRoot,'src'))).filter(name=>name.endsWith('.js'));
 const sourceFiles=['index.html','styles.css',...moduleNames.map(name=>'src/'+name)];
 const source=await Promise.all(sourceFiles.map(path=>readFile(join(projectRoot,path),'utf8')));
-const assets=[...new Set(source.join('\n').match(/assets\/[\w\-./]+\.(?:png|svg)/g)||[])];
+const assets=[...new Set(source.join('\n').match(/assets\/[\w\-./]+\.(?:png|svg|mp3)/g)||[])];
 const files=[...sourceFiles,...assets,'play.html'];
 let bytes=0;
 // A small concurrency limit avoids a burst of image IO on Windows and CI.

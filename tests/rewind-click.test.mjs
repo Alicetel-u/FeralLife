@@ -9,20 +9,27 @@ test('second act rewind shows clock and restored apartment without replaying fir
   assert.match(html,/src="assets\/apartments.png"/);
   assert.doesNotMatch(html,/fire-cinematic|fire-canvas/);
 });
-test('click anywhere completes rewind once; disposal removes click listener and cancels frames',()=>{
-  const originals={matchMedia:globalThis.matchMedia,requestAnimationFrame:globalThis.requestAnimationFrame,cancelAnimationFrame:globalThis.cancelAnimationFrame};
-  let cancelled=0;
+test('the skip button completes rewind once; disposal removes that listener and cancels frames',()=>{
+  const originals={matchMedia:globalThis.matchMedia,requestAnimationFrame:globalThis.requestAnimationFrame,cancelAnimationFrame:globalThis.cancelAnimationFrame,document:globalThis.document,now:performance.now};
+  let cancelled=0,now=0;
   globalThis.matchMedia=()=>({matches:false});
   globalThis.requestAnimationFrame=()=>123;
   globalThis.cancelAnimationFrame=()=>cancelled++;
+  globalThis.document={hidden:false};
+  performance.now=()=>now;
   try{
-    const root=new EventTarget();root.querySelector=()=>({focus(){}});
+    const node=()=>{const el=new EventTarget();el.focus=()=>{};el.style={setProperty(){}};el.classList={toggle(){}};el.dataset={};return el;};
+    const skip=node();
+    const root=new EventTarget();root.isConnected=true;root.dataset={};root.querySelector=selector=>selector==='[data-rewind-skip]'?skip:node();
     let done=0;
     const stop=startRewindTransition(root,'bag-return',()=>done++,false,1,57,true);
-    root.dispatchEvent(new Event('click'));root.dispatchEvent(new Event('click'));
-    assert.equal(done,1);assert.equal(cancelled,1);
-    stop();root.dispatchEvent(new Event('click'));assert.equal(done,1);
+    skip.dispatchEvent(new Event('click'));
+    assert.equal(done,0);
+    now=400;
+    skip.dispatchEvent(new Event('click'));
+    assert.equal(done,1);assert.ok(cancelled>=1);
+    stop();skip.dispatchEvent(new Event('click'));assert.equal(done,1);
     const dispose=startRewindTransition(root,'contract-sign',()=>done++,false,2,62,true);
-    dispose();root.dispatchEvent(new Event('click'));assert.equal(done,1);
-  }finally{Object.assign(globalThis,originals);}
+    dispose();skip.dispatchEvent(new Event('click'));assert.equal(done,1);
+  }finally{Object.assign(globalThis,originals);performance.now=originals.now;}
 });

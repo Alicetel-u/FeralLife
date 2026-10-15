@@ -10,6 +10,7 @@ import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo
 import { rewindTransitionHTML, startRewindTransition, automaticFirstRewind } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
 import { debtEndingHTML, startDebtEnding } from './debt-ending.js';
+import { createNormalBgm } from './bgm.js';
 import { createGame, advance, admit, addEvent, ROOMS, CHARACTERS, NEEDS, ACTIONS, dateAt, formatTime, atmosphere, validateSave } from './simulation.js';
 import { createTalk, stepTalk, claimAutomaticScene, rememberReadScenes } from './dialogue.js';
 import { WorldRenderer, roomBounds, drawPortrait } from './renderer.js';
@@ -210,7 +211,7 @@ let stopFireEnding = null;
 let stopOpeningPrologue = () => {};
 let cleanupChoiceUI = () => {};
 function clearFireEnding(){stopFireEnding?.();stopFireEnding=null;}
-function openModal(html) { stopOpeningPrologue(); cleanupChoiceUI();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); replaceConversationContent($('modal-content'),html); modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); }
+function openModal(html) { stopOpeningPrologue(); cleanupChoiceUI();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); replaceConversationContent($('modal-content'),html); modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); syncNormalBgm(); }
 function closeModal() {
   const event=modal.classList.contains('conversation-modal')&&state.actOne?state.events.find(e=>e.id===eventView?.id):null;
   if(event&&eventView.index===eventConversation(event).length-1&&avoidedTrouble(event,state.actOne.chapter)){
@@ -219,8 +220,8 @@ function closeModal() {
     stopFireEnding=startTroubleVictory(modal.querySelector('.trouble-victory'),()=>{closeModal();$('pause-button')?.focus({preventScroll:true});});
     return;
   }
-  stopOpeningPrologue(); cleanupChoiceUI(); clearFireEnding();clearTimeout(eventAutoTimer);modal.close(); updateUI(); }
-modal.addEventListener('close', () => { if(modal.open)return;stopOpeningPrologue();cleanupChoiceUI();clearFireEnding();clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); });
+  stopOpeningPrologue(); cleanupChoiceUI(); clearFireEnding();clearTimeout(eventAutoTimer);modal.close(); updateUI(); syncNormalBgm(); }
+modal.addEventListener('close', () => { if(modal.open)return;stopOpeningPrologue();cleanupChoiceUI();clearFireEnding();clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); syncNormalBgm(); });
 function syncStageCursor() {
   rememberReadScenes(state);
   seenStageId = state.events.reduce((max, event) => Math.max(max, event.id), 0);
@@ -407,9 +408,8 @@ function beginRewind(afterFire=false){
   const rollbackHour=storyCheckpointTarget(state).hour;
   openModal(rewindTransitionHTML(failure,state.actOne.attempt,afterFire,secondAct?2:1));
   const sound=$('sound-button').getAttribute('aria-pressed')==='true';
-  if(audio?.state==='running')audio.suspend().catch(()=>{});
   const stopTransition=startRewindTransition(modal.querySelector('.rewind-screen'),failure,()=>resetActState(secondAct?rewindActTwo(state):rewindBeforeFire(state),true),sound,state.actOne.attempt,rollbackHour,afterFire);
-  stopFireEnding=()=>{stopTransition();if(sound&&audio?.state==='suspended')audio.resume().catch(()=>{});};
+  stopFireEnding=()=>stopTransition();
 }
 function resetActState(next,resume=false){
   state=next;restored=false;Object.assign(talk,createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;
@@ -536,20 +536,27 @@ document.addEventListener('fullscreenchange',()=>{const active=!!document.fullsc
 $('new-game').onclick=()=>openModal(header('NEW OBSERVATION / はじめから','新しい観察記を始めますか？')+'<div class="modal-body"><p class="modal-copy">今の住人と観察記録はリセットされます。101号室の猫から、別の共同生活を始めましょう。</p></div><div class="modal-footer"><button class="secondary-button" data-close>今の暮らしに戻る</button><button class="primary-button" data-restart>はじめから →</button></div>');
 document.addEventListener('keydown',e=>{if(e.code==='Escape'&&!modal.open&&document.body.classList.contains('inspector-open'))setInspector(false);if(e.code==='Space'&&!modal.open&&!['BUTTON','INPUT','TEXTAREA','SELECT','A'].includes(document.activeElement.tagName)){e.preventDefault();paused=!paused;updateUI();}});
 window.addEventListener('pagehide',save);
-document.addEventListener('visibilitychange',()=>{lastTime=performance.now();if(document.hidden)save();});
+document.addEventListener('visibilitychange',()=>{lastTime=performance.now();if(document.hidden)save();syncNormalBgm();});
 
-let audio=null;
+const normalBgm=createNormalBgm();
+function paintSoundButton(){$('sound-button').setAttribute('aria-pressed',String(normalBgm.enabled));$('sound-button').innerHTML=normalBgm.label();}
+function syncNormalBgm(){
+  const rewind=modal.querySelector('.rewind-screen');
+  const clock=modal.open&&!!rewind&&(rewind.dataset.rewindPhase==='clock'||rewind.dataset.rewindPhase==='return');
+  const bad=!clock&&modal.open&&!modal.querySelector('.act-title')&&!!modal.querySelector('.fire-cinematic,.debt-cinematic,.act-burn,.rewind-screen');
+  const title=!bad&&!clock&&modal.open&&!!modal.querySelector('.game-title,.title-help');
+  const trouble=!bad&&!clock&&!title&&modal.open&&!!modal.querySelector('.trouble-card');
+  return normalBgm.setScene(document.hidden, clock?'clock':bad?'bad':title?'title':trouble?'trouble':'normal');
+}
+modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
+function unlockNormalBgm(event){if(event.target.closest?.('#sound-button'))return;normalBgm.unlock().catch(()=>{});}
+document.addEventListener('pointerdown',unlockNormalBgm,true);
+document.addEventListener('keydown',unlockNormalBgm,true);
 $('sound-button').onclick=async()=>{
-  if(audio){await audio.close();audio=null;$('sound-button').setAttribute('aria-pressed','false');$('sound-button').innerHTML='♫ <span>環境音 OFF</span>';return;}
-  try {
-    audio=new (window.AudioContext||window.webkitAudioContext)();
-    const buffer=audio.createBuffer(1,audio.sampleRate*4,audio.sampleRate),data=buffer.getChannelData(0);let previous=0;
-    for(let i=0;i<data.length;i++){previous=(previous+Math.random()*.04-.02)*.985;data[i]=previous;}
-    const source=audio.createBufferSource(),gain=audio.createGain(),low=audio.createBiquadFilter();source.buffer=buffer;source.loop=true;low.type='lowpass';low.frequency.value=450;gain.gain.value=.16;source.connect(low);low.connect(gain);gain.connect(audio.destination);source.start();
-    for(const hz of [110,164.81]){const osc=audio.createOscillator(),volume=audio.createGain();osc.type='sine';osc.frequency.value=hz;volume.gain.value=.003;osc.connect(volume);volume.connect(audio.destination);osc.start();}
-    await audio.resume();$('sound-button').setAttribute('aria-pressed','true');$('sound-button').innerHTML='♫ <span>環境音 ON</span>';
-  }catch{audio=null;toast('このブラウザでは環境音を再生できません。');}
+  try{await normalBgm.setEnabled(!normalBgm.enabled);paintSoundButton();}
+  catch{toast('このブラウザではBGMを再生できません。');}
 };
+paintSoundButton();
 const worldRenderGate = new WorldRenderGate();
 function frame(now){
   const seconds=Math.min(.25,Math.max(0,(now-lastTime)/1000));lastTime=now;
