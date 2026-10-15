@@ -642,3 +642,12 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
 .rewind-scene-reveal{position:fixed;inset:0;z-index:2147483647;background:white;opacity:1;pointer-events:none;transition:opacity 1s ease-out}
 .rewind-scene-reveal.revealing{opacity:0}
 @media(prefers-reduced-motion:reduce){.rewind-scene-reveal{transition:none}}
+
+/* Persona-inspired loop counter follows the trouble cut-in and its compact heading. */
+.game-ink .conversation-modal .trouble-headline{display:flex;align-items:center;justify-content:flex-end;gap:clamp(4px,.9vw,16px);white-space:nowrap}
+.game-ink .conversation-modal .trouble-loop{display:inline-block;flex:none;padding:.08em .35em .1em;background:#f1ddbc;color:#19111e;border:3px solid #b32240;box-shadow:5px 5px 0 #151019;font:900 clamp(12px,1.6vw,24px)/1.1 var(--sans);letter-spacing:-.03em;transform:rotate(6deg);white-space:nowrap}
+.game-ink .conversation-modal .trouble-card.slam .trouble-headline{justify-content:center;gap:clamp(8px,1.5vw,26px)}
+.game-ink .conversation-modal .trouble-card.slam .trouble-loop{font-size:clamp(24px,4cqw,68px);padding:.1em .26em .12em;border-width:5px;box-shadow:9px 9px 0 #151019;animation:trouble-loop-slam .54s .12s cubic-bezier(.15,1.35,.35,1) both}
+@keyframes trouble-loop-slam{from{opacity:0;transform:rotate(13deg) translateX(40px) scale(1.7)}70%{opacity:1;transform:rotate(4deg) translateX(0) scale(.94)}to{opacity:1;transform:rotate(6deg) scale(1)}}
+@media(max-width:700px){.game-ink .conversation-modal .trouble-headline{justify-content:center;gap:5px}.game-ink .conversation-modal .trouble-loop{font-size:11px;padding:4px 5px;border-width:2px;box-shadow:3px 3px 0 #151019}.game-ink .conversation-modal .trouble-card.slam .trouble-headline{gap:8px}.game-ink .conversation-modal .trouble-card.slam .trouble-bang{font-size:clamp(21px,5.4vw,38px)}.game-ink .conversation-modal .trouble-card.slam .trouble-loop{font-size:clamp(19px,5vw,35px);border-width:3px;box-shadow:4px 4px 0 #151019}}
+@media(prefers-reduced-motion:reduce){.game-ink .conversation-modal .trouble-card.slam .trouble-loop{animation:none}}
