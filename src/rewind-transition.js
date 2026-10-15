@@ -41,15 +41,13 @@ export function rewindTransitionHTML(failure,attempt=1,afterFire=false,chapter=1
 export function startRewindTransition(root,failure,finish,sound,attempt=1,targetTime=17,afterFire=false){
   const stopFire=afterFire?()=>{}:startFireEnding(root.querySelector('.fire-cinematic'),failure,()=>{});
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let t=0,last=performance.now(),frameId,phase='',audioContext=null,siren=null,clickPlayed=false,finished=false;
+  let t=0,last=performance.now(),frameId,phase='',audioContext=null,clickPlayed=false,finished=false;
   if(sound){
     try{
       audioContext=new (window.AudioContext||window.webkitAudioContext)();
-      const gain=audioContext.createGain();gain.gain.value=.055;gain.connect(audioContext.destination);
-      if(!afterFire){siren=audioContext.createOscillator();siren.type='sine';siren.connect(gain);siren.start();}audioContext.resume().catch(()=>{});
+      audioContext.resume().catch(()=>{});
     }catch{}
   }
-  const mute=()=>{if(siren){try{siren.stop();}catch{}siren=null;}};
   function tick(now){
     if(finished)return;
     if(!root.isConnected){cleanup();return;}
@@ -58,11 +56,11 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
     const voice=root.querySelector('.rewind-voice');voice.textContent=beat.text;voice.dataset.voiceKind=beat.kind;voice.style.opacity=beat.text?'1':'0';
     if(phase!==next){
       phase=next;root.dataset.rewindPhase=phase;
-      if(phase!=='fire'){mute();stopFire();}
+      root.dispatchEvent(new CustomEvent('rewind-phase',{bubbles:true,detail:phase}));
+      if(phase!=='fire')stopFire();
     }
-    if(siren&&!document.hidden)siren.frequency.setTargetAtTime(550+Math.sin(t*3)*170,audioContext.currentTime,.08);
     if(document.hidden&&audioContext?.state==='running')audioContext.suspend().catch(()=>{});
-    if(!document.hidden&&audioContext?.state==='suspended'&&phase==='fire')audioContext.resume().catch(()=>{});
+    if(!document.hidden&&audioContext?.state==='suspended')audioContext.resume().catch(()=>{});
     if(phase==='clock'){
       const progress=Math.min(1,Math.max(0,(t-beat.clockStart)/3.5));
       const eased=progress*progress*(3-2*progress);
@@ -93,7 +91,7 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
     complete();
   }
   const skipButton=root.querySelector('[data-rewind-skip]');
-  function cleanup(){finished=true;skipButton?.removeEventListener('click',clicked);cancelAnimationFrame(frameId);stopFire();mute();if(audioContext&&audioContext.state!=='closed')audioContext.close().catch(()=>{});}
+  function cleanup(){finished=true;skipButton?.removeEventListener('click',clicked);cancelAnimationFrame(frameId);stopFire();if(audioContext&&audioContext.state!=='closed')audioContext.close().catch(()=>{});}
   skipButton?.addEventListener('click',clicked);
   skipButton?.focus({preventScroll:true});
   frameId=requestAnimationFrame(tick);return cleanup;

@@ -6,15 +6,16 @@ const root = dirname(fileURLToPath(import.meta.url));
 const [html, css, ...modules] = await Promise.all([
   readFile(join(root, 'index.html'), 'utf8'),
   readFile(join(root, 'styles.css'), 'utf8'),
-  ...['message-pages', 'act-expressions', 'story-checkpoints', 'conversation-dom', 'speaker-colors', 'room-layouts', 'act-one-life', 'act-two-life', 'dialogue', 'character-art', 'movement', 'event-cases', 'management', 'simulation', 'act-one', 'act-two', 'fire-ending', 'debt-ending', 'rewind-transition', 'effects', 'exterior-occlusion', 'renderer', 'event-stage', 'choice-ui', 'opening-prologue', 'render-policy', 'trouble-victory', 'app'].map(name => readFile(join(root, 'src', name + '.js'), 'utf8'))
+  ...['message-pages', 'act-expressions', 'story-checkpoints', 'conversation-dom', 'speaker-colors', 'room-layouts', 'act-one-life', 'act-two-life', 'dialogue', 'character-art', 'movement', 'event-cases', 'management', 'simulation', 'act-one', 'act-two', 'fire-ending', 'debt-ending', 'rewind-transition', 'effects', 'exterior-occlusion', 'renderer', 'event-stage', 'choice-ui', 'opening-prologue', 'render-policy', 'trouble-victory', 'bgm', 'app'].map(name => readFile(join(root, 'src', name + '.js'), 'utf8'))
 ]);
 let script = modules.map(source => source.replace(/^import .*;\r?\n/gm, '').replace(/^export /gm, '')).join('\n\n');
-// コード中の 'assets/….png' をすべて data URL として埋め込む（差分ポーズを増やしてもここの修正は不要）
-const assetPaths = [...new Set(script.match(/assets\/[\w\-./]+\.(?:png|svg)/g) || [])];
+// コード中の画像と通常BGMを data URL として埋め込む（差分ポーズを増やしてもここの修正は不要）
+const assetPaths = [...new Set(script.match(/assets\/[\w\-./]+\.(?:png|svg|mp3)/g) || [])];
+const assetMime = path => path.endsWith('.svg') ? 'image/svg+xml' : path.endsWith('.mp3') ? 'audio/mpeg' : 'image/png';
 // Store each unchanged asset once, then share its URL across all references.
 const embeddedAssets = await Promise.all(assetPaths.map(async path => {
   const data = await readFile(join(root, path));
-  return `data:image/${path.endsWith('.svg')?'svg+xml':'png'};base64,${data.toString('base64')}`;
+  return `data:${assetMime(path)};base64,${data.toString('base64')}`;
 }));
 for (const [index, path] of assetPaths.entries()) {
   const reference = `standaloneAssets[${index}]`;
@@ -30,4 +31,4 @@ for(const [index,path] of assetPaths.entries()){
 }
 const standalone = html.replace('<link rel="stylesheet" href="styles.css">', () => `<style>${stylesheet}</style>`).replace('<script type="module" src="src/app.js"></script>', () => `<script type="module">\n${script}\n</script>`);
 await writeFile(join(root, 'play.html'), standalone, 'utf8');
-console.log(`Built standalone game: play.html (${assetPaths.length} images embedded, no server or install required)`);
+console.log(`Built standalone game: play.html (${assetPaths.length} assets embedded, no server or install required)`);
