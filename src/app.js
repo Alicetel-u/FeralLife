@@ -590,3 +590,20 @@ if(firstRewindPreview)showActEnding();
 else if(state.actOne&&!actTwoPreview)showGameTitle();
 document.documentElement.classList.remove('game-booting');
 document.getElementById('boot-screen')?.remove();
+const entryGate=$('entry-gate');
+if(entryGate && !previewType){
+  entryGate.hidden=false;
+  const entryStart=$('entry-start');
+  entryStart.addEventListener('click',()=>{
+    // The trusted user gesture grants HTMLAudioElement playback permission.
+    normalBgm.unlock().catch(()=>{});
+    entryGate.classList.add('entry-gate-exit');
+    entryStart.disabled=true;
+    entryGate.addEventListener('transitionend',event=>{
+      if(event.target===entryGate){entryGate.remove();}
+    },{once:true});
+    setTimeout(()=>entryGate.remove(),900);
+  },{once:true});
+}else{
+  entryGate?.remove();
+}
