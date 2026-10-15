@@ -280,6 +280,7 @@ function showEvent(id,index=null,page=0) {
   if(choices){e.choicePresented=true;save();}
   cleanupChoiceUI=mountChoiceUI(modal,state.actOne?.chapter===2?'hostess':'cat');
   characterVoice.play(lines[cursor],e.id+':'+cursor+':'+pageIndex);
+  characterVoice.prepare(cursor+1<lines.length?lines[cursor+1]:null);
   scheduleEventAuto();
   document.querySelector(last&&waiting?'[data-choice]':last?(['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'[data-epilogue-done].primary-button':['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'[data-rewind-resume].primary-button':e.actScene==='act2-prologue'&&state.actOne.prologuePending?'[data-act2-prologue-done].primary-button':e.actScene==='prologue'?'[data-opening="3"].primary-button':'[data-close].primary-button'):'[data-dialogue-next]')?.focus({preventScroll:true});
 }
