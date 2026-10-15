@@ -597,10 +597,12 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
   text-shadow:0 2px 4px #0c0712b8;
 }
 .game-ink .conversation-modal .stage-bubble.inner-voice{
-  background:linear-gradient(105deg,#51344cf5,#242033f2 65%,#43243af5);
-  border-top-color:#e1c8df;
+  background:linear-gradient(104deg,#d62d4a 0 1.1%,#f2dbc1 1.1% 1.5%,transparent 1.5%),
+    linear-gradient(121deg,#c82e4b5c 0 8%,transparent 8.2% 77%,#a5274240 100%),
+    linear-gradient(106deg,#34202cf7 0%,#221824f4 45%,#38202cf1 100%);
+  border-top-color:#f4dfc2;
 }
-.game-ink .conversation-modal .stage-bubble.inner-voice p{color:#f2e3f6}
+.game-ink .conversation-modal .stage-bubble.inner-voice p{color:var(--speech-color,#fff4e2)}
 .game-ink .conversation-modal .modal-footer .primary-button{
   background:#c82e49;
   color:#fff1db;
@@ -673,18 +675,6 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
 @media(max-width:700px){.entry-oversize{font-size:29vw;text-shadow:4px 5px 0 #f7e7d3,9px 10px 0 #bc2342}.entry-start{min-width:76vw;min-height:62px}}
 @media(prefers-reduced-motion:reduce){.entry-gate{transition:none}}
 
-/* First rewind: the landlord's inner voice keeps the same graphic dialogue frame.
-   Avoid the unrelated purple panel flashing between spoken lines. */
-.game-ink .conversation-modal .conversation-body[data-rewind-intro] .stage-bubble.inner-voice{
-  background:
-    linear-gradient(104deg,#d62d4a 0 1.1%,#f2dbc1 1.1% 1.5%,transparent 1.5%),
-    linear-gradient(121deg,#c82e4b5c 0 8%,transparent 8.2% 77%,#a5274240 100%),
-    linear-gradient(106deg,#34202cf7 0%,#221824f4 45%,#38202cf1 100%);
-  border-top-color:#f4dfc2;
-}
-.game-ink .conversation-modal .conversation-body[data-rewind-intro] .stage-bubble.inner-voice p{
-  color:var(--speech-color,#fff4e2);
-}
 
 /* In-game HOW TO PLAY: bold slanted menu, not a document page. */
 .game-ink dialog:has(.persona-help){width:min(960px,calc(100vw - 26px));max-width:960px;max-height:94dvh;overflow:auto;border:4px solid #f4e5d3;background:#141019;box-shadow:13px 14px 0 #b62645}
