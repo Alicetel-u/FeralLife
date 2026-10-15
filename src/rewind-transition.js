@@ -14,7 +14,7 @@ export function automaticFirstRewind(state){
   return !!a&&a.chapter!==2&&a.attempt===1&&a.status==='bad'&&a.failure?.startsWith('ash-');
 }
 export function rewindClickAction(failure,attempt,phase){
-  return attempt===1&&failure?.startsWith('ash-')&&phase!=='clock'&&phase!=='return'?'clock':'finish';
+  return phase!=='clock'&&phase!=='return'?'clock':'finish';
 }
 export function rewindBeat(t,attempt=1,afterFire=false){
   const repeat=attempt>1,fireEnd=afterFire?0:repeat?8:4,clockStart=fireEnd+(afterFire?2.5:1);
