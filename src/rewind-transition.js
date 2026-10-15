@@ -58,7 +58,7 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
     const musicDone=clockAudio?.ended===true;
     const unavailable=!sound || (clockAudio?.paused && clockElapsed>=10);
     if(clockElapsed>=4&&(musicDone||(unavailable&&clockElapsed>=5.5)))clockComplete=true;
-    const shownTime=clockComplete?clockStart+4.01:Math.min(t,clockStart+3.99);
+    const shownTime=Math.min(t,clockStart+3.99);
     const beat=rewindBeat(shownTime,attempt,afterFire),next=beat.phase;
     const voice=root.querySelector('.rewind-voice');voice.textContent=beat.text;voice.dataset.voiceKind=beat.kind;voice.style.opacity=beat.text?'1':'0';
     if(phase!==next){
