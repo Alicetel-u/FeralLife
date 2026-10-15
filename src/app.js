@@ -86,7 +86,7 @@ const talk = createTalk(restored ? (state.events[0]?.id || 0) : 0);
 const modal = $('modal');
 if(state.actOne){
   const goal=document.createElement('section');goal.className='act-objective';goal.id='act-objective';
-  goal.innerHTML=`<div><small>けもの荘 / 第一幕</small><strong>${actOneTitle(state)}</strong><span id="act-progress"></span></div><button class="act-wait" data-act-wait>次の異変まで見守る →</button>`;
+  goal.innerHTML=`<div><small>けもの荘 / 第一幕</small><strong>${actOneTitle(state)}</strong><span id="act-progress"></span></div><button class="act-wait" data-act-wait hidden>次のトラブルまで進む →</button>`;
   document.querySelector('main').prepend(goal);
   document.querySelector('.brand small').textContent='第一幕 · 二晩を、生き延びろ。';
 }
@@ -165,7 +165,10 @@ function updateUI() {
   if(state.actOne){
     $('act-objective').querySelector('strong').textContent=(state.actOne.chapter===2?ACT_TWO_TITLE:actOneTitle(state));
     $('act-progress').textContent=`${state.actOne.attempt}周目 · ${state.actOne.completed.length}/2件を突破 · 目標：${state.actOne.chapter===2?'5日目9時':'3日目9時'}`;
-    document.querySelector('[data-act-wait]').disabled=!!state.ending||!!state.actOne.pending||!state.actOne.started;
+    const waitButton=document.querySelector('[data-act-wait]');
+    const upcoming=Object.keys(state.actOne.chapter===2?ACT_TWO_EVENTS:ACT_ONE_EVENTS).find(id=>!state.actOne.completed.includes(id));
+    waitButton.hidden=!(state.actOne.skipUnlockedScene===upcoming&&state.actOne.attempt>1&&state.actOne.started&&!state.actOne.rewindIntroPending&&state.actOne.status==='playing'&&!state.actOne.pending);
+    waitButton.disabled=waitButton.hidden;
   }
   const management=ensureManagement(state);
   if(state.actOne){
@@ -314,7 +317,7 @@ function showHistory() {
   openModal(header('APARTMENT ARCHIVE / 観察日誌','ろくでもない、日々の記録')+`<div class="modal-body"><p class="modal-copy">${state.events.length}件の記録。新しい出来事から順に並んでいます。（最新240件を保存）</p><div class="history-list">${state.events.map(eventHTML).join('')}</div></div><div class="modal-footer"><span>気になる出来事を選ぶと、詳細を読めます。</span><button class="primary-button" data-close>観察に戻る →</button></div>`);
 }
 function showHelp() {
-  if(state.actOne){openModal(header('FIRST ACT / 遊び方','二晩を生き延びれば、次の住人が来る。')+`<div class="modal-body"><p class="modal-copy">1日目17時から3日目9時まで、住人はモクだけ。決められた時刻に2つのイベントが起きます。3択は全部変ですが、各イベントで助かるのは1つだけ。モクの言葉と、部屋の様子を覚えてください。</p><p class="modal-copy">会話中と返事を保留している間は時間が止まります。「次の異変まで見守る」で次のイベントまで進めます。AUTOは台詞だけ、SKIPは選択肢まで読み進めます。回答を勝手に選ぶことはありません。</p><p class="modal-copy">全焼すると、その時の後悔を持って1日目に戻れます。大家ノートには失敗した理由が残ります。データは自動保存されます。</p></div><div class="modal-footer"><button class="primary-button" data-close>モクの様子を見る →</button></div>`);return;}
+  if(state.actOne){openModal(header('FIRST ACT / 遊び方','二晩を生き延びれば、次の住人が来る。')+`<div class="modal-body"><p class="modal-copy">1日目17時から3日目9時まで、住人はモクだけ。決められた時刻に2つのイベントが起きます。3択は全部変ですが、各イベントで助かるのは1つだけ。モクの言葉と、部屋の様子を覚えてください。</p><p class="modal-copy">会話中と返事を保留している間は時間が止まります。失敗してループした後は「次のトラブルまで進む」で再挑戦まで進めます。AUTOは台詞だけ、SKIPは選択肢まで読み進めます。回答を勝手に選ぶことはありません。</p><p class="modal-copy">全焼すると、その時の後悔を持って1日目に戻れます。大家ノートには失敗した理由が残ります。データは自動保存されます。</p></div><div class="modal-footer"><button class="primary-button" data-close>モクの様子を見る →</button></div>`);return;}
   openModal(header('HOW TO OBSERVE / 管理人の心得','あなたは、暮らしの後始末を引き受ける。')+`<div class="modal-body"><p class="modal-copy">住人は自分で暮らします。相談や後日談が発生すると、その場で立ち絵と吹き出しが開きます。費用・信頼・安全にはそれぞれ変化があり、後日談が別の事件につながることもあります。返事は保留できます。</p><div class="help-grid"><div class="help-step"><strong><span>01</span>暮らしを眺める</strong>最初は猫の部屋を大きく表示。「全体を見る」で6部屋を一覧できます。下の部屋一覧で住人を選び、「住人ノート」で欲求や所持金を確認。衛生状態だけは、数値が高いほど良好です。</div><div class="help-step"><strong><span>02</span>記録を読む</strong>「日誌」から会話を読み返せます。管理人室には未回答の相談と後日談の予定が届きます。「次へ」で会話を読み、最後に返事を選びます。会話中は時間が止まります。</div><div class="help-step"><strong><span>03</span>次の住人を選ぶ</strong>3日目の9時から、原則3日ごとに2人の入居希望者が現れます。封筒から申込書を開き、一人を空室に迎えましょう。</div><div class="help-step"><strong><span>04</span>アパートの結末を見届ける</strong>18日目の9時に、管理資金・安全・信頼・助け合い・話題と、住人の暮らしから結末が決まります。組み合わせを変えて、別の観察記を始められます。</div></div><p class="modal-copy" style="margin-top:18px;margin-bottom:0">「住人を追う」をONにすると、選んだ住人が部屋を出たとき外観へ、帰宅すると内装へ自動で切り替わります。手動の内装／外観・大きさ切り替えは追跡をOFFにします。⛶で全画面表示。通常速度では10秒＝ゲーム内1時間。3×・6×で進行を速められます。ブラウザを閉じたり、別のタブを表示している間は進行しません。データはこのブラウザに自動保存されます。</p></div><div class="modal-footer"><span>Space：一時停止 / Esc：ノートを閉じる</span><button class="primary-button" data-close>けもの荘を眺める →</button></div>`);
 }
 function showOpening(step = 0) {
@@ -352,7 +355,7 @@ function continueGame(){
   closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();
 }
 function showTitleHelp(){
-  openModal(header('HOW TO PLAY / けもの荘','この家を、三日目の朝まで守る。',false)+`<div class="modal-body title-help"><p>大家になったあなたを待っていたのは、のんびり暮らす灰田モク。悪気はない。けれど、放っておくとアパートは全焼する。</p><ol><li><strong>モクの暮らしを見守る</strong><p>1日目17時から3日目9時まで。「次の異変まで見守る」でイベントまで進めます。</p></li><li><strong>三つの変な返事から、一つを選ぶ</strong><p>トラブルは二つ。各3択のうち、助かる返事は一つだけ。会話中は時間が止まります。</p></li><li><strong>燃えたら、後悔を持ってやり直す</strong><p>全焼すると1日目へ。失敗の手がかりは大家ノートに残ります。次の周回で役立てましょう。</p></li></ol><p>進行は自動保存。次回はタイトルの「つづきから」で再開できます。</p></div><div class="modal-footer"><button class="primary-button" data-act-title>タイトルに戻る →</button></div>`);
+  openModal(header('HOW TO PLAY / けもの荘','この家を、三日目の朝まで守る。',false)+`<div class="modal-body title-help"><p>大家になったあなたを待っていたのは、のんびり暮らす灰田モク。悪気はない。けれど、放っておくとアパートは全焼する。</p><ol><li><strong>モクの暮らしを見守る</strong><p>1日目17時から3日目9時まで。失敗してループした後は「次のトラブルまで進む」で再挑戦まで進めます。</p></li><li><strong>三つの変な返事から、一つを選ぶ</strong><p>トラブルは二つ。各3択のうち、助かる返事は一つだけ。会話中は時間が止まります。</p></li><li><strong>燃えたら、後悔を持ってやり直す</strong><p>全焼すると1日目へ。失敗の手がかりは大家ノートに残ります。次の周回で役立てましょう。</p></li></ol><p>進行は自動保存。次回はタイトルの「つづきから」で再開できます。</p></div><div class="modal-footer"><button class="primary-button" data-act-title>タイトルに戻る →</button></div>`);
 }
 
 function showActNotebook(){
@@ -444,7 +447,7 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-title-new'))openModal(header('NEW GAME / はじめから','一日目から、やり直しますか？',false)+'<div class="modal-body"><p class="modal-copy">今の進行と、タイムループで集めた失敗の記憶をリセットします。</p></div><div class="modal-footer"><button class="secondary-button" data-act-title>タイトルに戻る</button><button class="primary-button" data-restart>新しく始める →</button></div>');
   if(button.hasAttribute('data-act2-start')&&state.actOne?.chapter===2){state.actOne.started=true;state.actOne.titlePending=false;save();const intro=state.events.find(e=>e.actScene==='act2-prologue');if(state.actOne.prologuePending&&intro)showEvent(intro.id);else{closeModal();openNextStageEvent();}}
   if(button.hasAttribute('data-act-start')){state.actOne.started=true;state.actOne.rewindTitlePending=false;save();closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();}
-  if(button.hasAttribute('data-act-wait')&&state.actOne?.status==='playing'&&!state.actOne.pending){(state.actOne.chapter===2?advanceActTwo(state,nextActTwoAt(state)-state.hour):advanceActOne(state,nextActOneAt(state)-state.hour));queueFreshStageEvents();updateUI();save();if(state.ending)showActEnding();else openNextStageEvent();}
+  if(button.hasAttribute('data-act-wait')&&!button.hidden&&state.actOne?.status==='playing'&&!state.actOne.pending){(state.actOne.chapter===2?advanceActTwo(state,nextActTwoAt(state)-state.hour):advanceActOne(state,nextActOneAt(state)-state.hour));queueFreshStageEvents();updateUI();save();if(state.ending)showActEnding();else openNextStageEvent();}
   if(button.hasAttribute('data-act-rewind')&&state.actOne?.status==='bad')beginRewind();
   if(button.hasAttribute('data-act2-prologue-done')&&state.actOne?.chapter===2){state.actOne.prologuePending=false;const intro=state.events.find(e=>e.actScene==='act2-prologue');if(intro)intro.read=true;save();closeModal();openNextStageEvent();}
   if(button.hasAttribute('data-rewind-resume')&&state.actOne?.rewindIntroPending){state.actOne.rewindIntroPending=false;const intro=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-rewind':'rewind'));if(intro)intro.read=true;save();closeModal();}
