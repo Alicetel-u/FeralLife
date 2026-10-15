@@ -28,8 +28,8 @@ export function rewindBeat(t,attempt=1,afterFire=false){
   }
   if(phase==='dark'&&afterFire){text='……もう一度、やり直せるなら。';kind='inner';}
   if(phase==='clock'){
-    text=t>=clockStart+3.5?'……カチッ。':repeat?'次こそは……絶対に守ってやる！':'';
-    kind=t>=clockStart+3.5?'narration':'inner';
+    text=repeat?'次こそは……絶対に守ってやる！':'';
+    kind='inner';
   }
   return {phase,text,kind,clockStart,finished:t>=clockStart+5.5};
 }
@@ -41,15 +41,9 @@ export function rewindTransitionHTML(failure,attempt=1,afterFire=false,chapter=1
 export function startRewindTransition(root,failure,finish,sound,attempt=1,targetTime=17,afterFire=false,clockAudio=null){
   const stopFire=afterFire?()=>{}:startFireEnding(root.querySelector('.fire-cinematic'),failure,()=>{});
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let t=0,last=performance.now(),frameId,phase='',audioContext=null,clickPlayed=false,finished=false,clockComplete=false,fadeStarted=false,fadeStart=0;
+  let t=0,last=performance.now(),frameId,phase='',finished=false,clockComplete=false,fadeStarted=false,fadeStart=0;
   const clockStart=rewindBeat(0,attempt,afterFire).clockStart;
   const firstLoop=attempt===1;
-  if(sound){
-    try{
-      audioContext=new (window.AudioContext||window.webkitAudioContext)();
-      audioContext.resume().catch(()=>{});
-    }catch{}
-  }
   function tick(now){
     if(finished)return;
     if(!root.isConnected){cleanup();return;}
@@ -66,8 +60,6 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
       root.dispatchEvent(new CustomEvent('rewind-phase',{bubbles:true,detail:phase}));
       if(phase!=='fire')stopFire();
     }
-    if(document.hidden&&audioContext?.state==='running')audioContext.suspend().catch(()=>{});
-    if(!document.hidden&&audioContext?.state==='suspended')audioContext.resume().catch(()=>{});
     if(phase==='clock'){
       const progress=Math.min(1,Math.max(0,(t-beat.clockStart)/3.5));
       const eased=progress*progress*(3-2*progress);
@@ -79,9 +71,6 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
       root.querySelector('.rewind-clock').classList.toggle('clock-locked',progress>=1);
       root.querySelector('.rewind-hand.minute').style.transform=`rotate(${angle}deg)`;
       root.querySelector('.rewind-hand.hour').style.transform=`rotate(${reduced?targetHour:targetHour+120+(angle-targetMinute)/12}deg)`;
-      if(t>=beat.clockStart+3.5&&!clickPlayed){
-        clickPlayed=true;if(audioContext){const osc=audioContext.createOscillator(),volume=audioContext.createGain();volume.gain.setValueAtTime(.12,audioContext.currentTime);volume.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+.06);osc.frequency.value=1300;osc.connect(volume);volume.connect(audioContext.destination);osc.start();osc.stop(audioContext.currentTime+.06);}
-      }
     }
     if(clockComplete&&!fadeStarted){
       if(firstLoop){beginFade();}
@@ -98,7 +87,7 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
     if(clockComplete)beginFade();
   }
   const skipButton=root.querySelector('[data-rewind-skip]');
-  function cleanup(){finished=true;root.removeEventListener('click',clicked);cancelAnimationFrame(frameId);stopFire();if(audioContext&&audioContext.state!=='closed')audioContext.close().catch(()=>{});}
+  function cleanup(){finished=true;root.removeEventListener('click',clicked);cancelAnimationFrame(frameId);stopFire();}
   if(!firstLoop)root.addEventListener('click',clicked);
   skipButton?.focus({preventScroll:true});
   frameId=requestAnimationFrame(tick);return cleanup;
