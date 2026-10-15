@@ -1,4 +1,4 @@
-import {clearLegacyObservationMemo,observationActive,observationView,observationClockLimit,tickObservation,finishObservationLine,canSkipObservation,skipObservation,inheritObservation} from './act-one-observation.js';
+import {clearLegacyObservationMemo,observationView,observationClockLimit,tickObservation,canSkipObservation,skipObservation,inheritObservation} from './act-one-observation.js';
 import {createVoicePlayer} from './voice-player.js';
 const characterVoice=createVoicePlayer({onPlaybackChange:active=>normalBgm.setVoiceActive(active)});
 document.addEventListener('pointerdown',()=>characterVoice.unlock(),{capture:true});
@@ -98,22 +98,6 @@ if(state.actOne){
   document.querySelector('main').prepend(goal);
   document.querySelector('.brand small').textContent='第一幕 · 二晩を、生き延びろ。';
 }
-const observationPanel=document.createElement('section');
-observationPanel.className='observation-story';observationPanel.hidden=true;
-observationPanel.setAttribute('aria-label','暮らしの観察');
-observationPanel.innerHTML='<div class="observation-heading"><span data-obs-phase></span><small data-obs-count></small></div><h2 data-obs-title></h2><div aria-live="polite"><strong data-obs-speaker></strong><p data-obs-line></p></div><div class="observation-actions"><button data-obs-next>次へ →</button></div>';
-document.querySelector('main').append(observationPanel);
-let observationRenderKey='';
-function renderObservation(){
- const v=observationView(state);
- observationPanel.hidden=!observationActive(state)||modal.open||!v?.beat;
- if(observationPanel.hidden){observationRenderKey='';return;}
- const key=v.identity;
- if(key===observationRenderKey)return;observationRenderKey=key;
- const set=(name,text)=>observationPanel.querySelector('[data-obs-'+name+']').textContent=text;
- set('phase',v.phaseTitle);set('count',(v.done+1)+' / '+v.total);set('title',v.beat.title);
- set('speaker',v.line.name);set('line',v.line.text);
-}
 let autoFollow = true, cameraKey = '';
 
 function updateCamera() {
@@ -187,7 +171,6 @@ function updateJournal() {
   $('unread-count').textContent = state.events.filter(e => !e.read).length;
 }
 function updateUI() {
-  renderObservation();
   if(state.actOne){
     $('act-objective').querySelector('strong').textContent=(state.actOne.chapter===2?ACT_TWO_TITLE:actOneTitle(state));
     $('act-progress').textContent=`${state.actOne.attempt}周目 · ${state.actOne.completed.length}/2件を突破 · 目標：${state.actOne.chapter===2?'5日目9時':'3日目9時'}`;
@@ -350,7 +333,7 @@ function storyHelpContent(){
   return `<div class="persona-help">
     <div class="persona-help-hero"><span>HOW TO PLAY</span><strong>遊び方<span class="persona-help-paw">✦</span></strong><p>このアパートの運命は、大家の選択で変わる。</p></div>
     <div class="persona-help-steps">
-      <section class="persona-help-step"><b>01</b><div><h3>住人たちを見守ろう</h3><p>部屋ではモクの行動と独り言を見守りましょう。外や廊下では大家と顔を合わせて会話することも。セリフは自動で進み、「次へ」でも送れます。</p></div></section>
+      <section class="persona-help-step"><b>01</b><div><h3>住人たちを見守ろう</h3><p>部屋ではモクの行動と独り言を見守りましょう。外や廊下では大家と顔を合わせて会話することも。セリフは住人のそばの吹き出しに表示され、自動で進みます。</p></div></section>
       <section class="persona-help-step"><b>02</b><div><h3>大家として返事を選ぼう</h3><p>トラブルが起きたら会話を読み、3つの選択肢から返事を決めます。選び方によって、その後の展開が変わります。会話中はゲーム内の時間が止まります。</p></div></section>
       <section class="persona-help-step"><b>03</b><div><h3>失敗を次の挑戦に生かそう</h3><p>選択を間違えると、アパートを失う結末になることも。時間を巻き戻せばもう一度挑戦できます。前の周回で分かったことを手がかりに、別の選択を試しましょう。</p></div></section>
       <section class="persona-help-step"><b>04</b><div><h3>再挑戦はテンポよく</h3><p>第一幕では、一度見た区間を「見た暮らしを早送り」で進められます。初めての区間では、住人の様子を見てから相談を迎えましょう。第二幕では巻き戻し後に「次のトラブルまで進む」を使えます。</p></div></section>
@@ -493,7 +476,6 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-title-new'))openModal(header('NEW GAME / はじめから','一日目から、やり直しますか？',false)+'<div class="modal-body"><p class="modal-copy">今の進行と、タイムループで集めた失敗の記憶をリセットします。</p></div><div class="modal-footer"><button class="secondary-button" data-act-title>タイトルに戻る</button><button class="primary-button" data-restart>新しく始める →</button></div>');
   if(button.hasAttribute('data-act2-start')&&state.actOne?.chapter===2){state.actOne.started=true;state.actOne.titlePending=false;save();const intro=state.events.find(e=>e.actScene==='act2-prologue');if(state.actOne.prologuePending&&intro)showEvent(intro.id);else{closeModal();openNextStageEvent();}}
   if(button.hasAttribute('data-act-start')){state.actOne.started=true;state.actOne.rewindTitlePending=false;save();closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();}
-  if(button.hasAttribute('data-obs-next')&&observationActive(state)&&!modal.open){if(finishObservationLine(state))characterVoice.stop();updateUI();save();}
   if(button.hasAttribute('data-act-wait')&&!button.hidden&&state.actOne?.status==='playing'&&!state.actOne.pending&&(state.actOne.chapter===2||skipObservation(state))){(state.actOne.chapter===2?advanceActTwo(state,nextActTwoAt(state)-state.hour):advanceActOne(state,nextActOneAt(state)-state.hour));queueFreshStageEvents();updateUI();save();if(state.ending)showActEnding();else openNextStageEvent();}
   if(button.hasAttribute('data-act-rewind')&&state.actOne?.status==='bad')beginRewind();
   if(button.hasAttribute('data-act2-prologue-done')&&state.actOne?.chapter===2){state.actOne.prologuePending=false;const intro=state.events.find(e=>e.actScene==='act2-prologue');if(intro)intro.read=true;save();closeModal();openNextStageEvent();}
@@ -645,7 +627,7 @@ function frame(now){
   stepTalk(talk, state, now, stopped);
   updateCamera();
   if(!modal.open){const spoken=talk.bubbles[0];if(spoken)characterVoice.play(spoken,'bubble:'+JSON.stringify([spoken.speaker,spoken.text,talk.mutterShownAt,talk.eventId,talk.index]));else characterVoice.stop();}
-  const bubbles=document.body.classList.contains('conversation-active')||observationActive(state)?[]:talk.bubbles;
+  const bubbles=document.body.classList.contains('conversation-active')?[]:talk.bubbles;
   const drawWorld=worldRenderGate.shouldDraw(state,now,stopped,cameraKey,bubbles);
   if(drawWorld)renderer.draw(state,now,stopped,bubbles);
   else renderer.last=now;

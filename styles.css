@@ -919,18 +919,3 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
     text-shadow:3px 3px 0 #1b101b;
   }
 }
-/* Everyday observation is readable without covering the room or replacing event UI. */
-.observation-story[hidden]{display:none}
-.observation-story{position:fixed;z-index:25;left:24px;bottom:24px;width:min(360px,calc(100vw - 48px));box-sizing:border-box;padding:18px 20px;color:#f7eedb;background:rgba(28,32,30,.96);border:1px solid #b8a57a;border-radius:14px;box-shadow:0 8px 32px #0005;max-height:48dvh;overflow:auto;font-family:inherit}
-.observation-heading{display:flex;justify-content:space-between;gap:12px;color:#d1bc8f;font-size:12px;letter-spacing:.08em}
-.observation-story h2{font-size:18px;margin:8px 0 14px;font-weight:600}
-.observation-story strong{font-size:13px;color:#f0ce89}
-.observation-story p{font-size:16px;line-height:1.7;margin:6px 0 12px}
-.observation-actions{display:flex;justify-content:flex-end}
-.observation-actions button{font:inherit;font-size:13px;min-height:44px;padding:8px 14px;border:1px solid #aa9875;border-radius:8px;background:#394239;color:#fff2d8;cursor:pointer}
-.observation-actions button:disabled{opacity:.6;cursor:default}
-@media(max-width:700px){.observation-story{left:12px;bottom:14px;width:calc(100vw - 24px);padding:12px 16px;max-height:45dvh}.observation-story h2{font-size:16px;margin:6px 0 8px}.observation-story p{font-size:14px;margin-bottom:8px}}
-@media(max-height:500px) and (min-width:600px){.observation-story{left:12px;bottom:12px;width:340px;max-height:65dvh;padding:10px 14px}.observation-story h2{font-size:15px;margin:5px 0}.observation-story p{font-size:13px;line-height:1.5}.observation-actions button{min-height:36px}}
-
-.game-ink.controls-expanded .observation-story{visibility:hidden}
-@media(max-width:700px){.observation-story{bottom:calc(env(safe-area-inset-bottom,0px) + 72px);max-height:40dvh}}

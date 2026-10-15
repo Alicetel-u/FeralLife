@@ -326,14 +326,17 @@ export class WorldRenderer {
     ctx.save();
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.imageSmoothingEnabled = false;
+    const canvasBox=this.canvas.getBoundingClientRect?.();
+    const speechBounds=canvasBox?.width ? {left:Math.max(0,-canvasBox.left*WORLD_WIDTH/canvasBox.width),right:Math.min(WORLD_WIDTH,((globalThis.innerWidth||canvasBox.right)-canvasBox.left)*WORLD_WIDTH/canvasBox.width)} : {left:0,right:WORLD_WIDTH};
     for (const bubble of this.bubbles) {
       const resident = state.residents.find(r => r.type === bubble.speaker);
-      const place = this.speechAnchor(state, bubble.speaker) || {
+      const nearby = bubble.speaker==='manager'&&state.actOne?.chapter!==2 ? this.speechAnchor(state,'cat') : null;
+      const place = this.speechAnchor(state, bubble.speaker) || (nearby ? {x:Math.max(160,nearby.x-280),y:nearby.y,tail:false,source:'近くにいる大家'} : null) || {
         x: 1510, y: 230, tail: false, source: resident ? `${resident.room}号室の声` : 'けもの荘の声'
       };
       const visibleSpeaker = this.view === 'exterior' && place.tail && !place.source;
       drawSpeechBubble(ctx, place.x, place.y, bubble.name, bubble.text, {
-        large: this.focus, accent: speakerColors(bubble)[1], ink: speakerColors(bubble)[1],
+        bounds:speechBounds, large: this.focus, accent: speakerColors(bubble)[1], ink: speakerColors(bubble)[1],
         source: place.source, tail: place.tail, hideName: visibleSpeaker, opacity: this.speechOpacity
       });
     }
@@ -364,14 +367,15 @@ function drawSpeechBubble(ctx, screenX, screenY, name, text, opts) {
   ctx.save();
   ctx.globalAlpha = opts.opacity;
   ctx.font = `500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;
-  const lines = wrapSpeechText(ctx, text, opts.large ? 530 : 390);
+  const bounds=opts.bounds||{left:0,right:WORLD_WIDTH};
+  const lines = wrapSpeechText(ctx, text, Math.max(120,Math.min(opts.large ? 530 : 390,bounds.right-bounds.left-pad*2-48)));
   const header = opts.hideName ? '' : opts.source ? `${name}  ·  ${opts.source}` : name;
   ctx.font = '700 24px "Yu Gothic UI", Meiryo, sans-serif';
   const headerWidth = header ? ctx.measureText(header).width + 24 : 0;
   ctx.font = `500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;
   const w = Math.ceil(Math.max(160, headerWidth, ...lines.map(line => ctx.measureText(line).width)) + pad * 2);
   const h = Math.ceil((header ? 70 : 36) + lines.length * lineH);
-  const left = Math.max(24, Math.min(WORLD_WIDTH - w - 24, Math.round(screenX - w / 2)));
+  const left = Math.max(bounds.left+24, Math.min(bounds.right - w - 24, Math.round(screenX - w / 2)));
   let top = Math.max(24, Math.min(WORLD_HEIGHT - h - 24, Math.round(screenY - h - (opts.tail ? 34 : 12))));
   let tailLen = 0;
   if (opts.tail) {
