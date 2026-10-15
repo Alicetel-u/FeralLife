@@ -20,6 +20,6 @@ test('rewind clicks cannot bypass the clock and restored dialogue remains pendin
  const s=createActOne(42,[],1,true);advanceActOne(s,100);answerActOne(s,s.actOne.pending.eventId,'trash');
  const next=rewindBeforeFire(s),e=next.events.find(e=>e.actScene==='rewind');
  assert.equal(next.actOne.rewindIntroPending,true);
- assert.ok(e.lines.some(l=>l.text.includes('燃えたはず')));
- assert.ok(e.lines.some(l=>l.text.includes('戻ったのか')));
+ assert.ok(e.lines.some(l=>l.text.includes('さっきまで火事で')));
+ assert.ok(e.lines.some(l=>l.innerVoice&&l.text.includes('戻ってる？ 時間が')));
 });

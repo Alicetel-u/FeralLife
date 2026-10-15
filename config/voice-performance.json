@@ -1,0 +1,72 @@
+{
+  "model": "eleven_v3",
+  "outputFormat": "mp3_44100_128",
+  "estimatedCreditsPerCharacter": 1,
+  "profiles": {
+    "normal": {
+      "direction": "親しみやすい青年。低音や威圧を強調しない",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75
+      }
+    },
+    "inner": {
+      "direction": "静かな独り言。内省的で自然な間。声を張らない",
+      "tags": [
+        "[thoughtful]",
+        "[softly]"
+      ],
+      "settings": {
+        "stability": 1,
+        "similarity_boost": 0.75
+      }
+    },
+    "retort": {
+      "direction": "呆れ・困惑・苦笑いのコメディ。怒鳴らない",
+      "tags": [
+        "[lighthearted]",
+        "[sighs]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75
+      }
+    },
+    "moku": {
+      "direction": "気だるくのんびり。説教しない。ニャを自然に",
+      "tags": [
+        "[relaxed]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 0.95
+      }
+    },
+    "moku-happy": {
+      "direction": "脱力したまま楽しげな掛け合い",
+      "tags": [
+        "[chuckles]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 0.98
+      }
+    },
+    "moku-surprised": {
+      "direction": "気だるいモクの軽い驚き",
+      "tags": [
+        "[surprised]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 0.98
+      }
+    }
+  }
+}

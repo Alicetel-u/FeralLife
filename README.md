@@ -14,9 +14,9 @@ Windows / PCブラウザ向けの、2Dリアルタイム獣人生活観察ゲー
 
 ## 起動
 
-**`起動.cmd` または `play.html` をダブルクリックしてください。** 単体HTML版は画像・CSS・JavaScriptをすべて内蔵しており、インストール・Node.js・ネット接続は不要です。Edge / ChromeなどのPCブラウザで遊べます。
+**`起動.cmd` または `play.html` をダブルクリックしてください。** HTML版は画像・CSS・JavaScriptを内蔵しており、インストール・Node.js・ネット接続は不要です。Edge / ChromeなどのPCブラウザで遊べます。
 
-開発用の分割ソースを使う場合は、Node.jsで `npm start` を実行し、`http://localhost:4173` を開きます。`index.html` はHTTPサーバー経由で開きます。変更後は `npm run build` で単体版 `play.html` を更新します。単体版は生成物のためGit管理から外しています。リポジトリを取得した直後は `npm run build` で生成してから `npm test` を実行してください。GitHub Pagesでは公開時に自動生成します。
+開発用の分割ソースを使う場合は、Node.jsで `npm start` を実行し、`http://localhost:4173` を開きます。`index.html` はHTTPサーバー経由で開きます。変更後は `npm run build` で単体版 `play.html` を更新します。単体版は生成物のためGit管理から外しています。リポジトリを取得した直後は `npm run build` で生成してから `npm test` を実行してください。GitHub Pagesでは公開時に自動生成します。キャラクターボイスは必要なセリフだけ `assets/voices/` から読み込むため、ローカルで音声付きの `play.html` を移動するときはこのフォルダーも隣に置いてください。音声の設定・生成手順は [docs/voices.md](docs/voices.md) を参照してください。
 
 ## 遊び方
 

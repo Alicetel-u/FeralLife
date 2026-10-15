@@ -3,3 +3,6 @@
 
 # Generated deployment staging folders.
 /.pages-build-*/
+
+# Local credentials and generation journal
+/.local/

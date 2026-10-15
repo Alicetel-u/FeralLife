@@ -9,6 +9,7 @@ const port = Number(process.env.PORT || 4173);
 createServer(async (req, res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+    if (pathname.split('/').some(part => part.startsWith('.')) || !/^\/(?:$|index\.html$|play\.html$|styles\.css$|src\/[^/]+\.js$|assets\/)/.test(pathname)) { res.writeHead(403).end(); return; }
     const path = resolve(root, '.' + (pathname === '/' ? '/index.html' : pathname));
     if (!path.startsWith(root + sep)) { res.writeHead(403).end(); return; }
     const body = await readFile(path);

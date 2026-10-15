@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {messagePages} from '../src/message-pages.js';
 import {eventStageHTML} from '../src/event-stage.js';
 import {ACT_TWO_EVENTS} from '../src/act-two.js';
+import {EVENT_EXPRESSIONS} from '../src/character-art.js';
 
 test('all second-act messages retain every character across punctuation-aware pages',()=>{
  for(const event of Object.values(ACT_TWO_EVENTS))for(const line of [ ...event.lines,...event.choices.flatMap(c=>c.lines)]){
@@ -18,7 +19,7 @@ test('continuation pages retain speaker and expression while displaying only the
  const pages=messagePages(text);
  for(let i=0;i<pages.length;i++){
   const html=eventStageHTML(event,[],0,i);
-  assert.ok(html.includes(`<p>${pages[i]}</p>`));assert.match(html,/hostess-sad.png/);
+  assert.ok(html.includes(`<p>${pages[i]}</p>`));assert.ok(html.includes(EVENT_EXPRESSIONS.hostess.sad));assert.match(html,/data-emotion="sad"/);
   assert.ok(html.includes(`${i+1} / ${pages.length}`));
  }
 });

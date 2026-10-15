@@ -85,7 +85,7 @@ test('story rewind restores start or the preceding success and preserves earlier
   const saved=JSON.parse(JSON.stringify(first));assert.ok(validActOne(saved));
   const recovered=rewindBeforeFire(saved);assert.equal(recovered.hour,17);assert.equal(recovered.actOne.attempt,2);
   assert.equal(recovered.actOne.pending,null);assert.equal(recovered.ending,null);assert.equal(recovered.actOne.rewindIntroPending,true);
-  assert.ok(recovered.events.some(e=>e.actScene==='rewind'&&e.lines.some(l=>l.text.includes('燃えたはずだろ'))));
+  assert.ok(recovered.events.some(e=>e.actScene==='rewind'&&e.lines.some(l=>l.text.includes('さっきまで火事で'))));
   assert.deepEqual(recovered.actOne.chosenChoices,['ash:trash']);assert.deepEqual(recovered.actOne.memory,['ash-trash']);
   advanceActOne(recovered,2);assert.equal(recovered.actOne.pending.scene,'ash');answer(recovered,'water');
   advanceActOne(recovered,100);const checkpoint=JSON.parse(JSON.stringify(recovered.actOne.rollbackPoint.state));answer(recovered,'turbo');

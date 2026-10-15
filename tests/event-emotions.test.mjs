@@ -2,15 +2,16 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { EVENT_EXPRESSIONS } from '../src/character-art.js';
+import { EVENT_EXPRESSIONS, EVENT_ART } from '../src/character-art.js';
 import { eventEmotion, eventStageHTML, EVENT_EMOTION_NAMES } from '../src/event-stage.js';
 
-test('every resident has seven distinct bust assets',async()=>{
+test('residents retain seven emotion mappings and approved distinct character art',async()=>{
   assert.equal(Object.keys(EVENT_EXPRESSIONS).length,6);
   const hashes=[];
-  for(const states of Object.values(EVENT_EXPRESSIONS)) {
+  for(const [character,states] of Object.entries(EVENT_EXPRESSIONS)) {
     assert.deepEqual(Object.keys(states),Object.keys(EVENT_EMOTION_NAMES));
-    assert.equal(new Set(Object.values(states)).size,7);
+    assert.equal(new Set(Object.values(states)).size,character==='hostess'?1:7);
+    if(character==='hostess')assert.ok(Object.values(states).every(src=>src===EVENT_ART.hostess));
     for(const src of Object.values(states)) {
       const data=await readFile(new URL('../'+src,import.meta.url));
       assert.equal(data.subarray(1,4).toString(),'PNG');
@@ -20,7 +21,7 @@ test('every resident has seven distinct bust assets',async()=>{
       hashes.push(createHash('sha256').update(data).digest('hex'));
     }
   }
-  assert.equal(new Set(hashes).size,42,'Each emotion must be its own generated asset');
+  assert.equal(new Set(hashes).size,36,'Five distinct bust sets and Luna’s approved original art');
 });
 test('directed story reactions override ambiguous text; explicit emotion wins',()=>{
   const line={speaker:'fox',text:'近くない方がいいよ。'};
