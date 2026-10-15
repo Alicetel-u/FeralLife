@@ -35,15 +35,27 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
   };
   tracks.clock.loop = false;
   let enabled = true;
+  let volume = 0.35;
+  try {
+    const raw = globalThis.localStorage?.getItem('feral-bgm-volume');
+    if (raw !== null && raw !== undefined) {
+      const saved = Number(raw);
+      if (Number.isFinite(saved)) volume = Math.max(0, Math.min(1, saved));
+    }
+  } catch {}
   let voiceActive = false;
-  const syncLevel = () => { for(const audio of Object.values(tracks)) audio.volume = voiceActive ? 0.10 : 0.35; };
+  const syncLevel = () => {
+    const level = volume * (voiceActive ? 0.10 / 0.35 : 1);
+    for(const audio of Object.values(tracks)) audio.volume = level;
+  };
+  syncLevel();
   let suppressed = false;
   let unlocked = false;
   let cue = 'normal';
   const sync = async () => {
     const active = tracks[cue];
     for (const audio of Object.values(tracks)) if (audio !== active) audio.pause();
-    if (!unlocked || !enabled || suppressed) { active.pause(); return false; }
+    if (!unlocked || !enabled || volume === 0 || suppressed) { active.pause(); return false; }
     if (active.ended && cue === 'clock') return true;
     if (!active.paused) return true;
     try { await active.play(); return true; }
@@ -51,6 +63,8 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
   };
   return {
     get enabled() { return enabled; },
+    get volume() { return volume; },
+    setVolume(value) { volume = Math.max(0, Math.min(1, Number(value) || 0)); try { globalThis.localStorage?.setItem('feral-bgm-volume', String(volume)); } catch {} syncLevel(); return sync(); },
     setVoiceActive(value) { voiceActive = !!value; syncLevel(); },
     get cue() { return cue; },
     get clockAudio() { return tracks.clock; },
