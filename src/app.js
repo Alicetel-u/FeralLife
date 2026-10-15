@@ -411,9 +411,14 @@ function beginRewind(afterFire=false){
   const stopTransition=startRewindTransition(modal.querySelector('.rewind-screen'),failure,()=>resetActState(secondAct?rewindActTwo(state):rewindBeforeFire(state),true),sound,state.actOne.attempt,rollbackHour,afterFire,normalBgm.clockAudio);
   stopFireEnding=()=>stopTransition();
 }
+let rewindWhiteoutPending=false;
 function resetActState(next,resume=false){
+  const reveal=rewindWhiteoutPending;rewindWhiteoutPending=false;
+  let whiteout=null;
+  if(reveal){whiteout=document.createElement('div');whiteout.className='rewind-scene-reveal';document.body.append(whiteout);}
   state=next;restored=false;Object.assign(talk,createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;
   renderer.reset();closeModal();updateCamera();updateRooms();updateUI();save();
+  if(whiteout){requestAnimationFrame(()=>requestAnimationFrame(()=>whiteout.classList.add('revealing')));setTimeout(()=>whiteout.remove(),1300);}
   if(state.actOne.chapter===2){if(state.actOne.titlePending){showActTwoTitle();return;}const e=state.events.find(e=>e.actScene===(state.actOne.prologuePending?'act2-prologue':'act2-rewind'));if(e&&(state.actOne.prologuePending||state.actOne.rewindIntroPending)){showEvent(e.id,state.actOne.rewindIntroCursor||0);return;}showActTwoTitle();return;}
   if(state.actOne.rewindIntroPending)showEvent(state.events.find(e=>e.actScene==='rewind').id,state.actOne.rewindIntroCursor||0);else showActTitle();
 }
@@ -550,7 +555,7 @@ function syncNormalBgm(){
   return normalBgm.setScene(document.hidden, clock?'clock':bad?'bad':title?'title':trouble?'trouble':'normal');
 }
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
-modal.addEventListener('rewind-fade',()=>{normalBgm.setSuppressed(true);});
+modal.addEventListener('rewind-fade',()=>{rewindWhiteoutPending=true;normalBgm.setSuppressed(true);});
 function unlockNormalBgm(event){if(event.target.closest?.('#sound-button'))return;normalBgm.unlock().catch(()=>{});}
 document.addEventListener('pointerdown',unlockNormalBgm,true);
 document.addEventListener('keydown',unlockNormalBgm,true);
