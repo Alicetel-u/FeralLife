@@ -651,3 +651,26 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
 @keyframes trouble-loop-slam{from{opacity:0;transform:rotate(13deg) translateX(40px) scale(1.7)}70%{opacity:1;transform:rotate(4deg) translateX(0) scale(.94)}to{opacity:1;transform:rotate(6deg) scale(1)}}
 @media(max-width:700px){.game-ink .conversation-modal .trouble-headline{justify-content:center;gap:5px}.game-ink .conversation-modal .trouble-loop{font-size:11px;padding:4px 5px;border-width:2px;box-shadow:3px 3px 0 #151019}.game-ink .conversation-modal .trouble-card.slam .trouble-headline{gap:8px}.game-ink .conversation-modal .trouble-card.slam .trouble-bang{font-size:clamp(21px,5.4vw,38px)}.game-ink .conversation-modal .trouble-card.slam .trouble-loop{font-size:clamp(19px,5vw,35px);border-width:3px;box-shadow:4px 4px 0 #151019}}
 @media(prefers-reduced-motion:reduce){.game-ink .conversation-modal .trouble-card.slam .trouble-loop{animation:none}}
+
+/* First-visit audio unlock: a graphic-novel-style doorway before the title. */
+.entry-gate{position:fixed;inset:0;z-index:200000;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 80% 20%,#6e253b55,transparent 42%),linear-gradient(140deg,#100c15 0 48%,#301523 48% 52%,#160e1b 52%);color:#f6e8d2;isolation:isolate;transition:opacity .6s ease,filter .6s ease}
+.entry-gate[hidden]{display:none!important}
+.entry-gate::before{content:'';position:absolute;inset:-40%;background:linear-gradient(118deg,transparent 42%,#c82747 42% 45%,transparent 45% 51%,#e8cba225 51% 52%,transparent 52%);transform:rotate(-9deg);z-index:-1}
+.entry-gate::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 7px,#fff1e609 8px 9px);pointer-events:none;opacity:.4;z-index:-1}
+.entry-gate-graphics{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.entry-gate-graphics span:first-child{position:absolute;right:-.04em;top:-.28em;font:900 clamp(220px,45vw,730px)/1 Georgia,serif;color:#ffffff08;transform:rotate(-13deg)}
+.entry-gate-graphics span:last-child{position:absolute;left:3vw;top:5vh;font:900 clamp(11px,1.2vw,18px)/1 var(--sans);letter-spacing:.4em;color:#ddc7b7}
+.entry-gate-content{position:relative;width:min(92%,860px);padding:60px 18px 74px;text-align:left;transform:rotate(-2deg)}
+.entry-gate-kicker{display:inline-block;background:#ca2544;padding:8px 15px;color:#fff;font:900 clamp(10px,1.3vw,14px)/1.3 var(--sans);letter-spacing:.15em;transform:rotate(3deg)}
+.entry-gate h1{margin:20px 0 12px;font:1000 clamp(66px,12vw,165px)/.83 var(--sans);letter-spacing:-.095em;color:#fff1d8;text-shadow:10px 12px 0 #08070c,17px 20px 0 #b32644;transform:skew(-7deg)}
+.entry-gate h1 em{color:#ee4265;font-style:normal}.entry-gate h1 span{color:#ed4261}
+.entry-gate-japanese{margin:26px 0 32px;font:700 clamp(13px,1.7vw,20px)/1.8 var(--sans);letter-spacing:.08em}
+.entry-start{display:flex;gap:18px;align-items:center;justify-content:center;min-height:70px;min-width:min(100%,330px);padding:14px 24px;background:#e9d6b8;color:#1a101b;border:4px solid #fff1d8;box-shadow:9px 9px 0 #b62845;font:900 clamp(16px,2vw,25px)/1 var(--sans);transform:skew(-9deg);transition:transform .15s,background .15s}
+.entry-start span{color:#c1233c}.entry-start small{font:900 10px/1 var(--sans);letter-spacing:.12em}
+.entry-start:hover{background:#fff5e3;transform:skew(-9deg) translate(-3px,-3px)}
+.entry-start:focus-visible{outline:4px solid #f13c5d;outline-offset:6px}
+.entry-gate-sound{margin:25px 0 0;color:#cfbcbd;font:600 12px/1.5 var(--sans);letter-spacing:.12em}
+.entry-gate-footer{position:absolute;right:3vw;bottom:4vh;color:#c0abb3;font:700 10px/1.5 var(--sans);letter-spacing:.24em}
+.entry-gate.entry-gate-exit{opacity:0;filter:brightness(2);pointer-events:none}
+@media(max-width:700px){.entry-gate-content{padding:25px 14px 35px}.entry-gate h1{font-size:clamp(56px,15vw,105px);text-shadow:5px 7px 0 #08070c,9px 12px 0 #b32644}.entry-gate-japanese{margin:22px 0}.entry-start{min-height:62px;min-width:0;width:100%;gap:12px}.entry-gate-graphics span:last-child{top:25px}.entry-gate-footer{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.entry-gate,.entry-start{transition:none}}
