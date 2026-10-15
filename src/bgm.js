@@ -21,6 +21,7 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
     title: prepare(titleAudio || new Audio(TITLE_BGM_SRC)),
     clock: prepare(clockAudio || new Audio(CLOCK_BGM_SRC)),
   };
+  tracks.clock.loop = false;
   let enabled = true;
   let suppressed = false;
   let unlocked = false;
@@ -36,6 +37,7 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
   return {
     get enabled() { return enabled; },
     get cue() { return cue; },
+    get clockAudio() { return tracks.clock; },
     label() { return enabled ? '♫ <span>BGM ON</span>' : '♫ <span>BGM OFF</span>'; },
     unlock() { unlocked = true; return sync(); },
     setEnabled(value) { enabled = !!value; return sync(); },
