@@ -553,7 +553,8 @@ function syncNormalBgm(){
   const activeDialogue=modal.open&&modal.classList.contains('conversation-modal')?state.events.find(e=>e.id===eventView?.id):null;
   const victory=!bad&&!clock&&!title&&modal.open&&!!modal.querySelector('.trouble-victory');
   const trouble=!victory&&!bad&&!clock&&!title&&modal.open&&(!!modal.querySelector('.trouble-card')||activeDialogue?.actScene==='reply');
-  return normalBgm.setScene(document.hidden, clock?'clock':bad?'bad':title?'title':victory?'victory':trouble?'trouble':bedCue(state?.actOne));
+  const firstRewindUneasy=!bad&&!clock&&!title&&!victory&&!trouble&&activeDialogue?.actScene==='rewind'&&state.actOne?.chapter!==2&&state.actOne?.attempt===2&&state.actOne?.rewindIntroPending;
+  return normalBgm.setScene(document.hidden, clock?'clock':bad?'bad':title?'title':victory?'victory':trouble?'trouble':firstRewindUneasy?'uneasy':bedCue(state?.actOne));
 }
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
 modal.addEventListener('rewind-fade',()=>{rewindWhiteoutPending=true;normalBgm.setSuppressed(true);});
