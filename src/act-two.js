@@ -212,7 +212,7 @@ export function rewindActTwo(s){
   if(scene==='contract'){advanceActTwo(next,100);answerActTwo(next,next.actOne.pending.eventId,ACT_TWO_EVENTS.bag.choices.find(c=>!c.bad).id);}
  }
  if(s.actOne.rollbackPoint?.kind==='story')next.actOne.rollbackPoint=JSON.parse(JSON.stringify(s.actOne.rollbackPoint));
- next.actOne.attempt=a.attempt+1;next.actOne.memory=[...a.memory];next.actOne.chosenChoices=actTwoChosen(s);next.actOne.status='playing';next.actOne.pending=null;next.actOne.prologuePending=false;next.actOne.titlePending=false;next.actOne.started=true;next.ending=null;next.pending=null;next.events.forEach(e=>e.read=true);
+ next.actOne.attempt=a.attempt+1;next.actOne.skipUnlockedScene=scene;next.actOne.memory=[...a.memory];next.actOne.chosenChoices=actTwoChosen(s);next.actOne.status='playing';next.actOne.pending=null;next.actOne.prologuePending=false;next.actOne.titlePending=false;next.actOne.started=true;next.ending=null;next.pending=null;next.events.forEach(e=>e.read=true);
  const intro=addEvent(next,'life','また、差し押さえの前へ',storyCheckpointTarget(s).label+'に時間が戻った。',[102]);intro.actScene='act2-rewind';intro.cast=['hostess','cat'];intro.stageOnly=true;intro.read=false;intro.lines=[
  n('失ったはずのけもの荘が戻った。'+storyCheckpointTarget(s).label+'に時間が戻っている。'),
  m(scene==='bag'?'……また戻った。あの荷物と書類、今度は見逃さねぇ。':'……また戻った。今度こそ、絶対にハンコは押さねぇ。'),
