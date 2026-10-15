@@ -638,3 +638,7 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
 .rewind-screen[data-rewind-ready="true"]{cursor:pointer}
 @keyframes rewind-prompt-pulse{50%{opacity:.55}}
 @media(prefers-reduced-motion:reduce){.rewind-white-fade{transition:none}.rewind-continue{animation:none}}
+
+.rewind-scene-reveal{position:fixed;inset:0;z-index:2147483647;background:white;opacity:1;pointer-events:none;transition:opacity 1s ease-out}
+.rewind-scene-reveal.revealing{opacity:0}
+@media(prefers-reduced-motion:reduce){.rewind-scene-reveal{transition:none}}
