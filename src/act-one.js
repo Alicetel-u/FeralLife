@@ -368,6 +368,7 @@ export function rewindActOne(s){
       {...am('……もう二度と、あんな光景は見たくねぇ。'),innerVoice:true}
     ];
   }
+  next.actOne.skipUnlockedScene=Object.keys(ACT_ONE_EVENTS).find(id=>ACT_ONE_EVENTS[id].choices.some(c=>c.bad===s.actOne.failure))||'ash';
   next.actOne.rewindIntroPending=true;next.actOne.rewindIntroCursor=0;
   return next;
 }
