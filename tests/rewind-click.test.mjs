@@ -6,7 +6,7 @@ test('second act rewind shows clock and restored apartment without replaying fir
   const html=rewindTransitionHTML('contract-sign',1,true,2);
   assert.match(html,/rewind-clock-dial/);
   assert.match(html,/data-rewind-phase="dark"/);
-  assert.match(html,/src="assets\\/apartments.png"/);
+  assert.match(html,/src="assets\/apartments.png"/);
   assert.doesNotMatch(html,/fire-cinematic|fire-canvas/);
 });
 
@@ -27,10 +27,12 @@ test('later rewind can skip, but its exit uses the white fade',()=>{
   performance.now=()=>now;
   try{
     const node=()=>{const el=new EventTarget();el.focus=()=>{};el.style={setProperty(){}};el.classList={toggle(){},add(){}};el.dataset={};return el;};
-    const skip=node();
+    const skip=node();skip.closest=selector=>selector==='[data-rewind-skip]'?skip:null;
     const root=new EventTarget();root.isConnected=true;root.dataset={};root.classList={add(v){root.fading=v;}};root.querySelector=selector=>selector==='[data-rewind-skip]'?skip:node();
     const stop=startRewindTransition(root,'bag-return',()=>done++,false,2,57,true);
-    skip.dispatchEvent(new Event('click',{bubbles:true}));
+    const skipClick=new Event('click',{bubbles:true});
+    Object.defineProperty(skipClick,'target',{get(){return skip;}});
+    root.dispatchEvent(skipClick);
     root.dispatchEvent(new Event('click'));
     assert.equal(done,0);
     assert.equal(root.fading,'rewind-fading');
@@ -50,8 +52,8 @@ test('first rewind waits for the complete clock track before fading automaticall
   globalThis.CustomEvent=class extends Event{constructor(type,options){super(type,options);this.detail=options?.detail;}};
   performance.now=()=>now;
   try{
-    const node=()=>{const el=new EventTarget();el.style={setProperty(){}};el.classList={toggle(){},add(){}};el.dataset={};return el;};
-    const root=new EventTarget();root.isConnected=true;root.dataset={};root.classList={add(v){root.fading=v;}};root.querySelector=()=>node();
+    const node=()=>{const el=new EventTarget();el.style={setProperty(){}};el.classList={toggle(){},add(){}};el.dataset={};el.focus=()=>{};return el;};
+    const root=new EventTarget();root.isConnected=true;root.dataset={};root.classList={add(v){root.fading=v;}};root.querySelector=selector=>selector==='[data-rewind-skip]'?null:node();
     const audio={ended:false,paused:false};
     const stop=startRewindTransition(root,'ash-trash',()=>done++,true,1,17,true,audio);
     root.dispatchEvent(new Event('click'));

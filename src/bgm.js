@@ -3,6 +3,7 @@ export const TROUBLE_BGM_SRC = 'assets/audio/trouble-persona.mp3';
 export const BAD_END_BGM_SRC = 'assets/audio/bad-end-fire.mp3';
 export const TITLE_BGM_SRC = 'assets/audio/title-countdown.mp3';
 export const CLOCK_BGM_SRC = 'assets/audio/clock-rewind.mp3';
+export const UNEASY_BGM_SRC = 'assets/audio/uneasy-air.mp3';
 
 function prepare(audio) {
   audio.loop = true;
@@ -11,15 +12,25 @@ function prepare(audio) {
   return audio;
 }
 
-// Pop during ordinary play, the countdown on the game title, a persona sting on a trouble card,
-// the fire track through a bad ending, and the clock piece once the rewind dial appears.
-export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio) {
+const STINGS = new Set(['trouble', 'bad', 'title', 'clock']);
+
+// Pop until the first rewind. After that, chapter 1's everyday bed is the uneasy air.
+// Chapter two keeps the pop bed. Title, trouble, bad endings, and the clock stay on their own cues.
+export function bedCue(actOne) {
+  if (actOne && actOne.chapter !== 2 && actOne.attempt >= 2) return 'uneasy';
+  return 'normal';
+}
+
+// Pop during ordinary play, the uneasy air after the first time leap, the countdown on the game title,
+// a persona sting on a trouble card, the fire track through a bad ending, and the clock piece once the rewind dial appears.
+export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio, uneasyAudio) {
   const tracks = {
     normal: prepare(normalAudio || new Audio(NORMAL_BGM_SRC)),
     trouble: prepare(troubleAudio || new Audio(TROUBLE_BGM_SRC)),
     bad: prepare(badAudio || new Audio(BAD_END_BGM_SRC)),
     title: prepare(titleAudio || new Audio(TITLE_BGM_SRC)),
     clock: prepare(clockAudio || new Audio(CLOCK_BGM_SRC)),
+    uneasy: prepare(uneasyAudio || new Audio(UNEASY_BGM_SRC)),
   };
   tracks.clock.loop = false;
   let enabled = true;
@@ -45,8 +56,8 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
     setSuppressed(value) { suppressed = !!value; return sync(); },
     setScene(suppressedValue, nextCue) {
       suppressed = !!suppressedValue;
-      const name = nextCue === 'trouble' || nextCue === 'bad' || nextCue === 'title' || nextCue === 'clock' ? nextCue : 'normal';
-      if (name !== 'normal' && cue !== name) tracks[name].currentTime = 0;
+      const name = STINGS.has(nextCue) || nextCue === 'uneasy' ? nextCue : 'normal';
+      if (STINGS.has(name) && cue !== name) tracks[name].currentTime = 0;
       cue = name;
       return sync();
     },
