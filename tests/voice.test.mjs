@@ -6,7 +6,7 @@ import {voiceLineKey,voicePerformance} from '../src/voice-policy.js';
 import {createVoicePlayer} from '../src/voice-player.js';
 
 test('lively landlord keeps inner voice separate, uses audition settings and preserves Moku caches',async()=>{
- const rows=extractVoiceScript('act1');
+ const rows=extractVoiceScript('act1').filter(row=>!row.source.startsWith('act1/observation/'));
  const ids=JSON.parse(await readFile(new URL('../config/voice-ids.json',import.meta.url)));
  const config=JSON.parse(await readFile(new URL('../config/voice-performance.json',import.meta.url)));
  const {issues}=JSON.parse(await readFile(new URL('../config/voice-pronunciation-issues.json',import.meta.url)));

@@ -1,3 +1,4 @@
+import {observationActive,observationView} from './act-one-observation.js';
 import { firstActMutters } from './act-one-life.js';
 import { secondActChat,lunaMutters,lunaNearby } from './act-two-life.js';
 const NAMES = { cat: 'モク', rabbit: 'ミミ', fox: 'ホロ', wolf: 'ウル', bear: 'ゴロ', mouse: 'チリ', tanuki: 'ポン', hostess: 'ルナ', sister: 'ネム', peko: 'ペコ', ann: 'アン' };
@@ -102,6 +103,7 @@ export function createTalk(latestEventId = 0) {
 }
 export function stepTalk(talk, state, now, stopped) {
   if(state.actOne?.chapter===2)return stepSecondActTalk(talk,state,now,stopped);
+  if(state.actOne){const view=observationActive(state)?observationView(state):null;talk.bubbles=view?.line?[view.line]:[];talk.mutterShownAt=view?.identity;return talk;}
   for (const event of state.events) {
     if (event.read || event.stageOnly || !event.lines?.length || event.id <= talk.seenEvent || event.id === talk.eventId || talk.queue.includes(event.id)) continue;
     talk.queue.push(event.id);
