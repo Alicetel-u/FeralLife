@@ -19,7 +19,7 @@ test('loop scenes have one safe answer and two full-burn endings; first-run ash 
   for(const [scene,c]of Object.entries(ACT_ONE_EVENTS)){
     const loopChoices=getActOneChoices(start(),scene);assert.equal(loopChoices.length,3);assert.equal(loopChoices.filter(x=>x.bad).length,2);
     for(const bad of c.choices.filter(x=>x.bad)){
-      const s=start(bad.id==='freezer'?1:2);advanceActOne(s,1000);
+      const s=start();advanceActOne(s,1000);
       if(scene==='dinner'){answer(s,'water');advanceActOne(s,1000);}
       const result=answer(s,bad.id);
       assert.equal(s.actOne.status,'bad');assert.ok(s.ending.name.includes('全焼'));assert.ok(result.lines.length>=7);
@@ -49,7 +49,7 @@ test('read conversation and pending choice survive reload without replaying or a
 
 test('first-run ash cannot use water until the landlord loops',()=>{
   const first=start(1);advanceActOne(first,6);
-  assert.deepEqual(getActOneChoices(first,'ash').map(c=>c.id),['trash','balcony','freezer']);
+  assert.deepEqual(getActOneChoices(first,'ash').map(c=>c.id),['trash']);
   assert.equal(answer(first,'water'),null);
   answer(first,'trash');
   const loop=rewindActOne(first);advanceActOne(loop,6);
