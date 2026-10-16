@@ -96,7 +96,12 @@ export function startFireEnding(root, failure, finish, options = {}) {
     if (next !== phase) {
       phase = next; root.dataset.firePhase = phase;
       const narration = phase === 'building' ? '誰もいない部屋まで、炎だけが律儀に訪ねていった。' : phase === 'ruins' ? '家賃は、一円も入らなかった。帰る場所も、なくなった。' : '昨日まで、ただ散らかっているだけの部屋だった。';
-      root.querySelector('.fire-narration').textContent = narration;
+      const caption = root.querySelector('.fire-narration');
+      caption.classList.remove('fire-line-visible');
+      caption.textContent = narration;
+      // Restart the fade for each fire phase, including skipped phases.
+      void caption.offsetWidth;
+      caption.classList.add('fire-line-visible');
     }
     if (!document.hidden) {
       if(!reduced||paintedPhase!==phase){draw(reduced ? (phase === 'room' ? 3 : phase === 'building' ? 8 : 12) : elapsed, phase);paintedPhase=phase;}
