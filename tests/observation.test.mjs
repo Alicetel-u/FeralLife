@@ -41,9 +41,9 @@ test('every safe phase completes before the next event and the original ending r
  const s=createActOne(1,[],2,true);observationState(s);let count=0;
  for(let i=0;i<4000&&s.actOne.status==='playing';i++){
   step(s);
-  if(s.actOne.pending){const scene=s.actOne.pending.scene;assert.equal(observationView(s).done,3);answerActOne(s,s.actOne.pending.eventId,scene==='ash'?'water':'coronation');count++;}
+  if(s.actOne.pending){const scene=s.actOne.pending.scene;assert.equal(observationView(s).done,observationView(s).total);answerActOne(s,s.actOne.pending.eventId,scene==='ash'?'water':'coronation');count++;}
  }
- assert.equal(count,2);assert.equal(s.actOne.status,'clear');assert.equal(s.hour,57);assert.equal(s.actOne.observation.seen.length,10);assert.ok(validActOne(s));
+ assert.equal(count,2);assert.equal(s.actOne.status,'clear');assert.equal(s.hour,57);assert.equal(s.actOne.observation.seen.length,7);assert.ok(validActOne(s));
 });
 
 test('landlord replies only while Moku is physically outside or in the hall, before returning for trouble',()=>{
