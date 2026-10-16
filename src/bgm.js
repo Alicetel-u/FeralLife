@@ -49,7 +49,7 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
   const syncLevel = () => {
     // Keep the user's BGM slider unchanged; reduce only the actual playback level on phones.
     const mobile = globalThis.matchMedia?.('(pointer: coarse) and (max-width: 950px)')?.matches === true;
-    const level = volume * (mobile ? 0.5 : 1);
+    const level = volume * (mobile ? 0.3 : 1);
     for(const audio of Object.values(tracks)) audio.volume = level;
   };
   syncLevel();
