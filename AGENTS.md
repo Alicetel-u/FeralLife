@@ -10,6 +10,7 @@
 - When proposing a new plot point, label it a proposal and obtain the user's decision before incorporating it as established canon.
 
 ## Implementation hygiene
+- Preserve the existing message-window UI, nameplate, speaker colors, and dialogue controls when changing scene direction or backgrounds. Reuse the standard dialogue renderer; redesign the message-window UI only when the user explicitly asks for that change.
 - Keep secrets, API keys, and spoiler-heavy developer documents out of player-facing assets and dialogue.
 - Note: this is a **public** GitHub repository; files under `docs/story/` can be read by anyone, even if they aren't linked from the game.
 - Run the existing build and tests for gameplay changes whenever possible.

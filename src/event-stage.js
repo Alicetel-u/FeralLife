@@ -76,7 +76,7 @@ export function eventEmotion(line, event = {}) {
   return 'neutral';
 }
 
-export function eventStageHTML(event,residents,index=0,page=0) {
+export function eventStageHTML(event,residents,index=0,page=0,{hideCharacters=false}={}) {
   const lines=eventConversation(event),cursor=Math.max(0,Math.min(index,lines.length-1)),line=lines[cursor];
   const pages=messagePages(line.text),pageIndex=Math.max(0,Math.min(page,pages.length-1)),pageText=pages[pageIndex];
   if(line.flashbackEffect==='whiteout'){
@@ -87,7 +87,7 @@ export function eventStageHTML(event,residents,index=0,page=0) {
     .filter(type=>!(Number.isInteger(event.revealCharacterAt)&&index<event.revealCharacterAt&&type==='cat')),left=participants[0]||null;
   const right=line.speaker==='manager'&&participants[1]?participants[1]:line.speaker!=='narrator'&&line.speaker!=='mystery'&&line.speaker!==left?line.speaker:participants[1]||'manager';
   const character=(type,side)=> {
-    if(!type||type==='manager')return '';
+    if(hideCharacters||!type||type==='manager')return '';
     const previous=lines.slice(0,cursor+1).reverse().find(item=>item.speaker===type);
     const emotion=eventEmotion(previous,event),expression=EVENT_EXPRESSIONS[type]?.[emotion];
     const src=expression||EVENT_ART[type]||CHARACTER_ART[type]?.src,active=line.speaker===type;

@@ -1,7 +1,5 @@
-import { EVENT_EXPRESSIONS } from './character-art.js';
-import { speakerColorStyle } from './speaker-colors.js';
+import {eventConversation,eventStageHTML} from './event-stage.js';
 
-const fireEscape = value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Direction only: the authored dialogue, voice keys and saved cursor stay intact.
 export function isFirstFireReply(event,act){
  return act?.chapter!==2&&act?.attempt===1&&act?.status==='bad'&&act?.failure==='ash-trash'
@@ -19,11 +17,13 @@ export function firstFireCut(lines,index){
  if(reached('その場を離れた'))return 'departure';
  return 'trust';
 }
-export function firstFireStageHTML(lines,index,pageText){
- const line=lines[index],cut=firstFireCut(lines,index),inside=cut==='trust',corridor=['departure','rush','blocked'].includes(cut);
+export function firstFireStageHTML(event,residents,index=0,page=0){
+ const lines=eventConversation(event),cut=firstFireCut(lines,index),inside=cut==='trust',corridor=['departure','rush','blocked'].includes(cut);
+ if(inside)return eventStageHTML(event,residents,index,page);
  const background=inside?'assets/rooms/cat/interior-v2.png':corridor?(cut==='departure'?'assets/events/first-fire-corridor.png':'assets/events/first-fire-entrance.png'):cut==='smoke'?'assets/apartments.png':'assets/events/first-fire-exterior.png';
- const distant=line.speaker==='cat'&&!inside;
- const speaker=line.speaker==='manager'?'大家':line.speaker==='cat'?(distant?'モク · 101号室の中':'モク'):'';
- const portrait=inside?EVENT_EXPRESSIONS.cat[line.emotion]||EVENT_EXPRESSIONS.cat.neutral:null;
- return `<div class="event-stage first-fire-stage" data-cut="${cut}" data-speaker="${fireEscape(line.speaker)}"><div class="first-fire-shot" aria-hidden="true"><img class="first-fire-background" src="${background}" alt="">${portrait?`<img class="first-fire-moku" src="${portrait}" alt="">`:''}<div class="first-fire-smoke"></div><div class="first-fire-vignette"></div><div class="first-fire-slash"></div></div><div class="first-fire-bars" aria-hidden="true"></div><span class="first-fire-location" aria-hidden="true">${inside?'101 / 23:00':corridor?'けもの荘 · 一階廊下':'けもの荘 · 屋外'}</span><div class="stage-bubble first-fire-caption ${distant?'first-fire-distant':''} ${line.speaker==='narrator'?'first-fire-narration':''}" style="${speakerColorStyle(line)}" aria-live="polite" aria-atomic="true">${speaker?`<span class="first-fire-speaker">${fireEscape(speaker)}</span>`:''}<p>${fireEscape(pageText)}</p></div><span class="first-fire-next" aria-hidden="true">CLICK / ENTER <b>▸</b></span></div>`;
+ const shot=`<div class="first-fire-shot" aria-hidden="true"><img class="first-fire-background" src="${background}" alt=""><div class="first-fire-smoke"></div><div class="first-fire-vignette"></div><div class="first-fire-slash"></div></div><div class="first-fire-bars" aria-hidden="true"></div><span class="first-fire-location" aria-hidden="true">${inside?'101 / 23:00':corridor?'けもの荘 · 一階廊下':'けもの荘 · 屋外'}</span>`;
+ // Reuse the exact normal message window, nameplate, colors, pagination and tap target.
+ return eventStageHTML(event,residents,index,page,{hideCharacters:!inside})
+  .replace('class="event-stage ',`data-cut="${cut}" class="event-stage first-fire-stage `)
+  .replace(/^(<div[^>]*>)/,'$1'+shot);
 }
