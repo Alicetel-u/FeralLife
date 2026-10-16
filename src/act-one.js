@@ -443,6 +443,7 @@ export function rewindBeforeFire(s){
   const intro=addEvent(next,'life',firstLoop?'初めての巻き戻し':'また、火事の前へ',
     firstLoop?'焼け落ちたはずの101号室が、何事もなかったように戻っている。':'また時間が戻った。'+storyCheckpointTarget(s).label+'だ。',[101]);
   intro.actScene='rewind';intro.cast=['cat'];intro.stageOnly=true;intro.read=false;
+  intro.revealCharacterAt=firstLoop?8:0;
   intro.lines=firstLoop?[
     an('耳をつんざく炎の音。肌を焼く熱気。息を吸うたび、喉の奥が焼けるように痛む。'),
     am('くそっ……！ モク！ 走れ！！ 早く！！'),
