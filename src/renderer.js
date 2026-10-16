@@ -68,6 +68,17 @@ function firstEveningCleanup(state,r,position,t){
   }
   return position;
 }
+// During the smartphone search, move between nearby floor spots before each discovery.
+function phoneSearchWalk(state,r,position,t){
+  const scene=state.actOne?.observation?.current;
+  if(r.type!=='cat'||scene?.id!=='phone-search'||position.zone!=='room')return position;
+  const idx=Math.min(2,scene.index||0);
+  const route=[[-18,-8],[38,-4],[0,0]];
+  const from=idx===0?[0,0]:route[idx-1],to=route[idx];
+  const progress=Math.min(1,Math.max(0,(scene.elapsed||0)/1.1));
+  const eased=progress*progress*(3-2*progress),walking=progress<1;
+  return {...position,x:273+from[0]+(to[0]-from[0])*eased,y:436+from[1]+(to[1]-from[1])*eased,moving:walking,direction:to[0]>=from[0]?1:-1};
+}
 export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1, direction = 1, opts = {}) {
   const art = CHARACTER_ART[type];
   if (art?.image) {
@@ -223,7 +234,7 @@ export class WorldRenderer {
     ctx.restore();
   }
   drawInteriorResident(state,r,t) {
-    const p=firstEveningCleanup(state,r,sampleJourney(r,state.hour,ACTIONS[r.action].place),t);
+    const p=phoneSearchWalk(state,r,firstEveningCleanup(state,r,sampleJourney(r,state.hour,ACTIONS[r.action].place),t),t);
     if(p.zone==='away'||p.zone==='street'||p.zone==='stairs')return;
     const base=exteriorRoomBounds(p.room||r.room), b=roomBounds(p.room||r.room,this.focusRoom);if(!b)return;
     const ctx=this.ctx,x=b.x+(p.x-base.x)/base.w*b.w,y=p.zone==='hall'?b.y+b.h+16:b.y+(p.y-base.y)/base.h*b.h;
