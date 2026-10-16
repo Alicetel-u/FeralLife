@@ -406,7 +406,7 @@ function showActEnding(afterFire=false){
   const a=state.actOne,bad=a.status==='bad';
   if(bad&&!afterFire){
     openModal(fireEndingHTML(a.failure));
-    stopFireEnding=startFireEnding(modal.querySelector('.fire-cinematic'),a.failure,()=>showActEnding(true));
+    stopFireEnding=startFireEnding(modal.querySelector('.fire-cinematic'),a.failure,()=>showActEnding(true),{firstTragedy:a.attempt===1&&a.failure==='ash-trash'});
     return;
   }
   if(bad&&afterFire&&automaticFirstRewind(state)){beginRewind(true);return;}
