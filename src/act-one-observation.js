@@ -184,17 +184,18 @@ export const OBSERVATION_BEATS=[
     ]
   },
   {
-    "id": "tv-late",
-    "phase": 1,
-    "at": 24.1,
-    "title": "夜更かし",
+    "id": "tv-late", "phase": 1, "at": 24.1, "title": "動画の続き",
     "lines": [
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "あと一本だけ見るニャ。"
-      }
+      {"speaker":"cat","name":"モク","emotion":"neutral","text":"そういえば、昨日の動画の続き見てなかったニャ。"},
+      {"speaker":"cat","name":"モク","emotion":"neutral","text":"ちょっとだけ見るかニャ。"}
+    ]
+  },
+  {
+    "id":"before-dinner","phase":1,"at":36.65,"title":"昼過ぎの空腹",
+    "lines":[
+      {"speaker":"cat","name":"モク","emotion":"tired","text":"……腹減ったニャ。"},
+      {"speaker":"cat","name":"モク","emotion":"tired","text":"そういえば、昨日から何も食べてない気がするニャ……。"},
+      {"speaker":"cat","name":"モク","emotion":"tired","text":"……なんか作るかニャ。"}
     ]
   },
   {
