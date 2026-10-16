@@ -44,9 +44,8 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
       if (Number.isFinite(saved)) volume = Math.max(0, Math.min(1, saved));
     }
   } catch {}
-  let voiceActive = false;
   const syncLevel = () => {
-    const level = volume * (voiceActive ? 0.10 / 0.35 : 1);
+    const level = volume;
     for(const audio of Object.values(tracks)) audio.volume = level;
   };
   syncLevel();
@@ -66,7 +65,7 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
     get enabled() { return enabled; },
     get volume() { return volume; },
     setVolume(value) { volume = Math.max(0, Math.min(1, Number(value) || 0)); try { globalThis.localStorage?.setItem('feral-bgm-volume', String(volume)); } catch {} syncLevel(); return sync(); },
-    setVoiceActive(value) { voiceActive = !!value; syncLevel(); },
+    setVoiceActive() { /* Voice playback does not change BGM volume. */ },
     get cue() { return cue; },
     get clockAudio() { return tracks.clock; },
     label() { return enabled ? '♫ <span>BGM ON</span>' : '♫ <span>BGM OFF</span>'; },
