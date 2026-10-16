@@ -1,4 +1,5 @@
-export const NORMAL_BGM_SRC = 'assets/audio/moku-theme.mp3';
+export const NORMAL_BGM_SRC = 'assets/audio/normal-pop.mp3';
+export const MOKU_BGM_SRC = 'assets/audio/moku-theme.mp3';
 export const TROUBLE_BGM_SRC = 'assets/audio/trouble-persona.mp3';
 export const BAD_END_BGM_SRC = 'assets/audio/bad-end-fire.mp3';
 export const TITLE_BGM_SRC = 'assets/audio/title-countdown.mp3';
@@ -24,9 +25,10 @@ export function bedCue(actOne) {
 // Moku's theme during ordinary play, uneasy air after the first time leap, countdown on the game title,
 // a persona sting on a trouble card, the result fanfare on a cleared trouble,
 // the fire track through a bad ending, and the clock piece once the rewind dial appears.
-export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio, uneasyAudio, victoryAudio) {
+export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio, uneasyAudio, victoryAudio, mokuAudio) {
   const tracks = {
     normal: prepare(normalAudio || new Audio(NORMAL_BGM_SRC)),
+    moku: prepare(mokuAudio || new Audio(MOKU_BGM_SRC)),
     trouble: prepare(troubleAudio || new Audio(TROUBLE_BGM_SRC)),
     bad: prepare(badAudio || new Audio(BAD_END_BGM_SRC)),
     title: prepare(titleAudio || new Audio(TITLE_BGM_SRC)),
@@ -74,7 +76,7 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
     setSuppressed(value) { suppressed = !!value; return sync(); },
     setScene(suppressedValue, nextCue) {
       suppressed = !!suppressedValue;
-      const name = STINGS.has(nextCue) || nextCue === 'uneasy' ? nextCue : 'normal';
+      const name = STINGS.has(nextCue) || nextCue === 'uneasy' || nextCue === 'moku' ? nextCue : 'normal';
       if (STINGS.has(name) && cue !== name) tracks[name].currentTime = 0;
       cue = name;
       return sync();
