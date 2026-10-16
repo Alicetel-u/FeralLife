@@ -15,4 +15,4 @@
 
 第一幕の保存キーは `feral-act-one-v1`。旧 `feral-apartments-v1` を削除／上書きしない。タイトル・未回答のイベント・全焼・クリア・入居予約を保存復元できる。
 
-`tests/act-one.test.mjs` で全6回答、4種類の失敗とループ、時刻の停止、保存復元、入居解放を検証する。`tools/preview-act-one.mjs` は実ブラウザで同じ経路を操作し、単体版とスマホを確認。画面は `docs/act-one-preview/`。
+`tests/act-one.test.mjs` で全6回答、4種類の失敗とループ、時刻の停止、保存復元、入居解放を検証する。`tools/preview-act-one.mjs` は実ブラウザで同じ経路を操作し、単体版とスマホを確認。画面は `docs/game-title-preview/`。
