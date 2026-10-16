@@ -30,10 +30,10 @@ test('legacy saves migrate without replaying past scenes; malformed observation 
  s.actOne.chapter=2;assert.equal(observationView(s),null);assert.equal(observationClockLimit(s),Infinity);
 });
 test('all phases follow completed events and new speech is extracted directly from game data',()=>{
- const s=start();s.actOne.completed=['ash'];s.hour=19;assert.equal(observationView(s).total,3);
+ const s=start();s.actOne.completed=['ash'];s.hour=19;assert.equal(observationView(s).total,4);
  s.actOne.completed.push('dinner');s.hour=37;assert.equal(observationView(s).total,4);
  const rows=extractVoiceScript('act1').filter(r=>r.source.startsWith('act1/observation/'));
- assert.equal(rows.length,37);assert.deepEqual(rows.map(r=>r.line.text),OBSERVATION_BEATS.flatMap(b=>b.lines.map(l=>l.text)));
+ assert.equal(rows.length,41);assert.deepEqual(rows.map(r=>r.line.text),OBSERVATION_BEATS.flatMap(b=>b.lines.map(l=>l.text)));
  assert.equal(extractVoiceScript('intro').some(r=>r.source.startsWith('act1/observation/')),false);
 });
 
@@ -43,7 +43,7 @@ test('every safe phase completes before the next event and the original ending r
   step(s);
   if(s.actOne.pending){const scene=s.actOne.pending.scene;assert.equal(observationView(s).done,observationView(s).total);answerActOne(s,s.actOne.pending.eventId,scene==='ash'?'water':'coronation');count++;}
  }
- assert.equal(count,2);assert.equal(s.actOne.status,'clear');assert.equal(s.hour,57);assert.equal(s.actOne.observation.seen.length,11);assert.ok(validActOne(s));
+ assert.equal(count,2);assert.equal(s.actOne.status,'clear');assert.equal(s.hour,57);assert.equal(s.actOne.observation.seen.length,12);assert.ok(validActOne(s));
 });
 
 test('landlord replies only while Moku is physically outside or in the hall, before returning for trouble',()=>{
