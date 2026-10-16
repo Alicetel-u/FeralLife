@@ -195,6 +195,7 @@ export function spriteMotion(action, moving, needs = {}, t = 0, pose = 'base') {
   if (moving) return m;
   if (action === 'sleep') { m.sy = 1 + Math.sin(t * 1.4) * .025; return m; }
   m.sy = 1 + Math.sin(t * 1.8) * .012;                                   // 呼吸
+  if (action === 'clean') { m.dx = Math.sin(t * 8) * 2.3; m.sy = 1 + Math.sin(t * 11) * .035; }
   if (action === 'fight') m.dx = Math.sin(t * 45) * .7;                  // 怒りで震える
   if ((needs.alcohol ?? 0) >= 70 || action === 'drink') {
     if ((needs.alcohol ?? 0) >= 70 && pose !== 'sit') m.rotate = Math.sin(t * 1.2) * .045; // 千鳥足
