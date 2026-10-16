@@ -59,6 +59,7 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
     if(finished)return;
     if(!root.isConnected){cleanup();return;}
     const dt=Math.min(.1,(now-last)/1000);last=now;if(!document.hidden)t+=dt;
+    if(afterFire&&attempt===1&&t<2.5){const beats=t>=1.3?2:t>=.2?1:0;while(playedHeartbeats<beats){beatHeart();playedHeartbeats++;}}
     const clockElapsed=t-clockStart;
     const musicDone=clockAudio?.ended===true;
     const unavailable=!sound || (clockAudio?.paused && clockElapsed>=10);
