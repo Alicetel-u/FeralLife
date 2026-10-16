@@ -2,8 +2,7 @@ import { createRoomMove, sampleJourney } from './movement.js';
 
 // First-act daily blocking; story deadlines and authored conversations stay unchanged.
 export const MOKU_DAY = [
-  [17,'clean','center','通り道を片づける'],[17.25,'outside','street','外へ出て一服'],[19.3,'meet','street','大家に近づく'],[21.2,'home','table','部屋へ帰る'],
-  [22,'idle','table','帰宅してひと息'],[22.5,'smoke','window','灰皿の前で一服'],
+  [17,'clean','center','通り道を片づける'],[17.25,'outside','street','外へ出て一服'],[19.3,'meet','street','大家に近づく'],[20.6,'home','table','部屋へ帰る'],[22.5,'smoke','window','灰皿の前で一服'],
   [23.25,'idle','table','灰皿のあとにひと息'],[23.85,'idle','center','スマホを探す'],[24.1,'tv','tv','テレビを見て夜更かし'],
   [36.5,'eat','fridge','眠いまま食事の準備'],
   [37.25,'eat','table','カップ麺で昼食'],[38,'sleep','bed','食後のうたた寝'],
