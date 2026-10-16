@@ -19,11 +19,16 @@ export function managerTarget(state,bubbles=[]){
  if(visitor){const {p}=visitor;return {x:Math.min(930,p.x+110),y:p.y,zone:p.zone,chat:true,direction:-1,pose:speaking?.speaker==='manager'?managerReaction(speaking):'idle'};}
  return {x:650,y:513,zone:'street',chat:false,direction:1,pose:'clean'};
 }
-export function managerFrame(target,t){return target.chat?target.pose:(Math.floor(t*3)%2?'clean_b':'clean_a');}
+export function managerFrame(target,t,moving=false){
+ if(moving)return Math.floor(t*4)%2?'walk_b':'walk_a';
+ return target.chat?target.pose:(Math.floor(t*3)%2?'clean_b':'clean_a');
+}
 export function advanceManager(current,target,seconds){
  const p=current||{x:650,y:513,zone:'street',goalZone:'street',route:[]};
  const route=p.goalZone!==target.zone?(target.zone==='hall'?[{x:815,y:513},{x:777,y:440}]:[{x:777,y:440},{x:815,y:513}]):[...(p.route||[])];
  let x=p.x,y=p.y,budget=Math.max(0,Math.min(.1,seconds))*100;
  while(budget>0){const next=route[0]||target,dx=next.x-x,dy=next.y-y,d=Math.hypot(dx,dy);if(d<=budget){x=next.x;y=next.y;budget-=d;if(route.length){route.shift();continue;}break;}x+=dx*budget/d;y+=dy*budget/d;break;}
- return {x,y,zone:route.length?p.zone:target.zone,goalZone:target.zone,route};
+ const moving=route.length>0||Math.hypot(target.x-x,target.y-y)>.01;
+ const direction=Math.abs(x-p.x)>.001?Math.sign(x-p.x):(p.direction||target.direction||1);
+ return {x,y,zone:route.length?p.zone:target.zone,goalZone:target.zone,route,moving,direction};
 }

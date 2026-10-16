@@ -126,7 +126,7 @@ export class WorldRenderer {
     this.managerTarget=managerTarget(state,bubbles);
     const target=this.managerTarget;
     this.managerPosition=advanceManager(this.managerPosition,target,paused?0:dt);
-    this.managerMoving=Math.hypot(target.x-this.managerPosition.x,target.y-this.managerPosition.y)>3;
+    this.managerMoving=this.managerPosition.moving;
     ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,WORLD_WIDTH,WORLD_HEIGHT);
     ctx.setTransform(WORLD_WIDTH/1200,0,0,WORLD_HEIGHT/675,0,0);ctx.imageSmoothingEnabled = false;
     const h = dateAt(state.hour).hour + state.hour % 1;
@@ -174,10 +174,10 @@ export class WorldRenderer {
     if(SCENE_ART.image)ctx.drawImage(SCENE_ART.image,0,0,1000,562.5);else rect(ctx,0,0,1000,562.5,'#494d42');
     rect(ctx,0,0,1000,562.5,`rgba(16,27,49,${darkness})`);
     if(darkness>.3)for(let i=0;i<36;i++)rect(ctx,noise(i,2,1)*1000,noise(i,3,2)*115,1,1,'#e9dcc277');
-    const caretaker=this.managerPosition||{x:650,y:513},caretakerPose=this.managerPreviewPose||(this.managerMoving?'idle':null)||managerFrame(this.managerTarget||managerTarget(state,this.bubbles),t);
+    const caretaker=this.managerPosition||{x:650,y:513},caretakerPose=this.managerPreviewPose||managerFrame(this.managerTarget||managerTarget(state,this.bubbles),t,this.managerMoving);
     if(CHARACTER_ART.manager?.image){
       rect(ctx,caretaker.x-13,caretaker.y+1,26,3,'#17211b66');
-      drawSprite(ctx,'manager',caretaker.x,caretaker.y,t,'idle',80/44,this.managerTarget?.direction||1,{pose:caretakerPose});
+      drawSprite(ctx,'manager',caretaker.x,caretaker.y,t,'idle',80/44,this.managerMoving?caretaker.direction:(this.managerTarget?.direction||1),{pose:caretakerPose});
       if(!this.speaking?.has('manager')){ctx.font='10px "Yu Gothic UI",sans-serif';ctx.textAlign='center';ctx.fillStyle='#f2e9d2';ctx.fillText('大家',caretaker.x,caretaker.y-86);ctx.textAlign='left';}
     }
     const people=state.residents.map(r=>({r,p:sampleJourney(r,state.hour,ACTIONS[r.action].place)})).sort((a,b)=>a.p.y-b.p.y);
@@ -402,7 +402,7 @@ function drawSpeechBubble(ctx, screenX, screenY, name, text, opts) {
     }
   }
   const tipX = Math.max(left + 34, Math.min(left + w - 34, screenX));
-  const paper = '#f7edd9', ink = '#241725';
+  const paper = '#f7edd9', ink = opts.ink || '#241725', accent = opts.accent || '#da2948';
   const shape = () => {
     ctx.beginPath();ctx.moveTo(left+10,top);ctx.lineTo(left+w,top+4);ctx.lineTo(left+w-6,top+h);ctx.lineTo(left,top+h-4);ctx.closePath();
     if (opts.tail) { ctx.moveTo(tipX-14,top+h-1);ctx.lineTo(tipX+2,top+h+tailLen);ctx.lineTo(tipX+16,top+h-1);ctx.closePath(); }
@@ -416,10 +416,10 @@ function drawSpeechBubble(ctx, screenX, screenY, name, text, opts) {
     ctx.fillStyle=paper;ctx.beginPath();ctx.moveTo(tipX-14,top+h-3);ctx.lineTo(tipX+2,top+h+tailLen);ctx.lineTo(tipX+16,top+h-3);ctx.fill();
     ctx.beginPath();ctx.moveTo(tipX-14,top+h);ctx.lineTo(tipX+2,top+h+tailLen);ctx.lineTo(tipX+16,top+h);ctx.stroke();
   }
-  rect(ctx,left+10,top+8,w-22,4,'#da2948');
+  rect(ctx,left+10,top+8,w-22,4,accent);
   const textTop = header ? 62 : 18;
   if (header) {
-    ctx.fillStyle='#d42645';ctx.beginPath();ctx.moveTo(left+pad+4,top+22);ctx.lineTo(left+pad+11,top+22);ctx.lineTo(left+pad+7,top+46);ctx.lineTo(left+pad,top+46);ctx.closePath();ctx.fill();
+    ctx.fillStyle=accent;ctx.beginPath();ctx.moveTo(left+pad+4,top+22);ctx.lineTo(left+pad+11,top+22);ctx.lineTo(left+pad+7,top+46);ctx.lineTo(left+pad,top+46);ctx.closePath();ctx.fill();
     ctx.font='700 24px "Yu Gothic UI", Meiryo, sans-serif';ctx.textBaseline='middle';ctx.fillStyle=ink;ctx.fillText(header,left+pad+19,top+34);
   }
   ctx.font=`500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;ctx.fillStyle=ink;ctx.textBaseline='top';

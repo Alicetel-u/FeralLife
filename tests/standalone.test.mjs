@@ -15,6 +15,7 @@ test('standalone game embeds its artwork, styles and syntactically valid script'
   assert.ok(!script.includes('assets/characters/fox/portrait.png'));
   assert.ok(!script.includes('assets/apartments.png'));
   assert.ok(!script.includes('assets/audio/normal-pop.mp3'));
+  assert.ok(!script.includes('assets/audio/moku-theme.mp3'));
   assert.ok(!script.includes('assets/audio/trouble-persona.mp3'));
   assert.ok(!script.includes('assets/audio/bad-end-fire.mp3'));
   assert.ok(!script.includes('assets/audio/title-countdown.mp3'));

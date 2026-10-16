@@ -1,4 +1,4 @@
-export const NORMAL_BGM_SRC = 'assets/audio/normal-pop.mp3';
+export const NORMAL_BGM_SRC = 'assets/audio/moku-theme.mp3';
 export const TROUBLE_BGM_SRC = 'assets/audio/trouble-persona.mp3';
 export const BAD_END_BGM_SRC = 'assets/audio/bad-end-fire.mp3';
 export const TITLE_BGM_SRC = 'assets/audio/title-countdown.mp3';
@@ -15,12 +15,13 @@ function prepare(audio) {
 
 const STINGS = new Set(['trouble', 'bad', 'title', 'clock', 'victory']);
 
-// Everyday scenes always use the pop bed; the first-rewind dialogue selects uneasy explicitly.
+// Observation and everyday dialogue (including Moku's scenes) use Moku's theme.
+// The first-rewind dialogue selects uneasy explicitly.
 export function bedCue(actOne) {
   return 'normal';
 }
 
-// Pop during ordinary play, the uneasy air after the first time leap, the countdown on the game title,
+// Moku's theme during ordinary play, uneasy air after the first time leap, countdown on the game title,
 // a persona sting on a trouble card, the result fanfare on a cleared trouble,
 // the fire track through a bad ending, and the clock piece once the rewind dial appears.
 export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio, uneasyAudio, victoryAudio) {

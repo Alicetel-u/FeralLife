@@ -87,7 +87,7 @@ let eventAuto=false,eventAutoTimer=null;
 let seenStageId = 0;
 const stageQueue = [];
 const renderer = new WorldRenderer($('world'));
-if(managerPreview){renderer.view='exterior';renderer.focus=false;const pose=new URLSearchParams(location.search).get('pose');if(['idle','happy','angry','sad','surprised','retort','clean_a','clean_b'].includes(pose))renderer.managerPreviewPose=pose;}
+if(managerPreview){renderer.view='exterior';renderer.focus=false;const pose=new URLSearchParams(location.search).get('pose');if(['idle','happy','angry','sad','surprised','retort','clean_a','clean_b','walk_a','walk_b'].includes(pose))renderer.managerPreviewPose=pose;}
 let artVersion=0;
 const onArtReady=()=>{artVersion++;worldRenderGate.state=null;};
 // 最初の画面を描いてから画像を読み込み始める（画像の欠損中は代替描画）。
@@ -476,7 +476,7 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-title-help'))showTitleHelp();
   if(button.hasAttribute('data-game-continue')&&(state.actOne.started||state.actOne.chapter===2))continueGame();
   if(button.hasAttribute('data-game-new')){if(state.actOne.started||state.actOne.chapter===2)button.setAttribute('data-title-new','');else showOpening();}
-  if(button.hasAttribute('data-title-new'))openModal(header('NEW GAME / はじめから','一日目から、やり直しますか？',false)+'<div class="modal-body"><p class="modal-copy">今の進行と、タイムループで集めた失敗の記憶をリセットします。</p></div><div class="modal-footer"><button class="secondary-button" data-act-title>タイトルに戻る</button><button class="primary-button" data-restart>新しく始める →</button></div>');
+  if(button.hasAttribute('data-title-new'))openModal(`<section class="restart-confirm" aria-describedby="restart-description"><div class="restart-stamp" aria-hidden="true">DAY<span>01</span></div><div class="restart-content"><p class="restart-kicker"><span aria-hidden="true">↺</span> NEW GAME / はじめから</p><h2 id="modal-title"><span>一日目から、</span><strong>やり直しますか？</strong></h2><p id="restart-description">今の進行と、タイムループで集めた<br class="restart-desktop-break">失敗の記憶をリセットします。</p><div class="restart-actions"><button class="restart-back" data-act-title><small aria-hidden="true">01 / BACK</small><span>タイトルに戻る</span><b aria-hidden="true">↩</b></button><button class="restart-start" data-restart><small aria-hidden="true">02 / NEW GAME</small><span>新しく始める</span><b aria-hidden="true">→</b></button></div></div><div class="restart-edge" aria-hidden="true">KEMONOSOU / RESTART?</div></section>`);
   if(button.hasAttribute('data-act2-start')&&state.actOne?.chapter===2){state.actOne.started=true;state.actOne.titlePending=false;save();const intro=state.events.find(e=>e.actScene==='act2-prologue');if(state.actOne.prologuePending&&intro)showEvent(intro.id);else{closeModal();openNextStageEvent();}}
   if(button.hasAttribute('data-act-start')){state.actOne.started=true;state.actOne.rewindTitlePending=false;save();closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();}
   if(button.hasAttribute('data-act-wait')&&!button.hidden&&state.actOne?.status==='playing'&&!state.actOne.pending&&(state.actOne.chapter===2||skipObservation(state))){(state.actOne.chapter===2?advanceActTwo(state,nextActTwoAt(state)-state.hour):advanceActOne(state,nextActOneAt(state)-state.hour));queueFreshStageEvents();updateUI();save();if(state.ending)showActEnding();else openNextStageEvent();}

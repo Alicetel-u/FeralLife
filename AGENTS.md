@@ -13,3 +13,8 @@
 - Keep secrets, API keys, and spoiler-heavy developer documents out of player-facing assets and dialogue.
 - Note: this is a **public** GitHub repository; files under `docs/story/` can be read by anyone, even if they aren't linked from the game.
 - Run the existing build and tests for gameplay changes whenever possible.
+
+## Production deployment
+- The user requests production deployment after each completed change. After building and passing the existing tests, commit the intended task changes and push to `main` to trigger `.github/workflows/deploy-pages.yml`.
+- Verify the GitHub Pages workflow succeeds and report the production URL. If deployment fails, investigate and report the actual state.
+- Exclude unrelated local files, credentials, and preview-only output from commits.

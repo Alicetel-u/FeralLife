@@ -1,4 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
 import {SPEAKER_COLORS,speakerColors,speakerColorStyle} from '../src/speaker-colors.js';
 import {CHARACTERS} from '../src/simulation.js';
 import {eventStageHTML} from '../src/event-stage.js';
@@ -15,4 +16,22 @@ test('inner and memory voices override the speaker without altering dialogue',()
  assert.deepEqual(speakerColors({speaker:'unknown'}),SPEAKER_COLORS.narrator);
  const event={title:'test',detail:'台詞',cast:['cat'],lines:[{speaker:'cat',text:'台詞'}]};
  const html=eventStageHTML(event,[],0);assert.ok(html.includes(speakerColorStyle({speaker:'cat'})));assert.match(html,/台詞/);
+});
+
+test('message window updates speaker colors and later design rules preserve them',async()=>{
+ const lines=[{speaker:'cat',text:'モク'},{speaker:'hostess',text:'ルナ'},{speaker:'manager',text:'大家'},{speaker:'manager',innerVoice:true,text:'心の声'}];
+ const event={detail:lines[0].text,lines,cast:['cat','hostess']};
+ for(const [index,line] of lines.entries()){
+  const html=eventStageHTML(event,[],index);
+  assert.ok(html.includes(`style="${speakerColorStyle(line)}" class="stage-bubble`));
+ }
+ const css=await readFile(new URL('../styles.css',import.meta.url),'utf8');
+ const colors=[];
+ for(const rule of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)){
+  const selectors=rule[1].split(',').map(s=>s.trim());
+  if(!selectors.includes('.game-ink .conversation-modal .stage-bubble p'))continue;
+  for(const declaration of rule[2].matchAll(/(?:^|;)\s*color\s*:\s*([^;}]*)/g))colors.push(declaration[1].trim());
+ }
+ assert.ok(colors.length>0);
+ assert.match(colors.at(-1),/^var\(--speech-color,/,'the final message text design must use the current speaker color');
 });

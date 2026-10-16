@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { bedCue, createNormalBgm } from '../src/bgm.js';
+import { NORMAL_BGM_SRC, bedCue, createNormalBgm } from '../src/bgm.js';
 
 function fakeAudio() {
   return {
@@ -33,7 +33,7 @@ test('normal bgm waits for a gesture, then loops until a cinematic', async () =>
   assert.equal(audio.paused, false);
 });
 
-test('trouble cue replaces the pop loop and restarts only when trouble begins', async () => {
+test('trouble cue replaces the everyday theme and restarts only when trouble begins', async () => {
   const normal = fakeAudio();
   const trouble = fakeAudio();
   const bgm = createNormalBgm(normal, trouble, fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio());
@@ -115,7 +115,7 @@ test('clock cue starts when the rewind dial appears and does not restart mid-dia
   assert.equal(clock.currentTime, 3);
 });
 
-test('uneasy air replaces pop after the first leap and resumes across other cues', async () => {
+test('uneasy air replaces the everyday theme after the first leap and resumes across other cues', async () => {
   const normal = fakeAudio();
   const trouble = fakeAudio();
   const uneasy = fakeAudio();
@@ -140,7 +140,8 @@ test('uneasy air replaces pop after the first leap and resumes across other cues
   assert.equal(normal.currentTime, 7);
 });
 
-test('everyday bed stays pop after a rewind; uneasy is reserved for the intro scene', () => {
+test('observation and everyday Moku scenes keep his theme after a rewind; uneasy is reserved for the intro', () => {
+  assert.equal(NORMAL_BGM_SRC, 'assets/audio/moku-theme.mp3');
   assert.equal(bedCue({ attempt: 1 }), 'normal');
   assert.equal(bedCue({ attempt: 2 }), 'normal');
   assert.equal(bedCue({ attempt: 5 }), 'normal');
@@ -173,7 +174,7 @@ test('victory fanfare replaces trouble on a cleared result and does not restart 
 });
 
 test('packaged bgm files are mp3s', async () => {
-  for (const name of ['normal-pop.mp3', 'trouble-persona.mp3', 'bad-end-fire.mp3', 'title-countdown.mp3', 'clock-rewind.mp3', 'uneasy-air.mp3', 'victory-fanfare.mp3']) {
+  for (const name of ['moku-theme.mp3', 'trouble-persona.mp3', 'bad-end-fire.mp3', 'title-countdown.mp3', 'clock-rewind.mp3', 'uneasy-air.mp3', 'victory-fanfare.mp3']) {
     const file = await readFile(new URL('../assets/audio/' + name, import.meta.url));
     assert.ok(file.length > 100000);
     assert.ok(file[0] === 0xff || file.subarray(0, 3).toString() === 'ID3');

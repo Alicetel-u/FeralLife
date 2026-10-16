@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { wrapSpeechText, WorldRenderer, WORLD_WIDTH } from '../src/renderer.js';
 import { createOuting, homeSpot, sampleJourney } from '../src/movement.js';
+import { speakerColors } from '../src/speaker-colors.js';
 
 function view(name, focus = true, room = 101) {
   const renderer = Object.create(WorldRenderer.prototype);
@@ -25,6 +26,20 @@ function findHour(person, pred) {
 }
 
 const pen = { measureText: text => ({ width: Array.from(text).length * 10 }) };
+
+test('observation paints each speaker text and name with their color, including inner voices',()=>{
+ const renderer=view('exterior');
+ renderer.canvas={};renderer.speechAnchor=()=>({x:800,y:500,tail:false,source:''});
+ for(const line of [{speaker:'cat'},{speaker:'hostess'},{speaker:'manager'},{speaker:'manager',innerVoice:true},{speaker:'manager',memoryVoice:true}]){
+  const painted=[];
+  const ctx=new Proxy({measureText:pen.measureText,fillText(text){painted.push({text,color:this.fillStyle});}},{get:(target,key)=>key in target?target[key]:()=>{}});
+  renderer.ctx=ctx;renderer.bubbles=[{...line,name:'名前',text:'セリフ'}];
+  renderer.drawSpeech({residents:[]});
+  assert.ok(painted.some(item=>item.text==='セリフ'));
+  assert.ok(painted.some(item=>item.text.includes('名前')));
+  for(const item of painted)assert.equal(item.color,speakerColors(line)[1]);
+ }
+});
 test('speech preserves explicit line breaks and long dialogue without losing characters', () => {
   const text = '今日は準備の日。\n明日からちゃんと片づけるつもりだけど、まずはごはんを食べて、そのあと少し寝る。';
   const lines = wrapSpeechText(pen, text, 70);

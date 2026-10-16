@@ -24,12 +24,29 @@ test('every approved caretaker pose ships at one foot origin, with distinct swee
  const art=CHARACTER_ART.manager;assert.deepEqual(art.origin,[80,156]);assert.equal(art.displayHeight,44);
  const frames=await Promise.all([art.src,...Object.values(art.poses).map(p=>p.src)].map(path=>readFile(path)));
  for(const frame of frames){assert.equal(frame.readUInt32BE(16),160);assert.equal(frame.readUInt32BE(20),160);assert.equal(frame[25],6);}
- assert.notDeepEqual(frames[1],frames[2]);
+ for(const [a,b] of [['clean_a','clean_b'],['walk_a','walk_b']])assert.notDeepEqual(await readFile(art.poses[a].src),await readFile(art.poses[b].src));
 });
-test('landlord reaction is visible without removing either resident from a shared conversation',()=>{
+test('landlord has no conversation portrait and both residents remain visible',()=>{
  const event={detail:'大家さん。',cast:['hostess','cat'],lines:[{speaker:'hostess',text:'大家さん。'},{speaker:'manager',text:'なんで俺が決めるんだよ……。'}]};
- const html=eventStageHTML(event,[],1);for(const id of ['hostess','cat','manager'])assert.ok(html.includes('data-character="'+id+'"'));
- assert.ok(html.includes('manager/poses/retort.png'));assert.ok(!html.includes('observation-story'));
+ const html=eventStageHTML(event,[],1);for(const id of ['hostess','cat'])assert.ok(html.includes('data-character="'+id+'"'));
+ assert.ok(!html.includes('data-character="manager"'));assert.ok(!html.includes('assets/characters/manager'));assert.ok(html.includes('なんで俺が決めるんだよ'));assert.ok(!html.includes('observation-story'));
+ for(const cast of [[],['cat'],['manager']]){
+  const solo=eventStageHTML({...event,cast},[],1);
+  assert.ok(!solo.includes('data-character="manager"'));assert.ok(!solo.includes('assets/characters/manager'));
+ }
+});
+
+test('landlord walks in alternating frames, faces travel direction, then resumes sweeping on arrival',()=>{
+ const target={x:610,y:513,zone:'street',chat:false,direction:1};
+ let p=advanceManager(null,target,.1);
+ assert.equal(p.moving,true);assert.equal(p.direction,-1);
+ assert.equal(managerFrame(target,0,p.moving),'walk_a');
+ assert.equal(managerFrame(target,.25,p.moving),'walk_b');
+ const paused=advanceManager(p,target,0);assert.deepEqual(paused,p);
+ for(let i=0;i<4;i++)p=advanceManager(p,target,.1);
+ assert.equal(p.x,610);assert.equal(p.moving,false);
+ assert.equal(managerFrame(target,0,p.moving),'clean_a');
+ const returning=advanceManager(p,{...target,x:650},.1);assert.equal(returning.direction,1);
 });
 
 test('landlord reaches first-floor encounters via stairs and pause holds his position',()=>{

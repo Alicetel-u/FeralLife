@@ -39,5 +39,5 @@ test('listener holds their last reaction through manager lines and narration',()
   assert.match(html,/right[^>]+data-emotion="sad"/);
   assert.match(html,/cat-angry.png/);
   assert.match(html,/sister-sad.png/);
-  assert.match(html,/data-character="manager"/);
+  assert.doesNotMatch(html,/data-character="manager"/);
 });

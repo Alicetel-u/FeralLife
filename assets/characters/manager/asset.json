@@ -106,6 +106,30 @@
         80,
         156
       ]
+    },
+    "walk_a": {
+      "source": "sources/walk_a.png",
+      "file": "poses/walk_a.png",
+      "size": [
+        160,
+        160
+      ],
+      "origin": [
+        80,
+        156
+      ]
+    },
+    "walk_b": {
+      "source": "sources/walk_b.png",
+      "file": "poses/walk_b.png",
+      "size": [
+        160,
+        160
+      ],
+      "origin": [
+        80,
+        156
+      ]
     }
   }
 }

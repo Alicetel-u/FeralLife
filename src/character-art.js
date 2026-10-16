@@ -88,6 +88,8 @@ export const CHARACTER_ART = {
   manager: {
     src:'assets/characters/manager/idle.png',portraitSrc:'assets/characters/manager/idle.png',displayHeight:44,origin:[80,156],image:null,portrait:null,
     poses:{
+      walk_a:catPose('assets/characters/manager/poses/walk_a.png',[80,156]),
+      walk_b:catPose('assets/characters/manager/poses/walk_b.png',[80,156]),
       clean_a:catPose('assets/characters/manager/poses/clean_a.png',[80,156]),
       clean_b:catPose('assets/characters/manager/poses/clean_b.png',[80,156]),
       happy:catPose('assets/characters/manager/poses/happy.png',[80,156]),

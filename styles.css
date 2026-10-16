@@ -449,6 +449,62 @@ body.game-ink{height:100dvh;overflow:hidden}
 @media(max-width:700px){.game-ink .masthead{top:8px;left:8px;right:8px;height:44px;flex-wrap:nowrap;padding:5px 8px;gap:8px}.game-ink .brand strong{font-size:17px}.game-ink .header-right{width:auto;border:0;padding:0;gap:8px}.game-ink .header-right #new-game,.game-ink .save-status,.game-ink .weather-icon{display:none}.game-ink .date-display{width:auto;white-space:nowrap;gap:0}.game-ink .date-display strong{font-size:11px}.game-ink .date-display strong span{font-size:16px}.game-ink .camera-toggle{position:absolute;display:block;top:62px;left:8px;z-index:3;padding:9px 12px;min-height:44px;background:#17131de8;color:#fff1db;border-left:3px solid #d42a41;font-weight:800}.game-ink .camera-bar{display:none;top:112px;left:8px;right:8px;padding:8px;gap:8px;z-index:4}.game-ink.controls-expanded .camera-bar{display:flex}.game-ink .camera-tools{margin-left:0;width:100%;flex-wrap:wrap;gap:4px}.game-ink .camera-group button,.game-ink .tool-button{min-height:44px;padding:8px 10px}.game-ink .act-objective{top:62px;right:8px;left:115px;width:auto;max-width:none;padding:6px 8px;gap:8px}.game-ink .act-objective>div{display:none}.game-ink .act-wait{width:100%;min-height:44px;padding:8px;font-size:11px}.game-ink .scene-label{top:120px;left:12px}.game-ink .room-strip{width:calc(100% - 16px);bottom:64px;grid-template-columns:repeat(6,95px);justify-content:start;overflow-x:auto;overscroll-behavior:contain;scrollbar-width:thin}.game-ink .room-strip button{min-height:48px}.game-ink .playback{bottom:8px;left:8px;right:8px;height:48px}.game-ink .pause-button{height:44px;width:44px}.game-ink .speed-group button{min-height:44px;padding:6px 10px}.game-ink #sound-button{min-height:44px}.game-ink #playback-state{display:none}.game-ink .scene-caption{bottom:132px;white-space:normal;text-align:center;max-width:90%;width:max-content;font-size:10px}.game-ink .request-notice{bottom:166px;width:calc(100% - 16px);min-height:64px}.game-ink .request-notice small{display:none}.game-ink .resident-panel{top:112px;bottom:8px;max-height:calc(100dvh - 120px)}.game-ink .scene-notice{min-width:0;width:calc(100% - 32px)}}
 @media(max-height:500px) and (min-width:701px){.game-ink .masthead{top:6px;height:40px}.game-ink .camera-bar{top:54px}.game-ink .act-objective{top:103px;padding:5px 8px}.game-ink .act-objective>div{display:none}.game-ink .scene-label{top:108px}.game-ink .room-strip{bottom:46px}.game-ink .playback{bottom:6px;height:32px}.game-ink .scene-caption{bottom:105px}}
 
+/* New-game confirmation: a cut-paper decision card over the current room. */
+.game-ink dialog:has(.restart-confirm){width:min(960px,94vw);max-width:94vw;max-height:94dvh;padding:0;border:0;background:transparent;color:#fff5e6;box-shadow:none;overflow:visible}
+.game-ink dialog:has(.restart-confirm)::backdrop{background:#08070cbd;backdrop-filter:blur(5px) grayscale(.6)}
+.restart-confirm{position:relative;isolation:isolate;padding:48px 50px 52px;overflow:hidden;background:#d92743;clip-path:polygon(0 4%,97% 0,100% 94%,3% 100%);filter:drop-shadow(12px 14px 0 #09070e);animation:restart-arrive .25s ease-out both}
+.restart-confirm::before{content:'';position:absolute;inset:14px 15px 19px 18px;background:#151119;clip-path:polygon(0 5%,99% 0,97% 96%,2% 100%);z-index:-2}
+.restart-confirm::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(130deg,transparent 0 8px,#fff1df0b 8px 10px);clip-path:polygon(65% 0,100% 0,100% 100%,91% 100%);z-index:-1;pointer-events:none}
+.restart-content{position:relative;z-index:1}
+.restart-kicker{display:inline-flex;align-items:center;gap:10px;margin:0 0 23px;padding:7px 19px;background:#fff1df;color:#1b1420;font:900 11px/1.2 var(--sans);letter-spacing:.13em;transform:rotate(-3deg)}
+.restart-kicker>span{font-size:23px;line-height:1}
+.restart-confirm h2{position:relative;margin:0;font-family:var(--sans);font-weight:950;letter-spacing:-.04em;line-height:1.2;transform:rotate(-2deg)}
+.restart-confirm h2>span{display:block;font-size:clamp(25px,4.4vw,49px);margin-bottom:8px}
+.restart-confirm h2>strong{display:inline-block;font-size:clamp(30px,5.5vw,62px);color:#fff1df;text-shadow:4px 4px 0 #a51c35}
+.restart-confirm #restart-description{margin:28px 0 32px;padding:0 0 0 16px;border-left:4px solid #e92d4c;font:500 15px/1.9 var(--sans);color:#dacbd4;letter-spacing:.04em}
+.restart-stamp{position:absolute;right:5%;top:10%;font:950 24px/.9 var(--sans);font-style:italic;letter-spacing:.08em;color:#51404d;transform:rotate(10deg);opacity:.55;z-index:-1;text-align:center;pointer-events:none}
+.restart-stamp>span{display:block;font-size:clamp(130px,23vw,230px);letter-spacing:-.1em;margin-right:.1em}
+.restart-actions{display:grid;grid-template-columns:1fr 1.15fr;gap:17px;padding:0 8px}
+.restart-actions button{position:relative;min-height:85px;padding:14px 52px 15px 23px;text-align:left;font-family:var(--sans);transform:skewX(-7deg);transition:translate .15s,background .15s,color .15s;box-shadow:5px 6px 0 #030205}
+.restart-actions button>small,.restart-actions button>span{display:block;transform:skewX(7deg)}
+.restart-actions button>small{font-size:10px;letter-spacing:.12em;line-height:1.5;margin-bottom:4px;font-weight:800}
+.restart-actions button>span{font-size:clamp(16px,2.3vw,25px);font-weight:900;white-space:nowrap;line-height:1.3}
+.restart-actions button>b{position:absolute;right:19px;top:50%;font-size:29px;line-height:1;transform:translateY(-50%) skewX(7deg)}
+.restart-actions .restart-back{background:#f8eddb;color:#211626;border:2px solid #f8eddb}
+.restart-actions .restart-start{background:#d92743;color:#fff9ed;border:2px solid #ff6880}
+.restart-actions button:hover{translate:0 -4px;background:#fff9ed;color:#b71d38}
+.restart-actions button:focus-visible{outline:3px solid #fff;outline-offset:5px;translate:0 -4px}
+.restart-actions button:active{translate:0 1px;box-shadow:2px 2px 0 #030205}
+.restart-edge{position:relative;text-align:right;margin:25px 6px -20px;font:800 9px/1.3 var(--sans);letter-spacing:.3em;color:#d9afbc}
+@keyframes restart-arrive{from{opacity:0;translate:0 18px;scale:.97}to{opacity:1;translate:0 0;scale:1}}
+@media(max-width:600px){
+ .game-ink dialog:has(.restart-confirm){width:96vw;max-width:96vw;max-height:96dvh;overflow-y:auto}
+ .restart-confirm{padding:38px 27px 42px;clip-path:polygon(0 2%,97% 0,100% 98%,3% 100%)}
+ .restart-kicker{font-size:9px;margin-bottom:24px;padding:6px 12px}
+ .restart-confirm h2>span{font-size:clamp(23px,7vw,36px)}
+ .restart-confirm h2>strong{font-size:clamp(27px,8vw,43px)}
+ .restart-confirm #restart-description{font-size:13px;line-height:1.85;margin:25px 0;padding-left:12px}
+ .restart-desktop-break{display:none}
+ .restart-actions{grid-template-columns:1fr;gap:13px;padding:0 5px}
+ .restart-actions button{min-height:69px;padding:10px 51px 12px 20px}
+ .restart-actions button>span{font-size:20px}
+ .restart-actions button>small{font-size:9px}
+ .restart-stamp{right:9%;top:19%;opacity:.4}
+ .restart-stamp>span{font-size:160px}
+ .restart-edge{font-size:8px;letter-spacing:.2em}
+}
+@media(max-height:500px) and (min-width:601px){
+ .restart-confirm{padding:29px 40px 31px}
+ .restart-kicker{margin-bottom:12px}
+ .restart-confirm h2>span{display:inline;font-size:29px;margin:0 12px 0 0}
+ .restart-confirm h2>strong{font-size:37px}
+ .restart-confirm #restart-description{font-size:13px;margin:18px 0}
+ .restart-desktop-break{display:none}
+ .restart-actions button{min-height:65px;padding-block:9px}
+ .restart-edge{margin-top:18px;margin-bottom:-13px}
+}
+@media(prefers-reduced-motion:reduce){.restart-confirm{animation:none}.restart-actions button{transition:none}}
+
 /* Mobile game: keep taps and scrolling, disable double-tap zoom. */
 @media (pointer:coarse){html,body,button,a,canvas,.scene,dialog{touch-action:manipulation}}
 
@@ -592,7 +648,7 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
   z-index:4;
 }
 .game-ink .conversation-modal .stage-bubble p{
-  color:#fff4e2;
+  color:var(--speech-color,#fff4e2);
   font-weight:750;
   text-shadow:0 2px 4px #0c0712b8;
 }
@@ -919,11 +975,3 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
     text-shadow:3px 3px 0 #1b101b;
   }
 }
-
-/* The landlord uses his approved miniature sprite, not a stretched resident bust. */
-.game-ink .conversation-modal .stage-character[data-character="manager"]{top:19%;bottom:auto;right:4%;width:27%;height:55%}
-.game-ink .conversation-modal .stage-character[data-character="manager"] img{position:absolute;top:0;left:50%;transform:translateX(-50%);height:100%;width:auto;max-width:100%;object-fit:contain;image-rendering:pixelated}
-@media(max-width:700px){.game-ink .conversation-modal .stage-character[data-character="manager"]{top:17%;right:2%;width:31%;height:40%}}
-
-.game-ink .conversation-modal .stage-character.landlord-extra[data-character="manager"]{top:10%;left:50%;right:auto;width:22%;height:42%;transform:translateX(-50%)}
-@media(max-width:700px){.game-ink .conversation-modal .stage-character.landlord-extra[data-character="manager"]{top:12%;width:22%;height:27%}}
