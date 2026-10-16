@@ -621,13 +621,23 @@ $('sound-button').onclick=async()=>{
 };
 paintSoundButton();
 const worldRenderGate = new WorldRenderGate();
+let lateNightWarp = null;
 function frame(now){
   const seconds=Math.min(.25,Math.max(0,(now-lastTime)/1000));lastTime=now;
   if(document.hidden){renderer.last=now;requestAnimationFrame(frame);return;}
   const stopped=paused||modal.open||!!state.ending||!!document.querySelector('#entry-gate:not([hidden])');
   const observationStopped=stopped||document.body.classList.contains('controls-expanded');
   tickObservation(state,seconds,{stopped:observationStopped,voiceBusy:characterVoice.busy});
-  if(!stopped&&!talk.chapterChat){if(state.actOne)(state.actOne.chapter===2?advanceActTwo(state,seconds*speed/10):advanceActOne(state,Math.min(seconds*speed/10,Math.max(0,observationClockLimit(state)-state.hour))));else advance(state,seconds*speed/10);}
+  if(!stopped&&!talk.chapterChat){
+    const firstNight=state.actOne?.chapter!==2&&state.actOne?.completed?.includes('ash')&&!state.actOne?.completed?.includes('dinner')&&!state.actOne?.pending&&state.hour>=24.1&&state.hour<37;
+    if(!lateNightWarp&&firstNight&&observationView(state)?.beat==null&&observationView(state)?.done===observationView(state)?.total){
+      lateNightWarp={rate:(37-state.hour)/4,tail:0};document.body.classList.add('late-night-warp');
+    }
+    if(lateNightWarp){
+      if(state.hour<37)advanceActOne(state,Math.min(37-state.hour,seconds*lateNightWarp.rate));
+      else {lateNightWarp.tail+=seconds;if(lateNightWarp.tail>=0.75){lateNightWarp=null;document.body.classList.remove('late-night-warp');}}
+    }else if(state.actOne)(state.actOne.chapter===2?advanceActTwo(state,seconds*speed/10):advanceActOne(state,Math.min(seconds*speed/10,Math.max(0,observationClockLimit(state)-state.hour))));else advance(state,seconds*speed/10);
+  }
   tickObservation(state,0,{stopped:observationStopped,voiceBusy:characterVoice.busy});
   queueFreshStageEvents();
   stepTalk(talk, state, now, stopped);
@@ -640,7 +650,7 @@ function frame(now){
   if(now-lastUI>300&&(!stopped||drawWorld)){updateUI();lastUI=now;}
   if(now-lastSave>5000){save();lastSave=now;}
   if(state.ending&&!endingShown&&(!state.actOne||!modal.open)){showEnding();save();}
-  else openNextStageEvent();
+  else if(!lateNightWarp)openNextStageEvent();
   requestAnimationFrame(frame);
 }
 syncStageCursor();
