@@ -600,7 +600,10 @@ function syncNormalBgm(){
   const victory=!bad&&!clock&&!title&&modal.open&&!!modal.querySelector('.trouble-victory');
   const trouble=!victory&&!bad&&!clock&&!title&&modal.open&&(!!modal.querySelector('.trouble-card')||activeDialogue?.actScene==='reply');
   const firstRewindUneasy=!bad&&!clock&&!title&&!victory&&!trouble&&activeDialogue?.actScene==='rewind'&&state.actOne?.chapter!==2&&state.actOne?.attempt===2&&state.actOne?.rewindIntroPending;
-  return normalBgm.setScene(document.hidden, clock?'clock':bad?'bad':title?'title':victory?'victory':trouble?'trouble':firstRewindUneasy?'uneasy':bedCue(state?.actOne));
+  // Use Moku's theme only when her portrait is actually visible in the dialogue.
+  // Trouble stings always take precedence over character themes.
+  const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
+  return normalBgm.setScene(document.hidden, clock?'clock':bad?'bad':title?'title':victory?'victory':trouble?'trouble':firstRewindUneasy?'uneasy':mokuVisible?'moku':bedCue(state?.actOne));
 }
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
 modal.addEventListener('rewind-fade',()=>{rewindWhiteoutPending=true;normalBgm.setSuppressed(true);});
