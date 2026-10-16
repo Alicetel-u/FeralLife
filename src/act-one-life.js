@@ -4,7 +4,7 @@ import { createRoomMove, sampleJourney } from './movement.js';
 export const MOKU_DAY = [
   [17,'clean','center','通り道を片づける'],[17.25,'outside','street','外へ出て一服'],[19.3,'meet','street','大家に近づく'],[20.6,'home','table','部屋へ帰る'],[22.5,'smoke','window','灰皿の前で一服'],
   [23.25,'idle','table','灰皿のあとにひと息'],[23.85,'idle','center','スマホを探す'],[24.1,'tv','tv','テレビを見て夜更かし'],
-  [36.5,'eat','fridge','眠いまま食事の準備'],
+  [36.8,'eat','fridge','空腹で料理の準備'],
   [37.25,'eat','table','カップ麺で昼食'],[38,'sleep','bed','食後のうたた寝'],
   [41,'walk','hall','夕方の気分転換'],[46,'eat','fridge','夕食'],
   [47,'tv','tv','また夜更かし'],
@@ -14,7 +14,7 @@ const places={smoke:'window',eat:'fridge',sleep:'bed',tv:'tv',clean:'center',dri
 export function firstActLife(state, delta=0){
   if(!state.actOne||state.actOne.chapter===2||state.actOne.status!=='playing')return;
   const r=state.residents.find(r=>r.type==='cat');if(!r)return;
-  const preparing=state.hour>=22.5&&!state.actOne.completed.includes('ash')?22.5:state.hour>=36.5&&!state.actOne.completed.includes('dinner')?36.5:null;
+  const preparing=state.hour>=22.5&&!state.actOne.completed.includes('ash')?22.5:state.hour>=36.8&&!state.actOne.completed.includes('dinner')?36.8:null;
   const beat=preparing?MOKU_DAY.find(([at])=>at===preparing):MOKU_DAY.findLast(([at])=>at<=state.hour)||MOKU_DAY[0];
   r.storyUntil=58;
   if(r.lifeBeat!==beat[0]){
