@@ -40,17 +40,26 @@ export const OBSERVATION_BEATS=[
     ]
   },
   {
-    "id": "outside",
+    "id": "outside-smoke",
     "phase": 0,
-    "at": 19.5,
-    "title": "建物の前でひと休み",
+    "at": 18.95,
+    "title": "外で一服",
+    "place": "street",
     "lines": [
       {
         "speaker": "cat",
         "name": "モク",
         "emotion": "neutral",
         "text": "ふぅ〜……外で吸うタバコもうまいニャ。"
-      },
+      }
+    ]
+  },
+  {
+    "id": "outside",
+    "phase": 0,
+    "at": 19.85,
+    "title": "大家に話しかける",
+    "lines": [
       {
         "speaker": "cat",
         "name": "モク",
