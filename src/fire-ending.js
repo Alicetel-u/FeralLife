@@ -95,7 +95,8 @@ export function startFireEnding(root, failure, finish, options = {}) {
     const next = options.ambient ? 'building' : fireEndingPhase(elapsed);
     if (next !== phase) {
       phase = next; root.dataset.firePhase = phase;
-      const narration = phase === 'building' ? '誰もいない部屋まで、炎だけが律儀に訪ねていった。' : phase === 'ruins' ? '家賃は、一円も入らなかった。帰る場所も、なくなった。' : '昨日まで、ただ散らかっているだけの部屋だった。';
+      const tragedy=options.firstTragedy===true;
+      const narration = tragedy?(phase==='room'?'燃え上がる101号室。もう、モクの声は聞こえない。':phase==='building'?'「……嘘だろ。さっきまで普通に話してたじゃねえか……。」':'「ゴミ袋に捨てろって……俺が……。すまねえ、モク……。」'):(phase === 'building' ? '誰もいない部屋まで、炎だけが律儀に訪ねていった。' : phase === 'ruins' ? '家賃は、一円も入らなかった。帰る場所も、なくなった。' : '昨日まで、ただ散らかっているだけの部屋だった。');
       const caption = root.querySelector('.fire-narration');
       caption.classList.remove('fire-line-visible');
       caption.textContent = narration;
