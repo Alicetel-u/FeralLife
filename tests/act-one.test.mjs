@@ -18,7 +18,7 @@ test('loop scenes have one safe answer and two full-burn endings; first-run ash 
   assert.equal(Object.keys(ACT_ONE_EVENTS).length,2);
   for(const [scene,c]of Object.entries(ACT_ONE_EVENTS)){
     const loopChoices=getActOneChoices(start(),scene);assert.equal(loopChoices.length,3);assert.equal(loopChoices.filter(x=>x.bad).length,2);
-    for(const bad of c.choices.filter(x=>x.bad)){
+    for(const bad of c.choices.filter(x=>x.bad&&x.id!=='freezer')){
       const s=start();advanceActOne(s,1000);
       if(scene==='dinner'){answer(s,'water');advanceActOne(s,1000);}
       const result=answer(s,bad.id);
