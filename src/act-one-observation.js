@@ -132,155 +132,59 @@ export const OBSERVATION_BEATS=[
     "id": "after-ash",
     "phase": 1,
     "at": 23.6,
-    "title": "片づいた、その直後",
+    "title": "灰皿トラブルのあと",
     "lines": [
       {
         "speaker": "cat",
         "name": "モク",
         "emotion": "neutral",
-        "text": "灰皿が空いたニャ。テーブルも広くなったニャ。"
+        "text": "ふぅ……これで安心ニャ。"
       },
       {
         "speaker": "cat",
         "name": "モク",
         "emotion": "neutral",
-        "text": "ここに缶を置けば……。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "……さっき空いたところだったニャ。今日は端に置くニャ。"
+        "text": "大家、やっぱりと頼りになるニャ。"
       }
     ]
   },
   {
-    "id": "evening",
+    "id": "phone-search",
     "phase": 1,
-    "at": 24.5,
-    "title": "夜食のあと",
+    "at": 23.85,
+    "title": "スマホがないニャ",
     "lines": [
       {
         "speaker": "cat",
         "name": "モク",
         "emotion": "neutral",
-        "text": "食べたニャ。あとは容器を捨てるだけニャ。"
+        "text": "……スマホどこやったかニャ？"
       },
       {
         "speaker": "cat",
         "name": "モク",
         "emotion": "neutral",
-        "text": "この番組が終わったら捨てるニャ。"
+        "text": "……ないニャ。"
       },
       {
         "speaker": "cat",
         "name": "モク",
         "emotion": "neutral",
-        "text": "……容器は逃げないニャ。番組は待ってくれないニャ。"
+        "text": "……持ってたニャ。"
       }
     ]
   },
   {
-    "id": "late-video",
+    "id": "tv-late",
     "phase": 1,
-    "at": 28.3,
-    "title": "終われない夜",
+    "at": 24.1,
+    "title": "夜更かし",
     "lines": [
       {
         "speaker": "cat",
         "name": "モク",
         "emotion": "neutral",
-        "text": "今度こそ最後の動画ニャ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "……前編？"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "ここでやめたら、逆に気になって眠れないニャ。後編も見るニャ。"
-      }
-    ]
-  },
-  {
-    "id": "morning",
-    "phase": 1,
-    "at": 32.5,
-    "title": "朝の言い訳",
-    "lines": [
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "まぶしいニャ。誰が電気つけたニャ……。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "……太陽ニャ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "寝てないだけで、早起きした気分ニャ。"
-      }
-    ]
-  },
-  {
-    "id": "three-cans",
-    "phase": 1,
-    "at": 34.5,
-    "title": "本日の働き",
-    "lines": [
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "一本、二本、三本。缶を拾ったニャ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "……まだあるニャ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "いっぺんに終わらせたら、明日の仕事がなくなるニャ。今日はここまでニャ。"
-      }
-    ]
-  },
-  {
-    "id": "hungry",
-    "phase": 1,
-    "at": 36.8,
-    "title": "空腹と眠気",
-    "lines": [
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "何か食べたいニャ。冷蔵庫に……何があったかニャ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "立ったら目が覚めると思ったのに、立ったまま眠いニャ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "……大家に聞いてからにするニャ。"
+        "text": "あと一本だけ見るニャ。"
       }
     ]
   },
