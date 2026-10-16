@@ -83,7 +83,8 @@ export function eventStageHTML(event,residents,index=0,page=0) {
     const name=line.memoryVoice?'大家（過去の声）':line.innerVoice?'大家（心の声）':eventSpeakerName(line.speaker);
     return `<div class="event-stage memory-whiteout"><div class="memory-text" style="${speakerColorStyle(line)}" aria-live="polite" aria-atomic="true"><span class="visually-hidden">${eventEscape(name)}：</span><p>${eventEscape(pageText)}</p></div><span class="memory-prompt" aria-hidden="true">CLICK / ENTER</span></div>`;
   }
-  const participants=Array.isArray(event.cast)?event.cast.filter(type=>CHARACTERS[type]):eventParticipants(event,residents),left=participants[0]||null;
+  const participants=(Array.isArray(event.cast)?event.cast.filter(type=>CHARACTERS[type]):eventParticipants(event,residents))
+    .filter(type=>!(Number.isInteger(event.revealCharacterAt)&&index<event.revealCharacterAt&&type==='cat')),left=participants[0]||null;
   const right=line.speaker==='manager'&&participants[1]?participants[1]:line.speaker!=='narrator'&&line.speaker!=='mystery'&&line.speaker!==left?line.speaker:participants[1]||'manager';
   const character=(type,side)=> {
     if(!type||type==='manager')return '';
