@@ -4,10 +4,8 @@ import { createRoomMove, sampleJourney } from './movement.js';
 export const MOKU_DAY = [
   [17,'clean','center','通り道を片づける'],[17.25,'outside','street','建物の前で気分転換'],
   [22,'idle','table','帰宅してひと息'],[22.5,'smoke','window','灰皿の前で一服'],
-  [23.25,'eat','fridge','遅めの夕食'],[24,'tv','tv','テレビをだらだら見る'],
-  [28,'tv','tv','動画の続きを見る'],
-  [32,'idle','table','徹夜明けの休憩'],[34,'clean','center','空き缶を少し片づける'],
-  [35,'idle','table','空腹をこらえる'],[36.5,'eat','fridge','昼食の準備'],
+  [23.25,'idle','table','灰皿のあとにひと息'],[23.85,'idle','center','スマホを探す'],[24.1,'tv','tv','テレビを見て夜更かし'],
+  [36.5,'eat','fridge','眠いまま食事の準備'],
   [37.25,'eat','table','カップ麺で昼食'],[38,'sleep','bed','食後のうたた寝'],
   [41,'walk','hall','夕方の気分転換'],[46,'eat','fridge','夕食'],
   [47,'tv','tv','また夜更かし'],
