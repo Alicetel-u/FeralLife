@@ -622,6 +622,11 @@ $('sound-button').onclick=async()=>{
 paintSoundButton();
 const worldRenderGate = new WorldRenderGate();
 let lateNightWarp = null;
+function nightMontageCaption(hour){
+  return hour<27?'00:30　「あと一本だけ見るニャ。」':hour<30?'03:00　「……これ、続きが気になるニャ。」':hour<34?'06:00　「……もう朝かニャ？ まあいいニャ。」':'12:30　「……あれ、もう昼ニャ……？」';
+}
+function removeNightMontage(){document.querySelector('#night-montage-caption')?.remove();document.body.classList.remove('late-night-warp');}
+
 function frame(now){
   const seconds=Math.min(.25,Math.max(0,(now-lastTime)/1000));lastTime=now;
   if(document.hidden){renderer.last=now;requestAnimationFrame(frame);return;}
@@ -629,13 +634,14 @@ function frame(now){
   const observationStopped=stopped||document.body.classList.contains('controls-expanded');
   tickObservation(state,seconds,{stopped:observationStopped,voiceBusy:characterVoice.busy});
   if(!stopped&&!talk.chapterChat){
-    const firstNight=state.actOne?.chapter!==2&&state.actOne?.completed?.includes('ash')&&!state.actOne?.completed?.includes('dinner')&&!state.actOne?.pending&&state.hour>=24.1&&state.hour<37;
+    const firstNight=state.actOne?.chapter!==2&&state.actOne?.completed?.includes('ash')&&!state.actOne?.completed?.includes('dinner')&&!state.actOne?.pending&&state.hour>=24.1&&state.hour<36.65;
     if(!lateNightWarp&&firstNight&&observationView(state)?.beat==null&&observationView(state)?.done===observationView(state)?.total){
-      lateNightWarp={rate:(37-state.hour)/4,tail:0};document.body.classList.add('late-night-warp');
+      lateNightWarp={rate:(36.65-state.hour)/11,tail:0};document.body.classList.add('late-night-warp');
+      const caption=document.createElement('div');caption.id='night-montage-caption';caption.className='night-montage-caption';document.body.append(caption);
     }
     if(lateNightWarp){
-      if(state.hour<37)advanceActOne(state,Math.min(37-state.hour,seconds*lateNightWarp.rate));
-      else {lateNightWarp.tail+=seconds;if(lateNightWarp.tail>=0.75){lateNightWarp=null;document.body.classList.remove('late-night-warp');}}
+      if(state.hour<36.65){advanceActOne(state,Math.min(36.65-state.hour,seconds*lateNightWarp.rate));const caption=document.querySelector('#night-montage-caption');if(caption)caption.textContent=nightMontageCaption(state.hour);}
+      else {lateNightWarp.tail+=seconds;if(lateNightWarp.tail>=1.1){lateNightWarp=null;removeNightMontage();}}
     }else if(state.actOne)(state.actOne.chapter===2?advanceActTwo(state,seconds*speed/10):advanceActOne(state,Math.min(seconds*speed/10,Math.max(0,observationClockLimit(state)-state.hour))));else advance(state,seconds*speed/10);
   }
   tickObservation(state,0,{stopped:observationStopped,voiceBusy:characterVoice.busy});
