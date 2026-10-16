@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { NORMAL_BGM_SRC, bedCue, createNormalBgm } from '../src/bgm.js';
+import { NORMAL_BGM_SRC, MOKU_BGM_SRC, bedCue, createNormalBgm } from '../src/bgm.js';
 
 function fakeAudio() {
   return {
@@ -13,7 +13,7 @@ function fakeAudio() {
 
 test('normal bgm waits for a gesture, then loops until a cinematic', async () => {
   const audio = fakeAudio();
-  const bgm = createNormalBgm(audio, fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio());
+  const bgm = createNormalBgm(audio, fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio());
   assert.equal(audio.loop, true);
   assert.equal(audio.volume, 0.35);
   assert.equal(await bgm.setSuppressed(false), false);
@@ -36,7 +36,7 @@ test('normal bgm waits for a gesture, then loops until a cinematic', async () =>
 test('trouble cue replaces the everyday theme and restarts only when trouble begins', async () => {
   const normal = fakeAudio();
   const trouble = fakeAudio();
-  const bgm = createNormalBgm(normal, trouble, fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio());
+  const bgm = createNormalBgm(normal, trouble, fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio());
   await bgm.unlock();
   assert.equal(normal.paused, false);
   assert.equal(trouble.paused, true);
@@ -61,7 +61,7 @@ test('trouble cue replaces the everyday theme and restarts only when trouble beg
 test('bad ending cue uses the fire track and continues through the same ending', async () => {
   const normal = fakeAudio();
   const bad = fakeAudio();
-  const bgm = createNormalBgm(normal, fakeAudio(), bad, fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio());
+  const bgm = createNormalBgm(normal, fakeAudio(), bad, fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio());
   await bgm.unlock();
   normal.currentTime = 4;
   await bgm.setScene(false, 'bad');
@@ -81,7 +81,7 @@ test('bad ending cue uses the fire track and continues through the same ending',
 test('game title cue uses the countdown and restarts only when the title returns', async () => {
   const normal = fakeAudio();
   const title = fakeAudio();
-  const bgm = createNormalBgm(normal, fakeAudio(), fakeAudio(), title, fakeAudio(), fakeAudio(), fakeAudio());
+  const bgm = createNormalBgm(normal, fakeAudio(), fakeAudio(), title, fakeAudio(), fakeAudio(), fakeAudio(), fakeAudio());
   await bgm.unlock();
   normal.currentTime = 9;
   await bgm.setScene(false, 'title');
@@ -101,7 +101,7 @@ test('game title cue uses the countdown and restarts only when the title returns
 test('clock cue starts when the rewind dial appears and does not restart mid-dial', async () => {
   const bad = fakeAudio();
   const clock = fakeAudio();
-  const bgm = createNormalBgm(fakeAudio(), fakeAudio(), bad, fakeAudio(), clock, fakeAudio(), fakeAudio());
+  const bgm = createNormalBgm(fakeAudio(), fakeAudio(), bad, fakeAudio(), clock, fakeAudio(), fakeAudio(), fakeAudio());
   await bgm.unlock();
   await bgm.setScene(false, 'bad');
   assert.equal(bad.paused, false);
@@ -119,7 +119,7 @@ test('uneasy air replaces the everyday theme after the first leap and resumes ac
   const normal = fakeAudio();
   const trouble = fakeAudio();
   const uneasy = fakeAudio();
-  const bgm = createNormalBgm(normal, trouble, fakeAudio(), fakeAudio(), fakeAudio(), uneasy, fakeAudio());
+  const bgm = createNormalBgm(normal, trouble, fakeAudio(), fakeAudio(), fakeAudio(), uneasy, fakeAudio(), fakeAudio());
   await bgm.unlock();
   normal.currentTime = 7;
   await bgm.setScene(false, 'uneasy');
@@ -140,8 +140,9 @@ test('uneasy air replaces the everyday theme after the first leap and resumes ac
   assert.equal(normal.currentTime, 7);
 });
 
-test('observation and everyday Moku scenes keep his theme after a rewind; uneasy is reserved for the intro', () => {
-  assert.equal(NORMAL_BGM_SRC, 'assets/audio/moku-theme.mp3');
+test('observation keeps the normal bed after a rewind; Moku dialogue has a separate theme', () => {
+  assert.equal(NORMAL_BGM_SRC, 'assets/audio/normal-pop.mp3');
+  assert.equal(MOKU_BGM_SRC, 'assets/audio/moku-theme.mp3');
   assert.equal(bedCue({ attempt: 1 }), 'normal');
   assert.equal(bedCue({ attempt: 2 }), 'normal');
   assert.equal(bedCue({ attempt: 5 }), 'normal');
@@ -154,7 +155,7 @@ test('victory fanfare replaces trouble on a cleared result and does not restart 
   const trouble = fakeAudio();
   const victory = fakeAudio();
   const uneasy = fakeAudio();
-  const bgm = createNormalBgm(fakeAudio(), trouble, fakeAudio(), fakeAudio(), fakeAudio(), uneasy, victory);
+  const bgm = createNormalBgm(fakeAudio(), trouble, fakeAudio(), fakeAudio(), fakeAudio(), uneasy, victory, fakeAudio());
   await bgm.unlock();
   await bgm.setScene(false, 'trouble');
   trouble.currentTime = 6;
