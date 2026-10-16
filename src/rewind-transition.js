@@ -17,7 +17,7 @@ export function rewindClickAction(failure,attempt,phase){
   return phase!=='clock'&&phase!=='return'?'clock':'finish';
 }
 export function rewindBeat(t,attempt=1,afterFire=false){
-  const repeat=attempt>1,fireEnd=afterFire?0:repeat?8:4,clockStart=fireEnd+(afterFire?2.5:1);
+  const repeat=attempt>1,fireEnd=afterFire?0:repeat?8:4,clockStart=fireEnd+(afterFire&&attempt===1?5.6:afterFire?2.5:1);
   const phase=t<fireEnd?'fire':t<clockStart?'dark':t<clockStart+4?'clock':'return';
   let text='',kind='spoken';
   if(phase==='fire'){
@@ -26,7 +26,7 @@ export function rewindBeat(t,attempt=1,afterFire=false){
       if(t>=4&&t<6)kind='narration';
     }else{text=t<2?'嘘だろ……。':'俺が……俺のせいで……。';kind='inner';}
   }
-  if(phase==='dark'&&afterFire){text='……もう一度、やり直せるなら。';kind='inner';}
+  if(phase==='dark'&&afterFire){text=attempt===1?(t<1.1?'ドクン……':t<2.35?'ドクンッ！！':'くそっ！俺も煙を吸い過ぎたか…意識が…'):'……もう一度、やり直せるなら。';kind='inner';}
   if(phase==='clock'){
     text=repeat?'次こそは……絶対に守ってやる！':'';
     kind='inner';
@@ -42,6 +42,17 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
   const stopFire=afterFire?()=>{}:startFireEnding(root.querySelector('.fire-cinematic'),failure,()=>{});
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   let t=0,last=performance.now(),frameId,phase='',finished=false,clockComplete=false,fadeStarted=false,fadeStart=0;
+  let heartbeatAudio=null,playedHeartbeats=0;
+  function beatHeart(){
+    if(!sound||typeof AudioContext==='undefined')return;
+    try{
+      heartbeatAudio ||= new AudioContext();
+      const start=heartbeatAudio.currentTime,osc=heartbeatAudio.createOscillator(),gain=heartbeatAudio.createGain();
+      osc.type='sine';osc.frequency.setValueAtTime(64,start);osc.frequency.exponentialRampToValueAtTime(38,start+.25);
+      gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.48,start+.035);gain.gain.exponentialRampToValueAtTime(.0001,start+.3);
+      osc.connect(gain);gain.connect(heartbeatAudio.destination);osc.start(start);osc.stop(start+.31);
+    }catch{}
+  }
   const clockStart=rewindBeat(0,attempt,afterFire).clockStart;
   const firstLoop=attempt===1;
   function tick(now){
@@ -87,7 +98,7 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
     if(clockComplete)beginFade();
   }
   const skipButton=root.querySelector('[data-rewind-skip]');
-  function cleanup(){finished=true;root.removeEventListener('click',clicked);cancelAnimationFrame(frameId);stopFire();}
+  function cleanup(){finished=true;root.removeEventListener('click',clicked);cancelAnimationFrame(frameId);stopFire();if(heartbeatAudio)heartbeatAudio.close().catch(()=>{});}
   if(!firstLoop)root.addEventListener('click',clicked);
   skipButton?.focus({preventScroll:true});
   frameId=requestAnimationFrame(tick);return cleanup;
