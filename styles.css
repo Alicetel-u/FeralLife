@@ -1026,3 +1026,30 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
 .game-ink.late-night-warp .masthead{position:fixed;inset:50% auto auto 50%;z-index:90;transform:translate(-50%,-50%) rotate(-3deg) scale(1.8)}
 @media(max-width:700px){.game-ink.late-night-warp .masthead{transform:translate(-50%,-50%) rotate(-3deg) scale(1.05)}}
 @media(prefers-reduced-motion:reduce){.game-ink .masthead{transition:none}}
+
+/* Continue centered cinematic captions into the post-fire rewind sequence. */
+.game-ink .rewind-screen>.rewind-voice{
+  box-sizing:border-box;position:absolute;z-index:7;
+  top:50%;left:50%;right:auto;bottom:auto;
+  width:min(86vw,840px);max-width:86%;margin:0;padding:0;
+  transform:translate(-50%,-50%);text-align:center;
+  background:none;border:0;box-shadow:none;
+  color:#fff4e8;font:600 clamp(20px,2.4vw,34px)/1.85 var(--serif);
+  letter-spacing:.08em;text-shadow:0 3px 12px #000,0 0 36px #000,0 0 55px #000d;
+  transition:opacity .4s ease;
+}
+.game-ink .rewind-screen>.rewind-voice[data-voice-kind=inner],
+.game-ink .rewind-screen>.rewind-voice[data-voice-kind=narration]{
+  font:600 clamp(20px,2.4vw,34px)/1.85 var(--serif);
+  color:#fff4e8;text-align:center;border:0;background:none;
+}
+@media(max-width:700px){
+  .game-ink .rewind-screen>.rewind-voice,
+  .game-ink .rewind-screen>.rewind-voice[data-voice-kind=inner],
+  .game-ink .rewind-screen>.rewind-voice[data-voice-kind=narration]{
+    top:50%;left:50%;right:auto;bottom:auto;
+    width:88%;max-width:88%;padding:0;
+    font-size:clamp(19px,5vw,25px);line-height:1.8;letter-spacing:.05em;
+  }
+}
+@media(prefers-reduced-motion:reduce){.game-ink .rewind-screen>.rewind-voice{transition:none}}
