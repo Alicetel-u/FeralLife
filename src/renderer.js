@@ -1,3 +1,4 @@
+import {managerTarget,managerFrame,advanceManager} from './manager-life.js';
 import { speakerColors } from './speaker-colors.js';
 import { ROOM_LAYOUTS } from './room-layouts.js';
 import { ROOMS, CHARACTERS, ACTIONS, dateAt } from './simulation.js';
@@ -111,7 +112,7 @@ export function drawPortrait(canvas, type) {
 
 export class WorldRenderer {
   constructor(canvas) { this.canvas = canvas; this.ctx = canvas.getContext('2d'); this.view = 'interior'; this.focus = true; this.focusRoom = 101; this.animTime = 0; this.last = 0; }
-  reset() { this.last = 0; }
+  reset() { this.last = 0; this.managerPosition=null; }
   draw(state, timestamp, paused, bubbles = []) {
     const ctx = this.ctx;
     this.bubbles = bubbles;
@@ -122,6 +123,10 @@ export class WorldRenderer {
     const dt = Math.min(.1, Math.max(0, (timestamp - this.last) / 1000)); this.last = timestamp;
     if (!paused) this.animTime += dt;
     const t = this.animTime;
+    this.managerTarget=managerTarget(state,bubbles);
+    const target=this.managerTarget;
+    this.managerPosition=advanceManager(this.managerPosition,target,paused?0:dt);
+    this.managerMoving=Math.hypot(target.x-this.managerPosition.x,target.y-this.managerPosition.y)>3;
     ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,WORLD_WIDTH,WORLD_HEIGHT);
     ctx.setTransform(WORLD_WIDTH/1200,0,0,WORLD_HEIGHT/675,0,0);ctx.imageSmoothingEnabled = false;
     const h = dateAt(state.hour).hour + state.hour % 1;
@@ -169,6 +174,12 @@ export class WorldRenderer {
     if(SCENE_ART.image)ctx.drawImage(SCENE_ART.image,0,0,1000,562.5);else rect(ctx,0,0,1000,562.5,'#494d42');
     rect(ctx,0,0,1000,562.5,`rgba(16,27,49,${darkness})`);
     if(darkness>.3)for(let i=0;i<36;i++)rect(ctx,noise(i,2,1)*1000,noise(i,3,2)*115,1,1,'#e9dcc277');
+    const caretaker=this.managerPosition||{x:650,y:513},caretakerPose=this.managerPreviewPose||(this.managerMoving?'idle':null)||managerFrame(this.managerTarget||managerTarget(state,this.bubbles),t);
+    if(CHARACTER_ART.manager?.image){
+      rect(ctx,caretaker.x-13,caretaker.y+1,26,3,'#17211b66');
+      drawSprite(ctx,'manager',caretaker.x,caretaker.y,t,'idle',80/44,this.managerTarget?.direction||1,{pose:caretakerPose});
+      if(!this.speaking?.has('manager')){ctx.font='10px "Yu Gothic UI",sans-serif';ctx.textAlign='center';ctx.fillStyle='#f2e9d2';ctx.fillText('大家',caretaker.x,caretaker.y-86);ctx.textAlign='left';}
+    }
     const people=state.residents.map(r=>({r,p:sampleJourney(r,state.hour,ACTIONS[r.action].place)})).sort((a,b)=>a.p.y-b.p.y);
     for(const {r,p} of people) {
       if(p.zone==='room'||p.zone==='away'||p.x<-45||p.x>1045)continue;
@@ -285,7 +296,11 @@ export class WorldRenderer {
   // 外観スプライトの身長は80。吹き出しは内装と同じく、その86%上（頭）へ付ける。
   speechAnchor(state, type) {
     const resident = state.residents.find(person => person.type === type);
-    if (!resident) return null;
+    if (!resident) {
+      if(type!=='manager'||this.view!=='exterior'||!this.managerPosition)return null;
+      const selected=state.residents.find(r=>r.room===state.selected),p=selected?sampleJourney(selected,state.hour,ACTIONS[selected.action].place):null;
+      return {...this.projectExterior(this.managerPosition.x,this.managerPosition.y-80*.86,p),tail:true,source:''};
+    }
     const selected = state.residents.find(person => person.room === state.selected);
     const selectedPos = selected ? sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
     const p = sampleJourney(resident, state.hour, ACTIONS[resident.action].place);

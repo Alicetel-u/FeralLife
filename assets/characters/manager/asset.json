@@ -1,0 +1,111 @@
+{
+  "character": "manager",
+  "method": "Built-in ImageGen; RGBA framing with nearest-neighbor scaling",
+  "displayHeight": 44,
+  "frame": {
+    "width": 160,
+    "height": 160,
+    "origin": [
+      80,
+      156
+    ]
+  },
+  "poses": {
+    "angry": {
+      "source": "sources/angry.png",
+      "file": "poses/angry.png",
+      "size": [
+        160,
+        160
+      ],
+      "origin": [
+        80,
+        156
+      ]
+    },
+    "clean_a": {
+      "source": "sources/clean_a.png",
+      "file": "poses/clean_a.png",
+      "size": [
+        160,
+        160
+      ],
+      "origin": [
+        80,
+        156
+      ]
+    },
+    "clean_b": {
+      "source": "sources/clean_b.png",
+      "file": "poses/clean_b.png",
+      "size": [
+        160,
+        160
+      ],
+      "origin": [
+        80,
+        156
+      ]
+    },
+    "happy": {
+      "source": "sources/happy.png",
+      "file": "poses/happy.png",
+      "size": [
+        160,
+        160
+      ],
+      "origin": [
+        80,
+        156
+      ]
+    },
+    "idle": {
+      "source": "sources/idle.png",
+      "file": "idle.png",
+      "size": [
+        160,
+        160
+      ],
+      "origin": [
+        80,
+        156
+      ]
+    },
+    "retort": {
+      "source": "sources/retort.png",
+      "file": "poses/retort.png",
+      "size": [
+        160,
+        160
+      ],
+      "origin": [
+        80,
+        156
+      ]
+    },
+    "sad": {
+      "source": "sources/sad.png",
+      "file": "poses/sad.png",
+      "size": [
+        160,
+        160
+      ],
+      "origin": [
+        80,
+        156
+      ]
+    },
+    "surprised": {
+      "source": "sources/surprised.png",
+      "file": "poses/surprised.png",
+      "size": [
+        160,
+        160
+      ],
+      "origin": [
+        80,
+        156
+      ]
+    }
+  }
+}

@@ -919,3 +919,11 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
     text-shadow:3px 3px 0 #1b101b;
   }
 }
+
+/* The landlord uses his approved miniature sprite, not a stretched resident bust. */
+.game-ink .conversation-modal .stage-character[data-character="manager"]{top:19%;bottom:auto;right:4%;width:27%;height:55%}
+.game-ink .conversation-modal .stage-character[data-character="manager"] img{position:absolute;top:0;left:50%;transform:translateX(-50%);height:100%;width:auto;max-width:100%;object-fit:contain;image-rendering:pixelated}
+@media(max-width:700px){.game-ink .conversation-modal .stage-character[data-character="manager"]{top:17%;right:2%;width:31%;height:40%}}
+
+.game-ink .conversation-modal .stage-character.landlord-extra[data-character="manager"]{top:10%;left:50%;right:auto;width:22%;height:42%;transform:translateX(-50%)}
+@media(max-width:700px){.game-ink .conversation-modal .stage-character.landlord-extra[data-character="manager"]{top:12%;width:22%;height:27%}}

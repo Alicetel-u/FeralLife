@@ -85,6 +85,18 @@ const catPose = (src, origin = [48, 126]) => ({ src, origin, image: null });
 // Presentation sizes, not canonical physical heights. Keep the same correction
 // across every pose; ears, hair and seated silhouettes remain part of the art.
 export const CHARACTER_ART = {
+  manager: {
+    src:'assets/characters/manager/idle.png',portraitSrc:'assets/characters/manager/idle.png',displayHeight:44,origin:[80,156],image:null,portrait:null,
+    poses:{
+      clean_a:catPose('assets/characters/manager/poses/clean_a.png',[80,156]),
+      clean_b:catPose('assets/characters/manager/poses/clean_b.png',[80,156]),
+      happy:catPose('assets/characters/manager/poses/happy.png',[80,156]),
+      angry:catPose('assets/characters/manager/poses/angry.png',[80,156]),
+      sad:catPose('assets/characters/manager/poses/sad.png',[80,156]),
+      surprised:catPose('assets/characters/manager/poses/surprised.png',[80,156]),
+      retort:catPose('assets/characters/manager/poses/retort.png',[80,156])
+    },actionPoses:{idle:'base',chat:'base',clean:['clean_a','clean_b']}
+  },
   ann: {
     src: 'assets/characters/ann/poses/stand.png', portraitSrc: 'assets/characters/ann/idle.png', displayHeight: 43, origin: [64, 126], image: null, portrait: null,
     poses: {
@@ -211,14 +223,14 @@ export function loadCharacterArt(onReady) {
   // 初期画面の背景とモクだけを優先。それ以外はブラウザのアイドル時間に少しずつ。
   const first=[
     assignImage(SCENE_ART,'image',SCENE_ART.src,onReady),
-    ...['cat'].flatMap(type=>{
+    ...['cat','manager'].flatMap(type=>{
       const art=CHARACTER_ART[type];
       return [assignImage(art,'image',art.src,onReady),assignImage(art,'portrait',art.portraitSrc,onReady)];
     })
   ];
   const remaining=[];
   for (const [type,art] of Object.entries(CHARACTER_ART)) {
-    if (type!=='cat') {
+    if (!['cat','manager'].includes(type)) {
       remaining.push(()=>assignImage(art,'image',art.src,onReady));
       remaining.push(()=>assignImage(art,'portrait',art.portraitSrc,onReady));
     }

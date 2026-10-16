@@ -37,15 +37,16 @@ if ('ontouchstart' in window) {
 const $ = id => document.getElementById(id);
 const escape = text => String(text ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen = n => '¥' + Math.round(n).toLocaleString('ja-JP');
+const managerPreview = new URLSearchParams(location.search).get('preview')==='manager';
 const observationPreview = new URLSearchParams(location.search).get('preview')==='observation';
-const STORAGE = observationPreview?'feral-observation-preview-v1':'feral-act-one-v1';
+const STORAGE = managerPreview?'feral-manager-preview-v1':observationPreview?'feral-observation-preview-v1':'feral-act-one-v1';
 const previewType = new URLSearchParams(location.search).get('preview');
 const eventPreview = previewType === 'events';
 const actTwoPreview = previewType === 'act-two';
 const firstRewindPreview = previewType === 'first-rewind';
 const previewResident = ['hostess', 'fox', 'sister', 'peko', 'ann'].includes(previewType) ? previewType : null;
 let state, restored = false;
-try { const saved = previewResident || eventPreview || actTwoPreview || firstRewindPreview || observationPreview ? null : JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(saved) && validActOne(saved)) { state = saved; restored = true; } } catch {}
+try { const saved = previewResident || eventPreview || actTwoPreview || firstRewindPreview || observationPreview || managerPreview ? null : JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(saved) && validActOne(saved)) { state = saved; restored = true; } } catch {}
 state ||= previewResident || eventPreview ? createGame() : createActOne();
 clearLegacyObservationMemo(state);
 ensureManagement(state);
@@ -80,12 +81,13 @@ if (state.pending) {
   state.pending = state.pending.filter(type => state.remaining.includes(type));
   if (!state.pending.length) state.pending = null;
 }
-let speed = 6, paused = !!previewResident || eventPreview || observationPreview, filter = 'all', profileKey = null, lastUI = 0, lastSave = 0, lastTime = performance.now(), lastEventId = 0, endingShown = false, toastTimer;
+let speed = 6, paused = !!previewResident || eventPreview || observationPreview || managerPreview, filter = 'all', profileKey = null, lastUI = 0, lastSave = 0, lastTime = performance.now(), lastEventId = 0, endingShown = false, toastTimer;
 let eventView = null;
 let eventAuto=false,eventAutoTimer=null;
 let seenStageId = 0;
 const stageQueue = [];
 const renderer = new WorldRenderer($('world'));
+if(managerPreview){renderer.view='exterior';renderer.focus=false;const pose=new URLSearchParams(location.search).get('pose');if(['idle','happy','angry','sad','surprised','retort','clean_a','clean_b'].includes(pose))renderer.managerPreviewPose=pose;}
 let artVersion=0;
 const onArtReady=()=>{artVersion++;worldRenderGate.state=null;};
 // 最初の画面を描いてから画像を読み込み始める（画像の欠損中は代替描画）。
@@ -98,7 +100,7 @@ if(state.actOne){
   document.querySelector('main').prepend(goal);
   document.querySelector('.brand small').textContent='第一幕 · 二晩を、生き延びろ。';
 }
-let autoFollow = true, cameraKey = '';
+let autoFollow = !managerPreview, cameraKey = '';
 
 function updateCamera() {
   if(autoFollow&&state.actOne){const lead=state.residents.find(r=>r.type===(state.actOne.chapter===2?'hostess':'cat'));if(lead)state.selected=lead.room;}
@@ -118,6 +120,7 @@ function setInspector(open) {
 }
 
 function save() {
+  if(managerPreview){$('save-status').textContent='○ 大家のミニキャラ確認用（保存なし）';return;}
   if(firstRewindPreview){$('save-status').textContent='○ 第一幕巻き戻し確認用（保存なし）';return;}
   if(actTwoPreview){$('save-status').textContent='○ 第二幕観察確認用（保存なし）';return;}
   if(eventPreview) { $('save-status').textContent='○ イベント確認用（保存なし）';return; }
@@ -656,7 +659,7 @@ if(entryGate && !previewType){
 }else{
   entryGate?.remove();
   if(firstRewindPreview)showActEnding();
-  else if(state.actOne&&!actTwoPreview&&!observationPreview)showGameTitle();
+  else if(state.actOne&&!actTwoPreview&&!observationPreview&&!managerPreview)showGameTitle();
 }
 
 

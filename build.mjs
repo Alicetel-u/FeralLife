@@ -6,7 +6,7 @@ const root = dirname(fileURLToPath(import.meta.url));
 const [html, css, ...modules] = await Promise.all([
   readFile(join(root, 'index.html'), 'utf8'),
   readFile(join(root, 'styles.css'), 'utf8'),
-  ...['message-pages', 'act-expressions', 'story-checkpoints', 'conversation-dom', 'speaker-colors', 'room-layouts', 'act-one-life', 'act-two-life', 'act-one-observation', 'dialogue', 'character-art', 'movement', 'event-cases', 'management', 'simulation', 'act-one', 'act-two', 'fire-ending', 'debt-ending', 'rewind-transition', 'effects', 'exterior-occlusion', 'renderer', 'event-stage', 'choice-ui', 'opening-prologue', 'render-policy', 'trouble-victory', 'bgm', 'voice-policy', 'voice-manifest', 'voice-player', 'app'].map(name => readFile(join(root, 'src', name + '.js'), 'utf8'))
+  ...['message-pages', 'act-expressions', 'story-checkpoints', 'conversation-dom', 'speaker-colors', 'room-layouts', 'act-one-life', 'act-two-life', 'act-one-observation', 'dialogue', 'character-art', 'movement', 'event-cases', 'management', 'simulation', 'act-one', 'act-two', 'fire-ending', 'debt-ending', 'rewind-transition', 'effects', 'exterior-occlusion', 'manager-life', 'renderer', 'event-stage', 'choice-ui', 'opening-prologue', 'render-policy', 'trouble-victory', 'bgm', 'voice-policy', 'voice-manifest', 'voice-player', 'app'].map(name => readFile(join(root, 'src', name + '.js'), 'utf8'))
 ]);
 let script = modules.map(source => source.replace(/^import .*;\r?\n/gm, '').replace(/^export /gm, '')).join('\n\n');
 // コード中の画像と通常BGMを data URL として埋め込む（差分ポーズを増やしてもここの修正は不要）
