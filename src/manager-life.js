@@ -30,5 +30,6 @@ export function advanceManager(current,target,seconds){
  while(budget>0){const next=route[0]||target,dx=next.x-x,dy=next.y-y,d=Math.hypot(dx,dy);if(d<=budget){x=next.x;y=next.y;budget-=d;if(route.length){route.shift();continue;}break;}x+=dx*budget/d;y+=dy*budget/d;break;}
  const moving=route.length>0||Math.hypot(target.x-x,target.y-y)>.01;
  const direction=Math.abs(x-p.x)>.001?Math.sign(x-p.x):(p.direction||target.direction||1);
- return {x,y,zone:route.length?p.zone:target.zone,goalZone:target.zone,route,moving,direction};
+ const zone=route.length===1?'stairs':route.length>1?(target.zone==='hall'?'street':'hall'):target.zone;
+ return {x,y,zone,goalZone:target.zone,route,moving,direction};
 }

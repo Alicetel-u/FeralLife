@@ -174,10 +174,12 @@ export class WorldRenderer {
     if(SCENE_ART.image)ctx.drawImage(SCENE_ART.image,0,0,1000,562.5);else rect(ctx,0,0,1000,562.5,'#494d42');
     rect(ctx,0,0,1000,562.5,`rgba(16,27,49,${darkness})`);
     if(darkness>.3)for(let i=0;i<36;i++)rect(ctx,noise(i,2,1)*1000,noise(i,3,2)*115,1,1,'#e9dcc277');
-    const caretaker=this.managerPosition||{x:650,y:513},caretakerPose=this.managerPreviewPose||managerFrame(this.managerTarget||managerTarget(state,this.bubbles),t,this.managerMoving);
+    const caretaker=this.managerPosition||{x:650,y:513,zone:'street'},caretakerPose=this.managerPreviewPose||managerFrame(this.managerTarget||managerTarget(state,this.bubbles),t,this.managerMoving);
     if(CHARACTER_ART.manager?.image){
       rect(ctx,caretaker.x-13,caretaker.y+1,26,3,'#17211b66');
       drawSprite(ctx,'manager',caretaker.x,caretaker.y,t,'idle',80/44,this.managerMoving?caretaker.direction:(this.managerTarget?.direction||1),{pose:caretakerPose});
+      ctx.save();ctx.beginPath();ctx.rect(caretaker.x-70,caretaker.y-115,140,120);ctx.clip();
+      drawExteriorForeground(ctx,SCENE_ART.image,caretaker,darkness);ctx.restore();
     }
     const people=state.residents.map(r=>({r,p:sampleJourney(r,state.hour,ACTIONS[r.action].place)})).sort((a,b)=>a.p.y-b.p.y);
     for(const {r,p} of people) {

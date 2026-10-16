@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createActOne,advanceActOne,validActOne} from '../src/act-one.js';
 import {managerTarget,managerFrame,managerReaction,advanceManager} from '../src/manager-life.js';
-import {CHARACTER_ART} from '../src/character-art.js';
+import {CHARACTER_ART,SCENE_ART} from '../src/character-art.js';
+import {WorldRenderer} from '../src/renderer.js';
+import {foregroundKeys} from '../src/exterior-occlusion.js';
 import {eventStageHTML} from '../src/event-stage.js';
 test('caretaker sweeps outside without becoming a tenant or changing saved state',()=>{
  const s=createActOne(42,[],2,true),before=JSON.stringify(s),target=managerTarget(s);
@@ -54,4 +56,34 @@ test('landlord reaches first-floor encounters via stairs and pause holds his pos
  for(let i=0;i<5;i++)p=advanceManager(p,target,.1);assert.equal(p.y,513);assert.ok(p.x>650);
  const paused=advanceManager(p,target,0);assert.equal(paused.x,p.x);assert.equal(paused.y,p.y);
  for(let i=0;i<100;i++)p=advanceManager(p,target,.1);assert.equal(p.x,520);assert.equal(p.y,440);
+});
+
+test('landlord uses stair rails in transit and hallway rails on arrival in both directions',()=>{
+ let p=null;
+ for(const target of [{x:520,y:440,zone:'hall'},{x:650,y:513,zone:'street'}]){
+  let stairs=false;
+  for(let i=0;i<100;i++){
+   p=advanceManager(p,target,.1);
+   if(p.y>440&&p.y<513){stairs=true;assert.equal(p.zone,'stairs');assert.ok(foregroundKeys(p).includes('stairs'));}
+  }
+  assert.ok(stairs);assert.equal(p.zone,target.zone);
+  assert.equal(foregroundKeys(p).includes('lower'),target.zone==='hall');
+ }
+});
+
+test('landlord sprite is covered by clipped foreground with matching night tint',()=>{
+ const calls=[],scene={},sprite={width:160,height:160};
+ const previousScene=SCENE_ART.image,previousSprite=CHARACTER_ART.manager.image;
+ try{
+  SCENE_ART.image=scene;CHARACTER_ART.manager.image=sprite;
+  const ctx=new Proxy({}, {get:(_,key)=>(...args)=>calls.push([key,...args]),set:(_,key,value)=>(calls.push([key,value]),true)});
+  const renderer=Object.create(WorldRenderer.prototype);renderer.ctx=ctx;renderer.focus=false;
+  renderer.managerPosition={x:520,y:440,zone:'hall'};renderer.managerTarget={chat:true,pose:'idle',direction:-1};
+  renderer.drawExterior({residents:[]},null,0,.57);
+  const drawn=calls.findIndex(c=>c[0]==='drawImage'&&c[1]===sprite);
+  const foreground=calls.findIndex((c,i)=>i>drawn&&c[0]==='drawImage'&&c[1]===scene);
+  assert.ok(drawn>=0&&foreground>drawn);
+  assert.ok(calls.slice(drawn,foreground).some(c=>c[0]==='clip'));
+  assert.ok(calls.slice(foreground).some(c=>c[0]==='fillStyle'&&c[1]==='rgba(16,27,49,0.57)'));
+ }finally{SCENE_ART.image=previousScene;CHARACTER_ART.manager.image=previousSprite;}
 });
