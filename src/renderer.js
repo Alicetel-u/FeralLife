@@ -1,3 +1,4 @@
+import { MINI_EMOTION_ART, MiniReactionState, miniDailyEmotion, drawMiniEmotion } from './mini-emotions.js';
 import {managerTarget,managerFrame,advanceManager} from './manager-life.js';
 import { speakerColors } from './speaker-colors.js';
 import { ROOM_LAYOUTS } from './room-layouts.js';
@@ -81,6 +82,17 @@ function phoneSearchWalk(state,r,position,t){
 }
 export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1, direction = 1, opts = {}) {
   const art = CHARACTER_ART[type];
+  const moving=opts.pose?.startsWith('walk')||action==='outing';
+  const emotion=opts.emotion||(!art?.image?'relieved':null);
+  const allowsEmotion=(!moving||type==='patron')&&action!=='sleep'&&(!['eat','drink','clean','smoke'].includes(action)||opts.emotionActive);
+  if((allowsEmotion&&emotion&&emotion!=='neutral'&&emotion!=='tired')||(!art?.image&&MINI_EMOTION_ART[type]?.image)){
+    const fallbackEmotion=(moving&&type!=='patron')||action==='sleep'?'relieved':emotion==='tired'?'sad':emotion&&MINI_EMOTION_ART[type]?.frames[emotion]?emotion:'relieved';
+    const step=moving&&!opts.reduced?Math.sin(tick*11)*.35*scale:0;
+    if(drawMiniEmotion(ctx,type,x,y+step,tick,scale,direction,fallbackEmotion,{moving,baseHeight:art?.image?art.displayHeight:26,reduced:opts.reduced})){
+      if(!art?.image&&action!=='sleep')drawMiniActionProp(ctx,x,y+step,scale,direction,action);
+      return;
+    }
+  }
   if (art?.image) {
     const pose = opts.pose && opts.pose !== 'base' ? art.poses?.[opts.pose] : null;
     const image = pose?.image || art.image, origin = pose?.image ? pose.origin : art.origin;
@@ -126,6 +138,18 @@ export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1
   if (action === 'stream') { p(-10,-19,2,7,'#393c42');p(8,-19,2,7,'#393c42');p(-8,-21,16,2,'#393c42'); }
   ctx.restore();
 }
+// Keep the existing small action props for residents whose original art was procedural.
+function drawMiniActionProp(ctx,x,y,scale,direction,action){
+  ctx.save();ctx.translate(Math.round(x),Math.round(y));ctx.scale(scale*direction,scale);
+  const p=(x,y,w,h,color)=>rect(ctx,x,y,w,h,color);
+  if(action==='eat'||action==='steal'){p(5,-9,6,3,'#e8ce8f');p(6,-10,4,2,'#a66d41');}
+  if(action==='drink'){p(6,-10,4,6,'#b6b38d');p(7,-10,2,1,'#dfc99f');}
+  if(action==='shop'||action==='sell'){p(5,-7,7,6,'#b89466');p(7,-9,3,2,'#cfb17e');}
+  if(action==='smoke'){p(6,-12,6,1,'#d8cdad');p(11,-12,1,1,'#d97c42');}
+  if(action==='stream'){p(6,-12,2,7,'#393c42');p(5,-12,4,2,'#66758a');}
+  if(action==='gamble'){p(5,-8,6,4,'#f5e7c8');p(7,-7,1,1,'#b64b42');}
+  ctx.restore();
+}
 export function drawPortrait(canvas, type) {
   const ctx = canvas.getContext('2d'); canvas.width = 64; canvas.height = 68;
   ctx.imageSmoothingEnabled = true;
@@ -141,7 +165,7 @@ export function drawPortrait(canvas, type) {
 
 export class WorldRenderer {
   constructor(canvas) { this.canvas = canvas; this.ctx = canvas.getContext('2d'); this.view = 'interior'; this.focus = true; this.focusRoom = 101; this.animTime = 0; this.last = 0; }
-  reset() { this.last = 0; this.managerPosition=null; }
+  reset() { this.last = 0; this.managerPosition=null; this.miniReactions?.reset(); }
   draw(state, timestamp, paused, bubbles = []) {
     const ctx = this.ctx;
     this.bubbles = bubbles;
@@ -152,6 +176,9 @@ export class WorldRenderer {
     const dt = Math.min(.1, Math.max(0, (timestamp - this.last) / 1000)); this.last = timestamp;
     if (!paused) this.animTime += dt;
     const t = this.animTime;
+    this.miniReactions??=new MiniReactionState();
+    this.miniReactions.update(bubbles,t);
+    this.reducedMotion=globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches??false;
     this.managerTarget=managerTarget(state,bubbles);
     const target=this.managerTarget;
     this.managerPosition=advanceManager(this.managerPosition,target,paused?0:dt);
@@ -197,6 +224,10 @@ export class WorldRenderer {
     const cy = this.focus ? Math.max(height / 2, Math.min(562.5 - height / 2, (target?.y ?? 420) - 60)) : 281.25;
     return { zoom, ox: cx - width / 2, oy: cy - height / 2 };
   }
+  miniReaction(type,t,resident={}) {
+    const active=this.speaking?.has(type)||false;
+    return {emotion:this.miniReactions?.emotion(type,t,active)??miniDailyEmotion(resident),emotionActive:active,reduced:this.reducedMotion};
+  }
   drawExterior(state,selectedPos,t,darkness) {
     const ctx=this.ctx, cam=this.exteriorCamera(selectedPos);
     ctx.save();ctx.scale(1.2*cam.zoom,1.2*cam.zoom);ctx.translate(-cam.ox,-cam.oy);
@@ -206,7 +237,7 @@ export class WorldRenderer {
     const caretaker=this.managerPosition||{x:650,y:513,zone:'street'},caretakerPose=this.managerPreviewPose||managerFrame(this.managerTarget||managerTarget(state,this.bubbles),t,this.managerMoving);
     if(CHARACTER_ART.manager?.image){
       rect(ctx,caretaker.x-13,caretaker.y+1,26,3,'#17211b66');
-      drawSprite(ctx,'manager',caretaker.x,caretaker.y,t,'idle',80/44,this.managerMoving?caretaker.direction:(this.managerTarget?.direction||1),{pose:caretakerPose});
+      drawSprite(ctx,'manager',caretaker.x,caretaker.y,t,'idle',80/44,this.managerMoving?caretaker.direction:(this.managerTarget?.direction||1),{pose:caretakerPose,...this.miniReaction('manager',t)});
       ctx.save();ctx.beginPath();ctx.rect(caretaker.x-70,caretaker.y-115,140,120);ctx.clip();
       drawExteriorForeground(ctx,SCENE_ART.image,caretaker,darkness);ctx.restore();
     }
@@ -219,7 +250,7 @@ export class WorldRenderer {
       const action=p.moving?'outing':r.action, pose=resolvePose(r.type,action,p.moving,t,state.hour), motion=spriteMotion(action,p.moving,r.needs,t,pose);
       const fy=p.y+(p.moving?Math.sin(t*11)*1.1:0);
       ctx.save();ctx.translate(p.x+motion.dx,fy);if(motion.rotate)ctx.rotate(motion.rotate);ctx.scale(1,motion.sy);
-      drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint});ctx.restore();
+      drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint,...this.miniReaction(r.type,t,r)});ctx.restore();
       drawCharacterEffects(ctx,{type:r.type,x:p.x,y:fy,u:80/128,dir:p.direction,t,action,pose,moving:p.moving,needs:r.needs,trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip:CHARACTER_ART[r.type]?.smokeTip?.[pose]});
       // Repaint foreground through its actual silhouette after the sprite and effects.
       // Limit restoration to this person's footprint so it cannot erase another resident.
@@ -228,7 +259,7 @@ export class WorldRenderer {
       const companion = sampleCompanion(r, state.hour);
       if (companion) {
         rect(ctx,companion.x-15,companion.y+1,30,3,'#17211b66');
-        drawSprite(ctx,'patron',companion.x,companion.y+Math.sin(t*11+1)*1.1,t,'outing',80/44,companion.direction);
+        drawSprite(ctx,'patron',companion.x,companion.y+Math.sin(t*11+1)*1.1,t,'outing',80/44,companion.direction,{...this.miniReaction('patron',t),emotion:this.miniReactions?.emotion('patron',t)||'happy'});
       }
     }
     ctx.restore();
@@ -250,7 +281,7 @@ export class WorldRenderer {
       ctx.save();ctx.translate(x-12,y-2);ctx.rotate(-Math.PI/2);ctx.scale(motion.sy,1);drawSprite(ctx,r.type,0,0,t,'sleep',scale*.72);ctx.restore();
     } else {
       ctx.save();ctx.translate(x+motion.dx*u,fy);if(motion.rotate)ctx.rotate(motion.rotate);ctx.scale(1,motion.sy);
-      drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint});ctx.restore();
+      drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint,...this.miniReaction(r.type,t,r)});ctx.restore();
     }
     const tip=CHARACTER_ART[r.type]?.image?CHARACTER_ART[r.type].smokeTip?.[pose]:[72,-50];
     drawCharacterEffects(ctx,{type:r.type,x,y:fy,u,dir:p.direction,t,action,pose,moving:p.moving,needs:r.needs,trash:p.zone==='room'?r.trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip});

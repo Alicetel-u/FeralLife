@@ -1,3 +1,4 @@
+import { MINI_EMOTION_ART } from './mini-emotions.js';
 // Add future approved character art here; unregistered residents retain their draft sprites.
 export const SCENE_ART = { src: 'assets/apartments.png', image: null };
 // イベント専用の立ち絵。観察画面のドット絵とは独立して管理する。
@@ -226,10 +227,11 @@ export function loadCharacterArt(onReady) {
     assignImage(SCENE_ART,'image',SCENE_ART.src,onReady),
     ...['cat','manager'].flatMap(type=>{
       const art=CHARACTER_ART[type];
-      return [assignImage(art,'image',art.src,onReady),assignImage(art,'portrait',art.portraitSrc,onReady)];
+      return [assignImage(art,'image',art.src,onReady),assignImage(art,'portrait',art.portraitSrc,onReady),assignImage(MINI_EMOTION_ART[type],'image',MINI_EMOTION_ART[type].src,onReady)];
     })
   ];
   const remaining=[];
+  for(const [type,art] of Object.entries(MINI_EMOTION_ART))if(!['cat','manager'].includes(type))remaining.push(()=>assignImage(art,'image',art.src,onReady));
   for (const [type,art] of Object.entries(CHARACTER_ART)) {
     if (!['cat','manager'].includes(type)) {
       remaining.push(()=>assignImage(art,'image',art.src,onReady));
