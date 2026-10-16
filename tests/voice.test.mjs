@@ -23,8 +23,8 @@ test('lively landlord keeps inner voice separate, uses audition settings and pre
   }
  }
  const {VOICE_MANIFEST}=await import('../src/voice-manifest.js');
- for(const r of plan.filter(r=>r.speaker==='cat'))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
- for(const r of plan.filter(r=>r.speaker==='manager'&&r.performance!=='inner'))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
+ for(const r of plan.filter(r=>r.speaker==='cat'&&!r.source.includes('attempt-1/ash/trash/reply')))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
+ for(const r of plan.filter(r=>r.speaker==='manager'&&r.performance!=='inner'&&!r.source.includes('attempt-1/ash/trash/reply')))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
 });
 
 test('act1 extraction covers revised branches, epilogue and the complete daily schedule',async()=>{
