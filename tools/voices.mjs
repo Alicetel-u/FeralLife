@@ -10,7 +10,9 @@ const args=process.argv.slice(2),scope=args.find(a=>a.startsWith('--scope='))?.s
 const ids=normalizeVoiceIds(await json('config/voice-ids.json')),config=await json('config/voice-performance.json');
 const sampleMoku=args.includes('--sample-moku');
 if(sampleMoku&&scope!=='intro')throw Error('Moku sample requires intro scope');
-const script=extractVoiceScript(scope);
+const firstTragedy=args.includes('--first-tragedy');
+if(firstTragedy&&scope!=='act1')throw Error('First tragedy requires act1 scope');
+const script=extractVoiceScript(scope).filter(row=>!firstTragedy||row.source.includes('attempt-1/ash/trash/reply'));
 const speaker=args.find(a=>a.startsWith('--speaker='))?.slice('--speaker='.length);
 if(speaker&&!['cat','manager'].includes(speaker))throw Error('Unknown speaker filter');
 if(speaker==='manager'&&!['intro','act1'].includes(scope))throw Error('Landlord generation is limited to act1');
@@ -42,7 +44,7 @@ console.table(report.rows.map((r,i)=>({no:i+1,source:r.source,speaker:r.speaker,
 if(pronunciationReview.length)console.table(pronunciationReview.map(issue=>({term:issue.term,reading:issue.reading,status:issue.status,lines:issue.sources.length})));
 console.log(JSON.stringify({scope,planId,model:config.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true}));
 if(!args.includes('--verify')&&!args.includes('--generate'))process.exit(0);
-const allowedGeneration=scope==='intro'||(scope==='act1'&&['cat','manager'].includes(speaker)&&!sampleMoku&&!pronunciationOnly);
+const allowedGeneration=scope==='intro'||(scope==='act1'&&(['cat','manager'].includes(speaker)||firstTragedy)&&!sampleMoku&&!pronunciationOnly);
 if(args.includes('--generate')&&(!allowedGeneration||!args.includes('--approve='+planId)))throw Error('Generation requires intro or act1 with a single speaker and explicit approval of current plan hash');
 let key;
 try{key=(await json('.local/elevenlabs.json')).apiKey;}catch{throw Error('Local API key missing. Run npm run voice:setup (do not paste key into chat).');}

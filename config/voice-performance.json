@@ -85,6 +85,77 @@
         "similarity_boost": 0.75,
         "speed": 1.05
       }
+    },
+    "tragedy-shock": {
+      "direction": "異変への戸惑い。笑わない",
+      "tags": [
+        "[shocked]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 0.95
+      }
+    },
+    "tragedy-panic": {
+      "direction": "命を救おうと必死に叫ぶ。コミカルにしない",
+      "tags": [
+        "[shouting]",
+        "[panicked]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.05
+      }
+    },
+    "tragedy-grief": {
+      "direction": "声を震わせ返事を懇願する",
+      "tags": [
+        "[crying]",
+        "[pleading]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 0.9
+      }
+    },
+    "tragedy-choking": {
+      "direction": "煙にむせて苦しく呼びかける",
+      "tags": [
+        "[coughing]",
+        "[strained]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 0.9
+      }
+    },
+    "tragedy-fear": {
+      "direction": "視界を失い恐怖で助けを求める",
+      "tags": [
+        "[panicked]",
+        "[strained]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1
+      }
+    },
+    "tragedy-fading": {
+      "direction": "息が続かず途切れる弱い助け声",
+      "tags": [
+        "[weakly]",
+        "[breathlessly]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 0.85
+      }
     }
   }
 }

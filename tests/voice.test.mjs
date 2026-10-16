@@ -13,7 +13,7 @@ test('lively landlord keeps inner voice separate, uses audition settings and pre
  const plan=planVoices(rows,ids,config,issues);
  assert.equal(voicePerformance({speaker:'manager',text:'なんで俺が決めるんだよ……。'}),'weary');
  assert.equal(voicePerformance({speaker:'manager',text:'誰のせいだよ！！'}),'retort');
- for(const r of plan.filter(r=>r.speaker==='manager')){
+ for(const r of plan.filter(r=>r.speaker==='manager'&&!r.performance.startsWith('tragedy-'))){
   assert.equal(r.voiceId,'vY4PC2kSleyw73YRUOI6');
   assert.equal(r.request.voice_settings.stability,r.performance==='inner'?0.5:0);
   if(r.performance!=='inner')assert.equal(r.request.voice_settings.speed,1.05);
@@ -94,4 +94,16 @@ test('autoplay rejection can be retried by a user gesture and network errors rel
  player.play(line,'1');await Promise.resolve();assert.equal(player.busy,false);
  player.unlock();assert.equal(sounds.length,2);assert.equal(player.busy,true);
  sounds[1].onerror();assert.equal(player.busy,false);player.stop();
+});
+
+
+test('first tragedy uses serious performances only after the fire and preserves ordinary caches',async()=>{
+ const rows=extractVoiceScript('act1').filter(r=>r.source.includes('attempt-1/ash/trash/reply'));
+ assert.equal(rows.length,19);
+ assert.ok(rows.slice(0,8).every(r=>!r.performance.startsWith('tragedy-')));
+ assert.ok(rows.slice(8).every(r=>r.performance.startsWith('tragedy-')));
+ assert.equal(rows.at(-1).performance,'tragedy-grief');
+ assert.equal(voicePerformance({speaker:'manager',text:'モク！！'}),'normal');
+ const config=JSON.parse(await readFile(new URL('../config/voice-performance.json',import.meta.url)));
+ for(const r of rows.slice(8))assert.ok(config.profiles[r.performance].tags.every(t=>!t.includes('lighthearted')));
 });

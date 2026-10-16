@@ -2753,5 +2753,176 @@ export const VOICE_MANIFEST = {
     "text": "お前はそればっかりか！！",
     "performance": "normal",
     "model": "eleven_v3"
+  },
+  "[\"manager\",\"とりあえず、ゴミ袋にまとめて捨てとけ。\",\"normal\",false]": {
+    "file": "assets/voices/9a871d80b31845ed4bce0468384801eb12ddfbc3d69e7e6c7d24982bf4d79228.mp3",
+    "hash": "9a871d80b31845ed4bce0468384801eb12ddfbc3d69e7e6c7d24982bf4d79228",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:0",
+    "speaker": "manager",
+    "text": "とりあえず、ゴミ袋にまとめて捨てとけ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"ゴミ袋でいいのかニャ？\",\"moku\",false]": {
+    "file": "assets/voices/bb9e5906bd870db15687f5f93db7a2930bf9d4b8a8eea44e9458a1df1a3e3c4b.mp3",
+    "hash": "bb9e5906bd870db15687f5f93db7a2930bf9d4b8a8eea44e9458a1df1a3e3c4b",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:1",
+    "speaker": "cat",
+    "text": "ゴミ袋でいいのかニャ？",
+    "performance": "moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ああ。いつまでも灰皿いっぱいにしておくわけにもいかねえだろ。\",\"normal\",false]": {
+    "file": "assets/voices/03546b5795a06c36619f2c252b7b9d0b0fc23c537d7ea940a4ccb75863eb9090.mp3",
+    "hash": "03546b5795a06c36619f2c252b7b9d0b0fc23c537d7ea940a4ccb75863eb9090",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:2",
+    "speaker": "manager",
+    "text": "ああ。いつまでも灰皿いっぱいにしておくわけにもいかねえだろ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"わかったニャ。大家がそう言うならそうするニャ。\",\"moku\",false]": {
+    "file": "assets/voices/c239a37f5f2df532d6a5af01133966e61b64da7fe76cb2b084cf720037ceaf8d.mp3",
+    "hash": "c239a37f5f2df532d6a5af01133966e61b64da7fe76cb2b084cf720037ceaf8d",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:3",
+    "speaker": "cat",
+    "text": "わかったニャ。大家がそう言うならそうするニャ。",
+    "performance": "moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……なんだよ、妙に素直だな。\",\"normal\",false]": {
+    "file": "assets/voices/94f3f1c79d17ff5d015da69f9f7302442ecfd036ff80e91011d8caf4efa7d267.mp3",
+    "hash": "94f3f1c79d17ff5d015da69f9f7302442ecfd036ff80e91011d8caf4efa7d267",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:4",
+    "speaker": "manager",
+    "text": "……なんだよ、妙に素直だな。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"だって大家だろ？ 信用してるニャ。\",\"moku-happy\",false]": {
+    "file": "assets/voices/b34814ff288b4472346ad4834f6ca33d98043a127faf188cc718ff2b82a9e568.mp3",
+    "hash": "b34814ff288b4472346ad4834f6ca33d98043a127faf188cc718ff2b82a9e568",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:5",
+    "speaker": "cat",
+    "text": "だって大家だろ？ 信用してるニャ。",
+    "performance": "moku-happy",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"そういうときだけ都合よく信用するなよ。\",\"normal\",false]": {
+    "file": "assets/voices/331fd953fe5f5931b686da994c14433f17d3546aeee4a3fe210741c9725dc213.mp3",
+    "hash": "331fd953fe5f5931b686da994c14433f17d3546aeee4a3fe210741c9725dc213",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:6",
+    "speaker": "manager",
+    "text": "そういうときだけ都合よく信用するなよ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"にゃはは。じゃ、ありがとニャ！\",\"moku-happy\",false]": {
+    "file": "assets/voices/4c9be4b2817d267bd6129d39468a2643f44404675de059e6ad32c23faa337074.mp3",
+    "hash": "4c9be4b2817d267bd6129d39468a2643f44404675de059e6ad32c23faa337074",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:7",
+    "speaker": "cat",
+    "text": "にゃはは。じゃ、ありがとニャ！",
+    "performance": "moku-happy",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……なんだ、あの煙？\",\"tragedy-shock\",false]": {
+    "file": "assets/voices/b13f1653c889b1daeb7ba85892a65d83db1c3024fa96a32b06e9c34c6ee5f4c3.mp3",
+    "hash": "b13f1653c889b1daeb7ba85892a65d83db1c3024fa96a32b06e9c34c6ee5f4c3",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:10",
+    "speaker": "manager",
+    "text": "……なんだ、あの煙？",
+    "performance": "tragedy-shock",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"おい、嘘だろ！？ モク！！\",\"tragedy-panic\",false]": {
+    "file": "assets/voices/b9e36060d0838335dce778797a1d2454bb3e46787ce6a2e1de53f972fbf601b2.mp3",
+    "hash": "b9e36060d0838335dce778797a1d2454bb3e46787ce6a2e1de53f972fbf601b2",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:12",
+    "speaker": "manager",
+    "text": "おい、嘘だろ！？ モク！！",
+    "performance": "tragedy-panic",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"火事だ！！ 早く逃げろ！！\",\"tragedy-panic\",false]": {
+    "file": "assets/voices/88536b41a061a174843106ed52a12a69151e4b1b84d83d74d0a01a16e26c9b07.mp3",
+    "hash": "88536b41a061a174843106ed52a12a69151e4b1b84d83d74d0a01a16e26c9b07",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:13",
+    "speaker": "manager",
+    "text": "火事だ！！ 早く逃げろ！！",
+    "performance": "tragedy-panic",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"ゲホッ……大家……！\",\"tragedy-choking\",false]": {
+    "file": "assets/voices/817bfef424cf15566a28a47d0a239a6c426a385bd45b2fb68b54c018c3c5f627.mp3",
+    "hash": "817bfef424cf15566a28a47d0a239a6c426a385bd45b2fb68b54c018c3c5f627",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:14",
+    "speaker": "cat",
+    "text": "ゲホッ……大家……！",
+    "performance": "tragedy-choking",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"モク！？ まだ中にいるのか！？\",\"tragedy-panic\",false]": {
+    "file": "assets/voices/460d1822fb29aeaaf07e83f48c34d843b06a9f93831df2e2618a4c8cf88a78a2.mp3",
+    "hash": "460d1822fb29aeaaf07e83f48c34d843b06a9f93831df2e2618a4c8cf88a78a2",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:15",
+    "speaker": "manager",
+    "text": "モク！？ まだ中にいるのか！？",
+    "performance": "tragedy-panic",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"煙が……前が見えないニャ……！\",\"tragedy-fear\",false]": {
+    "file": "assets/voices/7eaa752be2ba8eca376bd02150217fb5425251a5a03348df81c0ede841370148.mp3",
+    "hash": "7eaa752be2ba8eca376bd02150217fb5425251a5a03348df81c0ede841370148",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:16",
+    "speaker": "cat",
+    "text": "煙が……前が見えないニャ……！",
+    "performance": "tragedy-fear",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"待ってろ！！ 今そっちに——！\",\"tragedy-panic\",false]": {
+    "file": "assets/voices/35205995cef33204add7863cc11058ded779efee33e86757a605a5d37d8db0dd.mp3",
+    "hash": "35205995cef33204add7863cc11058ded779efee33e86757a605a5d37d8db0dd",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:17",
+    "speaker": "manager",
+    "text": "待ってろ！！ 今そっちに——！",
+    "performance": "tragedy-panic",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家……助け……\",\"tragedy-fading\",false]": {
+    "file": "assets/voices/5f1bcb9f2eb3607ee4894fa79128ffb3d325741c4b8efa07de17b3c92a882b4b.mp3",
+    "hash": "5f1bcb9f2eb3607ee4894fa79128ffb3d325741c4b8efa07de17b3c92a882b4b",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:19",
+    "speaker": "cat",
+    "text": "大家……助け……",
+    "performance": "tragedy-fading",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"モク！！\",\"tragedy-panic\",false]": {
+    "file": "assets/voices/c56b35a6abccafeb0af7ec7532ff9d3db48d41651aa1dadc8e92571e6358f8ca.mp3",
+    "hash": "c56b35a6abccafeb0af7ec7532ff9d3db48d41651aa1dadc8e92571e6358f8ca",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:21",
+    "speaker": "manager",
+    "text": "モク！！",
+    "performance": "tragedy-panic",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"おい……返事しろよ……！\",\"tragedy-grief\",false]": {
+    "file": "assets/voices/49027786f723f286263841179809d54a26c172ca217ebfbab7fc0b476a574a5c.mp3",
+    "hash": "49027786f723f286263841179809d54a26c172ca217ebfbab7fc0b476a574a5c",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:22",
+    "speaker": "manager",
+    "text": "おい……返事しろよ……！",
+    "performance": "tragedy-grief",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"モク……頼む、返事をしてくれ。\",\"tragedy-grief\",false]": {
+    "file": "assets/voices/a72ee4a69a6a904272e2e6c8c788de433cafa19eaa1e41fb431572395c4e0abc.mp3",
+    "hash": "a72ee4a69a6a904272e2e6c8c788de433cafa19eaa1e41fb431572395c4e0abc",
+    "source": "act1/runtime/attempt-1/ash/trash/reply:23",
+    "speaker": "manager",
+    "text": "モク……頼む、返事をしてくれ。",
+    "performance": "tragedy-grief",
+    "model": "eleven_v3"
   }
 };
