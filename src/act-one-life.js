@@ -2,7 +2,7 @@ import { createRoomMove, sampleJourney } from './movement.js';
 
 // First-act daily blocking; story deadlines and authored conversations stay unchanged.
 export const MOKU_DAY = [
-  [17,'clean','center','通り道を片づける'],[17.25,'outside','street','建物の前で気分転換'],
+  [17,'clean','center','通り道を片づける'],[17.25,'outside','street','外へ出て一服'],[19.3,'meet','street','大家に近づく'],[21.2,'home','table','部屋へ帰る'],
   [22,'idle','table','帰宅してひと息'],[22.5,'smoke','window','灰皿の前で一服'],
   [23.25,'idle','table','灰皿のあとにひと息'],[23.85,'idle','center','スマホを探す'],[24.1,'tv','tv','テレビを見て夜更かし'],
   [36.5,'eat','fridge','眠いまま食事の準備'],
@@ -20,11 +20,20 @@ export function firstActLife(state, delta=0){
   r.storyUntil=58;
   if(r.lifeBeat!==beat[0]){
     const start=sampleJourney(r,state.hour,places[r.action]||'table');
-    r.previous=r.action;r.action=beat[1]==='outside'?'smoke':beat[1]==='walk'?'idle':beat[1];r.actionAge=0;r.targetRoom=null;r.lifeBeat=beat[0];
+    r.previous=r.action;r.action=beat[1]==='outside'?'smoke':['meet','home','walk'].includes(beat[1])?'idle':beat[1];r.actionAge=0;r.targetRoom=null;r.lifeBeat=beat[0];
     if(beat[1]==='outside'){
-      const path=[start,{x:331,y:440,zone:'hall',room:101},{x:777,y:440,zone:'hall',room:103},{x:815,y:513,zone:'street'},{x:650,y:513,zone:'street'}];
+      const path=[start,{x:331,y:440,zone:'hall',room:101},{x:777,y:440,zone:'hall',room:103},{x:815,y:513,zone:'street'},{x:865,y:513,zone:'street'}];
       const travel=path.slice(1).reduce((n,p,i)=>n+Math.hypot(p.x-path[i].x,p.y-path[i].y),0)/430;
-      r.journey={kind:'visit',startedAt:state.hour,arriveAt:state.hour+travel,returnAt:state.hour+travel+.8,endsAt:state.hour+travel*2+.8,path,back:[...path].reverse(),reason:'外で一服して大家と立ち話',actionAfter:'idle',returned:false};
+      r.journey={kind:'room',startedAt:state.hour,arriveAt:state.hour+travel,returnAt:state.hour+travel,endsAt:state.hour+travel,path,back:[],reason:'外で一服',actionAfter:'smoke',returned:false};
+    }else if(beat[1]==='meet'){
+      const path=[start,{x:705,y:513,zone:'street'}];
+      const travel=Math.hypot(start.x-705,start.y-513)/430;
+      r.journey={kind:'room',startedAt:state.hour,arriveAt:state.hour+travel,returnAt:state.hour+travel,endsAt:state.hour+travel,path,back:[],reason:'大家のところまで歩く',actionAfter:'idle',returned:false};
+    }else if(beat[1]==='home'){
+      const path=[start,{x:815,y:513,zone:'street'},{x:777,y:440,zone:'hall',room:103},{x:331,y:440,zone:'hall',room:101},{...start,x:331,y:420,zone:'room',room:101}];
+      const destination={x:330,y:396,zone:'room',room:101};path.push(destination);
+      const travel=path.slice(1).reduce((n,p,i)=>n+Math.hypot(p.x-path[i].x,p.y-path[i].y),0)/430;
+      r.journey={kind:'room',startedAt:state.hour,arriveAt:state.hour+travel,returnAt:state.hour+travel,endsAt:state.hour+travel,path,back:[],reason:'101号室へ帰宅',actionAfter:'idle',returned:false};
     }else if(beat[1]==='walk'){
       const end={x:410,y:440,zone:'hall',room:101};
       const path=[start,{x:331,y:440,zone:'hall',room:101},end];
