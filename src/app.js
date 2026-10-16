@@ -635,7 +635,7 @@ function frame(now){
   tickObservation(state,seconds,{stopped:observationStopped,voiceBusy:characterVoice.busy});
   if(!stopped&&!talk.chapterChat){
     const firstNight=state.actOne?.chapter!==2&&state.actOne?.completed?.includes('ash')&&!state.actOne?.completed?.includes('dinner')&&!state.actOne?.pending&&state.hour>=24.1&&state.hour<36.65;
-    if(!lateNightWarp&&firstNight&&observationView(state)?.beat==null&&observationView(state)?.done===observationView(state)?.total){
+    if(!lateNightWarp&&firstNight&&observationView(state)?.beat==null&&state.actOne?.observation?.done?.includes('tv-late')&&!state.actOne?.observation?.done?.includes('before-dinner')){
       lateNightWarp={rate:(36.65-state.hour)/11,tail:0};document.body.classList.add('late-night-warp');
       const caption=document.createElement('div');caption.id='night-montage-caption';caption.className='night-montage-caption';document.body.append(caption);
     }
