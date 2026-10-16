@@ -245,9 +245,37 @@ export const ACT_ONE_EVENTS={
   ]}
 };
 
+const FIRST_ASH_TRAGEDY_LINES=[
+ am('とりあえず、ゴミ袋にまとめて捨てとけ。'),
+ ac('neutral','ゴミ袋でいいのかニャ？'),
+ am('ああ。いつまでも灰皿いっぱいにしておくわけにもいかねえだろ。'),
+ ac('neutral','わかったニャ。大家がそう言うならそうするニャ。'),
+ am('……なんだよ、妙に素直だな。'),
+ ac('happy','だって大家だろ？ 信用してるニャ。'),
+ am('そういうときだけ都合よく信用するなよ。'),
+ ac('happy','にゃはは。じゃ、ありがとニャ！'),
+ an('モクが部屋の奥へ戻り、大家はその場を離れた。'),
+ an('数分後。101号室の窓から、突然、黒い煙が噴き出した。'),
+ am('……なんだ、あの煙？'),
+ an('ガラスの割れる音。窓から炎が吹き出す。'),
+ am('おい、嘘だろ！？ モク！！'),
+ am('火事だ！！ 早く逃げろ！！'),
+ ac('tired','ゲホッ……大家……！'),
+ am('モク！？ まだ中にいるのか！？'),
+ ac('surprised','煙が……前が見えないニャ……！'),
+ am('待ってろ！！ 今そっちに——！'),
+ an('大家が駆け寄る。しかし、猛烈な熱気と黒煙に阻まれ、入り口へ近づけない。'),
+ ac('sad','大家……助け……'),
+ an('激しい崩落音。炎が燃え上がり、モクの声が途切れた。'),
+ am('モク！！'),
+ am('おい……返事しろよ……！'),
+ am('モクーーーーッ！！'),
+ an('返事はなかった。')
+];
+
 export function getActOneChoices(s,scene){
   const choices=ACT_ONE_EVENTS[scene]?.choices||[];
-  return scene==='ash'&&s.actOne?.attempt===1?choices.filter(c=>c.id!=='water'):choices.filter(c=>scene!=='ash'||c.id!=='freezer');
+  return scene==='ash'&&s.actOne?.attempt===1?choices.filter(c=>c.id==='trash').map(c=>({...c,label:'とりあえず、ゴミ袋にまとめて捨てとけ'})):choices.filter(c=>scene!=='ash'||c.id!=='freezer');
 }
 
 export function actOneChosenChoices(s){
@@ -402,8 +430,10 @@ export function answerActOne(s,eventId,choiceId){
   const original=s.events.find(e=>e.id===p.eventId);original.read=true;original.actChoice=choiceId;
   a.chosenChoices=actOneChosenChoices(s);
   a.pending=null;a.completed.push(p.scene);
-  const result=addEvent(s,'life','返事：'+choice.label,choice.lines[0].text,[101]);
-  result.actScene='reply';result.cast=['cat'];result.stageOnly=true;result.lines=choice.lines.map(l=>({...l}));
+  const firstTragedy=p.scene==='ash'&&a.attempt===1&&choiceId==='trash';
+  const replyLines=firstTragedy?FIRST_ASH_TRAGEDY_LINES:choice.lines;
+  const result=addEvent(s,'life','返事：'+choice.label,replyLines[0].text,[101]);
+  result.actScene='reply';result.cast=['cat'];result.stageOnly=true;result.lines=replyLines.map(l=>({...l}));
   if(choice.bad){
     a.status='bad';a.failure=choice.bad;
     if(!a.memory.includes(choice.bad))a.memory.push(choice.bad);
