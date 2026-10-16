@@ -178,7 +178,6 @@ export class WorldRenderer {
     if(CHARACTER_ART.manager?.image){
       rect(ctx,caretaker.x-13,caretaker.y+1,26,3,'#17211b66');
       drawSprite(ctx,'manager',caretaker.x,caretaker.y,t,'idle',80/44,this.managerMoving?caretaker.direction:(this.managerTarget?.direction||1),{pose:caretakerPose});
-      if(!this.speaking?.has('manager')){ctx.font='10px "Yu Gothic UI",sans-serif';ctx.textAlign='center';ctx.fillStyle='#f2e9d2';ctx.fillText('大家',caretaker.x,caretaker.y-86);ctx.textAlign='left';}
     }
     const people=state.residents.map(r=>({r,p:sampleJourney(r,state.hour,ACTIONS[r.action].place)})).sort((a,b)=>a.p.y-b.p.y);
     for(const {r,p} of people) {
@@ -195,14 +194,10 @@ export class WorldRenderer {
       // Limit restoration to this person's footprint so it cannot erase another resident.
       ctx.save();ctx.beginPath();ctx.rect(p.x-70,fy-115,140,120);ctx.clip();
       drawExteriorForeground(ctx,SCENE_ART.image,p,darkness);ctx.restore();
-      if (!this.speaking?.has(r.type)) {
-        ctx.font='10px "Yu Gothic UI",sans-serif';ctx.textAlign='center';ctx.fillStyle='#f2e9d2';ctx.shadowColor='#151b18';ctx.shadowBlur=3;ctx.fillText(CHARACTERS[r.type].name.split(' ')[1],p.x,p.y-86);ctx.shadowBlur=0;ctx.textAlign='left';
-      }
       const companion = sampleCompanion(r, state.hour);
       if (companion) {
         rect(ctx,companion.x-15,companion.y+1,30,3,'#17211b66');
         drawSprite(ctx,'patron',companion.x,companion.y+Math.sin(t*11+1)*1.1,t,'outing',80/44,companion.direction);
-        ctx.font='10px "Yu Gothic UI",sans-serif';ctx.textAlign='center';ctx.fillStyle='#f2e9d2';ctx.fillText('トクゾウ（来訪者）',companion.x,companion.y-88);ctx.textAlign='left';
       }
     }
     ctx.restore();
@@ -349,10 +344,9 @@ export class WorldRenderer {
       const place = this.speechAnchor(state, bubble.speaker) || (nearby ? {x:Math.max(160,nearby.x-280),y:nearby.y,tail:false,source:'近くにいる大家'} : null) || {
         x: 1510, y: 230, tail: false, source: resident ? `${resident.room}号室の声` : 'けもの荘の声'
       };
-      const visibleSpeaker = this.view === 'exterior' && place.tail && !place.source;
       drawSpeechBubble(ctx, place.x, place.y, bubble.name, bubble.text, {
         bounds:speechBounds, large: this.focus, accent: speakerColors(bubble)[1], ink: speakerColors(bubble)[1],
-        source: place.source, tail: place.tail, hideName: visibleSpeaker, opacity: this.speechOpacity
+        source: place.source, tail: place.tail, opacity: this.speechOpacity
       });
     }
     ctx.restore();
@@ -384,7 +378,7 @@ function drawSpeechBubble(ctx, screenX, screenY, name, text, opts) {
   ctx.font = `500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;
   const bounds=opts.bounds||{left:0,right:WORLD_WIDTH};
   const lines = wrapSpeechText(ctx, text, Math.max(120,Math.min(opts.large ? 530 : 390,bounds.right-bounds.left-pad*2-48)));
-  const header = opts.hideName ? '' : opts.source ? `${name}  ·  ${opts.source}` : name;
+  const header = opts.source ? `${name}  ·  ${opts.source}` : name;
   ctx.font = '700 24px "Yu Gothic UI", Meiryo, sans-serif';
   const headerWidth = header ? ctx.measureText(header).width + 24 : 0;
   ctx.font = `500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;

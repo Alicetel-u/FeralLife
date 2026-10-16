@@ -29,7 +29,9 @@ const pen = { measureText: text => ({ width: Array.from(text).length * 10 }) };
 
 test('observation paints each speaker text and name with their color, including inner voices',()=>{
  const renderer=view('exterior');
- renderer.canvas={};renderer.speechAnchor=()=>({x:800,y:500,tail:false,source:''});
+ renderer.canvas={};
+ for(const tail of [false,true]){
+ renderer.speechAnchor=()=>({x:800,y:500,tail,source:''});
  for(const line of [{speaker:'cat'},{speaker:'hostess'},{speaker:'manager'},{speaker:'manager',innerVoice:true},{speaker:'manager',memoryVoice:true}]){
   const painted=[];
   const ctx=new Proxy({measureText:pen.measureText,fillText(text){painted.push({text,color:this.fillStyle});}},{get:(target,key)=>key in target?target[key]:()=>{}});
@@ -38,6 +40,7 @@ test('observation paints each speaker text and name with their color, including 
   assert.ok(painted.some(item=>item.text==='セリフ'));
   assert.ok(painted.some(item=>item.text.includes('名前')));
   for(const item of painted)assert.equal(item.color,speakerColors(line)[1]);
+ }
  }
 });
 test('speech preserves explicit line breaks and long dialogue without losing characters', () => {
