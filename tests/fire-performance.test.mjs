@@ -23,5 +23,8 @@ test('reduced motion paints an unchanged phase once, and cleanup cancels its ani
   root.dispatchEvent(new Event('click'));assert.equal(root.dataset.firePhase,'building');assert.equal(finished,0);assert.match(narration.textContent,/炎だけ/);
   root.dispatchEvent(new Event('click'));assert.equal(root.dataset.firePhase,'ruins');assert.equal(finished,0);assert.match(narration.textContent,/家賃/);
   root.dispatchEvent(new Event('click'));root.dispatchEvent(new Event('click'));assert.equal(finished,1);assert.equal(callbacks.size,0);end();
+  const tragedy=startFireEnding(root,'ash-trash',()=>{},{firstTragedy:true});
+  const [firstId,firstFrame]=callbacks.entries().next().value;callbacks.delete(firstId);firstFrame(performance.now());
+  assert.equal(root.dataset.firePhase,'building');assert.match(narration.textContent,/さっきまで普通に話してた/);tragedy();
  }finally{for(const [key,value]of Object.entries(old)){if(value===undefined)delete globalThis[key];else globalThis[key]=value;}}
 });
