@@ -13,6 +13,11 @@ export function managerReaction(line){
  return 'idle';
 }
 export function managerTarget(state,bubbles=[]){
+ if(state.actOne?.chapter!==2&&state.actOne?.started&&!state.actOne?.completed?.includes('ash')&&!state.actOne?.pending){
+  const speaking=bubbles[0];const p=state.residents.find(r=>r.type==='cat');
+  const meeting=p?.lifeBeat===19.3;
+  return {x:650,y:513,zone:'street',chat:meeting,direction:1,pose:meeting&&speaking?.speaker==='manager'?managerReaction(speaking):'clean'};
+ }
  const outside=state.residents.map(r=>({r,p:sampleJourney(r,state.hour,ACTIONS[r.action].place)})).filter(({p})=>p.zone==='street'||(p.zone==='hall'&&p.y>=430));
  const speaking=bubbles[0];
  const visitor=outside.find(({r})=>r.type===speaking?.speaker)||outside.find(({r})=>r.room===state.selected);
