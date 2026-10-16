@@ -50,6 +50,24 @@ function tintedImage(image, tint) {
  *  sx, sy … 足元を基準にした伸縮（呼吸など）
  *  rotate … 足元を軸にした傾き（ラジアン。千鳥足など）
  */
+// First evening: Moku walks a few steps, stops to pick up litter, then changes spots.
+// Use animation time rather than story time so each gesture keeps moving while dialogue pauses the clock.
+function firstEveningCleanup(state,r,position,t){
+  if(r.type!=='cat'||r.action!=='clean'||r.lifeBeat!==17||!state.actOne?.started||state.hour>=17.25||position.zone!=='room')return position;
+  const phase=((t%9)+9)%9;
+  const stops=[{until:1,x:0},{until:2,x:-22},{until:4,x:-22},{until:5.2,x:22},{until:7.2,x:22},{until:8,x:0},{until:9,x:0}];
+  let from=0,prev=0;
+  for(const stop of stops){
+    if(phase<stop.until){
+      const walking=stop.x!==from;
+      const ratio=walking?(phase-prev)/(stop.until-prev):1;
+      const x=from+(stop.x-from)*ratio;
+      return {...position,x:position.x+x,y:position.y+(walking?Math.sin(ratio*Math.PI)*1.2:0),moving:walking,direction:walking?(stop.x>from?1:-1):position.direction};
+    }
+    from=stop.x;prev=stop.until;
+  }
+  return position;
+}
 export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1, direction = 1, opts = {}) {
   const art = CHARACTER_ART[type];
   if (art?.image) {
@@ -205,13 +223,14 @@ export class WorldRenderer {
     ctx.restore();
   }
   drawInteriorResident(state,r,t) {
-    const p=sampleJourney(r,state.hour,ACTIONS[r.action].place);
+    const p=firstEveningCleanup(state,r,sampleJourney(r,state.hour,ACTIONS[r.action].place),t);
     if(p.zone==='away'||p.zone==='street'||p.zone==='stairs')return;
     const base=exteriorRoomBounds(p.room||r.room), b=roomBounds(p.room||r.room,this.focusRoom);if(!b)return;
     const ctx=this.ctx,x=b.x+(p.x-base.x)/base.w*b.w,y=p.zone==='hall'?b.y+b.h+16:b.y+(p.y-base.y)/base.h*b.h;
     const height=this.focus?300:144,baseHeight=CHARACTER_ART[r.type]?.image?44:26,scale=height/baseHeight;
     const u=height/128, sleeping=r.action==='sleep'&&!p.moving&&p.zone==='room';
-    const pose=resolvePose(r.type,r.action,p.moving,t,state.hour), motion=spriteMotion(r.action,p.moving,r.needs,t,pose);
+    const action=p.moving?'outing':r.action;
+    const pose=resolvePose(r.type,action,p.moving,t,state.hour), motion=spriteMotion(action,p.moving,r.needs,t,pose);
     const fy=y+(p.moving?Math.sin(t*11)*2:0);
     ctx.save();ctx.beginPath();ctx.rect(b.x,b.y,b.w,b.h+27);ctx.clip();
     rect(ctx,x-height*(pose==='sleep'?.26:.18),y+3,height*(pose==='sleep'?.52:.36),5,'#23302255');
@@ -220,10 +239,10 @@ export class WorldRenderer {
       ctx.save();ctx.translate(x-12,y-2);ctx.rotate(-Math.PI/2);ctx.scale(motion.sy,1);drawSprite(ctx,r.type,0,0,t,'sleep',scale*.72);ctx.restore();
     } else {
       ctx.save();ctx.translate(x+motion.dx*u,fy);if(motion.rotate)ctx.rotate(motion.rotate);ctx.scale(1,motion.sy);
-      drawSprite(ctx,r.type,0,0,t,r.action,scale,p.direction,{pose,tint:motion.tint});ctx.restore();
+      drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint});ctx.restore();
     }
     const tip=CHARACTER_ART[r.type]?.image?CHARACTER_ART[r.type].smokeTip?.[pose]:[72,-50];
-    drawCharacterEffects(ctx,{type:r.type,x,y:fy,u,dir:p.direction,t,action:r.action,pose,moving:p.moving,needs:r.needs,trash:p.zone==='room'?r.trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip});
+    drawCharacterEffects(ctx,{type:r.type,x,y:fy,u,dir:p.direction,t,action,pose,moving:p.moving,needs:r.needs,trash:p.zone==='room'?r.trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip});
     if(['stream','sell','gamble','shop','collect'].includes(r.action)&&!p.moving&&!this.speaking?.has(r.type)){ctx.fillStyle='#efe3c3';ctx.font=`${this.focus?32:20}px monospace`;ctx.fillText(ACTIONS[r.action].icon,x+height*.15,y-height);}
     ctx.restore();
   }
