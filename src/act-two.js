@@ -9,25 +9,85 @@ const l=(emotion,text)=>({speaker:'hostess',emotion:actExpression('hostess',text
 const c=(emotion,text)=>({speaker:'cat',emotion:actExpression('cat',text,emotion),text});
 export const ACT_TWO_TITLE='第二幕「アパートを借金（ルナ）から守れ！」';
 export const ACT_TWO_EVENTS={
-  bag:{at:66,title:'第一の事件：夕暮れの待ち伏せ',call:'ルナを探す男にどう対応する？',detail:'3日目18時。けもの荘の前を、不審な男が何度も行き来している。',lines:[
-    n('夕暮れどき、けもの荘の向かい。電柱の陰に隠れるように、スーツ姿ではない中年の男が立っていた。'),
-    n('男は102号室の窓を見上げては、スマートフォンを確認している。'),
-    c('neutral','さっきから同じおじさんがいるニャ。散歩が趣味ニャ？'),
-    m('同じ場所を往復する散歩があるか。'),
-    n('男は大家に気づき、急に愛想笑いを浮かべた。'),
-    n('男「ねえ、ここに金城ルナって女の子、住んでるでしょ？」'),
-    m('何の用だ？'),
-    n('男「俺はあの子の常連でね。店の人に頼まれて探してるんだよ。」'),
-    n('男「ルナちゃん、店の金を持って逃げたらしいんだ！」'),
-    c('surprised','お金持ちニャ！？'),
-    m('話が飛びすぎだ。本人に確認するまで何も教えられねぇよ。'),
-    n('ちょうど玄関から出てきたルナが男の顔を見て、足を止めた。'),
-    l('surprised','……っ、なんで……ここまで……。'),
-    n('男「やっと見つけたよ、ルナちゃん。俺のことまで避けるなんてひどいよ！」'),
-    l('sad','……大家さん、お願い。その人には何も話さないで。'),
-    m('……さて、どうする？')
+  bag:{at:66,title:'第一の事件：夕暮れの待ち伏せ',call:'ルナを追う男にどう対応する？',detail:'3日目18時。けもの荘の玄関前で、ルナが見知らぬ男に呼び止められた。',lines:[
+    n('夕暮れ。大家がアパートの前を掃除していると、男の声が聞こえてきた。'),
+    n('男「あっ！ ルナちゃん！」'),
+    l('surprised','……っ！'),
+    n('振り返ったルナの表情が、一瞬で凍りつく。'),
+    n('男「やっと見つけたよ！ 急に連絡くれなくなるから、心配したんだよ？」'),
+    l('surprised','……なんで……ここが……。'),
+    n('男「頑張って探したんだ。ルナちゃん、引っ越したんでしょ？」'),
+    l('sad','……もう、お店は辞めたから。'),
+    n('男「うん、知ってるよ。でも、俺たちの関係は別じゃない？」'),
+    l('angry','……そんな関係じゃない！'),
+    n('男は笑顔のまま、一歩近づいた。'),
+    n('男「照れなくていいって。俺、ルナちゃんのこと本気なんだから。」'),
+    l('sad','……お願い。もう帰って。'),
+    n('その声に気づき、大家が二人の間に入る。'),
+    m('おい、あんた。何やってるんだ？'),
+    n('男「……誰？」'),
+    m('ここの大家だ。'),
+    n('男「……大家？ へえ。」'),
+    n('男は大家を上から下まで眺める。'),
+    n('男「ルナちゃん。この人とはどういう関係？」'),
+    l('sad','……大家さん。それだけだよ。'),
+    n('男「ふうん……。」'),
+    n('男の笑顔が消えかける。'),
+    m('ルナは帰ってくれって言ってるだろ。今日はもう帰れ。'),
+    n('男「……あんたには関係ないだろ。」'),
+    n('男は大家を押しのけようとする。')
   ],choices:[
-    {id:'guarantee',label:'金の話なら、まず俺を通せ！',bad:'bag-guarantee',endingName:'甘い罠',regret:'ルナに運営資金と修繕費を持ち逃げされ、けもの荘の資金繰りが破綻した。',clue:'金銭トラブルを自分が引き受けると口にした大家は、ルナの甘い誘いにも警戒心を失ってしまった。',lines:[
+    {id:'first-watch',label:'もう大丈夫だろ。今日はゆっくり休め。',bad:'bag-first-watch',endingName:'夕暮れの待ち伏せ',regret:'男を追い返して安心したが、深夜、ルナが血だらけで倒れているのを発見した。',clue:'相手が引き下がっても、ルナを一人にして安全を確かめなかった。',lines:[
+      n('そのとき、モクが現れる。'),
+      c('neutral','……おい。'),
+      n('男「……あ？」'),
+      n('モクがゆっくりと近づいてくる。'),
+      c('neutral','……ルナが帰れって言ってるニャ。'),
+      n('男「なんだよ、お前。邪魔すんなよ。」'),
+      c('neutral','……聞こえなかったのかニャ？'),
+      n('モクは男の目をじっと見据える。'),
+      c('angry','帰れって言ってんだニャ！！'),
+      n('モクが一歩踏み出す。男は思わず後ずさる。'),
+      n('男「……っ！ わ、分かったよ！」'),
+      n('男は慌てて背を向け、逃げるように走り去った。'),
+      m('……お前、そんな怖い顔できたのか。'),
+      c('neutral','モクはいつも優しいニャ。'),
+      m('自分で言うなよ……。'),
+      l('sad','……モクちゃん、ありがとう……。'),
+      c('happy','当然ニャ！'),
+      n('ルナは男が逃げた方向を不安そうに見つめていた。'),
+      l('sad','……本当に、もう来ないかな……。'),
+      m('もう大丈夫だろ。今日はゆっくり休め。'),
+      l('sad','……うん。ありがとう、大家さん。'),
+      c('happy','また来たらモクが追い払うニャ！'),
+      m('ははっ。頼りにしてるぞ。'),
+      l('sad','……じゃあ、おやすみなさい。'),
+      n('ルナは102号室へ戻り、大家とモクもそれぞれ部屋へ戻った。'),
+      n('深夜。大家が102号室の前を通りかかる。'),
+      n('扉が少し開いている。'),
+      m('……ん？ ルナ？'),
+      n('返事はない。'),
+      m('……おい、開けっぱなしだぞ。'),
+      n('大家は102号室へ入る。倒れた椅子と割れたグラスが目に入る。'),
+      m('……なんだ、これ……。'),
+      n('部屋の奥で、ルナが血だらけになって倒れていた。'),
+      {...n('辺りの音が途切れる。'),tragedyEffect:'silence'},
+      {...m('…………ルナ？'),voicePerformance:'tragedy-shock'},
+      n('返事はない。'),
+      m('……おい……。'),
+      m('……嘘だろ……。'),
+      n('大家はルナに駆け寄る。'),
+      {...m('ルナ！！ しっかりしろ！！'),voicePerformance:'tragedy-panic'},
+      {...m('頼む……目を開けてくれ……！'),voicePerformance:'tragedy-grief'},
+      n('ルナは動かない。'),
+      {...m('……くそっ！ 救急車……！'),voicePerformance:'tragedy-panic'},
+      {...n('大家が立ち上がろうとした、その瞬間。鈍い衝撃音が響く。'),tragedyEffect:'impact'},
+      {...n('視界が揺れ、すべてが暗闇に沈んだ。'),tragedyEffect:'blackout'},
+      {...n('……カチッ。'),tragedyEffect:'clock'},
+      {...n('暗闇の中で時計の針が逆回転を始める。'),tragedyEffect:'clock'},
+      {...n('針が夕暮れの18時を指すと、白い光が広がった。'),flashbackEffect:'whiteout'}
+    ]},
+    {id:'guarantee',label:'俺がルナの彼氏だ。文句あるか！',bad:'bag-guarantee',endingName:'甘い罠',regret:'ルナに運営資金と修繕費を持ち逃げされ、けもの荘の資金繰りが破綻した。',clue:'金銭トラブルを自分が引き受けると口にした大家は、ルナの甘い誘いにも警戒心を失ってしまった。',lines:[
       m('金の話なら、まず俺を通せ！'),
       n('男「へえ……大家さんが責任を持ってくれるんですか？」'),
       m('いや、そういう意味じゃねぇ！！'),
@@ -186,7 +246,7 @@ export const ACT_TWO_EVENTS={
     {id:'refuse',label:'担保は絶対ダメだ！ 契約は持ち帰れ！',lines:[m('担保は絶対ダメだ！ 契約は持ち帰れ！'),l('surprised','でも、今日だけって……。'),m('今日しか考える時間をくれない契約なんて、なおさらダメだ！'),c('happy','じゃあモクのハンコも貸さないニャ。'),m('お前はそもそも持ってないだろ！'),n('大家は署名を拒み、昨日男が落としたメモと帳簿を照らし合わせた。売上金の数字は噛み合わず、店側が従業員への不当な請求をルナの横領に見せかけた疑いが浮かぶ。男は舌打ちして立ち去った。'),l('sad','……私が盗んだって言われても、信じないでくれたんだね。ありがとう、大家さん。'),m('次からは小さい文字ほど先に読め。')]}
   ]}
 };
-export const actTwoChoices=(s,scene)=>ACT_TWO_EVENTS[scene]?.choices||[];
+export const actTwoChoices=(s,scene)=>scene==='bag'&&s.actOne?.attempt===1?[ACT_TWO_EVENTS.bag.choices[0]]:ACT_TWO_EVENTS[scene]?.choices.filter(choice=>choice.id!=='first-watch')||[];
 export const actTwoChosen=s=>[...new Set([...(s.actOne.chosenChoices||[]),...s.events.filter(e=>e.actChoice&&ACT_TWO_EVENTS[e.actScene]).map(e=>e.actScene+':'+e.actChoice)])];
 export function beginActTwo(s){
   s.ending=null;s.pending=['hostess'];admit(s,'hostess');s.hour=57;
@@ -279,7 +339,7 @@ export function advanceActTwo(s,hours){
  s.ending={name:'第二幕クリア — 残った鍵',text:'けもの荘は、借金のカタにならずに済んだ。'};}
 }
 export function answerActTwo(s,eventId,choiceId){
- const a=s.actOne,p=a.pending,event=ACT_TWO_EVENTS[p?.scene];const choice=event?.choices.find(c=>c.id===choiceId);
+ const a=s.actOne,p=a.pending,event=ACT_TWO_EVENTS[p?.scene];const choice=actTwoChoices(s,p?.scene).find(c=>c.id===choiceId);
  if(a.status!=='playing'||p?.eventId!==Number(eventId)||!choice)return null;
  const original=s.events.find(e=>e.id===p.eventId);original.read=true;original.actChoice=choiceId;
  a.chosenChoices=actTwoChosen(s);a.pending=null;a.completed.push(p.scene);
@@ -300,13 +360,44 @@ export function rewindActTwo(s){
  }
  if(s.actOne.rollbackPoint?.kind==='story')next.actOne.rollbackPoint=JSON.parse(JSON.stringify(s.actOne.rollbackPoint));
  next.actOne.attempt=a.attempt+1;next.actOne.skipUnlockedScene=scene;next.actOne.memory=[...a.memory];next.actOne.chosenChoices=actTwoChosen(s);next.actOne.status='playing';next.actOne.pending=null;next.actOne.prologuePending=false;next.actOne.titlePending=false;next.actOne.started=true;next.ending=null;next.pending=null;next.events.forEach(e=>e.read=true);
- const intro=addEvent(next,'life','また、差し押さえの前へ',storyCheckpointTarget(s).label+'に時間が戻った。',[102]);intro.actScene='act2-rewind';intro.cast=['hostess','cat'];intro.stageOnly=true;intro.read=false;intro.lines=[
- n('失ったはずのけもの荘が戻った。'+storyCheckpointTarget(s).label+'に時間が戻っている。'),
- m(scene==='bag'?'……また戻った。あの荷物と書類、今度は見逃さねぇ。':'……また戻った。今度こそ、絶対にハンコは押さねぇ。'),
- l('surprised','大家さん？ 何かあった？'),
- m('ああ。取り返しのつかない未来を見た。'),
- c('tired','大家、寝不足ニャ？'),
- m('お前らのせいでな！！')];
+ const firstStalkerLoop=scene==='bag'&&a.attempt===1;
+ const intro=addEvent(next,'life',firstStalkerLoop?'初めての巻き戻し':'また、事件の前へ',firstStalkerLoop?'血だらけのルナを見た直後、夕暮れの景色が戻っている。':storyCheckpointTarget(s).label+'に時間が戻っている。',[102]);
+ intro.actScene='act2-rewind';intro.cast=['hostess','cat'];intro.stageOnly=true;intro.read=false;
+ intro.revealCharacterAt=firstStalkerLoop?3:0;
+ intro.lines=firstStalkerLoop?[
+  n('夕暮れ。さっき聞いたはずの声が、耳に飛び込んでくる。'),
+  n('男「……あんたには関係ないだろ。」'),
+  {...m('……っ！？'),voicePerformance:'tragedy-shock'},
+  n('大家は思わず頭を押さえる。だが、痛みはない。'),
+  m('……待て……ここ……さっきの……？'),
+  l('surprised','……大家さん？ 大丈夫？'),
+  m('……ルナ……？'),
+  n('血だらけで倒れていたはずのルナが、何事もなかったように立っている。'),
+  m('……生きてる……。'),
+  l('surprised','えっ？ 何言ってるの？'),
+  m('……俺は……確か……。'),
+  n('あの鈍い衝撃の記憶がよみがえる。'),
+  {...m('……っ！'),voicePerformance:'tragedy-shock'},
+  l('surprised','大家さん！？'),
+  {...m('……夢……だったのか……？'),innerVoice:true},
+  {...m('……いや……違う。この男も……この時間も……全部、同じだ……。'),innerVoice:true},
+  n('男「さっきから無視してんじゃねえよ！」'),
+  n('男が大家に詰め寄る。'),
+  {...m('……こいつが……ルナを……？'),innerVoice:true},
+  {...m('……いや、決めつけるな。俺だって、何が起きたのか分かってねぇ……。'),innerVoice:true},
+  c('neutral','……おい。'),
+  {...m('……そうだ。このあとモクが、あいつを追い返した……。'),innerVoice:true},
+  {...m('……俺は、あれでもう大丈夫だと思った……。'),innerVoice:true},
+  {...m('……また同じことが起きるかもしれない……。'),innerVoice:true},
+  m('……絶対に、あんな目には遭わせねぇ。')
+ ]:[
+  n('失ったはずのけもの荘が戻った。'+storyCheckpointTarget(s).label+'に時間が戻っている。'),
+  m(scene==='bag'?'……また戻った。今度こそルナを守る。':'……また戻った。今度こそ、絶対にハンコは押さねぇ。'),
+  l('surprised','大家さん？ 何かあった？'),
+  m('ああ。取り返しのつかない未来を見た。'),
+  c('tired','大家、寝不足ニャ？'),
+  m('お前らのせいでな！！')
+ ];
  next.actOne.rewindIntroPending=true;next.actOne.rewindIntroCursor=0;
  return next;
 }
