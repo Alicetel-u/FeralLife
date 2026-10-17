@@ -494,7 +494,7 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-act2-prologue-done')&&state.actOne?.chapter===2){state.actOne.prologuePending=false;const intro=state.events.find(e=>e.actScene==='act2-prologue');if(intro)intro.read=true;save();closeModal();openNextStageEvent();}
   if(button.hasAttribute('data-rewind-resume')&&state.actOne?.rewindIntroPending){state.actOne.rewindIntroPending=false;const intro=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-rewind':'rewind'));if(intro)intro.read=true;save();closeModal();}
   if(button.hasAttribute('data-epilogue-done')&&state.actOne?.status==='clear'){state.actOne.epilogueSeen=true;const ep=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-epilogue':'epilogue'));if(ep)ep.read=true;save();showActEnding();}
-  if(button.hasAttribute('data-act-reward')&&state.actOne?.status==='clear'){resetActState(beginActTwo(state));showActTwoOpening();}
+  if(button.hasAttribute('data-act-reward')&&state.actOne?.status==='clear')resetActState(beginActTwo(state));
   if(button.hasAttribute('data-act2-rewind')&&state.actOne?.chapter===2&&state.actOne.status==='bad')beginRewind(true);
   if(button.hasAttribute('data-act2-finish'))openModal(header('TO BE CONTINUED','第三幕、準備中。',false)+'<div class="modal-footer"><button class="primary-button" data-act-replay>最初から遊ぶ</button></div>');
   if(button.hasAttribute('data-act-replay'))resetActState(createActOne());
