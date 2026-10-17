@@ -1135,3 +1135,8 @@ dialog.act-modal:has(.luna-film) #modal-content{height:100%;padding:0;overflow:h
 .luna-motion-gate small{font:11px var(--sans);letter-spacing:.28em;color:#c0c7cf}
 .luna-motion-gate button{padding:16px 36px;border:1px solid #b9c0ca88;color:#f0ede5;background:#101824b3;font:15px var(--serif);letter-spacing:.18em}
 .luna-motion .luna-film-controls{opacity:.8}
+
+/* Chapter two begins outside the apartment entrance, never inside Moku's room. */
+.game-ink dialog.conversation-modal:has(.event-stage):not(:has(.memory-whiteout)) .conversation-body[data-act-two-arrival]{
+  background:#575447 url('assets/apartments.png') center center / cover no-repeat;
+}
