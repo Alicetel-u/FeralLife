@@ -19,10 +19,13 @@ test('notification and readable rental notice precede the building reveal',()=>{
  assert.ok(shots[call].events.some(e=>e.type==='ring'&&e.at<.65));
  assert.equal(actTwoOpeningFrame(call,.3).notification,false);
  assert.equal(actTwoOpeningFrame(call,.7).notification,true);
- assert.ok(actTwoOpeningHTML().includes('まだ話は終わっていない'));
+ assert.ok(actTwoOpeningHTML().includes('まだ話は<br>終わっていない'));
  assert.ok(actTwoOpeningHTML().includes('入居者募集'));
  assert.ok(shots.find(s=>s.shot==='collapse').cues.length===0);
- assert.ok(shots.some(s=>s.pose==='rear')&&shots.some(s=>s.pose==='turn'));
+ assert.equal(shots.find(s=>s.shot==='chase').pose,undefined);
+ assert.equal(shots[call].pose,undefined);
+ assert.equal(shots.find(s=>s.shot==='listen').pose,'turn');
+ assert.ok(actTwoOpeningHTML().includes('luna-film-message'));
  const dialogue=shots.flatMap(s=>s.cues.map(c=>c.text)).join('');
  assert.ok(!/もう、足が|少しだけ|まだ、来るの/.test(dialogue));
  const out=shots.findIndex(s=>s.shot==='out');
