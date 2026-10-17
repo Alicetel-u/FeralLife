@@ -47,3 +47,17 @@ test('all chapter choices have available portraits, preserve deliberate neutral 
   assert.equal(eventEmotion({speaker:'cat',emotion:'shy',text:'……軽っ！？'},{actScene:'reply',stageOnly:true}),'shy');
   assert.equal(eventEmotion({speaker:'cat',emotion:'neutral',text:'……軽っ！？'},{}),'neutral');
 });
+
+test('chapter-two arrival starts with Luna bust alone, then Moku joins naturally',()=>{
+  const state=firstActComplete();beginActTwo(state);
+  const event=state.events.find(e=>e.actScene==='act2-prologue');
+  const opening=eventStageHTML(event,state.residents,0);
+  assert.match(opening,/busts\\/hostess-neutral\\.png/);
+  assert.match(opening,/expression-art/);
+  assert.doesNotMatch(opening,/data-character="cat"/);
+  const lead=eventStageHTML(event,state.residents,event.revealCharacterAt-1);
+  assert.doesNotMatch(lead,/data-character="cat"/);
+  const entry=eventStageHTML(event,state.residents,event.revealCharacterAt);
+  assert.match(entry,/data-character="cat"/);
+  assert.ok(event.lines.some(line=>line.text.includes('101号室のドアが開いた')));
+});
