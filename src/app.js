@@ -49,6 +49,7 @@ const firstRewindPreview = previewType === 'first-rewind';
 const firstFirePreview = previewType === 'first-fire';
 const previewResident = ['hostess', 'fox', 'sister', 'peko', 'ann'].includes(previewType) ? previewType : null;
 let state, restored = false;
+let developerMode=false, debugTapCount=0, debugLastTap=0;
 try { const saved = previewResident || eventPreview || actTwoPreview || firstRewindPreview || firstFirePreview || observationPreview || managerPreview ? null : JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(saved) && validActOne(saved)) { state = saved; restored = true; } } catch {}
 state ||= previewResident || eventPreview ? createGame() : createActOne();
 clearLegacyObservationMemo(state);
@@ -123,6 +124,7 @@ function setInspector(open) {
 }
 
 function save() {
+  if(developerMode){$('save-status').textContent='◇ DEBUG（通常セーブは変更しません）';return;}
   if(managerPreview){$('save-status').textContent='○ 大家のミニキャラ確認用（保存なし）';return;}
   if(firstFirePreview){$('save-status').textContent='○ 初回火災演出確認用（保存なし）';return;}
   if(firstRewindPreview){$('save-status').textContent='○ 第一幕巻き戻し確認用（保存なし）';return;}
@@ -375,8 +377,9 @@ function showOpening(step = 0) {
 }
 
 function showGameTitle(){
+  debugTapCount=0;
   const continuing=state.actOne.started||state.actOne.chapter===2;
-  openModal(`<section class="act-screen game-title graphic-title"><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
+  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
   modal.querySelector('.title-actions button')?.focus({preventScroll:true});
 }
 function showActTwoOpening(){
@@ -478,8 +481,41 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
+function showDeveloperMenu(){
+  openModal(`<section class="act-screen" style="background:#111525;color:#f1eaf5;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:clamp(18px,5vw,56px);gap:14px;overflow:auto">
+    <p style="letter-spacing:.2em;opacity:.65">DEVELOPER / CHAPTER SELECT</p>
+    <h2 id="modal-title" style="font-size:clamp(22px,4vw,40px);margin:0 0 12px">開発者メニュー</h2>
+    <p style="opacity:.75;margin:0 0 14px;text-align:center">確認する第二幕のシーンを選択してください。通常セーブは変更しません。</p>
+    ${[['opening','逃げる女 — オープニング'],['arrival','ルナ入居プロローグ'],['bag','第一の事件：謎の届け物'],['contract','第二の事件：契約書'],['epilogue','第二幕エピローグ']].map(([id,label])=>`<button type="button" data-debug-scene="${id}" style="width:min(480px,100%);min-height:48px;background:#29314a;color:#fff;border:1px solid #71809a;border-radius:9px;font:inherit;padding:12px;cursor:pointer">${label}</button>`).join('')}
+    <button type="button" data-debug-back style="margin-top:8px;background:transparent;color:#c8c8d6;border:1px solid #777;padding:10px 24px;border-radius:8px">タイトルに戻る</button>
+  </section>`);
+}
+function startDeveloperScene(scene){
+  developerMode=true;
+  const next=beginActTwo(createActOne());
+  next.actOne.started=true;next.actOne.titlePending=false;next.actOne.prologuePending=false;
+  next.events.filter(e=>e.actScene==='act2-prologue').forEach(e=>e.read=true);
+  if(scene==='bag'||scene==='contract'||scene==='epilogue'){
+    advanceActTwo(next,5);
+    if(scene!=='bag'){
+      answerActTwo(next,next.actOne.pending.eventId,'loan');
+      advanceActTwo(next,100);
+      if(scene==='epilogue'){
+        answerActTwo(next,next.actOne.pending.eventId,'refuse');
+        advanceActTwo(next,100);
+      }
+    }
+  }
+  resetActState(next);
+  if(scene==='opening'){next.actOne.started=false;next.actOne.titlePending=true;showActTwoOpening();}
+  else if(scene==='arrival'){next.actOne.prologuePending=true;const e=next.events.find(x=>x.actScene==='act2-prologue');if(e){e.read=false;showEvent(e.id);}}
+  else {const name=scene==='epilogue'?'act2-epilogue':scene;const e=next.events.find(x=>x.actScene===name);if(e){e.read=false;showEvent(e.id);}else showGameTitle();}
+}
 document.addEventListener('click',e=>{
   const button=e.target.closest('button');if(!button)return;
+  if(button.hasAttribute('data-debug-hotspot')){const now=performance.now();debugTapCount=now-debugLastTap>2500?1:debugTapCount+1;debugLastTap=now;if(debugTapCount>=5){debugTapCount=0;showDeveloperMenu();}return;}
+  if(button.hasAttribute('data-debug-back')){showGameTitle();return;}
+  if(button.dataset.debugScene){startDeveloperScene(button.dataset.debugScene);return;}
   if(button.dataset.opening)showOpening(Number(button.dataset.opening));
   if(button.hasAttribute('data-opening-continue'))showActTitle();
   if(button.hasAttribute('data-act-title'))showGameTitle();
