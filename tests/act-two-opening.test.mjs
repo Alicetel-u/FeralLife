@@ -69,7 +69,9 @@ test('dismiss still blacks out into the existing collapse',()=>{
  assert.equal(shots[dismiss].image,'assets/events/luna-dismiss-v2.png');
  assert.notEqual(shots[dismiss].image,shots[dismiss-1].image);
  assert.deepEqual(shots[dismiss].from,shots[dismiss].to);
- assert.equal(shots[dismiss].cues.length,0);
+ assert.equal(shots[dismiss].cues.length,1);
+ assert.equal(shots[dismiss].cues[0].text,'……あたし、そんなに悪いことしたかな……。');
+ assert.ok(shots[dismiss].cues[0].end<shots[dismiss].duration);
  assert.equal(actTwoOpeningFrame(dismiss,shots[dismiss].duration-.7).black,0);
  assert.ok(actTwoOpeningFrame(dismiss,shots[dismiss].duration-.4).black>0);
  assert.equal(actTwoOpeningFrame(dismiss,shots[dismiss].duration).black,1);
