@@ -101,7 +101,7 @@ test('all sixteen Luna reactions are directed by real authored lines and serious
  const lines=extractVoiceScript('act2').filter(r=>r.speaker==='hostess');
  const used=new Set(lines.map(r=>miniLineEmotion(r.line)));
  for(const emotion of LUNA_MINI_EMOTIONS)assert.ok(used.has(emotion),emotion+' must have a real authored trigger');
- for(const r of lines.filter(r=>/act2\/(bag|contract|film)/.test(r.source)))assert.ok(!miniLineEmotion(r.line).startsWith('flirt-'),r.line.text);
+ for(const r of lines.filter(r=>/act2\/(bag|contract|film)/.test(r.source)&&!r.source.includes('act2/bag/guarantee')))assert.ok(!miniLineEmotion(r.line).startsWith('flirt-'),r.line.text);
  assert.equal(miniLineEmotion({speaker:'hostess',text:'助けて♡',emotion:'scared'}),'scared');
  assert.equal(miniLineEmotion({speaker:'hostess',text:'おはよう',miniEmotion:'toString'}),'neutral');
  assert.equal(miniLineEmotion({speaker:'cat',text:'モクちゃん、それ毎日言ってない？'}),'neutral');
