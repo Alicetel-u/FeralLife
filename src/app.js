@@ -387,7 +387,10 @@ function showGameTitle(){
 }
 function showActTwoOpening(){
   openModal(actTwoOpeningHTML());
-  stopOpeningPrologue=startActTwoOpening(modal,()=>showActTwoTitle(),characterVoice,normalBgm);
+  stopOpeningPrologue=startActTwoOpening(modal,()=>{
+    if(state.actOne?.chapter!==2)return;
+    showActTwoTitle();
+  },characterVoice,normalBgm);
 }
 function showActTwoTitle(){openModal(`<section class="act-screen act-title" data-chapter="2"><div class="act-title-copy"><p class="act-kicker">KEMONOSOU / CHAPTER 02</p><p class="act-number">第二幕</p><h2 id="modal-title">アパートを<br><span>借金<span class="act-resident">（ルナ）</span></span>から守れ！</h2><p class="act-tagline">燃えなかったアパート。次は借金のカタに取られるな。</p><button class="act-primary" data-act2-start>第二幕を始める →</button></div><img class="act-key-art" src="${EVENT_EXPRESSIONS.hostess.neutral}" alt="金城ルナ"></section>`);}
 function showActTitle(){
@@ -547,7 +550,10 @@ function startDeveloperScene(target){
     return;
   }
   if(scene==='opening'){
-    next.actOne.started=false;next.actOne.titlePending=true;
+    // Scene-select must enter the real chapter-two flow: film -> chapter title -> Luna arrival.
+    state.actOne.started=false;state.actOne.titlePending=true;state.actOne.prologuePending=true;
+    const arrival=state.events.find(e=>e.actScene==='act2-prologue');if(arrival)arrival.read=false;
+    save();
     requestAnimationFrame(()=>showActTwoOpening());return;
   }
   if(scene==='arrival'){next.actOne.prologuePending=true;}
