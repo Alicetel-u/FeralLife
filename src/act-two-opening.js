@@ -55,6 +55,7 @@ export function startActTwoOpening(root,onDone){
   const screen=root.querySelector('[data-act2-opening]');
   if(!screen)return ()=>{};
   let index=0,done=false,timer;
+  const duration=[4600,5400,5100,6200];
   const render=()=>{
     const s=ACT_TWO_OPENING_SCENES[index];
     screen.dataset.scene=s.id;
@@ -62,6 +63,8 @@ export function startActTwoOpening(root,onDone){
     screen.querySelector('[data-act2-line]').textContent=s.line;
     screen.querySelector('[data-act2-cue]').textContent=s.cue;
     screen.querySelector('[data-act2-opening-next]').textContent=index===ACT_TWO_OPENING_SCENES.length-1?'第二幕へ →':'次のカット →';
+    clearTimeout(timer);
+    timer=setTimeout(()=>{if(!done)next();},duration[index]);
   };
   const finish=()=>{if(done)return;done=true;clearTimeout(timer);screen.removeEventListener('click',click);onDone();};
   const next=()=>{clearTimeout(timer);if(index===ACT_TWO_OPENING_SCENES.length-1){finish();return;}index++;render();};
