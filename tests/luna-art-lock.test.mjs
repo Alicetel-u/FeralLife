@@ -36,7 +36,7 @@ test('Luna dialogue preserves the approved neutral layout and changes emotion po
   assert.match(html, /fullbody-art/);
   assert.doesNotMatch(html, /busts\/hostess/);
   for (const emotion of expressions.filter(e => e !== 'neutral')) {
-    const scene = eventStageHTML({...event, lines:[{speaker:'hostess',emotion,text:'こんにちは！'}]},[],0);
+    const scene = eventStageHTML({...event, lines:[{speaker:'hostess',emotion,text:'こんにちは！'}]},[],1);
     assert.match(scene, new RegExp(`busts/hostess-${emotion}\\.png`));
     assert.match(scene, /expression-art/);
   }
