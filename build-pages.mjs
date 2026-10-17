@@ -5,7 +5,8 @@ import {createHash} from 'node:crypto';
 const projectRoot=dirname(fileURLToPath(import.meta.url));
 // Unique output avoids stale files and never removes a checkout or user files.
 const siteRoot=await mkdtemp(join(projectRoot,'.pages-build-'));
-const moduleNames=(await readdir(join(projectRoot,'src'))).filter(name=>name.endsWith('.js'));
+// The abandoned pose-animation study is retained in Git history/source only.
+const moduleNames=(await readdir(join(projectRoot,'src'))).filter(name=>name.endsWith('.js')&&name!=='luna-motion.js');
 const sourceFiles=['index.html','styles.css',...moduleNames.map(name=>'src/'+name)];
 const source=await Promise.all(sourceFiles.map(path=>readFile(join(projectRoot,path),'utf8')));
 const assets=[...new Set(source.join('\n').match(/assets\/[\w\-./]+\.(?:png|svg|mp3)/g)||[])];

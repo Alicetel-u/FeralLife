@@ -12,8 +12,7 @@ import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './troub
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.17.9';
-import { lunaMotionHTML, startLunaMotion } from './luna-motion.js';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.17.10';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition, automaticFirstRewind } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -46,8 +45,8 @@ const STORAGE = ['act-two-opening','luna-motion'].includes(new URLSearchParams(l
 const previewType = new URLSearchParams(location.search).get('preview');
 const eventPreview = previewType === 'events';
 const actTwoPreview = previewType === 'act-two';
-const actTwoOpeningPreview = previewType === 'act-two-opening';
-const lunaMotionPreview = previewType === 'luna-motion';
+// Old preview links now lead to the same full opening used by the story.
+const actTwoOpeningPreview = ['act-two-opening','luna-motion'].includes(previewType);
 const firstRewindPreview = previewType === 'first-rewind';
 const firstFirePreview = previewType === 'first-fire';
 const previewResident = ['hostess', 'fox', 'sister', 'peko', 'ann'].includes(previewType) ? previewType : null;
@@ -60,7 +59,7 @@ ensureManagement(state);
 if(observationPreview){state.actOne.started=true;observationView(state);state.hour=17.08;state.events.forEach(e=>e.read=true);tickObservation(state,0);}
 if(firstRewindPreview||firstFirePreview){state.actOne.started=true;advanceActOne(state,100);answerActOne(state,state.actOne.pending.eventId,'trash');state.events.forEach(e=>e.read=true);}
 if(actTwoPreview){beginActTwo(state);state.actOne.started=true;state.actOne.titlePending=false;state.actOne.prologuePending=false;advanceActTwo(state,2.25);state.events.forEach(e=>e.read=true);}
-if(actTwoOpeningPreview||lunaMotionPreview){beginActTwo(state);}
+if(actTwoOpeningPreview){beginActTwo(state);}
 if(eventPreview) {
   for(const type of ['hostess','fox','sister','peko','ann']) {state.pending=[type];admit(state,type);}
   state.hour=100;
@@ -383,16 +382,12 @@ function showOpening(step = 0) {
 function showGameTitle(){
   debugTapCount=0;
   const continuing=state.actOne.started||state.actOne.chapter===2;
-  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU · ver 2026.10.17.9</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
+  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU · ver 2026.10.17.10</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
   modal.querySelector('.title-actions button')?.focus({preventScroll:true});
 }
 function showActTwoOpening(){
   openModal(actTwoOpeningHTML());
   stopOpeningPrologue=startActTwoOpening(modal,()=>showActTwoTitle(),characterVoice,normalBgm);
-}
-function showLunaMotion(){
-  openModal(lunaMotionHTML());
-  stopOpeningPrologue=startLunaMotion(modal,()=>showActTwoTitle(),characterVoice,normalBgm);
 }
 function showActTwoTitle(){openModal(`<section class="act-screen act-title" data-chapter="2"><div class="act-title-copy"><p class="act-kicker">KEMONOSOU / CHAPTER 02</p><p class="act-number">第二幕</p><h2 id="modal-title">アパートを<br><span>借金<span class="act-resident">（ルナ）</span></span>から守れ！</h2><p class="act-tagline">燃えなかったアパート。次は借金のカタに取られるな。</p><button class="act-primary" data-act2-start>第二幕を始める →</button></div><img class="act-key-art" src="${EVENT_EXPRESSIONS.hostess.neutral}" alt="金城ルナ"></section>`);}
 function showActTitle(){
@@ -490,8 +485,8 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.17.9';
-const BUILD_UPDATED='2026-10-17 15:30 JST';
+const BUILD_VERSION='2026.10.17.10';
+const BUILD_UPDATED='2026-10-17 14:31 JST';
 function debugMenuPage(title,subtitle,buttons,back){
   openModal(`<section class="act-screen" style="background:#111525;color:#f1eaf5;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:clamp(18px,5vw,56px);gap:14px;overflow:auto">
   <p style="letter-spacing:.2em;opacity:.65">DEVELOPER TOOLS</p>
@@ -700,13 +695,15 @@ function syncNormalBgm(){
   const activeDialogue=modal.open&&modal.classList.contains('conversation-modal')?state.events.find(e=>e.id===eventView?.id):null;
   const victory=!bad&&!clock&&!title&&modal.open&&!!modal.querySelector('.trouble-victory');
   const trouble=!victory&&!bad&&!clock&&!title&&modal.open&&(!!modal.querySelector('.trouble-card')||activeDialogue?.actScene==='reply');
-  const lunaFilm=modal.open&&!!modal.querySelector('[data-act2-opening],[data-luna-motion]');
+  const lunaFilm=modal.open?modal.querySelector('[data-act2-opening]'):null;
+  const filmQuiet=!!lunaFilm&&(['blind','listen','silence'].includes(lunaFilm.dataset.cut)||lunaFilm.dataset.paused==='true');
   const firstRewindUneasy=lunaFilm||!bad&&!clock&&!title&&!victory&&!trouble&&activeDialogue?.actScene==='rewind'&&state.actOne?.chapter!==2&&state.actOne?.attempt===2&&state.actOne?.rewindIntroPending;
   // Use Moku's theme only when her portrait is actually visible in the dialogue.
   // Trouble stings always take precedence over character themes.
   const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
-  return normalBgm.setScene(document.hidden||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad?'bad':title?'title':victory?'victory':trouble?'trouble':firstRewindUneasy?'uneasy':mokuVisible?'moku':bedCue(state?.actOne));
+  return normalBgm.setScene(document.hidden||filmQuiet||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad?'bad':title?'title':victory?'victory':trouble?'trouble':firstRewindUneasy?'uneasy':mokuVisible?'moku':bedCue(state?.actOne));
 }
+modal.addEventListener('luna-film-phase',()=>{syncNormalBgm();});
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
 modal.addEventListener('rewind-fade',()=>{rewindWhiteoutPending=true;normalBgm.setSuppressed(true);});
 function unlockNormalBgm(event){
@@ -779,8 +776,7 @@ if(entryGate && !previewType){
   },{once:true});
 }else{
   entryGate?.remove();
-  if(lunaMotionPreview)showLunaMotion();
-  else if(actTwoOpeningPreview)showActTwoOpening();
+  if(actTwoOpeningPreview)showActTwoOpening();
   else if(firstFirePreview){const reply=state.events.find(e=>e.actScene==='reply');showEvent(reply.id,Number(new URLSearchParams(location.search).get('line')||0));}
   else if(firstRewindPreview)showActEnding();
   else if(state.actOne&&!actTwoPreview&&!observationPreview&&!managerPreview)showGameTitle();

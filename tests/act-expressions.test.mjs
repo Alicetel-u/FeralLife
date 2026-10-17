@@ -52,7 +52,7 @@ test('chapter-two arrival starts with Luna bust alone, then Moku joins naturally
   const state=firstActComplete();beginActTwo(state);
   const event=state.events.find(e=>e.actScene==='act2-prologue');
   const opening=eventStageHTML(event,state.residents,0);
-  assert.match(opening,/busts\\/hostess-neutral\\.png/);
+  assert.ok(opening.includes('assets/events/busts/hostess-neutral.png'));
   assert.match(opening,/expression-art/);
   assert.doesNotMatch(opening,/data-character="cat"/);
   const lead=eventStageHTML(event,state.residents,event.revealCharacterAt-1);

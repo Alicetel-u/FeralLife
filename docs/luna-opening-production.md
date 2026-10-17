@@ -1,63 +1,44 @@
-# 第二幕「逃げる女」映像制作メモ
+# 第二幕「逃げる女」オープニング制作メモ
 
-2026-10-17。メッセージウィンドウを使わない、自動再生の約36秒の導入。
+## 現行版：2026.10.17.10
 
-## 構成
+本編の第一幕クリア後に `showActTwoOpening()` から再生する約25秒・12カットのオープニング。確認URL `?preview=act-two-opening` と、以前の `?preview=luna-motion` も同じ本編実装へ接続する。
 
-逃走5.4秒 → 振り返り4.8秒 → 連絡5.2秒 → 座り込む背中5.6秒 → 建物全景への引き8.8秒 → 最後の一言6.4秒。
-「collapse」の最終カメラ座標と「reveal」の開始座標は一致させる。
-Spaceで一時停止、Enter／右矢印で次のカット。画面下に操作ボタン。タブを隠すと時計と効果音を止める。
-`?preview=act-two-opening` で直接確認できる。通常のセーブとは別の保存領域を使う。
+人物のポーズ切り替え、スプライトシート、補間、身体の変形は使用しない。専用の静止画と背景＋透過キャラを使い、カット割り・画面揺れ・急な寄り・黒への切り替え・静止・音で演出する。以前の動作試作はアプリ／単体版ビルド／Pagesの配信対象から外す。
 
-## 音声追加
+## カット
 
-`src/act-two-opening.js` の `ACT_TWO_OPENING_SCENES[].cues` に安定したID、開始秒、字幕終了秒、speaker、emotion、textを保持。
-音声抽出のact2スコープに `act2/film/…` として含まれる。既存のvoice manifest/playerを使い、再生中は次のカットへ自動遷移しない。
-今回、音声の新規生成は行っていない。足音・振動は短いWeb Audio効果音。BGMには既存のuneasyを使用。
+暗がりと足音0.9秒 → ヒール1.05秒 → 逃走2.5秒 → 振り返りの寄り1.15秒 → 暗転0.35秒 → 息を潜める3.25秒 → 連絡3.4秒 → 座り込んだ後ろ姿1.1秒 → 静止1.35秒 → 建物全景へ5.4秒 → 最後の一言3.8秒 → 暗転0.65秒。
 
-## 画像
+足音・着地・スマホの振動と画面の揺れは同じイベント時刻を参照する。息を潜める場面と座り込んだ後の静止では揺れを止め、BGMも止める。建物を見せる場面は同じ静止画を保持し、背景と手前の人物でカメラ倍率を変えて奥行きを出す。
 
-内蔵image_genを使用。参照：`assets/events/hostess.png`（ルナのデザイン）、`assets/apartments.png`（建物）。出力をプロジェクト内へコピー。
+画像読み込み後に開始。一時停止、次カット、スキップ、読み込み失敗時の再試行に対応。非表示タブでは時計・効果音・音声を止める。Spaceで停止／再生、Enter／右矢印で次カット。通常会話のメッセージUI、章進行、チェックポイントは維持する。
 
-- `assets/events/luna-flight.png`：逃走、振り返り。
-- `assets/events/luna-phone.png`：スマートフォンの連絡。
-- `assets/events/luna-sanctuary.png`：座り込んだ後ろ姿と建物のローアングル全景。同一画でカメラを引く。
+## 後から音声を付ける場合
 
-## 使用プロンプト
+`src/act-two-opening.js` の `ACT_TWO_OPENING_SCENES[].cues` に開始秒、字幕終了秒、speaker、emotion、text、安定したIDを保存。voice-scriptのact2スコープから抽出できる。音声と効果音は別トラック。台詞再生中はカット末尾手前で待ち、読み終わるまで次へ自動遷移しない。今回、台詞音声の新規生成は行っていない。
 
-### Flight
+## 画像ファイル
 
-Use case: illustration-story. Create a premium widescreen 16:9 anime game cinematic keyframe, full bleed, no panels or text. Reference 1 is the EXACT adult character Luna: long voluminous wavy blonde hair, feline ears, large fluffy blonde tail, black ribbons with gold hearts, sleeveless black white plaid short dress, black platform ankle strap heels, black handbag. Reference 2 is the exact apartment building architecture, for setting and painted background style. Shot: late night wet Japanese residential back alley, Luna running urgently away from camera in three-quarter back view, looking anxiously over her shoulder. Dynamic low tracking-camera composition, legs mid-stride, hair and tail trailing naturally. Dark midnight blue shadow, tiny warm practical lamps, wet asphalt glints, tense restrained cinematic lighting, finely painted atmospheric anime background. One woman only, no pursuer, no injury. Character is visibly frightened and exhausted not smiling. Keep outfit and adult proportions consistent with reference. Very high quality cinematic illustration; no typography, no watermark, no framing UI. Create single image only.
+内蔵image_genで生成した静止画をプロジェクト内へ保存。
 
-### Sanctuary
+- `assets/events/luna-alley.png`：人物のいない夜の裏道。
+- `assets/events/luna-heel.png`：濡れた路面を蹴るヒールのインサート。
+- `assets/events/luna-seated-rear.png`：座り込んだルナの透過の一枚絵。
+- 既存の `luna-flight.png`、`luna-phone.png`、`luna-courtyard-plate.png` も使用。
 
-Use case illustration-story. Single premium 16:9 widescreen anime game cinematic illustration. Reference 1 exact adult Luna character identity and clothing; Reference 2 exact two-storey Japanese apartment architecture and painted background art style. CRITICAL COMPOSITION: camera at wet pavement height behind Luna. Luna has just collapsed exhausted into a seated position on pavement foreground bottom center-left, back to camera, shoulders slumped, one palm bracing on pavement, knees naturally bent to one side, long wavy blonde hair with black gold-heart ribbons, feline ears and fluffy blonde tail, exact sleeveless black and white plaid short dress and platform ankle-strap heels, small black handbag dropped beside her. Not sexualized, respectful cinematic view from behind. Behind and ABOVE her, the ENTIRE familiar old two-storey six-door apartment looms in dramatic LOW ANGLE wide lens perspective. Preserve six green doors 101 102 103 downstairs 201 202 203 upstairs, external right staircase, aged cream walls, balconies and tall illuminated vertical sign けもの荘 on left; roof water tank, pipes, nearby residences. Deep late-night navy sky, sparse warm corridor fluorescents, moonlit wet asphalt, cinematic contrast, very detailed painted Japanese anime background. Foreground Luna occupies lower 35%, full building upper 75%, generous image margins for slow camera tilt upward and dolly pullback. Emotion: exhausted sanctuary, uneasy silence after escape. No other people. No captions, no panels, no watermarks. Single coherent shot, exceptional film still quality.
+## 最終使用プロンプト
 
-### Phone
+### 裏道（参照：luna-flight.png）
 
-Use case illustration-story. Single widescreen 16:9 film still for tense anime visual novel. Same adult blonde cat woman Luna as reference 1, exact black white plaid sleeveless dress, black gold-heart hair ribbons. Match detailed cinematic painted anime style and midnight blue wet-street amber lighting of reference 2. Extreme close-up over shoulder of her hand clutching a vibrating smartphone at waist, phone tilted slightly, lit screen blank dark blue-grey for later text compositing, her fingers visibly tense, edge of blonde hair and dress catching phone light. Her other hand braced against a rough concrete wall in anonymous dark Japanese alley. No apartment visible, no other people, no readable text or symbols on screen, no panels, no UI frame, no captions, no watermark. Focus is hand and phone, quiet threatening negative space right side, beautiful restrained chiaroscuro.
+Use case illustration-story. Clean cinematic animation BACKGROUND PLATE, widescreen 16:9. Match the sophisticated detailed painted anime film style, wet asphalt, deep midnight blue and practical amber lighting of reference. Anonymous narrow Japanese residential BACK ALLEY at night, NOT the apartment in reference. NO people anywhere. Side-on low tracking-camera composition: wet asphalt roadway fills bottom third, weathered concrete wall and pipes occupy middle third, ordinary dim residential windows and overhead power cables upper third. Left to right street continuity, no major vanishing point in center, suitable for lateral tracking of a running character composited later. At far right edge a shadowy corner wall indicates a turn into another lane. Tiny sparse warm wall lamps and cold night ambient fill, reflective wet curb, restrained cinematic chiaroscuro, tense deserted atmosphere. Foreground pavement stays clear, no trash hiding character feet. No recognizable けもの荘 building, no dramatic neon or fantasy architecture. No human figures, no text, no labels, no borders, no baked vignette, no rain streaks baked into picture (rain animated separately). Premium painterly anime background, sharp yet atmospheric.
 
-## 2026.10.17.6：動作確認用の短い試作
+注：このプロンプトの「animation」は制作背景素材の用途名。現行実装では静止背景として使用し、人物の走行や雨のアニメーションを作らない。
 
-`?preview=luna-motion` から約10.5秒の動作試作を再生できる。全編のオープニングとは別に公開し、再生ボタンで開始、停止・再生・最初から・第二幕への移動に対応。通常セーブは変更しない。
+### 足元（参照：luna-flight.png）
 
-- 8ポーズを順に描画し、立位→膝折れ→手をつく→座位を1.2秒で見せる。画像全体の移動だけで座り込みを表現しない。
-- その後は髪・肩の呼吸による小さな遅れ、人物と建物の別々のカメラ倍率、雨・波紋・着地音を組み合わせる。
-- これはフルアニメーション動画ではなく、8枚の作画と描画処理を用いた動作試作。頭を上げる動作の追加作画など、全編への展開は確認後に判断する。
-- 音声は未生成。既存voice playerに最後の一言を渡す。長い収録音声が入った場合は終了を待つ。
-- 左寄り不具合：aspect-ratioとmax-heightからフレーム幅が縮む際、left:0のままになっていた。幅を明示しleft:50%とtranslate(-50%,-50%)で中央に固定。1900×888と390×844で確認。
+Use case illustration-story. One SINGLE cinematic widescreen 16:9 still insert illustration, no animation, no panels. Match Luna and the painterly anime style of the reference. Extreme LOW ANGLE CLOSE-UP of adult Luna's black platform ankle-strap heel striking wet asphalt mid-escape, lower leg visible only from mid-calf down, tiny water splash caught in the instant, other shoe a blurred hint farther behind. Shoe design must match reference exactly. Camera almost touching pavement, strongest focus at heel and water contact, pavement reflections stretch away into anonymous dark Japanese alley; no apartment building visible. Deep midnight navy, warm amber glints, shallow depth of field, tense urgent dramatic diagonal composition. Clear high-quality detailed anime film insert, visually beautiful real water droplets. No face, no extra feet, no text, no speed-line graphics, no borders or watermark.
 
-### 試作の使用画像と生成プロンプト
+### 座り込んだ後ろ姿（参照：hostess.png、luna-sanctuary.png）
 
-内蔵image_genで生成。使用ファイル：
-
-- `assets/events/luna-collapse-sheet.png`：透過の8ポーズ。生成結果の実寸は1774×887、上段と下段の余白が異なるため、ソース矩形・接地位置を個別指定する。
-- `assets/events/luna-courtyard-plate.png`：人物を除いた背景。
-
-**Pose sheet**（参照：hostess.png、luna-sanctuary.png）
-
-Use case illustration-story. Production ANIMATION SPRITE SHEET, 4096 x 2048 if possible, exact 4 columns x 2 rows of EIGHT equally sized square cells. No grid lines, no labels, all background genuinely TRANSPARENT. This is not a storyboard: isolated consistent character animation frames to be played sequentially. Reference 1 is exact adult Luna design: blonde wavy long hair, cat ears, fluffy blonde cat tail, black gold-heart hair bows, black white plaid sleeveless short dress, black ankle strap platform heels, black handbag. Reference 2 gives rear camera angle and sophisticated night-lighting anime painting style. SAME fixed camera, FULL REAR VIEW, no face visible, SAME character size and floor baseline in every cell, feet at 94% cell height, centered horizontally. KEEP enough transparent padding, each complete body never touches cell edges. Character initially stands at height 88% cell then lowers naturally into seated height 46%, never resize the seated character to fill cell. Eight consecutive physically coherent in-between drawings of exhausted woman sinking to sit on ground: row1 left to right 1 standing exhausted slight forward lean; 2 knees beginning to buckle; 3 deeper knee bend and torso folding; 4 deep crouch reaching right hand toward floor. row2 left to right 5 right palm touching floor while hips descend; 6 hips near floor knees fold to right; 7 hip touches ground one palm planted hair and tail still slightly lifted; 8 fully seated slumped on ground back facing camera knees naturally folded to right, head bowed, right palm on floor, hair and tail settled. Right hand is on viewer's right. Bag held left hand initially, rests by left hip in final poses. Preserve hair volume, dress pattern, tail, anatomy, body mass and proportions in ALL eight frames. Restrained warm rim light from above and cool blue shadows. Beautiful detailed clean anime film drawing. Nonsexualized acting, ordinary exhausted sitting. Transparent outside character only; do not draw floor or environment. EXACTLY EIGHT frames, 4x2, evenly aligned identical square cells. No text, no contact sheet borders, no decorations.
-
-**Clean background**（参照：luna-sanctuary.png）
-
-Use case precise-object-edit. Edit the reference into a clean animation background plate. REMOVE ONLY the blonde seated woman completely including ALL hair, tail, handbag, arms, legs and character shadow. Reconstruct the wet asphalt seamlessly where she was. Keep the original two-storey six-door Japanese apartment architecture, perspective, Japanese sign けもの荘, right stairs, water tank, green doors and numbers, night sky, moon, houses, street lights, plants, pavement reflections. No people anywhere, no bags. Recompose gently so the apartment is centered horizontally and preserve full building roof and both edges inside frame with 8 percent breathing room. Full 16:9 widescreen detailed cinematic anime painting, wet quiet night, warm corridor lamps, cool navy surroundings. Low angle street-level view, open wet asphalt foreground in bottom 28 percent to composite animated woman later. No typography beyond existing signs. No panels, no captions, no vignette or black bars baked into image. High quality sharp clean plate.
+Use case identity-preserve. ONE SINGLE still character illustration on a genuinely TRANSPARENT background. This is NOT an animation, NOT sprite sheet, no extra frames. Adult Luna from reference1, seated collapsed exhausted, FULL BACK VIEW with her back toward camera, head and body centered, full body from ears to feet and tail included with transparent margin. Match reference2 cinematic painterly anime shading and pose, but body viewed more directly from behind, knees folded to right naturally, right palm on ground at her side, long wavy blonde hair falling down back, blonde feline ears, large fluffy blonde tail resting to left, black ribbons with gold heart ornaments. Exact black-white plaid sleeveless short dress, black ankle-strap platform heels, black handbag resting at right hip. Exhaustion and relief in shoulders, head slightly lowered. Keep hair/body proportions consistent with reference1. Warm rim from corridor lamps, cool midnight fill, subtly darker than daytime portrait. Respectful nonsexualized rear view, skirt covers body naturally. CRITICAL: alpha background must be truly empty and transparent everywhere outside character, no black matte, no glow halo, no shadow plane, no floor, no gradient, no scenery. No text, no labels, no grid, no frame. Beautiful polished high-resolution still asset for compositing over a night apartment background.
