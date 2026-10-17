@@ -15,7 +15,7 @@ test('Luna unpacks, receives a visitor, goes to work and returns before the cont
  assert.equal(sampleJourney(cat,s.hour).room,102);
  assert.equal(sampleJourney(cat,s.hour).moving,false);
  assert.equal(secondActChat(s).key,'act2-chat-arrival');
- advanceActTwo(s,100);assert.equal(s.hour,62);answerActTwo(s,s.actOne.pending.eventId,'loan');
+ advanceActTwo(s,100);assert.equal(s.hour,66);answerActTwo(s,s.actOne.pending.eventId,'loan');
  advanceActTwo(s,6);assert.equal(luna.action,'outing');
  advanceActTwo(s,12.9);
  const p=sampleJourney(luna,s.hour);assert.equal(p.zone,'room');assert.equal(p.room,102);
