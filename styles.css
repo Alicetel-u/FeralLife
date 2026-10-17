@@ -1154,3 +1154,32 @@ dialog.act-modal:has(.luna-film) #modal-content{height:100%;padding:0;overflow:h
 .game-ink dialog.conversation-modal:has(.event-stage):not(:has(.memory-whiteout)) .conversation-body[data-act-two-arrival]{
   background:#575447 url('assets/apartments.png') center center / cover no-repeat;
 }
+
+
+/* Second-act first tragedy: still-frame dialogue treatment, not a 3D camera. */
+.game-ink .conversation-modal:has(.stalker-cinematic) .conversation-body{background:#08090d}
+.game-ink .conversation-modal .event-stage.stalker-cinematic{position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;margin-top:10px;background:#08090d;border-color:#222229;isolation:isolate;color:#eee2df;overflow:hidden}
+.stalker-cinematic::before,.stalker-cinematic::after{display:none!important}
+.stalker-next{position:absolute;inset:0;border:0;background:transparent;z-index:8;cursor:pointer}
+.stalker-cinematic-copy{position:relative;z-index:2;width:min(92%,650px);text-align:center;pointer-events:none;padding:20px}
+.stalker-cinematic-copy small{display:block;min-height:1.2em;font-size:12px;letter-spacing:.16em;color:#cfb4ae}
+.stalker-cinematic-copy p{font:500 clamp(18px,2.6vw,27px)/1.8 var(--serif);letter-spacing:.07em;white-space:pre-wrap;color:#f8f3ee;text-shadow:0 2px 12px #000}
+.stalker-cinematic-prompt{position:absolute;bottom:15px;right:25px;color:#827d87;font:10px var(--sans);letter-spacing:2px;pointer-events:none}
+.game-ink .event-stage.stalker-silence{background:radial-gradient(ellipse at center,#21131a 0%,#08090d 75%)}
+.game-ink .event-stage.stalker-impact{background:radial-gradient(ellipse at center,#731a22 0%,#10090c 72%);animation:stalker-impact-shake .43s ease-out both}
+.stalker-impact::after{content:''!important;display:block!important;position:absolute;inset:0;background:#efc5b8;animation:stalker-impact-flash .65s steps(1,end) both;pointer-events:none}
+.stalker-blackout .stalker-cinematic-copy{opacity:.3;animation:stalker-into-dark 1s both}
+.stalker-blackout .stalker-cinematic-prompt{opacity:.15}
+.stalker-clock .stalker-cinematic-copy{margin-top:auto;padding-bottom:45px}
+.stalker-clock-dial{position:relative;z-index:1;flex:none;width:min(54vw,230px);aspect-ratio:1;border:9px solid #6f5a52;border-radius:50%;background:radial-gradient(circle,#2b232a 0%,#12111a 72%,#080910 74%);box-shadow:0 0 0 2px #ab8e77,0 0 75px #ad293d55,inset 0 0 20px #000;margin-top:38px}
+.stalker-clock-dial::before{content:'';position:absolute;inset:9%;border:1px dashed #a99a86;border-radius:50%;opacity:.65}
+.stalker-clock-dial b{position:absolute;width:12px;height:12px;top:calc(50% - 6px);left:calc(50% - 6px);background:#d9c2a5;border-radius:50%;z-index:5}
+.stalker-clock-dial i{position:absolute;display:block;bottom:50%;left:calc(50% - 2px);width:4px;transform-origin:center bottom;background:#edd4aa;border-radius:3px}
+.stalker-clock-hour{height:26%;animation:stalker-reverse 14s linear infinite}
+.stalker-clock-minute{height:37%;animation:stalker-reverse 4s linear infinite}
+.stalker-clock-second{height:42%;width:2px!important;background:#d64c60!important;animation:stalker-reverse .85s linear infinite}
+@keyframes stalker-reverse{to{transform:rotate(-360deg)}}
+@keyframes stalker-impact-flash{0%{opacity:.9}18%{opacity:0}100%{opacity:0}}
+@keyframes stalker-impact-shake{0%{transform:translate(0,0)}15%{transform:translate(-12px,6px)}30%{transform:translate(12px,-6px)}48%{transform:translate(-6px,4px)}100%{transform:translate(0,0)}}
+@keyframes stalker-into-dark{from{opacity:.75}to{opacity:.12}}
+@media(prefers-reduced-motion:reduce){.game-ink .event-stage.stalker-impact,.stalker-clock-dial i,.stalker-blackout .stalker-cinematic-copy{animation:none!important}.stalker-impact::after{display:none!important}}
