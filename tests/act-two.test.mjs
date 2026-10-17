@@ -17,7 +17,7 @@ test('each act-two trouble offers one safe option and two bad options',()=>{
  for(const event of Object.values(ACT_TWO_EVENTS)){assert.equal(event.choices.length,3);assert.equal(event.choices.filter(c=>!!c.bad).length,2);}
 });
 test('first bad ending restores a playable checkpoint with memory',()=>{
- const s=create();start(s);advanceActTwo(s,5);
+ const s=create();start(s);advanceActTwo(s,9);
  assert.equal(s.actOne.pending.scene,'bag');
  answer(s,'guarantee');assert.equal(s.actOne.status,'bad');
  const next=rewindActTwo(s);assert.equal(next.hour,57);
@@ -25,12 +25,12 @@ test('first bad ending restores a playable checkpoint with memory',()=>{
  assert.ok(next.actOne.memory.includes('bag-guarantee'));
  assert.equal(next.actOne.rewindIntroPending,true);
  assert.ok(validActOne(next)&&validateSave(next));
- next.actOne.rewindIntroPending=false;advanceActTwo(next,5);
+ next.actOne.rewindIntroPending=false;advanceActTwo(next,9);
  assert.equal(next.actOne.pending.scene,'bag');
 });
 test('safe route reaches chapter-two epilogue at day five',()=>{
  const s=create();start(s);
- advanceActTwo(s,5);answer(s,'loan');
+ advanceActTwo(s,9);answer(s,'loan');
  advanceActTwo(s,100);assert.equal(s.actOne.pending.scene,'contract');
  answer(s,'refuse');advanceActTwo(s,100);
  assert.equal(s.actOne.status,'clear');
@@ -40,10 +40,10 @@ test('safe route reaches chapter-two epilogue at day five',()=>{
 });
 test('second contract bad end returns to contract checkpoint',()=>{
  const s=create();start(s);
- advanceActTwo(s,5);answer(s,'loan');advanceActTwo(s,100);
+ advanceActTwo(s,9);answer(s,'loan');advanceActTwo(s,100);
  answer(s,'sign');assert.equal(s.actOne.status,'bad');
  const next=rewindActTwo(s);
- assert.equal(next.hour,62);assert.deepEqual(next.actOne.completed,['bag']);
+ assert.equal(next.hour,66);assert.deepEqual(next.actOne.completed,['bag']);
  assert.ok(next.actOne.memory.includes('contract-sign'));assert.ok(validActOne(next)&&validateSave(next));
 });
 
@@ -53,7 +53,7 @@ test('chapter two remains active after the arrival dialogue ends',()=>{
  s.actOne.prologuePending=false;intro.read=true;s.selected=102;
  assert.equal(s.actOne.chapter,2);assert.equal(s.actOne.status,'playing');
  assert.equal(s.selected,102);assert.ok(s.residents.some(r=>r.type==='hostess'&&r.room===102));
- advanceActTwo(s,5);assert.equal(s.actOne.pending.scene,'bag');
+ advanceActTwo(s,9);assert.equal(s.actOne.pending.scene,'bag');
 });
 
 test('second-act opening scene selection retains the arrival as the next scene',()=>{
