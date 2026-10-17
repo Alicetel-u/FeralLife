@@ -128,3 +128,27 @@ test('act-two trouble-one scope includes the film, arrival, observation, all fir
  assert.equal(voicePerformance({speaker:'hostess',text:'……怖かった。',emotion:'sad',voiceChapter:2}),'luna-serious');
  assert.equal(voicePerformance({speaker:'manager',text:'心の声',innerVoice:true,voiceChapter:2}),'inner');
 });
+
+
+test('iPhone initial gesture unlocks the same media element used by delayed film cues',async()=>{
+ const descriptor=Object.getOwnPropertyDescriptor(globalThis,'navigator');
+ Object.defineProperty(globalThis,'navigator',{configurable:true,value:{userAgent:'iPhone'}});
+ let player;
+ try{
+  const {ACT_TWO_OPENING_SCENES}=await import('../src/act-two-opening.js');
+  const cues=ACT_TWO_OPENING_SCENES.flatMap(s=>s.cues.filter(c=>!c.silent));
+  const sounds=[],played=[];
+  const manifest=Object.fromEntries(cues.map((c,i)=>[voiceLineKey(c),{file:`film-${i}.mp3`}]));
+  player=createVoicePlayer({manifest,storage:null,chapter:()=>1,makeAudio:()=>{
+   const a={play(){played.push([this,this.src]);return Promise.resolve();},pause(){},removeAttribute(){},load(){}};sounds.push(a);return a;
+  }});
+  player.unlock();await Promise.resolve();
+  assert.match(played[0][1],/^data:audio/);
+  for(const [i,cue] of cues.entries()){
+   assert.equal(cue.voicePerformance,'luna-film-tense');
+   player.prepare(cue);player.play(cue,'film:'+i);
+   assert.equal(played.at(-1)[0],sounds[0]);assert.equal(played.at(-1)[1],`film-${i}.mp3`);
+   player.stop();
+  }
+ }finally{player?.stop();if(descriptor)Object.defineProperty(globalThis,'navigator',descriptor);else delete globalThis.navigator;}
+});

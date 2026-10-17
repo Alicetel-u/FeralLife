@@ -356,6 +356,19 @@
         "similarity_boost": 0.75,
         "speed": 0.95
       }
+    },
+    "luna-film-tense": {
+      "direction": "追われる恐怖を押し殺した緊迫感。走った直後の息切れ、震える小声。誘惑や明るさは入れない。",
+      "tags": [
+        "[breathlessly]",
+        "[nervous]",
+        "[whispers]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.0
+      }
     }
   }
 }

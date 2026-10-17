@@ -8,7 +8,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
   // through Web Audio while leaving desktop playback completely unchanged.
   const mobile=typeof navigator!=='undefined'&&/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   const AudioContextType=mobile&&(globalThis.AudioContext||globalThis.webkitAudioContext);
-  let context=null,source=null,gain=null,limiter=null;
+  let context=null,source=null,gain=null,limiter=null,mobileAudio=null,unlocked=false;
   const disconnect=()=>{
     // Disconnect EVERY Web Audio node. Otherwise each old compressor remains
     // connected to the destination, retaining a graph per dialogue line on iOS.
@@ -19,6 +19,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
   };
   const connectMobile=element=>{
     if(!AudioContextType)return;
+    if(source&&element===mobileAudio){element.volume=1;if(context.state==='suspended')context.resume().catch(()=>{});return;}
     try{
       context ||= new AudioContextType();
       const node=context.createMediaElementSource(element);
@@ -50,7 +51,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     try{const next=makeAudio();next.preload='auto';next.src=clip.file;next.load?.();prepared={file:clip.file,audio:next};}catch{prepared=null;}
   };
   const save=()=>{try{storage?.setItem('feral-voice',JSON.stringify(prefs));}catch{}};
-  const stop=()=>{token++;clearTimeout(watchdog);if(audio){audio.pause();audio.removeAttribute('src');audio.load();}disconnect();audio=null;active=false;blocked=false;onPlaybackChange(false);};
+  const stop=()=>{token++;clearTimeout(watchdog);if(audio){audio.pause();audio.removeAttribute('src');audio.load();}if(!mobile)disconnect();audio=null;active=false;blocked=false;onPlaybackChange(false);};
   const play=(line,identity)=>{
     if(current?.identity===identity)return;
     stop();current=line?{line,identity}:null;
@@ -58,7 +59,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     if(!prefs.enabled||!clip)return;
     const version=token;
     try{
-      if(prepared?.file===clip.file){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clip.file;}audio.volume=prefs.volume;connectMobile(audio);active=true;onPlaybackChange(true);
+      if(mobile){mobileAudio ||= makeAudio();audio=mobileAudio;audio.src=clip.file;clearPrepared();}else if(prepared?.file===clip.file){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clip.file;}audio.volume=prefs.volume;connectMobile(audio);active=true;onPlaybackChange(true);
       const done=()=>{if(version===token){active=false;onPlaybackChange(false);clearTimeout(watchdog);}};
       audio.onended=done;audio.onerror=done;
       watchdog=setTimeout(done,60000);
@@ -67,7 +68,17 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
   };
   return {
     play,prepare,stop:()=>{stop();clearPrepared();current=null;},get busy(){return prefs.enabled&&active;},get enabled(){return prefs.enabled;},get volume(){return prefs.volume;},
-    unlock(){if(blocked&&current){const {line,identity}=current;current=null;play(line,identity);}},
+    unlock(){
+      // Safari needs a media play and AudioContext resume inside the initial tap,
+      // before cinematic cues fire later from requestAnimationFrame.
+      if(mobile&&!unlocked&&!active){
+        mobileAudio ||= makeAudio();connectMobile(mobileAudio);
+        mobileAudio.src='data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQIAAACAgA==';
+        const version=token;
+        try{Promise.resolve(mobileAudio.play()).then(()=>{unlocked=true;if(version===token&&!active)mobileAudio.pause();}).catch(()=>{});}catch{}
+      }
+      if(context?.state==='suspended')context.resume().catch(()=>{});
+      if(blocked&&current){const {line,identity}=current;current=null;play(line,identity);}},
     setEnabled(value){prefs.enabled=Boolean(value);save();if(!prefs.enabled){stop();clearPrepared();}else if(current){const {line,identity}=current;current=null;play(line,identity);}},
     setVolume(value){prefs.volume=Math.max(0,Math.min(1,Number(value)||0));if(gain)gain.gain.value=2.0*prefs.volume;else if(audio)audio.volume=prefs.volume;save();}
   };

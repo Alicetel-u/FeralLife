@@ -4886,5 +4886,59 @@ export const VOICE_MANIFEST = {
     "text": "お前らのせいでな！！",
     "performance": "act2-manager",
     "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……はぁ、はぁ……っ。\",\"luna-film-tense\",false]": {
+    "file": "assets/voices/2f0e389580c2ae8dca9d5794df4fdd7325e7a4873641a3d7a11264d194f1e93e.mp3",
+    "hash": "2f0e389580c2ae8dca9d5794df4fdd7325e7a4873641a3d7a11264d194f1e93e",
+    "source": "act2/film/heel:0",
+    "speaker": "hostess",
+    "text": "……はぁ、はぁ……っ。",
+    "performance": "luna-film-tense",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……ここまで来れば……。\",\"luna-film-tense\",false]": {
+    "file": "assets/voices/fcdce9eee7f8aa56027f5a9e00f680b47a240d994784e686bae57bef13e0ce6f.mp3",
+    "hash": "fcdce9eee7f8aa56027f5a9e00f680b47a240d994784e686bae57bef13e0ce6f",
+    "source": "act2/film/listen:0",
+    "speaker": "hostess",
+    "text": "……ここまで来れば……。",
+    "performance": "luna-film-tense",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……しつこい……。\",\"luna-film-tense\",false]": {
+    "file": "assets/voices/b2296689622891591b68e3895ed00ee7ffae5741f4a3bea43fe481797ec767ac.mp3",
+    "hash": "b2296689622891591b68e3895ed00ee7ffae5741f4a3bea43fe481797ec767ac",
+    "source": "act2/film/call:0",
+    "speaker": "hostess",
+    "text": "……しつこい……。",
+    "performance": "luna-film-tense",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……あたし、そんなに悪いことしたかな……。\",\"luna-film-tense\",false]": {
+    "file": "assets/voices/dcd6b3a548083084bee0528827b4b5fdb05f42c6ea4fea7fd2e0a144b7934611.mp3",
+    "hash": "dcd6b3a548083084bee0528827b4b5fdb05f42c6ea4fea7fd2e0a144b7934611",
+    "source": "act2/film/dismiss:0",
+    "speaker": "hostess",
+    "text": "……あたし、そんなに悪いことしたかな……。",
+    "performance": "luna-film-tense",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……入居者、募集……？\",\"luna-film-tense\",false]": {
+    "file": "assets/voices/3f3f7a3e97803ddd33bebba3e8a46c2135b8bde8bbaf0f76d8be04d3bff2fe95.mp3",
+    "hash": "3f3f7a3e97803ddd33bebba3e8a46c2135b8bde8bbaf0f76d8be04d3bff2fe95",
+    "source": "act2/film/notice:0",
+    "speaker": "hostess",
+    "text": "……入居者、募集……？",
+    "performance": "luna-film-tense",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……ここなら……。\",\"luna-film-tense\",false]": {
+    "file": "assets/voices/f730103acd3b1583bba5e0f7a348242e161991cb55c76749465558d080f64c5d.mp3",
+    "hash": "f730103acd3b1583bba5e0f7a348242e161991cb55c76749465558d080f64c5d",
+    "source": "act2/film/reveal:0",
+    "speaker": "hostess",
+    "text": "……ここなら……。",
+    "performance": "luna-film-tense",
+    "model": "eleven_v3"
   }
 };
