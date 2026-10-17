@@ -118,6 +118,7 @@ export function beginActTwo(s){
   ];
   // eventConversation prepends the scene detail narration, so offset by one.
   e.revealCharacterAt=1+e.lines.findIndex(line=>line.speaker==='cat');
+  for(const event of s.events)if(event!==e&&event.actScene&&event.actScene!=='act2-prologue')event.read=true;
   saveStoryCheckpoint(s,'bag','第二幕の開始時点');
  secondActLife(s);
   return s;

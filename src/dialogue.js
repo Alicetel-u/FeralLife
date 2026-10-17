@@ -23,6 +23,17 @@ export function claimAutomaticScene(state,event) {
   if(heard(state,key))return false;
   mark(state,key);return true;
 }
+const AUTOMATIC_SCENES={
+  1:new Set(['opening','prologue','ash','dinner','epilogue','rewind']),
+  2:new Set(['act2-prologue','bag','contract','act2-epilogue','act2-rewind'])
+};
+// A queued scene from the other chapter must not open when this chapter's dialogue closes.
+export function automaticChapterScene(event,act) {
+  if(!event?.lines?.length||!event.actScene)return false;
+  const chapter=act?.chapter===2?2:1;
+  if(event.actScene==='reply')return chapter===2?!!event.cast?.includes('hostess'):!event.cast?.includes('hostess');
+  return AUTOMATIC_SCENES[chapter].has(event.actScene);
+}
 export function rememberReadScenes(state) {
   for(const event of state.events)if(event.read){const key=dialogueSceneKey(event);if(key)mark(state,key);}
 }
