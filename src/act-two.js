@@ -8,36 +8,7 @@ const m=text=>({speaker:'manager',emotion:'neutral',text});
 const l=(emotion,text)=>({speaker:'hostess',emotion:actExpression('hostess',text,emotion),text});
 const c=(emotion,text)=>({speaker:'cat',emotion:actExpression('cat',text,emotion),text});
 export const ACT_TWO_TITLE='第二幕「アパートを借金（ルナ）から守れ！」';
-export const ACT_TWO_EVENTS={
-  bag:{at:66,title:'第一の事件：夕暮れの待ち伏せ',call:'ルナを追う男にどう対応する？',detail:'3日目18時。けもの荘の玄関前で、ルナが見知らぬ男に呼び止められた。',lines:[
-    n('夕暮れ。大家がアパートの前を掃除していると、男の声が聞こえてきた。'),
-    n('男「あっ！ ルナちゃん！」'),
-    l('surprised','……っ！'),
-    n('振り返ったルナの表情が、一瞬で凍りつく。'),
-    n('男「やっと見つけたよ！ 急に連絡くれなくなるから、心配したんだよ？」'),
-    l('surprised','……なんで……ここが……。'),
-    n('男「頑張って探したんだ。ルナちゃん、引っ越したんでしょ？」'),
-    l('sad','……もう、お店は辞めたから。'),
-    n('男「うん、知ってるよ。でも、俺たちの関係は別じゃない？」'),
-    l('angry','……そんな関係じゃない！'),
-    n('男は笑顔のまま、一歩近づいた。'),
-    n('男「照れなくていいって。俺、ルナちゃんのこと本気なんだから。」'),
-    l('sad','……お願い。もう帰って。'),
-    n('その声に気づき、大家が二人の間に入る。'),
-    m('おい、あんた。何やってるんだ？'),
-    n('男「……誰？」'),
-    m('ここの大家だ。'),
-    n('男「……大家？ へえ。」'),
-    n('男は大家を上から下まで眺める。'),
-    n('男「ルナちゃん。この人とはどういう関係？」'),
-    l('sad','……大家さん。それだけだよ。'),
-    n('男「ふうん……。」'),
-    n('男の笑顔が消えかける。'),
-    m('ルナは帰ってくれって言ってるだろ。今日はもう帰れ。'),
-    n('男「……あんたには関係ないだろ。」'),
-    n('男は大家を押しのけようとする。')
-  ],choices:[
-    {id:'first-watch',label:'もう大丈夫だろ。今日はゆっくり休め。',bad:'bag-first-watch',endingName:'夕暮れの待ち伏せ',regret:'男を追い返して安心したが、深夜、ルナが血だらけで倒れているのを発見した。',clue:'相手が引き下がっても、ルナを一人にして安全を確かめなかった。',lines:[
+const FIRST_STALKER_TRAGEDY_LINES=[
       n('そのとき、モクが現れる。'),
       c('neutral','……おい。'),
       n('男「……あ？」'),
@@ -86,7 +57,36 @@ export const ACT_TWO_EVENTS={
       {...n('……カチッ。'),tragedyEffect:'clock'},
       {...n('暗闇の中で時計の針が逆回転を始める。'),tragedyEffect:'clock'},
       {...n('針が夕暮れの18時を指すと、白い光が広がった。'),flashbackEffect:'whiteout'}
-    ]},
+    ];
+export const ACT_TWO_EVENTS={
+  bag:{at:66,title:'第一の事件：夕暮れの待ち伏せ',call:'ルナを追う男にどう対応する？',detail:'3日目18時。けもの荘の玄関前で、ルナが見知らぬ男に呼び止められた。',lines:[
+    n('夕暮れ。大家がアパートの前を掃除していると、男の声が聞こえてきた。'),
+    n('男「あっ！ ルナちゃん！」'),
+    l('surprised','……っ！'),
+    n('振り返ったルナの表情が、一瞬で凍りつく。'),
+    n('男「やっと見つけたよ！ 急に連絡くれなくなるから、心配したんだよ？」'),
+    l('surprised','……なんで……ここが……。'),
+    n('男「頑張って探したんだ。ルナちゃん、引っ越したんでしょ？」'),
+    l('sad','……もう、お店は辞めたから。'),
+    n('男「うん、知ってるよ。でも、俺たちの関係は別じゃない？」'),
+    l('angry','……そんな関係じゃない！'),
+    n('男は笑顔のまま、一歩近づいた。'),
+    n('男「照れなくていいって。俺、ルナちゃんのこと本気なんだから。」'),
+    l('sad','……お願い。もう帰って。'),
+    n('その声に気づき、大家が二人の間に入る。'),
+    m('おい、あんた。何やってるんだ？'),
+    n('男「……誰？」'),
+    m('ここの大家だ。'),
+    n('男「……大家？ へえ。」'),
+    n('男は大家を上から下まで眺める。'),
+    n('男「ルナちゃん。この人とはどういう関係？」'),
+    l('sad','……大家さん。それだけだよ。'),
+    n('男「ふうん……。」'),
+    n('男の笑顔が消えかける。'),
+    m('ルナは帰ってくれって言ってるだろ。今日はもう帰れ。'),
+    n('男「……あんたには関係ないだろ。」'),
+    n('男は大家を押しのけようとする。')
+  ],choices:[
     {id:'guarantee',label:'俺がルナの彼氏だ。文句あるか！',bad:'bag-guarantee',endingName:'甘い罠',regret:'ルナに運営資金と修繕費を持ち逃げされ、けもの荘の資金繰りが破綻した。',clue:'金銭トラブルを自分が引き受けると口にした大家は、ルナの甘い誘いにも警戒心を失ってしまった。',lines:[
       m('金の話なら、まず俺を通せ！'),
       n('男「へえ……大家さんが責任を持ってくれるんですか？」'),
@@ -246,7 +246,7 @@ export const ACT_TWO_EVENTS={
     {id:'refuse',label:'担保は絶対ダメだ！ 契約は持ち帰れ！',lines:[m('担保は絶対ダメだ！ 契約は持ち帰れ！'),l('surprised','でも、今日だけって……。'),m('今日しか考える時間をくれない契約なんて、なおさらダメだ！'),c('happy','じゃあモクのハンコも貸さないニャ。'),m('お前はそもそも持ってないだろ！'),n('大家は署名を拒み、昨日男が落としたメモと帳簿を照らし合わせた。売上金の数字は噛み合わず、店側が従業員への不当な請求をルナの横領に見せかけた疑いが浮かぶ。男は舌打ちして立ち去った。'),l('sad','……私が盗んだって言われても、信じないでくれたんだね。ありがとう、大家さん。'),m('次からは小さい文字ほど先に読め。')]}
   ]}
 };
-export const actTwoChoices=(s,scene)=>scene==='bag'&&s.actOne?.attempt===1?[ACT_TWO_EVENTS.bag.choices[0]]:ACT_TWO_EVENTS[scene]?.choices.filter(choice=>choice.id!=='first-watch')||[];
+export const actTwoChoices=(s,scene)=>scene==='bag'&&s.actOne?.attempt===1?[{...ACT_TWO_EVENTS.bag.choices[0],label:'もう大丈夫だろ。今日はゆっくり休め。'}]:ACT_TWO_EVENTS[scene]?.choices||[];
 export const actTwoChosen=s=>[...new Set([...(s.actOne.chosenChoices||[]),...s.events.filter(e=>e.actChoice&&ACT_TWO_EVENTS[e.actScene]).map(e=>e.actScene+':'+e.actChoice)])];
 export function beginActTwo(s){
   s.ending=null;s.pending=['hostess'];admit(s,'hostess');s.hour=57;
@@ -339,12 +339,14 @@ export function advanceActTwo(s,hours){
  s.ending={name:'第二幕クリア — 残った鍵',text:'けもの荘は、借金のカタにならずに済んだ。'};}
 }
 export function answerActTwo(s,eventId,choiceId){
- const a=s.actOne,p=a.pending,event=ACT_TWO_EVENTS[p?.scene];const choice=actTwoChoices(s,p?.scene).find(c=>c.id===choiceId);
+ const a=s.actOne,p=a.pending,event=ACT_TWO_EVENTS[p?.scene];const choice=event?.choices.find(c=>c.id===choiceId);
  if(a.status!=='playing'||p?.eventId!==Number(eventId)||!choice)return null;
  const original=s.events.find(e=>e.id===p.eventId);original.read=true;original.actChoice=choiceId;
  a.chosenChoices=actTwoChosen(s);a.pending=null;a.completed.push(p.scene);
- const r=addEvent(s,'life','返事：'+choice.label,choice.lines[0].text,[102]);r.actScene='reply';r.cast=['hostess','cat'];r.stageOnly=true;r.lines=choice.lines;
- if(choice.bad){a.status='bad';a.failure=choice.bad;if(!a.memory.includes(choice.bad))a.memory.push(choice.bad);s.ending={name:choice.endingName?('BAD END — '+choice.endingName):(p.scene==='bag'?'夜逃げ':'差し押さえ')+' — '+event.title,text:choice.regret};}
+ const firstStalkerTragedy=p.scene==='bag'&&a.attempt===1&&choiceId==='guarantee';
+ const replyLines=firstStalkerTragedy?FIRST_STALKER_TRAGEDY_LINES:choice.lines;
+ const r=addEvent(s,'life','返事：'+(firstStalkerTragedy?'もう大丈夫だろ。今日はゆっくり休め。':choice.label),replyLines[0].text,[102]);r.actScene='reply';r.cast=['hostess','cat'];r.stageOnly=true;r.lines=replyLines;
+ if(choice.bad){a.status='bad';a.failure=choice.bad;if(!a.memory.includes(choice.bad))a.memory.push(choice.bad);s.ending={name:firstStalkerTragedy?'BAD END — 夕暮れの待ち伏せ':choice.endingName?('BAD END — '+choice.endingName):(p.scene==='bag'?'夜逃げ':'差し押さえ')+' — '+event.title,text:choice.regret};}
  if(!choice.bad&&p.scene==='bag')saveStoryCheckpoint(s,'contract','バッグの事件を回避した直後');
  return r;
 }
