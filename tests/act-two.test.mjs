@@ -55,3 +55,18 @@ test('chapter two remains active after the arrival dialogue ends',()=>{
  assert.equal(s.selected,102);assert.ok(s.residents.some(r=>r.type==='hostess'&&r.room===102));
  advanceActTwo(s,5);assert.equal(s.actOne.pending.scene,'bag');
 });
+
+test('second-act opening scene selection retains the arrival as the next scene',()=>{
+ const state=beginActTwo(createGame(42));
+ state.actOne.started=false;
+ state.actOne.titlePending=true;
+ state.actOne.prologuePending=true;
+ const arrival=state.events.find(e=>e.actScene==='act2-prologue');
+ arrival.read=false;
+ assert.equal(state.actOne.chapter,2);
+ assert.equal(state.actOne.prologuePending,true);
+ assert.equal(arrival.read,false);
+ state.actOne.started=true;
+ state.actOne.titlePending=false;
+ assert.ok(state.events.find(e=>e.actScene==='act2-prologue'&&!e.read));
+});
