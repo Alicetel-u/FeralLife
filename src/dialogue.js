@@ -113,6 +113,7 @@ export function createTalk(latestEventId = 0) {
   return { seenEvent: latestEventId, eventId: 0, index: 0, since: 0, queue: [], mutterIndex: 0, mutterAction: '', mutterShownAt: null, currentMutter: null, bubbles: [] };
 }
 export function stepTalk(talk, state, now, stopped) {
+  if(observationActive(state)){const view=observationView(state);talk.chapterChat=null;talk.bubbles=view?.line?[view.line]:[];talk.mutterShownAt=view?.identity;return talk;}
   if(state.actOne?.chapter===2)return stepSecondActTalk(talk,state,now,stopped);
   if(state.actOne){const view=observationActive(state)?observationView(state):null;talk.bubbles=view?.line?[view.line]:[];talk.mutterShownAt=view?.identity;return talk;}
   for (const event of state.events) {

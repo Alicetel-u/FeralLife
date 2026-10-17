@@ -1,3 +1,4 @@
+import {tickObservation,observationClockLimit} from '../src/act-one-observation.js';
 import {readFileSync} from 'node:fs';
 import {extractVoiceScript} from '../tools/voice-script.mjs';
 import {createActOne} from '../src/act-one.js';
@@ -135,8 +136,8 @@ test('both flirting crops render distinctly, respect reduced motion, and defer t
 
 test('chapter-two observation actually reaches both flirt reactions without editing the save or dialogue',()=>{
  const s=createActOne(91);beginActTwo(s);s.actOne.started=true;s.actOne.prologuePending=false;s.events.forEach(e=>e.read=true);
- advanceActTwo(s,2.25);let talk=createTalk();
- stepTalk(talk,s,100,false);stepTalk(talk,s,100+SPEECH_MS.line,false);stepTalk(talk,s,100+SPEECH_MS.line*2,false);
+ let talk=createTalk();
+ for(let i=0;i<600;i++){tickObservation(s,.25);advanceActTwo(s,Math.min(.15,Math.max(0,observationClockLimit(s)-s.hour)));tickObservation(s,0);stepTalk(talk,s,i*250,false);if(miniLineEmotion(talk.bubbles[0])==='wicked')break;}
  assert.equal(miniLineEmotion(talk.bubbles[0]),'wicked');
  advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'loan');
  advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'refuse');

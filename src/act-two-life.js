@@ -1,8 +1,9 @@
 import {createRoomMove,createVisit,createOuting,sampleJourney} from './movement.js';
+import {ACT_TWO_OBSERVATION_BEATS} from './act-two-observation.js';
 
 const LUNA_DAY=[
  [57,'clean','center'],[58.5,'idle','table','arrival'],[61,'clean','center'],
- [62.25,'idle','table'],[65,'eat','fridge'],[66,'idle','table','papers'],
+ [62.25,'idle','table','tea'],[65,'eat','fridge'],[66,'idle','table','papers'],
  [67,'outing','hall'],[80,'idle','table'],[81.25,'clean','table'],
  [83,'idle','table','relief'],[87,'sleep','bed'],[95,'eat','fridge'],
  [97,'clean','center'],[103,'idle','window']
@@ -42,7 +43,8 @@ export function secondActChat(state){
   papers:[['hostess','あの荷物のこと、大家さんに確認しておこう。'],['cat','紙って小さいのに、面倒は大きいニャ。'],['hostess','うん。次はちゃんと読む。']],
   relief:[['hostess','片づけてたら、もうこんな時間。'],['cat','休憩の時間も片づけたらダメニャ。'],['hostess','ふふ。じゃあ、少しだけ休もうかな。']]
  };
- return kind?{key:'act2-chat-'+kind,lines:chats[kind]}:null;
+ const lines=kind==='tea'?ACT_TWO_OBSERVATION_BEATS.find(b=>b.id==='luna-tea').lines.map(l=>[l.speaker,l.text]):chats[kind];
+ return lines?{key:'act2-chat-'+kind,lines}:null;
 }
 export function lunaMutters(state){
  const luna=state.residents.find(r=>r.type==='hostess');if(!luna)return [];

@@ -1,3 +1,4 @@
+import {ACT_TWO_OBSERVATION_BEATS} from '../src/act-two-observation.js';
 import {secondActChat,lunaMutters} from '../src/act-two-life.js';
 import {OBSERVATION_BEATS} from '../src/act-one-observation.js';
 import {PROLOGUE_CUTS,INITIAL_MOKU_LINES} from '../src/opening-prologue.js';
@@ -17,6 +18,7 @@ export function extractVoiceScript(scope='intro') {
     const speaker=voiceSpeaker(line);
     if(['cat','manager','hostess'].includes(speaker))result.push({source:source+':'+index,line,speaker,performance:voicePerformance(line),lineKey:voiceLineKey(line)});
   });
+  if(['act2','act2-trouble1','all'].includes(scope))for(const beat of ACT_TWO_OBSERVATION_BEATS)add('act2/observation/'+beat.id,beat.lines);
   const state=createActOne(1);
   if(scope==='act2-trouble1'){
     for(const shot of ACT_TWO_OPENING_SCENES)add('act2/film/'+shot.shot,shot.cues.filter(c=>!c.silent));

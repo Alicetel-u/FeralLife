@@ -1,3 +1,4 @@
+import {ACT_TWO_OBSERVATION_BEATS} from './act-two-observation.js';
 import {sampleJourney} from './movement.js';
 // Solo room speech; landlord replies only during shared outdoor/hall encounters.
 export const OBSERVATION_BEATS=[
@@ -5,37 +6,37 @@ export const OBSERVATION_BEATS=[
     "id": "seat",
     "phase": 0,
     "at": 17.08,
-    "title": "片づけの第一歩",
+    "title": "片づけ（座れたら終了）",
     "lines": [
       {
         "speaker": "cat",
         "name": "モク",
         "emotion": "neutral",
-        "text": "片づけるニャ。今日は通り道を作るニャ。"
+        "text": "新しい大家も来たし、今日は片づけるニャ。"
+      },
+      {
+        "speaker": "cat",
+        "name": "モク",
+        "emotion": "surprised",
+        "text": "この缶をどかして……お、床ニャ。"
+      },
+      {
+        "speaker": "cat",
+        "name": "モク",
+        "emotion": "happy",
+        "text": "久しぶりニャ。元気にしてたかニャ。"
       },
       {
         "speaker": "cat",
         "name": "モク",
         "emotion": "neutral",
-        "text": "まずは、この缶を……よいしょニャ。"
+        "text": "……もう一本どかせば、座れるニャ。"
       },
       {
         "speaker": "cat",
         "name": "モク",
-        "emotion": "neutral",
-        "text": "……まだ落ちてるニャ。あっちも拾うニャ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "ふぅ。ちょっとは綺麗になったニャ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "続きは明日でいいニャ。"
+        "emotion": "happy",
+        "text": "よし、座れたニャ。片づけ終了ニャ！"
       }
     ]
   },
@@ -43,14 +44,14 @@ export const OBSERVATION_BEATS=[
     "id": "outside-smoke",
     "phase": 0,
     "at": 18.95,
-    "title": "外で一服",
+    "title": "外の空気で一服",
     "place": "street",
     "lines": [
       {
         "speaker": "cat",
         "name": "モク",
-        "emotion": "neutral",
-        "text": "ふぅ〜……外で吸うタバコもうまいニャ。"
+        "emotion": "happy",
+        "text": "ふぅ〜……外で吸うのもうまいニャ。缶を二本も動かしたあとの一本は格別ニャ。"
       }
     ]
   },
@@ -58,55 +59,55 @@ export const OBSERVATION_BEATS=[
     "id": "outside",
     "phase": 0,
     "at": 19.85,
-    "title": "大家に話しかける",
+    "title": "大家に片づけの成果を報告",
     "lines": [
       {
         "speaker": "cat",
         "name": "モク",
-        "emotion": "neutral",
-        "text": "お、大家。ちょうどいいところにいたニャ。"
+        "emotion": "happy",
+        "text": "大家、いい知らせニャ。"
       },
       {
         "speaker": "manager",
         "name": "大家",
-        "emotion": "neutral",
-        "text": "なんだよ。今度は何か頼み事か？"
+        "emotion": "happy",
+        "text": "お、部屋を片づけたのか？"
+      },
+      {
+        "speaker": "cat",
+        "name": "モク",
+        "emotion": "happy",
+        "text": "ちゃんと床が見えたニャ！"
+      },
+      {
+        "speaker": "manager",
+        "name": "大家",
+        "emotion": "surprised",
+        "text": "おお！ どのくらい？"
       },
       {
         "speaker": "cat",
         "name": "モク",
         "emotion": "neutral",
-        "text": "失礼ニャ。たまには普通に話しかけるニャ。"
+        "text": "足の裏くらいニャ。"
       },
       {
         "speaker": "manager",
         "name": "大家",
-        "emotion": "neutral",
-        "text": "……そうか。で、何の話だ？"
+        "emotion": "angry",
+        "text": "立ってた場所だけじゃねぇか！"
       },
       {
         "speaker": "cat",
         "name": "モク",
-        "emotion": "neutral",
-        "text": "……忘れたニャ。"
+        "emotion": "happy",
+        "text": "明日はもう片足ぶん頑張るニャ。"
       },
       {
         "speaker": "manager",
         "name": "大家",
-        "emotion": "neutral",
-        "text": "用もないのに話しかけてきたのかよ！"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "まあまあ、そう怒るとハゲるニャ。"
-      },
-      {
-        "speaker": "manager",
-        "name": "大家",
-        "emotion": "neutral",
-        "text": "余計なお世話だ！！"
+        "emotion": "angry",
+        "text": "せめて両足ぶんは今日やれ！"
       }
     ],
     "place": "street"
@@ -115,25 +116,25 @@ export const OBSERVATION_BEATS=[
     "id": "ash-sign",
     "phase": 0,
     "at": 22.9,
-    "title": "灰皿の限界",
+    "title": "灰皿がそろそろ限界",
     "lines": [
       {
         "speaker": "cat",
         "name": "モク",
-        "emotion": "neutral",
-        "text": "ふぅ……もう一本吸うかニャ。"
+        "emotion": "surprised",
+        "text": "もう一本……灰皿が山盛りニャ。"
       },
       {
         "speaker": "cat",
         "name": "モク",
-        "emotion": "neutral",
-        "text": "……ん？"
+        "emotion": "surprised",
+        "text": "押せば入るかニャ。……あ、崩れたニャ。"
       },
       {
         "speaker": "cat",
         "name": "モク",
-        "emotion": "neutral",
-        "text": "……ニャ？"
+        "emotion": "surprised",
+        "text": "大家ー！ ちょっと知恵を貸すニャ！"
       }
     ]
   },
@@ -184,18 +185,49 @@ export const OBSERVATION_BEATS=[
     ]
   },
   {
-    "id": "tv-late", "phase": 1, "at": 24.1, "title": "動画の続き",
+    "id": "tv-late",
+    "phase": 1,
+    "at": 24.1,
+    "title": "動画の続き",
     "lines": [
-      {"speaker":"cat","name":"モク","emotion":"neutral","text":"そういえば、昨日の動画の続き見てなかったニャ。"},
-      {"speaker":"cat","name":"モク","emotion":"neutral","text":"ちょっとだけ見るかニャ。"}
+      {
+        "speaker": "cat",
+        "name": "モク",
+        "emotion": "neutral",
+        "text": "そういえば、昨日の動画の続き見てなかったニャ。"
+      },
+      {
+        "speaker": "cat",
+        "name": "モク",
+        "emotion": "neutral",
+        "text": "ちょっとだけ見るかニャ。"
+      }
     ]
   },
   {
-    "id":"before-dinner","phase":1,"at":36.65,"title":"昼過ぎの空腹",
-    "lines":[
-      {"speaker":"cat","name":"モク","emotion":"tired","text":"……腹減ったニャ。"},
-      {"speaker":"cat","name":"モク","emotion":"tired","text":"そういえば、昨日から何も食べてない気がするニャ……。"},
-      {"speaker":"cat","name":"モク","emotion":"tired","text":"……なんか作るかニャ。"}
+    "id": "before-dinner",
+    "phase": 1,
+    "at": 36.65,
+    "title": "昼過ぎの空腹",
+    "lines": [
+      {
+        "speaker": "cat",
+        "name": "モク",
+        "emotion": "tired",
+        "text": "……腹減ったニャ。"
+      },
+      {
+        "speaker": "cat",
+        "name": "モク",
+        "emotion": "tired",
+        "text": "そういえば、昨日から何も食べてない気がするニャ……。"
+      },
+      {
+        "speaker": "cat",
+        "name": "モク",
+        "emotion": "tired",
+        "text": "……なんか作るかニャ。"
+      }
     ]
   },
   {
@@ -316,45 +348,56 @@ export const OBSERVATION_BEATS=[
     ]
   }
 ];
+const secondObservation=state=>state.actOne?.chapter===2&&!state.actOne.completed?.includes('bag')&&state.residents.some(r=>r.type==='hostess');
+const observationBeats=state=>secondObservation(state)?ACT_TWO_OBSERVATION_BEATS:OBSERVATION_BEATS;
 const obsPhaseNames=['モクの最初の晩','夜更かしの代償','何も起こらない一日'];
-export function observationPhase(state){return state.actOne?.completed?.includes('dinner')?2:state.actOne?.completed?.includes('ash')?1:0;}
+export function observationPhase(state){if(secondObservation(state))return 0;return state.actOne?.completed?.includes('dinner')?2:state.actOne?.completed?.includes('ash')?1:0;}
 export function clearLegacyObservationMemo(state){
  const a=state.actOne;if(!a)return;
  if(a.observation){delete a.observation.notes;if(a.observation.current)delete a.observation.current.inspecting;}
  if(a.rollbackPoint?.state)clearLegacyObservationMemo(a.rollbackPoint.state);
 }
 export function observationState(state){
- const a=state.actOne;if(!a||a.chapter===2)return null;
+ const a=state.actOne;if(!a||a.chapter===2&&!secondObservation(state))return null;
  if(!a.observation||a.observation.version!==2){
   const phase=observationPhase(state);
-  a.observation={version:2,seen:[],done:OBSERVATION_BEATS.filter(b=>b.phase<phase||b.at<state.hour).map(b=>b.id),current:null,gap:0};
+  a.observation={version:2,seen:[],done:observationBeats(state).filter(b=>b.phase<phase||b.at<state.hour).map(b=>b.id),current:null,gap:0};
  }
  const o=a.observation;
  if(o.current)delete o.current.inspecting;
  if(!Array.isArray(o.seen))o.seen=[];if(!Array.isArray(o.done))o.done=[];delete o.notes;
- if(o.current&&!OBSERVATION_BEATS.some(b=>b.id===o.current.id&&b.phase===observationPhase(state)&&Number.isInteger(o.current.index)&&o.current.index>=0&&o.current.index<b.lines.length))o.current=null;
+ if(o.current&&!observationBeats(state).some(b=>b.id===o.current.id&&b.phase===observationPhase(state)&&Number.isInteger(o.current.index)&&o.current.index>=0&&o.current.index<b.lines.length))o.current=null;
  if(!Number.isFinite(o.gap))o.gap=0;
  if(o.current&&!Number.isFinite(o.current.elapsed))o.current.elapsed=0;
  return o;
 }
-export function observationActive(state){return !!state.actOne&&state.actOne.chapter!==2&&state.actOne.started&&!state.actOne.rewindIntroPending&&state.actOne.status==='playing'&&!state.actOne.pending;}
-const obsBeats=state=>OBSERVATION_BEATS.filter(b=>b.phase===observationPhase(state));
+export function observationActive(state){return !!state.actOne&&(state.actOne.chapter!==2||secondObservation(state))&&state.actOne.started&&!state.actOne.prologuePending&&!state.actOne.rewindIntroPending&&state.actOne.status==='playing'&&!state.actOne.pending;}
+const obsBeats=state=>observationBeats(state).filter(b=>b.phase===observationPhase(state));
 export function canSkipObservation(state){const o=observationState(state);return observationActive(state)&&obsBeats(state).every(b=>o.done.includes(b.id)||o.seen.includes(b.id));}
+function observationInPlace(state,beat){
+ const cat=state.residents.find(r=>r.type==='cat');
+ if(beat.place&&(!cat||sampleJourney(cat,state.hour).zone!==beat.place))return false;
+ if(!beat.together)return true;
+ const luna=state.residents.find(r=>r.type==='hostess');if(!cat||!luna)return false;
+ const a=sampleJourney(cat,state.hour),b=sampleJourney(luna,state.hour);
+ return !a.moving&&!b.moving&&a.zone==='room'&&b.zone==='room'&&a.room===b.room;
+}
 export function observationClockLimit(state){
  if(!observationActive(state))return Infinity;
  const o=observationState(state);if(o.current||o.gap>0)return state.hour;
- const next=obsBeats(state).find(b=>!o.done.includes(b.id));if(next?.place){const r=state.residents.find(r=>r.type==='cat');if(r?.journey&&sampleJourney(r,state.hour).zone!==next.place)return Math.max(next.at,r.journey.arriveAt);}
+ const next=obsBeats(state).find(b=>!o.done.includes(b.id));if(next?.together&&!observationInPlace(state,next)){const cat=state.residents.find(r=>r.type==='cat');return Math.max(state.hour,next.at,cat?.journey?.arriveAt??next.at);}
+ if(next?.place){const r=state.residents.find(r=>r.type==='cat');if(r?.journey&&sampleJourney(r,state.hour).zone!==next.place)return Math.max(next.at,r.journey.arriveAt);}
  return next?Math.max(state.hour,next.at):Infinity;
 }
 export function finishObservationLine(state){
  const o=observationState(state),c=o?.current;if(!c)return false;
- const beat=OBSERVATION_BEATS.find(b=>b.id===c.id);
+ const beat=observationBeats(state).find(b=>b.id===c.id);
  if(c.elapsed<0.5)return false;
  c.index++;c.elapsed=0;
  if(c.index>=beat.lines.length){
   if(!o.done.includes(beat.id))o.done.push(beat.id);
   if(!o.seen.includes(beat.id))o.seen.push(beat.id);
-  o.current=null;o.gap=1.5;
+  o.current=null;o.gap=secondObservation(state)||observationPhase(state)===0?.65:1.5;
  }
  return true;
 }
@@ -362,9 +405,9 @@ export function tickObservation(state,seconds,{stopped=false,voiceBusy=false}={}
  if(!observationActive(state)||stopped)return;
  const o=observationState(state),dt=Math.max(0,Math.min(seconds,0.25));
  if(o.gap>0){o.gap=Math.max(0,o.gap-dt);return;}
- if(!o.current){const beat=obsBeats(state).find(b=>!o.done.includes(b.id));if(beat&&state.hour>=beat.at-1e-7&&(!beat.place||sampleJourney(state.residents.find(r=>r.type==='cat'),state.hour).zone===beat.place))o.current={id:beat.id,index:0,elapsed:0};return;}
- const c=o.current,beat=OBSERVATION_BEATS.find(b=>b.id===c.id);c.elapsed+=dt;
- if(!voiceBusy&&c.elapsed>=Math.max(3.6,Array.from(beat.lines[c.index].text).length*0.095))finishObservationLine(state);
+ if(!o.current){const beat=obsBeats(state).find(b=>!o.done.includes(b.id));if(beat&&state.hour>=beat.at-1e-7&&observationInPlace(state,beat))o.current={id:beat.id,index:0,elapsed:0};return;}
+ const c=o.current,beat=observationBeats(state).find(b=>b.id===c.id);c.elapsed+=dt;
+ if(!voiceBusy&&c.elapsed>=(secondObservation(state)||observationPhase(state)===0?observationLineSeconds(beat.lines[c.index]):Math.max(3.6,Array.from(beat.lines[c.index].text).length*.095)))finishObservationLine(state);
 }
 export function skipObservation(state){
  if(!canSkipObservation(state))return false;
@@ -372,10 +415,12 @@ export function skipObservation(state){
 }
 export function observationView(state){
  const o=observationState(state);if(!o)return null;
- const beats=obsBeats(state),beat=OBSERVATION_BEATS.find(b=>b.id===o.current?.id);
- return {phaseTitle:obsPhaseNames[observationPhase(state)],total:beats.length,done:beats.filter(b=>o.done.includes(b.id)).length,beat,line:beat?.lines[o.current.index],identity:beat?beat.id+':'+o.current.index:null};
+ const beats=obsBeats(state),beat=observationBeats(state).find(b=>b.id===o.current?.id);
+ return {phaseTitle:secondObservation(state)?'ルナの引っ越し初日':obsPhaseNames[observationPhase(state)],lineIndex:o.current?.index??0,total:beats.length,done:beats.filter(b=>o.done.includes(b.id)).length,beat,line:beat?.lines[o.current.index],identity:beat?beat.id+':'+o.current.index:null};
 }
 export function inheritObservation(previous,next){
  const before=observationState(previous),after=observationState(next);if(!before||!after)return;
  after.seen=[...new Set([...after.seen,...before.seen])];
 }
+
+export function observationLineSeconds(line){return Math.min(4.2,Math.max(2.1,1+Array.from(line?.text||'').length*.065));}

@@ -1190,3 +1190,9 @@ dialog.act-modal:has(.luna-film) #modal-content{height:100%;padding:0;overflow:h
 .act-two-morning-blackout{position:absolute;inset:0;min-height:100%;z-index:100}
 @keyframes act-two-dawn{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){.act-two-morning-stage *{animation:none!important}}
+.game-ink .scene-caption.story-observation{display:grid;position:absolute;inset:94px 24px auto auto;transform:none;z-index:3;width:max-content;max-width:min(320px,calc(100% - 48px));padding:12px 18px;text-align:left;gap:5px;white-space:normal;background:#17131cec;color:#fff1dc;border-left:4px solid #ef3751;box-shadow:4px 5px 0 #0004;pointer-events:none}
+.story-observation small{font:700 10px/1.4 sans-serif;color:#f1bc75;letter-spacing:.05em}
+.story-observation strong{font:800 clamp(13px,1.5vw,19px)/1.5 sans-serif;overflow-wrap:anywhere}
+.story-observation span{font:12px/1.4 sans-serif;color:#d3c4cd;font-variant-numeric:tabular-nums}
+@media(max-width:700px){.game-ink .scene-caption.story-observation{inset:94px 10px auto auto;max-width:min(210px,calc(100% - 84px));padding:8px 10px;gap:3px}.story-observation small{font-size:9px}.story-observation strong{font-size:12px}.story-observation span{font-size:10px}}
+body.conversation-active .scene-caption.story-observation{visibility:hidden}

@@ -15,7 +15,7 @@ import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './troub
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.8';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.9';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition, automaticFirstRewind } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -63,7 +63,7 @@ ensureManagement(state);
 if(observationPreview){state.actOne.started=true;observationView(state);state.hour=17.08;state.events.forEach(e=>e.read=true);tickObservation(state,0);}
 if(firstRewindPreview||firstFirePreview){state.actOne.started=true;advanceActOne(state,100);answerActOne(state,state.actOne.pending.eventId,'trash');state.events.forEach(e=>e.read=true);}
 if(firstStalkerPreview){beginActTwo(state);state.actOne.started=true;state.actOne.titlePending=false;state.actOne.prologuePending=false;advanceActTwo(state,100);answerActTwo(state,state.actOne.pending.eventId,'guarantee');state.events.forEach(e=>e.read=true);}
-if(actTwoPreview){beginActTwo(state);state.actOne.started=true;state.actOne.titlePending=false;state.actOne.prologuePending=false;advanceActTwo(state,2.25);state.events.forEach(e=>e.read=true);}
+if(actTwoPreview){beginActTwo(state);state.actOne.started=true;state.actOne.titlePending=false;state.actOne.prologuePending=false;state.events.forEach(e=>e.read=true);}
 if(actTwoOpeningPreview){beginActTwo(state);}
 if(eventPreview) {
   for(const type of ['hostess','fox','sister','peko','ann']) {state.pending=[type];admit(state,type);}
@@ -237,7 +237,17 @@ function updateUI() {
   $('playback-state').textContent = state.ending ? (state.actOne?'第一幕の結末に到達しました':'18日間の観察が終わりました') : modal.open ? '会話中は一時停止' : state.actOne?.pending?'モクが大家の返事を待っています' : paused ? '時間を止めて眺めています' : speed > 1 ? `${speed}倍の速さで暮らしが進みます` : '時間はゆっくり進んでいます';
   const r = state.residents.find(r => r.room === state.selected);
   const line = talk.bubbles[0];
-  $('scene-caption').textContent = state.ending ? 'ろくでもない灯りが、今日もここに。' : r ? `${r.room}号室 · ${CHARACTERS[r.type].name.split(' ')[1]} / ${motionLabel(r,state.hour,ACTIONS[r.action].label)}` : `${state.selected}号室 · 次の住人を待っている。`;
+  const liveObservation=observationView(state);
+  const caption=$('scene-caption');
+  caption.classList.toggle('story-observation',Boolean(liveObservation)&&!state.ending&&!state.actOne?.pending);
+  caption.setAttribute('role','status');
+  caption.setAttribute('aria-live','polite');
+  if(liveObservation&&!state.ending&&!state.actOne?.pending){
+    const title=liveObservation.beat?.title||(r?motionLabel(r,state.hour,ACTIONS[r.action].label):'住人の暮らしを観察中');
+    const progress=liveObservation.beat?`${liveObservation.lineIndex+1}/${liveObservation.beat.lines.length}`:'移動中・次のひとコマへ';
+    const content=`<small>${state.actOne.chapter===2?'第二幕':'第一幕'} / ${escape(liveObservation.phaseTitle)}</small><strong>${escape(title)}</strong><span>${paused?'一時停止中 · ':''}${escape(progress)}</span>`;
+    if(caption.innerHTML!==content)caption.innerHTML=content;
+  }else caption.textContent = state.ending ? 'ろくでもない灯りが、今日もここに。' : r ? `${r.room}号室 · ${CHARACTERS[r.type].name.split(' ')[1]} / ${motionLabel(r,state.hour,ACTIONS[r.action].label)}` : `${state.selected}号室 · 次の住人を待っている。`;
   $('world').setAttribute('aria-label', line ? `${line.name}「${line.text}」` : '住人の暮らしと廊下・階段・屋外の移動を観察する画面');
   for (const button of document.querySelectorAll('[data-view]')) { const active=button.dataset.view===renderer.view;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active)); }
   for (const button of document.querySelectorAll('[data-camera]')) { const active=(button.dataset.camera==='focus')===renderer.focus;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active)); }
@@ -431,7 +441,7 @@ function showOpening(step = 0) {
 function showGameTitle(){
   debugTapCount=0;
   const continuing=state.actOne.started||state.actOne.chapter===2;
-  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU · ver 2026.10.18.8</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
+  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU · ver 2026.10.18.9</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
   modal.querySelector('.title-actions button')?.focus({preventScroll:true});
 }
 function showActTwoOpening(){
@@ -540,7 +550,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.18.8';
+const BUILD_VERSION='2026.10.18.9';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -813,7 +823,7 @@ function frame(now){
   const stopped=document.documentElement.classList.contains('game-booting')||paused||modal.open||!!state.ending||!!document.querySelector('#entry-gate:not([hidden])');
   const observationStopped=stopped||document.body.classList.contains('controls-expanded');
   tickObservation(state,seconds,{stopped:observationStopped,voiceBusy:characterVoice.busy});
-  if(!stopped&&!talk.chapterChat){
+  if(!observationStopped&&!talk.chapterChat){
     const firstNight=state.actOne?.chapter!==2&&state.actOne?.completed?.includes('ash')&&!state.actOne?.completed?.includes('dinner')&&!state.actOne?.pending&&state.hour>=24.1&&state.hour<36.65;
     if(!lateNightWarp&&firstNight&&observationView(state)?.beat==null&&state.actOne?.observation?.done?.includes('tv-late')&&!state.actOne?.observation?.done?.includes('before-dinner')){
       lateNightWarp={rate:(36.65-state.hour)/11,tail:0};document.body.classList.add('late-night-warp');
@@ -822,11 +832,11 @@ function frame(now){
     if(lateNightWarp){
       if(state.hour<36.65){advanceActOne(state,Math.min(36.65-state.hour,seconds*lateNightWarp.rate));const caption=document.querySelector('#night-montage-caption');if(caption)caption.textContent=nightMontageCaption(state.hour);}
       else {lateNightWarp.tail+=seconds;if(lateNightWarp.tail>=1.1){lateNightWarp=null;removeNightMontage();}}
-    }else if(state.actOne)(state.actOne.chapter===2?advanceActTwo(state,seconds*speed/10):advanceActOne(state,Math.min(seconds*speed/10,Math.max(0,observationClockLimit(state)-state.hour))));else advance(state,seconds*speed/10);
+    }else if(state.actOne)(state.actOne.chapter===2?advanceActTwo(state,Math.min(seconds*speed/10,Math.max(0,observationClockLimit(state)-state.hour))):advanceActOne(state,Math.min(seconds*speed/10,Math.max(0,observationClockLimit(state)-state.hour))));else advance(state,seconds*speed/10);
   }
   tickObservation(state,0,{stopped:observationStopped,voiceBusy:characterVoice.busy});
   queueFreshStageEvents();
-  stepTalk(talk, state, now, stopped);
+  stepTalk(talk, state, now, observationStopped);
   updateCamera();
   if(!modal.open){const spoken=talk.bubbles[0];if(spoken)characterVoice.play(spoken,'bubble:'+JSON.stringify([spoken.speaker,spoken.text,talk.mutterShownAt,talk.eventId,talk.index]));else characterVoice.stop();}
   const bubbles=document.body.classList.contains('conversation-active')?[]:talk.bubbles;

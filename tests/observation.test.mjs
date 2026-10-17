@@ -9,7 +9,7 @@ const step=(s,stopped=false)=>{tickObservation(s,.25,{stopped});if(!stopped)adva
 test('first visit reads three unique everyday scenes before the ash incident, even at high speed',()=>{
  const s=start(),seen=new Set();let frames=0;
  while(!s.actOne.pending&&frames++<600){step(s);const v=observationView(s);if(v.identity)seen.add(v.identity);}
- assert.equal(s.actOne.pending?.scene,'ash');assert.equal(seen.size,17);assert.ok(frames>=300);assert.equal(s.hour,23);assert.ok(validActOne(s));
+ assert.equal(s.actOne.pending?.scene,'ash');assert.equal(seen.size,17);assert.ok(frames>=180&&frames<300,'first observation remains readable and finishes within 75 seconds');assert.equal(s.hour,23);assert.ok(validActOne(s));
 });
 test('pause and active voice hold the current line; reload preserves the speech cursor',()=>{
  const s=start();for(let i=0;i<4;i++)step(s);const before=JSON.stringify(s.actOne.observation),hour=s.hour;
