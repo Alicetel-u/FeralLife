@@ -14,7 +14,7 @@ export function openingPrologueHTML(){
 export function prologueCutHTML(cut){
  return (cut.image?'<figure class="ink-insert"><div class="ink-insert-border"><img src="'+prologueEscape(cut.image)+'" alt="'+({keys:'鍵と封筒を持つ大家の手元',letter:'封筒から取り出した便箋',income:'家賃についての手紙を読む手元',warning:'手紙を読んで止まる、鍵を握る手',door:'薄暗い101号室の入口と大家の手元'}[cut.shot]||'')+'"></div></figure>':'')+'<div class="ink-dialogue"><span class="ink-speaker">'+prologueEscape(cut.speaker)+'</span><p class="ink-line" aria-hidden="true"></p><p class="visually-hidden" aria-live="polite" aria-atomic="true">'+prologueEscape(cut.text)+'</p><span class="ink-prompt" aria-hidden="true">CLICK / ENTER</span></div>';
 }
-export function startOpeningPrologue(root,onContinue,voice=null,cuts=cuts){
+export function startOpeningPrologue(root,onContinue,voice=null,cuts=PROLOGUE_CUTS){
  const content=root.querySelector('.ink-cut-content'),next=root.querySelector('.ink-next'),progress=root.querySelector('.ink-progress');
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let cursor=0,typing=false,leaving=false,destroyed=false,lineTimer,exitTimer;
