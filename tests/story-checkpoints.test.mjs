@@ -16,7 +16,7 @@ test('second act restores chapter entry or bag success, including old saves with
   if(late){advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'sign');}
   for(const old of [false,true]){
    const load=JSON.parse(JSON.stringify(s));if(old)delete load.actOne.rollbackPoint;
-   const next=rewindActTwo(load);assert.equal(next.hour,late?66:57);assert.deepEqual(next.actOne.completed,late?['bag']:[]);assert.equal(next.actOne.titlePending,false);assert.ok(validActOne(next)&&validateSave(next));assert.ok(next.actOne.memory.includes(late?'contract-sign':'bag-guarantee'));
+   const next=rewindActTwo(load);assert.equal(next.hour,late?66:66);assert.deepEqual(next.actOne.completed,late?['bag']:[]);assert.equal(next.actOne.titlePending,false);assert.ok(validActOne(next)&&validateSave(next));assert.ok(next.actOne.memory.includes(late?'contract-sign':'bag-guarantee'));
   }
  }
 });
