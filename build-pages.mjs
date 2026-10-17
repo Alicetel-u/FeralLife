@@ -31,6 +31,13 @@ publishedSource.set('src/game-bundle.js',bundle);
 publishedSource.set('index.html',publishedSource.get('index.html')
  .replace(/<script type="module" src="src\/app\.js[^"]*"><\/script>/,'')
  .replace('<!-- WEB_BOOT_ENTRY -->',()=>`<script>window.kemonoBoot.loadBundle('src/game-bundle.js?v=${bundleVersion}',${Buffer.byteLength(bundle)});</script>`));
+// Old bookmarks must not download/parse the 200+ MB offline export on phones.
+// Keep build.mjs's local standalone file, but publish a tiny compatibility entry.
+publishedSource.set('play.html',`<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>けもの荘</title>
+<script>location.replace('./'+location.search+location.hash);</script>
+<noscript><meta http-equiv="refresh" content="0;url=./"></noscript>
+</head><body><p>ゲームを開いています。<a href="./">通常版を開く</a></p></body></html>`);
 const files=[...sourceFiles,'src/game-bundle.js',...assets,'play.html'];
 let bytes=0;
 // A small concurrency limit avoids a burst of image IO on Windows and CI.
