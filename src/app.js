@@ -760,7 +760,7 @@ function syncNormalBgm(){
   const trouble=!victory&&!bad&&!clock&&!title&&modal.open&&(!!modal.querySelector('.trouble-card')||activeDialogue?.actScene==='reply');
   const lunaFilm=modal.open?modal.querySelector('[data-act2-opening]'):null;
   const filmQuiet=!!lunaFilm&&(lunaFilm.dataset.quiet==='true'||lunaFilm.dataset.paused==='true');
-  const firstRewindUneasy=lunaFilm||!bad&&!clock&&!title&&!victory&&!trouble&&activeDialogue?.actScene==='rewind'&&state.actOne?.chapter!==2&&state.actOne?.attempt===2&&state.actOne?.rewindIntroPending;
+  const firstRewindUneasy=lunaFilm||!bad&&!clock&&!title&&!victory&&!trouble&&['rewind','act2-rewind'].includes(activeDialogue?.actScene)&&state.actOne?.attempt===2&&state.actOne?.rewindIntroPending;
   // Use Moku's theme only when her portrait is actually visible in the dialogue.
   // Trouble stings always take precedence over character themes.
   const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
