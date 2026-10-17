@@ -46,3 +46,12 @@ test('second contract bad end returns to contract checkpoint',()=>{
  assert.equal(next.hour,62);assert.deepEqual(next.actOne.completed,['bag']);
  assert.ok(next.actOne.memory.includes('contract-sign'));assert.ok(validActOne(next)&&validateSave(next));
 });
+
+test('chapter two remains active after the arrival dialogue ends',()=>{
+ const s=create();const intro=s.events.find(e=>e.actScene==='act2-prologue');
+ assert.ok(intro);s.actOne.started=true;s.actOne.titlePending=false;
+ s.actOne.prologuePending=false;intro.read=true;s.selected=102;
+ assert.equal(s.actOne.chapter,2);assert.equal(s.actOne.status,'playing');
+ assert.equal(s.selected,102);assert.ok(s.residents.some(r=>r.type==='hostess'&&r.room===102));
+ advanceActTwo(s,5);assert.equal(s.actOne.pending.scene,'bag');
+});
