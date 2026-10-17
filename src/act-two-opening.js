@@ -1,13 +1,13 @@
 // Composed cinematic stills; no interpolated character poses or body animation.
 // Voice cue IDs/times are independent of cuts so recordings can be added later.
-export const ACT_TWO_OPENING_REVISION='2026.10.17.15';
+export const ACT_TWO_OPENING_REVISION='2026.10.17.16';
 export const ACT_TWO_SEATED_ART='assets/events/luna-seated-rear.png';
 export const ACT_TWO_OPENING_SCENES=[
  {shot:'heel',image:'assets/events/luna-heel.png',duration:3.6,from:[1.12,-2,1],to:[1.06,0,0],events:Array.from({length:10},(_,i)=>({at:.1+i*.34,type:'step',power:.8})),cues:[{id:'breath',at:1,end:3.5,speaker:'hostess',emotion:'tired',text:'……はぁ、はぁ……っ。'}]},
  {shot:'chase',image:'assets/events/luna-corner-v2.png',duration:4.4,from:[1.09,-2,0],to:[1.025,0,0],events:Array.from({length:9},(_,i)=>({at:i*.34,type:'step',power:.7})).concat([{at:3.1,type:'scrape'}]),cues:[]},
  {shot:'listen',image:'assets/events/luna-watch-v2.png',duration:4,from:[1,0,0],to:[1.02,0,0],quiet:true,events:[],cues:[{id:'corner',at:.6,end:3.7,speaker:'hostess',emotion:'tired',text:'……ここまで来れば……。'}]},
  {shot:'call',image:'assets/events/luna-handset-v2.png',duration:5.2,from:[1,0,0],to:[1.035,0,0],quiet:true,events:[{at:.25,type:'buzz'},{at:.52,type:'ring'},{at:.7,type:'buzz'}],cues:[{id:'persistent',at:3.1,end:5,speaker:'hostess',emotion:'angry',text:'……しつこい……。'}]},
- {shot:'dismiss',image:'assets/events/luna-watch-v2.png',duration:2.2,from:[1.02,0,0],to:[1.02,0,0],quiet:true,events:[{at:.1,type:'scrape',power:.35}],cues:[]},
+ {shot:'dismiss',image:'assets/events/luna-dismiss-v2.png',duration:2.8,from:[1.02,0,0],to:[1.02,0,0],quiet:true,events:[{at:.1,type:'scrape',power:.35}],cues:[]},
  {shot:'collapse',image:'assets/events/luna-courtyard-plate.png',duration:3.2,from:[2.8,0,-88],to:[2.8,0,-88],person:true,personFrom:1.7,personTo:1.7,quiet:true,events:[{at:.05,type:'land',power:.55}],cues:[]},
  {shot:'notice',image:'assets/events/luna-rental-insert.png',duration:4.8,from:[1,0,0],to:[1,0,0],quiet:true,events:[],cues:[{id:'vacancy',at:1,end:4.5,speaker:'hostess',emotion:'tired',text:'……入居者、募集……？'}]},
  {shot:'reveal',image:'assets/events/luna-courtyard-plate.png',duration:6,from:[1.48,0,-12],to:[1.02,0,0],person:true,personFrom:1.2,personTo:1,events:[],cues:[{id:'shelter',at:3.2,end:5.8,speaker:'hostess',emotion:'tired',text:'……ここなら……。'}]},
@@ -31,7 +31,7 @@ export function actTwoOpeningFrame(index,seconds,reduced=false){
   if(shot.shot==='glance'){x+=28*Math.exp(-t*19);roll=-1.1*Math.exp(-t*10);}
  }
  const foreground=(shot.personFrom||1)+((shot.personTo||1)-(shot.personFrom||1))*blend;
- const black=shot.shot==='heel'?1-filmClamp((t-.2)/1.1):shot.shot==='out'?filmClamp(t/1.4):0;
+ const black=shot.shot==='heel'?1-filmClamp((t-.2)/1.1):shot.shot==='out'?filmClamp(t/1.4):shot.shot==='dismiss'?filmClamp((t-(shot.duration-.6))/.35):0;
  return {
   transform:`translate(${camera[1]}%,${camera[2]}%) scale(${camera[0]})`,
   foreground:`scale(${foreground})`,rig:`translate(${x.toFixed(3)}px,${y.toFixed(3)}px) rotate(${roll.toFixed(3)}deg) scale(1.035)`,
@@ -103,7 +103,7 @@ export function startActTwoOpening(root,onDone,voice=null,sound=null){
  const show=()=>{
   const shot=ACT_TWO_OPENING_SCENES[index];section.dataset.cut=shot.shot;section.dataset.quiet=String(!!shot.quiet);
   notice.hidden=shot.shot!=='notice';
-  if(image.getAttribute('src')!==shot.image)image.src=shot.image;image.alt=({cold:'人気のない深夜の裏道',heel:'濡れた路面を蹴るヒール',chase:'走る視点から見える深夜の路地',glance:'背後を気にするルナの表情',listen:'暗がりで息を潜めるルナ',call:'手の中のスマートフォンに届いたメッセージ',dismiss:'背後の路地を警戒するルナの横顔',collapse:'けもの荘の前で座り込んだルナ',silence:'静まり返った路地とルナの後ろ姿',reveal:'ルナの背後から見上げる夜のけもの荘',look:'けもの荘の灯りを見上げるルナ'}[shot.shot]||'夜のけもの荘');
+  if(image.getAttribute('src')!==shot.image)image.src=shot.image;image.alt=({cold:'人気のない深夜の裏道',heel:'濡れた路面を蹴るヒール',chase:'走る視点から見える深夜の路地',glance:'背後を気にするルナの表情',listen:'暗がりで息を潜めるルナ',call:'手の中のスマートフォンに届いたメッセージ',dismiss:'壁にもたれてスマートフォンを見るルナ',collapse:'けもの荘の前で座り込んだルナ',silence:'静まり返った路地とルナの後ろ姿',reveal:'ルナの背後から見上げる夜のけもの荘',look:'けもの荘の灯りを見上げるルナ'}[shot.shot]||'夜のけもの荘');
   foreground.hidden=!shot.person;activeCue=null;soundsPlayed=new Set();voice?.stop();voice?.prepare(shot.cues.find(c=>!c.silent)||null);
   if(!paused&&!document.hidden)foley.scene(!!shot.quiet);paint();announce();
  };

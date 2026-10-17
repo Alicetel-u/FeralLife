@@ -64,3 +64,21 @@ test('rebuilt escape and phone shots use composed artwork and settle before list
  assert.equal(actTwoOpeningFrame(chase,shots[chase].duration).rig,actTwoOpeningFrame(listen,0).rig);
  assert.ok(!shots.some(s=>s.shot==='blind'));
 });
+test('dismiss still blacks out into the existing collapse',()=>{
+ const dismiss=shots.findIndex(s=>s.shot==='dismiss'),collapse=dismiss+1;
+ assert.equal(shots[dismiss].image,'assets/events/luna-dismiss-v2.png');
+ assert.notEqual(shots[dismiss].image,shots[dismiss-1].image);
+ assert.deepEqual(shots[dismiss].from,shots[dismiss].to);
+ assert.equal(shots[dismiss].cues.length,0);
+ assert.equal(actTwoOpeningFrame(dismiss,shots[dismiss].duration-.7).black,0);
+ assert.ok(actTwoOpeningFrame(dismiss,shots[dismiss].duration-.4).black>0);
+ assert.equal(actTwoOpeningFrame(dismiss,shots[dismiss].duration).black,1);
+ assert.equal(actTwoOpeningFrame(collapse,0).black,0);
+ assert.deepEqual(shots.slice(collapse).map(s=>[s.shot,s.image,s.events.map(e=>e.type).join(','),s.cues.map(c=>c.id).join(',')]),[
+  ['collapse','assets/events/luna-courtyard-plate.png','land',''],
+  ['notice','assets/events/luna-rental-insert.png','','vacancy'],
+  ['reveal','assets/events/luna-courtyard-plate.png','','shelter'],
+  ['out','assets/events/luna-courtyard-plate.png','','']
+ ]);
+ assert.equal(shots[collapse].events[0].at,.05);
+});
