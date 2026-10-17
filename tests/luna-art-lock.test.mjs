@@ -11,10 +11,11 @@ const approvedPath = 'assets/events/hostess.png';
 const approvedBlob = 'e078448bba0d59a783659f3eea0b7f6b74c5af24';
 const expressions = ['neutral', 'happy', 'angry', 'sad', 'surprised', 'shy', 'tired'];
 
-test('Luna always uses the approved illustration in dialogue, never temporary busts', () => {
+test('Luna keeps approved neutral art and uses explicit expressive portraits for other moods', () => {
   assert.equal(EVENT_ART.hostess, approvedPath);
-  for (const emotion of expressions) {
-    assert.equal(EVENT_EXPRESSIONS.hostess[emotion], approvedPath, emotion);
+  assert.equal(EVENT_EXPRESSIONS.hostess.neutral, approvedPath);
+  for (const emotion of expressions.filter(e => e !== 'neutral')) {
+    assert.equal(EVENT_EXPRESSIONS.hostess[emotion], `assets/events/busts/hostess-${emotion}.png`, emotion);
   }
 });
 
@@ -24,14 +25,19 @@ test('the original Luna image bytes cannot silently be replaced', async () => {
   assert.equal(sha, approvedBlob, 'Luna art changed: approve the replacement before updating this baseline');
 });
 
-test('Luna dialogue keeps the original full-body layout', () => {
+test('Luna dialogue preserves the approved neutral layout and changes emotion portraits', () => {
   const event = {
     id: 1, cast: ['hostess'], rooms: [102],
-    lines: [{ speaker: 'hostess', emotion: 'happy', text: 'こんにちは！' }],
+    lines: [{ speaker: 'hostess', emotion: 'neutral', text: 'こんにちは！' }],
   };
   const html = eventStageHTML(event, [], 0);
   assert.match(html, /data-character="hostess"/);
   assert.match(html, /src="assets\/events\/hostess\.png"/);
   assert.match(html, /fullbody-art/);
   assert.doesNotMatch(html, /busts\/hostess/);
+  for (const emotion of expressions.filter(e => e !== 'neutral')) {
+    const scene = eventStageHTML({...event, lines:[{speaker:'hostess',emotion,text:'こんにちは！'}]},[],0);
+    assert.match(scene, new RegExp(`busts/hostess-${emotion}\\.png`));
+    assert.match(scene, /expression-art/);
+  }
 });
