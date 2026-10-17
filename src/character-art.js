@@ -218,10 +218,10 @@ async function assignImage(art,property,src,onReady) {
   art[property]=image;
   if (image) onReady?.();
 }
-export function loadRoomArt(onReady) {
-  return Promise.all(Object.values(ROOM_ART).map(art=>assignImage(art,'image',art.src,onReady)));
+export function loadRoomArt(onReady,onSettled) {
+  return Promise.all(Object.values(ROOM_ART).map(art=>assignImage(art,'image',art.src,onReady).finally(()=>onSettled?.())));
 }
-export function loadCharacterArt(onReady) {
+export function loadCharacterArt(onReady,onSettled) {
   // 初期画面の背景とモクだけを優先。それ以外はブラウザのアイドル時間に少しずつ。
   const first=[
     assignImage(SCENE_ART,'image',SCENE_ART.src,onReady),
@@ -239,7 +239,8 @@ export function loadCharacterArt(onReady) {
     }
     for (const pose of Object.values(art.poses||{})) remaining.push(()=>assignImage(pose,'image',pose.src,onReady));
   }
-  Promise.all(first).then(()=>{
+  const initial=first.map(task=>task.finally(()=>onSettled?.()));
+  Promise.all(initial).then(()=>{
     // 同時接続と画像デコードの集中を避ける。起動画面をブロックしない。
     const schedule=window.requestIdleCallback||((fn)=>setTimeout(fn,40));
     let index=0;
@@ -249,5 +250,5 @@ export function loadCharacterArt(onReady) {
     };
     schedule(batch);
   });
-  return Promise.all(first);
+  return Promise.all(initial);
 }

@@ -4,16 +4,39 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="theme-color" content="#131118">
-  <meta name="app-version" content="2026.10.17.16">
+  <meta name="app-version" content="2026.10.17.17">
   <title>けもの荘 第一幕「アパートを火事（モク）から守れ！」</title>
   <style>
-#boot-screen{position:fixed;inset:0;z-index:99999;display:grid;place-content:center;gap:16px;text-align:center;background:#131118;color:#f4ecdd;font:600 22px system-ui,sans-serif}
-#boot-screen small{font-size:13px;font-weight:400;opacity:.72}
+#boot-screen{position:fixed;inset:0;z-index:300000;display:grid;place-items:center;overflow:hidden;isolation:isolate;background:#100e14;color:#fff8eb;font-family:system-ui,sans-serif}
+#boot-screen::before{content:"";position:absolute;inset:-25%;z-index:-2;background:#d51d3f;clip-path:polygon(0 0,79% 0,40% 100%,0 100%);transform:rotate(-9deg)}
+#boot-screen::after{content:"";position:absolute;inset:0;z-index:-1;opacity:.14;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:8px 8px}
+.boot-card{width:min(76vw,680px);transform:rotate(-5deg)}
+.boot-kicker{display:inline-block;background:#fff8eb;color:#111;padding:7px 14px;font-size:12px;font-weight:900;letter-spacing:.28em;box-shadow:5px 5px 0 #111}
+.boot-title{margin:22px 0 0;font-size:clamp(40px,10vw,90px);font-weight:1000;line-height:1.15;letter-spacing:-.07em;text-shadow:5px 6px 0 #111}
+.boot-word{display:block;margin:4px 0 28px;font-size:clamp(27px,7vw,64px);font-weight:1000;font-style:italic;letter-spacing:-.05em;color:#111;-webkit-text-stroke:1px #fff8eb}
+.boot-readout{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:0 4px 8px;font-size:12px;font-weight:800;letter-spacing:.08em}
+.boot-number{font-size:clamp(32px,7vw,58px);font-weight:1000;font-variant-numeric:tabular-nums;line-height:1}
+.boot-number small{font-size:.4em}
+.boot-track{height:30px;padding:5px;background:#111;border:3px solid #fff8eb;transform:skewX(-13deg);box-shadow:8px 8px 0 #111}
+.boot-fill{height:100%;width:0;background:repeating-linear-gradient(115deg,#fff8eb 0 22px,#d51d3f 22px 27px);transition:width .18s ease}
+.boot-foot{display:flex;justify-content:space-between;margin-top:20px;font-size:10px;font-weight:800;letter-spacing:.16em}
+.boot-pulse{animation:boot-blink 1s steps(2,end) infinite}
+#boot-screen.boot-exit{opacity:0;transform:translateX(6%);transition:opacity .25s,transform .25s}
+@keyframes boot-blink{50%{opacity:.35}}
+@media(prefers-reduced-motion:reduce){.boot-pulse{animation:none}.boot-fill,#boot-screen.boot-exit{transition:none}}
 </style>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="game-ink">
-  <div id="boot-screen" role="status" aria-live="polite">🐾 けもの荘<small>ゲームを準備しています…</small></div>
+  <div id="boot-screen" aria-label="ゲームの読み込み">
+    <div class="boot-card">
+      <span class="boot-kicker">WELCOME TO THE APARTMENT</span>
+      <div class="boot-title">けもの荘</div><span class="boot-word" aria-hidden="true">NOW LOADING!</span>
+      <div class="boot-readout"><span id="boot-label" role="status" aria-live="polite">ゲームを準備しています</span><span class="boot-number"><span id="boot-percent">0</span><small>%</small></span></div>
+      <div class="boot-track" id="boot-progress" role="progressbar" aria-label="起動準備" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="boot-fill" id="boot-fill"></div></div>
+      <div class="boot-foot"><span>このアパート、問題しかない。</span><span class="boot-pulse" aria-hidden="true">◆ STAND BY</span></div>
+    </div>
+  </div>
   <header class="masthead">
     <div class="brand"><span class="brand-mark">🐾</span><span><strong>けもの荘</strong><small>～このアパート、問題しかない。～</small></span></div>
     <div class="date-display"><span class="weather-icon" id="weather-icon">☀</span><div><strong id="day-clock">1日目 <span>17:00</span></strong><small id="time-label">夕暮れ · けもの荘</small></div></div>
@@ -44,8 +67,8 @@
     <div class="entry-oversize" aria-hidden="true">START</div>
     <button type="button" id="entry-start" class="entry-start">▶ START</button>
   </div>
-  <div id="build-version" style="position:fixed;bottom:5px;left:7px;z-index:999;color:#fff9;background:#1119;font:11px sans-serif;padding:4px 7px;border-radius:4px;pointer-events:none">ver 2026.10.17.16</div>
+  <div id="build-version" style="position:fixed;bottom:5px;left:7px;z-index:999;color:#fff9;background:#1119;font:11px sans-serif;padding:4px 7px;border-radius:4px;pointer-events:none">ver 2026.10.17.17</div>
   <div id="update-banner" hidden role="status" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:99999;background:#101826;color:white;border:1px solid #e6a6cb;border-radius:12px;padding:14px 20px;box-shadow:0 8px 30px #000a;font:14px sans-serif;text-align:center">けもの荘が更新されました。 <button id="update-reload" type="button" style="margin:7px;padding:8px 14px;border:0;border-radius:6px;background:#e6a6cb;color:#111;font-weight:bold">最新版を読み込む</button></div>
-  <script type="module" src="src/app.js?v=2026.10.17.16"></script>
+  <script type="module" src="src/app.js?v=2026.10.17.17"></script>
 </body>
 </html>
