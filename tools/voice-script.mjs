@@ -1,5 +1,6 @@
 import {OBSERVATION_BEATS} from '../src/act-one-observation.js';
 import {PROLOGUE_CUTS,INITIAL_MOKU_LINES} from '../src/opening-prologue.js';
+import {ACT_TWO_OPENING_SCENES} from '../src/act-two-opening.js';
 import {ACT_ONE_EVENTS,createActOne,advanceActOne,answerActOne,getActOneChoices,rewindBeforeFire,rewindActOne} from '../src/act-one.js';
 import {ACT_TWO_EVENTS,beginActTwo,advanceActTwo,answerActTwo,rewindActTwo} from '../src/act-two.js';
 import {firstActLife,firstActMutters} from '../src/act-one-life.js';
@@ -37,6 +38,7 @@ export function extractVoiceScript(scope='intro') {
   }
   if(['act1','all'].includes(scope))for(const beat of OBSERVATION_BEATS)add('act1/observation/'+beat.id,beat.lines);
   if(['act2','all'].includes(scope)){
+    for(const shot of ACT_TWO_OPENING_SCENES)add('act2/film/'+shot.shot,shot.cues.filter(cue=>!cue.silent));
     beginActTwo(state);add('act2/opening',state.events.find(e=>e.actScene==='act2-prologue').lines);
     // beginActTwo prepends its prologue event.
     for(const [scene,event] of Object.entries(ACT_TWO_EVENTS)){

@@ -1108,3 +1108,25 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
 /* Overnight montage subtitles stay beneath the enlarged existing HUD clock. */
 .night-montage-caption{position:fixed;z-index:91;bottom:17%;left:8%;width:84%;pointer-events:none;text-align:center;color:#fff3de;font:600 clamp(18px,2.4vw,31px)/1.8 var(--serif);letter-spacing:.06em;text-shadow:0 2px 12px #000,0 0 28px #000;padding:12px;box-sizing:border-box}
 @media(max-width:700px){.night-montage-caption{bottom:18%;font-size:clamp(16px,4.2vw,22px)}}
+
+/* Second-act film: its camera is timeline-driven, independent of dialogue UI. */
+dialog.act-modal:has(.luna-film){width:100vw;height:100dvh;max-width:100vw;max-height:100dvh;margin:0;border:0;border-radius:0;background:#030508;padding:0}
+dialog.act-modal:has(.luna-film) #modal-content{height:100%;padding:0;overflow:hidden}
+.luna-film{position:relative;isolation:isolate;width:100%;height:100dvh;min-height:0;background:#030508;overflow:hidden;outline:none;color:#eee9e0}
+.luna-film::before,.luna-film::after{display:none}
+.luna-film-frame{position:absolute;left:0;right:0;top:50%;aspect-ratio:16/9;max-height:84dvh;transform:translateY(-50%);overflow:hidden;background:#05090e}
+.luna-film-camera{position:absolute;inset:0;will-change:transform;transform-origin:50% 50%}
+.luna-film-image{display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.82) saturate(.82)}
+.luna-film-shade{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 30%,#0104098c 100%),linear-gradient(0deg,#0104098c,transparent 30%,transparent 80%,#02050b55)}
+.luna-film-grain{position:absolute;inset:0;opacity:.085;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 2px,#bdc7d82b 3px,transparent 4px);mix-blend-mode:screen}
+.luna-film-black{position:absolute;inset:0;background:#030508;pointer-events:none;opacity:1}
+.luna-film-subtitle{position:absolute;z-index:3;bottom:max(10%,calc((100dvh - 56.25vw)/2 + 20px));left:8%;right:8%;margin:0;text-align:center;white-space:pre-line;font:400 clamp(14px,1.5vw,23px)/1.9 var(--serif);letter-spacing:.07em;color:#f1ede5;text-shadow:0 2px 4px #000,0 0 16px #000,0 0 35px #000;opacity:0;transition:opacity .4s;pointer-events:none}
+.luna-film-subtitle.visible{opacity:1}
+.luna-film-intro{position:absolute;z-index:2;top:15%;left:7%;font:400 clamp(12px,1.1vw,16px)/1.7 var(--serif);letter-spacing:.2em;text-shadow:0 2px 6px #000;opacity:0;transition:opacity .6s}
+.luna-film-controls{position:absolute;z-index:4;right:max(24px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));display:flex;gap:6px;opacity:.35;transition:opacity .25s}
+.luna-film:hover .luna-film-controls,.luna-film:focus-within .luna-film-controls{opacity:.85}
+.luna-film-controls button{min-height:44px;min-width:44px;padding:8px 14px;border:1px solid #b5c3d02b;border-radius:2px;background:#0a101778;color:#d7dde3;font:11px var(--sans);letter-spacing:.14em;cursor:pointer}
+.luna-film-controls button:focus-visible{outline:2px solid #d6d2c7;outline-offset:3px}
+.luna-film-loading{position:absolute;inset:0;z-index:5;display:grid;place-content:center;background:#030508;color:#b6bcc5;font:12px var(--sans);letter-spacing:.2em}
+@media(orientation:portrait){.luna-film-frame{left:-20%;right:-20%;max-height:none}.luna-film-subtitle{bottom:calc((100dvh - 78.75vw)/2 + 12px);left:6%;right:6%;font-size:14px}.luna-film-intro{top:calc((100dvh - 78.75vw)/2 + 18px)}.luna-film-controls{opacity:.75}.luna-film-controls button{padding:8px 10px}}
+@media(prefers-reduced-motion:reduce){.luna-film-subtitle,.luna-film-intro,.luna-film-controls{transition:none}.luna-film-camera{will-change:auto}}
