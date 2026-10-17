@@ -18,7 +18,9 @@ const assetVersions=new Map();
 for(let index=0;index<assets.length;index+=8)await Promise.all(assets.slice(index,index+8).map(async path=>{
  assetVersions.set(path,createHash('sha256').update(await readFile(join(projectRoot,path))).digest('hex').slice(0,12));
 }));
+const builtAt=new Date().toISOString();
 const publishedSource=new Map(sourceFiles.map((path,index)=>[path,source[index]
+ .replace('name="build-updated" content="local"',`name="build-updated" content="${builtAt}"`)
  .replace(/(from\s+['"])(\.\/[^'"]+\.js)(['"])/g,`$1$2?v=${version}$3`)
  .replace(/(['"])(src\/[^'"]+\.js|styles\.css)(['"])/g,`$1$2?v=${version}$3`)
  .replace(/assets\/[\w\-./]+\.(?:png|svg|mp3)/g,asset=>`${asset}?v=${assetVersions.get(asset)}`)]));
@@ -26,8 +28,9 @@ const publishedSource=new Map(sourceFiles.map((path,index)=>[path,source[index]
 const bundle=GAME_MODULES.map(name=>publishedSource.get('src/'+name+'.js').replace(/^import .*;\r?\n/gm,'').replace(/^export /gm,'')).join('\n\n');
 const bundleVersion=createHash('sha256').update(bundle).digest('hex').slice(0,12);
 publishedSource.set('src/game-bundle.js',bundle);
-publishedSource.set('index.html',publishedSource.get('index.html').replace(/<script type="module" src="src\/app\.js[^"]*"><\/script>/,
- ()=>`<script type="module">window.kemonoBoot.loadBundle('src/game-bundle.js?v=${bundleVersion}',${Buffer.byteLength(bundle)});</script>`));
+publishedSource.set('index.html',publishedSource.get('index.html')
+ .replace(/<script type="module" src="src\/app\.js[^"]*"><\/script>/,'')
+ .replace('<!-- WEB_BOOT_ENTRY -->',()=>`<script>window.kemonoBoot.loadBundle('src/game-bundle.js?v=${bundleVersion}',${Buffer.byteLength(bundle)});</script>`));
 const files=[...sourceFiles,'src/game-bundle.js',...assets,'play.html'];
 let bytes=0;
 // A small concurrency limit avoids a burst of image IO on Windows and CI.

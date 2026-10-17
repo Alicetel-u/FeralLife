@@ -13,7 +13,7 @@ import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './troub
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.17.21';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.17.22';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition, automaticFirstRewind } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -393,7 +393,7 @@ function showOpening(step = 0) {
 function showGameTitle(){
   debugTapCount=0;
   const continuing=state.actOne.started||state.actOne.chapter===2;
-  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU · ver 2026.10.17.21</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
+  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU · ver 2026.10.17.22</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
   modal.querySelector('.title-actions button')?.focus({preventScroll:true});
 }
 function showActTwoOpening(){
@@ -499,8 +499,9 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.17.21';
-const BUILD_UPDATED='2026-10-17 16:45 JST';
+const BUILD_VERSION='2026.10.17.22';
+const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
+const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
   openModal(`<section class="act-screen" style="background:#111525;color:#f1eaf5;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:clamp(18px,5vw,56px);gap:14px;overflow:auto">
   <p style="letter-spacing:.2em;opacity:.65">DEVELOPER TOOLS</p>
@@ -510,7 +511,19 @@ function debugMenuPage(title,subtitle,buttons,back){
   <button type="button" ${back} style="margin-top:8px;background:transparent;color:#c8c8d6;border:1px solid #777;padding:10px 24px;border-radius:8px">← 戻る</button><footer style="margin-top:12px;text-align:center;font:12px/1.9 monospace;color:#aeb7d0">VERSION ${BUILD_VERSION}<br>最終更新 ${BUILD_UPDATED}</footer></section>`);
 }
 function showDeveloperMenu(){
-  debugMenuPage('開発者メニュー','デバッグ機能を選択してください。',[['scenes','シーンセレクト','data-debug-tool']], 'data-debug-back');
+  debugMenuPage('開発者メニュー','デバッグ機能を選択してください。',[['scenes','シーンセレクト','data-debug-tool'],['boot','起動診断・計測結果のコピー','data-debug-tool']], 'data-debug-back');
+}
+function showBootDiagnostics(){
+  debugMenuPage('起動診断','この端末で今回の起動にかかった時間です。結果は自動送信しません。',[['copy-boot','計測結果をコピー','data-debug-tool']], 'data-debug-tools-back');
+  const area=document.createElement('textarea');area.id='debug-boot-report';area.readOnly=true;area.setAttribute('aria-label','起動診断の計測結果');
+  area.value=window.kemonoBoot?.getReport?.()||'この版には起動計測がありません。最新版を再読み込みしてください。';
+  area.style.cssText='width:min(100%,640px);min-height:36vh;flex-shrink:0;box-sizing:border-box;overflow:auto;white-space:pre;background:#080b11;color:#e8edf6;border:1px solid #71809a;padding:12px;font:12px/1.5 monospace;user-select:text;-webkit-user-select:text';
+  modal.querySelector('footer').before(area);
+}
+async function copyBootDiagnostics(button){
+  const area=$('debug-boot-report');if(!area)return;
+  try{await navigator.clipboard.writeText(area.value);button.textContent='コピーしました';}
+  catch{area.focus();area.select();area.setSelectionRange(0,area.value.length);button.textContent='選択された結果を長押ししてコピーしてください';}
 }
 function showDebugChapterSelect(){
   debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter']], 'data-debug-tools-back');
@@ -579,6 +592,8 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-debug-tools-back')){showDeveloperMenu();return;}
   if(button.hasAttribute('data-debug-chapters-back')){showDebugChapterSelect();return;}
   if(button.dataset.debugTool==='scenes'){showDebugChapterSelect();return;}
+  if(button.dataset.debugTool==='boot'){showBootDiagnostics();return;}
+  if(button.dataset.debugTool==='copy-boot'){copyBootDiagnostics(button);return;}
   if(button.dataset.debugChapter){showDebugSceneSelect(button.dataset.debugChapter);return;}
   if(button.dataset.debugScene){startDeveloperScene(button.dataset.debugScene);return;}
   if(button.dataset.opening)showOpening(Number(button.dataset.opening));
@@ -797,6 +812,7 @@ if(entryGate && !previewType){
   entryGate.querySelector('#entry-start').addEventListener('click',()=>{
     // Open the title and unlock its soundtrack in the same trusted click.
     entryGate.remove();
+    if(new URLSearchParams(location.search).get('bootdiag')!=='1')document.getElementById('boot-diagnostics')?.remove();
     startWorldArt();
     if(state.actOne)showGameTitle();
     normalBgm.unlock().catch(()=>{});
