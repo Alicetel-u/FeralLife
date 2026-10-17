@@ -9,10 +9,21 @@ const siteRoot=await mkdtemp(join(projectRoot,'.pages-build-'));
 const moduleNames=(await readdir(join(projectRoot,'src'))).filter(name=>name.endsWith('.js')&&name!=='luna-motion.js');
 const sourceFiles=['index.html','styles.css',...moduleNames.map(name=>'src/'+name)];
 const source=await Promise.all(sourceFiles.map(path=>readFile(join(projectRoot,path),'utf8')));
+// Keep the early loading meter aligned with the actual entry module graph.
+const moduleGraph=new Set();
+function collectBootModules(path){
+ if(moduleGraph.has(path))return;
+ moduleGraph.add(path);
+ const text=source[sourceFiles.indexOf(path)];
+ if(text===undefined)throw new Error('Missing boot module: '+path);
+ for(const match of text.matchAll(/^import .*?from ['"]\.\/([^'"]+\.js)(?:\?[^'"]*)?['"]/gm))collectBootModules('src/'+match[1]);
+}
+collectBootModules('src/app.js');
 const assets=[...new Set(source.join('\n').match(/assets\/[\w\-./]+\.(?:png|svg|mp3)/g)||[])];
 // A refreshed HTML document must not mix newly deployed code with cached modules/CSS.
 const version=process.env.GITHUB_SHA?.slice(0,12)||createHash('sha256').update(source.join('\n')).digest('hex').slice(0,12);
 const publishedSource=new Map(sourceFiles.map((path,index)=>[path,source[index]
+ .replace(/const moduleTotal=\d+;/,`const moduleTotal=${moduleGraph.size};`)
  .replace(/(from\s+['"])(\.\/[^'"]+\.js)(['"])/g,`$1$2?v=${version}$3`)
  .replace(/(['"])(src\/[^'"]+\.js|styles\.css)(['"])/g,`$1$2?v=${version}$3`)
  .replace(/assets\/[\w\-./]+\.(?:png|svg|mp3)/g,asset=>`${asset}?v=${version}`)]));
