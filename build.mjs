@@ -6,7 +6,7 @@ const root = dirname(fileURLToPath(import.meta.url));
 const [html, css, ...modules] = await Promise.all([
   readFile(join(root, 'index.html'), 'utf8'),
   readFile(join(root, 'styles.css'), 'utf8'),
-  ...['message-pages', 'act-expressions', 'story-checkpoints', 'conversation-dom', 'speaker-colors', 'room-layouts', 'act-one-life', 'act-two-life', 'act-one-observation', 'dialogue', 'character-art', 'movement', 'event-cases', 'management', 'simulation', 'act-one', 'act-two', 'fire-ending', 'first-fire-stage', 'debt-ending', 'rewind-transition', 'effects', 'exterior-occlusion', 'manager-life', 'renderer', 'event-stage', 'choice-ui', 'opening-prologue', 'render-policy', 'trouble-victory', 'bgm', 'voice-policy', 'voice-manifest', 'voice-player', 'app'].map(name => readFile(join(root, 'src', name + '.js'), 'utf8'))
+  ...['message-pages', 'act-expressions', 'story-checkpoints', 'conversation-dom', 'speaker-colors', 'room-layouts', 'act-one-life', 'act-two-life', 'act-one-observation', 'dialogue', 'character-art', 'movement', 'event-cases', 'management', 'simulation', 'act-one', 'act-two', 'act-two-opening', 'fire-ending', 'first-fire-stage', 'debt-ending', 'rewind-transition', 'effects', 'exterior-occlusion', 'manager-life', 'renderer', 'event-stage', 'choice-ui', 'opening-prologue', 'render-policy', 'trouble-victory', 'bgm', 'voice-policy', 'voice-manifest', 'voice-player', 'app'].map(name => readFile(join(root, 'src', name + '.js'), 'utf8'))
 ]);
 let script = modules.map(source => source.replace(/^import .*;\r?\n/gm, '').replace(/^export /gm, '')).join('\n\n');
 // コード中の画像と通常BGMを data URL として埋め込む（差分ポーズを増やしてもここの修正は不要）
@@ -29,6 +29,6 @@ let stylesheet = css.replace("url('assets/apartments.png')", 'none');
 for(const [index,path] of assetPaths.entries()){
   stylesheet=stylesheet.replaceAll("url('"+path+"')",'url("'+embeddedAssets[index]+'")').replaceAll('url("'+path+'")','url("'+embeddedAssets[index]+'")');
 }
-const standalone = html.replace('<link rel="stylesheet" href="styles.css">', () => `<style>${stylesheet}</style>`).replace('<script type="module" src="src/app.js"></script>', () => `<script type="module">\n${script}\n</script>`);
+const standalone = html.replace('<link rel="stylesheet" href="styles.css">', () => `<style>${stylesheet}</style>`).replace(/<script type="module" src="src\/app\.js(?:\?v=[^"]+)?"><\/script>/, () => `<script type="module">\n${script}\n</script>`);
 await writeFile(join(root, 'play.html'), standalone, 'utf8');
 console.log(`Built standalone game: play.html (${assetPaths.length} assets embedded, no server or install required)`);
