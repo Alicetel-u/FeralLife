@@ -383,8 +383,8 @@ function showGameTitle(){
   modal.querySelector('.title-actions button')?.focus({preventScroll:true});
 }
 function showActTwoOpening(){
-  openModal(actTwoOpeningHTML(EVENT_EXPRESSIONS.hostess.neutral));
-  startActTwoOpening(modal,()=>showActTwoTitle());
+  openModal(actTwoOpeningHTML());
+  startActTwoOpening(modal,()=>showActTwoTitle(),characterVoice);
 }
 function showActTwoTitle(){openModal(`<section class="act-screen act-title" data-chapter="2"><div class="act-title-copy"><p class="act-kicker">KEMONOSOU / CHAPTER 02</p><p class="act-number">第二幕</p><h2 id="modal-title">アパートを<br><span>借金<span class="act-resident">（ルナ）</span></span>から守れ！</h2><p class="act-tagline">燃えなかったアパート。次は借金のカタに取られるな。</p><button class="act-primary" data-act2-start>第二幕を始める →</button></div><img class="act-key-art" src="${EVENT_EXPRESSIONS.hostess.neutral}" alt="金城ルナ"></section>`);}
 function showActTitle(){
