@@ -162,24 +162,6 @@ export const VOICE_MANIFEST = {
     "performance": "moku",
     "model": "eleven_v3"
   },
-  "[\"cat\",\"窓を少し開けるニャ。部屋の空気が煙たくなってきたニャ。\",\"moku\",false]": {
-    "file": "assets/voices/b6af106a26193a3c6a41e176036f978bddf45cace388ea297c14a75f773d8d89.mp3",
-    "hash": "b6af106a26193a3c6a41e176036f978bddf45cace388ea297c14a75f773d8d89",
-    "source": "act1/ambient/17.325/0:0",
-    "speaker": "cat",
-    "text": "窓を少し開けるニャ。部屋の空気が煙たくなってきたニャ。",
-    "performance": "moku",
-    "model": "eleven_v3"
-  },
-  "[\"cat\",\"灰皿、そろそろいっぱいニャ。捨てる場所を考えないとニャ。\",\"moku\",false]": {
-    "file": "assets/voices/59f15afbc1e66489349d329b17c9dd2bd6bc5442dc7f3d91a1edbe3ba95f9b55.mp3",
-    "hash": "59f15afbc1e66489349d329b17c9dd2bd6bc5442dc7f3d91a1edbe3ba95f9b55",
-    "source": "act1/ambient/18.625/0:0",
-    "speaker": "cat",
-    "text": "灰皿、そろそろいっぱいニャ。捨てる場所を考えないとニャ。",
-    "performance": "moku",
-    "model": "eleven_v3"
-  },
   "[\"cat\",\"灰皿がいっぱいニャ。まだ熱いし、大家に聞くニャ。\",\"moku\",false]": {
     "file": "assets/voices/0384a28730151615d216267b24ae28818b83e4b77c48b674f37fdd47a713b676.mp3",
     "hash": "0384a28730151615d216267b24ae28818b83e4b77c48b674f37fdd47a713b676",
@@ -250,15 +232,6 @@ export const VOICE_MANIFEST = {
     "speaker": "cat",
     "text": "めんどくさいから、大家が決めてニャ。",
     "performance": "moku",
-    "model": "eleven_v3"
-  },
-  "[\"manager\",\"なんで俺が決めるんだよ……。\",\"retort\",false]": {
-    "file": "assets/voices/367a6f1750d2c3c60a3c2e86a2bfb34027650ea726f9cdab2e21d24b58e43239.mp3",
-    "hash": "367a6f1750d2c3c60a3c2e86a2bfb34027650ea726f9cdab2e21d24b58e43239",
-    "source": "act1/ash:8",
-    "speaker": "manager",
-    "text": "なんで俺が決めるんだよ……。",
-    "performance": "retort",
     "model": "eleven_v3"
   },
   "[\"cat\",\"まだ熱いけど……まぁいいかニャ。\",\"moku\",false]": {
@@ -1086,15 +1059,6 @@ export const VOICE_MANIFEST = {
     "source": "act1/ambient/runtime/attempt-2/ash/water/32.100:1",
     "speaker": "cat",
     "text": "お腹が鳴ったニャ。何か食べたいけど、立つのが面倒ニャ。",
-    "performance": "moku",
-    "model": "eleven_v3"
-  },
-  "[\"cat\",\"缶を三本拾ったニャ。今日はもう、かなり働いたニャ。\",\"moku\",false]": {
-    "file": "assets/voices/df2c9369828701d8e828e9d95357d5fcee60fdffa4beb84ff0dadc63a04c9209.mp3",
-    "hash": "df2c9369828701d8e828e9d95357d5fcee60fdffa4beb84ff0dadc63a04c9209",
-    "source": "act1/ambient/runtime/attempt-2/ash/water/34.100:0",
-    "speaker": "cat",
-    "text": "缶を三本拾ったニャ。今日はもう、かなり働いたニャ。",
     "performance": "moku",
     "model": "eleven_v3"
   },

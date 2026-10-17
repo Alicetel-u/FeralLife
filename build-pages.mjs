@@ -1,8 +1,12 @@
-import {cp,mkdir,mkdtemp,readFile,readdir,stat,writeFile,appendFile} from 'node:fs/promises';
+import {cp,mkdir,mkdtemp,readFile,readdir,rm,stat,writeFile,appendFile} from 'node:fs/promises';
 import {dirname,join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 const projectRoot=dirname(fileURLToPath(import.meta.url));
+// Drop earlier staging folders from this script. They are gitignored copies, not user files.
+for(const entry of await readdir(projectRoot,{withFileTypes:true})){
+ if(entry.isDirectory()&&entry.name.startsWith('.pages-build-'))await rm(join(projectRoot,entry.name),{recursive:true,force:true});
+}
 // Unique output avoids stale files and never removes a checkout or user files.
 const siteRoot=await mkdtemp(join(projectRoot,'.pages-build-'));
 const moduleNames=(await readdir(join(projectRoot,'src'))).filter(name=>name.endsWith('.js'));
