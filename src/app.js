@@ -746,7 +746,9 @@ const normalBgm=createNormalBgm();
 function paintSoundButton(){$('sound-button').setAttribute('aria-pressed',String(normalBgm.enabled));$('sound-button').innerHTML=normalBgm.label();}
 function syncNormalBgm(){
   const firstFireStage=modal.open?modal.querySelector('.first-fire-stage'):null;
-  const stalkerSilent=modal.open&&!!modal.querySelector('.first-stalker-stage');
+  const firstStalkerScene=modal.open&&!!modal.querySelector('.first-stalker-stage');
+  const firstStalkerUneasy=firstStalkerScene&&state.actOne?.chapter===2&&state.actOne?.attempt===1;
+  const stalkerSilent=firstStalkerScene&&!firstStalkerUneasy;
   const firstActMemorySilence=state.actOne?.chapter!==2&&modal.open&&!!modal.querySelector('.event-stage.memory-whiteout');
   const firstFireDanger=firstFireStage&&!['trust','departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut);
   const rewind=modal.querySelector('.rewind-screen');
@@ -762,7 +764,7 @@ function syncNormalBgm(){
   // Use Moku's theme only when her portrait is actually visible in the dialogue.
   // Trouble stings always take precedence over character themes.
   const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
-  return normalBgm.setScene(document.hidden||filmQuiet||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad?'bad':title?'title':victory?'victory':trouble?'trouble':firstRewindUneasy?'uneasy':mokuVisible?'moku':bedCue(state?.actOne));
+  return normalBgm.setScene(document.hidden||filmQuiet||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad?'bad':title?'title':victory?'victory':firstStalkerUneasy?'uneasy':trouble?'trouble':firstRewindUneasy?'uneasy':mokuVisible?'moku':bedCue(state?.actOne));
 }
 modal.addEventListener('luna-film-phase',()=>{syncNormalBgm();});
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
