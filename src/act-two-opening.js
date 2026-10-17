@@ -1,6 +1,6 @@
 // Composed cinematic stills; no interpolated character poses or body animation.
 // Voice cue IDs/times are independent of cuts so recordings can be added later.
-export const ACT_TWO_OPENING_REVISION='2026.10.17.14';
+export const ACT_TWO_OPENING_REVISION='2026.10.17.15';
 export const ACT_TWO_SEATED_ART='assets/events/luna-seated-rear.png';
 export const ACT_TWO_OPENING_SCENES=[
  {shot:'heel',image:'assets/events/luna-heel.png',duration:3.6,from:[1.12,-2,1],to:[1.06,0,0],events:Array.from({length:10},(_,i)=>({at:.1+i*.34,type:'step',power:.8})),cues:[{id:'breath',at:1,end:3.5,speaker:'hostess',emotion:'tired',text:'……はぁ、はぁ……っ。'}]},
