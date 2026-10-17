@@ -1121,28 +1121,13 @@ dialog.act-modal:has(.luna-film) #modal-content{height:100%;padding:0;overflow:h
 .luna-film-person{position:absolute;left:50%;bottom:1.5%;width:40%;height:auto;max-width:none;transform:translateX(-50%);filter:brightness(.78) saturate(.78);pointer-events:none}
 .luna-film-contact-shadow{position:absolute;left:50%;bottom:1.5%;width:34%;height:5%;transform:translateX(-50%);border-radius:50%;background:#01040bb8;filter:blur(15px)}
 .luna-film-phone-light{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 62% 62%,#c4e5ff,transparent 62%);opacity:0}
-/* Crop the supplied upper-right still at the chest; no body/pose animation. */
-.luna-film-standing{position:absolute;left:41%;top:12%;width:38%;height:60%;overflow:hidden;pointer-events:none;filter:brightness(.72) saturate(.76)}
-.luna-film-standing::before{content:'';display:block;width:100%;aspect-ratio:2/3;background:url('assets/events/luna-rear-turn.png') 100% 0/200% 200% no-repeat}
-.luna-film[data-cut=listen] .luna-film-standing,.luna-film[data-cut=dismiss] .luna-film-standing{mask-image:linear-gradient(#000 0 83%,transparent)}
-.luna-film[data-cut=listen] .luna-film-image,.luna-film[data-cut=dismiss] .luna-film-image{filter:brightness(.5) saturate(.65);}
-/* The notification has its own graphic cut, with separate device/text regions. */
-.luna-film-phone-ui{position:absolute;inset:0;overflow:hidden;background:#11131a;pointer-events:none}
-.luna-film-phone-ui::before{content:'';position:absolute;inset:8% -12% 6%;background:#b22136;transform:rotate(-12deg);clip-path:polygon(0 16%,100% 0,100% 78%,0 100%)}
-.luna-film-phone-ui::after{content:'';position:absolute;left:4%;right:-5%;top:15%;height:1.5%;background:#f3ede2;transform:rotate(-12deg)}
-.luna-film-device{position:absolute;left:17%;top:15%;width:22%;height:67%;box-sizing:border-box;border:clamp(3px,.5vw,8px) solid #f3ede2;border-radius:8%;background:#131820;transform:rotate(-12deg);box-shadow:12px 14px 0 #080a10}
-.luna-film-device::before{content:'';position:absolute;left:34%;top:3%;width:32%;height:2%;background:#f3ede2;border-radius:8px}
-.luna-film-device-mark{position:absolute;inset:24% 0 auto;text-align:center;color:#f3ede2;font:900 clamp(26px,7vw,105px)/1 var(--sans);transform:rotate(12deg)}
-.luna-film-device i{position:absolute;left:20%;right:20%;bottom:23%;height:2%;background:#65707e}.luna-film-device i:last-child{right:39%;bottom:18%}
-.luna-film-message{position:absolute;left:47%;top:28%;width:47%;transform:rotate(-5deg);color:#16171c;font-family:var(--sans)}
-.luna-film-message>span{display:inline-block;padding:.45em 1em;background:#11131a;color:#fff6e9;font-size:clamp(9px,1.3vw,21px);font-weight:800;letter-spacing:.15em;transform:rotate(-3deg)}
-.luna-film-message>p{margin:.3em 0 0;padding:.45em .65em .55em;background:#f3ede2;clip-path:polygon(3% 0,100% 3%,96% 100%,0 96%);font-size:clamp(17px,3.8vw,59px);font-weight:900;line-height:1.5;letter-spacing:.025em;text-shadow:none}
-.luna-film-phone-ui[data-lit=false]::before{background:#292c34}
-.luna-film-phone-ui[data-lit=false] .luna-film-message,.luna-film-phone-ui[data-lit=false] .luna-film-device-mark{visibility:hidden}
-.luna-film-phone-ui[data-lit=true] .luna-film-device{box-shadow:12px 14px 0 #080a10,-5px -5px 0 #b22136}
+/* The message is typeset inside the generated handset, sharing its camera. */
+.luna-film-phone-ui{position:absolute;left:41.2%;top:24%;width:16%;box-sizing:border-box;padding:1.2%;background:#d3dce8ed;color:#17212d;border-radius:4px;font:600 clamp(8px,1.25vw,20px)/1.7 var(--sans);box-shadow:0 2px 8px #0005;pointer-events:none}
+.luna-film-phone-ui>span{display:block;margin-bottom:.6em;font-size:.65em;font-weight:500;letter-spacing:.08em;color:#43536a}
+.luna-film-phone-ui>p{margin:0;font-weight:600}
 .luna-film-notice{position:absolute;left:39%;top:27%;width:26%;height:47%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12%;color:#543626;text-align:center;font-family:var(--serif);text-shadow:0 1px #fff8}
 .luna-film-notice strong{font-size:clamp(14px,3vw,46px);letter-spacing:.08em;border-block:2px solid #784a35;padding:.25em 0;white-space:nowrap}.luna-film-notice small{font-size:clamp(12px,2vw,30px);letter-spacing:.25em}.luna-film-notice span{font-size:clamp(7px,1vw,16px)}
-.luna-film-standing[hidden],.luna-film-phone-ui[hidden],.luna-film-notice[hidden]{display:none}
+.luna-film-phone-ui[hidden],.luna-film-notice[hidden]{display:none}
 .luna-film-image{display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.82) saturate(.82)}
 .luna-film-shade{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 30%,#0104098c 100%),linear-gradient(0deg,#0104098c,transparent 30%,transparent 80%,#02050b55)}
 .luna-film-grain{position:absolute;inset:0;opacity:.085;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 2px,#bdc7d82b 3px,transparent 4px);mix-blend-mode:screen}

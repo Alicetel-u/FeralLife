@@ -1,6 +1,39 @@
 # 第二幕「逃げる女」オープニング制作メモ
 
-## 現行版：2026.10.17.13
+## 現行版：2026.10.17.14
+
+2カット目から通知後の反応までを新規の完成背景CGへ置換。立ち絵の拡大合成・赤黒の通知グラフィックは撤去。角の路地→顔・肩・胴体を左に揃えて路地をうかがうルナ→手元のスマホ→ルナの反応の順。足音は角で減速して停止。通知音の後にスマホ画面内へ文面を表示し、読む間を確保、4.6秒で画面を消す。通知文字は生成CGと同じカメラに属するため振動・寄りにも追従する。人物動作のアニメーションなし。約35秒、後半の座り姿・募集看板・建物全景と既存会話は維持。通しの画面確認はユーザー担当。
+
+追加素材は内蔵image_genで生成：
+- `assets/events/luna-corner-v2.png`：角を曲がった路地。
+- `assets/events/luna-watch-v2.png`：路地を警戒するルナを背景と一緒に描いたCG。
+- `assets/events/luna-handset-v2.png`：通知を見る手元。文字はHTMLで重ねる。
+
+### 今回の生成プロンプト
+
+### corner
+
+Generate ONE widescreen 16:9 cinematic anime illustration, a complete environment still for a tense visual novel. Reference is environment/style only. Camera at eye level has just ducked around a blind corner in the same wet Japanese residential alley at night. Close dark concrete wall occupies rightmost 22%, with a crisp vertical edge at 78% frame width. To the left of this edge a narrow empty lane recedes diagonally to distant amber lights; strong depth, cold blue shadows, wet reflections and overhead wires. No apartment building from the game, no signage, no people, no text. Restrained polished anime film background, believable perspective, no dutch tilt, clear legible composition. This should feel like sheltering behind the corner and listening, not a generic pretty street.
+
+### watch（初稿・不採用）
+
+Generate ONE finished widescreen 16:9 cinematic anime visual-novel keyframe, not a sprite or collage. Reference1 is CHARACTER DESIGN ONLY: the adult blonde feline woman Luna, same face, ears, long wavy hair, heart hairpin, black ribbons and black-white plaid sleeveless dress. Reference2 is ENVIRONMENT AND PALETTE. Compose character and background together with consistent perspective and illumination. Camera at shoulder height: Luna's head and upper shoulders occupy RIGHTMOST 35% foreground, seen from behind her left shoulder in a natural near-profile, turning her worried eyes LEFT toward the empty narrow alley she escaped through. The LEFT 60% must clearly show that dark lane receding into depth, with no pursuer or silhouette. Face around x78% y36%, ears fully within frame; crop body at upper chest, no cleavage, no hips, no hand touching an invisible wall, no phone. A real corner wall directly behind her on the right provides cover. Cold blue night fill, subtle amber rim light from lane lamp, damp hair wisps, parted lips catching breath, restrained fear, no crying. Strong cinematic negative space on left; polished detailed anime film still with natural anatomy, not a portrait pasted over a backdrop. No text or graphic panels.
+
+### watch（採用方針：顔・肩・胴体が同じ方向を向く横姿へ再生成）
+
+Create a new complete widescreen 16:9 anime cinematic still. Reference1 is CHARACTER IDENTITY ONLY (ignore its pose entirely); reference2 is exact LOCATION/lighting. Luna is adult blonde cat-eared woman with black heart ribbons, heart hairpin, black-and-white plaid sleeveless dress. SCENE: hiding beside the right-hand corner wall in this night alley, checking the empty lane on screen left. COMPOSITION: empty alley fills left 60%, Luna stands on right 40%, waist-up natural STRICT SIDE PROFILE facing SCREEN LEFT. Her nose, sternum, chest and abdomen ALL point LEFT. Her back and long hair point RIGHT, spine neutral upright. The camera sees the SIDE of her torso, NOT her back, NOT an over-shoulder pose. Neck and shoulders relaxed anatomically aligned, no neck twist, no shoulder raised toward chin, both arms hanging down naturally with hands outside bottom crop. Make the front neckline and front plaid bodice visibly face left so her body's front/back are unambiguous; no cleavage emphasis. Face worried, eyes looking left into lane, lips slightly parted catching breath. Head smaller than earlier, both ear tips fully within frame with margin. Beautiful coherent detailed anime illustration matching reference environment: cool blue fill, restrained warm amber rim, wet concrete corner and empty alley. No phone, no text, no pursuers, no collage. Prioritize sound human anatomy and natural profile silhouette over matching reference pose.
+
+### handset
+
+Generate ONE widescreen 16:9 polished cinematic anime close insert for the same rainy Japanese alley, matching the reference environment blue shadows and distant amber bokeh. Point of view looking down toward an adult woman's hands at waist height: the LEFT hand naturally supports a slim black smartphone, seen nearly square-on from above, the RIGHT thumb rests near the side power key without covering the screen. Only wrists/hands and a tiny blurred strand of blonde hair at far edge, no face, torso, breasts or cleavage. Correct natural hands with five fingers each, unobtrusive nails, no jewelry invented. Phone portrait rectangle centered at x50%, screen bounds approximately x40%-60%, y17%-82%, straight vertical edges and near-frontal glass so game can typeset a small message on it. Screen blank uniformly dark navy, no generated text, no icons, no UI, no bloom. Phone occupies 25% frame width, surrounded by generous dark negative space and blurred wet asphalt. Intimate tense grounded shot, subdued light, realistic proportions within anime illustration. No floating phone, no decorative frame, no collage.
+
+### 生成後の修正指定
+
+Edit this cinematic still. Preserve Luna's exact character design, alley environment, night lighting, finished anime rendering, and character-on-right / empty-alley-on-left layout. Fix the storytelling gaze and framing: the camera must look OVER HER RIGHT SHOULDER at her face turning toward SCREEN LEFT. Her nose must point left and her eyes must look directly into the visible empty alley on the left, NOT toward the right edge or the viewer. Show a natural left-facing worried profile/three-quarter profile as she checks behind her. She stays behind the right-side wall corner, shoulders and upper chest only, no hands or phone. Make the head slightly smaller so BOTH cat ear tips have clear margin below the top edge. Keep the left half unobstructed with the lane clearly visible. Do not horizontally flip the whole image; change her head/upper-body orientation to match that leftward sightline. No text, no panels.
+
+undefined
+
+## 旧版（2026.10.17.13）
 
 追跡カットは人物なしの路地と足音で表現。振り向きは添付上段右の静止画を胸元で切る構図に変更（1ポーズ512×768のため過度な拡大を避ける）。通知カットでは人物を表示せず、スマホ図形を左・文面を右に分けた黒／白／赤の斜めのグラフィックを使う。通知前は文面を隠し、音の後に表示。人物の動作アニメ・追加画像生成なし。セリフと約35秒の尺は維持。
 

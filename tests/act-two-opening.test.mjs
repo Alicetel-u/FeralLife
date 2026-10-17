@@ -24,8 +24,10 @@ test('notification and readable rental notice precede the building reveal',()=>{
  assert.ok(shots.find(s=>s.shot==='collapse').cues.length===0);
  assert.equal(shots.find(s=>s.shot==='chase').pose,undefined);
  assert.equal(shots[call].pose,undefined);
- assert.equal(shots.find(s=>s.shot==='listen').pose,'turn');
- assert.ok(actTwoOpeningHTML().includes('luna-film-message'));
+ assert.ok(shots.every(s=>!s.pose));
+ assert.ok(!/luna-film-standing|luna-film-device|luna-film-message/.test(actTwoOpeningHTML()));
+ assert.equal(actTwoOpeningFrame(call,4.7).notification,false);
+ assert.ok(actTwoOpeningHTML().includes('luna-film-phone-ui'));
  const dialogue=shots.flatMap(s=>s.cues.map(c=>c.text)).join('');
  assert.ok(!/もう、足が|少しだけ|まだ、来るの/.test(dialogue));
  const out=shots.findIndex(s=>s.shot==='out');
@@ -53,11 +55,12 @@ test('story and both old preview links invoke the same full opening; prototype i
  assert.ok(!/startLunaMotion|lunaMotionHTML/.test(app));
 });
 
-test('escape never shows the apartment and the listening shot continues the same camera',()=>{
+test('rebuilt escape and phone shots use composed artwork and settle before listening',()=>{
  const firstBuilding=shots.findIndex(s=>s.person);
  assert.ok(shots.slice(0,firstBuilding).every(s=>!s.image.includes('luna-flight')&&!s.image.includes('courtyard')));
  const chase=shots.findIndex(s=>s.shot==='chase'),listen=chase+1;
- assert.equal(shots[chase].image,shots[listen].image);
+ assert.notEqual(shots[chase].image,shots[listen].image);
+ assert.ok(shots.slice(chase,chase+4).every(s=>/-v2\.png$/.test(s.image)));
  assert.equal(actTwoOpeningFrame(chase,shots[chase].duration).rig,actTwoOpeningFrame(listen,0).rig);
  assert.ok(!shots.some(s=>s.shot==='blind'));
 });
