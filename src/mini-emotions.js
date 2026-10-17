@@ -267,8 +267,8 @@ export function miniEmotionMotion(type,emotion,t,reduced=false) {
   }
 }
 
-// Pixel sprites use a cached alpha test, like a cutout texture: faint generated
-// matte pixels must not form rectangles over the room. Source colors stay intact.
+// Cache a matte-free cutout with a soft one-pixel edge. Interior colors stay
+// intact, and semi-transparent background pixels cannot form visible rectangles.
 const miniCutoutCache=new WeakMap();
 function miniCutoutImage(art){
   if(!art.alphaCutoff||!globalThis.document?.createElement)return art.image;
@@ -277,7 +277,22 @@ function miniCutoutImage(art){
   const canvas=document.createElement('canvas');canvas.width=art.image.width;canvas.height=art.image.height;
   const pen=canvas.getContext('2d',{willReadFrequently:true});pen.drawImage(art.image,0,0);
   const pixels=pen.getImageData(0,0,canvas.width,canvas.height);
-  for(let i=3;i<pixels.data.length;i+=4)pixels.data[i]=pixels.data[i]>=art.alphaCutoff?255:0;
+  const data=pixels.data,width=canvas.width,height=canvas.height;
+  const originalAlpha=new Uint8Array(width*height);
+  for(let n=0;n<originalAlpha.length;n++)originalAlpha[n]=data[n*4+3];
+  const lower=Math.max(96,art.alphaCutoff-64);
+  for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+    const at=y*width+x,alpha=originalAlpha[at];
+    if(alpha>=art.alphaCutoff){data[at*4+3]=255;continue;}
+    // Keep only a soft one-pixel fringe next to the solid character. This
+    // restores fine hair/cloth edges without bringing back the generated matte.
+    let touchesBody=false;
+    if(alpha>lower)for(let dy=-1;dy<=1&&!touchesBody;dy++)for(let dx=-1;dx<=1;dx++){
+      const nx=x+dx,ny=y+dy;
+      if(nx>=0&&nx<width&&ny>=0&&ny<height&&originalAlpha[ny*width+nx]>=art.alphaCutoff){touchesBody=true;break;}
+    }
+    data[at*4+3]=touchesBody?Math.round(255*(alpha-lower)/(art.alphaCutoff-lower)):0;
+  }
   pen.putImageData(pixels,0,0);miniCutoutCache.set(art.image,{cutoff:art.alphaCutoff,canvas});
   return canvas;
 }
@@ -290,7 +305,7 @@ export function drawMiniEmotion(ctx,type,x,y,t,scale,direction,emotion,{moving=f
   const [sx,sy,w,h]=frame,px=baseHeight/art.height;
   const motion=miniEmotionMotion(type,emotion,t,reduced||moving);
   ctx.save();ctx.translate(Math.round(x+motion.dx*scale),Math.round(y+motion.dy*scale));
-  ctx.rotate(motion.rotate);ctx.scale(scale*direction,scale);ctx.imageSmoothingEnabled=false;
+  ctx.rotate(motion.rotate);ctx.scale(scale*direction,scale);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
   ctx.drawImage(miniCutoutImage(art),sx,sy,w,h,-w*px/2,-h*px,w*px,h*px);
   ctx.restore();return true;
 }

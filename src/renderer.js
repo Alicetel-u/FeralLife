@@ -106,8 +106,9 @@ export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1
     ctx.translate(Math.round(x), Math.round(y + bob));
     if (opts.rotate) ctx.rotate(opts.rotate);
     ctx.scale(scale * direction * (opts.sx || 1), scale * (opts.sy || 1));
-    // Miniature sprites use crisp scaling; conversation busts render separately.
-    ctx.imageSmoothingEnabled = false;
+    // Smooth the sprite once at the final display resolution; room pixels stay crisp.
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(opts.tint ? tintedImage(image, opts.tint) : image, -ox, -oy, width, height);
     ctx.restore();
     return;
@@ -165,6 +166,15 @@ export function drawPortrait(canvas, type) {
 
 export class WorldRenderer {
   constructor(canvas) { this.canvas = canvas; this.ctx = canvas.getContext('2d'); this.view = 'interior'; this.focus = true; this.focusRoom = 101; this.animTime = 0; this.last = 0; }
+  resizeToDisplay(){
+    const box=this.canvas.getBoundingClientRect?.();
+    if(!box?.width)return false;
+    // Match Retina screens without allowing an unbounded full-screen buffer.
+    const width=Math.min(2560,Math.max(WORLD_WIDTH,Math.ceil(box.width*(globalThis.devicePixelRatio||1)/16)*16));
+    const height=Math.round(width*WORLD_HEIGHT/WORLD_WIDTH);
+    if(this.canvas.width===width&&this.canvas.height===height)return false;
+    this.canvas.width=width;this.canvas.height=height;return true;
+  }
   reset() { this.last = 0; this.managerPosition=null; this.miniReactions?.reset(); }
   draw(state, timestamp, paused, bubbles = []) {
     const ctx = this.ctx;
@@ -183,8 +193,8 @@ export class WorldRenderer {
     const target=this.managerTarget;
     this.managerPosition=advanceManager(this.managerPosition,target,paused?0:dt);
     this.managerMoving=this.managerPosition.moving;
-    ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,WORLD_WIDTH,WORLD_HEIGHT);
-    ctx.setTransform(WORLD_WIDTH/1200,0,0,WORLD_HEIGHT/675,0,0);ctx.imageSmoothingEnabled = false;
+    ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+    ctx.setTransform(this.canvas.width/1200,0,0,this.canvas.height/675,0,0);ctx.imageSmoothingEnabled = false;
     const h = dateAt(state.hour).hour + state.hour % 1;
     const darkness = h >= 20 || h < 5 ? .57 : h >= 18 ? (h - 18) * .25 : h < 7 ? (7 - h) * .19 : 0;
     const selected = state.residents.find(r => r.room === state.selected);
@@ -398,7 +408,7 @@ export class WorldRenderer {
     if (!this.bubbles?.length) return;
     const ctx = this.ctx;
     ctx.save();
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.setTransform(this.canvas.width/WORLD_WIDTH, 0, 0, this.canvas.height/WORLD_HEIGHT, 0, 0);
     ctx.imageSmoothingEnabled = false;
     const canvasBox=this.canvas.getBoundingClientRect?.();
     const speechBounds=canvasBox?.width ? {left:Math.max(0,-canvasBox.left*WORLD_WIDTH/canvasBox.width),right:Math.min(WORLD_WIDTH,((globalThis.innerWidth||canvasBox.right)-canvasBox.left)*WORLD_WIDTH/canvasBox.width)} : {left:0,right:WORLD_WIDTH};
