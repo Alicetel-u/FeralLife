@@ -1,6 +1,25 @@
 # 第二幕「逃げる女」オープニング制作メモ
 
-## 現行版：2026.10.17.11
+## 現行版：2026.10.17.12
+
+約35秒。足元3.6秒 → 添付の後ろ姿と路地4.4秒 → 振り向き4秒 → 通知音・振動・スマホ文面5.2秒 → 警戒2.2秒 → 座った背中3.2秒 → 募集看板4.8秒 → 建物全景と「……ここなら……。」6秒 → 暗転1.4秒。以下の旧版メモより本段落と実装を優先。
+
+添付素材 `assets/events/luna-rear-turn.png` の上段2枚を独立した静止カットで使用。連続ポーズアニメーションは行わない。スマホ文面と募集看板の文字はHTMLで描画。通知文面は通知音の後に表示し、音声の台詞としては扱わない。静かな場面のBGM抑制はシーンのquiet指定と同期。画面での通し確認はユーザー担当とし、テスト・ビルドを実施。
+
+### 追加素材と生成プロンプト（内蔵image_gen）
+
+スマホ手元の生成画像はユーザー判断で不採用。配信対象に含めず、路地＋添付の振り向き姿＋HTML/CSSのスマホ表示を使用。
+- `assets/events/luna-rental-insert.png`：既存の建物を参照した募集掲示板。
+
+手元（不採用の生成記録）：
+
+Cinematic anime visual novel insert, widescreen 16:9. At night in a wet Japanese alley, tight closeup of an adult woman's delicate hand holding a black smartphone upright, cropped blonde hair and black-and-white plaid sleeveless dress at far left edge, no face. Phone is front facing, straight vertical rectangle, centered at 55% horizontal 48% vertical, screen occupies about 24% of frame width and 70% height, dark blue blank glass ready for UI compositing. Amber distant streetlight bokeh, cold blue wet pavement, tense intimate framing. Detailed polished illustration, no text, no notifications, no other people.
+
+掲示板（参照：luna-courtyard-plate.png）：
+
+Reference image is the exact apartment exterior and style to match. Create a cinematic anime widescreen 16:9 close insert of its weathered wooden neighborhood bulletin board at the entrance, rain drops, warm fluorescent light, blue night. Camera squarely facing the board, no tilt. A single prominent blank aged cream rectangular rental notice centered, paper edges at x30%-70%, y16%-84%, affixed with four pins. Behind the board blurred hints of matching old exterior, rails and ivy. No people. No text whatsoever on the central blank paper; game will typeset it. Polished dramatic visual novel illustration.
+
+## 旧版の制作記録（2026.10.17.11）
 
 本編の第一幕クリア後に `showActTwoOpening()` から再生する約47秒・8カットのオープニング。確認URL `?preview=act-two-opening` と、以前の `?preview=luna-motion` も同じ本編実装へ接続する。
 

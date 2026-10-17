@@ -1,16 +1,18 @@
-// Still-image direction only. No sprite sheets, interpolated poses or body rig.
+// Still-image direction only. No interpolated poses or body rig. Two supplied poses are separate static cuts.
 // Voice cue IDs/times are independent of cuts so recordings can be added later.
-export const ACT_TWO_OPENING_REVISION='2026.10.17.11';
+export const ACT_TWO_OPENING_REVISION='2026.10.17.12';
 export const ACT_TWO_SEATED_ART='assets/events/luna-seated-rear.png';
+export const ACT_TWO_REAR_ART='assets/events/luna-rear-turn.png';
 export const ACT_TWO_OPENING_SCENES=[
- {shot:'heel',image:'assets/events/luna-heel.png',duration:5,from:[1.12,-2,1],to:[1.06,0,0],events:Array.from({length:14},(_,i)=>({at:.1+i*.35,type:'step',power:.8})),cues:[]},
- {shot:'chase',image:'assets/events/luna-phone.png',duration:8,from:[1.18,-2,5],to:[1.65,2,23],events:Array.from({length:18},(_,i)=>({at:i*.33,type:'step',power:.8})).concat([{at:5.9,type:'scrape'}]),cues:[]},
- {shot:'listen',image:'assets/events/luna-phone.png',duration:7,from:[1.65,2,23],to:[1.65,2,23],quiet:true,events:[],cues:[{id:'breath',at:1.6,end:6.6,speaker:'hostess',emotion:'tired',text:'……はぁ、はぁ……っ。\n……もう、追ってこない……？'}]},
- {shot:'call',image:'assets/events/luna-phone.png',duration:6,from:[1.65,2,23],to:[1.04,0,0],events:[{at:.4,type:'buzz'},{at:.75,type:'buzz'}],cues:[{id:'message',at:2,end:5.7,speaker:'narrator',silent:true,text:'「まだ話は終わっていない」'}]},
- {shot:'collapse',image:'assets/events/luna-courtyard-plate.png',duration:5,from:[2.8,0,-88],to:[2.8,0,-88],person:true,personFrom:1.7,personTo:1.7,quiet:true,events:[{at:.05,type:'land',power:1}],cues:[]},
- {shot:'reveal',image:'assets/events/luna-courtyard-plate.png',duration:9,from:[2.8,0,-88],to:[1.02,0,0],person:true,personFrom:1.7,personTo:1,events:[],cues:[]},
- {shot:'look',image:'assets/events/luna-courtyard-plate.png',duration:5,from:[1.02,0,0],to:[1.02,0,0],person:true,personFrom:1,personTo:1,text:'……ここなら、しばらく隠れられるかな',events:[],cues:[{id:'shelter',at:1,end:4.7,speaker:'hostess',emotion:'tired',text:'……ここなら、しばらく隠れられるかな'}]},
- {shot:'out',image:'assets/events/luna-courtyard-plate.png',duration:1.5,from:[1.02,0,0],to:[1.02,0,0],person:true,personFrom:1,personTo:1,events:[],cues:[]}
+ {shot:'heel',image:'assets/events/luna-heel.png',duration:3.6,from:[1.12,-2,1],to:[1.06,0,0],events:Array.from({length:10},(_,i)=>({at:.1+i*.34,type:'step',power:.8})),cues:[{id:'breath',at:1,end:3.5,speaker:'hostess',emotion:'tired',text:'……はぁ、はぁ……っ。'}]},
+ {shot:'chase',image:'assets/events/luna-alley.png',duration:4.4,from:[1.12,-2,0],to:[1.06,0,0],pose:'rear',events:Array.from({length:9},(_,i)=>({at:i*.34,type:'step',power:.7})).concat([{at:3.1,type:'scrape'}]),cues:[]},
+ {shot:'listen',image:'assets/events/luna-alley.png',duration:4,from:[1.2,0,0],to:[1.24,0,0],pose:'turn',quiet:true,events:[],cues:[{id:'corner',at:.6,end:3.7,speaker:'hostess',emotion:'tired',text:'……ここまで来れば……。'}]},
+ {shot:'call',image:'assets/events/luna-alley.png',duration:5.2,from:[1.24,0,0],to:[1.24,0,0],pose:'turn',quiet:true,events:[{at:.25,type:'buzz'},{at:.52,type:'ring'},{at:.7,type:'buzz'}],cues:[{id:'persistent',at:3.1,end:5,speaker:'hostess',emotion:'angry',text:'……しつこい……。'}]},
+ {shot:'dismiss',image:'assets/events/luna-alley.png',duration:2.2,from:[1.24,0,0],to:[1.24,0,0],pose:'turn',quiet:true,events:[{at:.1,type:'scrape',power:.35}],cues:[]},
+ {shot:'collapse',image:'assets/events/luna-courtyard-plate.png',duration:3.2,from:[2.8,0,-88],to:[2.8,0,-88],person:true,personFrom:1.7,personTo:1.7,quiet:true,events:[{at:.05,type:'land',power:.55}],cues:[]},
+ {shot:'notice',image:'assets/events/luna-rental-insert.png',duration:4.8,from:[1,0,0],to:[1,0,0],quiet:true,events:[],cues:[{id:'vacancy',at:1,end:4.5,speaker:'hostess',emotion:'tired',text:'……入居者、募集……？'}]},
+ {shot:'reveal',image:'assets/events/luna-courtyard-plate.png',duration:6,from:[1.48,0,-12],to:[1.02,0,0],person:true,personFrom:1.2,personTo:1,events:[],cues:[{id:'shelter',at:3.2,end:5.8,speaker:'hostess',emotion:'tired',text:'……ここなら……。'}]},
+ {shot:'out',image:'assets/events/luna-courtyard-plate.png',duration:1.4,from:[1.02,0,0],to:[1.02,0,0],person:true,personFrom:1,personTo:1,events:[],cues:[]}
 ];
 export const ACT_TWO_OPENING_DURATION=ACT_TWO_OPENING_SCENES.reduce((sum,shot)=>sum+shot.duration,0);
 const filmClamp=n=>Math.max(0,Math.min(1,n));
@@ -26,7 +28,7 @@ export function actTwoOpeningFrame(index,seconds,reduced=false){
    const impulse=Math.exp(-age*(event.type==='land'?10:17));
    x+=Math.sin(age*95)*amplitude*impulse;y+=Math.cos(age*71)*amplitude*impulse;
   }
-  if(shot.shot==='chase'){const settle=1-filmEase((t-5.2)/2.4);x+=Math.sin(t*8)*4*settle;y+=Math.sin(t*11)*3*settle;roll=Math.sin(t*5)*.16*settle;}
+  if(shot.shot==='chase'){const settle=1-filmEase((t-2.6)/1.6);x+=Math.sin(t*8)*4*settle;y+=Math.sin(t*11)*3*settle;roll=Math.sin(t*5)*.16*settle;}
   if(shot.shot==='glance'){x+=28*Math.exp(-t*19);roll=-1.1*Math.exp(-t*10);}
  }
  const foreground=(shot.personFrom||1)+((shot.personTo||1)-(shot.personFrom||1))*blend;
@@ -36,13 +38,14 @@ export function actTwoOpeningFrame(index,seconds,reduced=false){
   foreground:`scale(${foreground})`,rig:`translate(${x.toFixed(3)}px,${y.toFixed(3)}px) rotate(${roll.toFixed(3)}deg) scale(1.035)`,
   black,blur:!reduced&&shot.shot==='glance'?Math.max(0,5-t*30):0,
   subtitle:shot.cues.find(cue=>t>=cue.at&&t<cue.end)?.text||'',
-  glow:shot.shot==='call'?filmClamp((t-1)/.3)*.18:0
+  glow:shot.shot==='call'?filmClamp((t-.45)/.25)*.18:0,
+  notification:shot.shot==='call'&&t>=.65
  };
 }
 export function actTwoOpeningHTML(){
  return `<section class="act-screen luna-film directed-luna-film" data-act2-opening data-opening-version="${ACT_TWO_OPENING_REVISION}" aria-label="第二幕オープニング・逃げる女" tabindex="-1">
  <h2 id="modal-title" class="visually-hidden">第二幕・逃げる女</h2>
- <div class="luna-film-frame"><div class="luna-film-rig"><div class="luna-film-camera"><img class="luna-film-image" alt=""></div><div class="luna-film-foreground"><div class="luna-film-contact-shadow"></div><img class="luna-film-person" src="${ACT_TWO_SEATED_ART}" alt="地面に座り込んだルナの後ろ姿"></div></div><div class="luna-film-shade"></div><div class="luna-film-phone-light"></div><div class="luna-film-grain"></div><div class="luna-film-black"></div></div>
+ <div class="luna-film-frame"><div class="luna-film-rig"><div class="luna-film-camera"><img class="luna-film-image" alt=""></div><div class="luna-film-foreground"><div class="luna-film-contact-shadow"></div><img class="luna-film-person" src="${ACT_TWO_SEATED_ART}" alt="地面に座り込んだルナの後ろ姿"></div></div><div class="luna-film-standing" role="img" aria-label="背後を警戒するルナ"></div><div class="luna-film-shade"></div><div class="luna-film-phone-light"></div><div class="luna-film-phone-ui" aria-label="スマートフォンの通知" hidden><span>メッセージ</span><p>まだ話は終わっていない</p></div><div class="luna-film-notice" hidden><small>けもの荘</small><strong>入居者募集</strong><span>お気軽にお問い合わせください</span></div><div class="luna-film-grain"></div><div class="luna-film-black"></div></div>
  <p class="luna-film-subtitle" aria-live="polite" aria-atomic="true"></p>
  <div class="luna-film-controls"><button type="button" data-film-pause aria-label="一時停止" aria-pressed="false">Ⅱ</button><button type="button" data-film-next aria-label="次のカットへ">次へ</button><button type="button" data-film-skip>スキップ</button></div>
  <div class="luna-film-loading" role="status"><span>映像を準備しています…</span><button type="button" data-film-retry hidden>もう一度読み込む</button></div></section>`;
@@ -74,6 +77,9 @@ function createLunaFilmSound(settings){
    if(event.type==='step'){noise(.045,.14*power,2800,'highpass');noise(.12,.12*power,350);}
    else if(event.type==='land')noise(.28,.3,260);
    else if(event.type==='scrape')noise(.19,.11,1200,'bandpass');
+   else if(event.type==='ring'){
+    for(const [delay,hz] of [[0,880],[.13,1174]]){const osc=context.createOscillator(),gain=context.createGain(),at=context.currentTime+delay;osc.type='sine';osc.frequency.value=hz;gain.gain.setValueAtTime(0,at);gain.gain.linearRampToValueAtTime(settings.volume*.09,at+.012);gain.gain.exponentialRampToValueAtTime(.0001,at+.28);osc.connect(gain);gain.connect(context.destination);osc.start(at);osc.stop(at+.3);osc.onended=()=>{osc.disconnect();gain.disconnect();};}
+   }
    else if(event.type==='buzz'){
     const osc=context.createOscillator(),gain=context.createGain(),at=context.currentTime;osc.type='sawtooth';osc.frequency.value=112;gain.gain.setValueAtTime(settings.volume*.024,at);gain.gain.exponentialRampToValueAtTime(.0001,at+.17);osc.connect(gain);gain.connect(context.destination);osc.start(at);osc.stop(at+.18);osc.onended=()=>{osc.disconnect();gain.disconnect();};
    }
@@ -87,15 +93,17 @@ export function startActTwoOpening(root,onDone,voice=null,sound=null){
  const section=root.querySelector('[data-act2-opening]');if(!section)return ()=>{};
  const image=section.querySelector('.luna-film-image'),camera=section.querySelector('.luna-film-camera'),foreground=section.querySelector('.luna-film-foreground'),rig=section.querySelector('.luna-film-rig');
  const subtitle=section.querySelector('.luna-film-subtitle'),black=section.querySelector('.luna-film-black'),light=section.querySelector('.luna-film-phone-light');
+ const standing=section.querySelector('.luna-film-standing'),phoneUI=section.querySelector('.luna-film-phone-ui'),notice=section.querySelector('.luna-film-notice');
  const pause=section.querySelector('[data-film-pause]'),loading=section.querySelector('.luna-film-loading');
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches,foley=createLunaFilmSound(sound);
  let index=0,elapsed=0,last=null,raf=0,ready=false,paused=false,destroyed=false,loadVersion=0,activeCue=null;
  let soundsPlayed=new Set();
  const decodedAssets=new Map();
  const announce=()=>section.dispatchEvent(new CustomEvent('luna-film-phase',{bubbles:true}));
- const paint=()=>{const frame=actTwoOpeningFrame(index,elapsed,reduced);camera.style.transform=frame.transform;foreground.style.transform=frame.foreground;rig.style.transform=frame.rig;rig.style.filter=frame.blur?`blur(${frame.blur}px)`:'none';black.style.opacity=frame.black;light.style.opacity=frame.glow;subtitle.textContent=frame.subtitle;subtitle.classList.toggle('visible',!!frame.subtitle);};
+ const paint=()=>{const frame=actTwoOpeningFrame(index,elapsed,reduced);camera.style.transform=frame.transform;foreground.style.transform=frame.foreground;rig.style.transform=frame.rig;rig.style.filter=frame.blur?`blur(${frame.blur}px)`:'none';black.style.opacity=frame.black;light.style.opacity=frame.glow;phoneUI.hidden=ACT_TWO_OPENING_SCENES[index].shot!=='call';phoneUI.dataset.lit=String(frame.notification);subtitle.textContent=frame.subtitle;subtitle.classList.toggle('visible',!!frame.subtitle);};
  const show=()=>{
-  const shot=ACT_TWO_OPENING_SCENES[index];section.dataset.cut=shot.shot;
+  const shot=ACT_TWO_OPENING_SCENES[index];section.dataset.cut=shot.shot;section.dataset.quiet=String(!!shot.quiet);
+  standing.hidden=!shot.pose;standing.dataset.pose=shot.pose||'';notice.hidden=shot.shot!=='notice';
   if(image.getAttribute('src')!==shot.image)image.src=shot.image;image.alt=({cold:'人気のない深夜の裏道',heel:'濡れた路面を蹴るヒール',chase:'背後を振り返りながら逃げるルナ',glance:'背後を気にするルナの表情',listen:'暗がりで息を潜めるルナ',call:'ルナの手の中で震えるスマートフォン',collapse:'けもの荘の前で座り込んだルナ',silence:'静まり返った路地とルナの後ろ姿',reveal:'ルナの背後から見上げる夜のけもの荘',look:'けもの荘の灯りを見上げるルナ'}[shot.shot]||'夜のけもの荘');
   foreground.hidden=!shot.person;activeCue=null;soundsPlayed=new Set();voice?.stop();voice?.prepare(shot.cues.find(c=>!c.silent)||null);
   if(!paused&&!document.hidden)foley.scene(!!shot.quiet);paint();announce();
@@ -117,7 +125,7 @@ export function startActTwoOpening(root,onDone,voice=null,sound=null){
  const toggle=()=>{if(!ready)return;paused=!paused;section.dataset.paused=String(paused);pause.textContent=paused?'▶':'Ⅱ';pause.setAttribute('aria-label',paused?'再生':'一時停止');pause.setAttribute('aria-pressed',String(paused));last=null;if(paused){voice?.stop();foley.pause();}else{activeCue=null;foley.scene(!!ACT_TWO_OPENING_SCENES[index].quiet);}announce();};
  const load=()=>{
   const version=++loadVersion;ready=false;loading.hidden=false;loading.querySelector('span').textContent='映像を準備しています…';loading.querySelector('button').hidden=true;
-  const sources=[...new Set([...ACT_TWO_OPENING_SCENES.map(s=>s.image),ACT_TWO_SEATED_ART])];
+  const sources=[...new Set([...ACT_TWO_OPENING_SCENES.map(s=>s.image),ACT_TWO_SEATED_ART,ACT_TWO_REAR_ART])];
   Promise.all(sources.map(src=>new Promise((resolve,reject)=>{const asset=new Image();asset.onload=async()=>{try{await asset.decode?.();decodedAssets.set(src,asset);resolve();}catch(error){reject(error);}};asset.onerror=reject;asset.src=src;}))).then(()=>{if(destroyed||version!==loadVersion)return;ready=true;last=null;loading.hidden=true;show();}).catch(()=>{if(destroyed||version!==loadVersion)return;loading.querySelector('span').textContent='画像の読み込みに失敗しました';loading.querySelector('button').hidden=false;});
  };
  function click(e){const button=e.target.closest('button');if(!button)return;e.preventDefault();e.stopPropagation();if(button.hasAttribute('data-film-skip'))finish();else if(button.hasAttribute('data-film-pause'))toggle();else if(button.hasAttribute('data-film-retry'))load();else next();}

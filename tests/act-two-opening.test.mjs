@@ -10,20 +10,24 @@ test('full opening uses stills and a single transparent seated character without
  for(const shot of shots){assert.ok(existsSync(shot.image));assert.ok(shot.duration>0);}
  assert.ok(existsSync(ACT_TWO_SEATED_ART));
  assert.ok(!shots.some(s=>/sheet|poses/.test(s.image)));
- assert.ok(ACT_TWO_OPENING_DURATION>=45&&ACT_TWO_OPENING_DURATION<=50);
- assert.deepEqual(shots.map(s=>s.shot),['heel','chase','listen','call','collapse','reveal','look','out']);
+ assert.ok(ACT_TWO_OPENING_DURATION>=33&&ACT_TWO_OPENING_DURATION<=38);
+ assert.deepEqual(shots.map(s=>s.shot),['heel','chase','listen','call','dismiss','collapse','notice','reveal','out']);
 });
-test('seated image and backdrop remain continuous through silence, reveal and final line',()=>{
- const indices=['collapse','reveal','look'].map(name=>shots.findIndex(s=>s.shot===name));
- for(let i=0;i<indices.length-1;i++){
-  const left=indices[i],right=indices[i+1];
-  assert.equal(shots[left].image,shots[right].image);
-  const end=actTwoOpeningFrame(left,shots[left].duration),start=actTwoOpeningFrame(right,0);
-  assert.equal(end.transform,start.transform);assert.equal(end.foreground,start.foreground);
- }
- const reveal=indices[1];
- assert.notEqual(actTwoOpeningFrame(reveal,0).foreground,actTwoOpeningFrame(reveal,shots[reveal].duration).foreground);
- assert.equal(shots[indices[0]].quiet,true);
+test('notification and readable rental notice precede the building reveal',()=>{
+ const call=shots.findIndex(s=>s.shot==='call'),notice=shots.findIndex(s=>s.shot==='notice'),reveal=shots.findIndex(s=>s.shot==='reveal');
+ assert.ok(call<notice&&notice<reveal);
+ assert.ok(shots[call].events.some(e=>e.type==='ring'&&e.at<.65));
+ assert.equal(actTwoOpeningFrame(call,.3).notification,false);
+ assert.equal(actTwoOpeningFrame(call,.7).notification,true);
+ assert.ok(actTwoOpeningHTML().includes('まだ話は終わっていない'));
+ assert.ok(actTwoOpeningHTML().includes('入居者募集'));
+ assert.ok(shots.find(s=>s.shot==='collapse').cues.length===0);
+ assert.ok(shots.some(s=>s.pose==='rear')&&shots.some(s=>s.pose==='turn'));
+ const dialogue=shots.flatMap(s=>s.cues.map(c=>c.text)).join('');
+ assert.ok(!/もう、足が|少しだけ|まだ、来るの/.test(dialogue));
+ const out=shots.findIndex(s=>s.shot==='out');
+ assert.equal(actTwoOpeningFrame(reveal,shots[reveal].duration).transform,actTwoOpeningFrame(out,0).transform);
+ assert.equal(actTwoOpeningFrame(reveal,shots[reveal].duration).foreground,actTwoOpeningFrame(out,0).foreground);
 });
 test('event-driven shakes stop in quiet shots and reduced motion preserves composition',()=>{
  const chase=shots.findIndex(s=>s.shot==='chase'),listen=shots.findIndex(s=>s.shot==='listen');
@@ -33,7 +37,7 @@ test('event-driven shakes stop in quiet shots and reduced motion preserves compo
   const a=actTwoOpeningFrame(i,.2,true),b=actTwoOpeningFrame(i,1,true);
   assert.equal(a.rig,b.rig);assert.equal(a.transform,b.transform);assert.equal(a.foreground,b.foreground);assert.equal(a.blur,0);
  }
- assert.match(actTwoOpeningFrame(listen,2).subtitle,/追ってこない/);
+ assert.match(actTwoOpeningFrame(listen,2).subtitle,/ここまで来れば/);
  assert.equal(actTwoOpeningFrame(0,0).black,1);
  assert.equal(actTwoOpeningFrame(shots.length-1,2).black,1);
  const ids=shots.flatMap(s=>s.cues.filter(c=>!c.silent).map(c=>c.id));assert.equal(new Set(ids).size,ids.length);
@@ -50,7 +54,7 @@ test('escape never shows the apartment and the listening shot continues the same
  const firstBuilding=shots.findIndex(s=>s.person);
  assert.ok(shots.slice(0,firstBuilding).every(s=>!s.image.includes('luna-flight')&&!s.image.includes('courtyard')));
  const chase=shots.findIndex(s=>s.shot==='chase'),listen=chase+1;
- assert.equal(actTwoOpeningFrame(chase,shots[chase].duration).transform,actTwoOpeningFrame(listen,0).transform);
+ assert.equal(shots[chase].image,shots[listen].image);
  assert.equal(actTwoOpeningFrame(chase,shots[chase].duration).rig,actTwoOpeningFrame(listen,0).rig);
  assert.ok(!shots.some(s=>s.shot==='blind'));
 });
