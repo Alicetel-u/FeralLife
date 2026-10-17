@@ -9,6 +9,8 @@ export function replaceConversationContent(container,html){
   const next=nextStage.querySelector('.stage-character.'+side);
   const currentImage=previous?.querySelector('img'),desiredImage=next?.querySelector('img');
   if(!previous||!next||!currentImage||!desiredImage)continue;
+  // Never preserve another character's face while the new portrait decodes.
+  if(previous.getAttribute('data-character')!==next.getAttribute('data-character'))continue;
   const src=desiredImage.getAttribute('src');
   const pending=portraitRequests.get(previous);
   const request=pending?.src===src?pending:{src};request.alt=desiredImage.alt;

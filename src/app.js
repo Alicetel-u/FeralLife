@@ -15,7 +15,7 @@ import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './troub
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.9';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.10';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition, automaticFirstRewind } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -280,7 +280,10 @@ function syncStageCursor() {
   // Show the opening on a new game without replaying the restored journal.
   if (!eventPreview && !previewResident) stageQueue.push(...state.events.filter(event => !event.read && event.lines?.length && (state.actOne?automaticChapterScene(event, state.actOne):!restored)).sort((a,b)=>a.id-b.id).map(event=>event.id));
 }
+let stageScanState=null,stageScanNextId=-1;
 function queueFreshStageEvents() {
+  if(stageScanState===state&&stageScanNextId===state.nextId)return;
+  stageScanState=state;stageScanNextId=state.nextId;
   const fresh = state.events.filter(event => (event.stageOnly || event.lines?.length) && (!state.actOne||automaticChapterScene(event, state.actOne)) && event.id > seenStageId).sort((a, b) => a.id - b.id);
   for (const event of fresh) {
     seenStageId = event.id;
@@ -441,7 +444,7 @@ function showOpening(step = 0) {
 function showGameTitle(){
   debugTapCount=0;
   const continuing=state.actOne.started||state.actOne.chapter===2;
-  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU · ver 2026.10.18.9</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
+  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU · ver 2026.10.18.10</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
   modal.querySelector('.title-actions button')?.focus({preventScroll:true});
 }
 function showActTwoOpening(){
@@ -550,7 +553,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.18.9';
+const BUILD_VERSION='2026.10.18.10';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -764,7 +767,7 @@ document.addEventListener('fullscreenchange',()=>{const active=!!document.fullsc
 $('new-game').onclick=()=>openModal(header('NEW OBSERVATION / はじめから','新しい観察記を始めますか？')+'<div class="modal-body"><p class="modal-copy">今の住人と観察記録はリセットされます。101号室の猫から、別の共同生活を始めましょう。</p></div><div class="modal-footer"><button class="secondary-button" data-close>今の暮らしに戻る</button><button class="primary-button" data-restart>はじめから →</button></div>');
 document.addEventListener('keydown',e=>{if(e.code==='Escape'&&!modal.open&&document.body.classList.contains('inspector-open'))setInspector(false);if(e.code==='Space'&&!modal.open&&!['BUTTON','INPUT','TEXTAREA','SELECT','A'].includes(document.activeElement.tagName)){e.preventDefault();paused=!paused;updateUI();}});
 window.addEventListener('pagehide',save);
-document.addEventListener('visibilitychange',()=>{lastTime=performance.now();if(document.hidden)save();syncNormalBgm();});
+document.addEventListener('visibilitychange',()=>{lastTime=performance.now();if(document.hidden)save();characterVoice.setSuspended(document.hidden);syncNormalBgm();});
 
 const normalBgm=createNormalBgm();
 function paintSoundButton(){$('sound-button').setAttribute('aria-pressed',String(normalBgm.enabled));$('sound-button').innerHTML=normalBgm.label();}
@@ -840,8 +843,8 @@ function frame(now){
   updateCamera();
   if(!modal.open){const spoken=talk.bubbles[0];if(spoken)characterVoice.play(spoken,'bubble:'+JSON.stringify([spoken.speaker,spoken.text,talk.mutterShownAt,talk.eventId,talk.index]));else characterVoice.stop();}
   const bubbles=document.body.classList.contains('conversation-active')?[]:talk.bubbles;
-  const drawWorld=worldRenderGate.shouldDraw(state,now,stopped,cameraKey,bubbles);
-  if(drawWorld)renderer.draw(state,now,stopped,bubbles);
+  const drawWorld=worldRenderGate.shouldDraw(state,now,observationStopped,cameraKey,bubbles);
+  if(drawWorld)renderer.draw(state,now,observationStopped,bubbles);
   else renderer.last=now;
   const portraitFollow=matchMedia('(max-width:700px) and (orientation:portrait)').matches && renderer.view==='interior' && renderer.focus && Number.isFinite(renderer.followCharacterX);
   const scene=$('scene'), canvas=$('world');

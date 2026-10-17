@@ -5,6 +5,32 @@ import {extractVoiceScript,planVoices} from '../tools/voice-script.mjs';
 import {voiceLineKey,voicePerformance} from '../src/voice-policy.js';
 import {createVoicePlayer} from '../src/voice-player.js';
 
+test('backgrounding pauses and resumes the current voice without stale play failures ending it',async()=>{
+ const line={speaker:'cat',text:'一時停止ニャ。'},sounds=[];let rejectFirst,plays=0;
+ const player=createVoicePlayer({storage:null,manifest:{[voiceLineKey(line)]:{file:'voice.mp3'}},makeAudio:()=>{
+  const sound={pauseCount:0,play(){plays++;return plays===1?new Promise((yes,no)=>{rejectFirst=no;}):Promise.resolve();},pause(){this.pauseCount++;},removeAttribute(){},load(){}};sounds.push(sound);return sound;
+ }});
+ try{
+  player.play(line,'same');player.setSuspended(true);assert.equal(sounds[0].pauseCount,1);assert.equal(player.busy,true);
+  player.setSuspended(false);assert.equal(plays,2);assert.equal(sounds.length,1);
+  rejectFirst({name:'AbortError'});await Promise.resolve();assert.equal(player.busy,true);
+  sounds[0].onended();assert.equal(player.busy,false);
+  player.setSuspended(true);player.setSuspended(false);assert.equal(plays,2,'finished clips stay finished');
+  player.setSuspended(true);player.play(line,'next');assert.equal(plays,2,'new clips wait while hidden');
+  player.setEnabled(false);player.setSuspended(false);assert.equal(plays,2,'OFF prevents resume');
+ }finally{player.stop();}
+});
+
+test('discarding preloaded voices releases their media source and decoder',()=>{
+ const line={speaker:'cat',text:'先読みニャ。'},sounds=[];
+ const player=createVoicePlayer({storage:null,manifest:{[voiceLineKey(line)]:{file:'voice.mp3'}},makeAudio:()=>{
+  const sound={loads:0,removed:0,pause(){},load(){this.loads++;},removeAttribute(name){if(name==='src')this.removed++;}};sounds.push(sound);return sound;
+ }});
+ player.prepare(line);player.prepare(null);
+ assert.equal(sounds[0].removed,1);assert.equal(sounds[0].loads,2);
+ player.stop();assert.equal(sounds[0].removed,1);
+});
+
 test('lively landlord keeps inner voice separate, uses audition settings and preserves Moku caches',async()=>{
  const rows=extractVoiceScript('act1').filter(row=>!row.source.startsWith('act1/observation/'));
  const ids=JSON.parse(await readFile(new URL('../config/voice-ids.json',import.meta.url)));
