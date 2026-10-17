@@ -10,8 +10,8 @@ test('residents retain seven emotion mappings and approved distinct character ar
   const hashes=[];
   for(const [character,states] of Object.entries(EVENT_EXPRESSIONS)) {
     assert.deepEqual(Object.keys(states),Object.keys(EVENT_EMOTION_NAMES));
-    assert.equal(new Set(Object.values(states)).size,character==='hostess'?1:7);
-    if(character==='hostess')assert.ok(Object.values(states).every(src=>src===EVENT_ART.hostess));
+    assert.equal(new Set(Object.values(states)).size,7);
+    if(character==='hostess')assert.equal(states.neutral,EVENT_ART.hostess);
     for(const src of Object.values(states)) {
       const data=await readFile(new URL('../'+src,import.meta.url));
       assert.equal(data.subarray(1,4).toString(),'PNG');
@@ -21,7 +21,7 @@ test('residents retain seven emotion mappings and approved distinct character ar
       hashes.push(createHash('sha256').update(data).digest('hex'));
     }
   }
-  assert.equal(new Set(hashes).size,36,'Five distinct bust sets and Luna’s approved original art');
+  assert.equal(new Set(hashes).size,42,'Six sets of seven distinct character expression portraits');
 });
 test('directed story reactions override ambiguous text; explicit emotion wins',()=>{
   const line={speaker:'fox',text:'近くない方がいいよ。'};
