@@ -20,12 +20,12 @@ test('first bad ending restores a playable checkpoint with memory',()=>{
  const s=create();start(s);advanceActTwo(s,9);
  assert.equal(s.actOne.pending.scene,'bag');
  answer(s,'guarantee');assert.equal(s.actOne.status,'bad');
- const next=rewindActTwo(s);assert.equal(next.hour,57);
+ const next=rewindActTwo(s);assert.equal(next.hour,66);
  assert.equal(next.actOne.status,'playing');assert.equal(next.actOne.attempt,2);
  assert.ok(next.actOne.memory.includes('bag-guarantee'));
  assert.equal(next.actOne.rewindIntroPending,true);
  assert.ok(validActOne(next)&&validateSave(next));
- next.actOne.rewindIntroPending=false;advanceActTwo(next,9);
+ next.actOne.rewindIntroPending=false;
  assert.equal(next.actOne.pending.scene,'bag');
 });
 test('safe route reaches chapter-two epilogue at day five',()=>{
