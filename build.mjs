@@ -29,6 +29,6 @@ let stylesheet = css.replace("url('assets/apartments.png')", 'none');
 for(const [index,path] of assetPaths.entries()){
   stylesheet=stylesheet.replaceAll("url('"+path+"')",'url("'+embeddedAssets[index]+'")').replaceAll('url("'+path+'")','url("'+embeddedAssets[index]+'")');
 }
-const standalone = html.replace('<link rel="stylesheet" href="styles.css">', () => `<style>${stylesheet}</style>`).replace(/<link rel="modulepreload" href="src\/app\.js(?:\?v=[^"]+)?">\r?\n?/,'').replace(/<script type="text\/plain" id="standalone-game"><\/script>/, () => `<script type="text/plain" id="standalone-game">\n${script}\n</script>`);
+const standalone = html.replace('<link rel="stylesheet" href="styles.css">', () => `<style>${stylesheet}</style>`).replace(/<script type="module" src="src\/app\.js(?:\?v=[^"]+)?"><\/script>/, () => `<script type="module">\n${script}\n</script>`);
 await writeFile(join(root, 'play.html'), standalone, 'utf8');
 console.log(`Built standalone game: play.html (${assetPaths.length} assets embedded, no server or install required)`);

@@ -7,7 +7,7 @@ test('standalone game embeds its artwork, styles and syntactically valid script'
   const html=await readFile(new URL('../play.html',import.meta.url),'utf8');
   assert.ok(html.includes('data:image/png;base64,'));
   assert.ok(html.includes('<style>'));assert.ok(!/<script[^>]+src=/.test(html));assert.ok(!/<link[^>]+stylesheet/.test(html));
-  const script=html.match(/<script type="text\/plain" id="standalone-game">([\s\S]*?)<\/script>/)[1];
+  const script=html.match(/<script type="module">([\s\S]*?)<\/script>/)[1];
   assert.ok(!/^import /m.test(script));
   assert.ok(!script.includes('assets/characters/cat/idle.png'));
   assert.ok(!script.includes('assets/characters/cat/portrait.png'));
