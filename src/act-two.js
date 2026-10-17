@@ -94,6 +94,7 @@ export function beginActTwo(s){
     n('ルナの笑顔が、一瞬だけ止まった。'),
     l('shy','……あはは！ ちょっと前の家が合わなくて！'),
     m('ふーん。まあ、うちは安さだけが取り柄だからな。'),
+    n('その声を聞きつけ、101号室のドアが開いた。モクが廊下から顔を出す。'),
     c('neutral','安さ以外にも取り柄はあるニャ。'),
     m('例えば？'),
     c('happy','家賃を待ってくれるニャ。'),
@@ -115,6 +116,8 @@ export function beginActTwo(s){
     l('happy','ううん！ なんでもない♡'),
     n('ルナは笑顔で部屋に入っていった。')
   ];
+  // eventConversation prepends the scene detail narration, so offset by one.
+  e.revealCharacterAt=1+e.lines.findIndex(line=>line.speaker==='cat');
   saveStoryCheckpoint(s,'bag','第二幕の開始時点');
  secondActLife(s);
   return s;
