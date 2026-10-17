@@ -11,7 +11,7 @@ test('Luna uses walking frames while moving, living poses and safe fallback', ()
     for(const pose of Object.values(art.poses))pose.image={};
     assert.equal(resolvePose('hostess','counsel',true,0),'walk_a');
     assert.equal(resolvePose('hostess','sleep',true,.25),'walk_b');
-    for(const [action,pose] of Object.entries({counsel:'chat',chat:'chat',sleep:'sleep',tv:'sit',eat:'eat',drink:'drink',clean:'clean',fight:'angry'}))assert.equal(resolvePose('hostess',action),pose);
+    for(const [action,pose] of Object.entries({counsel:'chat',chat:'chat',sleep:'sleep',tv:'sit',eat:'eat',drink:'drink',clean:'clean',fight:'base'}))assert.equal(resolvePose('hostess',action),pose);
     art.poses.sleep.image=null;
     assert.equal(resolvePose('hostess','sleep'),'base');
   } finally { for(const pose of Object.values(art.poses))pose.image=null; }
@@ -34,8 +34,13 @@ test('Luna RGBA frames match foot origins and ship in standalone', async () => {
   const art=CHARACTER_ART.hostess;
   for(const [name,src] of [['base',art.src],['portrait',art.portraitSrc],...Object.entries(art.poses).map(([n,p])=>[n,p.src])]){
     const png=await readFile(new URL('../'+src,import.meta.url));
-    assert.equal(png.readUInt32BE(16),name==='sleep'?176:128,name);
-    assert.equal(png.readUInt32BE(20),name==='sleep'?112:name==='portrait'?160:128,name);
+    const width=png.readUInt32BE(16),height=png.readUInt32BE(20);
+    if(name==='portrait'){assert.equal(width,128);assert.equal(height,160);}
+    else {
+      assert.ok(width>=250&&height>=200,name+' native resolution');
+      const origin=name==='base'?art.origin:art.poses[name].origin;
+      assert.equal(origin[0],width/2,name+' centered anchor');assert.equal(origin[1],height,name+' foot anchor');
+    }
     assert.equal(png[25],6,name+' RGBA');
     assert.ok(html.includes('data:image/png;base64,'+png.toString('base64')),name);
   }

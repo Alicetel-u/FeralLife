@@ -1,3 +1,4 @@
+import {readFileSync} from 'node:fs';
 import {extractVoiceScript} from '../tools/voice-script.mjs';
 import {createActOne} from '../src/act-one.js';
 import {beginActTwo,advanceActTwo,answerActTwo} from '../src/act-two.js';
@@ -150,15 +151,15 @@ test('chapter-two observation actually reaches both flirt reactions without edit
 });
 
 
-test('Luna cutout removes faint matte pixels once and caches the result without changing RGB',()=>{
+test('native Luna cutout renders without runtime alpha truncation or an intermediate canvas',()=>{
  const art=MINI_EMOTION_ART.hostess,base=CHARACTER_ART.hostess;
  const image=art.image,baseImage=base.image,doc=globalThis.document;
  const pixels=new Uint8ClampedArray([10,20,30,40,40,50,60,254]);let reads=0;
  const cleanCanvas={width:0,height:0,getContext:()=>({drawImage(){},getImageData(){reads++;return {data:pixels};},putImageData(){}})};
  try{
   globalThis.document={createElement:()=>cleanCanvas};art.image={width:2,height:1};base.image={width:128,height:128};
-  for(let i=0;i<2;i++){const p=pen();drawSprite(p.ctx,'hostess',0,0,0,'idle',1,1,{emotion:'flirt-wink'});assert.equal(p.calls.find(c=>c[0]==='drawImage')[1],cleanCanvas);}
-  assert.equal(reads,1);assert.deepEqual([...pixels],[10,20,30,0,40,50,60,255]);
+  for(let i=0;i<2;i++){const p=pen();drawSprite(p.ctx,'hostess',0,0,0,'idle',1,1,{emotion:'flirt-wink'});assert.equal(p.calls.find(c=>c[0]==='drawImage')[1],art.image);}
+  assert.equal(reads,0);assert.deepEqual([...pixels],[10,20,30,40,40,50,60,254]);
  }finally{art.image=image;base.image=baseImage;if(doc===undefined)delete globalThis.document;else globalThis.document=doc;}
 });
 
@@ -168,8 +169,21 @@ test('Moku uses her rebuilt sixteen mini frames and all strong directions match 
  const used=new Set(rows.map(r=>miniLineEmotion(r.line)));
  for(const emotion of MOKU_EXTRA_EMOTIONS)assert.ok(used.has(emotion),emotion);
  assert.equal(Object.keys(MINI_EMOTION_ART.cat.frames).length,16);
- assert.equal(MINI_EMOTION_ART.cat.src,'assets/characters/cat/emotions-v2.png');
- assert.equal(CHARACTER_ART.cat.src,'assets/characters/cat/idle.png');
- assert.equal(CHARACTER_ART.hostess.src,'assets/characters/hostess/idle.png');
+ assert.equal(MINI_EMOTION_ART.cat.src,'assets/characters/cat/emotions-v3.png');
+ assert.equal(CHARACTER_ART.cat.src,'assets/characters/cat/observation-v3/stand.png');
+ assert.equal(CHARACTER_ART.hostess.src,'assets/characters/hostess/observation-v3/stand.png');
  assert.notDeepEqual(MINI_EMOTION_ART.cat.frames.furious,MINI_EMOTION_ART.cat.frames.angry);
+});
+
+test('Moku and Luna share native-resolution art across every observation action',()=>{
+ for(const type of ['cat','hostess']){
+  const art=CHARACTER_ART[type],emotion=MINI_EMOTION_ART[type];
+  assert.ok(emotion.height>=350,'retain native emotion resolution');assert.equal(emotion.alphaCutoff,undefined,'alpha cleaned once at native resolution');
+  assert.match(art.src,/observation-v3\/stand.png$/);
+  for(const name of ['stand','walk_a','walk_b','sit','sleep','eat','drink','clean','chat']){
+   const pose=art.poses[name];assert.ok(pose,`${type}/${name}`);assert.match(pose.src,/observation-v3\//);
+   const png=readFileSync(new URL('../'+pose.src,import.meta.url));
+   assert.ok(png.readUInt32BE(16)>=250&&png.readUInt32BE(20)>=200,'no 96/128px intermediate sprite');
+  }
+ }
 });

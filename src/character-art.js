@@ -1,3 +1,4 @@
+import {OBSERVATION_ACTION_ART} from './observation-art.js';
 import { MINI_EMOTION_ART } from './mini-emotions.js';
 // Add future approved character art here; unregistered residents retain their draft sprites.
 export const SCENE_ART = { src: 'assets/apartments.png', image: null };
@@ -200,6 +201,14 @@ export const CHARACTER_ART = {
     actionPoses: {idle:['base','sit','stand','chat'],tv:'sit',eat:'eat',drink:'drink',clean:'clean',fight:'angry',chat:'chat',sleep:'sleep',outing:'stand',smoke:'stand'}
   }
 };
+
+// Moku and Luna use the same high-resolution identity for every observation action.
+for(const type of ['cat','hostess']){
+ const art=CHARACTER_ART[type],actions=OBSERVATION_ACTION_ART[type],stand=actions.stand;
+ art.src=stand.src;art.origin=stand.origin;
+ art.poses=Object.fromEntries(Object.entries(actions).map(([name,pose])=>[name,catPose(pose.src,pose.origin)]));
+ art.actionPoses={idle:['base','sit','base','chat'],tv:'sit',sleep:'sleep',eat:'eat',drink:'drink',clean:'clean',fight:'base',chat:'chat',counsel:'chat',shop:'base',outing:'base',smoke:'base'};
+}
 
 // 起動時に全画像の完了を待たない。表示に必要な画像から順番に読み込む。
 const imageCache = new Map();
