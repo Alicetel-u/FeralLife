@@ -1,3 +1,4 @@
+import { LUNA_MINI_EMOTIONS, MOKU_MINI_EMOTIONS } from './mini-emotions.js';
 import {isFirstFireReply,firstFireStageHTML} from './first-fire-stage.js';
 import {clearLegacyObservationMemo,observationView,observationClockLimit,tickObservation,canSkipObservation,skipObservation,inheritObservation} from './act-one-observation.js';
 import {createVoicePlayer} from './voice-player.js';
@@ -94,6 +95,8 @@ let eventAuto=false,eventAutoTimer=null;
 let seenStageId = 0;
 const stageQueue = [];
 const renderer = new WorldRenderer($('world'));
+if(previewResident==='hostess'){const emotion=new URLSearchParams(location.search).get('miniEmotion');if(LUNA_MINI_EMOTIONS.includes(emotion))renderer.miniPreview={type:'hostess',emotion};}
+if(observationPreview){const emotion=new URLSearchParams(location.search).get('miniEmotion');if(MOKU_MINI_EMOTIONS.includes(emotion))renderer.miniPreview={type:'cat',emotion};}
 if(managerPreview){renderer.view='exterior';renderer.focus=false;const pose=new URLSearchParams(location.search).get('pose');if(['idle','happy','angry','sad','surprised','retort','clean_a','clean_b','walk_a','walk_b'].includes(pose))renderer.managerPreviewPose=pose;}
 let artVersion=0;
 const onArtReady=()=>{artVersion++;worldRenderGate.state=null;};

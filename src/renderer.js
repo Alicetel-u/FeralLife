@@ -225,6 +225,7 @@ export class WorldRenderer {
     return { zoom, ox: cx - width / 2, oy: cy - height / 2 };
   }
   miniReaction(type,t,resident={}) {
+    if(this.miniPreview?.type===type)return {emotion:this.miniPreview.emotion,emotionActive:true,reduced:this.reducedMotion};
     const active=this.speaking?.has(type)||false;
     return {emotion:this.miniReactions?.emotion(type,t,active)??miniDailyEmotion(resident),emotionActive:active,reduced:this.reducedMotion};
   }
