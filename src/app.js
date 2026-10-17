@@ -451,6 +451,9 @@ function showActEnding(afterFire=false){
 function showActTwoEnding(afterCinematic=false){
  const a=state.actOne;
  if(a.status==='bad'){
+  if(a.failure==='bag-guarantee'&&a.attempt===1){
+   openModal(`<section class="act-screen act-burn" data-chapter="2"><div class="ending-building" aria-hidden="true"><img src="assets/apartments.png" alt=""></div><img class="ending-character" src="${EVENT_EXPRESSIONS.hostess.sad}" alt="金城ルナ"><div class="act-ending-copy"><p class="act-kicker">BAD END / 第二幕 · 初回</p><h2 id="modal-title">夕暮れの待ち伏せ</h2><p class="act-ending-story">ルナは血だらけで倒れていた。大家も何者かに襲われ、意識を失った。</p><p class="act-clue">あの男は、本当に帰ったのか。</p><button class="act-primary" data-act2-rewind>時計を巻き戻す ↶</button></div></section>`);return;
+  }
   if(!afterCinematic){
    openModal(debtEndingHTML(a.failure));
    stopFireEnding=startDebtEnding(modal.querySelector('.debt-cinematic'),()=>showActTwoEnding(true));
