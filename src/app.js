@@ -459,7 +459,7 @@ function beginRewind(afterFire=false){
   stopFireEnding=()=>stopTransition();
 }
 let rewindWhiteoutPending=false;
-function resetActState(next,resume=false){
+function resetActState(next,resume=false,skipInitialScreen=false){
   const reveal=rewindWhiteoutPending;rewindWhiteoutPending=false;
   let whiteout=null;
   if(reveal){whiteout=document.createElement('div');whiteout.className='rewind-scene-reveal';document.body.append(whiteout);}
@@ -467,6 +467,7 @@ function resetActState(next,resume=false){
   state=next;restored=false;Object.assign(talk,createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;
   renderer.reset();closeModal();updateCamera();updateRooms();updateUI();save();
   if(whiteout){requestAnimationFrame(()=>requestAnimationFrame(()=>whiteout.classList.add('revealing')));setTimeout(()=>whiteout.remove(),1300);}
+  if(skipInitialScreen)return;
   if(state.actOne.chapter===2){if(state.actOne.titlePending){showActTwoOpening();return;}const e=state.events.find(e=>e.actScene===(state.actOne.prologuePending?'act2-prologue':'act2-rewind'));if(e&&(state.actOne.prologuePending||state.actOne.rewindIntroPending)){showEvent(e.id,state.actOne.rewindIntroCursor||0);return;}showActTwoTitle();return;}
   if(state.actOne.rewindIntroPending)showEvent(state.events.find(e=>e.actScene==='rewind').id,state.actOne.rewindIntroCursor||0);else showActTitle();
 }
@@ -481,40 +482,81 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-function showDeveloperMenu(){
+function debugMenuPage(title,subtitle,buttons,back){
   openModal(`<section class="act-screen" style="background:#111525;color:#f1eaf5;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:clamp(18px,5vw,56px);gap:14px;overflow:auto">
-    <p style="letter-spacing:.2em;opacity:.65">DEVELOPER / CHAPTER SELECT</p>
-    <h2 id="modal-title" style="font-size:clamp(22px,4vw,40px);margin:0 0 12px">開発者メニュー</h2>
-    <p style="opacity:.75;margin:0 0 14px;text-align:center">確認する第二幕のシーンを選択してください。通常セーブは変更しません。</p>
-    ${[['opening','逃げる女 — オープニング'],['arrival','ルナ入居プロローグ'],['bag','第一の事件：謎の届け物'],['contract','第二の事件：契約書'],['epilogue','第二幕エピローグ']].map(([id,label])=>`<button type="button" data-debug-scene="${id}" style="width:min(480px,100%);min-height:48px;background:#29314a;color:#fff;border:1px solid #71809a;border-radius:9px;font:inherit;padding:12px;cursor:pointer">${label}</button>`).join('')}
-    <button type="button" data-debug-back style="margin-top:8px;background:transparent;color:#c8c8d6;border:1px solid #777;padding:10px 24px;border-radius:8px">タイトルに戻る</button>
-  </section>`);
+  <p style="letter-spacing:.2em;opacity:.65">DEVELOPER TOOLS</p>
+  <h2 id="modal-title" style="font-size:clamp(22px,4vw,40px);margin:0 0 12px">${title}</h2>
+  <p style="opacity:.75;margin:0 0 14px;text-align:center">${subtitle}</p>
+  ${buttons.map(([id,label,attr])=>`<button type="button" ${attr}="${id}" style="width:min(480px,100%);min-height:48px;background:#29314a;color:#fff;border:1px solid #71809a;border-radius:9px;font:inherit;padding:12px;cursor:pointer">${label}</button>`).join('')}
+  <button type="button" ${back} style="margin-top:8px;background:transparent;color:#c8c8d6;border:1px solid #777;padding:10px 24px;border-radius:8px">← 戻る</button></section>`);
 }
-function startDeveloperScene(scene){
+function showDeveloperMenu(){
+  debugMenuPage('開発者メニュー','デバッグ機能を選択してください。',[['scenes','シーンセレクト','data-debug-tool']], 'data-debug-back');
+}
+function showDebugChapterSelect(){
+  debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter']], 'data-debug-tools-back');
+}
+function showDebugSceneSelect(chapter){
+  const options=chapter==='1'
+    ?[['intro','第一幕・オープニング'],['ash','第一の火種：灰皿'],['dinner','第二の火種：料理'],['epilogue','第一幕・エピローグ']]
+    :[['opening','逃げる女 — オープニング'],['arrival','ルナ入居プロローグ'],['bag','第一の事件：謎の届け物'],['contract','第二の事件：契約書'],['epilogue','第二幕・エピローグ']];
+  debugMenuPage(chapter==='1'?'第一幕のポイント':'第二幕のポイント','開始地点を選んでください。',options.map(([id,label])=>[chapter+':'+id,label,'data-debug-scene']), 'data-debug-chapters-back');
+}
+function startDeveloperScene(target){
+  const [chapter,scene]=target.split(':');
+  if(!['1','2'].includes(chapter))return;
   developerMode=true;
-  const next=beginActTwo(createActOne());
-  next.actOne.started=true;next.actOne.titlePending=false;next.actOne.prologuePending=false;
-  next.events.filter(e=>e.actScene==='act2-prologue').forEach(e=>e.read=true);
-  if(scene==='bag'||scene==='contract'||scene==='epilogue'){
-    advanceActTwo(next,5);
-    if(scene!=='bag'){
-      answerActTwo(next,next.actOne.pending.eventId,'loan');
+  const next=createActOne(42,[],1,true);
+  if(chapter==='1'){
+    if(scene==='dinner'||scene==='epilogue'){
+      advanceActOne(next,100);
+      answerActOne(next,next.actOne.pending.eventId,'water');
+    }
+    if(scene==='epilogue'){
+      advanceActOne(next,100);
+      answerActOne(next,next.actOne.pending.eventId,'coronation');
+      advanceActOne(next,100);
+    }else if(scene==='ash'||scene==='dinner')advanceActOne(next,100);
+  }else{
+    beginActTwo(next);
+    next.actOne.started=true;next.actOne.titlePending=false;next.actOne.prologuePending=false;
+    next.events.filter(e=>e.actScene==='act2-prologue').forEach(e=>e.read=true);
+    if(['bag','contract','epilogue'].includes(scene)){
       advanceActTwo(next,100);
-      if(scene==='epilogue'){
-        answerActTwo(next,next.actOne.pending.eventId,'refuse');
+      if(scene!=='bag'){
+        answerActTwo(next,next.actOne.pending.eventId,'loan');
         advanceActTwo(next,100);
+        if(scene==='epilogue'){
+          answerActTwo(next,next.actOne.pending.eventId,'refuse');
+          advanceActTwo(next,100);
+        }
       }
     }
   }
-  resetActState(next);
-  if(scene==='opening'){next.actOne.started=false;next.actOne.titlePending=true;showActTwoOpening();}
-  else if(scene==='arrival'){next.actOne.prologuePending=true;const e=next.events.find(x=>x.actScene==='act2-prologue');if(e){e.read=false;showEvent(e.id);}}
-  else {const name=scene==='epilogue'?'act2-epilogue':scene;const e=next.events.find(x=>x.actScene===name);if(e){e.read=false;showEvent(e.id);}else showGameTitle();}
+  resetActState(next,false,true);
+  if(chapter==='1'){
+    if(scene==='intro'){showOpening();return;}
+    const eventName=scene==='epilogue'?'epilogue':scene;
+    const event=next.events.find(e=>e.actScene===eventName);
+    if(event){event.read=false;showEvent(event.id);}else showActTitle();
+    return;
+  }
+  if(scene==='opening'){
+    next.actOne.started=false;next.actOne.titlePending=true;showActTwoOpening();return;
+  }
+  if(scene==='arrival'){next.actOne.prologuePending=true;}
+  const name=scene==='arrival'?'act2-prologue':scene==='epilogue'?'act2-epilogue':scene;
+  const event=next.events.find(e=>e.actScene===name);
+  if(event){event.read=false;showEvent(event.id);}else showActTwoTitle();
 }
 document.addEventListener('click',e=>{
   const button=e.target.closest('button');if(!button)return;
   if(button.hasAttribute('data-debug-hotspot')){const now=performance.now();debugTapCount=now-debugLastTap>2500?1:debugTapCount+1;debugLastTap=now;if(debugTapCount>=5){debugTapCount=0;showDeveloperMenu();}return;}
   if(button.hasAttribute('data-debug-back')){showGameTitle();return;}
+  if(button.hasAttribute('data-debug-tools-back')){showDeveloperMenu();return;}
+  if(button.hasAttribute('data-debug-chapters-back')){showDebugChapterSelect();return;}
+  if(button.dataset.debugTool==='scenes'){showDebugChapterSelect();return;}
+  if(button.dataset.debugChapter){showDebugSceneSelect(button.dataset.debugChapter);return;}
   if(button.dataset.debugScene){startDeveloperScene(button.dataset.debugScene);return;}
   if(button.dataset.opening)showOpening(Number(button.dataset.opening));
   if(button.hasAttribute('data-opening-continue'))showActTitle();
