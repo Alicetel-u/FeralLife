@@ -73,9 +73,9 @@ test('finishing the Luna arrival does not queue the first-act opening', () => {
   assert.equal(validActOne(saved) && validateSave(saved), true);
   assert.equal(saved.actOne.chapter, 2);
   assert.equal(saved.hour, 57);
-  advanceActTwo(saved, 5);
+  advanceActTwo(saved, 9);
   assert.equal(saved.actOne.pending.scene, 'bag');
-  assert.equal(saved.events.find(event => event.actScene === 'bag')?.title, '第一の事件：夜の待ち伏せ');
+  assert.equal(saved.events.find(event => event.actScene === 'bag')?.title, '第一の事件：夕暮れの待ち伏せ');
 });
 
 test('stage queue refuses scenes from the other chapter', () => {
