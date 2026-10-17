@@ -79,6 +79,12 @@ export function eventEmotion(line, event = {}) {
 export function eventStageHTML(event,residents,index=0,page=0,{hideCharacters=false}={}) {
   const lines=eventConversation(event),cursor=Math.max(0,Math.min(index,lines.length-1)),line=lines[cursor];
   const pages=messagePages(line.text),pageIndex=Math.max(0,Math.min(page,pages.length-1)),pageText=pages[pageIndex];
+  if(['silence','impact','blackout','clock'].includes(line.tragedyEffect)){
+    const kind=line.tragedyEffect;
+    const dial=kind==='clock'?'<div class="stalker-clock-dial" aria-hidden="true"><i class="stalker-clock-hour"></i><i class="stalker-clock-minute"></i><i class="stalker-clock-second"></i><b></b></div>':'';
+    const name=line.speaker==='manager'?'大家':'';
+    return `<div class="event-stage stalker-cinematic stalker-${kind}" data-stalker-effect="${kind}"><button class="stalker-next" type="button" data-dialogue-next aria-label="次のセリフへ"></button>${dial}<div class="stalker-cinematic-copy" aria-live="polite"><small>${eventEscape(name)}</small><p>${eventEscape(pageText)}</p></div><span class="stalker-cinematic-prompt" aria-hidden="true">CLICK / ENTER</span></div>`;
+  }
   if(line.flashbackEffect==='whiteout'){
     const name=line.memoryVoice?'大家（過去の声）':line.innerVoice?'大家（心の声）':eventSpeakerName(line.speaker);
     return `<div class="event-stage memory-whiteout"><div class="memory-text" style="${speakerColorStyle(line)}" aria-live="polite" aria-atomic="true"><span class="visually-hidden">${eventEscape(name)}：</span><p>${eventEscape(pageText)}</p></div><span class="memory-prompt" aria-hidden="true">CLICK / ENTER</span></div>`;
