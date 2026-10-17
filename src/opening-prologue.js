@@ -14,25 +14,25 @@ export function openingPrologueHTML(){
 export function prologueCutHTML(cut){
  return (cut.image?'<figure class="ink-insert"><div class="ink-insert-border"><img src="'+prologueEscape(cut.image)+'" alt="'+({keys:'鍵と封筒を持つ大家の手元',letter:'封筒から取り出した便箋',income:'家賃についての手紙を読む手元',warning:'手紙を読んで止まる、鍵を握る手',door:'薄暗い101号室の入口と大家の手元'}[cut.shot]||'')+'"></div></figure>':'')+'<div class="ink-dialogue"><span class="ink-speaker">'+prologueEscape(cut.speaker)+'</span><p class="ink-line" aria-hidden="true"></p><p class="visually-hidden" aria-live="polite" aria-atomic="true">'+prologueEscape(cut.text)+'</p><span class="ink-prompt" aria-hidden="true">CLICK / ENTER</span></div>';
 }
-export function startOpeningPrologue(root,onContinue,voice=null){
+export function startOpeningPrologue(root,onContinue,voice=null,cuts=cuts){
  const content=root.querySelector('.ink-cut-content'),next=root.querySelector('.ink-next'),progress=root.querySelector('.ink-progress');
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let cursor=0,typing=false,leaving=false,destroyed=false,lineTimer,exitTimer;
  // Retain only this scene's small CG set; no polling or permanent animation loop.
- const preload=PROLOGUE_CUTS.filter(c=>c.image).map(c=>c.image);
+ const preload=cuts.filter(c=>c.image).map(c=>c.image);
  for(const src of new Set(preload)){const image=new Image();image.src=src;}
  const show=()=>{
-  clearTimeout(lineTimer);const cut=PROLOGUE_CUTS[cursor];root.dataset.cut=cut.shot;voice?.play(cut,'prologue:'+cursor);voice?.prepare(PROLOGUE_CUTS[cursor+1]||null);
-  content.innerHTML=prologueCutHTML(cut);progress.textContent=String(cursor+1).padStart(2,'0')+' / '+String(PROLOGUE_CUTS.length).padStart(2,'0');
-  next.setAttribute('aria-label',cursor===PROLOGUE_CUTS.length-1?'101号室へ':'次へ');
+  clearTimeout(lineTimer);const cut=cuts[cursor];root.dataset.cut=cut.shot;voice?.play(cut,'prologue:'+cursor);voice?.prepare(cuts[cursor+1]||null);
+  content.innerHTML=prologueCutHTML(cut);progress.textContent=String(cursor+1).padStart(2,'0')+' / '+String(cuts.length).padStart(2,'0');
+  next.setAttribute('aria-label',cursor===cuts.length-1?'101号室へ':'次へ');
   const line=content.querySelector('.ink-line'),chars=Array.from(cut.text);let count=0;
   const tick=()=>{if(destroyed)return;count=reduced?chars.length:Math.min(chars.length,count+2);line.textContent=chars.slice(0,count).join('');typing=count<chars.length;root.classList.toggle('ink-typing',typing);if(typing)lineTimer=setTimeout(tick,25);};
   tick();
  };
  const advance=()=>{
   if(leaving||destroyed)return;
-  if(typing){clearTimeout(lineTimer);content.querySelector('.ink-line').textContent=PROLOGUE_CUTS[cursor].text;typing=false;root.classList.remove('ink-typing');return;}
-  if(cursor<PROLOGUE_CUTS.length-1){cursor++;show();}else finish();
+  if(typing){clearTimeout(lineTimer);content.querySelector('.ink-line').textContent=cuts[cursor].text;typing=false;root.classList.remove('ink-typing');return;}
+  if(cursor<cuts.length-1){cursor++;show();}else finish();
  };
  const finish=()=>{if(leaving)return;leaving=true;voice?.stop();next.disabled=true;root.querySelector('.ink-skip').disabled=true;root.classList.add('ink-leaving');clearTimeout(lineTimer);exitTimer=setTimeout(()=>{if(!destroyed)onContinue();},reduced?0:180);};
  const click=e=>{e.preventDefault();e.stopImmediatePropagation();if(e.target.closest('[data-prologue-skip]'))finish();else advance();};
