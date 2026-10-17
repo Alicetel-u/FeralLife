@@ -13,7 +13,7 @@ import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './troub
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.17.18';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.17.19';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition, automaticFirstRewind } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -22,7 +22,7 @@ import { bedCue, createNormalBgm } from './bgm.js';
 import { createGame, advance, admit, addEvent, ROOMS, CHARACTERS, NEEDS, ACTIONS, dateAt, formatTime, atmosphere, validateSave } from './simulation.js';
 import { createTalk, stepTalk, claimAutomaticScene, rememberReadScenes, automaticChapterScene } from './dialogue.js';
 import { WorldRenderer, roomBounds, drawPortrait } from './renderer.js';
-import { loadCharacterArt, loadRoomArt, ROOM_ART, EVENT_ART, EVENT_EXPRESSIONS, eventParticipants } from './character-art.js';
+import { loadCharacterArt, loadRoomArt, EVENT_ART, EVENT_EXPRESSIONS, eventParticipants } from './character-art.js';
 import { sampleJourney, motionLabel } from './movement.js';
 import { MANAGEMENT_CASES } from './event-cases.js';
 import { ensureManagement, managementSummary, managementImpact, openManagementCase, resolveManagementCase } from './management.js';
@@ -100,15 +100,16 @@ if(observationPreview){const emotion=new URLSearchParams(location.search).get('m
 if(managerPreview){renderer.view='exterior';renderer.focus=false;const pose=new URLSearchParams(location.search).get('pose');if(['idle','happy','angry','sad','surprised','retort','clean_a','clean_b','walk_a','walk_b'].includes(pose))renderer.managerPreviewPose=pose;}
 let artVersion=0;
 const onArtReady=()=>{artVersion++;worldRenderGate.state=null;};
-// Count only initial scene assets; optional residents still stream in the background.
-let bootLoaded=0;
-const bootTotal=7+Object.keys(ROOM_ART).length;
+// START needs no world artwork. Fetch it after the first gesture (or in previews).
+let artStarted=false;
+function startWorldArt(){
+  if(artStarted)return;
+  artStarted=true;
+  document.body.classList.add('world-art-started');
+  requestAnimationFrame(()=>{loadCharacterArt(onArtReady);loadRoomArt(onArtReady);});
+}
 function paintBootProgress(percent,label){window.kemonoBoot?.update(percent,label);}
 window.kemonoBoot?.modulesReady();
-const initialArtReady=new Promise(resolve=>requestAnimationFrame(()=>{
-  const settled=()=>paintBootProgress(35+Math.round(++bootLoaded/bootTotal*60));
-  Promise.all([loadCharacterArt(onArtReady,settled),loadRoomArt(onArtReady,settled)]).then(resolve);
-}));
 const talk = createTalk(restored ? (state.events[0]?.id || 0) : 0);
 const modal = $('modal');
 if(state.actOne){
@@ -392,7 +393,7 @@ function showOpening(step = 0) {
 function showGameTitle(){
   debugTapCount=0;
   const continuing=state.actOne.started||state.actOne.chapter===2;
-  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU · ver 2026.10.17.18</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
+  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU · ver 2026.10.17.19</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
   modal.querySelector('.title-actions button')?.focus({preventScroll:true});
 }
 function showActTwoOpening(){
@@ -498,7 +499,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.17.18';
+const BUILD_VERSION='2026.10.17.19';
 const BUILD_UPDATED='2026-10-17 16:45 JST';
 function debugMenuPage(title,subtitle,buttons,back){
   openModal(`<section class="act-screen" style="background:#111525;color:#f1eaf5;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:clamp(18px,5vw,56px);gap:14px;overflow:auto">
@@ -778,11 +779,11 @@ syncStageCursor();
 updateCamera();updateRooms();updateUI();updateJournal();save();requestAnimationFrame(frame);
 if(restored)toast('前回の観察記の続きから。住人たちは、ここで待っていました。');
 async function finishBoot(){
-await initialArtReady;
+
 paintBootProgress(100,'準備完了');
 // Two animation frames allow the 100% state to paint before the exit transition.
 await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
-await new Promise(resolve=>setTimeout(resolve,220));
+
 $('boot-screen')?.classList.add('boot-exit');
 await new Promise(resolve=>setTimeout(resolve,matchMedia('(prefers-reduced-motion: reduce)').matches?0:250));
 document.documentElement.classList.remove('game-booting');
@@ -796,11 +797,13 @@ if(entryGate && !previewType){
   entryGate.querySelector('#entry-start').addEventListener('click',()=>{
     // Open the title and unlock its soundtrack in the same trusted click.
     entryGate.remove();
+    startWorldArt();
     if(state.actOne)showGameTitle();
     normalBgm.unlock().catch(()=>{});
   },{once:true});
 }else{
   entryGate?.remove();
+  startWorldArt();
   if(actTwoOpeningPreview)showActTwoOpening();
   else if(firstFirePreview){const reply=state.events.find(e=>e.actScene==='reply');showEvent(reply.id,Number(new URLSearchParams(location.search).get('line')||0));}
   else if(firstRewindPreview)showActEnding();

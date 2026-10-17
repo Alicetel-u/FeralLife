@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="theme-color" content="#131118">
-  <meta name="app-version" content="2026.10.17.18">
+  <meta name="app-version" content="2026.10.17.19">
   <title>けもの荘 第一幕「アパートを火事（モク）から守れ！」</title>
   <style>
 #boot-screen{position:fixed;inset:0;z-index:300000;display:grid;place-items:center;overflow:hidden;isolation:isolate;background:#100e14;color:#fff8eb;font-family:system-ui,sans-serif}
@@ -19,6 +19,7 @@
 .boot-number small{font-size:.4em}
 .boot-track{height:30px;padding:5px;background:#111;border:3px solid #fff8eb;transform:skewX(-13deg);box-shadow:8px 8px 0 #111}
 .boot-fill{height:100%;width:5%;background:repeating-linear-gradient(115deg,#fff8eb 0 22px,#d51d3f 22px 27px);transition:width .18s ease}
+body:not(.world-art-started) .scene{background-image:none!important}
 .boot-foot{display:flex;justify-content:space-between;margin-top:20px;font-size:10px;font-weight:800;letter-spacing:.16em}
 .boot-pulse{animation:boot-blink 1s steps(2,end) infinite}
 #boot-screen.boot-exit{opacity:0;transform:translateX(6%);transition:opacity .25s,transform .25s}
@@ -28,12 +29,9 @@
   <script>
 // Start before the stylesheet and game module graph can block mobile startup.
 (()=>{
-  const moduleTotal=37;
-  let percent=5,label='ゲームプログラムを読み込んでいます',observer;
-  const loaded=new Set();
+  let percent=5,label='ゲームプログラムを読み込んでいます';
   const paint=()=>{
-    const track=document.getElementById('boot-progress');
-    track?.setAttribute('aria-valuenow',String(percent));
+    document.getElementById('boot-progress')?.setAttribute('aria-valuenow',String(percent));
     const number=document.getElementById('boot-percent'),fill=document.getElementById('boot-fill'),caption=document.getElementById('boot-label');
     if(number)number.textContent=String(percent);
     if(fill)fill.style.width=percent+'%';
@@ -41,21 +39,36 @@
   };
   window.kemonoBoot={
     update(value,text){percent=Math.max(percent,Math.min(100,value));if(text)label=text;paint();},
-    modulesReady(){observer?.disconnect();this.update(35,'背景と住人を準備しています');},
-    destroy(){observer?.disconnect();document.removeEventListener('readystatechange',paint);delete window.kemonoBoot;}
-  };
-  if(typeof PerformanceObserver==='function')try{
-    observer=new PerformanceObserver(list=>{
-      for(const entry of list.getEntries()){
-        const url=new URL(entry.name,location.href);
-        const root=new URL('./src/',location.href);
-        if(url.origin===root.origin&&url.pathname.startsWith(root.pathname)&&url.pathname.endsWith('.js'))loaded.add(url.pathname);
+    modulesReady(){this.update(95,'起動しています');},
+    async loadBundle(url,total){
+      try{
+        let cache,cached;
+        try{cache=await caches.open('ferallife-code-v1');cached=await cache.match(url);}catch{}
+        const response=cached||await fetch(url);
+        if(!response.ok)throw new Error('HTTP '+response.status);
+        // The URL is content-hashed: reuse the exact same code without a network wait.
+        if(cache&&!cached)cache.put(url,response.clone()).then(async()=>{
+          const keys=await cache.keys();
+          for(const key of keys.slice(0,-3))await cache.delete(key);
+        }).catch(()=>{});
+        const parts=[];let received=0;
+        if(response.body?.getReader){
+          const reader=response.body.getReader();
+          while(true){const {done,value}=await reader.read();if(done)break;parts.push(value);received+=value.byteLength;this.update(5+Math.min(85,Math.floor(received/total*85)));}
+        }else{parts.push(await response.arrayBuffer());this.update(90);}
+        this.update(90,'ゲームプログラムを準備しています');
+        // Give mobile browsers a paint before compiling the downloaded module.
+        await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+        const blobUrl=URL.createObjectURL(new Blob(parts,{type:'text/javascript'}));
+        try{await import(blobUrl);}finally{URL.revokeObjectURL(blobUrl);}
+      }catch{
+        label='読み込みに失敗しました。通信を確認して再読み込みしてください';paint();
+        const button=document.createElement('button');button.type='button';button.textContent='再読み込み';button.onclick=()=>location.reload();
+        document.querySelector('.boot-card')?.append(button);
       }
-      // Count completed module requests. Image progress takes over after evaluation.
-      window.kemonoBoot?.update(5+Math.min(29,Math.floor(loaded.size/moduleTotal*30)));
-    });
-    observer.observe({type:'resource',buffered:true});
-  }catch{}
+    },
+    destroy(){document.removeEventListener('readystatechange',paint);delete window.kemonoBoot;}
+  };
   document.addEventListener('DOMContentLoaded',paint,{once:true});
   document.addEventListener('readystatechange',paint);
   requestAnimationFrame(paint);
@@ -103,8 +116,8 @@
     <div class="entry-oversize" aria-hidden="true">START</div>
     <button type="button" id="entry-start" class="entry-start">▶ START</button>
   </div>
-  <div id="build-version" style="position:fixed;bottom:5px;left:7px;z-index:999;color:#fff9;background:#1119;font:11px sans-serif;padding:4px 7px;border-radius:4px;pointer-events:none">ver 2026.10.17.18</div>
+  <div id="build-version" style="position:fixed;bottom:5px;left:7px;z-index:999;color:#fff9;background:#1119;font:11px sans-serif;padding:4px 7px;border-radius:4px;pointer-events:none">ver 2026.10.17.19</div>
   <div id="update-banner" hidden role="status" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:99999;background:#101826;color:white;border:1px solid #e6a6cb;border-radius:12px;padding:14px 20px;box-shadow:0 8px 30px #000a;font:14px sans-serif;text-align:center">けもの荘が更新されました。 <button id="update-reload" type="button" style="margin:7px;padding:8px 14px;border:0;border-radius:6px;background:#e6a6cb;color:#111;font-weight:bold">最新版を読み込む</button></div>
-  <script type="module" src="src/app.js?v=2026.10.17.18"></script>
+  <script type="module" src="src/app.js?v=2026.10.17.19"></script>
 </body>
 </html>

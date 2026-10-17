@@ -9,8 +9,15 @@ export const VICTORY_BGM_SRC = 'assets/audio/victory-fanfare.mp3';
 
 function prepare(audio) {
   audio.loop = true;
-  audio.preload = 'auto';
+  audio.preload = 'none';
   audio.volume = 0.35;
+  return audio;
+}
+
+function bgmTrack(provided,src){
+  if(provided)return prepare(provided);
+  const audio=prepare(new Audio());
+  audio.src=src;
   return audio;
 }
 
@@ -27,14 +34,14 @@ export function bedCue(actOne) {
 // the fire track through a bad ending, and the clock piece once the rewind dial appears.
 export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio, uneasyAudio, victoryAudio, mokuAudio) {
   const tracks = {
-    normal: prepare(normalAudio || new Audio(NORMAL_BGM_SRC)),
-    moku: prepare(mokuAudio || new Audio(MOKU_BGM_SRC)),
-    trouble: prepare(troubleAudio || new Audio(TROUBLE_BGM_SRC)),
-    bad: prepare(badAudio || new Audio(BAD_END_BGM_SRC)),
-    title: prepare(titleAudio || new Audio(TITLE_BGM_SRC)),
-    clock: prepare(clockAudio || new Audio(CLOCK_BGM_SRC)),
-    uneasy: prepare(uneasyAudio || new Audio(UNEASY_BGM_SRC)),
-    victory: prepare(victoryAudio || new Audio(VICTORY_BGM_SRC)),
+    normal: bgmTrack(normalAudio, NORMAL_BGM_SRC),
+    moku: bgmTrack(mokuAudio, MOKU_BGM_SRC),
+    trouble: bgmTrack(troubleAudio, TROUBLE_BGM_SRC),
+    bad: bgmTrack(badAudio, BAD_END_BGM_SRC),
+    title: bgmTrack(titleAudio, TITLE_BGM_SRC),
+    clock: bgmTrack(clockAudio, CLOCK_BGM_SRC),
+    uneasy: bgmTrack(uneasyAudio, UNEASY_BGM_SRC),
+    victory: bgmTrack(victoryAudio, VICTORY_BGM_SRC),
   };
   tracks.clock.loop = false;
   let enabled = true;
