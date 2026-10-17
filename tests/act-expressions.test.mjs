@@ -33,9 +33,9 @@ test('second act first incident and successful answer show both residents reacti
   // The revised incident has explicit emotions from its first release; these
   // new lines never existed in the older neutral-only saves.
   const incident=s.events.find(e=>e.id===s.actOne.pending.eventId);
-  for(const [text,emotion] of [['お金持ちニャ！？','surprised'],['……どうして、ここが……。','surprised'],['……大家さん。その人と話さないで。','sad']])expectExpression(incident,text,emotion,s.residents,false);
+  for(const [text,emotion] of [['お金持ちニャ！？','surprised'],['……っ、なんで……ここまで……。','surprised'],['……大家さん、お願い。その人には何も話さないで。','sad']])expectExpression(incident,text,emotion,s.residents,false);
   const reply=answerActTwo(s,s.actOne.pending.eventId,'loan');
-  for(const [text,emotion] of [['任せろニャ！','happy'],['……前のお店のお客さん。何度も断ったのに、ずっと追いかけてくるの。','sad'],['……お金のことは、あたしにも責任があるから。','tired'],['今は……ごめん。全部は話せない。','sad']])expectExpression(reply,text,emotion,s.residents,false);
+  for(const [text,emotion] of [['忘れるなニャ！！','angry'],['……前のお店のお客さん。何度も断ったのに、ずっと追いかけてくるの。','sad'],['……お金のことは、あたしにも責任があるから。','tired'],['今は……ごめん。全部は話せない。','sad']])expectExpression(reply,text,emotion,s.residents,false);
   advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'refuse');advanceActTwo(s,100);
   expectExpression(s.events.find(e=>e.actScene==='act2-epilogue'),'大家、酒はまだかニャ？','happy',s.residents);
 });
