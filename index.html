@@ -4,13 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="theme-color" content="#131118">
-  <meta name="app-version" content="2026.10.17.17">
+  <meta name="app-version" content="2026.10.17.18">
   <title>けもの荘 第一幕「アパートを火事（モク）から守れ！」</title>
   <style>
 #boot-screen{position:fixed;inset:0;z-index:99999;display:grid;place-content:center;gap:16px;text-align:center;background:#131118;color:#f4ecdd;font:600 22px system-ui,sans-serif}
 #boot-screen small{font-size:13px;font-weight:400;opacity:.72}
 </style>
   <link rel="stylesheet" href="styles.css">
+  <link rel="modulepreload" href="src/app.js?v=2026.10.17.18">
 </head>
 <body class="game-ink">
   <div id="boot-screen" role="status" aria-live="polite">🐾 けもの荘<small>ゲームを準備しています…</small></div>
@@ -44,8 +45,70 @@
     <div class="entry-oversize" aria-hidden="true">START</div>
     <button type="button" id="entry-start" class="entry-start">▶ START</button>
   </div>
-  <div id="build-version" style="position:fixed;bottom:5px;left:7px;z-index:999;color:#fff9;background:#1119;font:11px sans-serif;padding:4px 7px;border-radius:4px;pointer-events:none">ver 2026.10.17.17</div>
+  <div id="build-version" style="position:fixed;bottom:5px;left:7px;z-index:999;color:#fff9;background:#1119;font:11px sans-serif;padding:4px 7px;border-radius:4px;pointer-events:none">ver 2026.10.17.18</div>
   <div id="update-banner" hidden role="status" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:99999;background:#101826;color:white;border:1px solid #e6a6cb;border-radius:12px;padding:14px 20px;box-shadow:0 8px 30px #000a;font:14px sans-serif;text-align:center">けもの荘が更新されました。 <button id="update-reload" type="button" style="margin:7px;padding:8px 14px;border:0;border-radius:6px;background:#e6a6cb;color:#111;font-weight:bold">最新版を読み込む</button></div>
-  <script type="module" src="src/app.js?v=2026.10.17.17"></script>
+  <!-- The preparing screen used to stay up until every game module finished.
+       On a phone that read as a load that never ended. Reveal START first,
+       then start the modules after the browser has painted. -->
+  <script>
+    (function () {
+      const boot = document.getElementById('boot-screen');
+      const gate = document.getElementById('entry-gate');
+      const preview = new URLSearchParams(location.search).get('preview');
+      const showFailure = () => {
+        if (!boot) return;
+        if (gate) gate.hidden = true;
+        if (!boot.isConnected) document.body.prepend(boot);
+        const note = boot.querySelector('small');
+        if (note) note.textContent = '読み込みに失敗しました。再読み込みしてください。';
+        if (!boot.querySelector('button')) {
+          const retry = document.createElement('button');
+          retry.type = 'button';
+          retry.textContent = '再読み込み';
+          retry.style.cssText = 'margin-top:12px;min-height:48px;padding:10px 18px;font:700 16px sans-serif';
+          retry.addEventListener('click', () => location.reload());
+          boot.append(retry);
+        }
+      };
+      if (!preview && gate) {
+        document.documentElement.classList.remove('game-booting');
+        boot?.remove();
+        gate.hidden = false;
+        const remember = () => {
+          if (window.kemonoOpenFromGate) { window.kemonoOpenFromGate(); return; }
+          document.documentElement.dataset.gameStart = 'pending';
+          const button = document.getElementById('entry-start');
+          if (button) button.textContent = '読み込み中…';
+        };
+        gate.addEventListener('pointerup', remember);
+        gate.addEventListener('click', remember);
+      }
+      let launched = false;
+      let gameStarted = false;
+      window.addEventListener('error', event => {
+        if (gameStarted || (event.target && event.target !== window)) return;
+        showFailure();
+      });
+      const launch = () => {
+        if (launched) return;
+        launched = true;
+        const bundled = document.getElementById('standalone-game');
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.onload = () => { gameStarted = true; };
+        if (bundled && bundled.textContent.trim()) {
+          script.textContent = bundled.textContent;
+          bundled.remove();
+        } else {
+          script.src = 'src/app.js?v=2026.10.17.18';
+          script.onerror = showFailure;
+        }
+        document.body.append(script);
+      };
+      requestAnimationFrame(() => requestAnimationFrame(launch));
+      setTimeout(launch, 800);
+    })();
+  </script>
+  <script type="text/plain" id="standalone-game"></script>
 </body>
 </html>
