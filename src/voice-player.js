@@ -1,6 +1,6 @@
 import {VOICE_MANIFEST} from './voice-manifest.js';
 import {voiceLineKey} from './voice-policy.js';
-export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Audio(),storage,onPlaybackChange=()=>{}}={}) {
+export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Audio(),storage,chapter=()=>null,onPlaybackChange=()=>{}}={}) {
   let prefs={enabled:true,volume:0.8};
   try{if(storage===undefined)storage=globalThis.localStorage;const saved=JSON.parse(storage?.getItem('feral-voice')||'null');if(saved&&typeof saved.enabled==='boolean'&&Number.isFinite(saved.volume))prefs={enabled:saved.enabled,volume:Math.max(0,Math.min(1,saved.volume))};}catch{}
   let audio=null,token=0,current=null,active=false,blocked=false,watchdog=null;
@@ -40,7 +40,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     }
   };
   let prepared=null;
-  const clipFor=line=>line&&manifest[voiceLineKey(line)];
+  const clipFor=line=>{if(!line)return;const scoped=chapter()===2?{...line,voiceChapter:2}:line;return manifest[voiceLineKey(scoped)]||manifest[voiceLineKey(line)];};
   const clearPrepared=()=>{if(prepared){prepared.audio.pause();prepared=null;}};
   const prepare=line=>{
     const clip=prefs.enabled&&clipFor(line);

@@ -156,6 +156,206 @@
         "similarity_boost": 0.75,
         "speed": 0.85
       }
+    },
+    "luna-normal": {
+      "direction": "Tsuyuri。親しみやすい接客の会話。抑揚をはっきり",
+      "tags": [
+        "[animated]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      }
+    },
+    "luna-happy": {
+      "direction": "明るく華やかな営業スマイル。笑顔の掛け合い",
+      "tags": [
+        "[cheerfully]",
+        "[animated]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.05
+      }
+    },
+    "luna-flirt": {
+      "direction": "距離が近い、甘くからかう誘惑。囁きすぎない",
+      "tags": [
+        "[playful]",
+        "[softly]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 0.98
+      }
+    },
+    "luna-serious": {
+      "direction": "不安や悲しみを自然に。笑わず、感情を込める",
+      "tags": [
+        "[sad]",
+        "[softly]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 0.95
+      }
+    },
+    "luna-firm": {
+      "direction": "嫌な相手をはっきり拒絶する。語気と感情を強く",
+      "tags": [
+        "[angry]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1
+      }
+    },
+    "luna-surprised": {
+      "direction": "息をのむ驚き。表情をはっきり",
+      "tags": [
+        "[surprised]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1
+      }
+    },
+    "luna-breathless": {
+      "direction": "走った直後の息切れ。明るく読まない",
+      "tags": [
+        "[breathlessly]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 0.95
+      }
+    },
+    "luna-quiet": {
+      "direction": "追跡から逃れた不安と疲労。小さな声で感情を残す",
+      "tags": [
+        "[softly]",
+        "[tired]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 0.95
+      }
+    },
+    "act2-manager": {
+      "direction": "第一幕より勢いのある会話。明瞭な抑揚",
+      "tags": [
+        "[animated]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.07
+      }
+    },
+    "act2-retort": {
+      "direction": "テンション高めのコミカルなツッコミ",
+      "tags": [
+        "[excited]",
+        "[exasperated]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.08
+      }
+    },
+    "act2-manager-serious": {
+      "direction": "喪失や困惑。深刻さを保ち、声に感情を込める",
+      "tags": [
+        "[sad]",
+        "[thoughtful]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 0.95
+      }
+    },
+    "act2-manager-firm": {
+      "direction": "住人を守る決意。強くはっきりと話す",
+      "tags": [
+        "[firm]",
+        "[determined]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      }
+    },
+    "act2-moku": {
+      "direction": "気だるさを残した、活発な軽口と掛け合い",
+      "tags": [
+        "[playful]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      }
+    },
+    "act2-moku-happy": {
+      "direction": "楽しげで調子に乗ったモク。快活に",
+      "tags": [
+        "[chuckles]",
+        "[playful]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.05
+      }
+    },
+    "act2-moku-surprised": {
+      "direction": "大きく驚くモク。はっきりした反応",
+      "tags": [
+        "[surprised]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      }
+    },
+    "act2-moku-firm": {
+      "direction": "ルナを守る強い怒気。笑いや軽さを入れない",
+      "tags": [
+        "[angry]",
+        "[firm]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1
+      }
+    },
+    "act2-moku-sad": {
+      "direction": "深刻な悲しみや不安。軽口にしない",
+      "tags": [
+        "[sad]",
+        "[softly]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 0.95
+      }
     }
   }
 }

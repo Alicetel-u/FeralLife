@@ -107,3 +107,24 @@ test('first tragedy uses serious performances only after the fire and preserves 
  const config=JSON.parse(await readFile(new URL('../config/voice-performance.json',import.meta.url)));
  for(const r of rows.slice(8))assert.ok(config.profiles[r.performance].tags.every(t=>!t.includes('lighthearted')));
 });
+
+
+test('act-two trouble-one scope includes the film, arrival, observation, all first-event branches and rewinds only',async()=>{
+ const rows=extractVoiceScript('act2-trouble1');
+ assert.deepEqual([...new Set(rows.map(r=>r.speaker))].sort(),['cat','hostess','manager']);
+ assert.equal(rows.filter(r=>r.source.startsWith('act2/film/')).length,6);
+ assert.ok(rows.some(r=>r.source.startsWith('act2/opening')));
+ assert.ok(rows.some(r=>r.source.startsWith('act2/observation/')));
+ assert.ok(rows.some(r=>r.source.includes('/rewind/')));
+ assert.ok(rows.some(r=>r.performance==='tragedy-panic'));
+ assert.ok(rows.every(r=>r.line.voiceChapter===2&&!r.source.includes('contract')));
+ assert.equal(new Set(rows.map(r=>r.lineKey)).size,rows.length);
+ const ids=JSON.parse(await readFile(new URL('../config/voice-ids.json',import.meta.url)));
+ const config=JSON.parse(await readFile(new URL('../config/voice-performance.json',import.meta.url)));
+ const plan=planVoices(rows,ids,config);
+ assert.ok(plan.every(r=>r.voiceId&&r.request.text));
+ assert.ok(plan.filter(r=>r.speaker==='hostess').every(r=>r.voiceId==='0sLdAOQEyDDSrsr4uwND'));
+ assert.equal(voicePerformance({speaker:'cat',text:'いつものモクニャ。'}),'moku');
+ assert.equal(voicePerformance({speaker:'hostess',text:'……怖かった。',emotion:'sad',voiceChapter:2}),'luna-serious');
+ assert.equal(voicePerformance({speaker:'manager',text:'心の声',innerVoice:true,voiceChapter:2}),'inner');
+});

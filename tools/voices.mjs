@@ -14,8 +14,8 @@ const firstTragedy=args.includes('--first-tragedy');
 if(firstTragedy&&scope!=='act1')throw Error('First tragedy requires act1 scope');
 const script=extractVoiceScript(scope).filter(row=>!firstTragedy||row.source.includes('attempt-1/ash/trash/reply'));
 const speaker=args.find(a=>a.startsWith('--speaker='))?.slice('--speaker='.length);
-if(speaker&&!['cat','manager'].includes(speaker))throw Error('Unknown speaker filter');
-if(speaker==='manager'&&!['intro','act1'].includes(scope))throw Error('Landlord generation is limited to act1');
+if(speaker&&!['cat','manager','hostess'].includes(speaker))throw Error('Unknown speaker filter');
+if(speaker==='manager'&&!['intro','act1','act2-trouble1'].includes(scope))throw Error('Landlord generation is limited to act1');
 const pronunciationIssues=(await json('config/voice-pronunciation-issues.json')).issues;
 const pronunciationOnly=args.includes('--pronunciation-only');
 if(pronunciationOnly&&(sampleMoku||scope!=='intro'))throw Error('Pronunciation repair requires intro scope without sample mode');
@@ -40,12 +40,12 @@ await atomic('.local/voice-plan.md',[
   ...rows.map((r,i)=>`|${i+1}|${r.speaker}|${r.performance}|${r.characters}|${r.text.replaceAll('\n',' / ').replaceAll('|','\\|')}|`),
   '', '## 生成設定', '```json',JSON.stringify(config,null,2),'```',''
 ].join('\n'));
-console.table(report.rows.map((r,i)=>({no:i+1,source:r.source,speaker:r.speaker,performance:r.performance,characters:r.characters,text:r.text})));
-if(pronunciationReview.length)console.table(pronunciationReview.map(issue=>({term:issue.term,reading:issue.reading,status:issue.status,lines:issue.sources.length})));
+if(!args.includes('--quiet'))console.table(report.rows.map((r,i)=>({no:i+1,source:r.source,speaker:r.speaker,performance:r.performance,characters:r.characters,text:r.text})));
+if(!args.includes('--quiet')&&pronunciationReview.length)console.table(pronunciationReview.map(issue=>({term:issue.term,reading:issue.reading,status:issue.status,lines:issue.sources.length})));
 console.log(JSON.stringify({scope,planId,model:config.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true}));
 if(!args.includes('--verify')&&!args.includes('--generate'))process.exit(0);
-const allowedGeneration=scope==='intro'||(scope==='act1'&&(['cat','manager'].includes(speaker)||firstTragedy)&&!sampleMoku&&!pronunciationOnly);
-if(args.includes('--generate')&&(!allowedGeneration||!args.includes('--approve='+planId)))throw Error('Generation requires intro or act1 with a single speaker and explicit approval of current plan hash');
+const allowedGeneration=scope==='act2-trouble1'||scope==='intro'||(scope==='act1'&&(['cat','manager'].includes(speaker)||firstTragedy)&&!sampleMoku&&!pronunciationOnly);
+if(args.includes('--generate')&&(!allowedGeneration||!args.includes('--approve='+planId)))throw Error('Generation requires an allowed scope and authorization of the current plan hash');
 let key;
 try{key=(await json('.local/elevenlabs.json')).apiKey;}catch{throw Error('Local API key missing. Run npm run voice:setup (do not paste key into chat).');}
 if(typeof key!=='string'||!key.trim())throw Error('Empty API key');
@@ -77,6 +77,7 @@ async function verify(){
 }
 const before=await verify();
 if(!args.includes('--generate'))process.exit(0);
+if(scope==='act2-trouble1'&&(unique.length>350||estimate>20000))throw Error('Abnormal trouble-one generation volume; review scope before spending');
 if(pending.some(r=>!r.voiceId))throw Error('Missing voice ID');
 if(!Number.isFinite(before.remaining)||before.remaining<estimate)throw Error('Insufficient or unavailable balance');
 // Exclusive lock and durable intent BEFORE the charged call. An ambiguous failure
@@ -85,6 +86,7 @@ const lock=await open(join(root,'.local/voice-generation.lock'),'wx');
 try{
   journal=await exists('.local/voice-journal.json')?await json('.local/voice-journal.json'):{};
   await mkdir(join(root,'assets/voices'),{recursive:true});
+  let completed=0;
   for(const row of pending){
     if(await exists(row.file))continue;
     if(journal[row.hash])throw Error('Existing generation attempt requires history reconciliation: '+row.hash);
@@ -98,6 +100,7 @@ try{
     await atomic('.local/voice-journal.json',JSON.stringify(journal,null,2));
     // Publish each completed clip so a later failure never loses usable work.
     await publish();
+    if(++completed%25===0)console.log(JSON.stringify({completed,total:pending.length}));
   }
   await publish();
   const after=await verify();

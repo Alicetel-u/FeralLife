@@ -1,3 +1,4 @@
+import {secondActChat,lunaMutters} from '../src/act-two-life.js';
 import {OBSERVATION_BEATS} from '../src/act-one-observation.js';
 import {PROLOGUE_CUTS,INITIAL_MOKU_LINES} from '../src/opening-prologue.js';
 import {ACT_TWO_OPENING_SCENES} from '../src/act-two-opening.js';
@@ -9,13 +10,44 @@ import {createHash} from 'node:crypto';
 export const digest=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 export const normalizeVoiceIds=ids=>ids.characters?Object.fromEntries(Object.entries(ids.characters).map(([speaker,value])=>[speaker,value.voiceId||null])):ids;
 export function extractVoiceScript(scope='intro') {
-  if(!['intro','act1','act2','all'].includes(scope))throw Error('Unknown scope');
+  if(!['intro','act1','act2','act2-trouble1','all'].includes(scope))throw Error('Unknown scope');
   const result=[];
   const add=(source,lines)=>lines.forEach((line,index)=>{
+    if(scope==='act2-trouble1')line={...line,voiceChapter:2};
     const speaker=voiceSpeaker(line);
     if(['cat','manager','hostess'].includes(speaker))result.push({source:source+':'+index,line,speaker,performance:voicePerformance(line),lineKey:voiceLineKey(line)});
   });
   const state=createActOne(1);
+  if(scope==='act2-trouble1'){
+    for(const shot of ACT_TWO_OPENING_SCENES)add('act2/film/'+shot.shot,shot.cues.filter(c=>!c.silent));
+    beginActTwo(state);state.actOne.started=true;state.actOne.prologuePending=false;state.actOne.titlePending=false;
+    add('act2/opening',state.events.find(e=>e.actScene==='act2-prologue').lines);
+    const start=structuredClone(state);
+    const ambient=new Set();
+    for(let i=0;i<1000&&!state.actOne.pending;i++){
+      const chat=secondActChat(state);
+      if(chat&&!ambient.has(chat.key)){ambient.add(chat.key);add('act2/observation/'+chat.key,chat.lines.map(([speaker,text])=>({speaker,text})));}
+      for(const text of lunaMutters(state))if(!ambient.has(text)){ambient.add(text);add('act2/ambient',[{speaker:'hostess',text}]);}
+      advanceActTwo(state,.025);
+    }
+    if(state.actOne.pending?.scene!=='bag')throw Error('First act-two trouble not reached');
+    add('act2/bag',ACT_TWO_EVENTS.bag.lines);
+    for(const choice of ACT_TWO_EVENTS.bag.choices)add('act2/bag/'+choice.id,choice.lines);
+    for(const attempt of [1,2]){
+      const entry=structuredClone(start);entry.actOne.attempt=attempt;advanceActTwo(entry,100);
+      add('act2/bag/attempt-'+attempt,entry.events.find(e=>e.id===entry.actOne.pending.eventId).lines);
+      for(const choice of ACT_TWO_EVENTS.bag.choices){
+        const next=structuredClone(entry),reply=answerActTwo(next,next.actOne.pending.eventId,choice.id);
+        add('act2/bag/runtime/'+attempt+'/'+choice.id,reply.lines);
+        if(next.actOne.status==='bad'){
+          const rewind=rewindActTwo(next);
+          add('act2/bag/rewind/'+attempt+'/'+choice.id,rewind.events.find(e=>e.actScene==='act2-rewind').lines);
+        }
+      }
+    }
+    return [...new Map(result.map(r=>[r.lineKey,r])).values()];
+  }
+
   if(scope!=='act2'){
     add('prologue',PROLOGUE_CUTS);
     add('foyer',INITIAL_MOKU_LINES);

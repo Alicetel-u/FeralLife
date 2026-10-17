@@ -2924,5 +2924,1967 @@ export const VOICE_MANIFEST = {
     "text": "モク……頼む、返事をしてくれ。",
     "performance": "tragedy-grief",
     "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……はぁ、はぁ……っ。\",\"luna-breathless\",false]": {
+    "file": "assets/voices/bc065bcb56bcc11149c776ffdc763178ba28e2c5096b3db08da7dca3fcc688b1.mp3",
+    "hash": "bc065bcb56bcc11149c776ffdc763178ba28e2c5096b3db08da7dca3fcc688b1",
+    "source": "act2/film/heel:0",
+    "speaker": "hostess",
+    "text": "……はぁ、はぁ……っ。",
+    "performance": "luna-breathless",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……ここまで来れば……。\",\"luna-quiet\",false]": {
+    "file": "assets/voices/fdc4b55b1509c8586d8da3915fedbe50dc5a552b0a037f52fda86705c9d60246.mp3",
+    "hash": "fdc4b55b1509c8586d8da3915fedbe50dc5a552b0a037f52fda86705c9d60246",
+    "source": "act2/film/listen:0",
+    "speaker": "hostess",
+    "text": "……ここまで来れば……。",
+    "performance": "luna-quiet",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……しつこい……。\",\"luna-firm\",false]": {
+    "file": "assets/voices/3e192c6b6f95c89628baf1a7708c9a7a9c69e79078f25e2ab3f4ddd5b513f253.mp3",
+    "hash": "3e192c6b6f95c89628baf1a7708c9a7a9c69e79078f25e2ab3f4ddd5b513f253",
+    "source": "act2/film/call:0",
+    "speaker": "hostess",
+    "text": "……しつこい……。",
+    "performance": "luna-firm",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……あたし、そんなに悪いことしたかな……。\",\"luna-serious\",false]": {
+    "file": "assets/voices/044ff4c5d8d9dc600278ee4563c1225d5f649c41171cff0692be68b5a3a0f85c.mp3",
+    "hash": "044ff4c5d8d9dc600278ee4563c1225d5f649c41171cff0692be68b5a3a0f85c",
+    "source": "act2/film/dismiss:0",
+    "speaker": "hostess",
+    "text": "……あたし、そんなに悪いことしたかな……。",
+    "performance": "luna-serious",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……入居者、募集……？\",\"luna-quiet\",false]": {
+    "file": "assets/voices/f72c55c9392c6a52df0a67ed43716fb7a1099c45d557bcdb1bd3c01ec4231642.mp3",
+    "hash": "f72c55c9392c6a52df0a67ed43716fb7a1099c45d557bcdb1bd3c01ec4231642",
+    "source": "act2/film/notice:0",
+    "speaker": "hostess",
+    "text": "……入居者、募集……？",
+    "performance": "luna-quiet",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……ここなら……。\",\"luna-quiet\",false]": {
+    "file": "assets/voices/406b241ee63d62a67e91c29e81b5d4980d04dad157e4d2f858e3f664c05b0561.mp3",
+    "hash": "406b241ee63d62a67e91c29e81b5d4980d04dad157e4d2f858e3f664c05b0561",
+    "source": "act2/film/reveal:0",
+    "speaker": "hostess",
+    "text": "……ここなら……。",
+    "performance": "luna-quiet",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"こんにちはー！ 今日からお世話になります、金城ルナです♡\",\"luna-happy\",false]": {
+    "file": "assets/voices/4d4c57d907b827582a747f4111eaa46b0947a036b5c07431c1f374f5fd0065e7.mp3",
+    "hash": "4d4c57d907b827582a747f4111eaa46b0947a036b5c07431c1f374f5fd0065e7",
+    "source": "act2/opening:1",
+    "speaker": "hostess",
+    "text": "こんにちはー！ 今日からお世話になります、金城ルナです♡",
+    "performance": "luna-happy",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ああ、入居予定の人か。俺が大家だ。よろしく。\",\"act2-manager\",false]": {
+    "file": "assets/voices/fdef908287d510ea6a579a3a740dd8ff42f15b2baec941cd0bc2e0562387fff1.mp3",
+    "hash": "fdef908287d510ea6a579a3a740dd8ff42f15b2baec941cd0bc2e0562387fff1",
+    "source": "act2/opening:2",
+    "speaker": "manager",
+    "text": "ああ、入居予定の人か。俺が大家だ。よろしく。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"よろしくお願いします！ いや～、本当に助かりました！\",\"luna-happy\",false]": {
+    "file": "assets/voices/f23bd7b33dac2049da7a9a160587d59c952ab6bc4e3640beac23bf1df59639f7.mp3",
+    "hash": "f23bd7b33dac2049da7a9a160587d59c952ab6bc4e3640beac23bf1df59639f7",
+    "source": "act2/opening:3",
+    "speaker": "hostess",
+    "text": "よろしくお願いします！ いや～、本当に助かりました！",
+    "performance": "luna-happy",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"そんなに急いで引っ越したかったのか？\",\"act2-manager\",false]": {
+    "file": "assets/voices/abd96e1da81e0f9e8016e0775efd1f7141c98200df4acdeb042df92ef7308411.mp3",
+    "hash": "abd96e1da81e0f9e8016e0775efd1f7141c98200df4acdeb042df92ef7308411",
+    "source": "act2/opening:4",
+    "speaker": "manager",
+    "text": "そんなに急いで引っ越したかったのか？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"えっ？\",\"luna-surprised\",false]": {
+    "file": "assets/voices/53758cc2a01a2f693009bcd99f203ba81e572bca3b890c7cd5c245e02a73539a.mp3",
+    "hash": "53758cc2a01a2f693009bcd99f203ba81e572bca3b890c7cd5c245e02a73539a",
+    "source": "act2/opening:5",
+    "speaker": "hostess",
+    "text": "えっ？",
+    "performance": "luna-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……あはは！ ちょっと前の家が合わなくて！\",\"luna-flirt\",false]": {
+    "file": "assets/voices/1a027dc66f0a1426b11f68532b0dd39eb50ea2835ea71143033c351d41e63ade.mp3",
+    "hash": "1a027dc66f0a1426b11f68532b0dd39eb50ea2835ea71143033c351d41e63ade",
+    "source": "act2/opening:7",
+    "speaker": "hostess",
+    "text": "……あはは！ ちょっと前の家が合わなくて！",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ふーん。まあ、うちは安さだけが取り柄だからな。\",\"act2-manager\",false]": {
+    "file": "assets/voices/013a3e2c53d745f38588d4a7027aeac86bf60198edf5b21e8a1d6d242f7fc39a.mp3",
+    "hash": "013a3e2c53d745f38588d4a7027aeac86bf60198edf5b21e8a1d6d242f7fc39a",
+    "source": "act2/opening:8",
+    "speaker": "manager",
+    "text": "ふーん。まあ、うちは安さだけが取り柄だからな。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"安さ以外にも取り柄はあるニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/ac4120f3940a6349165863cb1e5b393357f3cfc4ea276304f8381cf22689a509.mp3",
+    "hash": "ac4120f3940a6349165863cb1e5b393357f3cfc4ea276304f8381cf22689a509",
+    "source": "act2/opening:10",
+    "speaker": "cat",
+    "text": "安さ以外にも取り柄はあるニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"例えば？\",\"act2-manager\",false]": {
+    "file": "assets/voices/a060086fc94ae32b1d1899da784c373cdfc6590375576dd0ad2876c3d01f6e83.mp3",
+    "hash": "a060086fc94ae32b1d1899da784c373cdfc6590375576dd0ad2876c3d01f6e83",
+    "source": "act2/opening:11",
+    "speaker": "manager",
+    "text": "例えば？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"家賃を待ってくれるニャ。\",\"act2-moku-happy\",false]": {
+    "file": "assets/voices/9a509d61dbefea72416371e824aaf86ce3f747b1ba1518fe4b02337ded7607a2.mp3",
+    "hash": "9a509d61dbefea72416371e824aaf86ce3f747b1ba1518fe4b02337ded7607a2",
+    "source": "act2/opening:12",
+    "speaker": "cat",
+    "text": "家賃を待ってくれるニャ。",
+    "performance": "act2-moku-happy",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"待たねぇよ！！\",\"act2-manager\",false]": {
+    "file": "assets/voices/b759aaae75cd60ae6ed720d5b596f4dd234016471952ab354787d931b43410db.mp3",
+    "hash": "b759aaae75cd60ae6ed720d5b596f4dd234016471952ab354787d931b43410db",
+    "source": "act2/opening:13",
+    "speaker": "manager",
+    "text": "待たねぇよ！！",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"あははっ！ 面白い人たちですね！\",\"luna-happy\",false]": {
+    "file": "assets/voices/28d8a075a9bb3a9d32bc60e746b40d376072a28bb82c32073b1022e8ebaf47f4.mp3",
+    "hash": "28d8a075a9bb3a9d32bc60e746b40d376072a28bb82c32073b1022e8ebaf47f4",
+    "source": "act2/opening:14",
+    "speaker": "hostess",
+    "text": "あははっ！ 面白い人たちですね！",
+    "performance": "luna-happy",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……っ。\",\"luna-surprised\",false]": {
+    "file": "assets/voices/ad711f52e42ec0930556b23b2ccb20e6933b3390519c7bb77dd8200daa62ab74.mp3",
+    "hash": "ad711f52e42ec0930556b23b2ccb20e6933b3390519c7bb77dd8200daa62ab74",
+    "source": "act2/opening:16",
+    "speaker": "hostess",
+    "text": "……っ。",
+    "performance": "luna-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"どうした？\",\"act2-manager\",false]": {
+    "file": "assets/voices/f471e02b00247b8d60dd2dc0d62c7066bc92a902f6507e48fff319d7539298a9.mp3",
+    "hash": "f471e02b00247b8d60dd2dc0d62c7066bc92a902f6507e48fff319d7539298a9",
+    "source": "act2/opening:18",
+    "speaker": "manager",
+    "text": "どうした？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"ううん、なんでもないです！ それより、102号室ってこっちですか？\",\"luna-happy\",false]": {
+    "file": "assets/voices/aa50fc5e3218d18ae4beb172bf520f20bc68db5c1b0bc7d76839c7f0a68df331.mp3",
+    "hash": "aa50fc5e3218d18ae4beb172bf520f20bc68db5c1b0bc7d76839c7f0a68df331",
+    "source": "act2/opening:19",
+    "speaker": "hostess",
+    "text": "ううん、なんでもないです！ それより、102号室ってこっちですか？",
+    "performance": "luna-happy",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ああ、101号室の隣だ。\",\"act2-manager\",false]": {
+    "file": "assets/voices/0022213a8a3a5d9c9cd37064889d26abfb623ca613047ce3b2cc3d61b5800b9d.mp3",
+    "hash": "0022213a8a3a5d9c9cd37064889d26abfb623ca613047ce3b2cc3d61b5800b9d",
+    "source": "act2/opening:20",
+    "speaker": "manager",
+    "text": "ああ、101号室の隣だ。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"隣人のモクですニャ。よろしくニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/18e84f0ea3237361665d3153cde716c609c8d350a99dc2f353a2bda356137cb0.mp3",
+    "hash": "18e84f0ea3237361665d3153cde716c609c8d350a99dc2f353a2bda356137cb0",
+    "source": "act2/opening:21",
+    "speaker": "cat",
+    "text": "隣人のモクですニャ。よろしくニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"モクちゃんね！ よろしく♡\",\"luna-happy\",false]": {
+    "file": "assets/voices/b9dd71db226c8794a327da381a6e5547bc9b47537dde6de8552412dee6042d5b.mp3",
+    "hash": "b9dd71db226c8794a327da381a6e5547bc9b47537dde6de8552412dee6042d5b",
+    "source": "act2/opening:22",
+    "speaker": "hostess",
+    "text": "モクちゃんね！ よろしく♡",
+    "performance": "luna-happy",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"ちゃん……悪くないニャ。\",\"act2-moku-happy\",false]": {
+    "file": "assets/voices/29aae8555f60655320911891c5d169051622baf5380b702cbc034c682cef86e9.mp3",
+    "hash": "29aae8555f60655320911891c5d169051622baf5380b702cbc034c682cef86e9",
+    "source": "act2/opening:23",
+    "speaker": "cat",
+    "text": "ちゃん……悪くないニャ。",
+    "performance": "act2-moku-happy",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"調子に乗るな。\",\"act2-manager\",false]": {
+    "file": "assets/voices/f76cd568c7d017d8d982dcda4d7b8f6a4da5b3bb36ae33ab6e62fcd4576b3a36.mp3",
+    "hash": "f76cd568c7d017d8d982dcda4d7b8f6a4da5b3bb36ae33ab6e62fcd4576b3a36",
+    "source": "act2/opening:24",
+    "speaker": "manager",
+    "text": "調子に乗るな。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……ここから、やり直さなきゃ。\",\"luna-serious\",false]": {
+    "file": "assets/voices/82276457e33062484db1f51ccd3144fef67ec220e7beaa68c3f73c3554d59843.mp3",
+    "hash": "82276457e33062484db1f51ccd3144fef67ec220e7beaa68c3f73c3554d59843",
+    "source": "act2/opening:26",
+    "speaker": "hostess",
+    "text": "……ここから、やり直さなきゃ。",
+    "performance": "luna-serious",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ん？ 何か言ったか？\",\"act2-manager\",false]": {
+    "file": "assets/voices/7f6588192cf66c1766cf6327d5ba46d6dc1ef4b482d0d2eb8001ff1a5b35194c.mp3",
+    "hash": "7f6588192cf66c1766cf6327d5ba46d6dc1ef4b482d0d2eb8001ff1a5b35194c",
+    "source": "act2/opening:27",
+    "speaker": "manager",
+    "text": "ん？ 何か言ったか？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"ううん！ なんでもない♡\",\"luna-happy\",false]": {
+    "file": "assets/voices/a5a94918c62c344b5dc3aba1c38e274403e2f0f29be97ea6dbf5f91987aeb674.mp3",
+    "hash": "a5a94918c62c344b5dc3aba1c38e274403e2f0f29be97ea6dbf5f91987aeb674",
+    "source": "act2/opening:28",
+    "speaker": "hostess",
+    "text": "ううん！ なんでもない♡",
+    "performance": "luna-happy",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"忘れ物、ないよね。\",\"luna-normal\",false]": {
+    "file": "assets/voices/b3ee3518053d43edd63d2208a8921adec1f1ea8f9b5791c631886a19252e046a.mp3",
+    "hash": "b3ee3518053d43edd63d2208a8921adec1f1ea8f9b5791c631886a19252e046a",
+    "source": "act2/ambient:0",
+    "speaker": "hostess",
+    "text": "忘れ物、ないよね。",
+    "performance": "luna-normal",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"仕事で使う荷物、そろそろ届くかな。\",\"luna-normal\",false]": {
+    "file": "assets/voices/a507a0716c963c2a5dd0d0923683b96fc571f06fb28103012a446e4d4472b64a.mp3",
+    "hash": "a507a0716c963c2a5dd0d0923683b96fc571f06fb28103012a446e4d4472b64a",
+    "source": "act2/ambient:0",
+    "speaker": "hostess",
+    "text": "仕事で使う荷物、そろそろ届くかな。",
+    "performance": "luna-normal",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"荷ほどきって、思ったより時間かかるね。\",\"luna-normal\",false]": {
+    "file": "assets/voices/16d801cb0c95ff4a37d7e88a6834358abeaf2daa590212beda2626f21d8724af.mp3",
+    "hash": "16d801cb0c95ff4a37d7e88a6834358abeaf2daa590212beda2626f21d8724af",
+    "source": "act2/ambient:0",
+    "speaker": "hostess",
+    "text": "荷ほどきって、思ったより時間かかるね。",
+    "performance": "luna-normal",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"荷ほどき、まだ終わらないんだよね。\",\"luna-normal\",false]": {
+    "file": "assets/voices/1dfac8abfac66fd193394d5dad54f930301494255ee1b2c94a9ec95a2df625e2.mp3",
+    "hash": "1dfac8abfac66fd193394d5dad54f930301494255ee1b2c94a9ec95a2df625e2",
+    "source": "act2/observation/act2-chat-arrival:0",
+    "speaker": "hostess",
+    "text": "荷ほどき、まだ終わらないんだよね。",
+    "performance": "luna-normal",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"今日はここまで、って決めるのも大事ニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/87f06818cbcd90089a1606ad91ecddc66839337e063f754a3ca6d01e6fffdff7.mp3",
+    "hash": "87f06818cbcd90089a1606ad91ecddc66839337e063f754a3ca6d01e6fffdff7",
+    "source": "act2/observation/act2-chat-arrival:1",
+    "speaker": "cat",
+    "text": "今日はここまで、って決めるのも大事ニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"モクちゃん、それ毎日言ってない？\",\"luna-flirt\",false]": {
+    "file": "assets/voices/4113fbaff0c557b390fd1f71d6c17ef67267b9c15fc4bac38df6b1ef9a28baf4.mp3",
+    "hash": "4113fbaff0c557b390fd1f71d6c17ef67267b9c15fc4bac38df6b1ef9a28baf4",
+    "source": "act2/observation/act2-chat-arrival:2",
+    "speaker": "hostess",
+    "text": "モクちゃん、それ毎日言ってない？",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"あの書類のこと、もう一度確認しておこう。\",\"luna-normal\",false]": {
+    "file": "assets/voices/fdffc970ac83cc23581e66a74f5b3ab7c20d7847c328c45677792d6d699f9ae2.mp3",
+    "hash": "fdffc970ac83cc23581e66a74f5b3ab7c20d7847c328c45677792d6d699f9ae2",
+    "source": "act2/ambient:0",
+    "speaker": "hostess",
+    "text": "あの書類のこと、もう一度確認しておこう。",
+    "performance": "luna-normal",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"知らない相手との買い物、気をつけなきゃ。\",\"luna-normal\",false]": {
+    "file": "assets/voices/74eeb1be0c835ad38f8b4a8caccd4544459992c91fe03920fd2852ddbdad6032.mp3",
+    "hash": "74eeb1be0c835ad38f8b4a8caccd4544459992c91fe03920fd2852ddbdad6032",
+    "source": "act2/ambient:0",
+    "speaker": "hostess",
+    "text": "知らない相手との買い物、気をつけなきゃ。",
+    "performance": "luna-normal",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……っ！\",\"luna-surprised\",false]": {
+    "file": "assets/voices/7b0dd739fedf0791aa8d064a414e1494e3452a6a94edfb84847836570496a56a.mp3",
+    "hash": "7b0dd739fedf0791aa8d064a414e1494e3452a6a94edfb84847836570496a56a",
+    "source": "act2/bag/attempt-1:2",
+    "speaker": "hostess",
+    "text": "……っ！",
+    "performance": "luna-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……なんで……ここが……。\",\"luna-surprised\",false]": {
+    "file": "assets/voices/39777d41d2aa01e1cf7a83ed6fbaa0207e9144b3538ce4e636d38a01902f6c44.mp3",
+    "hash": "39777d41d2aa01e1cf7a83ed6fbaa0207e9144b3538ce4e636d38a01902f6c44",
+    "source": "act2/bag/attempt-1:5",
+    "speaker": "hostess",
+    "text": "……なんで……ここが……。",
+    "performance": "luna-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……もう、お店は辞めたから。\",\"luna-serious\",false]": {
+    "file": "assets/voices/8f020a73376c68e41097fb5e40b751466dddc992cbb928d4d8d60fee8eedb565.mp3",
+    "hash": "8f020a73376c68e41097fb5e40b751466dddc992cbb928d4d8d60fee8eedb565",
+    "source": "act2/bag/attempt-1:7",
+    "speaker": "hostess",
+    "text": "……もう、お店は辞めたから。",
+    "performance": "luna-serious",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……そんな関係じゃない！\",\"luna-firm\",false]": {
+    "file": "assets/voices/6ece9659a08e545b954c3980e4f8edf94295632e238def2d3eaba371d3053793.mp3",
+    "hash": "6ece9659a08e545b954c3980e4f8edf94295632e238def2d3eaba371d3053793",
+    "source": "act2/bag/attempt-1:9",
+    "speaker": "hostess",
+    "text": "……そんな関係じゃない！",
+    "performance": "luna-firm",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……お願い。もう帰って。\",\"luna-serious\",false]": {
+    "file": "assets/voices/39504f233f839c0f4dade065d73de703bef08b13d4df8ea8f7d793fa45609959.mp3",
+    "hash": "39504f233f839c0f4dade065d73de703bef08b13d4df8ea8f7d793fa45609959",
+    "source": "act2/bag/attempt-1:12",
+    "speaker": "hostess",
+    "text": "……お願い。もう帰って。",
+    "performance": "luna-serious",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"おい、あんた。何やってるんだ？\",\"act2-manager\",false]": {
+    "file": "assets/voices/e558cf4d0f92fd8263c0827d2a92ca07c65dfe82a455ab545b00fa7d6e28808a.mp3",
+    "hash": "e558cf4d0f92fd8263c0827d2a92ca07c65dfe82a455ab545b00fa7d6e28808a",
+    "source": "act2/bag/attempt-1:14",
+    "speaker": "manager",
+    "text": "おい、あんた。何やってるんだ？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ここの大家だ。\",\"act2-manager\",false]": {
+    "file": "assets/voices/ea33a52ba8950a314384e1e4758e55863c317d0d18ed367eb199d54989eb0a49.mp3",
+    "hash": "ea33a52ba8950a314384e1e4758e55863c317d0d18ed367eb199d54989eb0a49",
+    "source": "act2/bag/attempt-1:16",
+    "speaker": "manager",
+    "text": "ここの大家だ。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……大家さん。それだけだよ。\",\"luna-serious\",false]": {
+    "file": "assets/voices/cadb2a15b0fe53d840a93897d2e48543eef82c970b218a6fbdd8bb9e3c4cbe8b.mp3",
+    "hash": "cadb2a15b0fe53d840a93897d2e48543eef82c970b218a6fbdd8bb9e3c4cbe8b",
+    "source": "act2/bag/attempt-1:20",
+    "speaker": "hostess",
+    "text": "……大家さん。それだけだよ。",
+    "performance": "luna-serious",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ルナは帰ってくれって言ってるだろ。今日はもう帰れ。\",\"act2-manager-firm\",false]": {
+    "file": "assets/voices/25b396684e778cfc521937058795257da4643198dd78dc6b70d2eae4be4c3c3b.mp3",
+    "hash": "25b396684e778cfc521937058795257da4643198dd78dc6b70d2eae4be4c3c3b",
+    "source": "act2/bag/attempt-1:23",
+    "speaker": "manager",
+    "text": "ルナは帰ってくれって言ってるだろ。今日はもう帰れ。",
+    "performance": "act2-manager-firm",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"モク、お前がルナの彼氏のフリをしろ！\",\"act2-manager\",false]": {
+    "file": "assets/voices/cefbbc2840386697e1a2045bf8b8824710c27d4e7539ed914a4dff84e767cf27.mp3",
+    "hash": "cefbbc2840386697e1a2045bf8b8824710c27d4e7539ed914a4dff84e767cf27",
+    "source": "act2/bag/runtime/2/loan:0",
+    "speaker": "manager",
+    "text": "モク、お前がルナの彼氏のフリをしろ！",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"馬鹿じゃないのかニャ？ モクは女ニャ。大家がやれニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/3f8fdff6e553ac629c283edf0f2915e47618ebd1645c6a389d79dadcfcefcfed.mp3",
+    "hash": "3f8fdff6e553ac629c283edf0f2915e47618ebd1645c6a389d79dadcfcefcfed",
+    "source": "act2/bag/runtime/2/loan:1",
+    "speaker": "cat",
+    "text": "馬鹿じゃないのかニャ？ モクは女ニャ。大家がやれニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"あっ……そうだった。\",\"act2-manager\",false]": {
+    "file": "assets/voices/feacc12ccf698ded2ce60de9946bc9f8a3310872f4262af47baee2e6097b7ea8.mp3",
+    "hash": "feacc12ccf698ded2ce60de9946bc9f8a3310872f4262af47baee2e6097b7ea8",
+    "source": "act2/bag/runtime/2/loan:2",
+    "speaker": "manager",
+    "text": "あっ……そうだった。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"忘れるなニャ！！\",\"act2-moku-firm\",false]": {
+    "file": "assets/voices/0122d9bba412948084a70404f7dd6c7accdadbacc7c4050000f7e79a1e2d0910.mp3",
+    "hash": "0122d9bba412948084a70404f7dd6c7accdadbacc7c4050000f7e79a1e2d0910",
+    "source": "act2/bag/runtime/2/loan:3",
+    "speaker": "cat",
+    "text": "忘れるなニャ！！",
+    "performance": "act2-moku-firm",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"あー……実は俺がルナの彼氏だ！\",\"act2-manager\",false]": {
+    "file": "assets/voices/b961e8f29ab506efa224a2e66506df21fe0ab705bdc693294fcbfcddd14a6154.mp3",
+    "hash": "b961e8f29ab506efa224a2e66506df21fe0ab705bdc693294fcbfcddd14a6154",
+    "source": "act2/bag/runtime/2/loan:5",
+    "speaker": "manager",
+    "text": "あー……実は俺がルナの彼氏だ！",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"えっ！？\",\"luna-surprised\",false]": {
+    "file": "assets/voices/03b8dc08c76f8287c9448f494c8875b3a81afb4e63130122489d436a9ee4e815.mp3",
+    "hash": "03b8dc08c76f8287c9448f494c8875b3a81afb4e63130122489d436a9ee4e815",
+    "source": "act2/bag/runtime/2/loan:6",
+    "speaker": "hostess",
+    "text": "えっ！？",
+    "performance": "luna-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……言う必要ないでしょ。\",\"luna-normal\",false]": {
+    "file": "assets/voices/9db22033c156cbabfae062e397734eab21927796da8cb1dedf60bc84443d1b50.mp3",
+    "hash": "9db22033c156cbabfae062e397734eab21927796da8cb1dedf60bc84443d1b50",
+    "source": "act2/bag/runtime/2/loan:9",
+    "speaker": "hostess",
+    "text": "……言う必要ないでしょ。",
+    "performance": "luna-normal",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"そうなの♡ この人があたしの彼氏。\",\"luna-flirt\",false]": {
+    "file": "assets/voices/e15562153b66e51dfe2b58a320b7dc993ff3c50c96a32745c5f7d2c57d804429.mp3",
+    "hash": "e15562153b66e51dfe2b58a320b7dc993ff3c50c96a32745c5f7d2c57d804429",
+    "source": "act2/bag/runtime/2/loan:11",
+    "speaker": "hostess",
+    "text": "そうなの♡ この人があたしの彼氏。",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……お、おう！\",\"act2-manager\",false]": {
+    "file": "assets/voices/a7b6597a45c46d7716c7ddd49fd78c91a1e6810f4751103204b0a94097f7eba2.mp3",
+    "hash": "a7b6597a45c46d7716c7ddd49fd78c91a1e6810f4751103204b0a94097f7eba2",
+    "source": "act2/bag/runtime/2/loan:12",
+    "speaker": "manager",
+    "text": "……お、おう！",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家、顔が赤いニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/5aab41581cf4d0e554a0590e5b5d4b3ce6ca1bf0dd21a7bcac489ce6eb9695c3.mp3",
+    "hash": "5aab41581cf4d0e554a0590e5b5d4b3ce6ca1bf0dd21a7bcac489ce6eb9695c3",
+    "source": "act2/bag/runtime/2/loan:13",
+    "speaker": "cat",
+    "text": "大家、顔が赤いニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"うるせぇ！ 今は黙ってろ！\",\"act2-retort\",false]": {
+    "file": "assets/voices/d6c68c6a282ced6f47f1190f24e38a805107e11dc4962e39b6f8c7ffc4807cf8.mp3",
+    "hash": "d6c68c6a282ced6f47f1190f24e38a805107e11dc4962e39b6f8c7ffc4807cf8",
+    "source": "act2/bag/runtime/2/loan:14",
+    "speaker": "manager",
+    "text": "うるせぇ！ 今は黙ってろ！",
+    "performance": "act2-retort",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"だから、待ってなんて頼んでない！\",\"luna-firm\",false]": {
+    "file": "assets/voices/60a80a200634ea94019f3e10053c0fa873a71069fa7fee54e5098b08170a5c1c.mp3",
+    "hash": "60a80a200634ea94019f3e10053c0fa873a71069fa7fee54e5098b08170a5c1c",
+    "source": "act2/bag/runtime/2/loan:16",
+    "speaker": "hostess",
+    "text": "だから、待ってなんて頼んでない！",
+    "performance": "luna-firm",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"違うだろ。ルナは最初から嫌がってるじゃねぇか。\",\"act2-manager\",false]": {
+    "file": "assets/voices/a99356526d2e74dbb2837ecbaac8fd8b487bf3a37158d569d98fb8940716bfb8.mp3",
+    "hash": "a99356526d2e74dbb2837ecbaac8fd8b487bf3a37158d569d98fb8940716bfb8",
+    "source": "act2/bag/runtime/2/loan:20",
+    "speaker": "manager",
+    "text": "違うだろ。ルナは最初から嫌がってるじゃねぇか。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……おい。\",\"act2-moku\",false]": {
+    "file": "assets/voices/70c559dd0895be5c44d57be119b5caa2312db51d0ca857c4e690987d071f12ea.mp3",
+    "hash": "70c559dd0895be5c44d57be119b5caa2312db51d0ca857c4e690987d071f12ea",
+    "source": "act2/bag/runtime/2/loan:23",
+    "speaker": "cat",
+    "text": "……おい。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……ルナが嫌がってるニャ。\",\"act2-moku-firm\",false]": {
+    "file": "assets/voices/7555394ee3ca293c3f8c7cd5af7308481958f0f410bcc1e3b75994a4dc729dac.mp3",
+    "hash": "7555394ee3ca293c3f8c7cd5af7308481958f0f410bcc1e3b75994a4dc729dac",
+    "source": "act2/bag/runtime/2/loan:26",
+    "speaker": "cat",
+    "text": "……ルナが嫌がってるニャ。",
+    "performance": "act2-moku-firm",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……聞こえなかったのかニャ？\",\"act2-moku-firm\",false]": {
+    "file": "assets/voices/bf2e97998da7bdf691c3826620e8b19dd3119f6a03da0622c8c51eeae5205a21.mp3",
+    "hash": "bf2e97998da7bdf691c3826620e8b19dd3119f6a03da0622c8c51eeae5205a21",
+    "source": "act2/bag/runtime/2/loan:28",
+    "speaker": "cat",
+    "text": "……聞こえなかったのかニャ？",
+    "performance": "act2-moku-firm",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"帰れって言ってんだニャ！！\",\"act2-moku-firm\",false]": {
+    "file": "assets/voices/ca0d7901d28f75467de0b689122381bba167c15f135f8900bc99584e2f33bc3e.mp3",
+    "hash": "ca0d7901d28f75467de0b689122381bba167c15f135f8900bc99584e2f33bc3e",
+    "source": "act2/bag/runtime/2/loan:30",
+    "speaker": "cat",
+    "text": "帰れって言ってんだニャ！！",
+    "performance": "act2-moku-firm",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"俺の彼女に二度と近づくな。\",\"act2-manager-firm\",false]": {
+    "file": "assets/voices/773a69779a093eb481453078316556b6feafb0950ba8cc35d4f4b63db385966e.mp3",
+    "hash": "773a69779a093eb481453078316556b6feafb0950ba8cc35d4f4b63db385966e",
+    "source": "act2/bag/runtime/2/loan:33",
+    "speaker": "manager",
+    "text": "俺の彼女に二度と近づくな。",
+    "performance": "act2-manager-firm",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"次はこんなもんじゃ済まないニャ。\",\"act2-moku-firm\",false]": {
+    "file": "assets/voices/fedabd5eac12f9b95d66bbb9be45c1e167345284d6f377ef30b59a6e9f831c07.mp3",
+    "hash": "fedabd5eac12f9b95d66bbb9be45c1e167345284d6f377ef30b59a6e9f831c07",
+    "source": "act2/bag/runtime/2/loan:34",
+    "speaker": "cat",
+    "text": "次はこんなもんじゃ済まないニャ。",
+    "performance": "act2-moku-firm",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ふぅ。行ったか。\",\"act2-manager\",false]": {
+    "file": "assets/voices/ef8b0466597d8ef3dee984b297926aa25e99ad553887e99d6a9917a961a44b8e.mp3",
+    "hash": "ef8b0466597d8ef3dee984b297926aa25e99ad553887e99d6a9917a961a44b8e",
+    "source": "act2/bag/runtime/2/loan:37",
+    "speaker": "manager",
+    "text": "……ふぅ。行ったか。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……ねえ、大家さん♡\",\"luna-happy\",false]": {
+    "file": "assets/voices/f4a40a3cfd55b3eb9ddc45c6d6a9204c90826093ef38f1010a3652269046c0c3.mp3",
+    "hash": "f4a40a3cfd55b3eb9ddc45c6d6a9204c90826093ef38f1010a3652269046c0c3",
+    "source": "act2/bag/runtime/2/loan:38",
+    "speaker": "hostess",
+    "text": "……ねえ、大家さん♡",
+    "performance": "luna-happy",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ん？\",\"act2-manager\",false]": {
+    "file": "assets/voices/4d3aadb88ffc40af293a5a50aff21d4a3d6d5bbe72f975258add176faeb791c6.mp3",
+    "hash": "4d3aadb88ffc40af293a5a50aff21d4a3d6d5bbe72f975258add176faeb791c6",
+    "source": "act2/bag/runtime/2/guarantee:27",
+    "speaker": "manager",
+    "text": "ん？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"さっき……『俺の彼女』って言ってくれたよね♡\",\"luna-flirt\",false]": {
+    "file": "assets/voices/5066325f2866dd1975f5d2e064eff5f24bba5cdaec6ba8e7ecccb67553f0b2a7.mp3",
+    "hash": "5066325f2866dd1975f5d2e064eff5f24bba5cdaec6ba8e7ecccb67553f0b2a7",
+    "source": "act2/bag/runtime/2/loan:40",
+    "speaker": "hostess",
+    "text": "さっき……『俺の彼女』って言ってくれたよね♡",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"あ、あれは！ あいつを追い払うためにだな……！\",\"act2-manager\",false]": {
+    "file": "assets/voices/6df50810cbeacec3073630416d659b10edefd7cf4dc72bbd7b1156dfb18ce91c.mp3",
+    "hash": "6df50810cbeacec3073630416d659b10edefd7cf4dc72bbd7b1156dfb18ce91c",
+    "source": "act2/bag/runtime/2/loan:41",
+    "speaker": "manager",
+    "text": "あ、あれは！ あいつを追い払うためにだな……！",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"ふふっ♡ 分かってるよ。\",\"luna-happy\",false]": {
+    "file": "assets/voices/4341d6c6a738d9af5319ddb74d3a7b5e5279cff60b602b1c9beb72bc76f89074.mp3",
+    "hash": "4341d6c6a738d9af5319ddb74d3a7b5e5279cff60b602b1c9beb72bc76f89074",
+    "source": "act2/bag/runtime/2/loan:42",
+    "speaker": "hostess",
+    "text": "ふふっ♡ 分かってるよ。",
+    "performance": "luna-happy",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……でも、ちょっと嬉しかったな♡\",\"luna-flirt\",false]": {
+    "file": "assets/voices/2011c6b4cd049113ce4c81d977784e7cf0d7d4c34ab0c390a683ad4c7608d838.mp3",
+    "hash": "2011c6b4cd049113ce4c81d977784e7cf0d7d4c34ab0c390a683ad4c7608d838",
+    "source": "act2/bag/runtime/2/loan:43",
+    "speaker": "hostess",
+    "text": "……でも、ちょっと嬉しかったな♡",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……そ、そうか。\",\"act2-manager\",false]": {
+    "file": "assets/voices/3f7bfbbaeb14b9e0c460a7918738ff96b7d60e103504786e33714c6ebd0cac98.mp3",
+    "hash": "3f7bfbbaeb14b9e0c460a7918738ff96b7d60e103504786e33714c6ebd0cac98",
+    "source": "act2/bag/runtime/2/loan:44",
+    "speaker": "manager",
+    "text": "……そ、そうか。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家、顔が真っ赤ニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/f288fa7d23f012cd4f2e69a99cf06bdca0dd1b3f47d29afec0a8416a2a3d7342.mp3",
+    "hash": "f288fa7d23f012cd4f2e69a99cf06bdca0dd1b3f47d29afec0a8416a2a3d7342",
+    "source": "act2/bag/runtime/2/loan:45",
+    "speaker": "cat",
+    "text": "大家、顔が真っ赤ニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"うるせぇ！！\",\"act2-retort\",false]": {
+    "file": "assets/voices/b43ba50fa85dd9ed63d44fd327e49d8d7b796e941f178da5bf08b9ffb1e07525.mp3",
+    "hash": "b43ba50fa85dd9ed63d44fd327e49d8d7b796e941f178da5bf08b9ffb1e07525",
+    "source": "act2/bag/runtime/2/loan:46",
+    "speaker": "manager",
+    "text": "うるせぇ！！",
+    "performance": "act2-retort",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"あははっ♡\",\"luna-happy\",false]": {
+    "file": "assets/voices/9730ccf54e1f07113cba5ce98a877083083fb08e20c694de66e10187695413a6.mp3",
+    "hash": "9730ccf54e1f07113cba5ce98a877083083fb08e20c694de66e10187695413a6",
+    "source": "act2/bag/runtime/2/loan:68",
+    "speaker": "hostess",
+    "text": "あははっ♡",
+    "performance": "luna-happy",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……前も、あいつは帰っていった。\",\"inner\",false]": {
+    "file": "assets/voices/c72b070bad0214fd8837ad1405f30f5669369ab863e22870c15fbbb6a5286644.mp3",
+    "hash": "c72b070bad0214fd8837ad1405f30f5669369ab863e22870c15fbbb6a5286644",
+    "source": "act2/bag/runtime/2/loan:49",
+    "speaker": "manager",
+    "text": "……前も、あいつは帰っていった。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……でも、あの夜……。\",\"inner\",false]": {
+    "file": "assets/voices/85335d6d83bb626c81e3448f33426dba6dd6d57e6fee45e1e87f21936e3f7637.mp3",
+    "hash": "85335d6d83bb626c81e3448f33426dba6dd6d57e6fee45e1e87f21936e3f7637",
+    "source": "act2/bag/runtime/2/loan:50",
+    "speaker": "manager",
+    "text": "……でも、あの夜……。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ルナ。今日は1人で過ごすな、俺も部屋に泊まる。\",\"act2-manager\",false]": {
+    "file": "assets/voices/8682d5b7324b9e0d88a4b2090e151d41891e3b7e7888841dc1a6232c8184cda9.mp3",
+    "hash": "8682d5b7324b9e0d88a4b2090e151d41891e3b7e7888841dc1a6232c8184cda9",
+    "source": "act2/bag/runtime/2/loan:51",
+    "speaker": "manager",
+    "text": "……ルナ。今日は1人で過ごすな、俺も部屋に泊まる。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……えっ？\",\"luna-surprised\",false]": {
+    "file": "assets/voices/8d63565482771caa5e0e54d932939b4bf3d6281115ec978f2d831f9e4f544698.mp3",
+    "hash": "8d63565482771caa5e0e54d932939b4bf3d6281115ec978f2d831f9e4f544698",
+    "source": "act2/bag/runtime/2/loan:52",
+    "speaker": "hostess",
+    "text": "……えっ？",
+    "performance": "luna-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……大家、さっき彼氏のフリって言ってなかったかニャ？\",\"act2-moku\",false]": {
+    "file": "assets/voices/ae6df40b5ee0eaa8c646a7ae48b2a311049d7e5446fec95177304cbcc895645a.mp3",
+    "hash": "ae6df40b5ee0eaa8c646a7ae48b2a311049d7e5446fec95177304cbcc895645a",
+    "source": "act2/bag/runtime/2/loan:53",
+    "speaker": "cat",
+    "text": "……大家、さっき彼氏のフリって言ってなかったかニャ？",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……は？\",\"act2-manager\",false]": {
+    "file": "assets/voices/300349eff356bdead80b55bf684520ffd1ed4851ebe707f587c8496afce64f85.mp3",
+    "hash": "300349eff356bdead80b55bf684520ffd1ed4851ebe707f587c8496afce64f85",
+    "source": "act2/bag/runtime/2/loan:54",
+    "speaker": "manager",
+    "text": "……は？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"もう本物の彼氏になるつもりかニャ？\",\"act2-moku\",false]": {
+    "file": "assets/voices/385435c21b68c28589cab8b842cc5865e5684b51cdcd3c081c6951406b2037d4.mp3",
+    "hash": "385435c21b68c28589cab8b842cc5865e5684b51cdcd3c081c6951406b2037d4",
+    "source": "act2/bag/runtime/2/loan:55",
+    "speaker": "cat",
+    "text": "もう本物の彼氏になるつもりかニャ？",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ちげぇよ！！ あいつがまた来るかもしれねぇだろ！\",\"act2-retort\",false]": {
+    "file": "assets/voices/703779aa4d4f4a84536c83ab149c51dd1f017c78f65a63dc46f00eb5a3a315b2.mp3",
+    "hash": "703779aa4d4f4a84536c83ab149c51dd1f017c78f65a63dc46f00eb5a3a315b2",
+    "source": "act2/bag/runtime/2/loan:56",
+    "speaker": "manager",
+    "text": "ちげぇよ！！ あいつがまた来るかもしれねぇだろ！",
+    "performance": "act2-retort",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"ふふっ♡ あたしは嬉しいけど？\",\"luna-happy\",false]": {
+    "file": "assets/voices/859d246b2bee146a7b9396c3005870bd620c27561de6094a8b82c6b69b639fe2.mp3",
+    "hash": "859d246b2bee146a7b9396c3005870bd620c27561de6094a8b82c6b69b639fe2",
+    "source": "act2/bag/runtime/2/loan:57",
+    "speaker": "hostess",
+    "text": "ふふっ♡ あたしは嬉しいけど？",
+    "performance": "luna-happy",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ルナまで茶化すな！！\",\"act2-manager\",false]": {
+    "file": "assets/voices/45d6304403d5f95d94a952e209cafd605024066ef7f03b3cf82819b5893efb4c.mp3",
+    "hash": "45d6304403d5f95d94a952e209cafd605024066ef7f03b3cf82819b5893efb4c",
+    "source": "act2/bag/runtime/2/loan:58",
+    "speaker": "manager",
+    "text": "ルナまで茶化すな！！",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……じゃあモクも泊まるニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/7a6a1da9050d636e69fc46c9102186f144dad62a016691ffd3be3a57c9b161a1.mp3",
+    "hash": "7a6a1da9050d636e69fc46c9102186f144dad62a016691ffd3be3a57c9b161a1",
+    "source": "act2/bag/runtime/2/loan:59",
+    "speaker": "cat",
+    "text": "……じゃあモクも泊まるニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……お前も？\",\"act2-manager\",false]": {
+    "file": "assets/voices/e02897baae5158a572b3d664d88168768aee8d6694dc6d21243d98bf7f0cede8.mp3",
+    "hash": "e02897baae5158a572b3d664d88168768aee8d6694dc6d21243d98bf7f0cede8",
+    "source": "act2/bag/runtime/2/loan:60",
+    "speaker": "manager",
+    "text": "……お前も？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家が変なことしないように見張るニャ！\",\"act2-moku\",false]": {
+    "file": "assets/voices/3651239363589a7f28f38e49a198ea86b78078136a6b50ec7dd1626729f0bdaa.mp3",
+    "hash": "3651239363589a7f28f38e49a198ea86b78078136a6b50ec7dd1626729f0bdaa",
+    "source": "act2/bag/runtime/2/loan:61",
+    "speaker": "cat",
+    "text": "大家が変なことしないように見張るニャ！",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"見張る相手が違うだろ！！\",\"act2-retort\",false]": {
+    "file": "assets/voices/a2fc7505f13e5a6d2ffccf065aad318824d68401de64d49a00162aef1810e815.mp3",
+    "hash": "a2fc7505f13e5a6d2ffccf065aad318824d68401de64d49a00162aef1810e815",
+    "source": "act2/bag/runtime/2/loan:62",
+    "speaker": "manager",
+    "text": "見張る相手が違うだろ！！",
+    "performance": "act2-retort",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"あははっ♡ 二人ともありがとう。\",\"luna-happy\",false]": {
+    "file": "assets/voices/b75bc8ef7300c527e152928e950dd28012ecb43323623887916667eba4279788.mp3",
+    "hash": "b75bc8ef7300c527e152928e950dd28012ecb43323623887916667eba4279788",
+    "source": "act2/bag/runtime/2/loan:63",
+    "speaker": "hostess",
+    "text": "あははっ♡ 二人ともありがとう。",
+    "performance": "luna-happy",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"ふぁぁ……見張りは完璧だったニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/77e10e72e864da87118feb93720edd1fca59a86b33a58580319d71e857992957.mp3",
+    "hash": "77e10e72e864da87118feb93720edd1fca59a86b33a58580319d71e857992957",
+    "source": "act2/bag/runtime/2/loan:66",
+    "speaker": "cat",
+    "text": "ふぁぁ……見張りは完璧だったニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"お前、真っ先に寝てただろ！！\",\"act2-retort\",false]": {
+    "file": "assets/voices/660d00cd7e60e05248bda84cbf5c954c58930a1dd67a4c9a031125a0083b6294.mp3",
+    "hash": "660d00cd7e60e05248bda84cbf5c954c58930a1dd67a4c9a031125a0083b6294",
+    "source": "act2/bag/runtime/2/loan:67",
+    "speaker": "manager",
+    "text": "お前、真っ先に寝てただろ！！",
+    "performance": "act2-retort",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……よかった。今度は守れたんだ。\",\"inner\",false]": {
+    "file": "assets/voices/71de4ea21616938c2d4eba0350c6ea0de93ac61b17e732f9b385519bc87ad5f9.mp3",
+    "hash": "71de4ea21616938c2d4eba0350c6ea0de93ac61b17e732f9b385519bc87ad5f9",
+    "source": "act2/bag/runtime/2/loan:70",
+    "speaker": "manager",
+    "text": "……よかった。今度は守れたんだ。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……関係あるさ。\",\"act2-manager\",false]": {
+    "file": "assets/voices/db6654f424740634f63fb88e095db35a7e2c2ba659589163e65cf617a831a649.mp3",
+    "hash": "db6654f424740634f63fb88e095db35a7e2c2ba659589163e65cf617a831a649",
+    "source": "act2/bag/runtime/2/guarantee:1",
+    "speaker": "manager",
+    "text": "……関係あるさ。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"俺がルナの彼氏だ。文句あるか！\",\"act2-manager\",false]": {
+    "file": "assets/voices/be6e4dc8077cc1398fe592997c5f600dd1297eed63f7815f23cbd80b1198215f.mp3",
+    "hash": "be6e4dc8077cc1398fe592997c5f600dd1297eed63f7815f23cbd80b1198215f",
+    "source": "act2/bag/runtime/2/guarantee:3",
+    "speaker": "manager",
+    "text": "俺がルナの彼氏だ。文句あるか！",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……えっ！？\",\"luna-surprised\",false]": {
+    "file": "assets/voices/964691a6ae3483c33c28966659a7d6cc83b12fa2125b1158606c181176696db6.mp3",
+    "hash": "964691a6ae3483c33c28966659a7d6cc83b12fa2125b1158606c181176696db6",
+    "source": "act2/bag/runtime/2/guarantee:4",
+    "speaker": "hostess",
+    "text": "……えっ！？",
+    "performance": "luna-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"嘘じゃねぇよ。\",\"act2-manager\",false]": {
+    "file": "assets/voices/24d002370d39729ec1d6e42948b07cdf3db76b159c8dc17b565a396222cd8342.mp3",
+    "hash": "24d002370d39729ec1d6e42948b07cdf3db76b159c8dc17b565a396222cd8342",
+    "source": "act2/bag/runtime/2/guarantee:6",
+    "speaker": "manager",
+    "text": "嘘じゃねぇよ。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……大家さん……。\",\"luna-surprised\",false]": {
+    "file": "assets/voices/cb3d5bf1373c24c62e136c54f27da089832ac50a6e032c814e56c54073ac2155.mp3",
+    "hash": "cb3d5bf1373c24c62e136c54f27da089832ac50a6e032c814e56c54073ac2155",
+    "source": "act2/bag/runtime/2/guarantee:8",
+    "speaker": "hostess",
+    "text": "……大家さん……。",
+    "performance": "luna-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"知らねぇよ。ルナは最初から、お前と付き合ってねぇだろ。\",\"act2-manager\",false]": {
+    "file": "assets/voices/b3b614a4e897741d6a75c53d4b8bd78aa600078c49ecbda2c1bf49ea92b2e225.mp3",
+    "hash": "b3b614a4e897741d6a75c53d4b8bd78aa600078c49ecbda2c1bf49ea92b2e225",
+    "source": "act2/bag/runtime/2/guarantee:11",
+    "speaker": "manager",
+    "text": "知らねぇよ。ルナは最初から、お前と付き合ってねぇだろ。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"だから何だよ。\",\"act2-manager\",false]": {
+    "file": "assets/voices/3ce7c490677c4bd80a9312f4c4e399b0f09610045ef11158fb41411207b30075.mp3",
+    "hash": "3ce7c490677c4bd80a9312f4c4e399b0f09610045ef11158fb41411207b30075",
+    "source": "act2/bag/runtime/2/guarantee:13",
+    "speaker": "manager",
+    "text": "だから何だよ。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"好きだからって、嫌がる相手を追い回していい理由にはならねぇだろ。\",\"act2-manager-firm\",false]": {
+    "file": "assets/voices/1b074d3d2b7c27a117ea41b5c485cb7cb696a14a19045065c3d9ac0f9300c888.mp3",
+    "hash": "1b074d3d2b7c27a117ea41b5c485cb7cb696a14a19045065c3d9ac0f9300c888",
+    "source": "act2/bag/runtime/2/guarantee:14",
+    "speaker": "manager",
+    "text": "好きだからって、嫌がる相手を追い回していい理由にはならねぇだろ。",
+    "performance": "act2-manager-firm",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"もうルナに近づくな。分かったな？\",\"act2-manager-firm\",false]": {
+    "file": "assets/voices/02e8ff7d2bd7aceb92d76ff4891ec528b1d9d0a69bbf785a21ab88f78d97bbbb.mp3",
+    "hash": "02e8ff7d2bd7aceb92d76ff4891ec528b1d9d0a69bbf785a21ab88f78d97bbbb",
+    "source": "act2/bag/runtime/2/guarantee:17",
+    "speaker": "manager",
+    "text": "もうルナに近づくな。分かったな？",
+    "performance": "act2-manager-firm",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……ずるいなぁ。\",\"luna-flirt\",false]": {
+    "file": "assets/voices/254d976eabda560b280766051c4c9d6e543c29a54646b840211bee2a5bb74308.mp3",
+    "hash": "254d976eabda560b280766051c4c9d6e543c29a54646b840211bee2a5bb74308",
+    "source": "act2/bag/runtime/2/guarantee:22",
+    "speaker": "hostess",
+    "text": "……ずるいなぁ。",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"大家さん、今日は本当にありがとう♡\",\"luna-flirt\",false]": {
+    "file": "assets/voices/983f06fd926f67ce68e3d90cd13b7f08c43583d89727bbf3f4d1925cb05cdd53.mp3",
+    "hash": "983f06fd926f67ce68e3d90cd13b7f08c43583d89727bbf3f4d1925cb05cdd53",
+    "source": "act2/bag/runtime/2/guarantee:24",
+    "speaker": "hostess",
+    "text": "大家さん、今日は本当にありがとう♡",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ああ。まあ、無事でよかったよ。\",\"act2-manager\",false]": {
+    "file": "assets/voices/b0bb9177f128c76c5e3d81c14f796bbb85dfbd030a38921dbd3e60034c9b0e86.mp3",
+    "hash": "b0bb9177f128c76c5e3d81c14f796bbb85dfbd030a38921dbd3e60034c9b0e86",
+    "source": "act2/bag/runtime/2/guarantee:25",
+    "speaker": "manager",
+    "text": "ああ。まあ、無事でよかったよ。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"ねえ……大家さん。\",\"luna-flirt\",false]": {
+    "file": "assets/voices/fcbab59c7468fc4c6d79e3c47f406e4d3caef5bd71a595297fa23a0cc5f96d61.mp3",
+    "hash": "fcbab59c7468fc4c6d79e3c47f406e4d3caef5bd71a595297fa23a0cc5f96d61",
+    "source": "act2/bag/runtime/2/guarantee:26",
+    "speaker": "hostess",
+    "text": "ねえ……大家さん。",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"ちょっと、二人きりで相談したいことがあるんだけど……♡\",\"luna-flirt\",false]": {
+    "file": "assets/voices/93b9b454285a7dc5558d403f12f6b6b615e13b331ac5f886239bbc876a60a038.mp3",
+    "hash": "93b9b454285a7dc5558d403f12f6b6b615e13b331ac5f886239bbc876a60a038",
+    "source": "act2/bag/runtime/2/guarantee:28",
+    "speaker": "hostess",
+    "text": "ちょっと、二人きりで相談したいことがあるんだけど……♡",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ここじゃ駄目なのか？\",\"act2-manager\",false]": {
+    "file": "assets/voices/80b6d67ec3dacfb5759fd3db6508a6beb3c02937fba3beed1378b584d793cd81.mp3",
+    "hash": "80b6d67ec3dacfb5759fd3db6508a6beb3c02937fba3beed1378b584d793cd81",
+    "source": "act2/bag/runtime/2/guarantee:29",
+    "speaker": "manager",
+    "text": "ここじゃ駄目なのか？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……駄目。二人だけの秘密にしたいの。\",\"luna-flirt\",false]": {
+    "file": "assets/voices/1a06e3316e654506495ebbbc791c77f0f1502bb00cf40779695042394ab4dc9a.mp3",
+    "hash": "1a06e3316e654506495ebbbc791c77f0f1502bb00cf40779695042394ab4dc9a",
+    "source": "act2/bag/runtime/2/guarantee:30",
+    "speaker": "hostess",
+    "text": "……駄目。二人だけの秘密にしたいの。",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……お、おう。\",\"act2-manager\",false]": {
+    "file": "assets/voices/1fd314109dbb8b938be70b29c0d6ef4fd2de4069d58730cf68476bb345c2455b.mp3",
+    "hash": "1fd314109dbb8b938be70b29c0d6ef4fd2de4069d58730cf68476bb345c2455b",
+    "source": "act2/bag/runtime/2/return:21",
+    "speaker": "manager",
+    "text": "……お、おう。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ん……？ もう朝か……。\",\"act2-manager\",false]": {
+    "file": "assets/voices/009e9cc3d97ce38c93dde7d90feea02abfc48857477d9db26dfeb98485c6b991.mp3",
+    "hash": "009e9cc3d97ce38c93dde7d90feea02abfc48857477d9db26dfeb98485c6b991",
+    "source": "act2/bag/runtime/2/return:33",
+    "speaker": "manager",
+    "text": "……ん……？ もう朝か……。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ルナ？\",\"act2-manager\",false]": {
+    "file": "assets/voices/4d1e1257d47ca09e8c2e49356695b4f0f85c5206a3031578722fc2926dbbe8ba.mp3",
+    "hash": "4d1e1257d47ca09e8c2e49356695b4f0f85c5206a3031578722fc2926dbbe8ba",
+    "source": "act2/bag/runtime/2/return:34",
+    "speaker": "manager",
+    "text": "……ルナ？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家ー！ 朝ニャ！\",\"act2-moku\",false]": {
+    "file": "assets/voices/d1a4778017d39553f9260a654886df5c621a26311c383a2f4919ecec962689dd.mp3",
+    "hash": "d1a4778017d39553f9260a654886df5c621a26311c383a2f4919ecec962689dd",
+    "source": "act2/bag/runtime/2/guarantee:40",
+    "speaker": "cat",
+    "text": "大家ー！ 朝ニャ！",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ん？ ああ、おはよう。\",\"act2-manager\",false]": {
+    "file": "assets/voices/1b024ae9ca0791a19f0b3325cd60f7bbbad5ab6a51d3773a412ad4b15da06df4.mp3",
+    "hash": "1b024ae9ca0791a19f0b3325cd60f7bbbad5ab6a51d3773a412ad4b15da06df4",
+    "source": "act2/bag/runtime/2/guarantee:41",
+    "speaker": "manager",
+    "text": "……ん？ ああ、おはよう。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……大家、なんで何も着てないニャ？\",\"act2-moku-surprised\",false]": {
+    "file": "assets/voices/a81ba142d1346df1c161a2455e4767e21ebc9b9f39b099557a5f88aee4235a07.mp3",
+    "hash": "a81ba142d1346df1c161a2455e4767e21ebc9b9f39b099557a5f88aee4235a07",
+    "source": "act2/bag/runtime/2/guarantee:42",
+    "speaker": "cat",
+    "text": "……大家、なんで何も着てないニャ？",
+    "performance": "act2-moku-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……え？\",\"act2-manager\",false]": {
+    "file": "assets/voices/a179c0232f5f5f43a0b174e1e538d16ad653eb405c9e9f23d52d4cc1c4991f85.mp3",
+    "hash": "a179c0232f5f5f43a0b174e1e538d16ad653eb405c9e9f23d52d4cc1c4991f85",
+    "source": "act2/bag/runtime/2/return:38",
+    "speaker": "manager",
+    "text": "……え？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"ヘンタイニャ！！\",\"act2-moku-firm\",false]": {
+    "file": "assets/voices/447c1651d006693a434c32d485ff904eacafebb0bed7389ab79a19df37088692.mp3",
+    "hash": "447c1651d006693a434c32d485ff904eacafebb0bed7389ab79a19df37088692",
+    "source": "act2/bag/runtime/2/return:41",
+    "speaker": "cat",
+    "text": "ヘンタイニャ！！",
+    "performance": "act2-moku-firm",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ち、違うんだーーー！！\",\"act2-retort\",false]": {
+    "file": "assets/voices/11b89f25b9c9c25c8f79188ebcde05f034a3ca1fb8727cf0193cad2884dccad9.mp3",
+    "hash": "11b89f25b9c9c25c8f79188ebcde05f034a3ca1fb8727cf0193cad2884dccad9",
+    "source": "act2/bag/runtime/2/guarantee:45",
+    "speaker": "manager",
+    "text": "ち、違うんだーーー！！",
+    "performance": "act2-retort",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"…………。\",\"act2-moku-surprised\",false]": {
+    "file": "assets/voices/96e8b76e5937c01bf4e0c89f931151389fc3eda76c4e3cc476de8a285ba9fe2a.mp3",
+    "hash": "96e8b76e5937c01bf4e0c89f931151389fc3eda76c4e3cc476de8a285ba9fe2a",
+    "source": "act2/bag/runtime/2/guarantee:47",
+    "speaker": "cat",
+    "text": "…………。",
+    "performance": "act2-moku-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……今度は何だよ？\",\"act2-manager\",false]": {
+    "file": "assets/voices/715252d4ae1922bffccb688cca77dad9e1ee00f9e342a71e6fddc307e5d1c17a.mp3",
+    "hash": "715252d4ae1922bffccb688cca77dad9e1ee00f9e342a71e6fddc307e5d1c17a",
+    "source": "act2/bag/runtime/2/guarantee:48",
+    "speaker": "manager",
+    "text": "……今度は何だよ？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……バ、バケモノニャーーー！！\",\"act2-moku-surprised\",false]": {
+    "file": "assets/voices/91cc2253459935bb503f16495f0b4dc9eca70f14c61e4826cb54eec32f7d5e29.mp3",
+    "hash": "91cc2253459935bb503f16495f0b4dc9eca70f14c61e4826cb54eec32f7d5e29",
+    "source": "act2/bag/runtime/2/guarantee:49",
+    "speaker": "cat",
+    "text": "……バ、バケモノニャーーー！！",
+    "performance": "act2-moku-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"何がバケモノだーーー！！\",\"act2-retort\",false]": {
+    "file": "assets/voices/85526e35ab24b9b760418fb17718448722dd855afda4c986958da579135b684e.mp3",
+    "hash": "85526e35ab24b9b760418fb17718448722dd855afda4c986958da579135b684e",
+    "source": "act2/bag/runtime/2/guarantee:51",
+    "speaker": "manager",
+    "text": "何がバケモノだーーー！！",
+    "performance": "act2-retort",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ったく……。\",\"act2-manager\",false]": {
+    "file": "assets/voices/bdf3b3b78f6a410d3cc733e7c063101e7a07ef77d0b89d4ce32aff5658aa59ac.mp3",
+    "hash": "bdf3b3b78f6a410d3cc733e7c063101e7a07ef77d0b89d4ce32aff5658aa59ac",
+    "source": "act2/bag/runtime/2/guarantee:53",
+    "speaker": "manager",
+    "text": "……ったく……。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……そういや、ルナはどこ行ったんだ？\",\"act2-manager\",false]": {
+    "file": "assets/voices/b5a670077fe5466c823fdf273ecfd6b51e882bddf9adee1b1b814b578755c99f.mp3",
+    "hash": "b5a670077fe5466c823fdf273ecfd6b51e882bddf9adee1b1b814b578755c99f",
+    "source": "act2/bag/runtime/2/guarantee:54",
+    "speaker": "manager",
+    "text": "……そういや、ルナはどこ行ったんだ？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……嘘だろ……。\",\"act2-manager-serious\",false]": {
+    "file": "assets/voices/9f177afe8d39bbb1c2d99695c8d157e68e8f7f60e14876564acecffddcabea66.mp3",
+    "hash": "9f177afe8d39bbb1c2d99695c8d157e68e8f7f60e14876564acecffddcabea66",
+    "source": "act2/bag/runtime/2/return:46",
+    "speaker": "manager",
+    "text": "……嘘だろ……。",
+    "performance": "act2-manager-serious",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家、102号室の募集はどうするニャ？\",\"act2-moku\",false]": {
+    "file": "assets/voices/d9439c85ff7b6181ed6d61ac4e15fbfec652cdea42641c5ab887459e98f433f4.mp3",
+    "hash": "d9439c85ff7b6181ed6d61ac4e15fbfec652cdea42641c5ab887459e98f433f4",
+    "source": "act2/bag/runtime/2/guarantee:59",
+    "speaker": "cat",
+    "text": "大家、102号室の募集はどうするニャ？",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……募集しない。\",\"act2-manager-serious\",false]": {
+    "file": "assets/voices/659c205e87c5656b96c23ef994fbafd67dab1d84c977135b1b3ad9700752c8f1.mp3",
+    "hash": "659c205e87c5656b96c23ef994fbafd67dab1d84c977135b1b3ad9700752c8f1",
+    "source": "act2/bag/runtime/2/guarantee:60",
+    "speaker": "manager",
+    "text": "……募集しない。",
+    "performance": "act2-manager-serious",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……は？\",\"act2-moku-surprised\",false]": {
+    "file": "assets/voices/f2afa04018b8bf20e7b099b093dbe2e6695bee472006382b795e39ae329dd1bc.mp3",
+    "hash": "f2afa04018b8bf20e7b099b093dbe2e6695bee472006382b795e39ae329dd1bc",
+    "source": "act2/bag/runtime/2/guarantee:61",
+    "speaker": "cat",
+    "text": "……は？",
+    "performance": "act2-moku-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ルナが帰ってくるかもしれないだろ。\",\"act2-manager-serious\",false]": {
+    "file": "assets/voices/315bf814955f58a2fcd6271efbe8e1094cdf645003a6e729c78efb80e1b7c4d1.mp3",
+    "hash": "315bf814955f58a2fcd6271efbe8e1094cdf645003a6e729c78efb80e1b7c4d1",
+    "source": "act2/bag/runtime/2/guarantee:62",
+    "speaker": "manager",
+    "text": "ルナが帰ってくるかもしれないだろ。",
+    "performance": "act2-manager-serious",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……いつ帰ってくるニャ？\",\"act2-moku\",false]": {
+    "file": "assets/voices/b9f0a5c921f7bdb1fa3c00e27f8088a7b136378b3b2ba162ec092a150bcb213f.mp3",
+    "hash": "b9f0a5c921f7bdb1fa3c00e27f8088a7b136378b3b2ba162ec092a150bcb213f",
+    "source": "act2/bag/runtime/2/guarantee:63",
+    "speaker": "cat",
+    "text": "……いつ帰ってくるニャ？",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……分からねぇ。\",\"act2-manager-serious\",false]": {
+    "file": "assets/voices/08204ec2e6d5442569112484c1a8cd412a7e162eab5d5c9a4d027e1812ed2e71.mp3",
+    "hash": "08204ec2e6d5442569112484c1a8cd412a7e162eab5d5c9a4d027e1812ed2e71",
+    "source": "act2/bag/runtime/2/guarantee:64",
+    "speaker": "manager",
+    "text": "……分からねぇ。",
+    "performance": "act2-manager-serious",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"じゃあ、いつまで空けておくニャ？\",\"act2-moku\",false]": {
+    "file": "assets/voices/2417ebff2a20610d2c8d25490fdf4e97b0daf3b824074fa89d1df8f07c20eeb3.mp3",
+    "hash": "2417ebff2a20610d2c8d25490fdf4e97b0daf3b824074fa89d1df8f07c20eeb3",
+    "source": "act2/bag/runtime/2/guarantee:65",
+    "speaker": "cat",
+    "text": "じゃあ、いつまで空けておくニャ？",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……帰ってくるまでだ。\",\"act2-manager-serious\",false]": {
+    "file": "assets/voices/1f48be86bfbbe7a124055c69e521e145f852a874dc82e29b2b46374d3e09dc62.mp3",
+    "hash": "1f48be86bfbbe7a124055c69e521e145f852a874dc82e29b2b46374d3e09dc62",
+    "source": "act2/bag/runtime/2/guarantee:66",
+    "speaker": "manager",
+    "text": "……帰ってくるまでだ。",
+    "performance": "act2-manager-serious",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家！ また入居希望が来てたニャ！\",\"act2-moku-firm\",false]": {
+    "file": "assets/voices/29469e98ce0aaf32f5772c8f74a7bb0b9788f739b1db765d31aecf0bc7278652.mp3",
+    "hash": "29469e98ce0aaf32f5772c8f74a7bb0b9788f739b1db765d31aecf0bc7278652",
+    "source": "act2/bag/runtime/2/guarantee:69",
+    "speaker": "cat",
+    "text": "大家！ また入居希望が来てたニャ！",
+    "performance": "act2-moku-firm",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……断ってくれ。\",\"act2-manager\",false]": {
+    "file": "assets/voices/4e9058fdbea7f14a299d728cce2f244c550a4c4c645872cbb3cedbe6116e5951.mp3",
+    "hash": "4e9058fdbea7f14a299d728cce2f244c550a4c4c645872cbb3cedbe6116e5951",
+    "source": "act2/bag/runtime/2/guarantee:70",
+    "speaker": "manager",
+    "text": "……断ってくれ。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"またニャ！？ これで何人目ニャ！\",\"act2-moku-firm\",false]": {
+    "file": "assets/voices/ba27eabbfbf056b5d58d89a673ecded628378d68f559466a0413372c80eff452.mp3",
+    "hash": "ba27eabbfbf056b5d58d89a673ecded628378d68f559466a0413372c80eff452",
+    "source": "act2/bag/runtime/2/guarantee:71",
+    "speaker": "cat",
+    "text": "またニャ！？ これで何人目ニャ！",
+    "performance": "act2-moku-firm",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ルナが戻った時に、部屋がなかったら困るだろ。\",\"act2-manager-serious\",false]": {
+    "file": "assets/voices/66e14d811546cb841e5d5bf717ea6bfc611eaf69b52d7bb89ca401e1fc4205db.mp3",
+    "hash": "66e14d811546cb841e5d5bf717ea6bfc611eaf69b52d7bb89ca401e1fc4205db",
+    "source": "act2/bag/runtime/2/guarantee:72",
+    "speaker": "manager",
+    "text": "……ルナが戻った時に、部屋がなかったら困るだろ。",
+    "performance": "act2-manager-serious",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"空いてる部屋はほかにもあるニャ！！\",\"act2-moku-firm\",false]": {
+    "file": "assets/voices/90debf0abc65224ad29a9df332eedd8e6f3353d65d8b7f029d3a2a8882d093ac.mp3",
+    "hash": "90debf0abc65224ad29a9df332eedd8e6f3353d65d8b7f029d3a2a8882d093ac",
+    "source": "act2/bag/runtime/2/guarantee:73",
+    "speaker": "cat",
+    "text": "空いてる部屋はほかにもあるニャ！！",
+    "performance": "act2-moku-firm",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ルナが知らないやつと同じアパートに住みたくないかもしれないだろ。\",\"act2-manager-serious\",false]": {
+    "file": "assets/voices/080dbbbb7ac415707a4111316f666c48684265eb851fad6340581ecf2a2c2197.mp3",
+    "hash": "080dbbbb7ac415707a4111316f666c48684265eb851fad6340581ecf2a2c2197",
+    "source": "act2/bag/runtime/2/guarantee:74",
+    "speaker": "manager",
+    "text": "……ルナが知らないやつと同じアパートに住みたくないかもしれないだろ。",
+    "performance": "act2-manager-serious",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……大家、もうおかしくなってるニャ。\",\"act2-moku-sad\",false]": {
+    "file": "assets/voices/2da28d2973797cea973a4773361d475e2a3619468b3a0aaa72c44c462b1d84e1.mp3",
+    "hash": "2da28d2973797cea973a4773361d475e2a3619468b3a0aaa72c44c462b1d84e1",
+    "source": "act2/bag/runtime/2/guarantee:75",
+    "speaker": "cat",
+    "text": "……大家、もうおかしくなってるニャ。",
+    "performance": "act2-moku-sad",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……大家。ルナが帰ってきても、もう部屋はないニャ。\",\"act2-moku-sad\",false]": {
+    "file": "assets/voices/04fc9988f5312ad93dbfdf7473ea068b14f1568a1a966663132068fb3ae5ce4a.mp3",
+    "hash": "04fc9988f5312ad93dbfdf7473ea068b14f1568a1a966663132068fb3ae5ce4a",
+    "source": "act2/bag/runtime/2/guarantee:78",
+    "speaker": "cat",
+    "text": "……大家。ルナが帰ってきても、もう部屋はないニャ。",
+    "performance": "act2-moku-sad",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"…………。\",\"act2-manager\",false]": {
+    "file": "assets/voices/6258318ccc76d8f088ed3b362c644a2a814b13ed095efc93cd855bc9a1e298c5.mp3",
+    "hash": "6258318ccc76d8f088ed3b362c644a2a814b13ed095efc93cd855bc9a1e298c5",
+    "source": "act2/bag/runtime/2/guarantee:79",
+    "speaker": "manager",
+    "text": "…………。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ルナ、俺の後ろに隠れてろ！\",\"act2-manager\",false]": {
+    "file": "assets/voices/4011ad117f16bee6d83fd78d80a05d3e54d6f1175d7d1278776b13d17064a979.mp3",
+    "hash": "4011ad117f16bee6d83fd78d80a05d3e54d6f1175d7d1278776b13d17064a979",
+    "source": "act2/bag/runtime/2/return:0",
+    "speaker": "manager",
+    "text": "ルナ、俺の後ろに隠れてろ！",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……大家さん？\",\"luna-surprised\",false]": {
+    "file": "assets/voices/64316f2da6c810976e424353d2a5133cb3268c950b60973a8b80a4c9f6f9ee2f.mp3",
+    "hash": "64316f2da6c810976e424353d2a5133cb3268c950b60973a8b80a4c9f6f9ee2f",
+    "source": "act2/bag/runtime/2/return:2",
+    "speaker": "hostess",
+    "text": "……大家さん？",
+    "performance": "luna-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"女の子一人を寄ってたかって追い回すんじゃねぇ！\",\"act2-manager\",false]": {
+    "file": "assets/voices/fb396f41569e6d62321bd326f970f47c715e1501c820bf06606b8e277dfc2bd1.mp3",
+    "hash": "fb396f41569e6d62321bd326f970f47c715e1501c820bf06606b8e277dfc2bd1",
+    "source": "act2/bag/runtime/2/return:3",
+    "speaker": "manager",
+    "text": "女の子一人を寄ってたかって追い回すんじゃねぇ！",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"確かに一人ニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/9277e2c1f8b1d141c6f5e16fa420ec28e25b13baabc415077289e459a9dfeab6.mp3",
+    "hash": "9277e2c1f8b1d141c6f5e16fa420ec28e25b13baabc415077289e459a9dfeab6",
+    "source": "act2/bag/runtime/2/return:5",
+    "speaker": "cat",
+    "text": "確かに一人ニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"そこは黙ってろ！！\",\"act2-retort\",false]": {
+    "file": "assets/voices/0169a482461c1430d80822aea94f445d04a9977a99974213429ee8b406d04579.mp3",
+    "hash": "0169a482461c1430d80822aea94f445d04a9977a99974213429ee8b406d04579",
+    "source": "act2/bag/runtime/2/return:6",
+    "speaker": "manager",
+    "text": "そこは黙ってろ！！",
+    "performance": "act2-retort",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"当たり前だ。俺はここの大家だからな！\",\"act2-manager\",false]": {
+    "file": "assets/voices/ce46aeb11d14f697b30e7e9769cd444aca7f65cd82996a8673c4c5acfb5f6ca0.mp3",
+    "hash": "ce46aeb11d14f697b30e7e9769cd444aca7f65cd82996a8673c4c5acfb5f6ca0",
+    "source": "act2/bag/runtime/2/return:8",
+    "speaker": "manager",
+    "text": "当たり前だ。俺はここの大家だからな！",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"いつもは家賃のことで泣いてるニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/e35f9fbddd626cb524c44a15262d8ea3ee9fe360342fd19fe27c7a765f37486a.mp3",
+    "hash": "e35f9fbddd626cb524c44a15262d8ea3ee9fe360342fd19fe27c7a765f37486a",
+    "source": "act2/bag/runtime/2/return:9",
+    "speaker": "cat",
+    "text": "いつもは家賃のことで泣いてるニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"今いいところなんだよ！！\",\"act2-retort\",false]": {
+    "file": "assets/voices/cda0b715aa3e4c6f058dca25d39e9ca6b78c14f19228e71abeb7b1cf00a5ffd0.mp3",
+    "hash": "cda0b715aa3e4c6f058dca25d39e9ca6b78c14f19228e71abeb7b1cf00a5ffd0",
+    "source": "act2/bag/runtime/2/return:10",
+    "speaker": "manager",
+    "text": "今いいところなんだよ！！",
+    "performance": "act2-retort",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……ふふっ。大家さんって、こういう人なんだ♡\",\"luna-flirt\",false]": {
+    "file": "assets/voices/f98b9f1b7260febe7e8c081bd7bd64b3f5f9b6626f43a2ad9cd8b94a1d67d5d0.mp3",
+    "hash": "f98b9f1b7260febe7e8c081bd7bd64b3f5f9b6626f43a2ad9cd8b94a1d67d5d0",
+    "source": "act2/bag/runtime/2/return:11",
+    "speaker": "hostess",
+    "text": "……ふふっ。大家さんって、こういう人なんだ♡",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……大家さん、怖かったぁ……。\",\"luna-serious\",false]": {
+    "file": "assets/voices/e8be0f5e085bf2063e0e5f53fbb0defc14e331df50ec4e74483530703aa9fdb8.mp3",
+    "hash": "e8be0f5e085bf2063e0e5f53fbb0defc14e331df50ec4e74483530703aa9fdb8",
+    "source": "act2/bag/runtime/2/return:15",
+    "speaker": "hostess",
+    "text": "……大家さん、怖かったぁ……。",
+    "performance": "luna-serious",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ああ、もう大丈夫だ。俺が追い払ったからな。\",\"act2-manager\",false]": {
+    "file": "assets/voices/22c901f9bfd5120a7d05abad0dbad47f6a59f0ed9804335399b06b646a8f1444.mp3",
+    "hash": "22c901f9bfd5120a7d05abad0dbad47f6a59f0ed9804335399b06b646a8f1444",
+    "source": "act2/bag/runtime/2/return:16",
+    "speaker": "manager",
+    "text": "ああ、もう大丈夫だ。俺が追い払ったからな。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"また来るって言ってたニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/77f9265039505a05d12759246f08f44c92ec55f0bf7191ea7080af3654a0632c.mp3",
+    "hash": "77f9265039505a05d12759246f08f44c92ec55f0bf7191ea7080af3654a0632c",
+    "source": "act2/bag/runtime/2/return:17",
+    "speaker": "cat",
+    "text": "また来るって言ってたニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"余計なこと言うな！！\",\"act2-manager\",false]": {
+    "file": "assets/voices/6f24771211acf48e6359358539a8af0264d7b8bcd2ca3207e749aa00a295f70d.mp3",
+    "hash": "6f24771211acf48e6359358539a8af0264d7b8bcd2ca3207e749aa00a295f70d",
+    "source": "act2/bag/runtime/2/return:18",
+    "speaker": "manager",
+    "text": "余計なこと言うな！！",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……本当にありがとう。あたし、誰かに守ってもらったの、久しぶりで……。\",\"luna-flirt\",false]": {
+    "file": "assets/voices/e7269e4b73048956bf9775c2fdcbb8724c2981d0d30422d317ddb0b7d97941ee.mp3",
+    "hash": "e7269e4b73048956bf9775c2fdcbb8724c2981d0d30422d317ddb0b7d97941ee",
+    "source": "act2/bag/runtime/2/return:20",
+    "speaker": "hostess",
+    "text": "……本当にありがとう。あたし、誰かに守ってもらったの、久しぶりで……。",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"ねえ、大家さん。ちょっとだけ、お礼させて？♡\",\"luna-flirt\",false]": {
+    "file": "assets/voices/cd047404a4013dc504238050fd3b44b1180eb0d3702f6dd66ef7e9096a68b51a.mp3",
+    "hash": "cd047404a4013dc504238050fd3b44b1180eb0d3702f6dd66ef7e9096a68b51a",
+    "source": "act2/bag/runtime/2/return:22",
+    "speaker": "hostess",
+    "text": "ねえ、大家さん。ちょっとだけ、お礼させて？♡",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"礼？ いや、別にいいって。\",\"act2-manager\",false]": {
+    "file": "assets/voices/7232b5961dbacd80b0fda4624c510e926d2b869e870ca4fffd54a62f51bb6d7b.mp3",
+    "hash": "7232b5961dbacd80b0fda4624c510e926d2b869e870ca4fffd54a62f51bb6d7b",
+    "source": "act2/bag/runtime/2/return:23",
+    "speaker": "manager",
+    "text": "礼？ いや、別にいいって。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"だめ♡ 二人きりで、ちゃんとお礼したいの。\",\"luna-flirt\",false]": {
+    "file": "assets/voices/404bb67c6d5919dc1f42100b6e15885ce3d1cbee6daa52ef0a0b6d2dee913183.mp3",
+    "hash": "404bb67c6d5919dc1f42100b6e15885ce3d1cbee6daa52ef0a0b6d2dee913183",
+    "source": "act2/bag/runtime/2/return:24",
+    "speaker": "hostess",
+    "text": "だめ♡ 二人きりで、ちゃんとお礼したいの。",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……大家、顔がニヤけてるニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/c0ae7c854ccfa66d6b52476fdf1fd3382bc62b82f20ed11f1da0f5b262bb22d3.mp3",
+    "hash": "c0ae7c854ccfa66d6b52476fdf1fd3382bc62b82f20ed11f1da0f5b262bb22d3",
+    "source": "act2/bag/runtime/2/return:25",
+    "speaker": "cat",
+    "text": "……大家、顔がニヤけてるニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ニヤけてねぇよ！\",\"act2-retort\",false]": {
+    "file": "assets/voices/8b90ae7fe17143c302996a1490fc218a89fdf374a54d29c123b9893c979c911e.mp3",
+    "hash": "8b90ae7fe17143c302996a1490fc218a89fdf374a54d29c123b9893c979c911e",
+    "source": "act2/bag/runtime/2/return:26",
+    "speaker": "manager",
+    "text": "ニヤけてねぇよ！",
+    "performance": "act2-retort",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"ふふっ。行こ、大家さん♡\",\"luna-flirt\",false]": {
+    "file": "assets/voices/b437d5f37ed2d73f3900bf45f1719db362158f17a1e4bf705a3926c5432fc387.mp3",
+    "hash": "b437d5f37ed2d73f3900bf45f1719db362158f17a1e4bf705a3926c5432fc387",
+    "source": "act2/bag/runtime/2/return:27",
+    "speaker": "hostess",
+    "text": "ふふっ。行こ、大家さん♡",
+    "performance": "luna-flirt",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……うわぁ……ニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/8e072079ef6c7461886a7d3f5b7f60907cca3d17e34e054032053dda65afaad0.mp3",
+    "hash": "8e072079ef6c7461886a7d3f5b7f60907cca3d17e34e054032053dda65afaad0",
+    "source": "act2/bag/runtime/2/return:29",
+    "speaker": "cat",
+    "text": "……うわぁ……ニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……大家、なんで服着てないニャ？\",\"act2-moku-surprised\",false]": {
+    "file": "assets/voices/50b4068ed4c5fdf8b56a8652cefa32b335c700cffe34c3d71b12a4f454f2dbb2.mp3",
+    "hash": "50b4068ed4c5fdf8b56a8652cefa32b335c700cffe34c3d71b12a4f454f2dbb2",
+    "source": "act2/bag/runtime/2/return:37",
+    "speaker": "cat",
+    "text": "……大家、なんで服着てないニャ？",
+    "performance": "act2-moku-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"うわああああああ！！\",\"act2-retort\",false]": {
+    "file": "assets/voices/350fdb9ec4ae793f32999ef5e058393bb5dc03411057e20109895d2d54cee232.mp3",
+    "hash": "350fdb9ec4ae793f32999ef5e058393bb5dc03411057e20109895d2d54cee232",
+    "source": "act2/bag/runtime/2/return:40",
+    "speaker": "manager",
+    "text": "うわああああああ！！",
+    "performance": "act2-retort",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"違うんだーーー！！\",\"act2-retort\",false]": {
+    "file": "assets/voices/04158fb3cc0901e9bac0dc8626df51a3ac3dcc348ad1ee9b59ab9a8967def227.mp3",
+    "hash": "04158fb3cc0901e9bac0dc8626df51a3ac3dcc348ad1ee9b59ab9a8967def227",
+    "source": "act2/bag/runtime/2/return:42",
+    "speaker": "manager",
+    "text": "違うんだーーー！！",
+    "performance": "act2-retort",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家、今日も仕事しないのかニャ？\",\"act2-moku\",false]": {
+    "file": "assets/voices/abaa137cb99f045180c9bebb9ed7297b47346b9232928c8902ecf005f91e5cbc.mp3",
+    "hash": "abaa137cb99f045180c9bebb9ed7297b47346b9232928c8902ecf005f91e5cbc",
+    "source": "act2/bag/runtime/2/return:48",
+    "speaker": "cat",
+    "text": "大家、今日も仕事しないのかニャ？",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ルナ……。\",\"act2-manager\",false]": {
+    "file": "assets/voices/731c55aa98d90a5b2e40c71f21e05415f6c27e615f823c3c63c5abecaec6ef23.mp3",
+    "hash": "731c55aa98d90a5b2e40c71f21e05415f6c27e615f823c3c63c5abecaec6ef23",
+    "source": "act2/bag/runtime/2/return:51",
+    "speaker": "manager",
+    "text": "……ルナ……。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"家賃の集金はどうするニャ？\",\"act2-moku\",false]": {
+    "file": "assets/voices/26361e2dd628a062f7d031304fa37843707857d5d71851de47501bb1c1158e7a.mp3",
+    "hash": "26361e2dd628a062f7d031304fa37843707857d5d71851de47501bb1c1158e7a",
+    "source": "act2/bag/runtime/2/return:50",
+    "speaker": "cat",
+    "text": "家賃の集金はどうするニャ？",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……重症ニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/603ba82a9863f8d2530dc04ef56ee5a39d5cda200a6d3636358fce9ae9ccb1f3.mp3",
+    "hash": "603ba82a9863f8d2530dc04ef56ee5a39d5cda200a6d3636358fce9ae9ccb1f3",
+    "source": "act2/bag/runtime/2/return:52",
+    "speaker": "cat",
+    "text": "……重症ニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家、女ひとりでアパート失ったニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/4f5a53ee2f63697863331a37d73b803eaddd5c8471b87e3bdbdf32e383af8560.mp3",
+    "hash": "4f5a53ee2f63697863331a37d73b803eaddd5c8471b87e3bdbdf32e383af8560",
+    "source": "act2/bag/runtime/2/return:56",
+    "speaker": "cat",
+    "text": "大家、女ひとりでアパート失ったニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……うるせぇ……。\",\"act2-retort\",false]": {
+    "file": "assets/voices/5351671832113737920b11b96ba9a3a3ba91998e5cb88a43b3025d1b23924fba.mp3",
+    "hash": "5351671832113737920b11b96ba9a3a3ba91998e5cb88a43b3025d1b23924fba",
+    "source": "act2/bag/runtime/2/return:57",
+    "speaker": "manager",
+    "text": "……うるせぇ……。",
+    "performance": "act2-retort",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"恋は盲目ニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/f5be178e9e70f3f1610f363fd1196b17b8e82fbecc9794f23607505e38b0a9b4.mp3",
+    "hash": "f5be178e9e70f3f1610f363fd1196b17b8e82fbecc9794f23607505e38b0a9b4",
+    "source": "act2/bag/runtime/2/return:58",
+    "speaker": "cat",
+    "text": "恋は盲目ニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"お前がまともなこと言うなよ……。\",\"act2-manager\",false]": {
+    "file": "assets/voices/b239c53121486afb2c76c2eabf2a82027c5743bb88ff1a6acb51dbb8e45faabc.mp3",
+    "hash": "b239c53121486afb2c76c2eabf2a82027c5743bb88ff1a6acb51dbb8e45faabc",
+    "source": "act2/bag/runtime/2/return:59",
+    "speaker": "manager",
+    "text": "お前がまともなこと言うなよ……。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……ルナが帰れって言ってるニャ。\",\"act2-moku-firm\",false]": {
+    "file": "assets/voices/69e7f5adca3f4e21955c7cc6c4f24efdbf840bb1cd3c69ff07f1837d21dba19c.mp3",
+    "hash": "69e7f5adca3f4e21955c7cc6c4f24efdbf840bb1cd3c69ff07f1837d21dba19c",
+    "source": "act2/bag/runtime/1/guarantee:4",
+    "speaker": "cat",
+    "text": "……ルナが帰れって言ってるニャ。",
+    "performance": "act2-moku-firm",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……お前、そんな怖い顔できたのか。\",\"act2-manager\",false]": {
+    "file": "assets/voices/6254484037e277d206f5ac8022a309d11a99dd461e7fbe619bc438cccdc8597d.mp3",
+    "hash": "6254484037e277d206f5ac8022a309d11a99dd461e7fbe619bc438cccdc8597d",
+    "source": "act2/bag/runtime/1/guarantee:12",
+    "speaker": "manager",
+    "text": "……お前、そんな怖い顔できたのか。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"モクはいつも優しいニャ。\",\"act2-moku\",false]": {
+    "file": "assets/voices/0a892afd1967f3e142fb1e5668daca42746707c846ef250dde557e9275f7d127.mp3",
+    "hash": "0a892afd1967f3e142fb1e5668daca42746707c846ef250dde557e9275f7d127",
+    "source": "act2/bag/runtime/1/guarantee:13",
+    "speaker": "cat",
+    "text": "モクはいつも優しいニャ。",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"自分で言うなよ……。\",\"act2-manager\",false]": {
+    "file": "assets/voices/f567c5e8345d19766d42814cba102d409567e35387d0db7eb72d56cf07eaa20a.mp3",
+    "hash": "f567c5e8345d19766d42814cba102d409567e35387d0db7eb72d56cf07eaa20a",
+    "source": "act2/bag/runtime/1/guarantee:14",
+    "speaker": "manager",
+    "text": "自分で言うなよ……。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……モクちゃん、ありがとう……。\",\"luna-serious\",false]": {
+    "file": "assets/voices/d8b71c137e9351077b592c84c0bcc8756b109568bd4b8cfb80a1cf1d4d3610ad.mp3",
+    "hash": "d8b71c137e9351077b592c84c0bcc8756b109568bd4b8cfb80a1cf1d4d3610ad",
+    "source": "act2/bag/runtime/1/guarantee:15",
+    "speaker": "hostess",
+    "text": "……モクちゃん、ありがとう……。",
+    "performance": "luna-serious",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"当然ニャ！\",\"act2-moku-happy\",false]": {
+    "file": "assets/voices/1024e6fa5d9eadbe5c5cc65241d95f50ab0487b93598a4bd3cabbf03944774be.mp3",
+    "hash": "1024e6fa5d9eadbe5c5cc65241d95f50ab0487b93598a4bd3cabbf03944774be",
+    "source": "act2/bag/runtime/1/guarantee:16",
+    "speaker": "cat",
+    "text": "当然ニャ！",
+    "performance": "act2-moku-happy",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……本当に、もう来ないかな……。\",\"luna-serious\",false]": {
+    "file": "assets/voices/ea284b5a4323847a9e6d6d186c20695f4d2cad6581bb2d386cb913ac0e3857bd.mp3",
+    "hash": "ea284b5a4323847a9e6d6d186c20695f4d2cad6581bb2d386cb913ac0e3857bd",
+    "source": "act2/bag/runtime/1/guarantee:18",
+    "speaker": "hostess",
+    "text": "……本当に、もう来ないかな……。",
+    "performance": "luna-serious",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"もう大丈夫だろ。今日はゆっくり休め。\",\"act2-manager\",false]": {
+    "file": "assets/voices/eb7e239b84657c6407b5e29ad4a06062c413453780ba87b3a9d9f0f24ce7295f.mp3",
+    "hash": "eb7e239b84657c6407b5e29ad4a06062c413453780ba87b3a9d9f0f24ce7295f",
+    "source": "act2/bag/runtime/1/guarantee:19",
+    "speaker": "manager",
+    "text": "もう大丈夫だろ。今日はゆっくり休め。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……うん。ありがとう、大家さん。\",\"luna-serious\",false]": {
+    "file": "assets/voices/c80f801776e39101ac470de90e4e54ba897a1545015d01ab9d92173dda1e2afa.mp3",
+    "hash": "c80f801776e39101ac470de90e4e54ba897a1545015d01ab9d92173dda1e2afa",
+    "source": "act2/bag/runtime/1/guarantee:20",
+    "speaker": "hostess",
+    "text": "……うん。ありがとう、大家さん。",
+    "performance": "luna-serious",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"また来たらモクが追い払うニャ！\",\"act2-moku-happy\",false]": {
+    "file": "assets/voices/622280dd124fe7b83bf249ba34504a15ca1e59566b0c1b9f29812dbd31411f64.mp3",
+    "hash": "622280dd124fe7b83bf249ba34504a15ca1e59566b0c1b9f29812dbd31411f64",
+    "source": "act2/bag/runtime/1/guarantee:21",
+    "speaker": "cat",
+    "text": "また来たらモクが追い払うニャ！",
+    "performance": "act2-moku-happy",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ははっ。頼りにしてるぞ。\",\"act2-manager\",false]": {
+    "file": "assets/voices/c85af74cc15c02501052caed36827c6b449987198086f8dad66e5c3c156bfd41.mp3",
+    "hash": "c85af74cc15c02501052caed36827c6b449987198086f8dad66e5c3c156bfd41",
+    "source": "act2/bag/runtime/1/guarantee:22",
+    "speaker": "manager",
+    "text": "ははっ。頼りにしてるぞ。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……じゃあ、おやすみなさい。\",\"luna-serious\",false]": {
+    "file": "assets/voices/8bf474158a4f7ca8b11b6eed9680640a00f3f64f3989a012854e53623ad088a9.mp3",
+    "hash": "8bf474158a4f7ca8b11b6eed9680640a00f3f64f3989a012854e53623ad088a9",
+    "source": "act2/bag/runtime/1/guarantee:23",
+    "speaker": "hostess",
+    "text": "……じゃあ、おやすみなさい。",
+    "performance": "luna-serious",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ん？ ルナ？\",\"act2-manager\",false]": {
+    "file": "assets/voices/594be0995143602b432cd6402bf288d850bb252ec35c382d9f7195973bc99387.mp3",
+    "hash": "594be0995143602b432cd6402bf288d850bb252ec35c382d9f7195973bc99387",
+    "source": "act2/bag/runtime/1/guarantee:27",
+    "speaker": "manager",
+    "text": "……ん？ ルナ？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……おい、開けっぱなしだぞ。\",\"act2-manager\",false]": {
+    "file": "assets/voices/5159223b1439041b45804e6cd5ec72bf82c36bed835cf5deaeb4d07c36c1cc0e.mp3",
+    "hash": "5159223b1439041b45804e6cd5ec72bf82c36bed835cf5deaeb4d07c36c1cc0e",
+    "source": "act2/bag/runtime/1/guarantee:29",
+    "speaker": "manager",
+    "text": "……おい、開けっぱなしだぞ。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……なんだ、これ……。\",\"act2-manager\",false]": {
+    "file": "assets/voices/efdb7197a5ff3a1f60ab0a0b9b76eeca58cdcafbcb959e747404186dac5df561.mp3",
+    "hash": "efdb7197a5ff3a1f60ab0a0b9b76eeca58cdcafbcb959e747404186dac5df561",
+    "source": "act2/bag/runtime/1/guarantee:31",
+    "speaker": "manager",
+    "text": "……なんだ、これ……。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"…………ルナ？\",\"tragedy-shock\",false]": {
+    "file": "assets/voices/a4fefe7ce9a63eefa42247204fe630fd47be9c16ee73d21e15f7488b696efa88.mp3",
+    "hash": "a4fefe7ce9a63eefa42247204fe630fd47be9c16ee73d21e15f7488b696efa88",
+    "source": "act2/bag/runtime/1/guarantee:34",
+    "speaker": "manager",
+    "text": "…………ルナ？",
+    "performance": "tragedy-shock",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……おい……。\",\"act2-manager\",false]": {
+    "file": "assets/voices/f0ce4e89fe64a60bbe21fd32575a32a2b13a4dfd3a60e8a1c6fd8652585407b9.mp3",
+    "hash": "f0ce4e89fe64a60bbe21fd32575a32a2b13a4dfd3a60e8a1c6fd8652585407b9",
+    "source": "act2/bag/runtime/1/guarantee:36",
+    "speaker": "manager",
+    "text": "……おい……。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ルナ！！ しっかりしろ！！\",\"tragedy-panic\",false]": {
+    "file": "assets/voices/1cae09cf6c64bafa0c83ea0a824096d294301b6a9b3972a36eb8a7f80ff9eeea.mp3",
+    "hash": "1cae09cf6c64bafa0c83ea0a824096d294301b6a9b3972a36eb8a7f80ff9eeea",
+    "source": "act2/bag/runtime/1/guarantee:39",
+    "speaker": "manager",
+    "text": "ルナ！！ しっかりしろ！！",
+    "performance": "tragedy-panic",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"頼む……目を開けてくれ……！\",\"tragedy-grief\",false]": {
+    "file": "assets/voices/ec077b05e77e32f10dac57db43011c119cc0a996c339e05e44bf3778b4e57f77.mp3",
+    "hash": "ec077b05e77e32f10dac57db43011c119cc0a996c339e05e44bf3778b4e57f77",
+    "source": "act2/bag/runtime/1/guarantee:40",
+    "speaker": "manager",
+    "text": "頼む……目を開けてくれ……！",
+    "performance": "tragedy-grief",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……くそっ！ 救急車……！\",\"tragedy-panic\",false]": {
+    "file": "assets/voices/8b8472979c5ebe8bf6e13e0bd05ee843d939e5ef60742c8a5d8754355ee40026.mp3",
+    "hash": "8b8472979c5ebe8bf6e13e0bd05ee843d939e5ef60742c8a5d8754355ee40026",
+    "source": "act2/bag/runtime/1/guarantee:42",
+    "speaker": "manager",
+    "text": "……くそっ！ 救急車……！",
+    "performance": "tragedy-panic",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……っ！？\",\"tragedy-shock\",false]": {
+    "file": "assets/voices/a35cdc75671d24e6013656fcb204f688404a948722f2f3be308e9f197c0791da.mp3",
+    "hash": "a35cdc75671d24e6013656fcb204f688404a948722f2f3be308e9f197c0791da",
+    "source": "act2/bag/rewind/1/return:2",
+    "speaker": "manager",
+    "text": "……っ！？",
+    "performance": "tragedy-shock",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……待て……ここ……さっきの……？\",\"act2-manager\",false]": {
+    "file": "assets/voices/13e4ac9d4c303809cf2bdaf82316053f4bbec06720cffef1e721b47d8af53fc0.mp3",
+    "hash": "13e4ac9d4c303809cf2bdaf82316053f4bbec06720cffef1e721b47d8af53fc0",
+    "source": "act2/bag/rewind/1/return:4",
+    "speaker": "manager",
+    "text": "……待て……ここ……さっきの……？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……大家さん？ 大丈夫？\",\"luna-surprised\",false]": {
+    "file": "assets/voices/be56e9178f6ebadfad0c28403ece6d049ad30e850a55b67c9ba6d2c8f42d9229.mp3",
+    "hash": "be56e9178f6ebadfad0c28403ece6d049ad30e850a55b67c9ba6d2c8f42d9229",
+    "source": "act2/bag/rewind/1/return:5",
+    "speaker": "hostess",
+    "text": "……大家さん？ 大丈夫？",
+    "performance": "luna-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……ルナ……？\",\"act2-manager\",false]": {
+    "file": "assets/voices/4065297fa5c8c3305b86d05d8d2dc29b03751f65f3a277535788bfa72ab360f8.mp3",
+    "hash": "4065297fa5c8c3305b86d05d8d2dc29b03751f65f3a277535788bfa72ab360f8",
+    "source": "act2/bag/rewind/1/return:6",
+    "speaker": "manager",
+    "text": "……ルナ……？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……生きてる……。\",\"act2-manager-serious\",false]": {
+    "file": "assets/voices/576dd180de95a09e85dae9ecb552a64edf4c93cdffe5ebb8b2eeb78d222845c8.mp3",
+    "hash": "576dd180de95a09e85dae9ecb552a64edf4c93cdffe5ebb8b2eeb78d222845c8",
+    "source": "act2/bag/rewind/1/return:8",
+    "speaker": "manager",
+    "text": "……生きてる……。",
+    "performance": "act2-manager-serious",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"えっ？ 何言ってるの？\",\"luna-surprised\",false]": {
+    "file": "assets/voices/57270a5b3d52fe14a7e63550056c43641f2ecfb565d85ebb375bedc1716e9e7f.mp3",
+    "hash": "57270a5b3d52fe14a7e63550056c43641f2ecfb565d85ebb375bedc1716e9e7f",
+    "source": "act2/bag/rewind/1/return:9",
+    "speaker": "hostess",
+    "text": "えっ？ 何言ってるの？",
+    "performance": "luna-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……俺は……確か……。\",\"act2-manager\",false]": {
+    "file": "assets/voices/824b2d49c17b1a23f0015b8fe20864ba20ba50af496972e35a41351939d34c6d.mp3",
+    "hash": "824b2d49c17b1a23f0015b8fe20864ba20ba50af496972e35a41351939d34c6d",
+    "source": "act2/bag/rewind/1/return:10",
+    "speaker": "manager",
+    "text": "……俺は……確か……。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……っ！\",\"tragedy-shock\",false]": {
+    "file": "assets/voices/448f0d011cc8f0061c882eaaca61e67a5e4c04ec2ea88b79ccc0d8dcf3b27d40.mp3",
+    "hash": "448f0d011cc8f0061c882eaaca61e67a5e4c04ec2ea88b79ccc0d8dcf3b27d40",
+    "source": "act2/bag/rewind/1/return:12",
+    "speaker": "manager",
+    "text": "……っ！",
+    "performance": "tragedy-shock",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"大家さん！？\",\"luna-surprised\",false]": {
+    "file": "assets/voices/e65de566d3ec8feeaa8ab7e358ebd632a165c926d4d5a3dce1a6a17fcc13707d.mp3",
+    "hash": "e65de566d3ec8feeaa8ab7e358ebd632a165c926d4d5a3dce1a6a17fcc13707d",
+    "source": "act2/bag/rewind/1/return:13",
+    "speaker": "hostess",
+    "text": "大家さん！？",
+    "performance": "luna-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……夢……だったのか……？\",\"inner\",false]": {
+    "file": "assets/voices/3b45be666ce71f9e839665f44b23374f747a201d4366e67c3b8eb0848ce30f84.mp3",
+    "hash": "3b45be666ce71f9e839665f44b23374f747a201d4366e67c3b8eb0848ce30f84",
+    "source": "act2/bag/rewind/1/return:14",
+    "speaker": "manager",
+    "text": "……夢……だったのか……？",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……いや……違う。この男も……この時間も……全部、同じだ……。\",\"inner\",false]": {
+    "file": "assets/voices/99870f478991da025a159c95a73740e0382768ded99a5d16f1b4546aea393400.mp3",
+    "hash": "99870f478991da025a159c95a73740e0382768ded99a5d16f1b4546aea393400",
+    "source": "act2/bag/rewind/1/return:15",
+    "speaker": "manager",
+    "text": "……いや……違う。この男も……この時間も……全部、同じだ……。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……こいつが……ルナを……？\",\"inner\",false]": {
+    "file": "assets/voices/3a87587a74e679cc5d2a803fe6701419a4c2184d24a55d83d9479efea757617e.mp3",
+    "hash": "3a87587a74e679cc5d2a803fe6701419a4c2184d24a55d83d9479efea757617e",
+    "source": "act2/bag/rewind/1/return:18",
+    "speaker": "manager",
+    "text": "……こいつが……ルナを……？",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……いや、決めつけるな。俺だって、何が起きたのか分かってねぇ……。\",\"inner\",false]": {
+    "file": "assets/voices/9fe5d0f7b6387e5374302896286d1aef82af2086e528aaeff806d9a65cfca6c9.mp3",
+    "hash": "9fe5d0f7b6387e5374302896286d1aef82af2086e528aaeff806d9a65cfca6c9",
+    "source": "act2/bag/rewind/1/return:19",
+    "speaker": "manager",
+    "text": "……いや、決めつけるな。俺だって、何が起きたのか分かってねぇ……。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……そうだ。このあとモクが、あいつを追い返した……。\",\"inner\",false]": {
+    "file": "assets/voices/60b628904794a6b98da8d9f09da7bade806a5ec393dac463493755d19ea1f128.mp3",
+    "hash": "60b628904794a6b98da8d9f09da7bade806a5ec393dac463493755d19ea1f128",
+    "source": "act2/bag/rewind/1/return:21",
+    "speaker": "manager",
+    "text": "……そうだ。このあとモクが、あいつを追い返した……。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……俺は、あれでもう大丈夫だと思った……。\",\"inner\",false]": {
+    "file": "assets/voices/da9feac6302e6e71e45b6ac03403e4bcd8ba0b11e3591b8a87fd0144074775a5.mp3",
+    "hash": "da9feac6302e6e71e45b6ac03403e4bcd8ba0b11e3591b8a87fd0144074775a5",
+    "source": "act2/bag/rewind/1/return:22",
+    "speaker": "manager",
+    "text": "……俺は、あれでもう大丈夫だと思った……。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……また同じことが起きるかもしれない……。\",\"inner\",false]": {
+    "file": "assets/voices/92e19b99a182dd9cb83868f4b12084179f00b2da53043ddfac37d31d82bb2b69.mp3",
+    "hash": "92e19b99a182dd9cb83868f4b12084179f00b2da53043ddfac37d31d82bb2b69",
+    "source": "act2/bag/rewind/1/return:23",
+    "speaker": "manager",
+    "text": "……また同じことが起きるかもしれない……。",
+    "performance": "inner",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……絶対に、あんな目には遭わせねぇ。\",\"act2-manager-firm\",false]": {
+    "file": "assets/voices/e99f74745ebc280500e4611795e304d6e4b7a6167ddfaf580b8740935fe6442a.mp3",
+    "hash": "e99f74745ebc280500e4611795e304d6e4b7a6167ddfaf580b8740935fe6442a",
+    "source": "act2/bag/rewind/1/return:24",
+    "speaker": "manager",
+    "text": "……絶対に、あんな目には遭わせねぇ。",
+    "performance": "act2-manager-firm",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……今度は、どうする……？\",\"act2-manager\",false]": {
+    "file": "assets/voices/6068758d796219e6021dfbdd24d58f99239832771a24fd83eb6ecf9d132128a2.mp3",
+    "hash": "6068758d796219e6021dfbdd24d58f99239832771a24fd83eb6ecf9d132128a2",
+    "source": "act2/bag/attempt-2:4",
+    "speaker": "manager",
+    "text": "……今度は、どうする……？",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……また戻った。今度こそルナを守る。\",\"act2-manager-firm\",false]": {
+    "file": "assets/voices/d45ae1fe0b8b60f6eaffc80cdb91e04dc9ba2a2ac70d524d772d6d2ef04c5c96.mp3",
+    "hash": "d45ae1fe0b8b60f6eaffc80cdb91e04dc9ba2a2ac70d524d772d6d2ef04c5c96",
+    "source": "act2/bag/rewind/2/return:1",
+    "speaker": "manager",
+    "text": "……また戻った。今度こそルナを守る。",
+    "performance": "act2-manager-firm",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"大家さん？ 何かあった？\",\"luna-surprised\",false]": {
+    "file": "assets/voices/dd2dcfa7da9cb881daee1e742e7658d1852f5f179e6e7c0b8feccad3079aca65.mp3",
+    "hash": "dd2dcfa7da9cb881daee1e742e7658d1852f5f179e6e7c0b8feccad3079aca65",
+    "source": "act2/bag/rewind/2/return:2",
+    "speaker": "hostess",
+    "text": "大家さん？ 何かあった？",
+    "performance": "luna-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"ああ。取り返しのつかない未来を見た。\",\"act2-manager\",false]": {
+    "file": "assets/voices/9c31836f1f2983762321a1b7b3fa5ccadc1d87aebf1346de7d8a713e4a1bf338.mp3",
+    "hash": "9c31836f1f2983762321a1b7b3fa5ccadc1d87aebf1346de7d8a713e4a1bf338",
+    "source": "act2/bag/rewind/2/return:3",
+    "speaker": "manager",
+    "text": "ああ。取り返しのつかない未来を見た。",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家、寝不足ニャ？\",\"act2-moku\",false]": {
+    "file": "assets/voices/51cd4317aa0f866c1189e8b4017deef5ed516404b28e009357d2cc9fd4ba83d0.mp3",
+    "hash": "51cd4317aa0f866c1189e8b4017deef5ed516404b28e009357d2cc9fd4ba83d0",
+    "source": "act2/bag/rewind/2/return:4",
+    "speaker": "cat",
+    "text": "大家、寝不足ニャ？",
+    "performance": "act2-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"お前らのせいでな！！\",\"act2-manager\",false]": {
+    "file": "assets/voices/06966dcbbe546ce9e2fabaa19f91cfad128bad82ff73a44a6606f67e4320d2fc.mp3",
+    "hash": "06966dcbbe546ce9e2fabaa19f91cfad128bad82ff73a44a6606f67e4320d2fc",
+    "source": "act2/bag/rewind/2/return:5",
+    "speaker": "manager",
+    "text": "お前らのせいでな！！",
+    "performance": "act2-manager",
+    "model": "eleven_v3"
   }
 };
