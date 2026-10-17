@@ -765,7 +765,7 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
 /* Stable room backplate for everyday dialogue. Never let the gameplay canvas
    or title graphics leak through an otherwise transparent conversation modal. */
 .game-ink dialog.conversation-modal:has(.event-stage):not(:has(.memory-whiteout)) .conversation-body{
-  background:#302824 url('assets/rooms/cat/interior-v2.png') center center / cover no-repeat;
+  background:#302824 url('assets/rooms/cat/interior-illustrated-v1.png') center center / cover no-repeat;
 }
 .game-ink dialog.conversation-modal:has(.event-stage.memory-whiteout) .conversation-body{background:#fff}
 /* Minimal full-screen game input gate. No site-style explanatory content. */
