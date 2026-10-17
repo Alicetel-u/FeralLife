@@ -814,6 +814,16 @@ function frame(now){
   const drawWorld=worldRenderGate.shouldDraw(state,now,stopped,cameraKey,bubbles);
   if(drawWorld)renderer.draw(state,now,stopped,bubbles);
   else renderer.last=now;
+  const portraitFollow=matchMedia('(max-width:700px) and (orientation:portrait)').matches && renderer.view==='interior' && renderer.focus && Number.isFinite(renderer.followCharacterX);
+  const scene=$('scene'), canvas=$('world');
+  if(portraitFollow){
+    const width=canvas.offsetWidth,viewport=scene.clientWidth,maxShift=Math.max(0,(width-viewport)/2);
+    const target=Math.max(-maxShift,Math.min(maxShift,(600-renderer.followCharacterX)*width/1200));
+    const previous=Number(scene.dataset.followShift||0);
+    const shift=previous+(target-previous)*Math.min(1,Math.max(.12,seconds*9));
+    scene.dataset.followShift=String(shift);
+    scene.style.setProperty('--follow-shift',shift+'px');
+  }else if(scene.dataset.followShift){delete scene.dataset.followShift;scene.style.removeProperty('--follow-shift');}
   if(now-lastUI>300&&(!stopped||drawWorld)){updateUI();lastUI=now;}
   if(now-lastSave>5000){save();lastSave=now;}
   if(state.ending&&!endingShown&&(!state.actOne||!modal.open)){showEnding();save();}
