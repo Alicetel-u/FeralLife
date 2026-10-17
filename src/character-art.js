@@ -18,16 +18,15 @@ export const EVENT_EXPRESSIONS = {
     shy: 'assets/events/busts/cat-shy.png',
     tired: 'assets/events/busts/cat-tired.png'
   },
-  // Restore Luna's original approved illustration. The later bust set was
-  // replacing her appearance with a temporary-looking character.
+  // Preserve Luna's approved original for neutral dialogue; authored mood-specific art is used for other emotions.
   hostess: {
     neutral: EVENT_ART.hostess,
-    happy: EVENT_ART.hostess,
-    angry: EVENT_ART.hostess,
-    sad: EVENT_ART.hostess,
-    surprised: EVENT_ART.hostess,
-    shy: EVENT_ART.hostess,
-    tired: EVENT_ART.hostess
+    happy: 'assets/events/busts/hostess-happy.png',
+    angry: 'assets/events/busts/hostess-angry.png',
+    sad: 'assets/events/busts/hostess-sad.png',
+    surprised: 'assets/events/busts/hostess-surprised.png',
+    shy: 'assets/events/busts/hostess-shy.png',
+    tired: 'assets/events/busts/hostess-tired.png'
   },
   fox: {
     neutral: 'assets/events/busts/fox-neutral.png',
