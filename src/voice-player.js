@@ -1,14 +1,16 @@
 import {VOICE_MANIFEST} from './voice-manifest.js';
-import {voiceLineKey} from './voice-policy.js';
+import {voiceLineKey,voiceSpeaker} from './voice-policy.js';
 export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Audio(),storage,chapter=()=>null,onPlaybackChange=()=>{}}={}) {
   let prefs={enabled:true,volume:0.8};
   try{if(storage===undefined)storage=globalThis.localStorage;const saved=JSON.parse(storage?.getItem('feral-voice')||'null');if(saved&&typeof saved.enabled==='boolean'&&Number.isFinite(saved.volume))prefs={enabled:saved.enabled,volume:Math.max(0,Math.min(1,saved.volume))};}catch{}
   let audio=null,token=0,current=null,active=false,blocked=false,watchdog=null;
-  // iOS ignores HTMLMediaElement.volume on some versions. Amplify mobile speech
-  // through Web Audio while leaving desktop playback completely unchanged.
+  // Apply character balance through Web Audio, including iOS where element volume is ignored.
   const mobile=typeof navigator!=='undefined'&&/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  const AudioContextType=mobile&&(globalThis.AudioContext||globalThis.webkitAudioContext);
+  const AudioContextType=(globalThis.AudioContext||globalThis.webkitAudioContext);
   let context=null,source=null,gain=null,limiter=null,mobileAudio=null,unlocked=false;
+  const speakerBoost=()=>({manager:1.6,hostess:1.8}[voiceSpeaker(current?.line||{})]||1);
+  const playbackGain=()=>(mobile?2:1)*prefs.volume*speakerBoost();
+  const applyVolume=()=>{if(gain){gain.gain.value=playbackGain();if(audio)audio.volume=1;}else if(audio)audio.volume=Math.min(1,prefs.volume*speakerBoost());};
   const disconnect=()=>{
     // Disconnect EVERY Web Audio node. Otherwise each old compressor remains
     // connected to the destination, retaining a graph per dialogue line on iOS.
@@ -19,16 +21,16 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
   };
   const connectMobile=element=>{
     if(!AudioContextType)return;
-    if(source&&element===mobileAudio){element.volume=1;if(context.state==='suspended')context.resume().catch(()=>{});return;}
+    if(source&&element===mobileAudio){gain.gain.value=playbackGain();element.volume=1;if(context.state==='suspended')context.resume().catch(()=>{});return;}
     try{
       context ||= new AudioContextType();
       const node=context.createMediaElementSource(element);
       const boost=context.createGain();
       // Dynamics compression limits sharp peaks rather than allowing harsh clipping.
       const comp=context.createDynamicsCompressor();
-      comp.threshold.value=-12;comp.knee.value=6;comp.ratio.value=6;
+      comp.threshold.value=mobile?-12:-1;comp.knee.value=mobile?6:0;comp.ratio.value=mobile?6:20;
       comp.attack.value=0.003;comp.release.value=0.2;
-      boost.gain.value=2.0*prefs.volume;
+      boost.gain.value=playbackGain();
       node.connect(boost);boost.connect(comp);comp.connect(context.destination);
       source=node;gain=boost;limiter=comp;
       // The current play is initiated by a tap, so resume inside that gesture.
@@ -37,7 +39,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     }catch{
       disconnect();
       // Fallback to native playback rather than failing the entire voice line.
-      element.volume=prefs.volume;
+      element.volume=Math.min(1,prefs.volume*speakerBoost());
     }
   };
   let prepared=null;
@@ -51,7 +53,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     try{const next=makeAudio();next.preload='auto';next.src=clip.file;next.load?.();prepared={file:clip.file,audio:next};}catch{prepared=null;}
   };
   const save=()=>{try{storage?.setItem('feral-voice',JSON.stringify(prefs));}catch{}};
-  const stop=()=>{token++;clearTimeout(watchdog);if(audio){audio.pause();audio.removeAttribute('src');audio.load();}if(!mobile)disconnect();audio=null;active=false;blocked=false;onPlaybackChange(false);};
+  const stop=()=>{token++;clearTimeout(watchdog);if(audio){audio.pause();audio.removeAttribute('src');audio.load();}audio=null;active=false;blocked=false;onPlaybackChange(false);};
   const play=(line,identity)=>{
     if(current?.identity===identity)return;
     stop();current=line?{line,identity}:null;
@@ -59,7 +61,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     if(!prefs.enabled||!clip)return;
     const version=token;
     try{
-      if(mobile){mobileAudio ||= makeAudio();audio=mobileAudio;audio.src=clip.file;clearPrepared();}else if(prepared?.file===clip.file){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clip.file;}audio.volume=prefs.volume;connectMobile(audio);active=true;onPlaybackChange(true);
+      if(mobile||AudioContextType){mobileAudio ||= makeAudio();audio=mobileAudio;audio.src=clip.file;clearPrepared();}else if(prepared?.file===clip.file){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clip.file;}audio.volume=Math.min(1,prefs.volume*speakerBoost());connectMobile(audio);active=true;onPlaybackChange(true);
       const done=()=>{if(version===token){active=false;onPlaybackChange(false);clearTimeout(watchdog);}};
       audio.onended=done;audio.onerror=done;
       watchdog=setTimeout(done,60000);
@@ -71,7 +73,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     unlock(){
       // Safari needs a media play and AudioContext resume inside the initial tap,
       // before cinematic cues fire later from requestAnimationFrame.
-      if(mobile&&!unlocked&&!active){
+      if((mobile||AudioContextType)&&!unlocked&&!active){
         mobileAudio ||= makeAudio();connectMobile(mobileAudio);
         mobileAudio.src='data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQIAAACAgA==';
         const version=token;
@@ -80,6 +82,6 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
       if(context?.state==='suspended')context.resume().catch(()=>{});
       if(blocked&&current){const {line,identity}=current;current=null;play(line,identity);}},
     setEnabled(value){prefs.enabled=Boolean(value);save();if(!prefs.enabled){stop();clearPrepared();}else if(current){const {line,identity}=current;current=null;play(line,identity);}},
-    setVolume(value){prefs.volume=Math.max(0,Math.min(1,Number(value)||0));if(gain)gain.gain.value=2.0*prefs.volume;else if(audio)audio.volume=prefs.volume;save();}
+    setVolume(value){prefs.volume=Math.max(0,Math.min(1,Number(value)||0));applyVolume();save();}
   };
 }

@@ -80,7 +80,7 @@ test('voice stops on advance, replay/back, OFF and skip; stale play failures can
  rejectFirst(Error('old'));await Promise.resolve();assert.equal(player.busy,true);
  sounds[1].onended();assert.equal(player.busy,false);
  player.play(line,'1');assert.equal(sounds.length,3);
- player.setVolume(0.2);assert.equal(sounds[2].volume,0.2);
+ player.setVolume(0.2);assert.equal(sounds[2].volume,0.2*1.6);
  player.setEnabled(false);assert.equal(sounds[2].paused,true);assert.equal(player.busy,false);
  player.setEnabled(true);assert.equal(sounds.length,4);
  player.stop();assert.equal(sounds[3].paused,true);assert.equal(player.busy,false);
@@ -151,4 +151,25 @@ test('iPhone initial gesture unlocks the same media element used by delayed film
    player.stop();
   }
  }finally{player?.stop();if(descriptor)Object.defineProperty(globalThis,'navigator',descriptor);else delete globalThis.navigator;}
+});
+
+test('character gain follows speaker changes and master volume on the reused audio graph',async()=>{
+ const old=globalThis.AudioContext;const gains=[];let sources=0;
+ const node=()=>({connect(){},disconnect(){}});
+ globalThis.AudioContext=class{
+  state='running';destination={};
+  createMediaElementSource(){sources++;return node();}
+  createGain(){const g={...node(),gain:{value:1}};gains.push(g);return g;}
+  createDynamicsCompressor(){return {...node(),threshold:{},knee:{},ratio:{},attack:{},release:{}};}
+ };
+ let player;
+ try{
+  const lines=['manager','hostess','cat'].map(speaker=>({speaker,text:speaker}));
+  player=createVoicePlayer({storage:null,manifest:Object.fromEntries(lines.map(l=>[voiceLineKey(l),{file:l.speaker+'.mp3'}])),makeAudio:()=>({play:()=>Promise.resolve(),pause(){},load(){},removeAttribute(){}})});
+  player.unlock();await Promise.resolve();
+  for(const [i,l] of lines.entries()){player.play(l,String(i));assert.equal(gains[0].gain.value,0.8*[1.6,1.8,1][i]);}
+  assert.equal(sources,1,'reuse the unlocked graph across speakers');
+  player.play({...lines[0],speaker:'大家（心の声）'},'inner');
+  player.setVolume(0.25);assert.equal(gains[0].gain.value,0.25*1.6);
+ }finally{player?.stop();if(old===undefined)delete globalThis.AudioContext;else globalThis.AudioContext=old;}
 });
