@@ -12,6 +12,7 @@ import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './troub
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition, automaticFirstRewind } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -378,6 +379,10 @@ function showGameTitle(){
   openModal(`<section class="act-screen game-title graphic-title"><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
   modal.querySelector('.title-actions button')?.focus({preventScroll:true});
 }
+function showActTwoOpening(){
+  openModal(actTwoOpeningHTML(EVENT_EXPRESSIONS.hostess.neutral));
+  startActTwoOpening(modal,()=>showActTwoTitle());
+}
 function showActTwoTitle(){openModal(`<section class="act-screen act-title" data-chapter="2"><div class="act-title-copy"><p class="act-kicker">KEMONOSOU / CHAPTER 02</p><p class="act-number">第二幕</p><h2 id="modal-title">アパートを<br><span>借金<span class="act-resident">（ルナ）</span></span>から守れ！</h2><p class="act-tagline">燃えなかったアパート。次は借金のカタに取られるな。</p><button class="act-primary" data-act2-start>第二幕を始める →</button></div><img class="act-key-art" src="${EVENT_EXPRESSIONS.hostess.neutral}" alt="金城ルナ"></section>`);}
 function showActTitle(){
   openModal(`<section data-chapter="1" class="act-screen act-title ${state.actOne.attempt>1?'act-title-burning':''}">${state.actOne.attempt>1?'<div class="act-title-fire" aria-hidden="true">'+fireEndingHTML(null).replace('id="modal-title"','')+'</div>':''}<div class="title-embers" aria-hidden="true"></div><img class="act-key-art" src="${EVENT_EXPRESSIONS.cat.tired}" alt="灰田モク"><div class="act-title-copy"><p class="act-kicker">KEMONOSOU / CHAPTER 01</p><p class="act-number">第一幕</p><h2 id="modal-title">${state.actOne.attempt > 1 ? 'アパートを<br><span>火事<span class="act-moku">（モク）</span></span>から守れ！' : 'アパートを<br><span>モク</span>から守れ！'}</h2><p class="act-tagline">${state.actOne.attempt > 1 ? 'たった一人の住人。たった三日間。<br>なのに、この家は何度でも燃える。' : 'たった一人の住人。たった三日間。<br>訳ありアパートの大家生活が、いま始まる。'}</p><div class="act-rule"><span>START <b>1日目 17:00</b></span><i>→</i><span>GOAL <b>3日目 09:00</b></span></div><button class="act-primary" data-act-start>大家さんの一日を始める <span>→</span></button></div></section>`);
@@ -386,7 +391,7 @@ function showActTitle(){
 function continueGame(){
   if(state.actOne.rewindIntroPending){showEvent(state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-rewind':'rewind')).id,state.actOne.rewindIntroCursor||0);return;}
   if(state.actOne.rewindTitlePending){showActTitle();return;}
-  if(state.actOne.chapter===2&&state.actOne.titlePending){showActTwoTitle();return;}
+  if(state.actOne.chapter===2&&state.actOne.titlePending){showActTwoOpening();return;}
   if(state.actOne.chapter===2&&state.actOne.prologuePending){const e=state.events.find(e=>e.actScene==='act2-prologue');if(e){showEvent(e.id);return;}}
   closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();
 }
@@ -459,7 +464,7 @@ function resetActState(next,resume=false){
   state=next;restored=false;Object.assign(talk,createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;
   renderer.reset();closeModal();updateCamera();updateRooms();updateUI();save();
   if(whiteout){requestAnimationFrame(()=>requestAnimationFrame(()=>whiteout.classList.add('revealing')));setTimeout(()=>whiteout.remove(),1300);}
-  if(state.actOne.chapter===2){if(state.actOne.titlePending){showActTwoTitle();return;}const e=state.events.find(e=>e.actScene===(state.actOne.prologuePending?'act2-prologue':'act2-rewind'));if(e&&(state.actOne.prologuePending||state.actOne.rewindIntroPending)){showEvent(e.id,state.actOne.rewindIntroCursor||0);return;}showActTwoTitle();return;}
+  if(state.actOne.chapter===2){if(state.actOne.titlePending){showActTwoOpening();return;}const e=state.events.find(e=>e.actScene===(state.actOne.prologuePending?'act2-prologue':'act2-rewind'));if(e&&(state.actOne.prologuePending||state.actOne.rewindIntroPending)){showEvent(e.id,state.actOne.rewindIntroCursor||0);return;}showActTwoTitle();return;}
   if(state.actOne.rewindIntroPending)showEvent(state.events.find(e=>e.actScene==='rewind').id,state.actOne.rewindIntroCursor||0);else showActTitle();
 }
 modal.addEventListener('cancel',e=>{const current=state.events.find(x=>x.id===eventView?.id);if(modal.classList.contains('conversation-modal')&&state.actOne&&eventView?.index===eventConversation(current||{}).length-1&&avoidedTrouble(current,state.actOne.chapter)){e.preventDefault();closeModal();return;}if(state.actOne&&(modal.classList.contains('act-modal')||modal.querySelector('[data-prologue],[data-rewind-intro]')))e.preventDefault();});
@@ -489,7 +494,7 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-act2-prologue-done')&&state.actOne?.chapter===2){state.actOne.prologuePending=false;const intro=state.events.find(e=>e.actScene==='act2-prologue');if(intro)intro.read=true;save();closeModal();openNextStageEvent();}
   if(button.hasAttribute('data-rewind-resume')&&state.actOne?.rewindIntroPending){state.actOne.rewindIntroPending=false;const intro=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-rewind':'rewind'));if(intro)intro.read=true;save();closeModal();}
   if(button.hasAttribute('data-epilogue-done')&&state.actOne?.status==='clear'){state.actOne.epilogueSeen=true;const ep=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-epilogue':'epilogue'));if(ep)ep.read=true;save();showActEnding();}
-  if(button.hasAttribute('data-act-reward')&&state.actOne?.status==='clear')resetActState(beginActTwo(state));
+  if(button.hasAttribute('data-act-reward')&&state.actOne?.status==='clear'){resetActState(beginActTwo(state));showActTwoOpening();}
   if(button.hasAttribute('data-act2-rewind')&&state.actOne?.chapter===2&&state.actOne.status==='bad')beginRewind(true);
   if(button.hasAttribute('data-act2-finish'))openModal(header('TO BE CONTINUED','第三幕、準備中。',false)+'<div class="modal-footer"><button class="primary-button" data-act-replay>最初から遊ぶ</button></div>');
   if(button.hasAttribute('data-act-replay'))resetActState(createActOne());
