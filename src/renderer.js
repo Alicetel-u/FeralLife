@@ -199,6 +199,7 @@ export class WorldRenderer {
     const darkness = h >= 20 || h < 5 ? .57 : h >= 18 ? (h - 18) * .25 : h < 7 ? (7 - h) * .19 : 0;
     const selected = state.residents.find(r => r.room === state.selected);
     const selectedPos = selected ? sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
+    this.followCharacterX = null;
     this.focusRoom = this.focus ? (selectedPos?.zone === 'room' ? selectedPos.room : state.selected) : null;
     if (this.view === 'exterior') { this.drawExterior(state,selectedPos,t,darkness); this.drawSpeech(state); return; }
     rect(ctx,0,0,1200,675,'#100d15');
@@ -280,6 +281,7 @@ export class WorldRenderer {
     if(p.zone==='away'||p.zone==='street'||p.zone==='stairs')return;
     const base=exteriorRoomBounds(p.room||r.room), b=roomBounds(p.room||r.room,this.focusRoom);if(!b)return;
     const ctx=this.ctx,x=b.x+(p.x-base.x)/base.w*b.w,y=p.zone==='hall'?b.y+b.h+16:b.y+(p.y-base.y)/base.h*b.h;
+    if(this.focus && p.zone==='room' && r.room===state.selected)this.followCharacterX=x;
     const height=this.focus?300:144,baseHeight=CHARACTER_ART[r.type]?.image?44:26,scale=height/baseHeight;
     const u=height/128, sleeping=r.action==='sleep'&&!p.moving&&p.zone==='room';
     const action=p.moving?'outing':r.action;
