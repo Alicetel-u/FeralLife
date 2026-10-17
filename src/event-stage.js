@@ -1,3 +1,4 @@
+import {isFirstStalkerReply,safeStalkerLine} from './first-stalker-stage.js';
 import { speakerColorStyle } from './speaker-colors.js';
 import { savedActExpression } from './act-expressions.js';
 import { messagePages } from './message-pages.js';
@@ -26,9 +27,10 @@ export function eventIcon(name) {
 const eventNameFrame=()=>`<svg class="name-frame" viewBox="0 0 360 92" preserveAspectRatio="none" aria-hidden="true"><path d="M15 9 354 0 338 83 0 92Z" fill="#f6edde" stroke="#121016" stroke-width="5"/></svg>`;
 
 export function eventConversation(event) {
-  const lines=(event.lines||[]).filter(l=>l&&typeof l.text==='string');
+  const directed=isFirstStalkerReply(event)||event.actScene==='act2-rewind';
+  const lines=(event.lines||[]).filter(l=>l&&typeof l.text==='string').map(l=>directed?safeStalkerLine(l):l);
   // A narration intro preserves story information that wasn't spoken aloud.
-  return lines.length && lines[0].text===event.detail ? lines : [{speaker:'narrator',text:event.detail},...lines];
+  return lines.length && lines[0].text===event.detail ? lines : [{speaker:'narrator',text:directed?safeStalkerLine({text:event.detail}).text:event.detail},...lines];
 }
 
 // Explicit emotion wins; older saves and ordinary journal dialogue use text cues.
@@ -76,16 +78,10 @@ export function eventEmotion(line, event = {}) {
   return 'neutral';
 }
 
-export function eventStageHTML(event,residents,index=0,page=0,{hideCharacters=false}={}) {
+export function eventStageHTML(event,residents,index=0,page=0,{hideCharacters=false,cinematic=false}={}) {
   const lines=eventConversation(event),cursor=Math.max(0,Math.min(index,lines.length-1)),line=lines[cursor];
   const pages=messagePages(line.text),pageIndex=Math.max(0,Math.min(page,pages.length-1)),pageText=pages[pageIndex];
-  if(['silence','impact','blackout','clock'].includes(line.tragedyEffect)){
-    const kind=line.tragedyEffect;
-    const dial=kind==='clock'?'<div class="stalker-clock-dial" aria-hidden="true"><i class="stalker-clock-hour"></i><i class="stalker-clock-minute"></i><i class="stalker-clock-second"></i><b></b></div>':'';
-    const name=line.speaker==='manager'?'大家':'';
-    return `<div class="event-stage stalker-cinematic stalker-${kind}" data-stalker-effect="${kind}"><button class="stalker-next" type="button" data-dialogue-next aria-label="次のセリフへ"></button>${dial}<div class="stalker-cinematic-copy" aria-live="polite"><small>${eventEscape(name)}</small><p>${eventEscape(pageText)}</p></div><span class="stalker-cinematic-prompt" aria-hidden="true">CLICK / ENTER</span></div>`;
-  }
-  if(line.flashbackEffect==='whiteout'){
+  if(!cinematic&&line.flashbackEffect==='whiteout'){
     const name=line.memoryVoice?'大家（過去の声）':line.innerVoice?'大家（心の声）':eventSpeakerName(line.speaker);
     return `<div class="event-stage memory-whiteout"><div class="memory-text" style="${speakerColorStyle(line)}" aria-live="polite" aria-atomic="true"><span class="visually-hidden">${eventEscape(name)}：</span><p>${eventEscape(pageText)}</p></div><span class="memory-prompt" aria-hidden="true">CLICK / ENTER</span></div>`;
   }

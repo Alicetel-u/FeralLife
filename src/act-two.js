@@ -43,22 +43,22 @@ const FIRST_STALKER_TRAGEDY_LINES=[
       m('……おい、開けっぱなしだぞ。'),
       n('大家は102号室へ入る。倒れた椅子と割れたグラスが目に入る。'),
       m('……なんだ、これ……。'),
-      n('部屋の奥で、ルナが血だらけになって倒れていた。'),
+      n('部屋の奥へ目を向けた大家が、その場で足を止めた。'),
       {...n('辺りの音が途切れる。'),tragedyEffect:'silence'},
       {...m('…………ルナ？'),voicePerformance:'tragedy-shock'},
       n('返事はない。'),
       m('……おい……。'),
       m('……嘘だろ……。'),
-      n('大家はルナに駆け寄る。'),
+      n('大家は部屋の奥へ駆け寄り、膝をついた。'),
       {...m('ルナ！！ しっかりしろ！！'),voicePerformance:'tragedy-panic'},
       {...m('頼む……目を開けてくれ……！'),voicePerformance:'tragedy-grief'},
-      n('ルナは動かない。'),
+      n('背後で、床が小さくきしんだ。'),
       {...m('……くそっ！ 救急車……！'),voicePerformance:'tragedy-panic'},
-      {...n('大家が立ち上がろうとした、その瞬間。鈍い衝撃音が響く。'),tragedyEffect:'impact'},
+      {...n('振り返るより早く、背後から鈍い衝撃が走った。'),tragedyEffect:'impact'},
       {...n('視界が揺れ、すべてが暗闇に沈んだ。'),tragedyEffect:'blackout'},
-      {...n('……カチッ。'),tragedyEffect:'clock'},
-      {...n('暗闇の中で時計の針が逆回転を始める。'),tragedyEffect:'clock'},
-      {...n('針が夕暮れの18時を指すと、白い光が広がった。'),flashbackEffect:'whiteout'}
+      {...n('何も、見えない。'),tragedyEffect:'blackout'},
+      {...n('声を出そうとしても、息が続かない。'),tragedyEffect:'blackout'},
+      {...n('意識が、遠のいていく。'),tragedyEffect:'blackout'}
     ];
 export const ACT_TWO_EVENTS={
   bag:{at:66,title:'第一の事件：夕暮れの待ち伏せ',call:'ルナを追う男にどう対応する？',detail:'3日目18時。けもの荘の玄関前で、ルナが見知らぬ男に呼び止められた。',lines:[
@@ -446,7 +446,7 @@ export function rewindActTwo(s){
  if(s.actOne.rollbackPoint?.kind==='story')next.actOne.rollbackPoint=JSON.parse(JSON.stringify(s.actOne.rollbackPoint));
  next.actOne.attempt=a.attempt+1;next.actOne.skipUnlockedScene=scene;next.actOne.memory=[...a.memory];next.actOne.chosenChoices=actTwoChosen(s);next.actOne.status='playing';next.actOne.pending=null;next.actOne.prologuePending=false;next.actOne.titlePending=false;next.actOne.started=true;next.ending=null;next.pending=null;next.events.forEach(e=>e.read=true);
  const firstStalkerLoop=scene==='bag'&&a.attempt===1;
- const intro=addEvent(next,'life',firstStalkerLoop?'初めての巻き戻し':'また、事件の前へ',firstStalkerLoop?'血だらけのルナを見た直後、夕暮れの景色が戻っている。':storyCheckpointTarget(s).label+'に時間が戻っている。',[102]);
+ const intro=addEvent(next,'life',firstStalkerLoop?'初めての巻き戻し':'また、事件の前へ',firstStalkerLoop?'102号室の暗闇が途切れ、夕暮れの景色が戻っている。':storyCheckpointTarget(s).label+'に時間が戻っている。',[102]);
  intro.actScene='act2-rewind';intro.cast=['hostess','cat'];intro.stageOnly=true;intro.read=false;
  intro.revealCharacterAt=firstStalkerLoop?3:0;
  intro.lines=firstStalkerLoop?[
@@ -457,7 +457,7 @@ export function rewindActTwo(s){
   m('……待て……ここ……さっきの……？'),
   l('surprised','……大家さん？ 大丈夫？'),
   m('……ルナ……？'),
-  n('血だらけで倒れていたはずのルナが、何事もなかったように立っている。'),
+  n('さっきは何度呼んでも返事がなかった。そのルナが、今は目の前で話している。'),
   m('……生きてる……。'),
   l('surprised','えっ？ 何言ってるの？'),
   m('……俺は……確か……。'),

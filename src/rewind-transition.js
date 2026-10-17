@@ -16,7 +16,7 @@ export function automaticFirstRewind(state){
 export function rewindClickAction(failure,attempt,phase){
   return phase!=='clock'&&phase!=='return'?'clock':'finish';
 }
-export function rewindBeat(t,attempt=1,afterFire=false){
+export function rewindBeat(t,attempt=1,afterFire=false,chapter=1){
   const repeat=attempt>1,fireEnd=afterFire?0:repeat?8:4,clockStart=fireEnd+(afterFire&&attempt===1?5.6:afterFire?2.5:1);
   const phase=t<fireEnd?'fire':t<clockStart?'dark':t<clockStart+4?'clock':'return';
   let text='',kind='spoken';
@@ -27,6 +27,7 @@ export function rewindBeat(t,attempt=1,afterFire=false){
     }else{text=t<2?'嘘だろ……。':'俺が……俺のせいで……。';kind='inner';}
   }
   if(phase==='dark'&&afterFire){text=attempt===1?(t<1.1?'ドクン……':t<2.35?'ドクンッ！！':'くそっ！俺も煙を吸い過ぎたか…意識が…'):'……もう一度、やり直せるなら。';kind='inner';}
+  if(phase==='dark'&&chapter===2){text=t<2.35?'':'……もう一度、やり直せるなら。';kind='inner';}
   if(phase==='clock'){
     text=repeat?'次こそは……絶対に守ってやる！':'';
     kind='inner';
@@ -35,7 +36,7 @@ export function rewindBeat(t,attempt=1,afterFire=false){
 }
 export function rewindTransitionHTML(failure,attempt=1,afterFire=false,chapter=1){
   const restored=chapter===2?'assets/apartments.png':'assets/rooms/cat/interior-v2.png';
-  return `<section class="act-screen rewind-screen" data-rewind-phase="${afterFire?'dark':'fire'}" ${afterFire?'data-after-fire':''}>${afterFire?'':fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${afterFire?'……もう一度、やり直せるなら。':attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="${restored}" alt="${chapter===2?'元に戻ったけもの荘':'元に戻った101号室'}">${attempt===1?'':'<button class="rewind-skip" data-rewind-skip>スキップ →</button>'}<p class="rewind-continue" hidden>クリックで続ける →</p><div class="rewind-white-fade" aria-hidden="true"></div></section>`;
+  return `<section class="act-screen rewind-screen" data-rewind-phase="${afterFire?'dark':'fire'}" data-chapter="${chapter}" ${afterFire?'data-after-fire':''}>${afterFire?'':fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${afterFire?'……もう一度、やり直せるなら。':attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="${restored}" alt="${chapter===2?'元に戻ったけもの荘':'元に戻った101号室'}">${attempt===1?'':'<button class="rewind-skip" data-rewind-skip>スキップ →</button>'}<p class="rewind-continue" hidden>クリックで続ける →</p><div class="rewind-white-fade" aria-hidden="true"></div></section>`;
 }
 
 export function startRewindTransition(root,failure,finish,sound,attempt=1,targetTime=17,afterFire=false,clockAudio=null){
@@ -53,7 +54,8 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
       osc.connect(gain);gain.connect(heartbeatAudio.destination);osc.start(start);osc.stop(start+.31);
     }catch{}
   }
-  const clockStart=rewindBeat(0,attempt,afterFire).clockStart;
+  const chapter=Number(root.dataset.chapter)||1;
+  const clockStart=rewindBeat(0,attempt,afterFire,chapter).clockStart;
   const firstLoop=attempt===1;
   function tick(now){
     if(finished)return;
@@ -65,7 +67,7 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
     const unavailable=!sound || (clockAudio?.paused && clockElapsed>=10);
     if(clockElapsed>=4&&(musicDone||(unavailable&&clockElapsed>=5.5)))clockComplete=true;
     const shownTime=Math.min(t,clockStart+3.99);
-    const beat=rewindBeat(shownTime,attempt,afterFire),next=beat.phase;
+    const beat=rewindBeat(shownTime,attempt,afterFire,chapter),next=beat.phase;
     const voice=root.querySelector('.rewind-voice');voice.textContent=beat.text;voice.dataset.voiceKind=beat.kind;voice.style.opacity=beat.text?'1':'0';
     if(phase!==next){
       phase=next;root.dataset.rewindPhase=phase;
