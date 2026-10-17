@@ -5,15 +5,17 @@ import { beginActTwo,advanceActTwo,answerActTwo,ACT_TWO_EVENTS } from '../src/ac
 import { eventStageHTML,eventConversation,eventEmotion } from '../src/event-stage.js';
 import { EVENT_EXPRESSIONS } from '../src/character-art.js';
 
-function expectExpression(event,text,emotion,residents){
+function expectExpression(event,text,emotion,residents,checkLegacy=true){
   const line=event.lines.find(l=>l.text===text);assert.ok(line,text);
   assert.equal(line.emotion,emotion,text);
   const cursor=eventConversation(event).indexOf(line);
   const html=eventStageHTML(event,residents,cursor);
   assert.ok(html.includes(`data-emotion="${emotion}" data-character="${line.speaker}"`),text);
   assert.ok(html.includes(EVENT_EXPRESSIONS[line.speaker][emotion]),text);
-  const oldEvent=JSON.parse(JSON.stringify(event));oldEvent.lines.forEach(l=>l.emotion='neutral');
-  assert.equal(eventEmotion(oldEvent.lines.find(l=>l.text===text),oldEvent),emotion,'old save: '+text);
+  if(checkLegacy){
+    const oldEvent=JSON.parse(JSON.stringify(event));oldEvent.lines.forEach(l=>l.emotion='neutral');
+    assert.equal(eventEmotion(oldEvent.lines.find(l=>l.text===text),oldEvent),emotion,'old save: '+text);
+  }
 }
 function firstActComplete(){
   const s=createActOne(42,[],2,true);
@@ -25,12 +27,15 @@ test('first act epilogue changes expression through disbelief, exhaustion, anger
   const s=firstActComplete(),e=s.events.find(e=>e.actScene==='epilogue');
   for(const [text,emotion] of [['ニャ？ 誰がニャ？','surprised'],['昨日の夜から起きてるから、まだ昨日ニャ。','tired'],['気持ち悪いニャ。','angry'],['大家。歓迎会するニャ？','happy']])expectExpression(e,text,emotion,s.residents);
 });
-test('second act bag scene and successful answer show both residents reacting',()=>{
+test('second act first incident and successful answer show both residents reacting',()=>{
   const s=firstActComplete();beginActTwo(s);s.actOne.started=true;s.actOne.prologuePending=false;
   advanceActTwo(s,100);
-  expectExpression(s.events.find(e=>e.id===s.actOne.pending.eventId),'今日は忙しいニャ。寝る予定があるニャ。','tired',s.residents);
+  // The revised incident has explicit emotions from its first release; these
+  // new lines never existed in the older neutral-only saves.
+  const incident=s.events.find(e=>e.id===s.actOne.pending.eventId);
+  for(const [text,emotion] of [['お金持ちニャ！？','surprised'],['……どうして、ここが……。','surprised'],['……大家さん。その人と話さないで。','sad']])expectExpression(incident,text,emotion,s.residents,false);
   const reply=answerActTwo(s,s.actOne.pending.eventId,'loan');
-  for(const [text,emotion] of [['任せろニャ！ モクは力持ちニャ！','happy'],['……軽っ！？','surprised'],['箱に裏切られたニャ……。','sad'],['なになに？ どうしたの？','surprised'],['え？ ネットで知り合った人からだけど……。','sad'],['モクのおかげで助かったニャ！','happy']])expectExpression(reply,text,emotion,s.residents);
+  for(const [text,emotion] of [['任せろニャ！','happy'],['……前のお店のお客さん。何度も断ったのに、ずっと追いかけてくるの。','sad'],['……お金のことは、あたしにも責任があるから。','tired'],['今は……ごめん。全部は話せない。','sad']])expectExpression(reply,text,emotion,s.residents,false);
   advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'refuse');advanceActTwo(s,100);
   expectExpression(s.events.find(e=>e.actScene==='act2-epilogue'),'大家、酒はまだかニャ？','happy',s.residents);
 });
