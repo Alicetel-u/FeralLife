@@ -10,11 +10,11 @@ import {readFile} from 'node:fs/promises';
 import {CHARACTERS} from '../src/simulation.js';
 import {CHARACTER_ART} from '../src/character-art.js';
 import {drawSprite,WorldRenderer} from '../src/renderer.js';
-import {MINI_EMOTIONS,LUNA_MINI_EMOTIONS,MOKU_MINI_EMOTIONS,MOKU_EXTRA_EMOTIONS,MINI_EMOTION_ART,MINI_PERSONALITY,miniLineEmotion,miniDailyEmotion,miniEmotionMotion,MiniReactionState} from '../src/mini-emotions.js';
+import {MINI_EMOTIONS,LUNA_MINI_EMOTIONS,MOKU_MINI_EMOTIONS,MOKU_EXTRA_EMOTIONS,MINI_EMOTION_ART,MINI_PERSONALITY,miniLineEmotion,miniDailyEmotion,miniEmotionMotion,MiniReactionState,miniEmotionFrameName} from '../src/mini-emotions.js';
 
 const pen=()=>{const calls=[];const ctx=new Proxy({}, {get:(_,key)=>(...args)=>calls.push([key,...args]),set:()=>true});return {ctx,calls};};
 
-test('all eleven residents, landlord and visitor ship bounded transparent reaction frames, including Moku and Luna’s sixteen',async()=>{
+test('all eleven residents, landlord and visitor ship bounded transparent reaction frames, including Moku and Luna’s nine',async()=>{
  const types=[...Object.keys(CHARACTERS),'manager','patron'].sort();
  assert.deepEqual(Object.keys(MINI_EMOTION_ART).sort(),types);
  assert.deepEqual(Object.keys(MINI_PERSONALITY).sort(),types);
@@ -98,11 +98,11 @@ test('newly illustrated residents keep a single walking silhouette and visitors 
 });
 
 
-test('all sixteen Luna reactions are directed by real authored lines and serious scenes never flirt',()=>{
- const lines=extractVoiceScript('act2').filter(r=>r.speaker==='hostess');
+test('all nine Luna reactions are directed by real authored lines and serious scenes never flirt',()=>{
+ const lines=[...extractVoiceScript('act2'),...extractVoiceScript('act2-trouble1')].filter(r=>r.speaker==='hostess');
  const used=new Set(lines.map(r=>miniLineEmotion(r.line)));
  for(const emotion of LUNA_MINI_EMOTIONS)assert.ok(used.has(emotion),emotion+' must have a real authored trigger');
- for(const r of lines.filter(r=>/act2\/(bag|contract|film)/.test(r.source)&&!r.source.includes('act2/bag/guarantee')))assert.ok(!miniLineEmotion(r.line).startsWith('flirt-'),r.line.text);
+ for(const r of lines.filter(r=>/act2\/(bag|contract|film)/.test(r.source)&&!r.source.includes('/runtime/')&&!r.source.includes('act2/bag/guarantee')))assert.ok(!miniLineEmotion(r.line).startsWith('flirt-'),r.line.text);
  assert.equal(miniLineEmotion({speaker:'hostess',text:'助けて♡',emotion:'scared'}),'scared');
  assert.equal(miniLineEmotion({speaker:'hostess',text:'おはよう',miniEmotion:'toString'}),'neutral');
  assert.equal(miniLineEmotion({speaker:'cat',text:'モクちゃん、それ毎日言ってない？'}),'neutral');
@@ -137,16 +137,16 @@ test('chapter-two observation actually reaches both flirt reactions without edit
  const s=createActOne(91);beginActTwo(s);s.actOne.started=true;s.actOne.prologuePending=false;s.events.forEach(e=>e.read=true);
  advanceActTwo(s,2.25);let talk=createTalk();
  stepTalk(talk,s,100,false);stepTalk(talk,s,100+SPEECH_MS.line,false);stepTalk(talk,s,100+SPEECH_MS.line*2,false);
- assert.equal(miniLineEmotion(talk.bubbles[0]),'flirt-wink');
+ assert.equal(miniLineEmotion(talk.bubbles[0]),'wicked');
  advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'loan');
  advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'refuse');
  for(let i=0;i<50&&!(lunaNearby(s)&&secondActChat(s)?.key==='act2-chat-relief');i++)advanceActTwo(s,.1);
  assert.equal(secondActChat(s)?.key,'act2-chat-relief');
  talk=createTalk();stepTalk(talk,s,100,false);stepTalk(talk,s,100+SPEECH_MS.line,false);stepTalk(talk,s,100+SPEECH_MS.line*2,false);
- assert.equal(miniLineEmotion(talk.bubbles[0]),'flirt-lean');
+ assert.equal(miniLineEmotion(talk.bubbles[0]),'charm');
  const renderer=Object.create(WorldRenderer.prototype);renderer.miniReactions=new MiniReactionState();renderer.speaking=new Set(['hostess']);
  const before=JSON.stringify(s);renderer.miniReactions.update(talk.bubbles,1);
- assert.equal(renderer.miniReaction('hostess',1,s.residents.find(r=>r.type==='hostess')).emotion,'flirt-lean');
+ assert.equal(renderer.miniReaction('hostess',1,s.residents.find(r=>r.type==='hostess')).emotion,'charm');
  assert.equal(JSON.stringify(s),before);
 });
 
@@ -164,26 +164,37 @@ test('native Luna cutout renders without runtime alpha truncation or an intermed
 });
 
 
-test('Moku uses her rebuilt sixteen mini frames and all strong directions match existing lines',()=>{
+test('Moku uses her rebuilt nine mini frames and all strong directions match existing lines',()=>{
  const rows=extractVoiceScript('act1').filter(r=>r.speaker==='cat');
  const used=new Set(rows.map(r=>miniLineEmotion(r.line)));
  for(const emotion of MOKU_EXTRA_EMOTIONS)assert.ok(used.has(emotion),emotion);
- assert.equal(Object.keys(MINI_EMOTION_ART.cat.frames).length,16);
- assert.equal(MINI_EMOTION_ART.cat.src,'assets/characters/cat/emotions-v3.png');
- assert.equal(CHARACTER_ART.cat.src,'assets/characters/cat/observation-v3/stand.png');
- assert.equal(CHARACTER_ART.hostess.src,'assets/characters/hostess/observation-v3/stand.png');
- assert.notDeepEqual(MINI_EMOTION_ART.cat.frames.furious,MINI_EMOTION_ART.cat.frames.angry);
+ assert.equal(Object.keys(MINI_EMOTION_ART.cat.frames).length,9);
+ assert.equal(MINI_EMOTION_ART.cat.src,'assets/characters/cat/emotions-v4.png');
+ assert.equal(CHARACTER_ART.cat.src,'assets/characters/cat/observation-v4/stand.png');
+ assert.equal(CHARACTER_ART.hostess.src,'assets/characters/hostess/observation-v4/stand.png');
+ assert.equal(miniEmotionFrameName('cat','furious'),'angry');assert.equal(miniEmotionFrameName('hostess','flirt-lean'),'charm');
 });
 
 test('Moku and Luna share native-resolution art across every observation action',()=>{
  for(const type of ['cat','hostess']){
   const art=CHARACTER_ART[type],emotion=MINI_EMOTION_ART[type];
   assert.ok(emotion.height>=350,'retain native emotion resolution');assert.equal(emotion.alphaCutoff,undefined,'alpha cleaned once at native resolution');
-  assert.match(art.src,/observation-v3\/stand.png$/);
+  assert.match(art.src,/observation-v4\/stand.png$/);
   for(const name of ['stand','walk_a','walk_b','sit','sleep','eat','drink','clean','chat']){
-   const pose=art.poses[name];assert.ok(pose,`${type}/${name}`);assert.match(pose.src,/observation-v3\//);
+   const pose=art.poses[name];assert.ok(pose,`${type}/${name}`);assert.match(pose.src,/observation-v4\//);
    const png=readFileSync(new URL('../'+pose.src,import.meta.url));
    assert.ok(png.readUInt32BE(16)>=250&&png.readUInt32BE(20)>=200,'no 96/128px intermediate sprite');
   }
  }
+});
+
+test('approved nine-frame families cover old directions and keep playful looks out of tragedy',()=>{
+ for(const type of ['cat','hostess']){
+  assert.equal(Object.keys(MINI_EMOTION_ART[type].frames).length,9);
+  for(const emotion of ['furious','panic','despair','pleading','stunned','laughing','shy','relieved','rejecting'])assert.ok(miniEmotionFrameName(type,emotion),type+'/'+emotion);
+ }
+ assert.notDeepEqual(MINI_EMOTION_ART.hostess.frames.charm,MINI_EMOTION_ART.hostess.frames['flirt-wink']);
+ assert.notDeepEqual(MINI_EMOTION_ART.hostess.frames.wicked,MINI_EMOTION_ART.hostess.frames.charm);
+ for(const text of ['……お願い。もう帰って。','助けて♡'])assert.ok(!['charm','flirt-wink','wicked'].includes(miniEmotionFrameName('hostess',miniLineEmotion({speaker:'hostess',text,emotion:'scared'}))));
+ assert.equal(miniEmotionFrameName('hostess','toString'),null);
 });

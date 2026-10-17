@@ -1,4 +1,4 @@
-import { MINI_EMOTION_ART, MiniReactionState, miniDailyEmotion, drawMiniEmotion } from './mini-emotions.js';
+import { MINI_EMOTION_ART, MiniReactionState, miniDailyEmotion, miniEmotionFrameName, drawMiniEmotion } from './mini-emotions.js';
 import {managerTarget,managerFrame,advanceManager} from './manager-life.js';
 import { speakerColors } from './speaker-colors.js';
 import { ROOM_LAYOUTS } from './room-layouts.js';
@@ -86,7 +86,7 @@ export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1
   const emotion=opts.emotion||(!art?.image?'relieved':null);
   const allowsEmotion=(!moving||type==='patron')&&action!=='sleep'&&(!['eat','drink','clean','smoke'].includes(action)||opts.emotionActive);
   if((allowsEmotion&&emotion&&emotion!=='neutral'&&emotion!=='tired')||(!art?.image&&MINI_EMOTION_ART[type]?.image)){
-    const fallbackEmotion=(moving&&type!=='patron')||action==='sleep'?'relieved':emotion==='tired'?'sad':emotion&&MINI_EMOTION_ART[type]?.frames[emotion]?emotion:'relieved';
+    const fallbackEmotion=(moving&&type!=='patron')||action==='sleep'?'relieved':emotion==='tired'?'sad':emotion&&miniEmotionFrameName(type,emotion)?emotion:'relieved';
     const step=moving&&!opts.reduced?Math.sin(tick*11)*.35*scale:0;
     if(drawMiniEmotion(ctx,type,x,y+step,tick,scale,direction,fallbackEmotion,{moving,baseHeight:art?.image?art.displayHeight:26,reduced:opts.reduced})){
       if(!art?.image&&action!=='sleep')drawMiniActionProp(ctx,x,y+step,scale,direction,action);

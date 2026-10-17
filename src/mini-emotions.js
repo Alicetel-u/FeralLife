@@ -2,47 +2,33 @@ import { actExpression } from './act-expressions.js';
 
 // Presentation state only: no reaction timers or generated art enter save data.
 export const MINI_EMOTIONS = ['happy','angry','sad','surprised','confused','scared','relieved','shy'];
-export const LUNA_EXTRA_EMOTIONS = ['furious','panic','despair','pleading','stunned','laughing','flirt-wink','flirt-lean'];
-export const LUNA_MINI_EMOTIONS = [...MINI_EMOTIONS,...LUNA_EXTRA_EMOTIONS];
+export const LUNA_EXTRA_EMOTIONS = ['charm','flirt-wink','wicked'];
+export const LUNA_MINI_EMOTIONS = ['happy','angry','sad','surprised','scared','confused',...LUNA_EXTRA_EMOTIONS];
 export const MOKU_EXTRA_EMOTIONS = ['furious','panic','despair','pleading','stunned','laughing','exasperated','rejecting'];
-export const MOKU_MINI_EMOTIONS = [...MINI_EMOTIONS,...MOKU_EXTRA_EMOTIONS];
-export const MINI_EMOTION_NAMES = {neutral:'通常',happy:'喜び',angry:'怒り',sad:'悲しみ',surprised:'驚き',confused:'困惑',scared:'恐怖',relieved:'安心',shy:'照れ',tired:'疲れ',furious:'激怒',panic:'恐慌',despair:'絶望',pleading:'必死の訴え',stunned:'愕然',laughing:'大笑い','flirt-wink':'誘惑・ウインク','flirt-lean':'誘惑・甘える',exasperated:'強い呆れ',rejecting:'拒絶'};
+export const MOKU_MINI_EMOTIONS = [...MINI_EMOTIONS,'exasperated'];
+export const MINI_EMOTION_NAMES = {charm:'お色気',wicked:'悪い顔',neutral:'通常',happy:'喜び',angry:'怒り',sad:'悲しみ',surprised:'驚き',confused:'困惑',scared:'恐怖',relieved:'安心',shy:'照れ',tired:'疲れ',furious:'激怒',panic:'恐慌',despair:'絶望',pleading:'必死の訴え',stunned:'愕然',laughing:'大笑い','flirt-wink':'誘惑・ウインク','flirt-lean':'誘惑・甘える',exasperated:'強い呆れ',rejecting:'拒絶'};
 export const MINI_EMOTION_ART = {
-  cat: {src:'assets/characters/cat/emotions-v3.png',image:null,height:447,frames:{
-    'happy':[45,57,326,432],
-    'angry':[413,77,350,412],
-    'sad':[812,86,327,403],
-    'surprised':[1193,55,326,433],
-    'confused':[44,530,324,447],
-    'scared':[417,574,343,403],
-    'relieved':[814,548,331,429],
-    'shy':[1198,572,329,405],
-    'furious':[30,1119,354,390],
-    'panic':[384,1119,384,390],
-    'despair':[768,1134,357,382],
-    'pleading':[1154,1120,374,395],
-    'stunned':[29,1551,351,442],
-    'laughing':[446,1583,322,410],
-    'exasperated':[768,1587,368,407],
-    'rejecting':[1192,1583,335,412],
+  cat: {src:'assets/characters/cat/emotions-v4.png',image:null,height:454,frames:{
+    'happy':[40,1,342,454],
+    'angry':[414,33,355,424],
+    'sad':[783,47,312,409],
+    'surprised':[32,460,348,450],
+    'confused':[411,462,335,451],
+    'scared':[789,505,330,405],
+    'relieved':[38,915,333,443],
+    'shy':[433,924,322,434],
+    'exasperated':[788,921,347,439],
   }},
-  hostess: {src:'assets/characters/hostess/emotions-v3.png',image:null,height:497,frames:{
-    'happy':[17,14,367,488],
-    'angry':[416,19,352,483],
-    'sad':[768,19,384,483],
-    'surprised':[1152,11,370,490],
-    'confused':[19,512,365,497],
-    'scared':[384,520,384,488],
-    'relieved':[768,512,384,497],
-    'shy':[1152,513,372,496],
-    'furious':[18,1040,366,483],
-    'panic':[384,1043,384,480],
-    'despair':[768,1040,348,483],
-    'pleading':[1154,1051,368,472],
-    'stunned':[31,1536,353,496],
-    'laughing':[414,1536,353,496],
-    'flirt-wink':[795,1536,353,496],
-    'flirt-lean':[1168,1536,355,496],
+  hostess: {src:'assets/characters/hostess/emotions-v4.png',image:null,height:446,frames:{
+    'happy':[26,4,370,446],
+    'angry':[413,4,378,446],
+    'sad':[819,18,363,432],
+    'surprised':[21,450,377,414],
+    'scared':[428,472,367,392],
+    'confused':[845,449,345,416],
+    'charm':[37,863,357,432],
+    'flirt-wink':[421,863,399,430],
+    'wicked':[832,864,354,429],
   }},
   ann: {src:'assets/characters/ann/emotions-v1.png',image:null,height:180,frames:{
     happy:[14,13,132,177],
@@ -185,6 +171,8 @@ export const LUNA_MINI_DIRECTIONS = {
   'flirt-wink':['大家さん、今日は本当にありがとう♡','こんにちはー！ 今日からお世話になります、金城ルナです♡','お礼に、今夜ご飯おごるね。','モクちゃん、それ毎日言ってない？','私も休憩中。煙が少ない所なら座るよ。'],
   'flirt-lean':['ちょっと、二人きりで相談したいことがあるんだけど……♡','……駄目。二人だけの秘密にしたいの。','……大家さん、ほんとにいい人♡','ふふ。じゃあ、少しだけ休もうかな。','いいよ。愚痴でも聞く？ 私も今日はちょっと疲れた。']
 };
+LUNA_MINI_DIRECTIONS.charm=['ふふ。じゃあ、少しだけ休もうかな。','お礼に、今夜ご飯おごるね。'];
+LUNA_MINI_DIRECTIONS.wicked=['モクちゃん、それ毎日言ってない？'];
 const lunaMiniLookup=new Map(Object.entries(LUNA_MINI_DIRECTIONS).flatMap(([emotion,texts])=>texts.map(text=>[text,emotion])));
 
 export const MOKU_MINI_DIRECTIONS = {
@@ -201,7 +189,7 @@ const mokuMiniLookup=new Map(Object.entries(MOKU_MINI_DIRECTIONS).flatMap(([emot
 
 export function miniLineEmotion(line) {
   if(!line)return 'neutral';
-  if(MINI_EMOTION_ART[line.speaker]&&Object.hasOwn(MINI_EMOTION_ART[line.speaker].frames,line.miniEmotion))return line.miniEmotion;
+  if(MINI_EMOTION_ART[line.speaker]&&miniEmotionFrameName(line.speaker,line.miniEmotion))return line.miniEmotion;
   if(line.speaker==='cat'&&mokuMiniLookup.has(line.text))return mokuMiniLookup.get(line.text);
   if(line.voicePerformance?.startsWith('tragedy-'))return /grief/.test(line.voicePerformance)?'sad':/shock/.test(line.voicePerformance)?'surprised':'scared';
   if(line.speaker==='hostess'&&lunaMiniLookup.has(line.text))return lunaMiniLookup.get(line.text);
@@ -299,8 +287,15 @@ function miniCutoutImage(art){
 
 // Packed sheets have per-cell alpha bounds so transparent padding never changes
 // the foot anchor. Scaling is shared across all eight poses of one character.
+// Old semantic directions and saves resolve to current art without loading retired sheets.
+export function miniEmotionFrameName(type,emotion){
+ const art=MINI_EMOTION_ART[type];if(Object.hasOwn(art?.frames||{},emotion))return emotion;
+ if(!['cat','hostess'].includes(type))return null;
+ const aliases={furious:'angry',panic:'scared',despair:'sad',pleading:'scared',stunned:'surprised',laughing:'happy',rejecting:'exasperated',tired:'sad','flirt-lean':'charm',shy:'confused',relieved:'happy',exasperated:'angry'};
+ const target=aliases[emotion];return art?.frames[target]?target:art?.frames[aliases[target]]?aliases[target]:null;
+}
 export function drawMiniEmotion(ctx,type,x,y,t,scale,direction,emotion,{moving=false,baseHeight=44,reduced=false}={}) {
-  const art=MINI_EMOTION_ART[type],frame=art?.frames[emotion];
+  const art=MINI_EMOTION_ART[type],frame=art?.frames[miniEmotionFrameName(type,emotion)];
   if(!art?.image||!frame)return false;
   const [sx,sy,w,h]=frame,px=baseHeight/art.height;
   const motion=miniEmotionMotion(type,emotion,t,reduced||moving);

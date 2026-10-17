@@ -35,10 +35,9 @@ test('Luna RGBA frames match foot origins and ship in standalone', async () => {
   for(const [name,src] of [['base',art.src],['portrait',art.portraitSrc],...Object.entries(art.poses).map(([n,p])=>[n,p.src])]){
     const png=await readFile(new URL('../'+src,import.meta.url));
     const width=png.readUInt32BE(16),height=png.readUInt32BE(20);
-    if(name==='portrait'){assert.equal(width,128);assert.equal(height,160);}
-    else {
+    {
       assert.ok(width>=250&&height>=200,name+' native resolution');
-      const origin=name==='base'?art.origin:art.poses[name].origin;
+      const origin=['base','portrait'].includes(name)?art.origin:art.poses[name].origin;
       assert.equal(origin[0],width/2,name+' centered anchor');assert.equal(origin[1],height,name+' foot anchor');
     }
     assert.equal(png[25],6,name+' RGBA');
