@@ -8,7 +8,7 @@ const m=text=>({speaker:'manager',emotion:'neutral',text});
 const l=(emotion,text)=>({speaker:'hostess',emotion:actExpression('hostess',text,emotion),text});
 const c=(emotion,text)=>({speaker:'cat',emotion:actExpression('cat',text,emotion),text});
 export const ACT_TWO_TITLE='第二幕「アパートを借金（ルナ）から守れ！」';
-const FIRST_STALKER_TRAGEDY_LINES=[
+const FIRST_STALKER_BEFORE_CHOICE=[
       n('そのとき、モクが現れる。'),
       c('neutral','……おい。'),
       n('男「……あ？」'),
@@ -28,6 +28,8 @@ const FIRST_STALKER_TRAGEDY_LINES=[
       c('happy','当然ニャ！'),
       n('ルナは男が逃げた方向を不安そうに見つめていた。'),
       l('sad','……本当に、もう来ないかな……。'),
+    ];
+const FIRST_STALKER_TRAGEDY_LINES=[
       m('もう大丈夫だろ。今日はゆっくり休め。'),
       l('sad','……うん。ありがとう、大家さん。'),
       c('happy','また来たらモクが追い払うニャ！'),
@@ -383,7 +385,7 @@ export function advanceActTwo(s,hours){
  while(s.hour<end){const next=Math.min(end,(Math.floor(s.hour*4+1e-7)+1)/4),delta=next-s.hour;advance(s,delta);secondActLife(s,delta);}
  s.pending=null;s.management.pending=null;s.management.queue=[];
  if(s.hour<at)return;
- if(scene){const ev=ACT_TWO_EVENTS[scene],e=addEvent(s,'trouble',ev.title,ev.detail,[102]);e.actScene=scene;e.cast=['hostess','cat'];e.stageOnly=true;e.lines=(scene==='bag'&&a.attempt>1?[n('男「……あんたには関係ないだろ。」'),n('男は大家を押しのけようとする。'),n('モクが男の前に歩み出た。'),c('neutral','……おい。'),m('……今度は、どうする……？')]:ev.lines).map(x=>({...x}));a.pending={scene,eventId:e.id};}
+ if(scene){const ev=ACT_TWO_EVENTS[scene],e=addEvent(s,'trouble',ev.title,ev.detail,[102]);e.actScene=scene;e.cast=['hostess','cat'];e.stageOnly=true;e.lines=(scene==='bag'?(a.attempt>1?[n('男「……あんたには関係ないだろ。」'),n('男は大家を押しのけようとする。'),n('モクが男の前に歩み出た。'),c('neutral','……おい。'),m('……今度は、どうする……？')]:[...ev.lines,...FIRST_STALKER_BEFORE_CHOICE]):ev.lines).map(x=>({...x}));a.pending={scene,eventId:e.id};}
  else{a.status='clear';a.epilogueSeen=false;const e=addEvent(s,'life','第二幕 エピローグ「残った鍵」','5日目9時。アパートは今日も大家のものだった。',[102]);e.actScene='act2-epilogue';e.cast=['hostess','cat'];e.stageOnly=true;e.lines=[
  n('5日目の朝。けもの荘の玄関には、差し押さえの貼り紙も、見知らぬ鍵もない。'),
  m('……残った。今度は建物ごと取られずに済んだ。'),
