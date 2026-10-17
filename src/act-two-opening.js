@@ -6,7 +6,7 @@ export const ACT_TWO_OPENING_SCENES = [
   {id:'look',caption:'バッグをぎゅっと胸に抱え、ルナは建物を見上げた。',line:'……ここなら、しばらく隠れられるかな',cue:'何から隠れるのか。その答えを、まだ誰も知らない。'}
 ];
 export function actTwoOpeningHTML(portrait){
-  return `<section class="act2-cinema" aria-label="第二幕オープニング・逃げる女" data-act2-opening>
+  return `<section class="act-screen act2-cinema" aria-label="第二幕オープニング・逃げる女" data-act2-opening>
     <style>
       .act2-cinema{position:relative;overflow:hidden;isolation:isolate;min-height:min(82vh,850px);height:100%;background:#080912;color:#fff;font-family:inherit}
       .act2-cinema *{box-sizing:border-box}
@@ -17,7 +17,7 @@ export function actTwoOpeningHTML(portrait){
       .act2-cinema .a2-shadow{position:absolute;left:4%;bottom:19%;width:26%;height:56%;background:#090a0e;filter:blur(11px);clip-path:polygon(46% 0,58% 0,72% 25%,79% 100%,15% 100%,25% 25%);opacity:.65;transform:translateX(-100%);transition:transform 2.4s ease,opacity 1s}
       .act2-cinema .a2-luna{position:absolute;bottom:12%;right:10%;height:72%;max-width:62%;object-fit:contain;object-position:bottom;filter:brightness(.12) saturate(.4) drop-shadow(0 5px 22px #060711);transform:translateX(42%) rotate(-6deg);opacity:0;transition:transform 1.1s ease,opacity 1s,filter 1.7s}
       .act2-cinema .a2-apartment{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;filter:brightness(.18) saturate(.45) contrast(1.3);transform:scale(1.19) translateY(5%);transition:opacity 2s,transform 7s ease,filter 2s}
-      .act2-cinema .a2-poster{position:absolute;top:27%;left:14%;width:180px;max-width:40vw;padding:16px 9px;background:#e2d7b8;color:#26232a;box-shadow:2px 4px 30px #000d;transform:rotate(-5deg) scale(.72);opacity:0;transition:opacity .9s,transform 1.6s; text-align:center;border:6px solid #a5a092}
+      .act2-cinema .a2-bag{position:absolute;right:18%;bottom:33%;width:12%;height:15%;border-radius:20% 20% 32% 32%;background:linear-gradient(145deg,#20141a,#090a10);border:2px solid #39262c;box-shadow:0 12px 25px #0009;opacity:0;transform:translateX(45%);transition:opacity 1s,transform 1s}.act2-cinema .a2-bag:before{content:"";position:absolute;width:55%;height:44%;left:20%;top:-36%;border:6px solid #261a20;border-bottom:0;border-radius:50% 50% 0 0}.act2-cinema[data-scene="breath"] .a2-bag,.act2-cinema[data-scene="look"] .a2-bag{opacity:1;transform:translateX(0)}.act2-cinema[data-scene="look"] .a2-bag{right:36%;bottom:32%;width:10%;height:12%}.act2-cinema .a2-poster{position:absolute;top:27%;left:14%;width:180px;max-width:40vw;padding:16px 9px;background:#e2d7b8;color:#26232a;box-shadow:2px 4px 30px #000d;transform:rotate(-5deg) scale(.72);opacity:0;transition:opacity .9s,transform 1.6s; text-align:center;border:6px solid #a5a092}
       .act2-cinema .a2-poster b{display:block;font-size:clamp(16px,3vw,31px);letter-spacing:.16em;line-height:1.5}
       .act2-cinema .a2-poster small{display:block;margin-top:7px;font-size:13px}
       .act2-cinema .a2-caption{position:absolute;top:7%;left:7%;right:7%;font-size:clamp(13px,1.6vw,19px);letter-spacing:.12em;color:#bfc3cd;text-shadow:0 2px 8px #000;max-width:600px;line-height:1.9}
@@ -43,7 +43,7 @@ export function actTwoOpeningHTML(portrait){
     </style>
     <div class="a2-night"></div><div class="a2-neon"></div><div class="a2-street"></div>
     <img class="a2-apartment" src="assets/apartments.png" alt="夜のけもの荘の全景">
-    <div class="a2-rain" aria-hidden="true"></div><div class="a2-shadow" aria-hidden="true"></div>
+    <div class="a2-rain" aria-hidden="true"></div><div class="a2-bag" aria-hidden="true"></div><div class="a2-shadow" aria-hidden="true"></div>
     <img class="a2-luna" src="${portrait}" alt="暗い路地のルナの影">
     <div class="a2-poster"><b>入居者募集</b><small>けもの荘<br>空室あり</small></div>
     <p class="a2-caption" data-act2-caption></p>
