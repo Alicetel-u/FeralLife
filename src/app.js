@@ -1,3 +1,4 @@
+import {actTwoMorningDirection,actTwoMorningStageHTML,startMorningBlackout,prepareMorningBirds} from './act-two-bad-stage.js';
 import {isFirstStalkerReply,firstStalkerStageHTML,prepareFirstStalkerAssets} from './first-stalker-stage.js';
 import { LUNA_MINI_EMOTIONS, MOKU_MINI_EMOTIONS } from './mini-emotions.js';
 import {isFirstFireReply,firstFireStageHTML} from './first-fire-stage.js';
@@ -14,7 +15,7 @@ import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './troub
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.7';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.8';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition, automaticFirstRewind } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -304,7 +305,7 @@ function playStalkerImpactCue(line,key){
     osc.onended=()=>{osc.disconnect();filter.disconnect();gain.disconnect();ctx.close().catch(()=>{});};
   }catch{}
 }
-function showEvent(id,index=null,page=0) {
+function showEvent(id,index=null,page=0,afterMorningBlackout=false) {
   const e = state.events.find(e => e.id === Number(id)); if (!e) return;
   if (e.stageOnly || e.lines?.length) {
     seenStageId = Math.max(seenStageId, e.id);
@@ -314,6 +315,19 @@ function showEvent(id,index=null,page=0) {
   e.read = true; rememberReadScenes(state); save(); updateJournal();
   if (!state.actOne && state.ending && e.id === state.events[0].id) { showEnding(); return; }
   const lines=eventConversation(e),cursor=Math.max(0,Math.min(index ?? (e.choicePresented?lines.length-1:0),lines.length-1));
+  const morningDirection=actTwoMorningDirection(e,cursor);
+  const crossingMorning=morningDirection&&eventView?.id===e.id&&eventView.index<morningDirection.morning&&cursor>=morningDirection.morning;
+  if(crossingMorning&&!afterMorningBlackout){
+    const birds=normalBgm.enabled&&cursor===morningDirection.morning?prepareMorningBirds(normalBgm.volume):null;
+    openModal('<section class="act-screen act-two-morning-blackout" aria-label="夜が明けるまで暗転"><h2 id="modal-title" class="visually-hidden">翌朝へ</h2></section>');
+    const stopBlackout=startMorningBlackout(modal.querySelector('.act-two-morning-blackout'),()=>{
+      stopFireEnding=null;
+      showEvent(id,cursor,page,true);
+      if(birds)stopFireEnding=birds.play();
+    });
+    stopFireEnding=()=>{stopBlackout();birds?.stop();};
+    return;
+  }
   const pages=messagePages(lines[cursor].text),pageIndex=Math.min(page,pages.length-1),last=cursor===lines.length-1&&pageIndex===pages.length-1;
   eventView={id:e.id,index:cursor,page:pageIndex};
   playStalkerImpactCue(lines[cursor],e.id+':'+cursor);
@@ -326,8 +340,8 @@ function showEvent(id,index=null,page=0) {
   const trouble=c?.call&&e.kind==='trouble'?troubleCardHTML(c.call,waiting&&cursor===0,state.actOne?.attempt??1):'';
   const firstFire=isFirstFireReply(e,state.actOne),firstStalker=isFirstStalkerReply(e);
   if(firstStalker)prepareFirstStalkerAssets();
-  const forward=last&&e.actScene==='act2-prologue'&&state.actOne.prologuePending?'<button class="primary-button" data-act2-prologue-done aria-label="第二幕へ">'+eventIcon('next')+'</button>':last&&['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'<button class="primary-button" data-epilogue-done aria-label="第一幕を終える">'+eventIcon('next')+'</button>':last&&['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'<button class="primary-button" data-rewind-resume aria-label="観察を再開">'+eventIcon('next')+'</button>':last&&e.actScene==='prologue'?'<button class="primary-button" data-opening="3" aria-label="タイトル演出へ進む">'+eventIcon('next')+'</button>':last?(waiting?'<button class="event-return" data-close>返事は後で</button>':state.pending&&e.kind==='arrival'&&!e.rooms.length?'<button class="event-return" data-show-candidates>申込書を見る</button>':`<button class="primary-button" data-close aria-label="${firstStalker?'暗闇の先へ':firstFire?'火災の先へ':'観察に戻る'}">${eventIcon('next')}</button>`):`<button class="primary-button" data-dialogue-next aria-label="次のセリフ">${eventIcon('next')}</button>`;
-  const stageHTML=firstStalker?firstStalkerStageHTML(e,state.residents,cursor,pageIndex):firstFire?firstFireStageHTML(e,state.residents,cursor,pageIndex):eventStageHTML(e,state.residents,cursor,pageIndex);
+  const forward=last&&e.actScene==='act2-prologue'&&state.actOne.prologuePending?'<button class="primary-button" data-act2-prologue-done aria-label="第二幕へ">'+eventIcon('next')+'</button>':last&&['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'<button class="primary-button" data-epilogue-done aria-label="第一幕を終える">'+eventIcon('next')+'</button>':last&&['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'<button class="primary-button" data-rewind-resume aria-label="観察を再開">'+eventIcon('next')+'</button>':last&&e.actScene==='prologue'?'<button class="primary-button" data-opening="3" aria-label="タイトル演出へ進む">'+eventIcon('next')+'</button>':last?(waiting?'<button class="event-return" data-close>返事は後で</button>':state.pending&&e.kind==='arrival'&&!e.rooms.length?'<button class="event-return" data-show-candidates>申込書を見る</button>':`<button class="primary-button" data-close aria-label="${firstStalker?'暗闇の先へ':firstFire?'火災の先へ':morningDirection?'結末へ':'観察に戻る'}">${eventIcon('next')}</button>`):`<button class="primary-button" data-dialogue-next aria-label="次のセリフ">${eventIcon('next')}</button>`;
+  const stageHTML=firstStalker?firstStalkerStageHTML(e,state.residents,cursor,pageIndex):firstFire?firstFireStageHTML(e,state.residents,cursor,pageIndex):morningDirection?actTwoMorningStageHTML(e,state.residents,cursor,pageIndex):eventStageHTML(e,state.residents,cursor,pageIndex);
   const toolbar=`<nav class="event-toolbar" aria-label="会話の操作"><button data-event-auto aria-pressed="${eventAuto}">${eventIcon('play')}<span>AUTO</span></button><button data-event-skip ${last?'disabled':''}>${eventIcon('skip')}<span>SKIP</span></button><button data-event-log aria-expanded="false">${eventIcon('log')}<span>LOG</span></button><button data-event-hide>${eventIcon('hide')}<span>HIDE</span></button><button data-event-menu aria-expanded="false">${eventIcon('menu')}<span>MENU</span></button></nav>`;
   openModal(`<h2 id="modal-title" class="conversation-title">${escape(c?.call&&e.kind==='trouble'?c.call:e.title)}</h2><div class="conversation-body" ${e.actScene==='act2-prologue'?'data-act-two-arrival':''} ${e.actScene==='bag'&&state.actOne?.chapter===2?'data-act-two-stalker-exterior':''} ${e.actScene==='prologue'?'data-prologue':e.actScene==='rewind'&&state.actOne.rewindIntroPending?'data-rewind-intro':''}>${trouble}${stageHTML}${choices}${toolbar}<details class="conversation-log"><summary>会話履歴を閉じる</summary>${lines.map(l=>`<p style="${speakerColorStyle(l)}"><strong>${escape(l.memoryVoice?'大家（過去の声）':l.innerVoice?'大家（心の声）':l.speaker==='mystery'?'謎の声':CHARACTERS[l.speaker]?.name||(l.speaker==='manager'?'管理人':'記録'))}</strong> ${escape(l.text)}</p>`).join('')}</details><button class="voice-settings-open" data-event-menu aria-label="ボイス・会話設定">⚙</button><div class="event-menu" hidden><button data-event-auto aria-pressed="${eventAuto}">AUTO</button><button data-event-skip ${last?'disabled':''}>SKIP</button><button data-voice-toggle aria-pressed="${characterVoice.enabled}">ボイス ${characterVoice.enabled?'ON':'OFF'}</button><button data-bgm-toggle aria-pressed="${normalBgm.enabled}">BGM ${normalBgm.enabled?'ON':'OFF'}</button><label>BGM音量 <input type="range" data-bgm-volume min="0" max="1" step="0.05" value="${normalBgm.volume}"></label><label>ボイス音量 <input type="range" data-voice-volume min="0" max="1" step="0.05" value="${characterVoice.volume}"></label><button data-dialogue-back ${cursor===0?'disabled':''}>前のセリフへ</button><button data-event-menu>会話を続ける</button><button ${e.actScene==='act2-prologue'&&state.actOne.prologuePending?'data-act2-prologue-done':e.actScene==='prologue'?'data-opening="3"':['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'data-epilogue-done':['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'data-rewind-resume':'data-close'}>${e.actScene==='act2-prologue'&&state.actOne.prologuePending?'第二幕へ進む':e.actScene==='prologue'?'タイトル演出へ進む':['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'幕を終える':e.actScene==='rewind'&&state.actOne.rewindIntroPending?'観察を再開':waiting?'返事を保留して観察へ':'観察画面に戻る'}</button></div></div><div class="modal-footer">${forward}</div><button class="event-restore" data-event-hide hidden aria-label="会話UIを再表示">${eventIcon('hide')} 表示を戻す</button>`);
   modal.classList.toggle('choice-mode',Boolean(choices));
@@ -417,7 +431,7 @@ function showOpening(step = 0) {
 function showGameTitle(){
   debugTapCount=0;
   const continuing=state.actOne.started||state.actOne.chapter===2;
-  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU · ver 2026.10.18.7</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
+  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU · ver 2026.10.18.8</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
   modal.querySelector('.title-actions button')?.focus({preventScroll:true});
 }
 function showActTwoOpening(){
@@ -484,7 +498,7 @@ function showActTwoEnding(afterCinematic=false){
    return;
   }
   const choice=Object.values(ACT_TWO_EVENTS).flatMap(v=>v.choices).find(v=>v.bad===a.failure);
-  openModal(`<section class="act-screen act-burn" data-chapter="2"><div class="ending-building" aria-hidden="true"><img src="assets/apartments.png" alt=""></div><img class="ending-character" src="${EVENT_EXPRESSIONS.hostess.sad}" alt="金城ルナ"><div class="act-ending-copy"><p class="act-kicker">BAD END / 第二幕 · ${a.attempt}周目</p><h2 id="modal-title">${a.failure?.startsWith("bag-")?"夜 逃 げ":"差 し 押 さ え"}</h2><p class="act-ending-story">${escape(state.ending.text)}</p><p class="act-clue">${escape(choice?.clue||'契約書はよく読む。')}</p><p>大家「……アパートまで失ってたまるか！ 次こそは！」</p><button class="act-primary" data-act2-rewind>直前のチェックポイントへ戻る ↶</button></div></section>`);return;
+  openModal(`<section class="act-screen act-burn" data-chapter="2"><div class="ending-building" aria-hidden="true"><img src="assets/apartments.png" alt=""></div><img class="ending-character" src="${a.failure?.startsWith("bag-")?EVENT_EXPRESSIONS.cat.sad:EVENT_EXPRESSIONS.hostess.sad}" alt="${a.failure?.startsWith("bag-")?"灰田モク":"金城ルナ"}"><div class="act-ending-copy"><p class="act-kicker">BAD END / 第二幕 · ${a.attempt}周目</p><h2 id="modal-title">${escape(choice?.endingName||(a.failure?.startsWith("bag-")?"夜 逃 げ":"差 し 押 さ え"))}</h2><p class="act-ending-story">${escape(state.ending.text)}</p><p class="act-clue">${escape(choice?.clue||'契約書はよく読む。')}</p><p>大家「……アパートまで失ってたまるか！ 次こそは！」</p><button class="act-primary" data-act2-rewind>直前のチェックポイントへ戻る ↶</button></div></section>`);return;
  }
  if(!a.epilogueSeen){const e=state.events.find(e=>e.actScene==='act2-epilogue');if(e){showEvent(e.id,a.epilogueCursor||0);return;}}
  openModal(`<section class="act-screen act-clear" data-chapter="2"><img class="ending-character" src="${EVENT_EXPRESSIONS.hostess.happy}" alt="金城ルナ"><div class="act-ending-copy"><p class="act-kicker">SECOND ACT COMPLETE</p><h2 id="modal-title">第二幕・完</h2><p class="act-ending-story">けもの荘は、借金のカタにならずに済んだ。</p><button class="act-primary" data-act2-finish>次章へ続く →</button></div></section>`);
@@ -526,7 +540,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.18.7';
+const BUILD_VERSION='2026.10.18.8';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -745,6 +759,8 @@ document.addEventListener('visibilitychange',()=>{lastTime=performance.now();if(
 const normalBgm=createNormalBgm();
 function paintSoundButton(){$('sound-button').setAttribute('aria-pressed',String(normalBgm.enabled));$('sound-button').innerHTML=normalBgm.label();}
 function syncNormalBgm(){
+  const morningStage=modal.open?modal.querySelector('.act-two-morning-stage'):null;
+  const morningQuiet=modal.open&&(!!modal.querySelector('.act-two-morning-blackout')||morningStage?.dataset.quiet==='true');
   const firstFireStage=modal.open?modal.querySelector('.first-fire-stage'):null;
   const firstStalkerScene=modal.open&&!!modal.querySelector('.first-stalker-stage');
   const firstStalkerUneasy=firstStalkerScene&&state.actOne?.chapter===2&&state.actOne?.attempt===1;
@@ -764,7 +780,7 @@ function syncNormalBgm(){
   // Use Moku's theme only when her portrait is actually visible in the dialogue.
   // Trouble stings always take precedence over character themes.
   const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
-  return normalBgm.setScene(document.hidden||filmQuiet||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad?'bad':title?'title':victory?'victory':firstStalkerUneasy?'uneasy':trouble?'trouble':firstRewindUneasy?'uneasy':mokuVisible?'moku':bedCue(state?.actOne));
+  return normalBgm.setScene(document.hidden||morningQuiet||filmQuiet||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad?'bad':title?'title':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':trouble?'trouble':firstRewindUneasy?'uneasy':mokuVisible?'moku':bedCue(state?.actOne));
 }
 modal.addEventListener('luna-film-phase',()=>{syncNormalBgm();});
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
