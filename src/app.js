@@ -554,7 +554,7 @@ function startDeveloperScene(target){
 }
 document.addEventListener('click',e=>{
   const button=e.target.closest('button');if(!button)return;
-  if(button.hasAttribute('data-debug-hotspot')){const now=performance.now();debugTapCount=now-debugLastTap>2500?1:debugTapCount+1;debugLastTap=now;if(debugTapCount>=5){debugTapCount=0;showDeveloperMenu();}return;}
+  if(button.hasAttribute('data-debug-hotspot')){const now=performance.now();debugTapCount=now-debugLastTap>2500?1:debugTapCount+1;debugLastTap=now;if(debugTapCount>=3){debugTapCount=0;showDeveloperMenu();}return;}
   if(button.hasAttribute('data-debug-back')){showGameTitle();return;}
   if(button.hasAttribute('data-debug-tools-back')){showDeveloperMenu();return;}
   if(button.hasAttribute('data-debug-chapters-back')){showDebugChapterSelect();return;}
