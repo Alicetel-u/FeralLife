@@ -489,7 +489,7 @@ function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
 const BUILD_VERSION='2026.10.17.13';
-const BUILD_UPDATED='2026-10-17 15:05 JST';
+const BUILD_UPDATED='2026-10-17 15:12 JST';
 function debugMenuPage(title,subtitle,buttons,back){
   openModal(`<section class="act-screen" style="background:#111525;color:#f1eaf5;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:clamp(18px,5vw,56px);gap:14px;overflow:auto">
   <p style="letter-spacing:.2em;opacity:.65">DEVELOPER TOOLS</p>
