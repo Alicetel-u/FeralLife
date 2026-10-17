@@ -20,7 +20,7 @@ export function firstFireCut(lines,index){
 export function firstFireStageHTML(event,residents,index=0,page=0){
  const lines=eventConversation(event),cut=firstFireCut(lines,index),inside=cut==='trust',corridor=['departure','rush','blocked'].includes(cut);
  if(inside)return eventStageHTML(event,residents,index,page);
- const background=inside?'assets/rooms/cat/interior-v2.png':corridor?(cut==='departure'?'assets/events/first-fire-corridor.png':'assets/events/first-fire-entrance.png'):cut==='smoke'?'assets/apartments.png':'assets/events/first-fire-exterior.png';
+ const background=inside?'assets/rooms/cat/interior-illustrated-v1.png':corridor?(cut==='departure'?'assets/events/first-fire-corridor.png':'assets/events/first-fire-entrance.png'):cut==='smoke'?'assets/apartments.png':'assets/events/first-fire-exterior.png';
  const shot=`<div class="first-fire-shot" aria-hidden="true"><img class="first-fire-background" src="${background}" alt=""><div class="first-fire-smoke"></div><div class="first-fire-vignette"></div><div class="first-fire-slash"></div></div><div class="first-fire-bars" aria-hidden="true"></div><span class="first-fire-location" aria-hidden="true">${inside?'101 / 23:00':corridor?'けもの荘 · 一階廊下':'けもの荘 · 屋外'}</span>`;
  // Reuse the exact normal message window, nameplate, colors, pagination and tap target.
  return eventStageHTML(event,residents,index,page,{hideCharacters:!inside})

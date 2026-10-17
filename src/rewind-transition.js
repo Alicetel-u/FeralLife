@@ -35,7 +35,7 @@ export function rewindBeat(t,attempt=1,afterFire=false,chapter=1){
   return {phase,text,kind,clockStart,finished:t>=clockStart+5.5};
 }
 export function rewindTransitionHTML(failure,attempt=1,afterFire=false,chapter=1){
-  const restored=chapter===2?'assets/apartments.png':'assets/rooms/cat/interior-v2.png';
+  const restored=chapter===2?'assets/apartments.png':'assets/rooms/cat/interior-illustrated-v1.png';
   return `<section class="act-screen rewind-screen" data-rewind-phase="${afterFire?'dark':'fire'}" data-chapter="${chapter}" ${afterFire?'data-after-fire':''}>${afterFire?'':fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${afterFire?'……もう一度、やり直せるなら。':attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="${restored}" alt="${chapter===2?'元に戻ったけもの荘':'元に戻った101号室'}">${attempt===1?'':'<button class="rewind-skip" data-rewind-skip>スキップ →</button>'}<p class="rewind-continue" hidden>クリックで続ける →</p><div class="rewind-white-fade" aria-hidden="true"></div></section>`;
 }
 

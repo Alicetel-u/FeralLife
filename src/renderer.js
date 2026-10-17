@@ -304,18 +304,19 @@ export class WorldRenderer {
     const type = r?.type;
     const awake = r && r.action !== 'sleep';
     if (ROOM_ART[type]?.image) {
-      ctx.drawImage(ROOM_ART[type].image, x, y, w, h);
+      ctx.save();ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+      ctx.drawImage(ROOM_ART[type].image, x, y, w, h);ctx.restore();
       // The painted screen stays dark until this resident is actually watching.
       if (awake && ['tv', 'stream'].includes(r.action)) {
         const [sx,sy,sw,sh]=ROOM_LAYOUTS[type]?.screen||[114,54,22,18];
         rect(ctx,x+sx,y+sy,sw,sh,Math.sin(t*3)>0?'#a5b9b8':'#596a79');
       }
-      const count = Math.floor(r.trash / 6);
+      const count = Math.floor(Math.max(0,r.trash-(type==='hostess'?30:0))/6);
       for (let i = 0; i < count; i++) {
         const gx = x+12+Math.floor(noise(i, room, 7)*(w-30));
-        const gy = y+86+Math.floor(noise(i, room, 8)*17);
-        rect(ctx, gx, gy, 5+i%4, 3+i%3, ['#9d8b63','#787e61','#b29b6d','#b28c76'][i%4]);
-        rect(ctx, gx+1, gy-1, 3, 1, '#c6b38a');
+        const gy = y+105+Math.floor(noise(i, room, 8)*3);
+        ctx.fillStyle=['#c5b9a3','#c0b5a4','#d2c4b1','#bbaa94'][i%4];
+        ctx.beginPath();ctx.moveTo(gx,gy+1);ctx.quadraticCurveTo(gx+1,gy-1,gx+3,gy);ctx.lineTo(gx+5,gy-1);ctx.quadraticCurveTo(gx+7,gy+2,gx+5,gy+3);ctx.lineTo(gx+2,gy+4);ctx.closePath();ctx.fill();
       }
       if (!awake) rect(ctx, x, y, w, h, 'rgba(22,35,45,.45)');
       else if (darkness > 0) rect(ctx, x, y, w, h, `rgba(16,27,49,${darkness})`);

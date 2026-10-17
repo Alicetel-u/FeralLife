@@ -75,8 +75,8 @@ export function eventParticipants(event, residents) {
 }
 // 入居者ごとの部屋絵。キーは住人の type。未登録の部屋は従来の共通間取りのまま。
 export const ROOM_ART = {
-  cat: { src: 'assets/rooms/cat/interior-v2.png', image: null },
-  hostess: { src: 'assets/rooms/hostess/interior.png', image: null }
+  cat: { src: 'assets/rooms/cat/interior-illustrated-v1.png', image: null },
+  hostess: { src: 'assets/rooms/hostess/interior-illustrated-v1.png', image: null }
 };
 
 // ポーズ差分の共通設定：立ち・座りは 96×128（足元 48,126）、寝姿は 160×112（体の下端中央 80,108）。
