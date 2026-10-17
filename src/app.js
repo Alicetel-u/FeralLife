@@ -282,6 +282,23 @@ function openNextStageEvent() {
     if (event && !event.read && (!state.actOne || automaticChapterScene(event, state.actOne)) && claimAutomaticScene(state,event)) { showEvent(id); return; }
   }
 }
+let lastStalkerImpactCue='';
+function playStalkerImpactCue(line,key){
+  if(line?.tragedyEffect!=='impact'||lastStalkerImpactCue===key)return;
+  lastStalkerImpactCue=key;
+  if(!normalBgm.enabled||normalBgm.volume===0)return;
+  try{
+    const AudioContextType=window.AudioContext||window.webkitAudioContext;
+    if(!AudioContextType)return;
+    const ctx=new AudioContextType(),osc=ctx.createOscillator(),gain=ctx.createGain(),filter=ctx.createBiquadFilter(),start=ctx.currentTime;
+    osc.type='triangle';osc.frequency.setValueAtTime(130,start);osc.frequency.exponentialRampToValueAtTime(38,start+.28);
+    filter.type='lowpass';filter.frequency.value=460;
+    gain.gain.setValueAtTime(Math.min(.18,normalBgm.volume*.3),start);
+    gain.gain.exponentialRampToValueAtTime(.0001,start+.36);
+    osc.connect(filter);filter.connect(gain);gain.connect(ctx.destination);osc.start(start);osc.stop(start+.38);
+    osc.onended=()=>{osc.disconnect();filter.disconnect();gain.disconnect();ctx.close().catch(()=>{});};
+  }catch{}
+}
 function showEvent(id,index=null,page=0) {
   const e = state.events.find(e => e.id === Number(id)); if (!e) return;
   if (e.stageOnly || e.lines?.length) {
@@ -294,6 +311,7 @@ function showEvent(id,index=null,page=0) {
   const lines=eventConversation(e),cursor=Math.max(0,Math.min(index ?? (e.choicePresented?lines.length-1:0),lines.length-1));
   const pages=messagePages(lines[cursor].text),pageIndex=Math.min(page,pages.length-1),last=cursor===lines.length-1&&pageIndex===pages.length-1;
   eventView={id:e.id,index:cursor,page:pageIndex};
+  playStalkerImpactCue(lines[cursor],e.id+':'+cursor);
   if(['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending){state.actOne.rewindIntroCursor=cursor;save();}
   if(['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen){state.actOne.epilogueCursor=cursor;save();}
   const waiting=!state.ending&&(state.actOne?state.actOne.pending?.eventId===e.id:state.management.pending?.eventId===e.id);
@@ -722,6 +740,7 @@ const normalBgm=createNormalBgm();
 function paintSoundButton(){$('sound-button').setAttribute('aria-pressed',String(normalBgm.enabled));$('sound-button').innerHTML=normalBgm.label();}
 function syncNormalBgm(){
   const firstFireStage=modal.open?modal.querySelector('.first-fire-stage'):null;
+  const stalkerSilent=modal.open&&!!modal.querySelector('.stalker-silence,.stalker-impact,.stalker-blackout,.stalker-clock');
   const firstFireDanger=firstFireStage&&!['trust','departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut);
   const rewind=modal.querySelector('.rewind-screen');
   const clock=modal.open&&!!rewind&&(rewind.dataset.rewindPhase==='clock'||rewind.dataset.rewindPhase==='return');
@@ -736,7 +755,7 @@ function syncNormalBgm(){
   // Use Moku's theme only when her portrait is actually visible in the dialogue.
   // Trouble stings always take precedence over character themes.
   const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
-  return normalBgm.setScene(document.hidden||filmQuiet||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad?'bad':title?'title':victory?'victory':trouble?'trouble':firstRewindUneasy?'uneasy':mokuVisible?'moku':bedCue(state?.actOne));
+  return normalBgm.setScene(document.hidden||filmQuiet||stalkerSilent||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad?'bad':title?'title':victory?'victory':trouble?'trouble':firstRewindUneasy?'uneasy':mokuVisible?'moku':bedCue(state?.actOne));
 }
 modal.addEventListener('luna-film-phase',()=>{syncNormalBgm();});
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
