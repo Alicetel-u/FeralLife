@@ -1636,3 +1636,8 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 }
 @media(max-height:500px) and (min-width:701px){.complete-content{padding-block:18px;gap:12px}.act-one-complete h2 span{font-size:25px}.act-one-complete h2 strong{font-size:36dvh}.complete-finish{gap:10px}.complete-next{min-height:46px;padding:8px 20px;font-size:17px}.complete-finish p{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.complete-portrait{animation:none}.complete-next{transition:none}}
+@media(max-height:500px){
+ .game-ink .debug-menu:not(:has(textarea)){display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));align-content:center;justify-items:center;gap:6px!important}
+ .debug-menu>p,.debug-menu>h2,.debug-menu>footer{grid-column:1/-1}
+ .debug-menu>button{font-size:12px!important}
+}

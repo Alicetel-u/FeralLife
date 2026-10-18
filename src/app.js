@@ -18,7 +18,7 @@ import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVic
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.19.03';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.19.04';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -550,16 +550,16 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.19.03';
+const BUILD_VERSION='2026.10.19.04';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
-  openModal(`<section class="act-screen" style="background:#111525;color:#f1eaf5;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:clamp(18px,5vw,56px);gap:14px;overflow:auto">
-  <p style="letter-spacing:.2em;opacity:.65">DEVELOPER TOOLS</p>
-  <h2 id="modal-title" style="font-size:clamp(22px,4vw,40px);margin:0 0 12px">${title}</h2>
-  <p style="opacity:.75;margin:0 0 14px;text-align:center">${subtitle}</p>
-  ${buttons.map(([id,label,attr])=>`<button type="button" ${attr}="${id}" style="width:min(480px,100%);min-height:48px;background:#29314a;color:#fff;border:1px solid #71809a;border-radius:9px;font:inherit;padding:12px;cursor:pointer">${label}</button>`).join('')}
-  <button type="button" ${back} style="margin-top:8px;background:transparent;color:#c8c8d6;border:1px solid #777;padding:10px 24px;border-radius:8px">← 戻る</button><footer style="margin-top:12px;text-align:center;font:12px/1.9 monospace;color:#aeb7d0">VERSION ${BUILD_VERSION}<br>最終更新 ${BUILD_UPDATED}</footer></section>`);
+  openModal(`<section class="act-screen debug-menu" style="height:100dvh;min-height:0;background:#111525;color:#f1eaf5;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:clamp(12px,3vw,32px);gap:clamp(4px,1dvh,10px);overflow:hidden">
+  <p style="letter-spacing:.2em;opacity:.65;margin:0;font-size:10px">DEVELOPER TOOLS</p>
+  <h2 id="modal-title" style="font-size:clamp(20px,4vw,32px);margin:0">${title}</h2>
+  <p style="opacity:.75;margin:0;text-align:center;font-size:12px">${subtitle}</p>
+  ${buttons.map(([id,label,attr])=>`<button type="button" ${attr}="${id}" style="width:min(480px,100%);min-height:44px;flex-shrink:0;background:#29314a;color:#fff;border:1px solid #71809a;border-radius:9px;font:inherit;padding:8px;cursor:pointer">${label}</button>`).join('')}
+  <button type="button" ${back} style="min-height:44px;flex-shrink:0;background:transparent;color:#c8c8d6;border:1px solid #777;padding:8px 24px;border-radius:8px">← 戻る</button><footer style="margin:0;text-align:center;font:11px/1.5 monospace;color:#aeb7d0">VERSION ${BUILD_VERSION}<br>最終更新 ${BUILD_UPDATED}</footer></section>`);
 }
 function showDeveloperMenu(){
   debugMenuPage('開発者メニュー','デバッグ機能を選択してください。',[['scenes','シーンセレクト','data-debug-tool'],['boot','起動診断・計測結果のコピー','data-debug-tool']], 'data-debug-back');
@@ -579,17 +579,23 @@ async function copyBootDiagnostics(button){
 function showDebugChapterSelect(){
   debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter']], 'data-debug-tools-back');
 }
-function showDebugSceneSelect(chapter){
+function showDebugSceneSelect(chapter,page=0){
   const options=chapter==='1'
-    ?[['intro','第一幕・オープニング'],['ash',ACT_ONE_EVENTS.ash.title],['dinner',ACT_ONE_EVENTS.dinner.title],['epilogue','第一幕・エピローグ']]
-    :[['opening','逃げる女 — オープニング'],['arrival','ルナ入居プロローグ'],['bag',ACT_TWO_EVENTS.bag.title],['contract',ACT_TWO_EVENTS.contract.title],['epilogue','第二幕・エピローグ']];
-  debugMenuPage(chapter==='1'?'第一幕のポイント':'第二幕のポイント','開始地点を選んでください。',options.map(([id,label])=>[chapter+':'+id,label,'data-debug-scene']), 'data-debug-chapters-back');
+    ?[['intro','第一幕・オープニング'],['ash',ACT_ONE_EVENTS.ash.title],['ash-loop','灰皿：巻き戻り直後'],['ash-choices','灰皿：3択直前'],['dinner',ACT_ONE_EVENTS.dinner.title],['dinner-loop','料理：巻き戻り直後'],['dinner-choices','料理：3択直前'],['epilogue','第一幕・エピローグ']]
+    :[['opening','逃げる女 — オープニング'],['arrival','ルナ入居プロローグ'],['bag',ACT_TWO_EVENTS.bag.title],['bag-loop','待ち伏せ：巻き戻り直後'],['bag-choices','待ち伏せ：3択直前'],['contract',ACT_TWO_EVENTS.contract.title],['contract-loop','契約書：巻き戻り直後'],['contract-choices','契約書：3択直前'],['epilogue','第二幕・エピローグ']];
+  const pages=Math.ceil(options.length/4),current=Math.max(0,Math.min(pages-1,Number(page)||0));
+  const buttons=options.slice(current*4,current*4+4).map(([id,label])=>[chapter+':'+id,label,'data-debug-scene']);
+  if(current>0)buttons.push([chapter+':'+(current-1),'← 前のページ','data-debug-scene-page']);
+  if(current<pages-1)buttons.push([chapter+':'+(current+1),'次のページ →','data-debug-scene-page']);
+  debugMenuPage(chapter==='1'?'第一幕のポイント':'第二幕のポイント',`開始地点を選んでください。 ${current+1} / ${pages}`,buttons, 'data-debug-chapters-back');
 }
 function startDeveloperScene(target){
-  const [chapter,scene]=target.split(':');
+  const [chapter,point]=target.split(':');
+  const phase=point?.endsWith('-loop')?'loop':point?.endsWith('-choices')?'choices':null;
+  const scene=phase?point.slice(0,point.lastIndexOf('-')):point;
   if(!['1','2'].includes(chapter))return;
   developerMode=true;
-  const next=createActOne(42,[],chapter==='1'&&['dinner','epilogue'].includes(scene)?2:1,true);
+  let next=createActOne(42,[],chapter==='1'&&['dinner','epilogue'].includes(scene)?2:1,true);
   // Observation movement may finish just after the event hour; enter the scene only once it is queued.
   const advanceFirstScene=()=>{
     for(let step=0;step<12&&!next.actOne.pending&&next.actOne.status==='playing';step++)advanceActOne(next,100);
@@ -607,6 +613,7 @@ function startDeveloperScene(target){
   }else{
     beginActTwo(next);
     next.actOne.started=true;next.actOne.titlePending=false;next.actOne.prologuePending=false;
+    if(phase&&scene==='contract')next.actOne.attempt=2;
     next.events.filter(e=>e.actScene==='act2-prologue').forEach(e=>e.read=true);
     if(['bag','contract','epilogue'].includes(scene)){
       advanceActTwo(next,100);
@@ -619,6 +626,22 @@ function startDeveloperScene(target){
         }
       }
     }
+  }
+  if(phase){
+    const events=chapter==='1'?ACT_ONE_EVENTS:ACT_TWO_EVENTS;
+    const choice=events[scene]?.choices.find(choice=>choice.bad);
+    if(!choice||!next.actOne.pending)return;
+    (chapter==='1'?answerActOne:answerActTwo)(next,next.actOne.pending.eventId,choice.id);
+    next=chapter==='1'?rewindBeforeFire(next):rewindActTwo(next);
+    if(phase==='choices'){
+      next.actOne.rewindIntroPending=false;
+      for(let step=0;step<12&&!next.actOne.pending;step++)(chapter==='1'?advanceActOne:advanceActTwo)(next,100);
+    }
+    next.events.forEach(event=>event.read=true);
+    resetActState(next,false,true);
+    const event=phase==='loop'?next.events.find(e=>e.actScene===(chapter==='1'?'rewind':'act2-rewind')):next.events.find(e=>e.id===next.actOne.pending?.eventId);
+    if(event){event.read=false;showEvent(event.id,phase==='choices'?eventConversation(event).length-1:0);}
+    return;
   }
   // Scene-select reconstructs past answers only to establish the chosen destination.
   // Do not leave those earlier scenes queued behind the current conversation.
@@ -653,6 +676,7 @@ document.addEventListener('click',e=>{
   if(button.dataset.debugTool==='boot'){showBootDiagnostics();return;}
   if(button.dataset.debugTool==='copy-boot'){copyBootDiagnostics(button);return;}
   if(button.dataset.debugChapter){showDebugSceneSelect(button.dataset.debugChapter);return;}
+  if(button.dataset.debugScenePage){const [chapter,page]=button.dataset.debugScenePage.split(':');showDebugSceneSelect(chapter,Number(page));return;}
   if(button.dataset.debugScene){startDeveloperScene(button.dataset.debugScene);return;}
   if(button.dataset.opening)showOpening(Number(button.dataset.opening));
   if(button.hasAttribute('data-opening-continue'))showActTitle();
