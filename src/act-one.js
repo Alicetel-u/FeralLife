@@ -472,7 +472,7 @@ export function rewindBeforeFire(s){
   next.ending=null;next.pending=null;
   next.events.forEach(e=>e.read=true);
   const firstLoop=s.actOne.attempt===1;
-  const resumeAtAsh=scene==='ash'&&(firstLoop||s.actOne.rollbackPoint?.state?.hour===ACT_ONE_EVENTS.ash.at);
+  const resumeAtAsh=scene==='ash';
   if(resumeAtAsh){
     // Restore the unanswered consultation, not the afternoon observation route.
     for(let step=0;step<4&&!next.actOne.pending;step++)advanceActOne(next,Math.max(.01,ACT_ONE_EVENTS.ash.at-next.hour));
@@ -481,9 +481,20 @@ export function rewindBeforeFire(s){
       consultation.lines=[am('……なあ、モク。')];
       consultation.detail=consultation.lines[0].text;consultation.choicePresented=true;
     }
-    if(firstLoop){
+    if(!(validStoryCheckpoint(next.actOne.rollbackPoint,1)&&next.actOne.rollbackPoint.scene==='ash'&&next.actOne.rollbackPoint.state.hour===23)){
       const checkpoint={...next,actOne:{...next.actOne,pending:null}};
       saveStoryCheckpoint(checkpoint,'ash','灰皿の相談を受けた夜');
+      next.actOne.rollbackPoint=checkpoint.actOne.rollbackPoint;
+    }
+  }
+  if(scene==='dinner'){
+    // Migrate older success snapshots to the unanswered cooking consultation.
+    for(let step=0;step<4&&!next.actOne.pending;step++)advanceActOne(next,Math.max(.01,ACT_ONE_EVENTS.dinner.at-next.hour));
+    const consultation=next.events.find(e=>e.id===next.actOne.pending?.eventId);
+    if(consultation){consultation.read=false;delete consultation.choicePresented;}
+    if(!(validStoryCheckpoint(next.actOne.rollbackPoint,1)&&next.actOne.rollbackPoint.scene==='dinner'&&next.actOne.rollbackPoint.state.hour===37)){
+      const checkpoint={...next,actOne:{...next.actOne,pending:null}};
+      saveStoryCheckpoint(checkpoint,'dinner','料理の相談を受けた昼');
       next.actOne.rollbackPoint=checkpoint.actOne.rollbackPoint;
     }
   }
@@ -491,7 +502,7 @@ export function rewindBeforeFire(s){
     firstLoop?'焼け落ちたはずの101号室が、何事もなかったように戻っている。':'また時間が戻った。'+storyCheckpointTarget(s).label+'だ。',[101]);
   intro.actScene='rewind';intro.cast=['cat'];intro.stageOnly=true;intro.read=false;
   intro.revealCharacterAt=0;
-  if(resumeAtAsh)intro.resumeChoice=true;
+  if(resumeAtAsh||scene==='dinner'){intro.resumeChoice=true;intro.resumeScene=scene;}
   intro.lines=firstLoop?[
     an('焦げた臭いが消えた。見慣れた101号室に、モクの声が響く。'),
     ac('neutral','灰皿いっぱいになったニャ。'),

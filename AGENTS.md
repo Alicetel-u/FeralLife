@@ -10,6 +10,7 @@
 - When proposing a new plot point, label it a proposal and obtain the user's decision before incorporating it as established canon.
 
 ## Narrative presentation (mandatory)
+- After a failed trouble, rewind to the beginning of that same trouble, preserving earlier resolved incidents. Keep the clock target and resumed dialogue consistent with that point; use this policy for future trouble implementations.
 - Keep dialogue and narration inside the story world. Do not describe chapter starts, checkpoints, choice branches, screen fades, or other implementation/staging instructions as narrative text. Describe what characters perceive instead.
 - Developer menus may use technical labels, but their scene names must match their actual destinations and current scenario definitions.
 

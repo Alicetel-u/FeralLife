@@ -80,7 +80,7 @@ test('rewind has its own reunion scene, preserves choices and resumes at day 1 1
   assert.deepEqual(loop.actOne.chosenChoices,['ash:trash']);
 });
 
-test('story rewind restores start or the preceding success and preserves earlier success',()=>{
+test('story rewind restores each consultation and preserves earlier success',()=>{
   const first=createActOne(42,[],1,true);advanceActOne(first,6);answer(first,'trash');
   const saved=JSON.parse(JSON.stringify(first));assert.ok(validActOne(saved));
   const recovered=rewindBeforeFire(saved);assert.equal(recovered.hour,23);assert.equal(recovered.actOne.attempt,2);
@@ -88,13 +88,13 @@ test('story rewind restores start or the preceding success and preserves earlier
   assert.ok(recovered.events.some(e=>e.actScene==='rewind'&&e.lines.some(l=>l.text.includes('さっきまで火事で'))));
   assert.deepEqual(recovered.actOne.chosenChoices,['ash:trash']);assert.deepEqual(recovered.actOne.memory,['ash-trash']);
   advanceActOne(recovered,6);assert.equal(recovered.actOne.pending.scene,'ash');answer(recovered,'water');
-  advanceActOne(recovered,100);const checkpoint=JSON.parse(JSON.stringify(recovered.actOne.rollbackPoint.state));answer(recovered,'turbo');
-  const next=rewindBeforeFire(JSON.parse(JSON.stringify(recovered)));assert.equal(next.hour,23);assert.deepEqual(next.actOne.completed,['ash']);
+  advanceActOne(recovered,100);const checkpoint=JSON.parse(JSON.stringify(recovered));answer(recovered,'turbo');
+  const next=rewindBeforeFire(JSON.parse(JSON.stringify(recovered)));assert.equal(next.hour,37);assert.deepEqual(next.actOne.completed,['ash']);
   const reprise=next.events.find(e=>e.actScene==='rewind'&&e.lines.some(l=>l.text.includes('また戻った')));
   assert.ok(reprise);
-  assert.deepEqual(next.residents.map(r=>({...r,history:r.history.filter(id=>id!==reprise.id)})),checkpoint.residents);assert.equal(next.rent,checkpoint.rent);assert.ok(validateSave(next)&&validActOne(next));
+  assert.equal(next.actOne.pending.scene,'dinner');assert.equal(reprise.resumeScene,'dinner');assert.equal(next.events.find(e=>e.id===next.actOne.pending.eventId).choicePresented,undefined);assert.equal(next.rent,checkpoint.rent);assert.ok(validateSave(next)&&validActOne(next));
   advanceActOne(next,18);assert.equal(next.actOne.pending.scene,'dinner');answer(next,'coronation');advanceActOne(next,100);assert.equal(next.actOne.status,'clear');
   const old=JSON.parse(JSON.stringify(recovered));delete old.actOne.rollbackPoint;
-  const migrated=rewindBeforeFire(old);assert.equal(migrated.hour,23);assert.deepEqual(migrated.actOne.completed,['ash']);assert.ok(validActOne(migrated));
+  const migrated=rewindBeforeFire(old);assert.equal(migrated.hour,37);assert.deepEqual(migrated.actOne.completed,['ash']);assert.ok(validActOne(migrated));
   saved.actOne.rollbackPoint.state.hour=20;assert.equal(validActOne(saved),false);
 });
