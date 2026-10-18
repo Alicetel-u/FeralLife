@@ -26,7 +26,9 @@ export const EXTERIOR_OCCLUDERS = {
   ],
   signs: [
     // Illuminated vertical apartment sign, including its dark frame.
-    [[280,339],[330,339],[344,350],[344,631],[335,641],[280,641],[272,632],[272,351]],
+    [[280,339],[330,339],[344,350],[344,631],[335,641],[280,641],[272,632],[272,351]]
+  ],
+  bulletin: [
     // Bulletin board and its two supporting legs.
     box(1255,675,135,122),box(1261,797,12,57),box(1375,797,12,57)
   ]
@@ -34,9 +36,11 @@ export const EXTERIOR_OCCLUDERS = {
 export function foregroundKeys(position) {
   if(position.zone==='away'||position.zone==='room')return [];
   const keys=['signs'];
+  // Compare feet with the board's ground contact, not the walking direction.
+  // Stair/hall traffic passes behind it; the nearest street passes in front.
+  if(position.y<854*562.5/SOURCE_HEIGHT)keys.push('bulletin');
   if(position.zone==='hall')keys.push(position.y<340?'upper':'lower');
   if(position.zone==='stairs')keys.push('upper','lower','stairs');
-  // The street is in front of the hallway rails, but passes behind the bulletin board.
   return keys;
 }
 const foregroundPathCache = new Map();
