@@ -5,8 +5,8 @@ export function fireEndingPhase(seconds) {
 
 export function fireEndingHTML(failure, options = {}) {
   const firstTragedy=options.firstTragedy===true;
-  const exterior=firstTragedy?'assets/events/first-fire-exterior.png':'assets/apartments.png';
-  return `<section class="act-screen fire-cinematic ${firstTragedy?'first-tragedy-fire':''}" data-fire-phase="${firstTragedy?'building':'room'}"><div class="fire-camera"><img class="fire-room-background" src="assets/rooms/cat/interior-illustrated-v1.png" alt="炎に包まれる101号室"><img class="fire-building-background" src="${exterior}" alt="炎が広がるけもの荘"><canvas class="fire-canvas" width="960" height="540" aria-hidden="true"></canvas><div class="fire-soot"></div></div><div class="fire-letterbox top"></div><div class="fire-letterbox bottom"></div><h2 id="modal-title" class="visually-hidden">けもの荘の火災</h2><p class="fire-narration" aria-live="polite">${firstTragedy?'「……嘘だろ。さっきまで普通に話してたじゃねえか……。」':'昨日まで、ただ散らかっているだけの部屋だった。'}</p></section>`;
+  const exterior='assets/events/first-fire-exterior.png';
+  return `<section class="act-screen fire-cinematic unified-fire ${firstTragedy?'first-tragedy-fire':''}" data-fire-phase="building"><div class="fire-camera"><img class="fire-building-background" src="${exterior}" alt="炎が広がるけもの荘"><canvas class="fire-canvas" width="960" height="540" aria-hidden="true"></canvas><div class="fire-soot"></div></div><div class="fire-letterbox top"></div><div class="fire-letterbox bottom"></div><h2 id="modal-title" class="visually-hidden">けもの荘の火災</h2><p class="fire-narration" aria-live="polite">${firstTragedy?'「……嘘だろ。さっきまで普通に話してたじゃねえか……。」':'昨日まで、ただ散らかっているだけの部屋だった。'}</p></section>`;
 }
 
 // Gradients use local coordinates and inherit the same transform as the path.
@@ -78,7 +78,7 @@ export function startFireEnding(root, failure, finish, options = {}) {
   const camera = root.querySelector('.fire-camera');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const kitchen = failure?.startsWith('dinner-');
-  let elapsed = options.firstTragedy===true?5:0, previous = performance.now(), frameId, phase = '', paintedPhase='';
+  let elapsed = 5, previous = performance.now(), frameId, phase = '', paintedPhase='';
   const draw=createFirePainter(canvas,kitchen);
   let stopped=false;
   function stop(){stopped=true;cancelAnimationFrame(frameId);}
@@ -100,10 +100,8 @@ export function startFireEnding(root, failure, finish, options = {}) {
       caption.classList.add('fire-line-visible');
     }
     if (!document.hidden) {
-      if((!options.firstTragedy||phase==='ruins')&&(!reduced||paintedPhase!==phase)){draw(reduced ? (phase === 'room' ? 3 : phase === 'building' ? 8 : 12) : elapsed, phase);paintedPhase=phase;}
-      const shake = !options.firstTragedy && !options.ambient && !reduced && phase !== 'ruins' ? (phase === 'building' ? 5 : 3) : 0;
-      if(shake)camera.style.transform = `translate(${Math.sin(elapsed * 29) * shake}px,${Math.cos(elapsed * 23) * shake * .6}px) scale(1.025)`;
-      else {const still=options.firstTragedy?'scale(1)':'scale(1.025)';if(camera.style.transform!==still)camera.style.transform=still;}
+      if(phase==='ruins'&&(!reduced||paintedPhase!==phase)){draw(reduced ? (phase === 'room' ? 3 : phase === 'building' ? 8 : 12) : elapsed, phase);paintedPhase=phase;}
+      if(camera.style.transform!=='scale(1)')camera.style.transform='scale(1)';
     }
     if (!options.ambient && elapsed >= 15) { complete(); return; }
     frameId = requestAnimationFrame(tick);

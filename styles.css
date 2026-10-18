@@ -485,18 +485,18 @@ body.game-ink{height:100dvh;overflow:hidden}
  .first-fire-stage[data-cut="ignition"] .first-fire-background,.first-fire-stage[data-cut="smoke"] .first-fire-background{object-position:30% center;transform:scale(1.1)}
  .first-fire-stage[data-cut="rush"] .first-fire-background,.first-fire-stage[data-cut="blocked"] .first-fire-background{object-position:77% center}
  .first-fire-stage[data-cut="collapse"] .first-fire-background,.first-fire-stage[data-cut="plea"] .first-fire-background,.first-fire-stage[data-cut="silence"] .first-fire-background{object-position:28% center}
- .first-tragedy-fire .fire-building-background{object-position:28% center}
+ .unified-fire .fire-building-background{object-position:28% center}
 }
 @media(prefers-reduced-motion:reduce){.first-fire-stage *{animation:none!important;transition:none!important}.first-fire-stage[data-cut="silence"] .first-fire-shot{opacity:.85}}
 
 /* First tragedy continues from the same outdoor plate, never back into room 101. */
-.first-tragedy-fire .fire-room-background{display:none}
-.first-tragedy-fire .fire-building-background{object-fit:cover;filter:brightness(.52) saturate(.45);transition:none}
-.game-ink .first-tragedy-fire .fire-canvas{display:none}
-.game-ink .first-tragedy-fire[data-fire-phase="ruins"] .fire-canvas{display:block;opacity:.45}
-.first-tragedy-fire .fire-camera{inset:0;animation:none}
-.game-ink .first-tragedy-fire .fire-letterbox{height:8vh;background:#070609}
-.game-ink .first-tragedy-fire .fire-letterbox.top::after{display:none}
+.unified-fire .fire-room-background{display:none}
+.unified-fire .fire-building-background{object-fit:cover;filter:brightness(.52) saturate(.45);transition:none}
+.game-ink .unified-fire .fire-canvas{display:none}
+.game-ink .unified-fire[data-fire-phase="ruins"] .fire-canvas{display:block;opacity:.45}
+.unified-fire .fire-camera{inset:0;animation:none}
+.game-ink .unified-fire .fire-letterbox{height:8vh;background:#070609}
+.game-ink .unified-fire .fire-letterbox.top::after{display:none}
 /* New-game confirmation: a cut-paper decision card over the current room. */
 .game-ink dialog:has(.restart-confirm){width:min(960px,94vw);max-width:94vw;max-height:94dvh;padding:0;border:0;background:transparent;color:#fff5e6;box-shadow:none;overflow:visible}
 .game-ink dialog:has(.restart-confirm)::backdrop{background:#08070cbd;backdrop-filter:blur(5px) grayscale(.6)}
@@ -1473,7 +1473,7 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 }
 
 /* Keep the initial fire's authored full-screen shot and centered captions intact. */
-.game-ink dialog.act-modal:has(.first-tragedy-fire) #modal-content{height:100%;padding:0;overflow:hidden}
+.game-ink dialog.act-modal:has(.unified-fire) #modal-content{height:100%;padding:0;overflow:hidden}
 
 
 /* Main title refinement. Preserve the approved logo; let art, contrast and motion carry the menu. */

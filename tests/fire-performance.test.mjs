@@ -18,14 +18,14 @@ test('reduced motion paints an unchanged phase once, and cleanup cancels its ani
  try{
   const stop=startFireEnding(root,'ash-trash',()=>{throw Error('must not finish early');});let now=performance.now();
   for(let i=0;i<20;i++){const [id,callback]=callbacks.entries().next().value;callbacks.delete(id);now+=100;callback(now);}
-  assert.equal(counts.smoke,38);assert.equal(root.dataset.firePhase,'room');assert.equal(camera.style.transform,'scale(1.025)');assert.equal(callbacks.size,1);stop();assert.equal(callbacks.size,0);
+  assert.equal(counts.smoke,0);assert.equal(root.dataset.firePhase,'building');assert.equal(camera.style.transform,'scale(1)');assert.equal(callbacks.size,1);stop();assert.equal(callbacks.size,0);
   let finished=0;const end=startFireEnding(root,'ash-trash',()=>finished++);
   let autoTime=performance.now();
   const advance=frames=>{for(let i=0;i<frames&&callbacks.size;i++){const [id,callback]=callbacks.entries().next().value;callbacks.delete(id);autoTime+=100;callback(autoTime);}};
-  advance(1);root.dispatchEvent(new Event('click'));assert.equal(root.dataset.firePhase,'room');assert.equal(finished,0);
+  advance(1);root.dispatchEvent(new Event('click'));assert.equal(root.dataset.firePhase,'building');assert.equal(finished,0);
   advance(50);assert.equal(root.dataset.firePhase,'building');assert.equal(finished,0);assert.match(narration.textContent,/炎だけ/);
   root.dispatchEvent(new Event('click'));assert.equal(root.dataset.firePhase,'building');
-  advance(60);assert.equal(root.dataset.firePhase,'ruins');assert.equal(finished,0);assert.match(narration.textContent,/家賃/);
+  advance(10);assert.equal(root.dataset.firePhase,'ruins');assert.equal(finished,0);assert.match(narration.textContent,/家賃/);
   advance(40);assert.equal(finished,1);assert.equal(callbacks.size,0);end();
   const tragedy=startFireEnding(root,'ash-trash',()=>{},{firstTragedy:true});
   const [firstId,firstFrame]=callbacks.entries().next().value;callbacks.delete(firstId);firstFrame(performance.now());

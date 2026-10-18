@@ -24,7 +24,7 @@ test('fire, sale, seizure and rewind keep cinematic controls and their own scene
  const samples=[fireEndingHTML('ash-trash'),debtEndingHTML('bag-return'),debtEndingHTML('contract-sign'),rewindTransitionHTML('bag-guarantee',1,true,2)];
  for(const original of samples){
   const html=storyScreenHTML(original);
-  assert.ok(html.includes('showcase-screen'));
+  assert.ok(html.includes('showcase-screen')||html.includes('unified-fire'));
   assert.doesNotMatch(html,/showcase-mast|showcase-footer|THE APARTMENT \//);
   for(const action of original.match(/data-(?:fire-finish|debt-finish|rewind-skip)/g)||[])assert.ok(html.includes(action));
   assert.ok(html.includes(original.slice(original.indexOf('>')+1)));

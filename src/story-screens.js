@@ -2,7 +2,7 @@
 export function storyScreenHTML(html){
  const root=html.match(/^<section\b([^>]*)>/);if(!root)return html;
  const classes=root[1].match(/\bclass="([^"]*)"/)?.[1]?.split(/\s+/)||[];
- if(classes.includes('showcase-screen')||classes.includes('graphic-title')||classes.includes('first-tragedy-fire'))return html;
+ if(classes.includes('showcase-screen')||classes.includes('graphic-title')||classes.includes('unified-fire'))return html;
  const kind=classes.includes('act-intermission')?'intermission':classes.includes('act-title')?'chapter':classes.includes('act-burn')?'bad':classes.includes('act-clear')?'clear':classes.includes('debt-cinematic')?'debt':classes.includes('fire-cinematic')?'fire':classes.includes('rewind-screen')?'rewind':null;
  if(!kind)return html;
  const chapter=root[1].match(/data-chapter="(\d+)"/)?.[1]||'1';
