@@ -1383,3 +1383,54 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .game-ink .trouble-card .trouble-loop{background:#fff5e7;color:#111116;border-color:#ed2448;font-family:var(--sans)}
 .game-ink dialog.act-modal:has(.showcase-screen){width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;border:0;border-radius:0;box-shadow:none}
 .game-ink .act-modal #modal-content:has(>.showcase-screen){height:100%;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#ed2448 #111116}
+
+
+/* Mobile is a single-screen game: reserve space for every action, not a scrollable poster. */
+@media(max-width:700px), (max-height:500px) and (pointer:coarse){
+ html:has(body.game-ink),body.game-ink{height:100dvh;overflow:hidden;overscroll-behavior:none}
+ .game-ink .act-modal #modal-content:has(>.showcase-screen){height:100%;overflow:hidden;overscroll-behavior:none}
+ .game-ink .showcase-screen,.game-ink .showcase-title{height:100dvh;min-height:0;max-height:100dvh;overflow:hidden}
+ .showcase-mast{top:max(12px,env(safe-area-inset-top,0px))}
+ .showcase-footer{bottom:max(10px,env(safe-area-inset-bottom,0px))}
+ .showcase-title .title-poster{height:100%;min-height:0;padding:clamp(45px,8dvh,68px) 24px max(40px,calc(env(safe-area-inset-bottom,0px) + 28px));display:flex;justify-content:flex-start}
+ .game-ink .showcase-title h2.title-logo{font-size:clamp(58px,min(20vw,11dvh),96px)}
+ .showcase-title .title-logo small{margin-top:8px;font-size:10px}
+ .showcase-title .title-label{margin-bottom:8px}
+ .showcase-title .title-hook{margin:12px 0 10px;line-height:1.6}
+ .showcase-title .title-actions{margin-top:auto;gap:6px;flex-shrink:0}
+ .game-ink .showcase-title .title-actions button{min-height:44px;padding:6px 18px;font-size:18px}
+ .showcase-title .title-record{margin:10px 0 0;flex-shrink:0}
+ .showcase-title .title-moku{top:22%;height:58dvh}
+ .game-ink .showcase-chapter .act-title-copy,
+ .game-ink .showcase-bad .act-ending-copy,.game-ink .showcase-clear .act-ending-copy{
+  height:100%;min-height:0;padding:clamp(140px,30dvh,255px) 22px max(45px,calc(env(safe-area-inset-bottom,0px) + 30px));justify-content:flex-end;
+ }
+ .game-ink .showcase-bad:not(:has(.ending-character)) .act-ending-copy{padding-top:55px}
+ .game-ink .showcase-chapter .act-key-art,.game-ink .showcase-screen .ending-character{top:5%;height:39dvh}
+ .game-ink .showcase-chapter .act-kicker{margin-bottom:8px}
+ .game-ink .showcase-chapter .act-number{font-size:16px;margin-bottom:10px;padding:3px 12px}
+ .game-ink .showcase-chapter h2{font-size:clamp(26px,min(8vw,5dvh),42px)}
+ .game-ink .showcase-chapter .act-tagline{font-size:11px;line-height:1.65;margin:12px 0}
+ .game-ink .showcase-chapter .act-rule{margin-bottom:12px;padding:6px 8px}
+ .game-ink .showcase-screen .act-primary{min-height:44px;padding:9px 13px;font-size:12px;flex-shrink:0;margin-top:8px}
+ .game-ink .showcase-bad .act-ending-copy h2,.game-ink .showcase-clear .act-ending-copy h2{font-size:clamp(32px,min(10vw,6dvh),56px);margin:8px 0 14px}
+ .game-ink .showcase-bad .act-ending-story,.game-ink .showcase-clear .act-ending-story{font-size:12px;line-height:1.7;margin-bottom:12px}
+ .game-ink .showcase-bad .act-clue{font-size:10px;line-height:1.6;padding:8px 10px;margin-bottom:10px}
+ .game-ink .showcase-bad .act-loop-reveal{margin:0 0 8px;line-height:1.5}
+ .game-ink .showcase-bad .act-loop-reveal p,.game-ink .showcase-clear .act-ending-copy>p:not([class]){font-size:11px;line-height:1.6;margin:8px 0}
+ .game-ink .showcase-screen .act-kicker{margin-bottom:8px}
+}
+@media(max-height:500px) and (pointer:coarse){
+ .showcase-title .title-poster{width:60%;padding:32px 24px 20px}
+ .showcase-title .title-hook,.showcase-title .title-label,.showcase-title .title-record{display:none}
+ .game-ink .showcase-title h2.title-logo{font-size:50px}
+ .showcase-title .title-moku{height:95dvh;width:65%;top:5%;right:-8%}
+ .showcase-title .title-actions{margin-top:14px}
+ .game-ink .showcase-chapter .act-title-copy,.game-ink .showcase-bad .act-ending-copy,.game-ink .showcase-clear .act-ending-copy{padding:40px 24px 25px;width:70%}
+ .game-ink .showcase-chapter .act-key-art,.game-ink .showcase-screen .ending-character{height:95dvh;width:50%;right:-8%}
+ .game-ink .showcase-chapter h2{font-size:27px}
+ .game-ink .showcase-chapter .act-kicker{display:none}
+ .game-ink .showcase-chapter .act-number{margin-bottom:5px;font-size:13px}
+ .game-ink .showcase-chapter .act-tagline{margin:6px 0;font-size:10px}
+ .game-ink .showcase-chapter .act-rule{margin-bottom:4px}
+}

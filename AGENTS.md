@@ -9,6 +9,11 @@
 - Preserve already-implemented scenes, save compatibility, and player-facing pacing unless the user explicitly requests a change.
 - When proposing a new plot point, label it a proposal and obtain the user's decision before incorporating it as established canon.
 
+## Mobile presentation (mandatory)
+- The mobile game must fit within one visible screen without scrolling. This is a standing user preference.
+- Use the dynamic viewport and safe-area insets; fit titles, chapter cards, endings, text, and action buttons together. Do not merely hide overflow while leaving content or buttons off-screen.
+- For content that cannot fit, use pagination or explicit screen changes instead of requiring scrolling.
+
 ## Implementation hygiene
 - Preserve the existing message-window UI, nameplate, speaker colors, and dialogue controls when changing scene direction or backgrounds. Reuse the standard dialogue renderer; redesign the message-window UI only when the user explicitly asks for that change.
 - Keep secrets, API keys, and spoiler-heavy developer documents out of player-facing assets and dialogue.

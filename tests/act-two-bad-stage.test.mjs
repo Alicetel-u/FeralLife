@@ -46,3 +46,17 @@ test('black lasts one second, pauses out of view, completes once, and cancels sa
  animation.finished=new Promise((yes,no)=>{reject=no;});
  const cancel=startMorningBlackout(root,()=>done++);cancel();reject(new Error('cancelled'));await Promise.resolve();assert.equal(done,1);
 });
+
+
+test('morning transitions show story prose instead of screen direction, including old saves',()=>{
+ for(const text of ['ルナが意味ありげに微笑む。画面がゆっくり暗転する。','二人は大家の部屋へ。扉が閉まり、画面が暗転する。']){
+  const event={actScene:'reply',detail:text,lines:[{speaker:'narrator',text}]};
+  const lines=eventConversation(event);
+  assert.equal(lines.length,1);assert.ok(!lines[0].text.includes('画面'));
+  assert.equal(event.lines[0].text,text);
+ }
+ for(const id of ['guarantee','return']){
+  const choice=ACT_TWO_EVENTS.bag.choices.find(c=>c.id===id);
+  assert.ok(!choice.lines.some(l=>/画面.*暗転/.test(l.text)));
+ }
+});

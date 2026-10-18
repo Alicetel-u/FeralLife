@@ -28,9 +28,17 @@ const eventNameFrame=()=>`<svg class="name-frame" viewBox="0 0 360 92" preserveA
 
 export function eventConversation(event) {
   const directed=isFirstStalkerReply(event)||event.actScene==='act2-rewind';
-  const lines=(event.lines||[]).filter(l=>l&&typeof l.text==='string').map(l=>directed?safeStalkerLine(l):l);
+  const clean=l=>{
+    if(directed)return safeStalkerLine(l);
+    if(event.actScene!=='reply'||l.speaker!=='narrator')return l;
+    const text=l.text.replace('ルナが意味ありげに微笑む。画面がゆっくり暗転する。','ルナが意味ありげに微笑む。')
+      .replace('二人は大家の部屋へ。扉が閉まり、画面が暗転する。','二人は大家の部屋へ。背後で、扉が静かに閉まった。');
+    return text===l.text?l:{...l,text};
+  };
+  const lines=(event.lines||[]).filter(l=>l&&typeof l.text==='string').map(clean);
+  const detail=clean({speaker:'narrator',text:event.detail}).text;
   // A narration intro preserves story information that wasn't spoken aloud.
-  return lines.length && lines[0].text===event.detail ? lines : [{speaker:'narrator',text:directed?safeStalkerLine({text:event.detail}).text:event.detail},...lines];
+  return lines.length && lines[0].text===detail ? lines : [{speaker:'narrator',text:detail},...lines];
 }
 
 // Explicit emotion wins; older saves and ordinary journal dialogue use text cues.
