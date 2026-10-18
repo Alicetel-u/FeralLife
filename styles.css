@@ -1535,49 +1535,70 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @media(prefers-reduced-motion:reduce){.title-refined .title-cast{animation:none}.title-refined .title-actions button,.title-refined .title-actions button:before{transition:none}}
 
 
-/* Title actions: staggered cutouts, with a clear active shape rather than identical text rows. */
-.title-refined .title-actions{width:min(430px,85%);gap:13px;transform:rotate(-3deg)}
+
+/* The resting menu is the design: touch never depends on hover or persistent selection. */
+.title-refined .title-actions{width:min(430px,85%);gap:12px;transform:rotate(-3deg)}
 .game-ink .title-refined .title-actions button{
- --menu-angle:-1deg;min-height:60px;padding:12px 28px 12px 18px;gap:14px;
- transform:rotate(var(--menu-angle));font-weight:1000;letter-spacing:.08em;
+ --menu-angle:1deg;min-height:58px;padding:12px 26px 12px 18px;gap:14px;
+ color:#fff1db;background:transparent;border:0;transform:rotate(var(--menu-angle));translate:0 0;
+ font-size:clamp(23px,2.3vw,32px);font-weight:1000;letter-spacing:.07em;
  animation:title-action-enter .4s cubic-bezier(.15,.7,.2,1) backwards;
 }
-.title-refined .title-actions button:nth-child(2){--menu-angle:1.5deg;width:91%;margin-left:16px;animation-delay:.07s}
-.title-refined .title-actions button:nth-child(3){--menu-angle:-.5deg;width:80%;margin-left:32px;animation-delay:.14s;font-size:clamp(20px,2vw,27px)}
 .title-refined .title-actions button:before{
- inset:0;height:auto;background:#fff1db88;z-index:-2;
- clip-path:polygon(3% 9%,100% 0,94% 91%,0 100%);
- transition:background .18s,translate .18s;
+ inset:0;height:auto;z-index:-2;background:#fff1db;translate:0 0;
+ clip-path:polygon(3% 9%,100% 0,94% 91%,0 100%);transition:translate .16s;
 }
 .title-refined .title-actions button:after{
- content:'';position:absolute;inset:2px;z-index:-1;
- background:linear-gradient(100deg,#c6193c 0 5px,#151019 6px 100%);
- clip-path:polygon(3% 9%,100% 0,94% 91%,0 100%);transition:background .18s;
+ content:'';position:absolute;inset:2px;z-index:-1;background:#151019;
+ clip-path:polygon(3% 9%,100% 0,94% 91%,0 100%);transition:background .16s;
 }
 .title-refined .title-actions button>span{position:relative;z-index:1}
-.title-refined .title-actions button:first-child{font-size:clamp(26px,2.65vw,37px)}
-.title-refined .title-actions button:first-child:before{background:#ed2448}
-.title-refined .title-actions button:first-child:after{background:linear-gradient(110deg,#95132e,#191019 60%)}
-.title-refined .title-actions button:nth-child(3)>span:nth-child(2){font-size:.82em}
-.game-ink .title-refined .title-actions button:hover,.game-ink .title-refined .title-actions button:focus{
- translate:10px 0;transform:rotate(var(--menu-angle));color:#fff1db;
+.title-refined .title-actions button .title-menu-mark{opacity:1;transform:none;background:#ed2448;width:12px;height:14px;flex:0 0 12px}
+.game-ink .title-refined .title-actions button:first-child{
+ --menu-angle:-1.5deg;min-height:70px;font-size:clamp(29px,2.9vw,40px);margin:0 0 4px;
 }
-.title-refined .title-actions button:hover:before,.title-refined .title-actions button:focus:before{
- height:auto;background:#fff1db;clip-path:polygon(3% 9%,100% 0,94% 91%,0 100%);translate:-3px 3px;
+.title-refined .title-actions button:first-child:before{translate:-4px 5px;background:#fff1db}
+.title-refined .title-actions button:first-child:after{inset:0;background:#d31940}
+.title-refined .title-actions button:first-child .title-menu-mark{background:#fff1db}
+.title-refined .title-actions button:nth-child(2){width:90%;margin-left:18px;animation-delay:.07s}
+.game-ink .title-refined .title-actions button[data-title-help]{--menu-angle:0deg;width:68%;margin-left:30px;min-height:44px;padding:8px 12px 10px;font-size:clamp(19px,1.8vw,24px);animation-delay:.14s}
+.title-refined .title-actions button[data-title-help]:before{inset:auto 18% 0 12px;height:3px;background:#cf2344;clip-path:none}
+.title-refined .title-actions button[data-title-help]:after{display:none}
+.title-refined .title-actions button[data-title-help] .title-menu-mark{width:7px;height:9px;flex-basis:7px}
+.game-ink .title-refined .title-actions button:focus{translate:0 0;transform:rotate(var(--menu-angle));color:#fff1db;background:transparent}
+.title-refined .title-actions button:focus:before{height:auto;translate:0 0;background:#fff1db;clip-path:polygon(3% 9%,100% 0,94% 91%,0 100%)}
+.title-refined .title-actions button:first-child:focus:before{translate:-4px 5px}
+.title-refined .title-actions button:focus:after{background:#151019}
+.title-refined .title-actions button:first-child:focus:after{background:#d31940}
+.title-refined .title-actions button[data-title-help]:focus:before{height:3px;translate:0 0;background:#cf2344;clip-path:none}
+.game-ink .title-refined .title-actions button:focus-visible{outline:2px solid #fff1db;outline-offset:7px}
+@media(hover:hover) and (pointer:fine){
+ .game-ink .title-refined .title-actions button:hover{translate:7px 0;transform:rotate(var(--menu-angle));background:transparent}
+ .title-refined .title-actions button:hover:before{height:auto;translate:-4px 5px;background:#fff1db;clip-path:polygon(3% 9%,100% 0,94% 91%,0 100%)}
+ .title-refined .title-actions button:hover:after{background:#b71735}
+ .title-refined .title-actions button[data-title-help]:hover:before{height:3px;translate:0 0;background:#fff1db;clip-path:none}
 }
-.title-refined .title-actions button:hover:after,.title-refined .title-actions button:focus:after{background:#cc193c}
-.title-refined .title-actions button:hover .title-menu-mark,.title-refined .title-actions button:focus .title-menu-mark{background:#fff1db}
-.game-ink .title-refined .title-actions button:active{translate:13px 2px;transform:rotate(var(--menu-angle)) scale(.98)}
+@media(hover:none){
+ .game-ink .title-refined .title-actions button:hover{translate:0 0;transform:rotate(var(--menu-angle));background:transparent}
+ .title-refined .title-actions button:hover:before{height:auto;translate:0 0;background:#fff1db;clip-path:polygon(3% 9%,100% 0,94% 91%,0 100%)}
+ .title-refined .title-actions button:first-child:hover:before{translate:-4px 5px}
+ .title-refined .title-actions button:hover:after{background:#151019}
+ .title-refined .title-actions button:first-child:hover:after{background:#d31940}
+ .title-refined .title-actions button[data-title-help]:hover:before{height:3px;translate:0 0;background:#cf2344;clip-path:none}
+}
+.game-ink .title-refined .title-actions button:active{translate:3px 2px;transform:rotate(var(--menu-angle)) scale(.98)}
 @keyframes title-action-enter{from{opacity:0;translate:-24px 0}to{opacity:1;translate:0 0}}
 @media(max-width:700px){
  .title-refined .title-actions{width:82%;gap:10px}
  .game-ink .title-refined .title-actions button{min-height:52px;padding:10px 20px 10px 14px;font-size:23px;gap:10px}
- .game-ink .title-refined .title-actions button:first-child{font-size:27px}
- .title-refined .title-actions button:nth-child(2){margin-left:10px}
- .title-refined .title-actions button:nth-child(3){margin-left:20px}
+ .game-ink .title-refined .title-actions button:first-child{min-height:64px;font-size:29px}
+ .title-refined .title-actions button:nth-child(2){margin-left:12px}
+ .game-ink .title-refined .title-actions button[data-title-help]{min-height:44px;margin-left:22px;font-size:19px}
 }
 @media(max-height:550px){
  .title-refined .title-actions{gap:7px;margin-top:14px}
- .game-ink .title-refined .title-actions button,.game-ink .title-refined .title-actions button:first-child{min-height:44px;padding:7px 18px 7px 12px;font-size:22px}
+ .game-ink .title-refined .title-actions button{min-height:44px;padding:7px 18px 7px 12px;font-size:22px}
+ .game-ink .title-refined .title-actions button:first-child{min-height:52px;font-size:26px}
+ .game-ink .title-refined .title-actions button[data-title-help]{min-height:44px;font-size:18px}
 }
 @media(prefers-reduced-motion:reduce){.title-refined .title-actions button{animation:none}.title-refined .title-actions button:after{transition:none}}
