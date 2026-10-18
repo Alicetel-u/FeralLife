@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="theme-color" content="#131118">
-  <meta name="app-version" content="2026.10.18.33">
+  <meta name="app-version" content="2026.10.18.34">
   <meta name="build-updated" content="local">
   <title>けもの荘 第一幕「アパートを火事（モク）から守れ！」</title>
   <style>
@@ -64,7 +64,7 @@ body:not(.world-art-started) .scene{background-image:none!important}
     paint();ticker=setInterval(()=>{
       render();
       const stall=document.getElementById('boot-stall');
-      if(stall)stall.textContent=performance.now()-lastProgress>10000?'読み込みに時間がかかっています。下の「読み込み状況」で停止箇所を確認できます。':'';
+      if(stall)stall.textContent=performance.now()-lastProgress>10000?'読み込みに時間がかかっています。':'';
     },1000);
   }
   window.kemonoBoot={
@@ -91,7 +91,7 @@ body:not(.world-art-started) .scene{background-image:none!important}
         try{await import(blobUrl);mark('module-evaluation-end');}finally{URL.revokeObjectURL(blobUrl);}
       }catch(error){
         clearTimeout(timeout);mark('loader-error: '+(error?.name||'Error'));
-        label='読み込みを完了できませんでした。読み込み状況を確認するか、再読み込みしてください';paint();
+        label='読み込みを完了できませんでした。再読み込みしてください';paint();
         if(panel)panel.open=true;
       }
     },
@@ -110,7 +110,7 @@ body:not(.world-art-started) .scene{background-image:none!important}
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="game-ink">
-  <details id="boot-diagnostics"><summary>読み込み状況・計測結果をコピー（ver 2026.10.18.33）</summary><button id="boot-copy" type="button">計測結果をコピー</button><button id="boot-reload" type="button" onclick="location.reload()">再読み込み</button><pre id="boot-report">起動スクリプトの実行を待っています。この表示のままなら、そのままスクリーンショットを送ってください。</pre></details>
+  <details id="boot-diagnostics" hidden><summary>読み込み状況・計測結果をコピー（ver 2026.10.18.34）</summary><button id="boot-copy" type="button">計測結果をコピー</button><button id="boot-reload" type="button" onclick="location.reload()">再読み込み</button><pre id="boot-report">起動スクリプトの実行を待っています。この表示のままなら、そのままスクリーンショットを送ってください。</pre></details>
   <div id="boot-screen" aria-label="ゲームの読み込み">
     <div class="boot-card">
       <span class="boot-kicker">WELCOME TO THE APARTMENT</span>
@@ -139,7 +139,7 @@ body:not(.world-art-started) .scene{background-image:none!important}
       <div class="scene" id="scene"><canvas id="world" width="1920" height="1080" aria-label="住人の暮らしと廊下・階段・屋外の移動を観察する画面"></canvas><div class="scene-label"><span class="label-dot"></span> LIVE <span id="scene-day">DAY 01</span></div><div class="scene-caption" id="scene-caption">101号室から、かすかにタバコの匂いがする。</div><div class="room-access" id="room-access" aria-label="画面内の部屋選択"></div><button class="scene-notice" id="scene-notice" hidden><span>✉</span><div><strong>入居希望者が来ています</strong><small>2通の申込書。どちらを迎える？</small></div><b>→</b></button></div>
       <nav class="room-strip" id="room-strip" aria-label="観察する部屋を選択"></nav>
       <button class="request-notice" id="request-notice" hidden><span>✉</span><strong id="request-title"></strong><small>管理人への相談 · 返事を保留できます</small><b>話を聞く →</b></button>
-      <div class="playback"><div class="playback-left"><button id="pause-button" class="pause-button" aria-label="一時停止">Ⅱ</button><div class="speed-group" aria-label="ゲーム速度"><button data-speed="1">1×</button><button data-speed="3">3×</button><button data-speed="6" class="active">6×</button></div><span id="playback-state">6倍の速さで暮らしが進みます</span></div><button id="sound-button" class="text-button" aria-pressed="true">♫ <span>BGM ON</span></button></div>
+      <div class="playback"><div class="playback-left"><div class="speed-group" aria-label="ゲーム速度"><button data-speed="1">1×</button><button data-speed="3">3×</button><button data-speed="6" class="active">6×</button></div><span id="playback-state">6倍の速さで暮らしが進みます</span></div><button id="sound-button" class="text-button" aria-pressed="true">♫ <span>BGM ON</span></button></div>
     </section>
     <aside class="resident-panel" id="resident-panel" inert><div class="section-bar"><strong>住人観察ノート</strong><button class="icon-button" id="inspector-close" aria-label="住人ノートを閉じる">×</button></div><div id="resident-content"></div><div class="building-stats"><div><span class="stat-icon">⌂</span><div><small>入居状況</small><strong id="occupancy">1 <span>/ 6室</span></strong></div></div><div><span class="stat-icon">¥</span><div><small>受け取った家賃</small><strong id="rent">¥0</strong></div></div><div><span class="stat-icon">♨</span><div><small>アパートの空気</small><strong id="atmosphere">まだ、穏やか</strong></div></div><div><span class="stat-icon">✉</span><div><small>次の入居募集</small><strong id="next-arrival">3日目 <span>09:00</span></strong></div></div></div><div class="note-footer">管理人は、今日も暮らしの後始末。</div></aside>
     <section class="journal" hidden><div id="event-list"></div></section>
@@ -151,8 +151,7 @@ body:not(.world-art-started) .scene{background-image:none!important}
     <div class="entry-oversize" aria-hidden="true">START</div>
     <button type="button" id="entry-start" class="entry-start">▶ START</button>
   </div>
-  <div id="build-version" style="position:fixed;bottom:5px;left:7px;z-index:999;color:#fff9;background:#1119;font:11px sans-serif;padding:4px 7px;border-radius:4px;pointer-events:none">ver 2026.10.18.33</div>
   <div id="update-banner" hidden role="status" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:99999;background:#101826;color:white;border:1px solid #e6a6cb;border-radius:12px;padding:14px 20px;box-shadow:0 8px 30px #000a;font:14px sans-serif;text-align:center">けもの荘が更新されました。 <button id="update-reload" type="button" style="margin:7px;padding:8px 14px;border:0;border-radius:6px;background:#e6a6cb;color:#111;font-weight:bold">最新版を読み込む</button></div>
-  <script type="module" src="src/app.js?v=2026.10.18.33"></script>
+  <script type="module" src="src/app.js?v=2026.10.18.34"></script>
 </body>
 </html>

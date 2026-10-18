@@ -17,7 +17,7 @@ import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './troub
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.33';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.34';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -231,11 +231,6 @@ function updateUI() {
   $('atmosphere').textContent = atmosphere(state);
   $('next-arrival').innerHTML = state.ending ? '観察終了' : state.residents.length === 6 ? '満室御礼' : state.pending ? '<span style="color:#a5533b">申込書が届いています</span>' : `${dateAt(state.nextArrival).day}日目 <span>09:00</span>`;
   $('scene-notice').hidden = !state.pending || !!state.ending;
-  const stopped = paused || modal.open || !!state.ending;
-  $('pause-button').textContent = stopped ? '▶' : 'Ⅱ';
-  $('pause-button').setAttribute('aria-label', stopped ? '再生' : '一時停止');
-  $('pause-button').setAttribute('aria-pressed', String(paused));
-  $('pause-button').disabled = !!state.ending;
   $('playback-state').textContent = state.ending ? (state.actOne?'第一幕の結末に到達しました':'18日間の観察が終わりました') : modal.open ? '会話中は一時停止' : state.actOne?.pending?'モクが大家の返事を待っています' : paused ? '時間を止めて眺めています' : speed > 1 ? `${speed}倍の速さで暮らしが進みます` : '時間はゆっくり進んでいます';
   const r = state.residents.find(r => r.room === state.selected);
   const line = talk.bubbles[0];
@@ -270,7 +265,7 @@ function closeModal() {
   if(event&&eventView.index===eventConversation(event).length-1&&avoidedTrouble(event,state.actOne.chapter)){
     event.avoidanceSeen=true;save();
     openModal(troubleAvoidedHTML(state.actOne.chapter));
-    stopFireEnding=startTroubleVictory(modal.querySelector('.trouble-victory'),()=>{closeModal();$('pause-button')?.focus({preventScroll:true});});
+    stopFireEnding=startTroubleVictory(modal.querySelector('.trouble-victory'),()=>{closeModal();});
     return;
   }
   characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); clearFireEnding();clearTimeout(eventAutoTimer);modal.close(); updateUI(); syncNormalBgm(); }
@@ -558,7 +553,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.18.33';
+const BUILD_VERSION='2026.10.18.34';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -761,7 +756,6 @@ const setObservationMenu=open=>{
 setObservationMenu(false);
 $('camera-toggle').onclick=()=>setObservationMenu(!document.body.classList.contains('controls-expanded'));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('controls-expanded')){setObservationMenu(false);$('camera-toggle').focus();}});
-$('pause-button').onclick=()=>{paused=!paused;updateUI();};
 $('help-button').onclick=showHelp;
 $('scene-notice').onclick=showCandidates;
 $('history-button').onclick=showHistory;
