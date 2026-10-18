@@ -16,7 +16,7 @@ import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './troub
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.18';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.19';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition, automaticFirstRewind } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -450,7 +450,7 @@ function showOpening(step = 0) {
 function showGameTitle(){
   debugTapCount=0;
   const continuing=state.actOne.started||state.actOne.chapter===2;
-  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU · ver 2026.10.18.18</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
+  openModal(`<section class="act-screen game-title graphic-title"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-edge" aria-hidden="true">NO ORDINARY DAYS.</div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true">▶</span><span>つづきから<small>CONTINUE</small></span><b aria-hidden="true">01</b></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true">▶</span><span>はじめから<small>NEW GAME</small></span><b aria-hidden="true">${continuing?'02':'01'}</b></button><button data-title-help><span class="title-menu-mark" aria-hidden="true">▶</span><span>遊び方<small>HOW TO PLAY</small></span><b aria-hidden="true">${continuing?'03':'02'}</b></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div><footer class="title-credit"><span>KEMONOSOU · ver 2026.10.18.19</span><span>個性豊かな住人たちとの、穏やかじゃない日常。</span></footer></section>`);
   modal.querySelector('.title-actions button')?.focus({preventScroll:true});
 }
 function showActTwoOpening(){
@@ -499,7 +499,7 @@ function showActEnding(afterFire=false){
   if(bad&&afterFire&&automaticFirstRewind(state)){beginRewind(true);return;}
   if(bad){
     const choice=Object.values(ACT_ONE_EVENTS).flatMap(c=>c.choices).find(c=>c.bad===a.failure);
-    openModal(`<section class="act-screen act-burn"><div class="burned-apartment" aria-hidden="true"><img src="assets/apartments.png" alt=""><div class="burned-rubble"></div></div><div class="act-ending-copy"><p class="act-kicker">BAD END / ${a.attempt}周目</p><h2 id="modal-title">全 焼</h2><p class="act-ending-story">${escape(state.ending.text)}</p><p class="act-clue">${escape(choice?.clue||'今度こそ、火元を確認しよう。')}</p><div class="act-loop-reveal"><small>${a.attempt===1?'初めて、時間が巻き戻る。':'また、時計が逆に進む。'}</small><p>${a.attempt===1?'炎に包まれたけもの荘。大家は呆然と立ち尽くす。':'大家「くそっ！！ またかよ！！」<br>大家「今度こそ大丈夫だと思ったのに……！」'}<br>大家「……もう一度、やり直せるなら。」</p></div><button class="act-primary" data-act-rewind>直前のチェックポイントへ戻る <span>↶</span></button></div></section>`);
+    openModal(`<section class="act-screen act-burn"><div class="burned-apartment" aria-hidden="true"><img src="assets/apartments.png" alt=""><div class="burned-rubble"></div></div><div class="act-ending-copy"><p class="act-kicker">BAD END / ${a.attempt}周目</p><h2 id="modal-title">全 焼</h2><p class="act-ending-story">${escape(state.ending.text)}</p><p class="act-clue">${escape(choice?.clue||'今度こそ、火元を確認しよう。')}</p><div class="act-loop-reveal"><small>${a.attempt===1?'初めて、時間が巻き戻る。':'また、時計が逆に進む。'}</small><p>${a.attempt===1?'炎に包まれたけもの荘。大家は呆然と立ち尽くす。':'大家「くそっ！！ またかよ！！」<br>大家「今度こそ大丈夫だと思ったのに……！」'}<br>大家「……もう一度、やり直せるなら。」</p></div><button class="act-primary" data-act-rewind>あの時へ、もう一度 <span>↶</span></button></div></section>`);
     return;
   }
   if(!a.epilogueSeen){const epilogue=state.events.find(e=>e.actScene==='epilogue');if(epilogue){showEvent(epilogue.id,a.epilogueCursor||0);return;}}
@@ -517,7 +517,7 @@ function showActTwoEnding(afterCinematic=false){
    return;
   }
   const choice=Object.values(ACT_TWO_EVENTS).flatMap(v=>v.choices).find(v=>v.bad===a.failure);
-  openModal(`<section class="act-screen act-burn" data-chapter="2"><div class="ending-building" aria-hidden="true"><img src="assets/apartments.png" alt=""></div><img class="ending-character" src="${a.failure?.startsWith("bag-")?EVENT_EXPRESSIONS.cat.sad:EVENT_EXPRESSIONS.hostess.sad}" alt="${a.failure?.startsWith("bag-")?"灰田モク":"金城ルナ"}"><div class="act-ending-copy"><p class="act-kicker">BAD END / 第二幕 · ${a.attempt}周目</p><h2 id="modal-title">${escape(choice?.endingName||(a.failure?.startsWith("bag-")?"夜 逃 げ":"差 し 押 さ え"))}</h2><p class="act-ending-story">${escape(state.ending.text)}</p><p class="act-clue">${escape(choice?.clue||'契約書はよく読む。')}</p><p>大家「……アパートまで失ってたまるか！ 次こそは！」</p><button class="act-primary" data-act2-rewind>直前のチェックポイントへ戻る ↶</button></div></section>`);return;
+  openModal(`<section class="act-screen act-burn" data-chapter="2"><div class="ending-building" aria-hidden="true"><img src="assets/apartments.png" alt=""></div><img class="ending-character" src="${a.failure?.startsWith("bag-")?EVENT_EXPRESSIONS.cat.sad:EVENT_EXPRESSIONS.hostess.sad}" alt="${a.failure?.startsWith("bag-")?"灰田モク":"金城ルナ"}"><div class="act-ending-copy"><p class="act-kicker">BAD END / 第二幕 · ${a.attempt}周目</p><h2 id="modal-title">${escape(choice?.endingName||(a.failure?.startsWith("bag-")?"夜 逃 げ":"差 し 押 さ え"))}</h2><p class="act-ending-story">${escape(state.ending.text)}</p><p class="act-clue">${escape(choice?.clue||'契約書はよく読む。')}</p><p>大家「……アパートまで失ってたまるか！ 次こそは！」</p><button class="act-primary" data-act2-rewind>あの時へ、もう一度 ↶</button></div></section>`);return;
  }
  if(!a.epilogueSeen){const e=state.events.find(e=>e.actScene==='act2-epilogue');if(e){showEvent(e.id,a.epilogueCursor||0);return;}}
  openModal(`<section class="act-screen act-clear" data-chapter="2"><img class="ending-character" src="${EVENT_EXPRESSIONS.hostess.happy}" alt="金城ルナ"><div class="act-ending-copy"><p class="act-kicker">SECOND ACT COMPLETE</p><h2 id="modal-title">第二幕・完</h2><p class="act-ending-story">けもの荘は、借金のカタにならずに済んだ。</p><button class="act-primary" data-act2-finish>次章へ続く →</button></div></section>`);
@@ -562,7 +562,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.18.18';
+const BUILD_VERSION='2026.10.18.19';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -593,25 +593,29 @@ function showDebugChapterSelect(){
 }
 function showDebugSceneSelect(chapter){
   const options=chapter==='1'
-    ?[['intro','第一幕・オープニング'],['ash','第一の火種：灰皿'],['dinner','第二の火種：料理'],['epilogue','第一幕・エピローグ']]
-    :[['opening','逃げる女 — オープニング'],['arrival','ルナ入居プロローグ'],['bag','第一の事件：謎の届け物'],['contract','第二の事件：契約書'],['epilogue','第二幕・エピローグ']];
+    ?[['intro','第一幕・オープニング'],['ash',ACT_ONE_EVENTS.ash.title],['dinner',ACT_ONE_EVENTS.dinner.title],['epilogue','第一幕・エピローグ']]
+    :[['opening','逃げる女 — オープニング'],['arrival','ルナ入居プロローグ'],['bag',ACT_TWO_EVENTS.bag.title],['contract',ACT_TWO_EVENTS.contract.title],['epilogue','第二幕・エピローグ']];
   debugMenuPage(chapter==='1'?'第一幕のポイント':'第二幕のポイント','開始地点を選んでください。',options.map(([id,label])=>[chapter+':'+id,label,'data-debug-scene']), 'data-debug-chapters-back');
 }
 function startDeveloperScene(target){
   const [chapter,scene]=target.split(':');
   if(!['1','2'].includes(chapter))return;
   developerMode=true;
-  const next=createActOne(42,[],1,true);
+  const next=createActOne(42,[],chapter==='1'&&['dinner','epilogue'].includes(scene)?2:1,true);
+  // Observation movement may finish just after the event hour; enter the scene only once it is queued.
+  const advanceFirstScene=()=>{
+    for(let step=0;step<12&&!next.actOne.pending&&next.actOne.status==='playing';step++)advanceActOne(next,100);
+  };
   if(chapter==='1'){
     if(scene==='dinner'||scene==='epilogue'){
-      advanceActOne(next,100);
+      advanceFirstScene();
       answerActOne(next,next.actOne.pending.eventId,'water');
     }
     if(scene==='epilogue'){
-      advanceActOne(next,100);
+      advanceFirstScene();
       answerActOne(next,next.actOne.pending.eventId,'coronation');
-      advanceActOne(next,100);
-    }else if(scene==='ash'||scene==='dinner')advanceActOne(next,100);
+      advanceFirstScene();
+    }else if(scene==='ash'||scene==='dinner')advanceFirstScene();
   }else{
     beginActTwo(next);
     next.actOne.started=true;next.actOne.titlePending=false;next.actOne.prologuePending=false;

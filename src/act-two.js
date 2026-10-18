@@ -371,7 +371,7 @@ export function beginActTwo(s){
   // eventConversation prepends the scene detail narration, so offset by one.
   e.revealCharacterAt=1+e.lines.findIndex(line=>line.speaker==='cat');
   for(const event of s.events)if(event!==e&&event.actScene&&event.actScene!=='act2-prologue')event.read=true;
-  saveStoryCheckpoint(s,'bag','第二幕の開始時点');
+  saveStoryCheckpoint(s,'bag','ルナが越してきた日');
  secondActLife(s);
   return s;
 }
@@ -430,7 +430,7 @@ export function answerActTwo(s,eventId,choiceId){
  const replyLines=firstStalkerTragedy?FIRST_STALKER_TRAGEDY_LINES:choice.lines;
  const r=addEvent(s,'life','返事：'+(firstStalkerTragedy?'もう大丈夫だろ。今日はゆっくり休め。':choice.label),replyLines[0].text,[102]);r.actScene='reply';r.cast=['hostess','cat'];r.stageOnly=true;r.lines=replyLines;
  if(choice.bad){a.status='bad';a.failure=choice.bad;if(!a.memory.includes(choice.bad))a.memory.push(choice.bad);s.ending={name:firstStalkerTragedy?'BAD END — 夕暮れの待ち伏せ':choice.endingName?('BAD END — '+choice.endingName):(p.scene==='bag'?'夜逃げ':'差し押さえ')+' — '+event.title,text:choice.regret};}
- if(!choice.bad&&p.scene==='bag')saveStoryCheckpoint(s,'contract','バッグの事件を回避した直後');
+ if(!choice.bad&&p.scene==='bag')saveStoryCheckpoint(s,'contract','あの男が立ち去った夕暮れ');
  return r;
 }
 export function rewindActTwo(s){

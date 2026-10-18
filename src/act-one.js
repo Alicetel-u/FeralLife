@@ -315,7 +315,7 @@ export function createActOne(seed=Date.now(),memory=[],attempt=1,started=false,c
     am('……まぁ、家賃さえ払ってくれりゃいいか。'),
     ...(attempt===2?[an('同じ声。同じ灰皿。同じ「明日から」。焼けた廊下を覚えているのは、大家だけだった。')]:[])
   ];
-  saveStoryCheckpoint(s,'ash','物語の開始時点');
+  saveStoryCheckpoint(s,'ash','初めてモクの部屋を訪ねた夕暮れ');
   return s;
 }
 export function nextActOneAt(s){
@@ -439,7 +439,7 @@ export function answerActOne(s,eventId,choiceId){
     if(!a.memory.includes(choice.bad))a.memory.push(choice.bad);
     s.ending={name:'全焼 — '+c.title,text:choice.regret};
   }
-  if(!choice.bad&&p.scene==='ash')saveStoryCheckpoint(s,'dinner','灰皿の火事を回避した直後');
+  if(!choice.bad&&p.scene==='ash')saveStoryCheckpoint(s,'dinner','灰皿の吸い殻を片づけた夜');
   return result;
 }
 export function rewindBeforeFire(s){

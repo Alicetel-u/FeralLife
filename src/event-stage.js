@@ -29,8 +29,15 @@ const eventNameFrame=()=>`<svg class="name-frame" viewBox="0 0 360 92" preserveA
 export function eventConversation(event) {
   const directed=isFirstStalkerReply(event)||event.actScene==='act2-rewind';
   const clean=l=>{
+    if(['rewind','act2-rewind'].includes(event.actScene)&&l.speaker==='narrator'&&typeof l.text==='string'){
+      const text=l.text.replace(/第二幕の開始時点/g,'ルナが越してきた日')
+        .replace(/バッグの事件を回避した直後/g,'あの男が立ち去った夕暮れ')
+        .replace(/灰皿の火事を回避した直後/g,'灰皿の吸い殻を片づけた夜')
+        .replace(/1日目17時・物語の開始時点|物語の開始時点/g,'初めてモクの部屋を訪ねた夕暮れ');
+      l=text===l.text?l:{...l,text};
+    }
     if(directed)return safeStalkerLine(l);
-    if(event.actScene!=='reply'||l.speaker!=='narrator')return l;
+    if(event.actScene!=='reply'||l.speaker!=='narrator'||typeof l.text!=='string')return l;
     const text=l.text.replace('ルナが意味ありげに微笑む。画面がゆっくり暗転する。','ルナが意味ありげに微笑む。')
       .replace('二人は大家の部屋へ。扉が閉まり、画面が暗転する。','二人は大家の部屋へ。背後で、扉が静かに閉まった。');
     return text===l.text?l:{...l,text};
