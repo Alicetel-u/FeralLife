@@ -13,6 +13,9 @@
 - Keep dialogue and narration inside the story world. Do not describe chapter starts, checkpoints, choice branches, screen fades, or other implementation/staging instructions as narrative text. Describe what characters perceive instead.
 - Developer menus may use technical labels, but their scene names must match their actual destinations and current scenario definitions.
 
+## Screen presentation (mandatory)
+- Do not add decorative top/bottom mastheads, English slogans, footer captions, or corner serial numbers to title/chapter/result/cinematic screens. The user explicitly rejected the shared KEMONOSOU/CHAPTER header and English footer framing.
+
 ## Mobile presentation (mandatory)
 - The mobile game must fit within one visible screen without scrolling. This is a standing user preference.
 - Use the dynamic viewport and safe-area insets; fit titles, chapter cards, endings, text, and action buttons together. Do not merely hide overflow while leaving content or buttons off-screen.

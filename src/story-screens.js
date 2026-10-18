@@ -9,8 +9,7 @@ export function storyScreenHTML(html){
  const serial=chapter==='2'?'02':'01';
  const sold=root[1].includes('data-debt-kind="sold"');
  const word={intermission:'NEXT',title:'FERAL LIFE',chapter:serial,bad:'BAD END',clear:'CLEAR',debt:sold?'SOLD':'SEIZED',fire:'BURN',rewind:'REWIND'}[kind];
- const label={intermission:'TO BE CONTINUED',title:'NO ORDINARY DAYS.',chapter:'CHAPTER / '+serial,bad:'THE COST OF A CHOICE',clear:'CHAPTER COMPLETE',debt:'PROPERTY / LOST',fire:'APARTMENT / LOST',rewind:'TRY AGAIN.'}[kind];
- const chrome=`<div class="showcase-geometry" aria-hidden="true"><i class="showcase-plane"></i><i class="showcase-cut"></i><i class="showcase-dots"></i><span class="showcase-word">${word}</span></div><div class="showcase-mast" aria-hidden="true"><span>KEMONOSOU</span><b>${label}</b></div><div class="showcase-footer" aria-hidden="true"><span>THE APARTMENT / THE CHOICE / THE CONSEQUENCE</span><b>${serial}</b></div><div class="showcase-wipe" aria-hidden="true"></div>`;
+ const chrome=`<div class="showcase-geometry" aria-hidden="true"><i class="showcase-plane"></i><i class="showcase-cut"></i><i class="showcase-dots"></i><span class="showcase-word">${word}</span></div><div class="showcase-wipe" aria-hidden="true"></div>`;
  const opening=root[0].replace(/class="([^"]*)"/,`class="$1 showcase-screen showcase-${kind}${kind==='intermission'?' showcase-clear':''}"`).replace(/>$/,` data-screen-kind="${kind}">`);
  return html.replace(root[0],opening+chrome);
 }

@@ -12,7 +12,8 @@ test('all chapter and result screens retain their original actions and copy insi
  for(const [type,kind] of [['graphic-title','title'],['act-title','chapter'],['act-burn','bad'],['act-clear','clear'],['act-intermission','intermission']]){
   const original=`<section class="act-screen ${type}" data-chapter="2"><h2 id="modal-title">見出し</h2><button data-act2-start>第二幕を始める</button></section>`;
   const html=storyScreenHTML(original);
-  assert.ok(html.includes(`showcase-${kind}`));assert.ok(html.includes('CHAPTER / 02')||kind!=='chapter');
+  assert.ok(html.includes(`showcase-${kind}`));
+  assert.doesNotMatch(html,/showcase-mast|showcase-footer|THE APARTMENT \/|KEMONOSOU|CHAPTER \/ 02/);
   assert.ok(html.includes('<h2 id="modal-title">見出し</h2><button data-act2-start>第二幕を始める</button>'));
   assert.equal(storyScreenHTML(html),html,'framing is never duplicated');
   assert.equal((html.match(/id="modal-title"/g)||[]).length,1);
@@ -24,6 +25,7 @@ test('fire, sale, seizure and rewind keep cinematic controls and their own scene
  for(const original of samples){
   const html=storyScreenHTML(original);
   assert.ok(html.includes('showcase-screen'));
+  assert.doesNotMatch(html,/showcase-mast|showcase-footer|THE APARTMENT \//);
   for(const action of original.match(/data-(?:fire-finish|debt-finish|rewind-skip)/g)||[])assert.ok(html.includes(action));
   assert.ok(html.includes(original.slice(original.indexOf('>')+1)));
  }
