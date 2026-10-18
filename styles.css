@@ -1299,7 +1299,6 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .showcase-fire .showcase-cut{background:var(--show-red);clip-path:polygon(0 0,2% 0,0 80%)}
 .showcase-fire .showcase-word{top:13%;right:-2%;width:auto;font-size:20vw;opacity:.3;-webkit-text-stroke:2px var(--show-paper);transform:rotate(-9deg)}
 .showcase-fire .fire-letterbox{background:var(--show-black);height:7vh}
-.game-ink .showcase-fire .fire-narration{left:6%;right:12%;bottom:10%;width:fit-content;max-width:80%;padding:15px 24px;border:0;border-left:6px solid var(--show-red);background:#111116ef;color:var(--show-paper);transform:rotate(-2deg);font:800 clamp(14px,2vw,25px)/1.8 var(--sans);z-index:6}
 .showcase-fire .fire-skip,.showcase-debt .debt-next,.showcase-rewind .rewind-skip{z-index:9;border:0;background:var(--show-paper);color:var(--show-black);padding:12px 20px;min-height:44px;font-weight:900;transform:rotate(-3deg)}
 .showcase-debt .showcase-plane{background:#111116;clip-path:polygon(0 0,40% 0,12% 100%,0 100%)}
 .showcase-debt .showcase-cut{background:var(--show-red);clip-path:polygon(70% 0,78% 0,44% 100%,36% 100%)}
@@ -1353,7 +1352,6 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .showcase-bad .showcase-word,.showcase-clear .showcase-word{top:13%;font-size:30vw;right:-17%;width:93%}
  .showcase-clear .showcase-plane{clip-path:polygon(75% 0,100% 0,100% 100%,0 55%)}
  .showcase-fire .showcase-word{font-size:34vw;top:18%}
- .game-ink .showcase-fire .fire-narration{left:5%;right:5%;max-width:90%;bottom:16%;font-size:15px;padding:12px 16px}
  .showcase-fire .fire-skip,.showcase-debt .debt-next{bottom:7%;right:6%;font-size:11px}
  .showcase-debt .debt-sign{left:6%;top:30%;width:85%;padding:20px;border-left-width:9px;box-shadow:9px 9px #111116}
  .showcase-debt .debt-sign h2{font-size:clamp(43px,13vw,85px)}.showcase-debt .debt-sign small{font-size:8px}.showcase-debt .debt-sign p{font-size:19px}
@@ -1483,3 +1481,6 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .game-ink .showcase-chapter .act-primary{font-size:12px;min-height:44px;padding:9px 16px}
  .game-ink .showcase-chapter .act-key-art{width:63%;height:110%;right:-7%;top:0}
 }
+
+/* Keep the initial fire's authored full-screen shot and centered captions intact. */
+.game-ink dialog.act-modal:has(.first-tragedy-fire) #modal-content{height:100%;padding:0;overflow:hidden}

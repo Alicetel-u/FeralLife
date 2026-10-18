@@ -32,7 +32,7 @@ test('fire, sale, seizure and rewind keep cinematic controls and their own scene
 });
 
 test('trouble avoided, ordinary dialogue and the approved horror interlude stay untouched',()=>{
- const samples=['<section class="act-screen game-title graphic-title"><button data-game-new>はじめから</button><button data-title-help>遊び方</button></section>',troubleAvoidedHTML(1),troubleAvoidedHTML(2),stalkerPrefaceHTML(),'<div class="event-stage">会話</div>','<section class="act-screen luna-film" data-act2-opening>映像</section>'];
+ const samples=[fireEndingHTML('ash-trash',{firstTragedy:true}),'<section class="act-screen game-title graphic-title"><button data-game-new>はじめから</button><button data-title-help>遊び方</button></section>',troubleAvoidedHTML(1),troubleAvoidedHTML(2),stalkerPrefaceHTML(),'<div class="event-stage">会話</div>','<section class="act-screen luna-film" data-act2-opening>映像</section>'];
  for(const html of samples)assert.equal(storyScreenHTML(html),html);
 });
 
@@ -46,4 +46,14 @@ test('rewind clock stays above the blackout and below the restored scene',()=>{
  const dark=layer('.rewind-dark'),clock=layer('.showcase-rewind .rewind-clock'),restored=layer('.rewind-restored-room');
  assert.ok(clock>dark,'clock must be visible above the opaque blackout');
  assert.ok(clock<restored,'restored scenery must cover the clock on return');
+});
+
+
+test('fire captions retain one centered layout instead of mixing panel and fade coordinates',()=>{
+ const css=readFileSync(new URL('../styles.css',import.meta.url),'utf8');
+ assert.doesNotMatch(css,/\.showcase-fire \.fire-narration\s*\{/);
+ assert.match(css,/\.fire-cinematic>\.fire-narration\{[^}]*top:50%;left:50%;right:auto;bottom:auto/);
+ const html=storyScreenHTML(fireEndingHTML('ash-trash',{firstTragedy:true}));
+ assert.doesNotMatch(html,/showcase-|>BURN</);
+ assert.match(html,/first-fire-exterior\.png/);
 });
