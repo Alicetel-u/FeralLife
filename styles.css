@@ -1602,3 +1602,15 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .game-ink .title-refined .title-actions button[data-title-help]{min-height:44px;font-size:18px}
 }
 @media(prefers-reduced-motion:reduce){.title-refined .title-actions button{animation:none}.title-refined .title-actions button:after{transition:none}}
+
+
+/* Fire skip controls must never inherit both a top and bottom anchor. */
+.game-ink .showcase-fire .fire-skip{
+ inset:max(16px,8dvh) 5% auto auto;height:auto;min-height:44px;width:max-content;max-width:90%;
+ display:block;white-space:normal;line-height:1.5;
+}
+.game-ink .showcase-debt .debt-next{top:auto;height:auto;max-width:90%}
+.game-ink .showcase-rewind .rewind-skip{bottom:auto;height:auto;max-width:90%}
+@media(max-width:700px){
+ .game-ink .showcase-fire .fire-skip{inset:auto 6% max(20px,7dvh) auto}
+}
