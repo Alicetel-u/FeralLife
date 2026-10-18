@@ -86,10 +86,11 @@ export function eventStageHTML(event,residents,index=0,page=0,{hideCharacters=fa
     return `<div class="event-stage memory-whiteout"><div class="memory-text" style="${speakerColorStyle(line)}" aria-live="polite" aria-atomic="true"><span class="visually-hidden">${eventEscape(name)}：</span><p>${eventEscape(pageText)}</p></div><span class="memory-prompt" aria-hidden="true">CLICK / ENTER</span></div>`;
   }
   const cast=Array.isArray(event.cast)?event.cast.filter(type=>CHARACTERS[type]):eventParticipants(event,residents);
-  // The unseen man has no portrait. Keep Luna on screen, never use Moku as his stand-in.
+  // The unseen man has no portrait. Moku stays once she has actually joined the scene.
   const manFocus=line.speaker==='narrator'&&/^(?:男[「はがの]|翌朝。スーツ姿の男)/.test(line.text);
   const catEntrance=lines.findIndex(l=>l.speaker==='cat'||/モクが(?:現れる|男の前に歩み出た)/.test(l.text));
-  const lunaOnly=cast.includes('hostess')&&(manFocus||['bag','act2-rewind'].includes(event.actScene)&&(catEntrance<0||cursor<catEntrance));
+  const catArrived=event.actScene==='reply'||catEntrance>=0&&cursor>=catEntrance;
+  const lunaOnly=cast.includes('hostess')&&!catArrived&&(manFocus||['bag','act2-rewind'].includes(event.actScene));
   const participants=cast.filter(type=>!(lunaOnly&&type!=='hostess')&&!(Number.isInteger(event.revealCharacterAt)&&index<event.revealCharacterAt&&type==='cat')),left=participants[0]||null;
   const right=line.speaker==='manager'&&participants[1]?participants[1]:line.speaker!=='narrator'&&line.speaker!=='mystery'&&line.speaker!==left?line.speaker:participants[1]||'manager';
   const character=(type,side)=> {
