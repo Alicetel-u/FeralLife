@@ -412,9 +412,9 @@ export class WorldRenderer {
     const ctx = this.ctx;
     ctx.save();
     ctx.setTransform(this.canvas.width/WORLD_WIDTH, 0, 0, this.canvas.height/WORLD_HEIGHT, 0, 0);
-    ctx.imageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = true;
     const canvasBox=this.canvas.getBoundingClientRect?.();
-    const speechBounds=canvasBox?.width ? {left:Math.max(0,-canvasBox.left*WORLD_WIDTH/canvasBox.width),right:Math.min(WORLD_WIDTH,((globalThis.innerWidth||canvasBox.right)-canvasBox.left)*WORLD_WIDTH/canvasBox.width)} : {left:0,right:WORLD_WIDTH};
+    const speechBounds=canvasBox?.width ? {left:Math.max(0,-canvasBox.left*WORLD_WIDTH/canvasBox.width),right:Math.min(WORLD_WIDTH,((globalThis.innerWidth||canvasBox.right)-canvasBox.left)*WORLD_WIDTH/canvasBox.width),top:Math.max(0,-canvasBox.top*WORLD_HEIGHT/canvasBox.height),bottom:Math.min(WORLD_HEIGHT,((globalThis.innerHeight||canvasBox.bottom)-canvasBox.top)*WORLD_HEIGHT/canvasBox.height)} : {left:0,right:WORLD_WIDTH};
     for (const bubble of this.bubbles) {
       const resident = state.residents.find(r => r.type === bubble.speaker);
       const nearby = bubble.speaker==='manager'&&state.actOne?.chapter!==2 ? this.speechAnchor(state,'cat') : null;
@@ -423,7 +423,9 @@ export class WorldRenderer {
       };
       drawSpeechBubble(ctx, place.x, place.y, bubble.name, bubble.text, {
         bounds:speechBounds, large: this.focus, accent: speakerColors(bubble)[1], ink: speakerColors(bubble)[1],
-        source: place.source, tail: place.tail, opacity: this.speechOpacity
+        source: place.source, tail: place.tail, opacity: this.speechOpacity,
+        pixelScale:canvasBox?.width/WORLD_WIDTH,
+        animate:!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches
       });
     }
     ctx.restore();
@@ -449,51 +451,54 @@ export function wrapSpeechText(ctx, text, maxWidth) {
   return lines.length ? lines : [''];
 }
 function drawSpeechBubble(ctx, screenX, screenY, name, text, opts) {
-  const font = opts.large ? 35 : 28, pad = 26, lineH = font * 1.5;
-  ctx.save();
-  ctx.globalAlpha = opts.opacity;
-  ctx.font = `500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;
+  const scale=opts.pixelScale||1;
+  const font=Math.max(opts.large?37:30,17/scale),pad=26,lineH=font*1.42;
   const bounds=opts.bounds||{left:0,right:WORLD_WIDTH};
-  const lines = wrapSpeechText(ctx, text, Math.max(120,Math.min(opts.large ? 530 : 390,bounds.right-bounds.left-pad*2-48)));
-  const header = opts.source ? `${name}  ·  ${opts.source}` : name;
-  ctx.font = '700 24px "Yu Gothic UI", Meiryo, sans-serif';
-  const headerWidth = header ? ctx.measureText(header).width + 24 : 0;
-  ctx.font = `500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;
-  const w = Math.ceil(Math.max(160, headerWidth, ...lines.map(line => ctx.measureText(line).width)) + pad * 2);
-  const h = Math.ceil((header ? 70 : 36) + lines.length * lineH);
-  const left = Math.max(bounds.left+24, Math.min(bounds.right - w - 24, Math.round(screenX - w / 2)));
-  let top = Math.max(24, Math.min(WORLD_HEIGHT - h - 24, Math.round(screenY - h - (opts.tail ? 34 : 12))));
-  let tailLen = 0;
-  if (opts.tail) {
-    tailLen = Math.max(22, Math.min(160, Math.round(screenY - 10 - (top + h))));
-    const overflow = top + h + tailLen + 24 - WORLD_HEIGHT;
-    if (overflow > 0) {
-      top = Math.max(24, top - overflow);
-      tailLen = Math.max(22, Math.min(160, Math.round(screenY - 10 - (top + h))));
-    }
-  }
-  const tipX = Math.max(left + 34, Math.min(left + w - 34, screenX));
-  const paper = '#f7edd9', ink = opts.ink || '#241725', accent = opts.accent || '#da2948';
-  const shape = () => {
-    ctx.beginPath();ctx.moveTo(left+10,top);ctx.lineTo(left+w,top+4);ctx.lineTo(left+w-6,top+h);ctx.lineTo(left,top+h-4);ctx.closePath();
-    if (opts.tail) { ctx.moveTo(tipX-14,top+h-1);ctx.lineTo(tipX+2,top+h+tailLen);ctx.lineTo(tipX+16,top+h-1);ctx.closePath(); }
+  const margin=18,available=Math.max(80,bounds.right-bounds.left-margin*2);
+  const maxWidth=Math.min(opts.large?590:440,available);
+  ctx.save();
+  const progress=Math.max(0,Math.min(1,opts.opacity??1));
+  ctx.globalAlpha=opts.animate===false?1:progress;
+  const ink=opts.ink||'#302732',accent=opts.accent||'#863651';
+  const header=opts.source?`${name} · ${opts.source}`:name;
+  const nameFont=Math.max(23,12/scale);
+  ctx.font=`700 ${nameFont}px "Yu Gothic UI", Meiryo, sans-serif`;
+  const headers=header?wrapSpeechText(ctx,header,Math.max(24,maxWidth-pad*2-18)):[];
+  const headerWidth=Math.max(0,...headers.map(line=>ctx.measureText(line).width+18));
+  ctx.font=`600 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;
+  const lines=wrapSpeechText(ctx,text,Math.max(24,maxWidth-pad*2));
+  const w=Math.min(maxWidth,Math.ceil(Math.max(140,headerWidth,...lines.map(line=>ctx.measureText(line).width))+pad*2));
+  const textTop=headers.length?24+headers.length*nameFont*1.3+12:24;
+  const h=Math.ceil(textTop+lines.length*lineH+18);
+  const left=Math.max(bounds.left+margin,Math.min(bounds.right-w-margin,screenX-w/2));
+  const minTop=(bounds.top||0)+margin,maxBottom=(bounds.bottom||WORLD_HEIGHT)-margin;
+  const top=Math.max(minTop,Math.min(maxBottom-h,screenY-h-36));
+  const below=opts.tail&&screenY<top+h/2;
+  const tailX=Math.max(left+42,Math.min(left+w-42,screenX));
+  const tipX=Math.max(bounds.left+margin,Math.min(bounds.right-margin,screenX));
+  const tipY=below?Math.max(minTop,Math.min(top-12,screenY+12)):Math.min(maxBottom,Math.max(top+h+12,screenY-12));
+  const r=28,paper='#fff8e9';
+  // A single outline keeps the rounded body and tail seamless.
+  const shape=()=>{
+    ctx.beginPath();ctx.moveTo(left+r,top);
+    if(opts.tail&&below){ctx.lineTo(tailX-14,top);ctx.quadraticCurveTo(tailX-12,top-8,tipX,tipY);ctx.lineTo(tailX+16,top);}
+    ctx.lineTo(left+w-r,top);ctx.quadraticCurveTo(left+w,top,left+w,top+r);
+    ctx.lineTo(left+w,top+h-r);ctx.quadraticCurveTo(left+w,top+h,left+w-r,top+h);
+    if(opts.tail&&!below){ctx.lineTo(tailX+16,top+h);ctx.quadraticCurveTo(tailX+10,top+h+12,tipX,tipY);ctx.lineTo(tailX-14,top+h);}
+    ctx.lineTo(left+r,top+h);ctx.quadraticCurveTo(left,top+h,left,top+h-r);
+    ctx.lineTo(left,top+r);ctx.quadraticCurveTo(left,top,left+r,top);ctx.closePath();
   };
-  ctx.shadowColor = '#100a16aa'; ctx.shadowBlur = 0; ctx.shadowOffsetX=7;ctx.shadowOffsetY = 8;
-  shape(); ctx.fillStyle = paper; ctx.fill();
-  ctx.shadowColor = 'transparent';
-  ctx.strokeStyle = '#17101c'; ctx.lineWidth = 3;
-  shape();ctx.stroke();
-  if (opts.tail) {
-    ctx.fillStyle=paper;ctx.beginPath();ctx.moveTo(tipX-14,top+h-3);ctx.lineTo(tipX+2,top+h+tailLen);ctx.lineTo(tipX+16,top+h-3);ctx.fill();
-    ctx.beginPath();ctx.moveTo(tipX-14,top+h);ctx.lineTo(tipX+2,top+h+tailLen);ctx.lineTo(tipX+16,top+h);ctx.stroke();
+  // One small entrance bounce, never a continuous wobble.
+  if(opts.animate!==false)ctx.translate(0,-Math.sin(progress*Math.PI)*9);
+  ctx.shadowColor='#24172538';ctx.shadowBlur=8;ctx.shadowOffsetX=3;ctx.shadowOffsetY=6;
+  shape();ctx.fillStyle=paper;ctx.fill();
+  ctx.shadowColor='transparent';ctx.strokeStyle='#352b36';ctx.lineWidth=3;ctx.stroke();
+  if(headers.length){
+    ctx.fillStyle=accent;ctx.beginPath();ctx.arc(left+pad+4,top+24+nameFont*.5,4,0,Math.PI*2);ctx.fill();
+    ctx.font=`700 ${nameFont}px "Yu Gothic UI", Meiryo, sans-serif`;ctx.textBaseline='top';ctx.fillStyle=ink;
+    headers.forEach((line,i)=>ctx.fillText(line,left+pad+18,top+24+i*nameFont*1.3));
   }
-  rect(ctx,left+10,top+8,w-22,4,accent);
-  const textTop = header ? 62 : 18;
-  if (header) {
-    ctx.fillStyle=accent;ctx.beginPath();ctx.moveTo(left+pad+4,top+22);ctx.lineTo(left+pad+11,top+22);ctx.lineTo(left+pad+7,top+46);ctx.lineTo(left+pad,top+46);ctx.closePath();ctx.fill();
-    ctx.font='700 24px "Yu Gothic UI", Meiryo, sans-serif';ctx.textBaseline='middle';ctx.fillStyle=ink;ctx.fillText(header,left+pad+19,top+34);
-  }
-  ctx.font=`500 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;ctx.fillStyle=ink;ctx.textBaseline='top';
-  lines.forEach((line,index)=>ctx.fillText(line,left+pad,top+textTop+index*lineH));
+  ctx.font=`600 ${font}px "Yu Gothic UI", Meiryo, sans-serif`;ctx.fillStyle=ink;ctx.textBaseline='top';
+  lines.forEach((line,i)=>ctx.fillText(line,left+pad,top+textTop+i*lineH));
   ctx.restore();
 }
