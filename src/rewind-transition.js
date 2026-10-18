@@ -27,7 +27,7 @@ export function rewindBeat(t,attempt=1,afterFire=false,chapter=1){
     }else{text=t<2?'嘘だろ……。':'俺が……俺のせいで……。';kind='inner';}
   }
   if(phase==='dark'&&afterFire){text=attempt===1?(t<1.1?'ドクン……':t<2.35?'ドクンッ！！':'くそっ！俺も煙を吸い過ぎたか…意識が…'):'……もう一度、やり直せるなら。';kind='inner';}
-  if(phase==='dark'&&chapter===2){text=t<2.35?'':'……もう一度、やり直せるなら。';kind='inner';}
+  if(phase==='dark'&&chapter===2){text=t<2.35?'':attempt===1?'……ルナ……。':'……もう一度、やり直せるなら。';kind='inner';}
   if(phase==='clock'){
     text=repeat?'次こそは……絶対に守ってやる！':'';
     kind='inner';
@@ -36,7 +36,7 @@ export function rewindBeat(t,attempt=1,afterFire=false,chapter=1){
 }
 export function rewindTransitionHTML(failure,attempt=1,afterFire=false,chapter=1){
   const restored=chapter===2?'assets/apartments.png':'assets/rooms/cat/interior-illustrated-v1.png';
-  return `<section class="act-screen rewind-screen" data-rewind-phase="${afterFire?'dark':'fire'}" data-chapter="${chapter}" ${afterFire?'data-after-fire':''}>${afterFire?'':fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${afterFire?'……もう一度、やり直せるなら。':attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="${restored}" alt="${chapter===2?'元に戻ったけもの荘':'元に戻った101号室'}">${attempt===1?'':'<button class="rewind-skip" data-rewind-skip>スキップ →</button>'}<p class="rewind-continue" hidden>クリックで続ける →</p><div class="rewind-white-fade" aria-hidden="true"></div></section>`;
+  return `<section class="act-screen rewind-screen" data-rewind-phase="${afterFire?'dark':'fire'}" data-chapter="${chapter}" ${afterFire?'data-after-fire':''}>${afterFire?'':fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${chapter===2&&attempt===1?'':afterFire?'……もう一度、やり直せるなら。':attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="${restored}" alt="${chapter===2?'元に戻ったけもの荘':'元に戻った101号室'}">${attempt===1?'':'<button class="rewind-skip" data-rewind-skip>スキップ →</button>'}<p class="rewind-continue" hidden>クリックで続ける →</p><div class="rewind-white-fade" aria-hidden="true"></div></section>`;
 }
 
 export function startRewindTransition(root,failure,finish,sound,attempt=1,targetTime=17,afterFire=false,clockAudio=null){

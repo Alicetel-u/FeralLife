@@ -71,6 +71,26 @@ test('preface holds long enough to read, pauses while hidden, and cancels withou
  click();assert.equal(completed,0);
  doc.hidden=true;visibility();assert.equal(clock.paused,true);assert.ok(classes.has('preface-paused'));
  doc.hidden=false;visibility();assert.equal(clock.paused,false);
- clock.currentTime=1600;click();resolve();await Promise.resolve();assert.equal(completed,1);assert.equal(visibility,null);assert.equal(click,null);stop();
+ clock.currentTime=1600;click();assert.equal(completed,0);
+ clock.currentTime=2999;click();assert.equal(completed,0);
+ clock.currentTime=3000;click();resolve();await Promise.resolve();assert.equal(completed,1);assert.equal(visibility,null);assert.equal(click,null);stop();
  clock.finished=new Promise((yes,no)=>{reject=no;});const cancel=startStalkerPreface(root,()=>completed++);cancel();reject(Error('cancelled'));await Promise.resolve();assert.equal(completed,1);
+});
+
+
+test('second-act rewind keeps tense Luna portraits and the apartment exterior',()=>{
+ const {state}=tragedy(),next=rewindActTwo(state),event=next.events.find(e=>e.actScene==='act2-rewind');
+ const lines=eventConversation(event);
+ for(let i=0;i<lines.length;i++){
+  const html=eventStageHTML(event,[],i);
+  assert.match(html,/data-character="hostess"/);
+  assert.ok(!html.includes('fullbody-art'));
+  assert.ok(!/data-emotion="(?:happy|shy)" data-character="hostess"/.test(html));
+ }
+ assert.match(eventStageHTML(event,[],0),/data-emotion="surprised" data-character="hostess"/);
+ const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
+ assert.ok(app.includes("['bag','act2-rewind'].includes(e.actScene)&&state.actOne?.chapter===2?'data-act-two-stalker-exterior'"));
+ assert.equal(rewindBeat(3,1,true,2).text,'……ルナ……。');
+ assert.ok(!rewindTransitionHTML('bag-guarantee',1,true,2).includes('もう一度、やり直せるなら'));
+ assert.ok(!eventConversation(tragedy().event).some(l=>l.text.includes('息が続かない')));
 });

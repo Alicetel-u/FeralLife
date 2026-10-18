@@ -12,7 +12,8 @@ export function safeStalkerLine(line){
   'ルナは動かない。':'背後で、床が小さくきしんだ。',
   '大家が立ち上がろうとした、その瞬間。鈍い衝撃音が響く。':'振り返るより早く、背後から鈍い衝撃が走った。',
   '……カチッ。':'何も、見えない。',
-  '暗闇の中で時計の針が逆回転を始める。':'声を出そうとしても、息が続かない。',
+  '暗闇の中で時計の針が逆回転を始める。':'何が起きたのか、考えることさえできない。',
+  '声を出そうとしても、息が続かない。':'何が起きたのか、考えることさえできない。',
   '針が夕暮れの18時を指すと、白い光が広がった。':'意識が、遠のいていく。',
   '血だらけのルナを見た直後、夕暮れの景色が戻っている。':'102号室の暗闇が途切れ、夕暮れの景色が戻っている。',
   '血だらけで倒れていたはずのルナが、何事もなかったように立っている。':'さっきは何度呼んでも返事がなかった。そのルナが、今は目の前で話している。'
@@ -48,7 +49,7 @@ export function startStalkerPreface(root,done){
  const sync=()=>{root.classList.toggle('preface-paused',doc.hidden);if(doc.hidden)clock.pause();else clock.play();};
  const cleanup=()=>{clock.cancel();doc.removeEventListener('visibilitychange',sync);button.removeEventListener('click',skip);};
  const finish=()=>{if(finished)return;finished=true;cleanup();done();};
- const skip=()=>{if(clock.currentTime>=1600)finish();};
+ const skip=()=>{if(clock.currentTime>=3000)finish();};
  clock.finished.then(finish,()=>{});doc.addEventListener('visibilitychange',sync);button.addEventListener('click',skip);sync();
  return ()=>{finished=true;cleanup();};
 }

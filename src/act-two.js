@@ -57,7 +57,7 @@ const FIRST_STALKER_TRAGEDY_LINES=[
       {...n('振り返るより早く、背後から鈍い衝撃が走った。'),tragedyEffect:'impact'},
       {...n('視界が揺れ、すべてが暗闇に沈んだ。'),tragedyEffect:'blackout'},
       {...n('何も、見えない。'),tragedyEffect:'blackout'},
-      {...n('声を出そうとしても、息が続かない。'),tragedyEffect:'blackout'},
+      {...n('何が起きたのか、考えることさえできない。'),tragedyEffect:'blackout'},
       {...n('意識が、遠のいていく。'),tragedyEffect:'blackout'}
     ];
 export const ACT_TWO_EVENTS={

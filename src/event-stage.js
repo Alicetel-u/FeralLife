@@ -96,7 +96,9 @@ export function eventStageHTML(event,residents,index=0,page=0,{hideCharacters=fa
   const character=(type,side)=> {
     if(hideCharacters||!type||type==='manager')return '';
     const previous=lines.slice(0,cursor+1).reverse().find(item=>item.speaker===type);
-    const emotion=eventEmotion(previous,event),expression=EVENT_EXPRESSIONS[type]?.[emotion];
+    const resolvedEmotion=eventEmotion(previous,event);
+    const emotion=type==='hostess'&&event.actScene==='act2-rewind'&&['neutral','happy','shy','tired'].includes(resolvedEmotion)?'surprised':resolvedEmotion;
+    const expression=EVENT_EXPRESSIONS[type]?.[emotion];
     const arrivalBust=event.actScene==='act2-prologue'&&type==='hostess'&&emotion==='neutral';
     const src=arrivalBust?'assets/events/busts/hostess-neutral.png':expression||EVENT_ART[type]||CHARACTER_ART[type]?.src,active=line.speaker===type;
     const bustLayout=arrivalBust||!!expression&&(type!=='hostess'||expression!==EVENT_ART.hostess); // Chapter-two arrival always uses bust portraits; other scenes preserve Luna's approved neutral full-body art.
