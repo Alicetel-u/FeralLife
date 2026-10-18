@@ -1425,3 +1425,61 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .game-ink .showcase-chapter .act-tagline{margin:6px 0;font-size:10px}
  .game-ink .showcase-chapter .act-rule{margin-bottom:4px}
 }
+
+
+/* Chapter cards: one overlapping composition, with the objective as the focal point. */
+.game-ink .showcase-chapter{height:100dvh;min-height:0;max-height:100dvh;overflow:hidden}
+.game-ink .showcase-chapter .act-title-copy{
+ position:relative;left:9%;width:76%;height:100%;min-height:0;padding:clamp(22px,4dvh,48px) 0;
+ justify-content:center;align-items:flex-start;background:none;
+}
+.showcase-chapter .showcase-plane{clip-path:polygon(49% 0,100% 0,100% 100%,27% 100%)}
+.showcase-chapter .showcase-cut{clip-path:polygon(79% 0,84% 0,59% 100%,54% 100%)}
+.showcase-chapter .showcase-word{display:none}
+.game-ink .showcase-chapter .act-title-copy:before{
+ content:'';position:absolute;z-index:-1;inset:0 -5% 0 -15%;pointer-events:none;
+ background:linear-gradient(90deg,#111116 0%,#111116e8 30%,#111116b3 47%,transparent 72%);
+}
+.game-ink .showcase-chapter .act-kicker{display:none}
+.game-ink .showcase-chapter .act-number{
+ font:1000 clamp(20px,2vw,30px)/1.3 var(--sans);letter-spacing:.12em;
+ padding:5px 18px;margin:0 0 clamp(12px,2dvh,22px);transform:rotate(-4deg);box-shadow:5px 5px 0 var(--show-red);
+}
+.game-ink .showcase-chapter h2{
+ font:1000 clamp(42px,min(7.6vw,11.8dvh),142px)/1.05 var(--sans);letter-spacing:-.065em;
+ margin:0;max-width:80%;text-shadow:4px 5px #111116;transform:rotate(-3deg);
+}
+.game-ink .showcase-chapter h2>span{font-size:1.32em;line-height:1.07;margin:3px 0;color:var(--show-red);text-shadow:3px 4px #111116}
+.game-ink .showcase-chapter .act-tagline{font-size:clamp(13px,1.3vw,20px);line-height:1.65;max-width:62%;margin:clamp(14px,2.4dvh,28px) 0 16px;color:var(--show-paper);text-shadow:1px 2px #111116}
+.game-ink .showcase-chapter .act-rule{font-size:12px;padding:9px 12px;gap:20px;margin:0 0 16px;background:#111116dc}
+.game-ink .showcase-chapter .act-rule b{font-size:15px}
+.game-ink .showcase-chapter .act-primary{font-size:clamp(15px,1.35vw,21px);min-height:50px;padding:12px 24px;margin:0;transform:rotate(-2deg)}
+.game-ink .showcase-chapter .act-key-art{
+ inset:0 -5% auto auto;width:65%;height:110%;object-fit:contain;object-position:center top;opacity:1;z-index:2;
+ mask-image:linear-gradient(90deg,transparent,#000 9% 100%);filter:drop-shadow(-3px 0 #fff5e7) drop-shadow(9px 8px #111116);
+}
+@media(max-width:700px){
+ .game-ink .showcase-chapter .act-title-copy{left:6%;width:92%;height:100%;min-height:0;padding:max(25px,env(safe-area-inset-top,0px)) 0 max(24px,env(safe-area-inset-bottom,0px));justify-content:center}
+ .game-ink .showcase-chapter .act-title-copy:before{inset:0 -4% 0 -8%;background:linear-gradient(90deg,#111116f2 0%,#111116c9 32%,#11111650 66%,#11111608 100%)}
+ .showcase-chapter .showcase-plane{clip-path:polygon(48% 0,100% 0,100% 100%,4% 100%)}
+ .showcase-chapter .showcase-cut{clip-path:polygon(90% 0,100% 0,50% 100%,40% 100%)}
+ .game-ink .showcase-chapter .act-key-art{inset:3% -43% auto auto;width:132%;height:103%;object-fit:cover;object-position:center top;mask-image:linear-gradient(#000 84%,transparent);filter:drop-shadow(-2px 0 #fff5e7)}
+ .game-ink .showcase-chapter .act-number{font-size:20px;padding:4px 12px;margin-bottom:18px}
+ .game-ink .showcase-chapter h2{font-size:clamp(38px,min(14vw,9.2dvh),72px);max-width:94%;line-height:1.1}
+ .game-ink .showcase-chapter h2>span{font-size:1.35em;line-height:1.14;margin:5px 0}
+ .game-ink .showcase-chapter .act-tagline{font-size:12px;line-height:1.7;max-width:86%;margin:22px 0 16px}
+ .game-ink .showcase-chapter .act-rule{font-size:9px;gap:12px;padding:7px 10px;margin-bottom:18px}
+ .game-ink .showcase-chapter .act-rule b{font-size:11px}
+ .game-ink .showcase-chapter .act-primary{font-size:14px;min-height:48px;padding:11px 18px;max-width:94%}
+}
+@media(max-height:550px){
+ .game-ink .showcase-chapter .act-title-copy{left:7%;width:80%;padding:16px 0;justify-content:center}
+ .game-ink .showcase-chapter .act-number{font-size:15px;padding:3px 12px;margin-bottom:8px}
+ .game-ink .showcase-chapter h2{font-size:clamp(30px,9.2dvh,55px);line-height:1.02}
+ .game-ink .showcase-chapter h2>span{margin:0;font-size:1.2em;line-height:1.05}
+ .game-ink .showcase-chapter .act-tagline{font-size:11px;margin:10px 0;max-width:65%}
+ .game-ink .showcase-chapter .act-rule{font-size:9px;padding:5px 8px;margin-bottom:10px}
+ .game-ink .showcase-chapter .act-rule b{font-size:10px}
+ .game-ink .showcase-chapter .act-primary{font-size:12px;min-height:44px;padding:9px 16px}
+ .game-ink .showcase-chapter .act-key-art{width:63%;height:110%;right:-7%;top:0}
+}
