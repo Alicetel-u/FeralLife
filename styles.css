@@ -1217,3 +1217,169 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @keyframes stalker-ink-spread{from{opacity:0;transform:scale(1.65)}35%{opacity:.35}to{opacity:.85;transform:scale(1.02)}}
 @media(max-width:700px){.stalker-preface-copy{font-size:clamp(16px,4vw,23px);letter-spacing:.02em;padding:20px 12px}.stalker-preface-copy span{max-width:19em}}
 @media(prefers-reduced-motion:reduce){.first-stalker-preface *,.first-stalker-preface:after{animation:none!important}.first-stalker-preface:after{display:none}.first-stalker-ink{animation:none!important}}
+/* Story screens, edition 02. Scoped so dialogue and TROUBLE AVOIDED stay untouched. */
+.game-ink .showcase-screen{--show-red:#ed2448;--show-paper:#fff5e7;--show-black:#111116;position:relative;isolation:isolate;min-height:100dvh;height:auto;background:var(--show-black);color:var(--show-paper);overflow:hidden;font-family:Arial,"Noto Sans JP",sans-serif}
+.game-ink .showcase-screen::before,.game-ink .showcase-screen::after{display:none!important}
+.showcase-geometry{position:absolute;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+.showcase-plane{position:absolute;inset:-10%;background:var(--show-red);clip-path:polygon(63% 0,100% 0,100% 100%,35% 100%)}
+.showcase-cut{position:absolute;inset:-5%;background:var(--show-paper);clip-path:polygon(91% 0,96% 0,63% 100%,58% 100%)}
+.showcase-dots{position:absolute;inset:0;background-image:radial-gradient(#fff6 1px,transparent 1.2px);background-size:6px 6px;opacity:.12;mask-image:linear-gradient(115deg,transparent 36%,#000 70%)}
+.showcase-word{position:absolute;right:-.07em;top:8%;width:65%;font:1000 italic clamp(110px,19vw,310px)/.8 "Arial Black",Arial,sans-serif;letter-spacing:-.07em;color:transparent;-webkit-text-stroke:2px #fff5e759;transform:rotate(-10deg);overflow-wrap:normal;white-space:normal}
+.showcase-mast,.showcase-footer{position:absolute;left:5vw;right:4vw;display:flex;justify-content:space-between;align-items:center;gap:20px;z-index:8;pointer-events:none;font:900 10px/1.4 Arial,sans-serif;letter-spacing:.16em}
+.showcase-mast{top:24px;padding-bottom:12px;border-bottom:1px solid #fff5e74d}
+.showcase-mast span{background:var(--show-paper);color:var(--show-black);padding:5px 10px;transform:skew(-10deg)}
+.showcase-mast b{font-size:9px;letter-spacing:.12em}
+.showcase-footer{bottom:18px;font-size:8px;color:#fff5e799;letter-spacing:.12em}
+.showcase-footer b{font:900 italic 24px/1 Arial,sans-serif;color:var(--show-paper)}
+.showcase-wipe{position:absolute;inset:-10%;z-index:30;pointer-events:none;background:var(--show-paper);clip-path:polygon(0 0,100% 0,80% 100%,0 100%);animation:showcase-wipe .62s cubic-bezier(.7,0,.15,1) both}
+@keyframes showcase-wipe{from{transform:translateX(0)}to{transform:translateX(-125%)}}
+@keyframes showcase-copy-in{from{opacity:0;transform:translate(-24px,8px)}to{opacity:1;transform:none}}
+@keyframes showcase-art-in{from{opacity:0;translate:7% 0}to{opacity:1;translate:0 0}}
+.game-ink .showcase-screen .act-primary,.game-ink .showcase-screen .act-secondary{position:relative;z-index:5;width:fit-content;max-width:100%;min-height:52px;padding:15px 24px;border:0;border-radius:0;clip-path:polygon(4% 0,100% 0,96% 100%,0 100%);background:var(--show-paper);color:var(--show-black);font:900 clamp(13px,1.2vw,17px)/1.5 var(--sans);letter-spacing:.04em;box-shadow:none;transform:rotate(-2deg);transition:background .16s,color .16s,translate .16s;cursor:pointer;text-align:left}
+.game-ink .showcase-screen .act-primary:hover,.game-ink .showcase-screen .act-primary:focus-visible{background:var(--show-red);color:white;translate:6px 0;outline:3px solid var(--show-paper);outline-offset:3px}
+.game-ink .showcase-screen .act-secondary{background:transparent;color:var(--show-paper);border-bottom:1px solid #fff7;clip-path:none;font-size:12px;padding:12px 0;transform:none;margin-top:8px}
+.game-ink .showcase-screen .act-secondary:focus-visible{outline:3px solid var(--show-red);outline-offset:4px}
+/* Main title: the logo and actions own the left half, the cast owns the right. */
+.game-ink .showcase-title{height:100dvh;min-height:600px}
+.showcase-title .title-city{filter:grayscale(1) contrast(1.4) brightness(.35);opacity:.2}
+.showcase-title .title-slash{background:var(--show-red);clip-path:polygon(64% 0,100% 0,100% 100%,31% 100%)}
+.showcase-title .title-slash:after{background:repeating-linear-gradient(125deg,transparent 0 12px,#11111618 12px 14px)}
+.showcase-title .showcase-plane{display:none}
+.showcase-title .showcase-word{top:38%;right:-13%;font-size:18vw;width:64%;-webkit-text-stroke:2px #11111655;transform:rotate(-12deg)}
+.showcase-title .title-cast{z-index:1;animation:showcase-art-in .65s .12s both}
+.showcase-title .title-moku{inset:15% -4% auto auto;width:61%;height:99%;object-fit:contain;object-position:center top;filter:drop-shadow(-5px 0 0 #fff5e7) drop-shadow(12px 10px 0 #111116);mask-image:linear-gradient(#000 78%,transparent 100%)}
+.showcase-title .title-support{background:var(--show-paper);border:5px solid var(--show-black);clip-path:polygon(8% 0,100% 0,91% 100%,0 100%);box-shadow:8px 8px 0 #111116;z-index:0}
+.showcase-title .title-support img{height:160%;filter:grayscale(1) contrast(1.13)}
+.showcase-title .title-luna{top:10%;right:1%;width:20%;height:27%;transform:rotate(7deg)}
+.showcase-title .title-nemu{top:8%;right:33%;width:17%;height:26%;transform:rotate(-8deg)}
+.showcase-title .title-poster{width:56%;padding:96px 0 76px 6vw;justify-content:center;background:none;z-index:3;animation:showcase-copy-in .55s .1s both}
+.showcase-title .title-label{background:var(--show-paper);color:var(--show-black);border:0;padding:7px 12px;transform:rotate(-3deg);letter-spacing:.12em;font-size:10px;margin-bottom:18px}
+.game-ink .showcase-title h2.title-logo{font:1000 clamp(76px,9vw,150px)/1.04 var(--sans);letter-spacing:-.095em;color:var(--show-paper);transform:rotate(-6deg);text-shadow:6px 7px 0 #111116,-2px -2px 0 #111116}
+.showcase-title .title-logo-last{color:var(--show-red);background:var(--show-paper);padding:0 .09em .05em}
+.showcase-title .title-logo small{font-size:clamp(12px,1.4vw,20px);letter-spacing:.06em;margin-top:14px;line-height:1.7;text-shadow:2px 2px #111116}
+.showcase-title .title-hook{font-size:clamp(12px,1.15vw,17px);line-height:1.8;margin:24px 0 20px;color:var(--show-paper)}
+.showcase-title .title-hook strong{display:inline-block;background:var(--show-red);padding:1px 8px;transform:rotate(-2deg);font-size:1.25em;margin-top:3px}
+.showcase-title .title-actions{width:min(370px,91%);gap:6px;margin:0;transform:rotate(-3deg);animation:none}
+.game-ink .showcase-title .title-actions button{background:var(--show-paper);color:var(--show-black);border:0;clip-path:polygon(3% 0,100% 0,96% 100%,0 100%);min-height:55px;padding:10px 22px;font-size:22px;box-shadow:none;transition:translate .15s,background .15s,color .15s}
+.showcase-title .title-actions b{opacity:1;color:var(--show-red);font-size:22px}
+.showcase-title .title-actions small{font-size:8px;letter-spacing:.12em}
+.game-ink .showcase-title .title-actions button:hover,.game-ink .showcase-title .title-actions button:focus{background:var(--show-red);color:white;transform:none;translate:10px 0}
+.showcase-title .title-actions button:focus b,.showcase-title .title-actions button:hover b{color:var(--show-paper)}
+.showcase-title .title-record{font-size:9px;margin-top:16px;color:#fff5e7bb}
+.showcase-title .title-edge{right:2%;bottom:12%;top:auto;color:var(--show-black);font-size:15px;letter-spacing:.17em;z-index:2;transform:rotate(8deg)}
+.showcase-title .title-credit{display:none}
+/* Chapter cards: oversized issue number, a named resident, an unmistakable objective. */
+.game-ink .showcase-chapter .act-title-copy{width:60%;min-height:100dvh;padding:110px 4vw 86px 7vw;background:linear-gradient(90deg,#111116 60%,#11111600);justify-content:center;z-index:4;animation:showcase-copy-in .5s .12s both}
+.game-ink .showcase-chapter .act-kicker{font-size:10px;letter-spacing:.12em;color:#fff5e7aa;margin:0 0 16px}
+.game-ink .showcase-chapter .act-number{width:fit-content;padding:5px 18px;margin:0 0 20px;background:var(--show-paper);color:var(--show-black);font:1000 25px/1.3 var(--sans);border:0;transform:rotate(-5deg);box-shadow:6px 6px 0 var(--show-red)}
+.game-ink .showcase-chapter h2{font:1000 clamp(32px,4.4vw,73px)/1.22 var(--sans);letter-spacing:-.045em;text-shadow:4px 4px var(--show-black);margin:0}
+.game-ink .showcase-chapter h2>span{display:block;color:var(--show-red);font-size:1.3em;text-shadow:2px 2px var(--show-black)}
+.game-ink .showcase-chapter .act-moku,.game-ink .showcase-chapter .act-resident{font-size:.4em;color:var(--show-paper);vertical-align:middle;letter-spacing:0}
+.game-ink .showcase-chapter .act-tagline{font:500 clamp(12px,1.1vw,16px)/1.9 var(--sans);color:#fff5e7cc;margin:24px 0;max-width:35em}
+.game-ink .showcase-chapter .act-rule{width:fit-content;padding:10px 14px;border:1px solid #fff5e744;border-left:4px solid var(--show-red);background:#111116;transform:rotate(-2deg);gap:16px;font-size:10px;margin-bottom:22px;color:#fff5e7aa}
+.game-ink .showcase-chapter .act-rule b{font-size:12px;color:var(--show-paper)}
+.game-ink .showcase-chapter .act-key-art{inset:9% -10% auto auto;height:98%;width:65%;object-fit:contain;object-position:center top;opacity:1;z-index:2;mask-image:linear-gradient(90deg,transparent 0,#000 13% 90%,transparent),linear-gradient(#000 83%,transparent);mask-composite:intersect;filter:drop-shadow(-5px 0 0 #fff5e7) drop-shadow(12px 8px 0 #111116);animation:showcase-art-in .6s .15s both}
+.showcase-chapter .showcase-word{font-size:41vw;top:4%;right:1%;width:auto;line-height:.8;-webkit-text-stroke:3px #fff5e785}
+.showcase-chapter .act-title-fire{opacity:.17!important;mix-blend-mode:screen;z-index:1;pointer-events:none}
+.showcase-chapter .title-embers{display:none}
+/* Results use the same system, with clear success/failure silhouettes. */
+.game-ink .showcase-bad .act-ending-copy,.game-ink .showcase-clear .act-ending-copy{position:relative;z-index:4;min-height:100dvh;width:62%;max-width:880px;padding:105px 5vw 90px 7vw;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(90deg,#111116 72%,#11111600);animation:showcase-copy-in .5s .1s both}
+.game-ink .showcase-bad .act-ending-copy h2,.game-ink .showcase-clear .act-ending-copy h2{font:1000 clamp(42px,7.4vw,112px)/1.12 var(--sans);letter-spacing:-.06em;margin:18px 0 25px;color:var(--show-paper);text-shadow:5px 5px var(--show-red);transform:rotate(-4deg);overflow-wrap:anywhere}
+.game-ink .showcase-bad .act-kicker,.game-ink .showcase-clear .act-kicker{width:fit-content;display:block;border:0;background:var(--show-red);color:var(--show-paper);padding:6px 12px;transform:rotate(-3deg);font:900 10px/1.6 var(--sans);letter-spacing:.1em;margin:0 0 12px}
+.game-ink .showcase-bad .act-ending-story,.game-ink .showcase-clear .act-ending-story{font-size:clamp(14px,1.4vw,20px);line-height:1.9;margin:0 0 22px;max-width:34em;color:var(--show-paper)}
+.game-ink .showcase-bad .act-clue{border:0;border-left:3px solid var(--show-red);padding:12px 16px;background:#fff5e70d;color:#fff5e7cf;max-width:38em;font-size:12px;line-height:1.9;margin:0 0 18px}
+.showcase-bad .act-clue:before{content:"NEXT / 次の手がかり";display:block;font:900 9px/1.8 var(--sans);letter-spacing:.12em;color:#ff6c85;margin-bottom:5px}
+.game-ink .showcase-bad .act-loop-reveal{font-size:12px;line-height:1.8;margin:0 0 20px;border:0;padding:0;background:none;color:#fff5e7b3}
+.showcase-bad .act-loop-reveal small{color:#fff5e7;font-size:11px}
+.game-ink .showcase-screen .ending-character{inset:12% -9% auto auto;width:62%;height:95%;object-fit:contain;object-position:center top;z-index:2;opacity:1;mask-image:linear-gradient(#000 78%,transparent);filter:drop-shadow(-5px 0 0 #fff5e7) drop-shadow(12px 10px #111116);animation:showcase-art-in .6s .12s both}
+.showcase-bad .showcase-word{font-size:17vw;top:15%;right:-13%;width:63%;line-height:.86;transform:rotate(-12deg)}
+.game-ink .showcase-bad .ending-building,.game-ink .showcase-bad .burned-apartment{inset:0;opacity:.35;mask-image:none;transform:none;z-index:1}
+.game-ink .showcase-bad .ending-building img,.game-ink .showcase-bad .burned-apartment img{filter:grayscale(1) contrast(1.4) brightness(.35)}
+.showcase-clear .showcase-plane{background:var(--show-paper);clip-path:polygon(66% 0,100% 0,100% 100%,35% 100%)}
+.showcase-clear .showcase-cut{background:var(--show-red)}
+.showcase-clear .showcase-word{color:var(--show-red);-webkit-text-stroke:0;top:16%;right:-12%;font-size:18vw;transform:rotate(-12deg)}
+.game-ink .showcase-clear .act-ending-copy h2{text-shadow:5px 5px var(--show-red)}
+.showcase-clear .showcase-mast b,.showcase-clear .showcase-footer b{color:var(--show-black)}
+/* Cinematics retain their authored action and timing, framed as moving graphic posters. */
+.showcase-fire .showcase-geometry,.showcase-debt .showcase-geometry{z-index:2;opacity:.72}
+.showcase-fire .showcase-plane{background:#111116;clip-path:polygon(0 0,17% 0,0 100%)}
+.showcase-fire .showcase-cut{background:var(--show-red);clip-path:polygon(0 0,2% 0,0 80%)}
+.showcase-fire .showcase-word{top:13%;right:-2%;width:auto;font-size:20vw;opacity:.3;-webkit-text-stroke:2px var(--show-paper);transform:rotate(-9deg)}
+.showcase-fire .fire-letterbox{background:var(--show-black);height:7vh}
+.game-ink .showcase-fire .fire-narration{left:6%;right:12%;bottom:10%;width:fit-content;max-width:80%;padding:15px 24px;border:0;border-left:6px solid var(--show-red);background:#111116ef;color:var(--show-paper);transform:rotate(-2deg);font:800 clamp(14px,2vw,25px)/1.8 var(--sans);z-index:6}
+.showcase-fire .fire-skip,.showcase-debt .debt-next,.showcase-rewind .rewind-skip{z-index:9;border:0;background:var(--show-paper);color:var(--show-black);padding:12px 20px;min-height:44px;font-weight:900;transform:rotate(-3deg)}
+.showcase-fire .showcase-mast,.showcase-debt .showcase-mast,.showcase-rewind .showcase-mast{top:20px}
+.showcase-debt .showcase-plane{background:#111116;clip-path:polygon(0 0,40% 0,12% 100%,0 100%)}
+.showcase-debt .showcase-cut{background:var(--show-red);clip-path:polygon(70% 0,78% 0,44% 100%,36% 100%)}
+.showcase-debt .showcase-word{font-size:24vw;top:18%;right:-4%;width:82%;opacity:.38;-webkit-text-stroke:2px var(--show-paper)}
+.showcase-debt .debt-building img{filter:grayscale(1) contrast(1.3) brightness(.4)}
+.showcase-debt .debt-sign{z-index:4;left:10%;top:27%;width:65%;padding:28px 35px;background:var(--show-paper);color:var(--show-black);border:0;border-left:14px solid var(--show-red);box-shadow:16px 16px 0 #111116;transform:rotate(-7deg);animation:showcase-copy-in .55s .1s both}
+.showcase-debt .debt-sign h2{font:1000 italic clamp(50px,10vw,150px)/1 var(--sans);letter-spacing:-.06em;color:var(--show-red);margin:12px 0}
+.showcase-debt .debt-sign small{color:var(--show-black);font-size:10px;font-weight:900;letter-spacing:.12em}
+.showcase-debt .debt-sign p{color:var(--show-black);font-size:22px;font-weight:1000}
+.showcase-debt .debt-seal{z-index:5;right:9%;bottom:20%;font-size:clamp(25px,4vw,65px);border:6px solid var(--show-red);color:var(--show-red);transform:rotate(12deg);background:#111116e6;box-shadow:5px 5px 0 #fff5e733}
+.showcase-debt .debt-caption{z-index:6;bottom:12%;font-size:12px;letter-spacing:.22em;color:var(--show-paper)}
+.showcase-debt .debt-papers{z-index:3;opacity:.55}
+.showcase-rewind .showcase-geometry{z-index:2;opacity:.25}
+.showcase-rewind .showcase-plane{background:var(--show-red);clip-path:polygon(0 0,9% 0,0 60%)}
+.showcase-rewind .showcase-cut{clip-path:polygon(98% 0,100% 0,100% 100%,90% 100%);background:var(--show-paper)}
+.showcase-rewind .showcase-word{top:35%;right:-12%;width:120%;font-size:22vw;white-space:nowrap;opacity:.5}
+.showcase-rewind .rewind-clock{z-index:3}
+.showcase-rewind .rewind-voice{z-index:6}
+.showcase-rewind .rewind-white-fade{z-index:20}
+.showcase-rewind .showcase-mast,.showcase-rewind .showcase-footer{opacity:.65}
+.showcase-rewind[data-rewind-phase="return"] .showcase-geometry{opacity:0}
+.showcase-screen.debt-hidden *{animation-play-state:paused!important}
+/* Small screens get an actual cover-and-copy composition, not a shrunken desktop poster. */
+@media(max-width:700px){
+ .game-ink .showcase-screen{min-height:100dvh;overflow-x:clip}
+ .showcase-mast{top:16px;left:20px;right:20px;font-size:8px;gap:8px}.showcase-mast b{font-size:7px}.showcase-footer{left:20px;right:20px;bottom:14px;font-size:6px;letter-spacing:.03em}.showcase-footer b{font-size:20px}
+ .game-ink .showcase-title{height:auto;min-height:100dvh}
+ .showcase-title .title-poster{min-height:100dvh;width:100%;height:auto;padding:88px 25px 76px;justify-content:flex-start;background:linear-gradient(0deg,#111116 10%,transparent 58%)}
+ .showcase-title .title-label{font-size:8px;margin-bottom:12px;max-width:90%;letter-spacing:.03em}
+ .game-ink .showcase-title h2.title-logo{font-size:clamp(65px,20vw,105px);line-height:1.1;letter-spacing:-.1em}
+ .showcase-title .title-logo small{font-size:11px;letter-spacing:0;margin-top:12px}
+ .showcase-title .title-hook{font-size:11px;margin:18px 0 0;max-width:65%;text-shadow:2px 2px #111116}
+ .showcase-title .title-moku{inset:20% -22% auto auto;width:96%;height:68dvh;max-height:650px;filter:drop-shadow(-3px 0 var(--show-paper)) drop-shadow(6px 7px var(--show-black))}
+ .showcase-title .title-support{display:none}.showcase-title .title-edge{display:none}
+ .showcase-title .title-actions{margin-top:clamp(100px,20dvh,180px);width:100%;max-width:none;gap:7px}
+ .game-ink .showcase-title .title-actions button{min-height:53px;font-size:20px;padding:10px 20px}
+ .showcase-title .title-record{font-size:8px;margin-top:17px}.showcase-title .showcase-word{font-size:40vw;width:85%;top:39%;right:-25%}
+ .game-ink .showcase-chapter .act-title-copy{width:100%;padding:43dvh 25px 85px;min-height:100dvh;justify-content:flex-start;background:linear-gradient(0deg,#111116 0 55%,#11111600 72%)}
+ .game-ink .showcase-chapter .act-key-art{inset:6% -14% auto auto;height:49dvh;width:105%;opacity:1;mask-image:linear-gradient(#000 70%,transparent);filter:drop-shadow(-3px 0 var(--show-paper));object-position:65% top}
+ .showcase-chapter .showcase-word{top:9%;font-size:68vw;right:7%}
+ .game-ink .showcase-chapter .act-kicker{font-size:8px;margin-bottom:12px}
+ .game-ink .showcase-chapter .act-number{font-size:19px;padding:5px 15px;margin-bottom:15px}
+ .game-ink .showcase-chapter h2{font-size:clamp(29px,8.3vw,48px);line-height:1.2;max-width:100%}
+ .game-ink .showcase-chapter .act-tagline{font-size:12px;margin:19px 0}
+ .game-ink .showcase-chapter .act-rule{font-size:9px;gap:8px;margin-bottom:20px;padding:8px 10px}.game-ink .showcase-chapter .act-rule b{font-size:10px}
+ .game-ink .showcase-screen .act-primary{font-size:13px;min-height:50px;padding:13px 18px;line-height:1.6}
+ .game-ink .showcase-bad .act-ending-copy,.game-ink .showcase-clear .act-ending-copy{width:100%;max-width:none;padding:40dvh 25px 85px;min-height:100dvh;justify-content:flex-start;background:linear-gradient(0deg,#111116 0 55%,#11111600 72%)}
+ .game-ink .showcase-bad:not(:has(.ending-character)) .act-ending-copy{padding-top:27dvh;background:linear-gradient(0deg,#111116 55%,#11111688)}
+ .game-ink .showcase-screen .ending-character{inset:7% -12% auto auto;width:105%;height:48dvh;opacity:1;object-position:65% top;mask-image:linear-gradient(#000 73%,transparent);filter:drop-shadow(-3px 0 var(--show-paper))}
+ .game-ink .showcase-bad .act-ending-copy h2,.game-ink .showcase-clear .act-ending-copy h2{font-size:clamp(41px,12vw,70px);line-height:1.15;margin:12px 0 24px}
+ .game-ink .showcase-bad .act-ending-story,.game-ink .showcase-clear .act-ending-story{font-size:14px;line-height:1.9;margin-bottom:19px}
+ .game-ink .showcase-bad .act-clue{font-size:11px;line-height:1.9;padding:10px 13px}
+ .showcase-bad .showcase-word,.showcase-clear .showcase-word{top:13%;font-size:30vw;right:-17%;width:93%}
+ .showcase-clear .showcase-plane{clip-path:polygon(75% 0,100% 0,100% 100%,0 55%)}
+ .showcase-fire .showcase-word{font-size:34vw;top:18%}
+ .game-ink .showcase-fire .fire-narration{left:5%;right:5%;max-width:90%;bottom:16%;font-size:15px;padding:12px 16px}
+ .showcase-fire .fire-skip,.showcase-debt .debt-next{bottom:7%;right:6%;font-size:11px}
+ .showcase-debt .debt-sign{left:6%;top:30%;width:85%;padding:20px;border-left-width:9px;box-shadow:9px 9px #111116}
+ .showcase-debt .debt-sign h2{font-size:clamp(43px,13vw,85px)}.showcase-debt .debt-sign small{font-size:8px}.showcase-debt .debt-sign p{font-size:19px}
+ .showcase-debt .debt-seal{right:9%;bottom:24%;font-size:28px;border-width:4px}.showcase-debt .debt-caption{bottom:17%;font-size:9px}
+ .showcase-rewind .showcase-word{font-size:30vw;top:35%}
+}
+@media(min-width:701px) and (max-height:650px){
+ .game-ink .showcase-title{min-height:500px}.showcase-title .title-poster{padding-top:86px;padding-bottom:56px}.game-ink .showcase-title h2.title-logo{font-size:76px}.showcase-title .title-hook{margin:15px 0}.game-ink .showcase-title .title-actions button{min-height:45px;font-size:19px}.showcase-title .title-label{margin-bottom:12px}
+ .game-ink .showcase-chapter .act-title-copy,.game-ink .showcase-bad .act-ending-copy,.game-ink .showcase-clear .act-ending-copy{padding-top:90px;padding-bottom:70px}.game-ink .showcase-chapter h2{font-size:37px}.game-ink .showcase-chapter .act-tagline{margin:16px 0}.game-ink .showcase-bad .act-ending-copy h2,.game-ink .showcase-clear .act-ending-copy h2{font-size:58px}
+}
+@media(prefers-reduced-motion:reduce){.showcase-screen .showcase-wipe{display:none}.showcase-screen *{animation:none!important;transition:none!important}.showcase-screen .title-actions button:hover,.showcase-screen .title-actions button:focus,.showcase-screen .act-primary:hover{translate:none}}
+.showcase-intermission .showcase-word{font-size:23vw;top:24%;right:-10%}
+.showcase-debt .debt-sign{animation-name:showcase-placard}
+@keyframes showcase-placard{from{opacity:0;transform:translateX(-30px) rotate(-7deg) scale(1.04)}to{opacity:1;transform:rotate(-7deg) scale(1)}}
+.game-ink .trouble-card .trouble-bang{font-family:var(--sans);font-weight:1000;letter-spacing:.06em;background:#ed2448;border-color:#fff5e7;box-shadow:8px 8px 0 #111116;color:#fff5e7;text-shadow:3px 3px #111116}
+.game-ink .trouble-card .trouble-name{display:inline-block;padding:7px 18px;background:#111116ed;color:#fff5e7;font-family:var(--sans);text-shadow:none;transform:rotate(-2deg);border-left:4px solid #ed2448}
+.game-ink .trouble-card .trouble-loop{background:#fff5e7;color:#111116;border-color:#ed2448;font-family:var(--sans)}
+.game-ink dialog.act-modal:has(.showcase-screen){width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;border:0;border-radius:0;box-shadow:none}
+.game-ink .act-modal #modal-content:has(>.showcase-screen){height:100%;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#ed2448 #111116}
