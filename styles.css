@@ -1484,3 +1484,52 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 
 /* Keep the initial fire's authored full-screen shot and centered captions intact. */
 .game-ink dialog.act-modal:has(.first-tragedy-fire) #modal-content{height:100%;padding:0;overflow:hidden}
+
+
+/* Main title refinement. Preserve the approved logo; let art, contrast and motion carry the menu. */
+.game-ink .graphic-title.title-refined{height:100dvh;min-height:0;overflow:hidden;background:#100e14}
+.game-ink dialog.act-modal:has(.title-refined) #modal-content{height:100%;padding:0;overflow:hidden}
+.title-refined .title-city{filter:grayscale(1) contrast(1.2) brightness(.2);opacity:.38}
+.title-refined .title-slash{background:#c6193c;clip-path:polygon(58% 0,100% 0,100% 100%,30% 100%)}
+.title-refined .title-slash:after{background:repeating-linear-gradient(120deg,transparent 0 13px,#100e1418 13px 15px)}
+.title-refined .title-cast{animation:title-art-reveal .7s cubic-bezier(.2,.7,.2,1) both}
+.title-refined .title-moku{inset:2% -8% auto auto;width:68%;height:115%;object-fit:contain;object-position:center top;filter:drop-shadow(-3px 0 #fff1dbb3) drop-shadow(-14px 8px #100e14);mask-image:linear-gradient(#000 82%,transparent)}
+.title-refined .title-support{background:#fff1db;border:3px solid #100e14;clip-path:polygon(10% 0,100% 0,90% 100%,0 100%);opacity:.85}
+.title-refined .title-support img{height:160%;filter:grayscale(1) contrast(1.1)}
+.title-refined .title-luna{inset:5% 1% auto auto;width:16%;height:24%;transform:rotate(8deg)}
+.title-refined .title-nemu{inset:2% 33% auto auto;width:14%;height:21%;transform:rotate(-8deg)}
+.title-refined .title-poster{width:65%;height:100%;padding:clamp(24px,5dvh,60px) 0 clamp(24px,5dvh,60px) 8vw;justify-content:center;background:linear-gradient(90deg,#100e14e0,transparent 95%)}
+.title-refined .title-label{font-size:10px;letter-spacing:.12em;margin-bottom:20px;border-left-width:3px}
+.title-refined .title-hook{font-size:clamp(13px,1.25vw,19px);line-height:1.8;margin:28px 0 24px;letter-spacing:.05em;text-shadow:2px 2px #100e14}
+.title-refined .title-hook strong{display:inline-block;border-bottom:3px solid #dc2146;padding-bottom:2px}
+.title-refined .title-actions{width:min(390px,80%);gap:8px;transform:rotate(-3deg);margin:0}
+.game-ink .title-refined .title-actions button{min-height:55px;padding:9px 12px 9px 0;gap:14px;border:0;background:transparent;color:#fff1db;font:900 clamp(22px,2.25vw,32px)/1.3 var(--sans);letter-spacing:.07em;isolation:isolate;transform:none;transition:translate .18s,color .18s}
+.title-refined .title-actions button:before{content:'';position:absolute;left:-9px;right:0;bottom:2px;height:2px;background:linear-gradient(90deg,#fff1db66,transparent 90%);z-index:-1;transition:height .18s,background .18s}
+.title-refined .title-menu-mark{width:12px;height:14px;font-size:0;flex:0 0 12px;clip-path:polygon(0 0,100% 50%,0 100%);background:#ed2448;opacity:0;transform:translateX(-8px)}
+.game-ink .title-refined .title-actions button:hover,.game-ink .title-refined .title-actions button:focus{background:transparent;color:#fff1db;translate:9px 0;transform:none;border:0}
+.title-refined .title-actions button:hover:before,.title-refined .title-actions button:focus:before{height:8px;background:#d51c40;clip-path:polygon(0 35%,100% 0,97% 100%,0 100%)}
+.title-refined .title-actions button:hover .title-menu-mark,.title-refined .title-actions button:focus .title-menu-mark{opacity:1;transform:none}
+.game-ink .title-refined .title-actions button:focus-visible{outline:2px solid #fff1db;outline-offset:4px}
+.game-ink .title-refined .title-actions button:active{translate:12px 0;transform:scale(.98)}
+.title-refined .title-record{font-size:10px;letter-spacing:.04em;margin:20px 0 0;color:#fff1db99}
+@keyframes title-art-reveal{from{opacity:0;translate:45px 0}to{opacity:1;translate:0 0}}
+@media(max-width:700px){
+ .title-refined .title-slash{clip-path:polygon(60% 0,100% 0,100% 100%,10% 100%)}
+ .title-refined .title-poster{width:100%;height:100%;min-height:0;padding:max(26px,env(safe-area-inset-top,0px)) 25px max(25px,env(safe-area-inset-bottom,0px));justify-content:flex-start;background:linear-gradient(90deg,#100e1490,transparent 75%),linear-gradient(0deg,#100e14 0%,#100e14e8 12%,#100e1433 43%,transparent 64%)}
+ .title-refined .title-label{font-size:8px;letter-spacing:.08em;margin-bottom:12px}
+ .title-refined .title-moku{inset:18% -40% auto auto;width:132%;height:88%;object-fit:cover;object-position:center top;mask-image:linear-gradient(#000 80%,transparent)}
+ .title-refined .title-support{display:none}
+ .title-refined .title-hook{font-size:12px;line-height:1.7;margin:20px 0 14px;max-width:88%}
+ .title-refined .title-actions{margin-top:auto;width:77%;gap:5px;flex-shrink:0}
+ .game-ink .title-refined .title-actions button{min-height:49px;font-size:24px;padding:8px 5px 8px 0;gap:12px}
+ .title-refined .title-record{margin:14px 0 0;font-size:9px;flex-shrink:0}
+}
+@media(max-height:550px){
+ .title-refined .title-poster{padding:20px 0 20px 7vw;justify-content:center;width:66%}
+ .game-ink .title-refined h2.title-logo{font-size:clamp(50px,12dvh,80px)}
+ .title-refined .title-label,.title-refined .title-hook,.title-refined .title-record{display:none}
+ .title-refined .title-actions{margin-top:18px;gap:2px;width:75%}
+ .game-ink .title-refined .title-actions button{min-height:44px;font-size:21px;padding:6px 0}
+ .title-refined .title-moku{inset:0 -7% auto auto;width:65%;height:115%;object-fit:contain}
+}
+@media(prefers-reduced-motion:reduce){.title-refined .title-cast{animation:none}.title-refined .title-actions button,.title-refined .title-actions button:before{transition:none}}
