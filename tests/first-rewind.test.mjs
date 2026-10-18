@@ -1,6 +1,6 @@
 import{readFileSync}from'node:fs';
 import test from 'node:test';import assert from 'node:assert/strict';
-import{automaticFirstRewind,rewindBeat,rewindTransitionHTML,rewindClickAction}from'../src/rewind-transition.js';
+import{automaticFirstRewind,rewindBeat,rewindTransitionHTML}from'../src/rewind-transition.js';
 import{storyCheckpointTarget,validStoryCheckpoint}from'../src/story-checkpoints.js';
 import{validateSave}from'../src/simulation.js';
 import{getActOneChoices,createActOne,advanceActOne,answerActOne,rewindBeforeFire,validActOne}from'../src/act-one.js';
@@ -17,9 +17,6 @@ test('after-fire transition starts in darkness, retains its plea, then reverses 
  assert.match(rewindTransitionHTML('ash-trash',1,true),/data-rewind-phase="dark"/);assert.match(rewindTransitionHTML('ash-trash',1,true),/data-after-fire/);assert.equal(rewindBeat(0,2).phase,'fire');
 });
 test('rewind clicks cannot bypass the clock and restored dialogue remains pending',()=>{
- assert.equal(rewindClickAction('ash-trash',1,'dark'),'clock');
- assert.equal(rewindClickAction('ash-trash',1,'clock'),'finish');
- assert.equal(rewindClickAction('bag-return',1,'dark'),'clock');
  const s=createActOne(42,[],1,true);advanceActOne(s,100);answerActOne(s,s.actOne.pending.eventId,'trash');
  const next=rewindBeforeFire(s),e=next.events.find(e=>e.actScene==='rewind');
  assert.equal(next.actOne.rewindIntroPending,true);

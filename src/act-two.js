@@ -1,3 +1,4 @@
+import {failedChoiceKeys} from './choice-history.js';
 import { saveStoryCheckpoint, storyCheckpointTarget } from './story-checkpoints.js';
 import { createActOne,advanceActOne,answerActOne } from './act-one.js';
 import {advance,addEvent,admit} from './simulation.js';
@@ -484,6 +485,7 @@ export function rewindActTwo(s){
   m('お前らのせいでな！！')
  ];
  if(firstStalkerLoop){advanceActTwo(next,ACT_TWO_EVENTS.bag.at-next.hour);}
+ next.actOne.failedChoices=[...failedChoiceKeys(s)];
  next.actOne.rewindIntroPending=true;next.actOne.rewindIntroCursor=0;
  return next;
 }

@@ -6,7 +6,7 @@ export function fireEndingPhase(seconds) {
 export function fireEndingHTML(failure, options = {}) {
   const firstTragedy=options.firstTragedy===true;
   const exterior=firstTragedy?'assets/events/first-fire-exterior.png':'assets/apartments.png';
-  return `<section class="act-screen fire-cinematic ${firstTragedy?'first-tragedy-fire':''}" data-fire-phase="${firstTragedy?'building':'room'}"><div class="fire-camera"><img class="fire-room-background" src="assets/rooms/cat/interior-illustrated-v1.png" alt="炎に包まれる101号室"><img class="fire-building-background" src="${exterior}" alt="炎が広がるけもの荘"><canvas class="fire-canvas" width="960" height="540" aria-hidden="true"></canvas><div class="fire-soot"></div></div><div class="fire-letterbox top"></div><div class="fire-letterbox bottom"></div><h2 id="modal-title" class="visually-hidden">けもの荘の火災</h2><p class="fire-narration" aria-live="polite">${firstTragedy?'「……嘘だろ。さっきまで普通に話してたじゃねえか……。」':'昨日まで、ただ散らかっているだけの部屋だった。'}</p><button class="fire-skip" data-fire-finish>クリックで次へ</button></section>`;
+  return `<section class="act-screen fire-cinematic ${firstTragedy?'first-tragedy-fire':''}" data-fire-phase="${firstTragedy?'building':'room'}"><div class="fire-camera"><img class="fire-room-background" src="assets/rooms/cat/interior-illustrated-v1.png" alt="炎に包まれる101号室"><img class="fire-building-background" src="${exterior}" alt="炎が広がるけもの荘"><canvas class="fire-canvas" width="960" height="540" aria-hidden="true"></canvas><div class="fire-soot"></div></div><div class="fire-letterbox top"></div><div class="fire-letterbox bottom"></div><h2 id="modal-title" class="visually-hidden">けもの荘の火災</h2><p class="fire-narration" aria-live="polite">${firstTragedy?'「……嘘だろ。さっきまで普通に話してたじゃねえか……。」':'昨日まで、ただ散らかっているだけの部屋だった。'}</p></section>`;
 }
 
 // Gradients use local coordinates and inherit the same transform as the path.
@@ -81,15 +81,8 @@ export function startFireEnding(root, failure, finish, options = {}) {
   let elapsed = options.firstTragedy===true?5:0, previous = performance.now(), frameId, phase = '', paintedPhase='';
   const draw=createFirePainter(canvas,kitchen);
   let stopped=false;
-  function stop(){stopped=true;cancelAnimationFrame(frameId);root.removeEventListener('click',nextMessage);}
+  function stop(){stopped=true;cancelAnimationFrame(frameId);}
   function complete(){if(stopped)return;stop();finish();}
-  function nextMessage(){
-    if(stopped)return;
-    if(elapsed>=11){complete();return;}
-    elapsed=elapsed<5?5:11;
-    cancelAnimationFrame(frameId);previous=performance.now();tick(previous);
-  }
-  if(!options.ambient)root.addEventListener('click',nextMessage);
   function tick(now) {
     if(stopped||!root.isConnected){stop();return;}
     const dt = Math.min(.1, (now - previous) / 1000); previous = now;

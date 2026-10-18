@@ -19,7 +19,7 @@ test('fire presents quiet narration without website-style headings or panels',()
     const html=fireEndingHTML(failure);
     assert.match(html,/class="fire-narration"/);
     assert.doesNotMatch(html,/fire-caption|<small>|<h2[^>]*>消し忘れ/);
-    assert.match(html,/data-fire-finish/);
+    assert.doesNotMatch(html,/data-fire-finish|クリックで次へ|<button/);
     assert.match(html,/assets\/rooms\/cat\/interior-illustrated-v1.png/);
     assert.match(html,/assets\/apartments.png/);
   }

@@ -1,3 +1,4 @@
+import {failedChoiceKeys} from './choice-history.js';
 import { saveStoryCheckpoint, validStoryCheckpoint, storyCheckpointTarget } from './story-checkpoints.js';
 import { firstActLife } from './act-one-life.js';
 import { actExpression } from './act-expressions.js';
@@ -465,6 +466,7 @@ export function rewindBeforeFire(s){
   next.actOne.skipUnlockedScene=scene;
   next.actOne.memory=[...s.actOne.memory];
   next.actOne.chosenChoices=actOneChosenChoices(s);
+  next.actOne.failedChoices=[...failedChoiceKeys(s)];
   next.actOne.started=true;next.actOne.status='playing';next.actOne.pending=null;
   next.actOne.rewindIntroPending=false;next.actOne.rewindTitlePending=false;
   next.ending=null;next.pending=null;
@@ -552,6 +554,7 @@ export function validActOne(s){
     if(a.version!==1||!Number.isInteger(a.attempt)||a.attempt<1||!Number.isInteger(a.seed)||!Array.isArray(a.memory)||!Array.isArray(a.completed)||!['playing','bad','clear'].includes(a.status))return false;
     const scenes={bag:{at:62},contract:{at:81}},failures=['bag-guarantee','bag-loan','bag-return','contract-sign','contract-stamp'];
     const chosen=['bag:guarantee','bag:loan','bag:return','contract:sign','contract:stamp','contract:refuse'];
+    if(a.failedChoices!==undefined&&(!Array.isArray(a.failedChoices)||a.failedChoices.some(x=>!chosen.includes(x))))return false;
     if(!Array.isArray(a.chosenChoices)||a.chosenChoices.some(x=>!chosen.includes(x))||a.memory.some(x=>!failures.includes(x))||a.completed.some(x=>!Object.hasOwn(scenes,x)))return false;
     if(s.hour<57||s.hour>105||s.residents.length!==2||!s.residents.some(r=>r.type==='hostess'))return false;
     if(a.pending!==null&&(!scenes[a.pending?.scene]||!s.events.some(e=>e.id===a.pending.eventId&&e.actScene===a.pending.scene)))return false;
@@ -562,6 +565,7 @@ export function validActOne(s){
     const point=a.rollbackPoint,event=(a.chapter===2?{'bag':{at:62},'contract':{at:81}}:ACT_ONE_EVENTS)[point?.scene],saved=point?.state;
     if(!event||saved?.actOne?.rollbackPoint!==undefined||(point.kind==='story'?!validStoryCheckpoint(point,1):saved?.hour!==event.at-.5)||saved?.actOne?.pending!==null||saved?.actOne?.status!=='playing'||!validateSave(saved)||!validActOne(saved))return false;
   }
+  if(a.failedChoices!==undefined){const known=Object.entries(ACT_ONE_EVENTS).flatMap(([scene,e])=>e.choices.map(c=>`${scene}:${c.id}`));if(!Array.isArray(a.failedChoices)||a.failedChoices.some(key=>!known.includes(key)))return false;}
   const failures=[...Object.values(ACT_ONE_EVENTS).flatMap(e=>e.choices.map(c=>c.bad).filter(Boolean)),'ash-laundry','ash-wind'];
   if(a.chosenChoices!==undefined){
     const known=Object.entries(ACT_ONE_EVENTS).flatMap(([scene,e])=>e.choices.map(c=>`${scene}:${c.id}`));

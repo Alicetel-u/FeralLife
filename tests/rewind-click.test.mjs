@@ -10,13 +10,15 @@ test('second act rewind shows clock and restored apartment without replaying fir
   assert.doesNotMatch(html,/fire-cinematic|fire-canvas/);
 });
 
-test('first rewind has no skip; later rewinds have skip and continue prompt',()=>{
-  assert.doesNotMatch(rewindTransitionHTML('ash-trash',1,true,1),/data-rewind-skip/);
-  assert.match(rewindTransitionHTML('ash-trash',2,true,1),/data-rewind-skip/);
-  assert.match(rewindTransitionHTML('ash-trash',2,true,1),/rewind-white-fade/);
+test('every rewind is free of skip and click-to-continue controls',()=>{
+ for(const chapter of [1,2])for(const attempt of [1,2,3]){
+  const html=rewindTransitionHTML(chapter===1?'ash-trash':'bag-return',attempt,false,chapter);
+  assert.doesNotMatch(html,/data-rewind-skip|rewind-continue|data-fire-finish|<button|クリックで|スキップ/);
+  assert.match(html,/rewind-white-fade/);
+ }
 });
 
-test('later rewind can skip, but its exit uses the white fade',()=>{
+test('later rewind ignores clicks and automatically exits through the white fade',()=>{
   const originals={matchMedia:globalThis.matchMedia,requestAnimationFrame:globalThis.requestAnimationFrame,cancelAnimationFrame:globalThis.cancelAnimationFrame,document:globalThis.document,now:performance.now,CustomEvent:globalThis.CustomEvent};
   let now=0,frame=()=>{},done=0;
   globalThis.matchMedia=()=>({matches:false});
@@ -35,8 +37,9 @@ test('later rewind can skip, but its exit uses the white fade',()=>{
     root.dispatchEvent(skipClick);
     root.dispatchEvent(new Event('click'));
     assert.equal(done,0);
+    assert.equal(root.fading,undefined);
+    for(let n=0;n<95;n++){now+=100;frame(now);}
     assert.equal(root.fading,'rewind-fading');
-    for(let n=0;n<12;n++){now+=100;frame(now);}
     assert.equal(done,1);
     stop();assert.equal(done,1);
   }finally{Object.assign(globalThis,originals);performance.now=originals.now;}

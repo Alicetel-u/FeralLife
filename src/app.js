@@ -1,3 +1,4 @@
+import {failedChoiceKeys} from './choice-history.js';
 import {storyScreenHTML} from './story-screens.js';
 import {actTwoMorningDirection,actTwoMorningStageHTML,startMorningBlackout,prepareMorningBirds} from './act-two-bad-stage.js';
 import {isFirstStalkerReply,firstStalkerStageHTML,prepareFirstStalkerAssets,needsStalkerPreface,stalkerPrefaceHTML,startStalkerPreface} from './first-stalker-stage.js';
@@ -16,7 +17,7 @@ import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './troub
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.29';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.30';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition, automaticFirstRewind } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -355,7 +356,7 @@ function showEvent(id,index=null,page=0,afterMorningBlackout=false) {
   const waiting=!state.ending&&(state.actOne?state.actOne.pending?.eventId===e.id:state.management.pending?.eventId===e.id);
   const c=state.actOne?(state.actOne.chapter===2?ACT_TWO_EVENTS:ACT_ONE_EVENTS)[e.actScene]:MANAGEMENT_CASES[e.caseId];
   const chosenChoices=new Set(state.actOne?(state.actOne.chapter===2?actTwoChosen(state):actOneChosenChoices(state)):[]);
-  const choices=waiting&&last?choiceUIHTML(e,state.actOne?(state.actOne.chapter===2?actTwoChoices(state,e.actScene):getActOneChoices(state,e.actScene)):c.choices,chosenChoices):'';
+  const choices=waiting&&last?choiceUIHTML(e,state.actOne?(state.actOne.chapter===2?actTwoChoices(state,e.actScene):getActOneChoices(state,e.actScene)):c.choices,chosenChoices,failedChoiceKeys(state)):'';
   const trouble=c?.call&&e.kind==='trouble'?troubleCardHTML(c.call,waiting&&cursor===0,state.actOne?.attempt??1):'';
   const firstFire=isFirstFireReply(e,state.actOne),firstStalker=isFirstStalkerReply(e);
   if(firstStalker)prepareFirstStalkerAssets();
@@ -369,7 +370,7 @@ function showEvent(id,index=null,page=0,afterMorningBlackout=false) {
   characterVoice.play(lines[cursor],e.id+':'+cursor+':'+pageIndex);
   characterVoice.prepare(cursor+1<lines.length?lines[cursor+1]:null);
   scheduleEventAuto();
-  document.querySelector(last&&waiting?'[data-choice]':last?(['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'[data-epilogue-done].primary-button':['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'[data-rewind-resume].primary-button':e.actScene==='act2-prologue'&&state.actOne.prologuePending?'[data-act2-prologue-done].primary-button':e.actScene==='prologue'?'[data-opening="3"].primary-button':'[data-close].primary-button'):'[data-dialogue-next]')?.focus({preventScroll:true});
+  document.querySelector(last&&waiting?'[data-choice]:not([disabled])':last?(['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'[data-epilogue-done].primary-button':['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'[data-rewind-resume].primary-button':e.actScene==='act2-prologue'&&state.actOne.prologuePending?'[data-act2-prologue-done].primary-button':e.actScene==='prologue'?'[data-opening="3"].primary-button':'[data-close].primary-button'):'[data-dialogue-next]')?.focus({preventScroll:true});
 }
 
 function scheduleEventAuto(){
@@ -562,7 +563,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.18.29';
+const BUILD_VERSION='2026.10.18.30';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
