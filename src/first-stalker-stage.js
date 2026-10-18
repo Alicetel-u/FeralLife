@@ -33,6 +33,25 @@ export function firstStalkerCut(lines,index){
  if(reached('深夜。'))return 'corridor';
  return 'farewell';
 }
+export function needsStalkerPreface(event,previous,target){
+ if(!isFirstStalkerReply(event)||previous?.id!==event.id)return false;
+ const night=eventConversation(event).findIndex(l=>l.text.startsWith('深夜。'));
+ return night>=0&&previous.index<night&&target>=night;
+}
+export function stalkerPrefaceHTML(){
+ return '<section class="act-screen first-stalker-preface" aria-label="あの夜の前に"><h2 id="modal-title" class="visually-hidden">あの夜の前に</h2><div class="stalker-preface-noise" aria-hidden="true"></div><p class="stalker-preface-copy">あの何気ないひと言が、<br><span>取り返しのつかない夜につながるなんて。</span></p><button type="button" data-stalker-preface-next>進む</button></section>';
+}
+export function startStalkerPreface(root,done){
+ const doc=root.ownerDocument,button=root.querySelector('[data-stalker-preface-next]');
+ const clock=root.animate([{opacity:1},{opacity:1}],{duration:4800});
+ let finished=false;
+ const sync=()=>{root.classList.toggle('preface-paused',doc.hidden);if(doc.hidden)clock.pause();else clock.play();};
+ const cleanup=()=>{clock.cancel();doc.removeEventListener('visibilitychange',sync);button.removeEventListener('click',skip);};
+ const finish=()=>{if(finished)return;finished=true;cleanup();done();};
+ const skip=()=>{if(clock.currentTime>=1600)finish();};
+ clock.finished.then(finish,()=>{});doc.addEventListener('visibilitychange',sync);button.addEventListener('click',skip);sync();
+ return ()=>{finished=true;cleanup();};
+}
 let stalkerAssetsReady=false;
 export function prepareFirstStalkerAssets(){
  if(stalkerAssetsReady||typeof Image==='undefined')return;
@@ -46,6 +65,7 @@ export function firstStalkerStageHTML(event,residents,index=0,page=0){
  const src=corridor?'assets/events/first-stalker-door.png':'assets/events/first-stalker-room.png';
  // Same dialogue window, speaker colors, history, pagination and tap targets as act one.
  const stage=eventStageHTML(event,residents,index,page,{hideCharacters:true,cinematic:true});
- const shot=`<div class="first-stalker-shot" aria-hidden="true"><img class="first-stalker-background" src="${src}" alt=""><div class="first-stalker-shadow"></div><div class="first-stalker-shock"></div></div><div class="first-fire-bars" aria-hidden="true"></div><span class="first-fire-location" aria-hidden="true">${corridor?'102 / 深夜':'102 / 室内'}</span>`;
- return stage.replace('class="event-stage ',`data-cut="${cut}" class="event-stage first-fire-stage first-stalker-stage `).replace(/^(<div[^>]*>)/,'$1'+shot);
+ const discovery=lines.findIndex(l=>l.text.includes('足を止めた'))===index;
+ const shot=`<div class="first-stalker-shot" aria-hidden="true"><img class="first-stalker-background" src="${src}" alt=""><div class="first-stalker-shadow"></div><div class="first-stalker-ink"></div><div class="first-stalker-shock"></div></div><div class="first-fire-bars" aria-hidden="true"></div><span class="first-fire-location" aria-hidden="true">${corridor?'102 / 深夜':'102 / 室内'}</span>`;
+ return stage.replace('class="event-stage ',`data-cut="${cut}" data-discovery="${discovery}" class="event-stage first-fire-stage first-stalker-stage `).replace(/^(<div[^>]*>)/,'$1'+shot);
 }

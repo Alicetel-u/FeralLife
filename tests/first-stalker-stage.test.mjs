@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {createGame} from '../src/simulation.js';
 import {beginActTwo,advanceActTwo,answerActTwo,rewindActTwo} from '../src/act-two.js';
 import {eventConversation,eventStageHTML} from '../src/event-stage.js';
-import {isFirstStalkerReply,firstStalkerCut,firstStalkerStageHTML} from '../src/first-stalker-stage.js';
+import {isFirstStalkerReply,firstStalkerCut,firstStalkerStageHTML,needsStalkerPreface,stalkerPrefaceHTML,startStalkerPreface} from '../src/first-stalker-stage.js';
 import {rewindBeat,rewindTransitionHTML} from '../src/rewind-transition.js';
 import {VOICE_MANIFEST} from '../src/voice-manifest.js';
 import {voiceLineKey} from '../src/voice-policy.js';
@@ -43,4 +43,34 @@ test('night ending enters the single existing rewind directly without fire narra
  const html=rewindTransitionHTML('bag-guarantee',1,true,2);assert.ok(html.includes('data-chapter="2"'));assert.equal((html.match(/<svg class="rewind-clock-dial"/g)||[]).length,1);
  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
  assert.match(app,/if\(a.failure==='bag-guarantee'&&a.attempt===1\)\{\s*beginRewind\(true\);return;/);
+});
+
+
+test('the white preface appears only when entering the first forced night, including SKIP',()=>{
+ const {event}=tragedy(),lines=eventConversation(event),night=lines.findIndex(l=>l.text.startsWith('深夜。'));
+ assert.equal(needsStalkerPreface(event,{id:event.id,index:night-1},night),true);
+ assert.equal(needsStalkerPreface(event,{id:event.id,index:0},lines.length-1),true);
+ assert.equal(needsStalkerPreface(event,{id:event.id,index:night},night+1),false);
+ assert.equal(needsStalkerPreface(event,{id:event.id,index:night+1},night),false);
+ assert.equal(needsStalkerPreface({...event,actScene:'bag'},{id:event.id,index:0},night),false);
+ const html=stalkerPrefaceHTML();assert.ok(html.includes('あの何気ないひと言が、<br><span>取り返しのつかない夜につながるなんて。'));
+ assert.ok(!html.includes('<img'));
+ const discovery=lines.findIndex(l=>l.text.includes('足を止めた'));
+ assert.ok(firstStalkerStageHTML(event,[],discovery).includes('data-discovery="true"'));
+ assert.ok(firstStalkerStageHTML(event,[],discovery).includes('first-stalker-ink'));
+ assert.ok(!firstStalkerStageHTML(event,[],discovery+1).includes('data-discovery="true"'));
+});
+
+test('preface holds long enough to read, pauses while hidden, and cancels without advancing',async()=>{
+ let resolve,reject,visibility,click,completed=0;
+ const classes=new Set(),doc={hidden:false,addEventListener:(t,fn)=>visibility=fn,removeEventListener:()=>visibility=null};
+ const button={addEventListener:(t,fn)=>click=fn,removeEventListener:()=>click=null};
+ const clock={currentTime:0,finished:new Promise((yes,no)=>{resolve=yes;reject=no;}),pause(){this.paused=true;},play(){this.paused=false;},cancel(){}};
+ const root={ownerDocument:doc,classList:{toggle:(name,value)=>value?classes.add(name):classes.delete(name)},querySelector:()=>button,animate:(frames,options)=>{assert.equal(options.duration,4800);return clock;}};
+ const stop=startStalkerPreface(root,()=>completed++);
+ click();assert.equal(completed,0);
+ doc.hidden=true;visibility();assert.equal(clock.paused,true);assert.ok(classes.has('preface-paused'));
+ doc.hidden=false;visibility();assert.equal(clock.paused,false);
+ clock.currentTime=1600;click();resolve();await Promise.resolve();assert.equal(completed,1);assert.equal(visibility,null);assert.equal(click,null);stop();
+ clock.finished=new Promise((yes,no)=>{reject=no;});const cancel=startStalkerPreface(root,()=>completed++);cancel();reject(Error('cancelled'));await Promise.resolve();assert.equal(completed,1);
 });
