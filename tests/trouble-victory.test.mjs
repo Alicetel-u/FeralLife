@@ -11,10 +11,12 @@ test('only authored safe replies trigger victory in either chapter; seen replies
     assert.equal(avoidedTrouble({...reply,actScene:scene},chapter),null);
   }
 });
-test('victory supports native keyboard activation, completes once and cleans up',()=>{
+test('victory waits for its button, supports keyboard activation, and cleans up',t=>{
+  t.mock.timers.enable({apis:['setTimeout']});
   const button=new EventTarget();button.focus=()=>{};
   let count=0;
   const stop=startTroubleVictory({querySelector:()=>button},()=>count++);
+  t.mock.timers.tick(60000);assert.equal(count,0,'waiting never dismisses the victory');
   button.dispatchEvent(new Event('click'));button.dispatchEvent(new Event('click'));stop();assert.equal(count,1);
   const cancel=startTroubleVictory({querySelector:()=>button},()=>count++);cancel();button.dispatchEvent(new Event('click'));assert.equal(count,1);
   assert.match(troubleAvoidedHTML(1),/トラブル/);assert.match(troubleAvoidedHTML(2),/data-victory-done/);

@@ -18,9 +18,8 @@ export function troubleAvoidedHTML(chapter) {
 export function startTroubleVictory(root, done) {
   let finished=false;
   const button=root.querySelector('[data-victory-done]');
-  const finish=()=>{if(finished)return;finished=true;clearTimeout(timer);button.removeEventListener('click',finish);done();};
-  const timer=setTimeout(finish,5000);
+  const finish=()=>{if(finished)return;finished=true;button.removeEventListener('click',finish);done();};
   button.addEventListener('click',finish);
   button.focus({preventScroll:true});
-  return ()=>{finished=true;clearTimeout(timer);button.removeEventListener('click',finish);};
+  return ()=>{finished=true;button.removeEventListener('click',finish);};
 }
