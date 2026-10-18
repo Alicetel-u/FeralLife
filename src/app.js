@@ -18,7 +18,7 @@ import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVic
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.19.04';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.19.05';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -233,13 +233,18 @@ function updateUI() {
   const line = talk.bubbles[0];
   const liveObservation=observationView(state);
   const caption=$('scene-caption');
-  caption.classList.toggle('story-observation',Boolean(liveObservation)&&!state.ending&&!state.actOne?.pending);
+  const activityVisible=!!state.actOne&&!state.ending&&!state.actOne.pending;
+  caption.classList.toggle('story-observation',activityVisible);
   caption.setAttribute('role','status');
   caption.setAttribute('aria-live','polite');
-  if(liveObservation&&!state.ending&&!state.actOne?.pending){
-    const title=liveObservation.beat?.title||(r?motionLabel(r,state.hour,ACTIONS[r.action].label):'住人の暮らしを観察中');
-    const progress=liveObservation.beat?`${liveObservation.lineIndex+1}/${liveObservation.beat.lines.length}`:'移動中・次のひとコマへ';
-    const content=`<small>${state.actOne.chapter===2?'第二幕':'第一幕'} / ${escape(liveObservation.phaseTitle)}</small><strong>${escape(title)}</strong><span>${paused?'一時停止中 · ':''}${escape(progress)}</span>`;
+  if(activityVisible){
+    const beat=liveObservation?.beat,title=beat?.title||(r?motionLabel(r,state.hour,ACTIONS[r.action].label):'住人の暮らしを観察中');
+    const moving=r&&sampleJourney(r,state.hour,ACTIONS[r.action].place).moving;
+    const status=paused?'一時停止中':beat?'会話中':moving?'移動中':'観察中';
+    const total=beat?.lines.length||0,index=liveObservation?.lineIndex||0;
+    const dots=Array.from({length:Math.min(7,total)},(_,i)=>`<i class="${i<Math.floor(index*Math.min(7,total)/total)?'done':i===Math.floor(index*Math.min(7,total)/total)?'current':''}"></i>`).join('');
+    const name=r?CHARACTERS[r.type].name.split(' ').at(-1):'住人';
+    const content=`<div class="activity-meta" style="${speakerColorStyle({speaker:r?.type})}"><span class="activity-person">${escape(name)}</span><small>${r?escape(r.room)+'号室':''}</small>${total?`<span class="activity-count">${index+1}<small> / ${total}</small></span>`:''}</div><strong class="activity-title">${escape(title)}</strong><div class="activity-foot"><span>${status}</span><div class="activity-dots" aria-hidden="true">${dots}</div></div>`;
     if(caption.innerHTML!==content)caption.innerHTML=content;
   }else caption.textContent = state.ending ? 'ろくでもない灯りが、今日もここに。' : r ? `${r.room}号室 · ${CHARACTERS[r.type].name.split(' ')[1]} / ${motionLabel(r,state.hour,ACTIONS[r.action].label)}` : `${state.selected}号室 · 次の住人を待っている。`;
   $('world').setAttribute('aria-label', line ? `${line.name}「${line.text}」` : '住人の暮らしと廊下・階段・屋外の移動を観察する画面');
@@ -550,7 +555,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.19.04';
+const BUILD_VERSION='2026.10.19.05';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){

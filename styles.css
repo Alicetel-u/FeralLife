@@ -1182,11 +1182,30 @@ dialog.act-modal:has(.luna-film) #modal-content{height:100%;padding:0;overflow:h
 .act-two-morning-blackout{position:absolute;inset:0;min-height:100%;z-index:100}
 @keyframes act-two-dawn{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){.act-two-morning-stage *{animation:none!important}}
-.game-ink .scene-caption.story-observation{display:grid;position:absolute;inset:94px 24px auto auto;transform:none;z-index:3;width:max-content;max-width:min(320px,calc(100% - 48px));padding:12px 18px;text-align:left;gap:5px;white-space:normal;background:#17131cec;color:#fff1dc;border-left:4px solid #ef3751;box-shadow:4px 5px 0 #0004;pointer-events:none}
-.story-observation small{font:700 10px/1.4 sans-serif;color:#f1bc75;letter-spacing:.05em}
-.story-observation strong{font:800 clamp(13px,1.5vw,19px)/1.5 sans-serif;overflow-wrap:anywhere}
-.story-observation span{font:12px/1.4 sans-serif;color:#d3c4cd;font-variant-numeric:tabular-nums}
-@media(max-width:700px){.game-ink .scene-caption.story-observation{inset:94px 10px auto auto;max-width:min(210px,calc(100% - 84px));padding:8px 10px;gap:3px}.story-observation small{font-size:9px}.story-observation strong{font-size:12px}.story-observation span{font-size:10px}}
+.game-ink .scene-caption.story-observation{display:flex;flex-direction:column;position:absolute;inset:94px 26px auto auto;transform:none;z-index:3;width:292px;max-width:calc(100% - 40px);padding:15px 18px;text-align:left;gap:9px;white-space:normal;background:#fff8eaf5;color:#302a30;border:1px solid #fffdf4;border-radius:18px 18px 6px 18px;box-shadow:0 7px 24px #08061030;pointer-events:none;text-shadow:none;letter-spacing:0}
+.activity-meta{display:flex;align-items:center;gap:8px;min-width:0}
+.activity-meta .activity-person{font:800 12px/1.2 var(--sans);color:var(--speech-day,#514b43);display:flex;align-items:center;gap:6px}
+.activity-person::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.activity-meta>small{font:500 10px/1.2 var(--sans);color:#82796d}
+.activity-meta .activity-count{margin-left:auto;font:800 12px/1.2 var(--sans);font-variant-numeric:tabular-nums;color:#514b43}
+.activity-count small{font-size:10px;font-weight:500;color:#82796d}
+.story-observation .activity-title{font:800 19px/1.45 var(--sans);color:#302a30;overflow-wrap:anywhere}
+.activity-foot{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.activity-foot>span{font:500 11px/1.3 var(--sans);color:#7b726a}
+.activity-dots{display:flex;align-items:center;gap:4px;min-height:7px}
+.activity-dots i{width:5px;height:5px;border-radius:50%;background:#d8d0c2}
+.activity-dots i.done{background:#9b9485}.activity-dots i.current{width:15px;border-radius:3px;background:#4d6553}
+@media(max-width:700px) and (orientation:portrait){
+ .game-ink .scene-caption.story-observation{inset:auto 20px calc(50% + 28.125vw + 12px) 20px;width:auto;max-width:none;padding:10px 14px;gap:5px;border-radius:14px 14px 5px 14px;box-shadow:0 4px 18px #0003}
+ .game-ink.camera-focused .scene-caption.story-observation{bottom:calc(50% + max(28.125vw,26.4375dvh) + 12px)}
+ .activity-meta .activity-person{font-size:11px}.activity-meta>small{font-size:10px}
+ .story-observation .activity-title{font-size:clamp(14px,1.9dvh,17px);line-height:1.35}
+ .activity-foot>span{font-size:10px}.activity-meta .activity-count{font-size:11px}
+}
+@media(max-height:500px){
+ .game-ink .scene-caption.story-observation{inset:72px 16px auto auto;width:240px;padding:9px 13px;gap:5px}
+ .story-observation .activity-title{font-size:14px}.activity-foot>span{font-size:10px}
+}
 body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .game-ink dialog:has(.first-stalker-preface){background:#f8f7f4}
 .first-stalker-preface{position:absolute;inset:0;min-height:100%;display:grid;place-items:center;overflow:hidden;background:#f8f7f4;color:#201d22;isolation:isolate}
