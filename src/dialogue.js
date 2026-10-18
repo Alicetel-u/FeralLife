@@ -31,6 +31,9 @@ const AUTOMATIC_SCENES={
 export function automaticChapterScene(event,act) {
   if(!event?.lines?.length||!event.actScene)return false;
   const chapter=act?.chapter===2?2:1;
+  // Legacy/debug saves may retain unread introductions after the story has moved on.
+  if(chapter===1&&['opening','prologue'].includes(event.actScene)&&(act?.pending||act?.completed?.length||act?.rewindIntroPending))return false;
+  if(['ash','dinner','bag','contract'].includes(event.actScene)&&act?.completed?.includes(event.actScene))return false;
   if(event.actScene==='reply')return chapter===2?!!event.cast?.includes('hostess'):!event.cast?.includes('hostess');
   return AUTOMATIC_SCENES[chapter].has(event.actScene);
 }
