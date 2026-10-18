@@ -9,7 +9,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
   const AudioContextType=(globalThis.AudioContext||globalThis.webkitAudioContext);
   let context=null,source=null,gain=null,limiter=null,mobileAudio=null,unlocked=false;
   const speakerBoost=()=>({manager:1.6,hostess:1.8}[voiceSpeaker(current?.line||{})]||1);
-  const playbackGain=()=>(mobile?2:1)*prefs.volume*speakerBoost();
+  const playbackGain=()=>(mobile?4:1)*prefs.volume*speakerBoost();
   const applyVolume=()=>{if(gain){gain.gain.value=playbackGain();if(audio)audio.volume=1;}else if(audio)audio.volume=Math.min(1,prefs.volume*speakerBoost());};
   const disconnect=()=>{
     // Disconnect EVERY Web Audio node. Otherwise each old compressor remains
@@ -28,7 +28,8 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
       const boost=context.createGain();
       // Dynamics compression limits sharp peaks rather than allowing harsh clipping.
       const comp=context.createDynamicsCompressor();
-      comp.threshold.value=mobile?-12:-1;comp.knee.value=mobile?6:0;comp.ratio.value=mobile?6:20;
+      // Keep quiet phone dialogue audible; restrain peaks near full scale.
+      comp.threshold.value=-1;comp.knee.value=0;comp.ratio.value=20;
       comp.attack.value=0.003;comp.release.value=0.2;
       boost.gain.value=playbackGain();
       node.connect(boost);boost.connect(comp);comp.connect(context.destination);

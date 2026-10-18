@@ -179,23 +179,26 @@ test('iPhone initial gesture unlocks the same media element used by delayed film
  }finally{player?.stop();if(descriptor)Object.defineProperty(globalThis,'navigator',descriptor);else delete globalThis.navigator;}
 });
 
-test('character gain follows speaker changes and master volume on the reused audio graph',async()=>{
- const old=globalThis.AudioContext;const gains=[];let sources=0;
+for(const mobile of [false,true])test(`character gain follows speaker and volume on the reused ${mobile?'iPhone':'desktop'} audio graph`,async()=>{
+ const old=globalThis.AudioContext,descriptor=Object.getOwnPropertyDescriptor(globalThis,'navigator');const gains=[],compressors=[];let sources=0;
+ Object.defineProperty(globalThis,'navigator',{configurable:true,value:{userAgent:mobile?'iPhone':'Desktop'}});
  const node=()=>({connect(){},disconnect(){}});
  globalThis.AudioContext=class{
   state='running';destination={};
   createMediaElementSource(){sources++;return node();}
   createGain(){const g={...node(),gain:{value:1}};gains.push(g);return g;}
-  createDynamicsCompressor(){return {...node(),threshold:{},knee:{},ratio:{},attack:{},release:{}};}
+  createDynamicsCompressor(){const comp={...node(),threshold:{},knee:{},ratio:{},attack:{},release:{}};compressors.push(comp);return comp;}
  };
  let player;
  try{
   const lines=['manager','hostess','cat'].map(speaker=>({speaker,text:speaker}));
   player=createVoicePlayer({storage:null,manifest:Object.fromEntries(lines.map(l=>[voiceLineKey(l),{file:l.speaker+'.mp3'}])),makeAudio:()=>({play:()=>Promise.resolve(),pause(){},load(){},removeAttribute(){}})});
   player.unlock();await Promise.resolve();
-  for(const [i,l] of lines.entries()){player.play(l,String(i));assert.equal(gains[0].gain.value,0.8*[1.6,1.8,1][i]);}
+  for(const [i,l] of lines.entries()){player.play(l,String(i));assert.equal(gains[0].gain.value,(mobile?4:1)*0.8*[1.6,1.8,1][i]);}
+  assert.equal(compressors[0].threshold.value,-1);
+  assert.equal(compressors[0].ratio.value,20);
   assert.equal(sources,1,'reuse the unlocked graph across speakers');
   player.play({...lines[0],speaker:'大家（心の声）'},'inner');
-  player.setVolume(0.25);assert.equal(gains[0].gain.value,0.25*1.6);
- }finally{player?.stop();if(old===undefined)delete globalThis.AudioContext;else globalThis.AudioContext=old;}
+  player.setVolume(0.25);assert.equal(gains[0].gain.value,(mobile?4:1)*0.25*1.6);
+ }finally{player?.stop();if(old===undefined)delete globalThis.AudioContext;else globalThis.AudioContext=old;if(descriptor)Object.defineProperty(globalThis,'navigator',descriptor);else delete globalThis.navigator;}
 });
