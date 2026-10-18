@@ -1,4 +1,4 @@
-import { createRoomMove, sampleJourney } from './movement.js';
+import { createRoomMove, sampleJourney, homeSpot, WALK_SPEED } from './movement.js';
 
 // First-act daily blocking; story deadlines and authored conversations stay unchanged.
 export const MOKU_DAY = [
@@ -11,9 +11,20 @@ export const MOKU_DAY = [
   [54,'idle','table','朝まで起きていた'],[56.5,'drink','table','朝の缶を開ける']
 ];
 const places={smoke:'window',eat:'fridge',sleep:'bed',tv:'tv',clean:'center',drink:'table',idle:'table'};
+function mokuHomeJourney(start,hour){
+ const path=[start,{x:815,y:513,zone:'street'},{x:777,y:440,zone:'hall',room:103},{x:331,y:440,zone:'hall',room:101},homeSpot(101,'hall'),homeSpot(101,'table')];
+ const travel=path.slice(1).reduce((n,p,i)=>n+Math.hypot(p.x-path[i].x,p.y-path[i].y),0)/WALK_SPEED;
+ return {kind:'room',startedAt:hour,arriveAt:hour+travel,returnAt:hour+travel,endsAt:hour+travel,path,back:[],reason:'101号室へ帰宅',actionAfter:'idle',returned:false};
+}
+
 export function firstActLife(state, delta=0){
   if(!state.actOne||state.actOne.chapter===2||state.actOne.status!=='playing')return;
   const r=state.residents.find(r=>r.type==='cat');if(!r)return;
+  // Repair the old hard-coded destination without resetting the current observation beat.
+  const oldHome=r.journey;
+  if(oldHome?.reason==='101号室へ帰宅'&&oldHome.path.at(-1)?.x===330&&oldHome.path.at(-1)?.y===396){
+    r.journey=mokuHomeJourney(oldHome.path[0],oldHome.startedAt);
+  }
   const preparing=state.hour>=22.5&&!state.actOne.completed.includes('ash')?22.5:state.hour>=36.5&&!state.actOne.completed.includes('dinner')?36.5:null;
   const beat=preparing?MOKU_DAY.find(([at])=>at===preparing):MOKU_DAY.findLast(([at])=>at<=state.hour)||MOKU_DAY[0];
   r.storyUntil=58;
@@ -29,10 +40,7 @@ export function firstActLife(state, delta=0){
       const travel=Math.hypot(start.x-705,start.y-513)/430;
       r.journey={kind:'room',startedAt:state.hour,arriveAt:state.hour+travel,returnAt:state.hour+travel,endsAt:state.hour+travel,path,back:[],reason:'大家のところまで歩く',actionAfter:'idle',returned:false};
     }else if(beat[1]==='home'){
-      const path=[start,{x:815,y:513,zone:'street'},{x:777,y:440,zone:'hall',room:103},{x:331,y:440,zone:'hall',room:101},{...start,x:331,y:420,zone:'room',room:101}];
-      const destination={x:330,y:396,zone:'room',room:101};path.push(destination);
-      const travel=path.slice(1).reduce((n,p,i)=>n+Math.hypot(p.x-path[i].x,p.y-path[i].y),0)/430;
-      r.journey={kind:'room',startedAt:state.hour,arriveAt:state.hour+travel,returnAt:state.hour+travel,endsAt:state.hour+travel,path,back:[],reason:'101号室へ帰宅',actionAfter:'idle',returned:false};
+      r.journey=mokuHomeJourney(start,state.hour);
     }else if(beat[1]==='walk'){
       const end={x:410,y:440,zone:'hall',room:101};
       const path=[start,{x:331,y:440,zone:'hall',room:101},end];

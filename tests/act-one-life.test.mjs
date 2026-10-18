@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createActOne,advanceActOne,answerActOne,nextActOneAt,validActOne} from '../src/act-one.js';
 import {validateSave} from '../src/simulation.js';
-import {sampleJourney,createOuting} from '../src/movement.js';
-import {firstActMutters} from '../src/act-one-life.js';
+import {sampleJourney,createOuting,homeSpot,WALK_SPEED} from '../src/movement.js';
+import {firstActMutters,firstActLife} from '../src/act-one-life.js';
 const start=()=>createActOne(42,[],2,true);
 test('first act walks the hall, returns before ash, stays awake until lunch and rests after safety',()=>{
  const s=start();advanceActOne(s,.6);const m=s.residents[0];assert.equal(sampleJourney(m,s.hour).zone,'hall');
@@ -25,4 +25,30 @@ test('older saves outside the room return on foot before an indoor event can ope
  const s=start();s.hour=22.99;const r=s.residents[0];r.action='outing';r.journey=createOuting(r,22);
  advanceActOne(s,.01);assert.equal(s.actOne.pending,null);assert.ok(nextActOneAt(s)>s.hour);
  advanceActOne(s,nextActOneAt(s)-s.hour);assert.equal(s.actOne.pending.scene,'ash');assert.equal(sampleJourney(r,s.hour,'window').zone,'room');
+});
+
+
+test('Moku returns through the door to the floor in front of her table',()=>{
+ const state=start();advanceActOne(state,3.75);const r=state.residents[0],journey=r.journey;
+ assert.equal(journey.reason,'101号室へ帰宅');
+ assert.deepEqual(journey.path.at(-2),homeSpot(101,'hall'));
+ assert.deepEqual(journey.path.at(-1),homeSpot(101,'table'));
+ for(let hour=journey.startedAt;hour<=journey.endsAt;hour+=.005){
+  const p=sampleJourney(r,hour);
+  if(p.zone==='room')assert.ok(p.y>=homeSpot(101,'table').y,'walk on the floor, not the furniture');
+  const next=sampleJourney(r,hour+.005);
+  assert.ok(Math.hypot(next.x-p.x,next.y-p.y)<=WALK_SPEED*.005+.00001);
+ }
+ assert.equal(sampleJourney(r,journey.endsAt).moving,false);
+ assert.ok(validateSave(state)&&validActOne(state));
+});
+
+test('saved legacy home routes are repaired while preserving their start time and daily beat',()=>{
+ const state=start();advanceActOne(state,3.75);const r=state.residents[0],old=structuredClone(r.journey),beat=r.lifeBeat;
+ old.path[old.path.length-2]={x:331,y:420,zone:'room',room:101};old.path[old.path.length-1]={x:330,y:396,zone:'room',room:101};r.journey=old;
+ firstActLife(state);
+ assert.equal(r.lifeBeat,beat);assert.equal(r.journey.startedAt,old.startedAt);
+ assert.deepEqual(r.journey.path.at(-1),homeSpot(101,'table'));
+ const repaired=r.journey;firstActLife(state);assert.equal(r.journey,repaired,'repair runs once');
+ assert.ok(validateSave(state)&&validActOne(state));
 });
