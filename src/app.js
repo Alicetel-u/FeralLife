@@ -4,7 +4,7 @@ import {actTwoMorningDirection,actTwoMorningStageHTML,startMorningBlackout,prepa
 import {isFirstStalkerReply,firstStalkerStageHTML,prepareFirstStalkerAssets,needsStalkerPreface,stalkerPrefaceHTML,startStalkerPreface} from './first-stalker-stage.js';
 import { LUNA_MINI_EMOTIONS, MOKU_MINI_EMOTIONS } from './mini-emotions.js';
 import {isFirstFireReply,firstFireStageHTML} from './first-fire-stage.js';
-import {clearLegacyObservationMemo,observationView,observationClockLimit,tickObservation,canSkipObservation,skipObservation,inheritObservation} from './act-one-observation.js';
+import {clearLegacyObservationMemo,observationView,observationClockLimit,tickObservation,inheritObservation} from './act-one-observation.js';
 import {createVoicePlayer} from './voice-player.js';
 const characterVoice=createVoicePlayer({chapter:()=>state?.actOne?.chapter,onPlaybackChange:active=>normalBgm.setVoiceActive(active)});
 document.addEventListener('pointerdown',()=>characterVoice.unlock(),{capture:true});
@@ -17,8 +17,8 @@ import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './troub
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.37';
-import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, nextActTwoAt, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.38';
+import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
 import { debtEndingHTML, startDebtEnding } from './debt-ending.js';
@@ -31,7 +31,7 @@ import { sampleJourney, motionLabel } from './movement.js';
 import { MANAGEMENT_CASES } from './event-cases.js';
 import { ensureManagement, managementSummary, managementImpact, openManagementCase, resolveManagementCase } from './management.js';
 import { eventConversation, eventStageHTML, eventIcon, troubleCardHTML } from './event-stage.js';
-import { actOneTitle, ACT_ONE_EVENTS, getActOneChoices, actOneChosenChoices, createActOne, advanceActOne, answerActOne, rewindBeforeFire, validActOne, nextActOneAt } from './act-one.js';
+import { actOneTitle, ACT_ONE_EVENTS, getActOneChoices, actOneChosenChoices, createActOne, advanceActOne, answerActOne, rewindBeforeFire, validActOne } from './act-one.js';
 
 
 // iOS Safari may ignore viewport zoom restrictions: intercept only native page magnification gestures.
@@ -120,7 +120,7 @@ const talk = createTalk(restored ? (state.events[0]?.id || 0) : 0);
 const modal = $('modal');
 if(state.actOne){
   const goal=document.createElement('section');goal.className='act-objective';goal.id='act-objective';
-  goal.innerHTML=`<div><small>けもの荘 / 第一幕</small><strong>${actOneTitle(state)}</strong><span id="act-progress"></span></div><button class="act-wait" data-act-wait hidden>次のトラブルまで進む →</button>`;
+  goal.innerHTML=`<div><small>けもの荘 / 第一幕</small><strong>${actOneTitle(state)}</strong><span id="act-progress"></span></div>`;
   document.querySelector('main').prepend(goal);
   document.querySelector('.brand small').textContent='第一幕 · 二晩を、生き延びろ。';
 }
@@ -204,11 +204,7 @@ function updateUI() {
   if(state.actOne){
     $('act-objective').querySelector('strong').textContent=(state.actOne.chapter===2?ACT_TWO_TITLE:actOneTitle(state));
     $('act-progress').textContent=`${state.actOne.attempt}周目 · ${state.actOne.completed.length}/2件を突破 · 目標：${state.actOne.chapter===2?'5日目9時':'3日目9時'}`;
-    const waitButton=document.querySelector('[data-act-wait]');
-    const upcoming=Object.keys(state.actOne.chapter===2?ACT_TWO_EVENTS:ACT_ONE_EVENTS).find(id=>!state.actOne.completed.includes(id));
-    waitButton.hidden=!(state.actOne.skipUnlockedScene===upcoming&&state.actOne.attempt>1&&state.actOne.started&&!state.actOne.rewindIntroPending&&state.actOne.status==='playing'&&!state.actOne.pending);
-    if(state.actOne.chapter!==2){waitButton.hidden=!canSkipObservation(state);waitButton.textContent='見た暮らしを早送り →';}
-    waitButton.disabled=waitButton.hidden;
+
   }
   const management=ensureManagement(state);
   if(state.actOne){
@@ -414,7 +410,6 @@ function storyHelpContent(){
       <section class="persona-help-step"><b>01</b><div><h3>住人たちを見守ろう</h3><p>部屋ではモクの行動と独り言を見守りましょう。外や廊下では大家と顔を合わせて会話することも。セリフは住人のそばの吹き出しに表示され、自動で進みます。</p></div></section>
       <section class="persona-help-step"><b>02</b><div><h3>大家として返事を選ぼう</h3><p>トラブルが起きたら会話を読み、3つの選択肢から返事を決めます。選び方によって、その後の展開が変わります。会話中はゲーム内の時間が止まります。</p></div></section>
       <section class="persona-help-step"><b>03</b><div><h3>失敗を次の挑戦に生かそう</h3><p>選択を間違えると、アパートを失う結末になることも。時間を巻き戻せばもう一度挑戦できます。前の周回で分かったことを手がかりに、別の選択を試しましょう。</p></div></section>
-      <section class="persona-help-step"><b>04</b><div><h3>再挑戦はテンポよく</h3><p>第一幕では、一度見た区間を「見た暮らしを早送り」で進められます。初めての区間では、住人の様子を見てから相談を迎えましょう。第二幕では巻き戻し後に「次のトラブルまで進む」を使えます。</p></div></section>
     </div>
     <div class="persona-help-note"><strong>操作のヒント</strong><p>AUTO：セリフを自動で進める　／　SKIP：選択肢まで会話を送る<br>進行状況は自動保存。タイトルの「つづきから」で再開できます。</p></div>
   </div>`;
@@ -553,7 +548,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.18.37';
+const BUILD_VERSION='2026.10.18.38';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -663,7 +658,6 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-title-new'))openModal(`<section class="restart-confirm" aria-describedby="restart-description"><div class="restart-stamp" aria-hidden="true">DAY<span>01</span></div><div class="restart-content"><p class="restart-kicker"><span aria-hidden="true">↺</span> NEW GAME / はじめから</p><h2 id="modal-title"><span>一日目から、</span><strong>やり直しますか？</strong></h2><p id="restart-description">今の進行と、タイムループで集めた<br class="restart-desktop-break">失敗の記憶をリセットします。</p><div class="restart-actions"><button class="restart-back" data-act-title><small aria-hidden="true">01 / BACK</small><span>タイトルに戻る</span><b aria-hidden="true">↩</b></button><button class="restart-start" data-restart><small aria-hidden="true">02 / NEW GAME</small><span>新しく始める</span><b aria-hidden="true">→</b></button></div></div><div class="restart-edge" aria-hidden="true">KEMONOSOU / RESTART?</div></section>`);
   if(button.hasAttribute('data-act2-start')&&state.actOne?.chapter===2){state.actOne.started=true;state.actOne.titlePending=false;save();const intro=state.events.find(e=>e.actScene==='act2-prologue');if(state.actOne.prologuePending&&intro)showEvent(intro.id);else{closeModal();openNextStageEvent();}}
   if(button.hasAttribute('data-act-start')){state.actOne.started=true;state.actOne.rewindTitlePending=false;save();closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();}
-  if(button.hasAttribute('data-act-wait')&&!button.hidden&&state.actOne?.status==='playing'&&!state.actOne.pending&&(state.actOne.chapter===2||skipObservation(state))){(state.actOne.chapter===2?advanceActTwo(state,nextActTwoAt(state)-state.hour):advanceActOne(state,nextActOneAt(state)-state.hour));queueFreshStageEvents();updateUI();save();if(state.ending)showActEnding();else openNextStageEvent();}
   if(button.hasAttribute('data-act2-prologue-done')&&state.actOne?.chapter===2){state.actOne.started=true;state.actOne.titlePending=false;state.actOne.prologuePending=false;const intro=state.events.find(e=>e.actScene==='act2-prologue');if(intro)intro.read=true;state.selected=102;autoFollow=true;cameraKey='';updateCamera();updateRooms();save();closeModal();openNextStageEvent();}
   if(button.hasAttribute('data-rewind-resume')&&state.actOne?.rewindIntroPending){state.actOne.rewindIntroPending=false;const intro=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-rewind':'rewind'));if(intro)intro.read=true;save();if(intro?.resumeChoice&&state.actOne.pending){showEvent(state.actOne.pending.eventId);return;}closeModal();}
   if(button.hasAttribute('data-epilogue-done')&&state.actOne?.status==='clear'){state.actOne.epilogueSeen=true;const ep=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-epilogue':'epilogue'));if(ep)ep.read=true;save();showActEnding();}
