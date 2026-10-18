@@ -331,7 +331,13 @@ export const ACT_TWO_EVENTS={
   ]}
 };
 export const actTwoChoices=(s,scene)=>scene==='bag'&&s.actOne?.attempt===1?[{...ACT_TWO_EVENTS.bag.choices.find(choice=>choice.id==='guarantee'),label:'もう大丈夫だろ。今日はゆっくり休め。'}]:ACT_TWO_EVENTS[scene]?.choices||[];
-export const actTwoChosen=s=>[...new Set([...(s.actOne.chosenChoices||[]),...s.events.filter(e=>e.actChoice&&ACT_TWO_EVENTS[e.actScene]).map(e=>e.actScene+':'+e.actChoice)])];
+export function actTwoChosen(s){
+ const genuine=s.events.filter(e=>e.actChoice&&ACT_TWO_EVENTS[e.actScene]&&!e.choiceForced&&!(e.actScene==='bag'&&e.actChoice==='guarantee'&&e.choiceForced!==false&&e.lines?.length>5));
+ const chosen=new Set([...(s.actOne.chosenChoices||[]),...genuine.map(e=>e.actScene+':'+e.actChoice)]);
+ // The mandatory first-night reassurance shares an old id with a different later answer.
+ if(!genuine.some(e=>e.actScene==='bag'&&e.actChoice==='guarantee')&&!failedChoiceKeys(s).has('bag:guarantee'))chosen.delete('bag:guarantee');
+ return [...chosen];
+}
 export function beginActTwo(s){
   s.ending=null;s.pending=['hostess'];admit(s,'hostess');s.hour=57;
   s.actOne={version:1,chapter:2,started:false,titlePending:true,attempt:1,status:'playing',completed:[],pending:null,memory:[],chosenChoices:[],seed:s.seed,prologuePending:true};
@@ -425,9 +431,9 @@ export function advanceActTwo(s,hours){
 export function answerActTwo(s,eventId,choiceId){
  const a=s.actOne,p=a.pending,event=ACT_TWO_EVENTS[p?.scene];const choice=event?.choices.find(c=>c.id===choiceId);
  if(a.status!=='playing'||p?.eventId!==Number(eventId)||!choice)return null;
- const original=s.events.find(e=>e.id===p.eventId);original.read=true;original.actChoice=choiceId;
- a.chosenChoices=actTwoChosen(s);a.pending=null;a.completed.push(p.scene);
  const firstStalkerTragedy=p.scene==='bag'&&a.attempt===1&&choiceId==='guarantee';
+ const original=s.events.find(e=>e.id===p.eventId);original.read=true;original.actChoice=choiceId;original.choiceForced=firstStalkerTragedy;
+ a.chosenChoices=actTwoChosen(s);a.pending=null;a.completed.push(p.scene);
  const replyLines=firstStalkerTragedy?FIRST_STALKER_TRAGEDY_LINES:choice.lines;
  const r=addEvent(s,'life','返事：'+(firstStalkerTragedy?'もう大丈夫だろ。今日はゆっくり休め。':choice.label),replyLines[0].text,[102]);r.actScene='reply';r.cast=['hostess','cat'];r.stageOnly=true;r.lines=replyLines;
  if(choice.bad){a.status='bad';a.failure=choice.bad;if(!a.memory.includes(choice.bad))a.memory.push(choice.bad);s.ending={name:firstStalkerTragedy?'BAD END — 夕暮れの待ち伏せ':choice.endingName?('BAD END — '+choice.endingName):(p.scene==='bag'?'夜逃げ':'差し押さえ')+' — '+event.title,text:choice.regret};}

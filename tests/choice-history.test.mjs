@@ -28,6 +28,9 @@ test('Luna first-night outcome does not lock her unseen later ending, but the la
  const s=createActOne(42,[],2,true);beginActTwo(s);Object.assign(s.actOne,{started:true,titlePending:false,prologuePending:false});
  advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'guarantee');
  const loop=rewindActTwo(s);assert.equal(failedChoiceKeys(loop).has('bag:guarantee'),false);
+ assert.equal(actTwoChosen(loop).includes('bag:guarantee'),false,'first-night reassurance never marks the unseen middle choice');
+ const legacy=JSON.parse(JSON.stringify(loop));legacy.actOne.chosenChoices=['bag:guarantee'];
+ assert.equal(actTwoChosen(legacy).includes('bag:guarantee'),false,'remove stale labels from existing saves');
  loop.actOne.rewindIntroPending=false;answerActTwo(loop,loop.actOne.pending.eventId,'guarantee');
  const later=rewindActTwo(loop),loaded=JSON.parse(JSON.stringify(later));
  assert.equal(failedChoiceKeys(loaded).has('bag:guarantee'),true);

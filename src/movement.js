@@ -53,6 +53,13 @@ export function createRoomMove(resident, hour, start, place) {
   const time = pathDuration(path);
   return { kind: 'room', startedAt: hour, arriveAt: hour + time, returnAt: hour + time, endsAt: hour + time, reason: '', path, back: [], actionAfter: resident.action, returned: false };
 }
+export function createEntranceMove(resident,hour,start){
+  const path=[start,doorway(resident.room)];
+  if(resident.room>=200)path.push(upperStair(),landing(),lowerStair());
+  path.push(point(650,513,'street'));
+  const arrival=hour+pathDuration(path);
+  return {kind:'room',startedAt:hour,arriveAt:arrival,returnAt:arrival,endsAt:arrival,reason:'玄関前へ移動中',path,back:[],actionAfter:'idle',returned:false};
+}
 function samplePath(path, hours) {
   let distance = Math.max(0, hours) * WALK_SPEED;
   for (let i = 1; i < path.length; i++) {

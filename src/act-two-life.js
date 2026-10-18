@@ -1,9 +1,9 @@
-import {createRoomMove,createVisit,createOuting,sampleJourney} from './movement.js';
+import {createRoomMove,createVisit,createOuting,createEntranceMove,sampleJourney} from './movement.js';
 import {ACT_TWO_OBSERVATION_BEATS} from './act-two-observation.js';
 
 const LUNA_DAY=[
  [57,'clean','center'],[58.5,'idle','table','arrival'],[61,'clean','center'],
- [62.25,'idle','table','tea'],[65,'eat','fridge'],[66,'idle','table','papers'],
+ [62.25,'idle','table','tea'],[65,'eat','fridge'],[65.25,'idle','entrance'],
  [67,'outing','hall'],[80,'idle','table'],[81.25,'clean','table'],
  [83,'idle','table','relief'],[87,'sleep','bed'],[95,'eat','fridge'],
  [97,'clean','center'],[103,'idle','window']
@@ -17,7 +17,7 @@ export function secondActLife(state,delta=0){
  if(luna.actTwoBeat!==beat[0]){
   const start=sampleJourney(luna,state.hour,POSITIONS[luna.action]||'table');
   luna.previous=luna.action;luna.action=beat[1];luna.actionAge=0;luna.targetRoom=null;luna.actTwoBeat=beat[0];
-  luna.journey=beat[1]==='outing'?createOuting(luna,state.hour,start):createRoomMove(luna,state.hour,start,beat[2]);
+  luna.journey=beat[2]==='entrance'?createEntranceMove(luna,Math.min(state.hour,65.25),start):beat[1]==='outing'?createOuting(luna,state.hour,start):createRoomMove(luna,state.hour,start,beat[2]);
   if(cat){
    const from=sampleJourney(cat,state.hour,POSITIONS[cat.action]||'table');
    cat.previous=cat.action;cat.action=beat[3]?'chat':state.hour%24<8?'sleep':'tv';cat.actionAge=0;cat.targetRoom=beat[3]?luna.room:null;

@@ -8,6 +8,19 @@ import {createTalk,stepTalk,SPEECH_MS} from '../src/dialogue.js';
 import {sampleJourney} from '../src/movement.js';
 import {validateSave} from '../src/simulation.js';
 function state(){const s=createActOne(91);beginActTwo(s);s.actOne.started=true;s.actOne.prologuePending=false;s.events.forEach(e=>e.read=true);observationView(s);return s;}
+
+test('Luna finishes her snack and walks to the entrance before the street trouble',()=>{
+ const s=state(),luna=s.residents.find(r=>r.type==='hostess');
+ advanceActTwo(s,8.08);assert.equal(luna.action,'eat');assert.equal(sampleJourney(luna,s.hour).zone,'room');
+ advanceActTwo(s,.42);assert.equal(luna.action,'idle');assert.equal(sampleJourney(luna,s.hour).moving,true);
+ advanceActTwo(s,100);const pos=sampleJourney(luna,s.hour);
+ assert.equal(s.actOne.pending.scene,'bag');assert.equal(s.hour,66);
+ assert.equal(pos.zone,'street');assert.equal(pos.moving,false);assert.notEqual(luna.action,'eat');
+ const loaded=JSON.parse(JSON.stringify(s)),oldLuna=loaded.residents.find(r=>r.type==='hostess');
+ oldLuna.actTwoBeat=65;oldLuna.action='eat';delete oldLuna.journey;
+ secondActLife(loaded);assert.equal(sampleJourney(oldLuna,loaded.hour).zone,'street');assert.notEqual(oldLuna.action,'eat');
+ assert.ok(validateSave(JSON.parse(JSON.stringify(s))));
+});
 test('Luna unpacks, receives a visitor, goes to work and returns before the contract',()=>{
  const s=state(),luna=s.residents.find(r=>r.type==='hostess'),cat=s.residents.find(r=>r.type==='cat');
  assert.equal(luna.action,'clean');
