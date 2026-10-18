@@ -13,11 +13,11 @@ import { storyCheckpointTarget } from './story-checkpoints.js';
 import { messagePages } from './message-pages.js';
 import { replaceConversationContent } from './conversation-dom.js';
 import { speakerColorStyle } from './speaker-colors.js';
-import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from './trouble-victory.js';
+import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVictory } from './trouble-victory.js';
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.39';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.18.40';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -489,7 +489,7 @@ function showActEnding(afterFire=false){
   }
   if(bad){beginRewind(true);return;}
   if(!a.epilogueSeen){const epilogue=state.events.find(e=>e.actScene==='epilogue');if(epilogue){showEvent(epilogue.id,a.epilogueCursor||0);return;}}
-  openModal(`<section class="act-screen act-clear" data-chapter="1"><img class="ending-character" src="${EVENT_EXPRESSIONS.cat.happy}" alt="灰田モク"><div class="act-ending-copy"><p class="act-kicker">FIRST ACT COMPLETE</p><h2 id="modal-title">第一幕・完</h2><p class="act-ending-story">けもの荘は、今日も燃えずに済んだ。</p><button class="act-primary" data-act-reward>第二幕プロローグへ <span>→</span></button><button class="act-secondary" data-act-replay>第一幕をもう一度遊ぶ</button></div></section>`);
+  openModal(actOneCompleteHTML());
 }
 function showActTwoEnding(afterCinematic=false){
  const a=state.actOne;
@@ -548,7 +548,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.18.39';
+const BUILD_VERSION='2026.10.18.40';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -781,7 +781,7 @@ function syncNormalBgm(){
   const bad=!clock&&modal.open&&!modal.querySelector('.act-title')&&(firstFireDanger||!!modal.querySelector('.fire-cinematic,.debt-cinematic,.act-burn,.rewind-screen'));
   const title=!bad&&!clock&&modal.open&&!!modal.querySelector('.game-title,.title-help');
   const activeDialogue=modal.open&&modal.classList.contains('conversation-modal')?state.events.find(e=>e.id===eventView?.id):null;
-  const victory=!bad&&!clock&&!title&&modal.open&&!!modal.querySelector('.trouble-victory');
+  const victory=!bad&&!clock&&!title&&modal.open&&!!modal.querySelector('.trouble-victory,.act-one-complete');
   const trouble=!victory&&!bad&&!clock&&!title&&modal.open&&(!!modal.querySelector('.trouble-card')||activeDialogue?.actScene==='reply');
   const lunaFilm=modal.open?modal.querySelector('[data-act2-opening]'):null;
   // Quiet film cuts reduce Foley only; keep the uneasy BGM continuous.

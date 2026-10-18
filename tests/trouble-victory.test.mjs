@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { avoidedTrouble, troubleAvoidedHTML, startTroubleVictory } from '../src/trouble-victory.js';
+import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVictory } from '../src/trouble-victory.js';
+import {readFileSync} from 'node:fs';
+import vm from 'node:vm';
+import {storyScreenHTML} from '../src/story-screens.js';
 import { ACT_ONE_EVENTS } from '../src/act-one.js';
 import { ACT_TWO_EVENTS } from '../src/act-two.js';
 test('only authored safe replies trigger victory in either chapter; seen replies never repeat',()=>{
@@ -9,6 +12,21 @@ test('only authored safe replies trigger victory in either chapter; seen replies
     assert.deepEqual(avoidedTrouble(reply,chapter),choice.bad?null:{scene,chapter});
     assert.equal(avoidedTrouble({...reply,avoidanceSeen:true},chapter),null);
     assert.equal(avoidedTrouble({...reply,actScene:scene},chapter),null);
+  }
+});
+
+test('first-act completion has one forward action and shares the victory soundtrack',()=>{
+  const html=actOneCompleteHTML();
+  assert.equal(storyScreenHTML(html),html);
+  assert.equal((html.match(/<button/g)||[]).length,1);
+  assert.match(html,/data-act-reward/);assert.doesNotMatch(html,/data-act-replay|FIRST ACT COMPLETE/);
+  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
+  const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
+  for(const screen of ['.trouble-victory','.act-one-complete']){
+    let cue;
+    const context={document:{hidden:false},state:{actOne:{chapter:1}},modal:{open:true,classList:{contains:()=>false},querySelector:s=>s.split(',').includes(screen)?{}:null},normalBgm:{setScene:(silent,name)=>{assert.equal(silent,false);cue=name;}}};
+    vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);
+    assert.equal(cue,'victory');
   }
 });
 test('victory waits for its button, supports keyboard activation, and cleans up',t=>{

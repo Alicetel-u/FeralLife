@@ -1605,3 +1605,34 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .game-ink .graphic-choice .decision-choice.choice-exhausted .choice-icon{filter:grayscale(1);opacity:.45}
 .game-ink .graphic-choice .decision-choice.choice-exhausted .choice-arrow{visibility:hidden}
 @media(max-width:700px){.game-ink .graphic-choice .decision-choice .choice-history-badge{right:8px;top:4px;font-size:8px;padding:1px 5px}}
+/* First-act completion: one composed screen, one way forward. */
+.game-ink .act-one-complete{position:relative;isolation:isolate;width:100%;height:100dvh;min-height:0;overflow:hidden;background:#111116;color:#fff5e7;font-family:var(--sans)}
+.game-ink .act-one-complete::before,.game-ink .act-one-complete::after{display:none!important}
+.complete-backdrop{position:absolute;inset:0;z-index:0;overflow:hidden;background:radial-gradient(#fff5e718 1px,transparent 1.6px) 0 0/7px 7px}
+.complete-backdrop::before{content:'';position:absolute;inset:-10%;background:#ed2448;clip-path:polygon(60% 0,100% 0,100% 100%,36% 100%)}
+.complete-backdrop::after{content:'';position:absolute;inset:-10%;background:#fff5e7;clip-path:polygon(84% 0,94% 0,61% 100%,51% 100%)}
+.complete-portrait{position:absolute;z-index:1;right:-6%;bottom:-15%;width:65%;height:110%;object-fit:contain;object-position:center bottom;filter:drop-shadow(-5px 0 #fff5e7) drop-shadow(10px 5px #111116);animation:complete-art-in .55s ease-out both}
+.complete-content{position:relative;z-index:2;width:52%;height:100%;display:flex;flex-direction:column;justify-content:center;padding:4dvh 0 6dvh 10%;gap:clamp(15px,4dvh,45px)}
+.game-ink .act-one-complete h2{margin:0;display:flex;flex-direction:column;align-items:flex-start;transform:rotate(-6deg);color:#fff5e7;text-shadow:none;letter-spacing:0;line-height:1}
+.act-one-complete h2 span{display:block;padding:.13em .32em .18em;background:#ed2448;box-shadow:7px 7px #fff5e7;font-size:clamp(30px,4vw,64px);font-weight:1000;letter-spacing:.12em}
+.act-one-complete h2 strong{display:block;font-size:clamp(160px,min(22vw,40dvh),360px);font-weight:1000;line-height:1.05;letter-spacing:-.08em;text-shadow:9px 8px #ed2448;margin-top:12px}
+.complete-finish{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:22px}
+.complete-finish p{margin:0;font-size:clamp(14px,1.4vw,20px);font-weight:700;line-height:1.8;white-space:nowrap;text-shadow:0 2px 6px #111116}
+.complete-next{display:flex;align-items:center;justify-content:space-between;gap:38px;min-width:250px;min-height:60px;padding:15px 26px;background:#fff5e7;color:#111116;font-size:20px;font-weight:900;border:2px solid #fff5e7;box-shadow:7px 7px #ed2448;transform:skewX(-7deg);transition:background .15s,color .15s}
+.complete-next span{font-size:28px;line-height:1}.complete-next:hover,.complete-next:focus-visible{background:#ed2448;color:#fff5e7;outline:2px solid #fff5e7;outline-offset:5px}
+@keyframes complete-art-in{from{opacity:0;translate:28px 10px}to{opacity:1;translate:0 0}}
+@media(max-width:700px){
+ .game-ink .act-one-complete{height:100dvh;min-height:0;max-height:100dvh}
+ .complete-backdrop::before{clip-path:polygon(60% 0,100% 0,100% 100%,0 76%)}
+ .complete-backdrop::after{clip-path:polygon(92% 0,104% 0,41% 100%,29% 100%)}
+ .complete-portrait{right:-30%;top:18%;bottom:auto;width:120%;height:80%;object-position:center top;mask-image:linear-gradient(#000 45%,transparent 74%)}
+ .complete-content{width:100%;padding:0;display:block;background:linear-gradient(0deg,#111116 0%,#111116f2 13%,transparent 38%)}
+ .game-ink .act-one-complete h2{position:absolute;left:8%;top:max(8dvh,calc(env(safe-area-inset-top,0px) + 22px))}
+ .act-one-complete h2 span{font-size:clamp(27px,8vw,45px);box-shadow:4px 4px #fff5e7}
+ .act-one-complete h2 strong{font-size:clamp(120px,min(43vw,28dvh),230px);text-shadow:6px 5px #ed2448}
+ .complete-finish{position:absolute;left:8%;right:8%;bottom:max(6dvh,calc(env(safe-area-inset-bottom,0px) + 22px));gap:18px}
+ .complete-finish p{font-size:clamp(12px,3.6vw,17px);white-space:normal}
+ .complete-next{width:100%;min-width:0;min-height:54px;font-size:18px;padding:12px 24px;box-shadow:5px 5px #ed2448}
+}
+@media(max-height:500px) and (min-width:701px){.complete-content{padding-block:18px;gap:12px}.act-one-complete h2 span{font-size:25px}.act-one-complete h2 strong{font-size:36dvh}.complete-finish{gap:10px}.complete-next{min-height:46px;padding:8px 20px;font-size:17px}.complete-finish p{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.complete-portrait{animation:none}.complete-next{transition:none}}

@@ -15,6 +15,9 @@ export function troubleAvoidedHTML(chapter) {
   const portrait=chapter===2?EVENT_EXPRESSIONS.hostess.happy:EVENT_EXPRESSIONS.cat.happy;
   return `<section class="act-screen trouble-victory"><div class="victory-rays" aria-hidden="true"></div><div class="victory-portrait" aria-hidden="true"><img src="${portrait}" alt=""></div><div class="victory-copy"><p class="victory-kicker">GOOD CALL / 大家の返事</p><h2 id="modal-title"><span>トラブル</span><strong>回避！</strong></h2><p class="victory-stamp">この日常、まだ続く。</p></div><button class="victory-next" data-victory-done>観察に戻る <span aria-hidden="true">→</span></button></section>`;
 }
+export function actOneCompleteHTML(){
+  return `<section class="act-screen act-clear graphic-title act-one-complete" data-chapter="1"><div class="complete-backdrop" aria-hidden="true"></div><img class="complete-portrait" src="${EVENT_EXPRESSIONS.cat.happy}" alt="灰田モク"><div class="complete-content"><h2 id="modal-title"><span>第一幕</span><strong>完</strong></h2><div class="complete-finish"><p>けもの荘は、今日も燃えずに済んだ。</p><button type="button" class="complete-next" data-act-reward>第二幕へ<span aria-hidden="true">→</span></button></div></div></section>`;
+}
 export function startTroubleVictory(root, done) {
   let finished=false;
   const button=root.querySelector('[data-victory-done]');
