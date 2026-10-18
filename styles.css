@@ -1375,20 +1375,23 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .game-ink .act-modal #modal-content:has(>.showcase-screen){height:100%;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#ed2448 #111116}
 
 
+/* Preserve the original main title without the rejected decorative edge copy. */
+.graphic-title .title-credit,.graphic-title .title-edge{display:none}
+
 /* Mobile is a single-screen game: reserve space for every action, not a scrollable poster. */
 @media(max-width:700px), (max-height:500px) and (pointer:coarse){
  html:has(body.game-ink),body.game-ink{height:100dvh;overflow:hidden;overscroll-behavior:none}
- .game-ink .act-modal #modal-content:has(>.showcase-screen){height:100%;overflow:hidden;overscroll-behavior:none}
- .game-ink .showcase-screen,.game-ink .showcase-title{height:100dvh;min-height:0;max-height:100dvh;overflow:hidden}
- .showcase-title .title-poster{height:100%;min-height:0;padding:clamp(45px,8dvh,68px) 24px max(40px,calc(env(safe-area-inset-bottom,0px) + 28px));display:flex;justify-content:flex-start}
- .game-ink .showcase-title h2.title-logo{font-size:clamp(58px,min(20vw,11dvh),96px)}
- .showcase-title .title-logo small{margin-top:8px;font-size:10px}
- .showcase-title .title-label{margin-bottom:8px}
- .showcase-title .title-hook{margin:12px 0 10px;line-height:1.6}
- .showcase-title .title-actions{margin-top:auto;gap:6px;flex-shrink:0}
- .game-ink .showcase-title .title-actions button{min-height:44px;padding:6px 18px;font-size:18px}
- .showcase-title .title-record{margin:10px 0 0;flex-shrink:0}
- .showcase-title .title-moku{top:22%;height:58dvh}
+ .game-ink .act-modal #modal-content:is(:has(>.showcase-screen),:has(>.graphic-title)){height:100%;overflow:hidden;overscroll-behavior:none}
+ .game-ink .showcase-screen,.game-ink .graphic-title{height:100dvh;min-height:0;max-height:100dvh;overflow:hidden}
+ .graphic-title .title-poster{height:100%;min-height:0;padding:clamp(45px,8dvh,68px) 24px max(40px,calc(env(safe-area-inset-bottom,0px) + 28px));display:flex;justify-content:flex-start}
+ .game-ink .graphic-title h2.title-logo{font-size:clamp(58px,min(20vw,11dvh),96px)}
+ .graphic-title .title-logo small{margin-top:8px;font-size:10px}
+ .graphic-title .title-label{margin-bottom:8px}
+ .graphic-title .title-hook{margin:12px 0 10px;line-height:1.6}
+ .graphic-title .title-actions{margin-top:auto;gap:6px;flex-shrink:0}
+ .game-ink .graphic-title .title-actions button{min-height:44px;padding:6px 18px;font-size:18px}
+ .graphic-title .title-record{margin:10px 0 0;flex-shrink:0}
+ .graphic-title .title-moku{top:22%;height:58dvh}
  .game-ink .showcase-chapter .act-title-copy,
  .game-ink .showcase-bad .act-ending-copy,.game-ink .showcase-clear .act-ending-copy{
   height:100%;min-height:0;padding:clamp(140px,30dvh,255px) 22px max(45px,calc(env(safe-area-inset-bottom,0px) + 30px));justify-content:flex-end;
@@ -1409,11 +1412,11 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .game-ink .showcase-screen .act-kicker{margin-bottom:8px}
 }
 @media(max-height:500px) and (pointer:coarse){
- .showcase-title .title-poster{width:60%;padding:32px 24px 20px}
- .showcase-title .title-hook,.showcase-title .title-label,.showcase-title .title-record{display:none}
- .game-ink .showcase-title h2.title-logo{font-size:50px}
- .showcase-title .title-moku{height:95dvh;width:65%;top:5%;right:-8%}
- .showcase-title .title-actions{margin-top:14px}
+ .graphic-title .title-poster{width:60%;padding:32px 24px 20px}
+ .graphic-title .title-hook,.graphic-title .title-label,.graphic-title .title-record{display:none}
+ .game-ink .graphic-title h2.title-logo{font-size:50px}
+ .graphic-title .title-moku{height:95dvh;width:65%;top:5%;right:-8%}
+ .graphic-title .title-actions{margin-top:14px}
  .game-ink .showcase-chapter .act-title-copy,.game-ink .showcase-bad .act-ending-copy,.game-ink .showcase-clear .act-ending-copy{padding:40px 24px 25px;width:70%}
  .game-ink .showcase-chapter .act-key-art,.game-ink .showcase-screen .ending-character{height:95dvh;width:50%;right:-8%}
  .game-ink .showcase-chapter h2{font-size:27px}

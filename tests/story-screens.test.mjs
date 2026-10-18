@@ -9,7 +9,7 @@ import {troubleAvoidedHTML} from '../src/trouble-victory.js';
 import {stalkerPrefaceHTML} from '../src/first-stalker-stage.js';
 
 test('all chapter and result screens retain their original actions and copy inside the new framing',()=>{
- for(const [type,kind] of [['graphic-title','title'],['act-title','chapter'],['act-burn','bad'],['act-clear','clear'],['act-intermission','intermission']]){
+ for(const [type,kind] of [['act-title','chapter'],['act-burn','bad'],['act-clear','clear'],['act-intermission','intermission']]){
   const original=`<section class="act-screen ${type}" data-chapter="2"><h2 id="modal-title">見出し</h2><button data-act2-start>第二幕を始める</button></section>`;
   const html=storyScreenHTML(original);
   assert.ok(html.includes(`showcase-${kind}`));
@@ -32,7 +32,7 @@ test('fire, sale, seizure and rewind keep cinematic controls and their own scene
 });
 
 test('trouble avoided, ordinary dialogue and the approved horror interlude stay untouched',()=>{
- const samples=[troubleAvoidedHTML(1),troubleAvoidedHTML(2),stalkerPrefaceHTML(),'<div class="event-stage">会話</div>','<section class="act-screen luna-film" data-act2-opening>映像</section>'];
+ const samples=['<section class="act-screen game-title graphic-title"><button data-game-new>はじめから</button><button data-title-help>遊び方</button></section>',troubleAvoidedHTML(1),troubleAvoidedHTML(2),stalkerPrefaceHTML(),'<div class="event-stage">会話</div>','<section class="act-screen luna-film" data-act2-opening>映像</section>'];
  for(const html of samples)assert.equal(storyScreenHTML(html),html);
 });
 
