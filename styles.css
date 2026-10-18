@@ -1533,3 +1533,51 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .title-refined .title-moku{inset:0 -7% auto auto;width:65%;height:115%;object-fit:contain}
 }
 @media(prefers-reduced-motion:reduce){.title-refined .title-cast{animation:none}.title-refined .title-actions button,.title-refined .title-actions button:before{transition:none}}
+
+
+/* Title actions: staggered cutouts, with a clear active shape rather than identical text rows. */
+.title-refined .title-actions{width:min(430px,85%);gap:13px;transform:rotate(-3deg)}
+.game-ink .title-refined .title-actions button{
+ --menu-angle:-1deg;min-height:60px;padding:12px 28px 12px 18px;gap:14px;
+ transform:rotate(var(--menu-angle));font-weight:1000;letter-spacing:.08em;
+ animation:title-action-enter .4s cubic-bezier(.15,.7,.2,1) backwards;
+}
+.title-refined .title-actions button:nth-child(2){--menu-angle:1.5deg;width:91%;margin-left:16px;animation-delay:.07s}
+.title-refined .title-actions button:nth-child(3){--menu-angle:-.5deg;width:80%;margin-left:32px;animation-delay:.14s;font-size:clamp(20px,2vw,27px)}
+.title-refined .title-actions button:before{
+ inset:0;height:auto;background:#fff1db88;z-index:-2;
+ clip-path:polygon(3% 9%,100% 0,94% 91%,0 100%);
+ transition:background .18s,translate .18s;
+}
+.title-refined .title-actions button:after{
+ content:'';position:absolute;inset:2px;z-index:-1;
+ background:linear-gradient(100deg,#c6193c 0 5px,#151019 6px 100%);
+ clip-path:polygon(3% 9%,100% 0,94% 91%,0 100%);transition:background .18s;
+}
+.title-refined .title-actions button>span{position:relative;z-index:1}
+.title-refined .title-actions button:first-child{font-size:clamp(26px,2.65vw,37px)}
+.title-refined .title-actions button:first-child:before{background:#ed2448}
+.title-refined .title-actions button:first-child:after{background:linear-gradient(110deg,#95132e,#191019 60%)}
+.title-refined .title-actions button:nth-child(3)>span:nth-child(2){font-size:.82em}
+.game-ink .title-refined .title-actions button:hover,.game-ink .title-refined .title-actions button:focus{
+ translate:10px 0;transform:rotate(var(--menu-angle));color:#fff1db;
+}
+.title-refined .title-actions button:hover:before,.title-refined .title-actions button:focus:before{
+ height:auto;background:#fff1db;clip-path:polygon(3% 9%,100% 0,94% 91%,0 100%);translate:-3px 3px;
+}
+.title-refined .title-actions button:hover:after,.title-refined .title-actions button:focus:after{background:#cc193c}
+.title-refined .title-actions button:hover .title-menu-mark,.title-refined .title-actions button:focus .title-menu-mark{background:#fff1db}
+.game-ink .title-refined .title-actions button:active{translate:13px 2px;transform:rotate(var(--menu-angle)) scale(.98)}
+@keyframes title-action-enter{from{opacity:0;translate:-24px 0}to{opacity:1;translate:0 0}}
+@media(max-width:700px){
+ .title-refined .title-actions{width:82%;gap:10px}
+ .game-ink .title-refined .title-actions button{min-height:52px;padding:10px 20px 10px 14px;font-size:23px;gap:10px}
+ .game-ink .title-refined .title-actions button:first-child{font-size:27px}
+ .title-refined .title-actions button:nth-child(2){margin-left:10px}
+ .title-refined .title-actions button:nth-child(3){margin-left:20px}
+}
+@media(max-height:550px){
+ .title-refined .title-actions{gap:7px;margin-top:14px}
+ .game-ink .title-refined .title-actions button,.game-ink .title-refined .title-actions button:first-child{min-height:44px;padding:7px 18px 7px 12px;font-size:22px}
+}
+@media(prefers-reduced-motion:reduce){.title-refined .title-actions button{animation:none}.title-refined .title-actions button:after{transition:none}}
