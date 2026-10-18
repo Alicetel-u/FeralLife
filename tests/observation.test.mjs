@@ -21,7 +21,8 @@ test('unseen scenes cannot be skipped; rewind preserves reading and unlocks only
  const s=start();assert.equal(skipObservation(s),false);
  for(let i=0;!s.actOne.pending&&i<600;i++)step(s);
  answerActOne(s,s.actOne.pending.eventId,'trash');const next=rewindBeforeFire(s);inheritObservation(s,next);next.actOne.started=true;next.actOne.rewindIntroPending=false;
- assert.equal(canSkipObservation(next),true);assert.equal(skipObservation(next),true);
+ assert.equal(next.hour,23);assert.equal(next.actOne.pending.scene,'ash');
+ assert.equal(canSkipObservation(next),false);assert.equal(skipObservation(next),false);
  assert.equal(observationClockLimit(next),Infinity);
 });
 test('legacy saves migrate without replaying past scenes; malformed observation fields recover',()=>{

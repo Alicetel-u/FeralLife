@@ -54,12 +54,16 @@ test('first rewind waits for the complete clock track before fading automaticall
   try{
     const node=()=>{const el=new EventTarget();el.style={setProperty(){}};el.classList={toggle(){},add(){}};el.dataset={};el.focus=()=>{};return el;};
     const root=new EventTarget();root.isConnected=true;root.dataset={};root.classList={add(v){root.fading=v;}};root.querySelector=selector=>selector==='[data-rewind-skip]'?null:node();
+    const minute=node(),hour=node(),clock=node();
+    root.querySelector=selector=>selector==='[data-rewind-skip]'?null:selector==='.rewind-hand.minute'?minute:selector==='.rewind-hand.hour'?hour:clock;
     const audio={ended:false,paused:false};
-    const stop=startRewindTransition(root,'ash-trash',()=>done++,true,1,17,true,audio);
+    const stop=startRewindTransition(root,'ash-trash',()=>done++,true,1,23,true,audio);
     root.dispatchEvent(new Event('click'));
     for(let n=0;n<170;n++){now+=100;frame(now);}
     assert.equal(done,0);
     assert.equal(root.fading,undefined);
+    assert.equal(hour.style.transform,'rotate(330deg)');
+    assert.equal(minute.style.transform,'rotate(-1440deg)');
     audio.ended=true;
     for(let n=0;n<14;n++){now+=100;frame(now);}
     assert.equal(done,1);

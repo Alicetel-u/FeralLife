@@ -470,50 +470,45 @@ export function rewindBeforeFire(s){
   next.ending=null;next.pending=null;
   next.events.forEach(e=>e.read=true);
   const firstLoop=s.actOne.attempt===1;
+  const resumeAtAsh=scene==='ash'&&(firstLoop||s.actOne.rollbackPoint?.state?.hour===ACT_ONE_EVENTS.ash.at);
+  if(resumeAtAsh){
+    // Restore the unanswered consultation, not the afternoon observation route.
+    for(let step=0;step<4&&!next.actOne.pending;step++)advanceActOne(next,Math.max(.01,ACT_ONE_EVENTS.ash.at-next.hour));
+    const consultation=next.events.find(e=>e.id===next.actOne.pending?.eventId);
+    if(consultation){
+      consultation.lines=[am('……なあ、モク。')];
+      consultation.detail=consultation.lines[0].text;consultation.choicePresented=true;
+    }
+    if(firstLoop){
+      const checkpoint={...next,actOne:{...next.actOne,pending:null}};
+      saveStoryCheckpoint(checkpoint,'ash','灰皿の相談を受けた夜');
+      next.actOne.rollbackPoint=checkpoint.actOne.rollbackPoint;
+    }
+  }
   const intro=addEvent(next,'life',firstLoop?'初めての巻き戻し':'また、火事の前へ',
     firstLoop?'焼け落ちたはずの101号室が、何事もなかったように戻っている。':'また時間が戻った。'+storyCheckpointTarget(s).label+'だ。',[101]);
   intro.actScene='rewind';intro.cast=['cat'];intro.stageOnly=true;intro.read=false;
-  intro.revealCharacterAt=firstLoop?8:0;
+  intro.revealCharacterAt=0;
+  if(resumeAtAsh)intro.resumeChoice=true;
   intro.lines=firstLoop?[
-    an('耳をつんざく炎の音。肌を焼く熱気。息を吸うたび、喉の奥が焼けるように痛む。'),
-    am('くそっ……！ モク！ 走れ！！ 早く！！'),
-    an('その瞬間、視界が真っ白になった。'),
-    an('……静寂。'),
-    {...am('……なんだ？ 何が起きた……？'),innerVoice:true},
-    an('鼻を刺す焦げ臭さが消えている。熱くもない。息もできる。'),
-    am('……はっ！ はぁっ……はぁっ……！'),
-    am('……火は！？ モクはどこだ！？'),
-    ac('surprised','ニャ！？ 大家、急にどうしたニャ！？'),
+    an('焦げた臭いが消えた。見慣れた101号室に、モクの声が響く。'),
+    ac('neutral','灰皿いっぱいになったニャ。'),
     am('……モク！？'),
-    an('目の前には、いつものようにタバコを吸うモクがいた。壁に焦げ跡はない。窓の外にも煙は上がっていない。'),
     am('お前……無事なのか！？'),
     ac('neutral','無事も何も、ずっとここにいるニャ。'),
     am('いや、だって……さっきまで火事で……！'),
     ac('surprised','火事？ 何の話ニャ？'),
-    am('……っ。'),
-    {...am('なんでだ……？ あんなに熱かったのに。煙も、炎も……全部覚えてる。'),innerVoice:true},
-    an('大家は震える手で自分の腕を確かめる。火傷はない。服も汚れていなかった。'),
-    {...am('夢……？ いや、違う。あれが夢なわけ……。'),innerVoice:true},
-    an('ふと、壁の時計が目に入る。'),
-    am('……17時？'),
-    an('1日目、17時。初めてこの部屋を訪れたときと、まったく同じ時刻だった。'),
-    am('……嘘だろ。'),
+    an('モクはきょとんとした顔で、大家を見ている。'),
+    ac('tired','大家？ 顔色悪いニャ。'),
+    an('大家は震える手を握りしめ、壁の時計を見上げた。'),
+    an('時計は、23時を指している。'),
+    an('さっき、灰皿の相談を受けたのと同じ時刻だった。'),
     {...am('……戻ってる？ 時間が……？'),innerVoice:true},
-    ac('tired','大家、さっきから顔色悪いニャ。ちょっと座った方がいいんじゃないかニャ？'),
-    am('……ああ。そうだな……。'),
-    an('大家はゆっくり息を吐く。しかし、胸の鼓動はなかなか収まらない。'),
-    {...am('……もし、また同じことが起きたら？'),innerVoice:true},
-    {...am('……もし、今度は逃げられなかったら？'),innerVoice:true},
-    an('大家はモクを見る。何も知らずに、いつものようにタバコを吸っている。'),
-    {...am('……あいつは覚えてない。俺だけが、あの火事を覚えてる。'),innerVoice:true},
-    {...am('だったら……今度こそ、間違えられねぇ。'),innerVoice:true},
-    ac('neutral','……大家？'),
-    am('……なあ、モク。'),
-    ac('neutral','なんだニャ？'),
-    am('……火の始末だけは、ちゃんとしてくれよ。'),
-    ac('neutral','なんだニャ、急に。ちゃんとしてるニャ。'),
-    am('……そうかよ。'),
-    {...am('……絶対に、もう燃やさせねぇ。'),innerVoice:true}
+    an('服に焦げ跡はない。息を吸っても、もう喉は痛まなかった。'),
+    {...am('なんでだ……？ あんなに熱かったのに。煙も、炎も……全部覚えてる。'),innerVoice:true},
+    ac('surprised','それが……さっき吸ったやつ、まだ熱いニャ。'),
+    an('モクの口ぶりも、さっきと同じだ。吸い殻は、まだ捨てられていない。'),
+    {...am('だったら……今度こそ、間違えられねぇ。'),innerVoice:true}
   ]:[
     an('炎の音が遠ざかる。見慣れた101号室。'+storyCheckpointTarget(s).label+'に戻っていた。'),
     {...am('……また戻った。今度こそ大丈夫だと思ったのに。'),innerVoice:true},
