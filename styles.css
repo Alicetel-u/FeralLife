@@ -1324,7 +1324,7 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .showcase-rewind .showcase-plane{background:var(--show-red);clip-path:polygon(0 0,9% 0,0 60%)}
 .showcase-rewind .showcase-cut{clip-path:polygon(98% 0,100% 0,100% 100%,90% 100%);background:var(--show-paper)}
 .showcase-rewind .showcase-word{top:35%;right:-12%;width:120%;font-size:22vw;white-space:nowrap;opacity:.5}
-.showcase-rewind .rewind-clock{z-index:3}
+.showcase-rewind .rewind-clock{z-index:5}
 .showcase-rewind .rewind-voice{z-index:6}
 .showcase-rewind .rewind-white-fade{z-index:20}
 .showcase-rewind .showcase-mast,.showcase-rewind .showcase-footer{opacity:.65}

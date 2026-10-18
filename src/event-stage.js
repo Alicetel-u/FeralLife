@@ -78,6 +78,19 @@ export function eventEmotion(line, event = {}) {
   return 'neutral';
 }
 
+// Luna reacts to what she can see and hear, without knowing the landlord's memories.
+const LUNA_REWIND_REACTIONS = new Map([
+  ['大家は思わず頭を押さえる。だが、痛みはない。','surprised'],
+  ['……大家さん？ 大丈夫？','sad'],
+  ['……生きてる……。','surprised'],
+  ['えっ？ 何言ってるの？','sad'],
+  ['大家さん！？','surprised'],
+  ['男「さっきから無視してんじゃねえよ！」','angry'],
+  ['男が大家に詰め寄る。','sad'],
+  ['……絶対に、あんな目には遭わせねぇ。','surprised'],
+  ['大家さん？ 何かあった？','sad']
+]);
+
 export function eventStageHTML(event,residents,index=0,page=0,{hideCharacters=false,cinematic=false}={}) {
   const lines=eventConversation(event),cursor=Math.max(0,Math.min(index,lines.length-1)),line=lines[cursor];
   const pages=messagePages(line.text),pageIndex=Math.max(0,Math.min(page,pages.length-1)),pageText=pages[pageIndex];
@@ -97,7 +110,10 @@ export function eventStageHTML(event,residents,index=0,page=0,{hideCharacters=fa
     if(hideCharacters||!type||type==='manager')return '';
     const previous=lines.slice(0,cursor+1).reverse().find(item=>item.speaker===type);
     const resolvedEmotion=eventEmotion(previous,event);
-    const emotion=type==='hostess'&&event.actScene==='act2-rewind'&&['neutral','happy','shy','tired'].includes(resolvedEmotion)?'surprised':resolvedEmotion;
+    const reaction=type==='hostess'&&event.actScene==='act2-rewind'
+      ?lines.slice(0,cursor+1).reverse().find(item=>LUNA_REWIND_REACTIONS.has(item.text)):null;
+    const emotion=type==='hostess'&&event.actScene==='act2-rewind'
+      ?LUNA_REWIND_REACTIONS.get(reaction?.text)||'sad':resolvedEmotion;
     const expression=EVENT_EXPRESSIONS[type]?.[emotion];
     const arrivalBust=event.actScene==='act2-prologue'&&type==='hostess'&&emotion==='neutral';
     const src=arrivalBust?'assets/events/busts/hostess-neutral.png':expression||EVENT_ART[type]||CHARACTER_ART[type]?.src,active=line.speaker===type;
