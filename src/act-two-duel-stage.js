@@ -6,7 +6,8 @@ function duelMini(type,emotion,classes,label){
  const sheet=MINI_EMOTION_ART[type],frame=sheet.frames[emotion];
  if(!frame)return `<img class="duel-mini ${classes}" src="${type==='cat'?'assets/characters/cat/observation-v4/stand.png':'assets/characters/hostess/observation-v4/stand.png'}" alt="${label}">`;
  const [width,height]=type==='cat'?[1145,1374]:[1204,1306];
- return `<svg class="duel-mini ${classes}" viewBox="${frame.join(' ')}" preserveAspectRatio="xMidYMax meet" role="img" aria-label="${label}"><image href="${sheet.src}" width="${width}" height="${height}"/></svg>`;
+ const [x,y,w,h]=frame,clipId=`duel-crop-${type}-${emotion}`;
+ return `<svg class="duel-mini ${classes}" viewBox="${frame.join(' ')}" preserveAspectRatio="xMidYMax meet" role="img" aria-label="${label}"><defs><clipPath id="${clipId}" clipPathUnits="userSpaceOnUse"><rect x="${x}" y="${y}" width="${w}" height="${h}"/></clipPath></defs><image href="${sheet.src}" width="${width}" height="${height}" clip-path="url(#${clipId})"/></svg>`;
 }
 
 // Derive presentation from the saved transcript. No animation state enters a save.
