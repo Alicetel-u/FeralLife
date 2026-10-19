@@ -556,10 +556,8 @@ function rewindDuel(s){
  next.ending=null;next.pending=null;next.events.forEach(e=>e.read=true);
  const intro=addEvent(next,'life','また、あの昼へ','玄関で、ルナが大家の袖を引いている。',[102]);
  Object.assign(intro,{actScene:'act2-rewind',cast:['hostess','cat'],stageOnly:true,lines:[m('……鍵はある。帳簿も、俺の手に……。'),l('surprised','大家さん？ まだ何もお願いしてないよ？'),...(a.failure==='duel-yandere'?[
-  {...m('……あのときは、助けられて安心しただけに見えた。'),innerVoice:true},
-  {...m('でも、俺への気持ちが高まりすぎて……離れるのが怖くなっちまったのか。'),innerVoice:true},
-  {...m('守るつもりで、期待まであおってたんだな……。'),innerVoice:true},
-  {...m('今度は安心させながらも、彼氏のフリだって線は引く。勢いで甘い約束を重ねるのはやめよう。'),innerVoice:true}
+  {...m('……ルナは、俺への気持ちが高まりすぎると、ああなっちまうのか。'),innerVoice:true},
+  {...m('今度は調子に乗って、期待させすぎないようにしねぇと……。'),innerVoice:true}
  ]:[]),m('……今日は、最後まで気を抜かねぇ。'),c('neutral','大家、彼氏役にそんな覚悟が要るニャ？')]});
  return next;
 }

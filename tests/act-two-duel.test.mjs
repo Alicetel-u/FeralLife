@@ -204,9 +204,9 @@ test('only the yandere rewind gives the landlord a hint about affection and boun
   const s=duelStart();for(const id of choices)answerActTwo(s,s.actOne.pending.eventId,id);
   assert.equal(s.actOne.status,'bad');
   const next=rewindActTwo(s),lines=next.events.find(e=>e.actScene==='act2-rewind').lines;
-  const thought=lines.find(line=>line.text.includes('気持ちが高まりすぎて'));
+  const thought=lines.find(line=>line.text.includes('気持ちが高まりすぎると'));
   assert.equal(!!thought,hint);
-  if(hint){assert.equal(thought.innerVoice,true);assert.ok(lines.some(line=>line.innerVoice&&line.text.includes('甘い約束')));}
+  if(hint){assert.equal(thought.innerVoice,true);assert.ok(lines.some(line=>line.innerVoice&&line.text.includes('期待させすぎない')));}
   assert.equal(next.hour,84);assert.deepEqual(next.actOne.completed,['bag']);
   assert.ok(validActOne(next)&&validateSave(next));
  }
