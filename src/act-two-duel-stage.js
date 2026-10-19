@@ -1,19 +1,59 @@
 import {DUEL_ART,DUEL_ROUNDS} from './act-two-duel.js';
-import {eventConversation,eventStageHTML,eventEscape} from './event-stage.js';
+import {eventConversation,eventStageHTML,eventEscape,eventIcon} from './event-stage.js';
+import {MINI_EMOTION_ART} from './mini-emotions.js';
+
+function duelMini(type,emotion,classes,label){
+ const sheet=MINI_EMOTION_ART[type],frame=sheet.frames[emotion];
+ if(!frame)return `<img class="duel-mini ${classes}" src="${type==='cat'?'assets/characters/cat/observation-v4/stand.png':'assets/characters/hostess/observation-v4/stand.png'}" alt="${label}">`;
+ const [width,height]=type==='cat'?[1145,1374]:[1204,1306];
+ return `<svg class="duel-mini ${classes}" viewBox="${frame.join(' ')}" preserveAspectRatio="xMidYMax meet" role="img" aria-label="${label}"><image href="${sheet.src}" width="${width}" height="${height}"/></svg>`;
+}
+
+// Derive presentation from the saved transcript. No animation state enters a save.
+export function duelFrame(event,index=0){
+ const lines=eventConversation(event),cursor=Math.max(0,Math.min(index,lines.length-1)),line=lines[cursor];
+ const round=line.duelRound??3,ending=line.duelEnding;
+ const updated=lines.slice(0,cursor+1).some(l=>l.duelRound===round&&l.duelHeartUpdate);
+ const resolved=event.duelResolvedRound??-1;
+ const before=event.duelPreviousHearts??event.duelHearts??0;
+ const hearts=Math.max(0,Math.min(10,updated||ending||round>resolved?event.duelHearts??0:before));
+ const entrance=line.duelRound!==undefined&&round>resolved&&cursor===lines.findIndex(l=>l.duelRound===round);
+ return {line,round,ending,hearts,before,updated,entrance,defeated:!!line.duelDefeated||updated};
+}
+
+export function duelChoiceHTML(event,choices,history=new Set()){
+ return `<section class="cinematic-choice duel-choices" aria-labelledby="choice-title"><div class="duel-choice-heading"><h2 id="choice-title">大家の漢気、見せてやれ！</h2><span>ひと言選んで、撃退！</span></div><div class="decision-panel" aria-label="大家の返事">${choices.map((choice,i)=>{
+  const ultimate=choice.delta===7,assist=choice.delta<0,seen=history.has('duel:'+choice.id);
+  return `<button type="button" class="decision-choice duel-command ${ultimate?'duel-ultimate':''}" style="--choice-index:${i}" data-case-event="${event.id}" data-choice="${eventEscape(choice.id)}" aria-disabled="true"><span class="duel-command-icon" aria-hidden="true">${eventIcon(assist?'cat':ultimate?'spark':'chat')}</span><span class="duel-command-copy"><small>${ultimate?'切り札・超絶奥義':assist?'困ったときのモク頼み':i===0?'啖呵を切る':'きっぱり断る'}</small><strong>${eventEscape(choice.label)}</strong>${seen?'<span class="choice-history-badge">選択済</span>':''}</span><span class="duel-command-key" aria-hidden="true">${i+1}</span></button>`;
+ }).join('')}</div><p class="choice-hint">↑ ↓ / 数字で移動 · Enter で決定</p></section>`;
+}
 
 export function duelStageHTML(event,residents,index=0,page=0){
- const lines=eventConversation(event),line=lines[index],ending=line.duelEnding;
+ const {line,round,ending,hearts,before,entrance,defeated}=duelFrame(event,index);
  if(line.duelRound===undefined&&!ending)return eventStageHTML(event,residents,index,page);
- const round=line.duelRound??3,enemy=DUEL_ROUNDS[round];
- const latest=lines.slice(0,index+1).reverse().find(l=>l.duelRound===round&&l.duelHeartUpdate);
- const hearts=latest||ending||round>(event.duelResolvedRound??-1)?event.duelHearts:event.duelPreviousHearts??event.duelHearts;
- const defeated=line.duelDefeated||!!latest;
+ const enemy=DUEL_ROUNDS[round],strike=!!line.duelAttack,delta=hearts-before,cleared=round+(defeated?1:0);
+ const managerPose=strike?'assets/characters/manager/poses/angry.png':line.speaker==='manager'?'assets/characters/manager/poses/retort.png':'assets/characters/manager/idle.png';
+ const lunaLine=eventConversation(event).slice(0,index+1).reverse().find(l=>l.duelRound===round&&l.speaker==='hostess');
+ const lunaEmotion=({shy:'charm',tired:'confused'})[lunaLine?.emotion]||lunaLine?.emotion;
+ const luna=duelMini('hostess',lunaEmotion,`duel-luna ${line.duelHeartUpdate?'duel-react':''}`,'ルナ');
+ const moku=duelMini('cat',line.duelRank===1?'angry':line.speaker==='cat'?'exasperated':null,`duel-moku ${line.duelRank===1?'duel-charge':''} ${line.speaker==='cat'?'duel-speaking':''}`,'モク');
  const scene=ending&&ending!=='clear'?`<img class="duel-cg" src="${DUEL_ART[ending]}" alt="${ending==='yandere'?'独占するルナ':'管理椅子から見下ろすルナ'}">`:
- `<div class="duel-field"><img class="duel-building" src="assets/apartments.png" alt=""><img class="duel-mini duel-luna" src="assets/characters/hostess/observation-v4/stand.png" alt="ルナ"><img class="duel-mini duel-manager" src="assets/characters/manager/idle.png" alt="大家"><img class="duel-mini duel-moku ${line.duelRank===1?'duel-charge':''}" src="assets/characters/cat/observation-v4/stand.png" alt="モク"><img class="duel-mini duel-enemy ${defeated?'duel-defeated':''}" src="${DUEL_ART[enemy.enemy]}" alt="${enemy.name}"></div>`;
- const hud=ending?'':`<div class="duel-hud"><span>${round+1} / 4　${enemy.name}</span><div class="duel-hearts ${line.duelHeartUpdate?'duel-heart-pop':''}" role="img" aria-label="ルナのハート ${hearts}個、最大10個">${Array.from({length:10},(_,i)=>`<span class="${i<hearts?'lit':''}" aria-hidden="true">♥</span>`).join('')}</div></div>`;
- const cut=line.duelAttack?`<div class="duel-impact rank-${line.duelRank}" aria-hidden="true"><strong>${eventEscape(line.duelAttack)}</strong></div>`:'';
+ `<div class="duel-field"><div class="duel-set ${strike?'duel-striking rank-'+line.duelRank:''}"><img class="duel-building" src="assets/apartments.png" alt="">${luna}<img class="duel-mini duel-manager ${line.speaker==='manager'?'duel-speaking':''}" src="${managerPose}" alt="大家">${moku}<img class="duel-mini duel-enemy ${defeated?'duel-defeated':entrance?'duel-arriving':''}" src="${DUEL_ART[enemy.enemy]}" alt="${enemy.name}"><span class="duel-hit-ring" aria-hidden="true"></span></div>${entrance?`<div class="duel-arrival" aria-hidden="true"><small>${round===3?'最後の来訪者':'来訪者'}</small><strong>${enemy.name}</strong></div>`:''}${defeated&&!ending?'<div class="duel-result" aria-label="撃退成功">撃退！<span>あと'+(3-round)+'人</span></div>':''}</div>`;
+ const hud=ending?'':`<div class="duel-hud"><div class="duel-opponent"><span class="duel-round">${round===3?'最終戦':`${round+1}人目`}<small> / 4人</small></span><strong>${enemy.name}</strong><div class="duel-progress" aria-label="${cleared}人撃退済">${DUEL_ROUNDS.map((r,i)=>`<i class="${i<cleared?'done':i===round?'current':''}" aria-hidden="true"></i>`).join('')}</div></div><div class="duel-affection"><span class="duel-heart-label">ルナのハート <b>${hearts}<small> / 10</small></b></span><div class="duel-hearts" role="img" aria-label="ルナのハート ${hearts}個、最大10個">${Array.from({length:10},(_,i)=>`<span style="--heart-index:${Math.abs(i-before)}" class="${i<hearts?'lit':''} ${line.duelHeartUpdate&&i>=Math.min(before,hearts)&&i<Math.max(before,hearts)?'duel-heart-changed':''}" aria-hidden="true">♥</span>`).join('')}</div>${line.duelHeartUpdate?`<span class="duel-heart-delta ${delta<0?'down':''}" role="status">${delta>0?'+':''}${delta||'±0'}</span>`:''}</div></div>`;
+ const cut=strike?`<div class="duel-impact rank-${line.duelRank}" aria-hidden="true"><strong>${eventEscape(line.duelAttack)}</strong></div>`:'';
  const stage=eventStageHTML(event,residents,index,page,{hideCharacters:true,cinematic:true});
  return stage.replace('class="event-stage ',`class="event-stage duel-stage ${ending?'duel-ending-scene':''} `).replace(/^(<div[^>]*>)/,'$1'+scene+hud+cut);
+}
+
+// Only the brief attack montage advances itself; conversation and choices stay manual.
+// Cancel on every modal replacement and pause while menus, voice or hidden tabs are active.
+export function mountDuelPlayback(line,{advance,blocked,reduced=false,schedule=setTimeout,cancel=clearTimeout}){
+ const delay=line?.duelAttack?(reduced?450:1550):line?.duelPlayback?1200:line?.duelWindup?1000:0;
+ if(!delay)return ()=>{};
+ let timer,stopped=false;
+ const tick=()=>{if(stopped)return;if(blocked())timer=schedule(tick,200);else advance();};
+ timer=schedule(tick,delay);
+ return ()=>{stopped=true;cancel(timer);};
 }
 export function duelBadHTML(state){
  const y=state.actOne.failure==='duel-yandere';

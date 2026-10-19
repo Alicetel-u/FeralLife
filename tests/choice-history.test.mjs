@@ -47,7 +47,7 @@ test('choice input skips exhausted buttons, never re-enables them, and rejects t
  globalThis.setTimeout=fn=>{timers.push(fn);return timers.length;};globalThis.clearTimeout=()=>{};
  try{
   const button=disabled=>({disabled,attrs:{},setAttribute(k,v){this.attrs[k]=v;},focus(){document.activeElement=this;},classList:{add(){}}});
-  const buttons=[button(true),button(false),button(false)],panel={querySelectorAll:()=>buttons,isConnected:true,classList:{add(){}}};
+  const buttons=[button(true),button(false),button(false)],panel={querySelectorAll:()=>buttons,isConnected:true,classList:{add(){},contains:()=>false}};
   const modal=new EventTarget();modal.open=true;modal.style={};modal.classList={contains:()=>false};modal.querySelector=sel=>sel==='.cinematic-choice'?panel:sel==='.event-menu'?{hidden:true}:null;
   const control=mountChoiceUI(modal);assert.equal(document.activeElement,buttons[1]);timers[0]();
   assert.equal(buttons[0].disabled,true);assert.notEqual(buttons[0].attrs['aria-disabled'],'false');

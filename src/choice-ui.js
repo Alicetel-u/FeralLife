@@ -14,7 +14,7 @@ export function choiceUIHTML(event,choices,history=new Set(),failed=new Set()) {
 export function mountChoiceUI(modal, roomType='cat') {
  const panel=modal.querySelector('.cinematic-choice');
  if(!panel)return ()=>{};
- modal.style.backgroundImage='linear-gradient(#100b084d,#100b084d),url("'+(ROOM_ART[roomType]||ROOM_ART.cat).src+'")';
+ if(!panel.classList.contains('duel-choices'))modal.style.backgroundImage='linear-gradient(#100b084d,#100b084d),url("'+(ROOM_ART[roomType]||ROOM_ART.cat).src+'")';
  const allButtons=[...panel.querySelectorAll('[data-choice]')],buttons=allButtons.filter(b=>!b.disabled);
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let ready=false,locked=false,commitTimer;

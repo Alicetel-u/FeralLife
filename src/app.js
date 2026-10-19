@@ -1,4 +1,4 @@
-import {duelStageHTML,duelBadHTML,playDuelCue} from './act-two-duel-stage.js';
+import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js';
 import {failedChoiceKeys} from './choice-history.js';
 import {secondActLife} from './act-two-life.js';
 import {storyScreenHTML} from './story-screens.js';
@@ -19,7 +19,7 @@ import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVic
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.19.06';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.19.07';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -261,8 +261,9 @@ function header(eyebrow,title,closable=true) { return `<div class="modal-header"
 let stopFireEnding = null;
 let stopOpeningPrologue = () => {};
 let cleanupChoiceUI = () => {};
+let cleanupDuelPlayback = () => {};
 function clearFireEnding(){stopFireEnding?.();stopFireEnding=null;}
-function openModal(html) { html=storyScreenHTML(html);characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); replaceConversationContent($('modal-content'),html); modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); syncNormalBgm(); }
+function openModal(html) { html=storyScreenHTML(html);characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); cleanupDuelPlayback();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); replaceConversationContent($('modal-content'),html); modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); syncNormalBgm(); }
 function closeModal() {
   const duelEvent=state.actOne?.duel&&state.events.find(e=>e.id===eventView?.id);
   if(duelEvent?.duel&&eventView.index===eventConversation(duelEvent).length-1){state.actOne.duel.dialogueComplete=true;save();}
@@ -273,8 +274,8 @@ function closeModal() {
     stopFireEnding=startTroubleVictory(modal.querySelector('.trouble-victory'),()=>{closeModal();});
     return;
   }
-  characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); clearFireEnding();clearTimeout(eventAutoTimer);modal.close(); updateUI(); syncNormalBgm(); }
-modal.addEventListener('close', () => { if(modal.open)return;characterVoice.stop();stopOpeningPrologue();cleanupChoiceUI();clearFireEnding();clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); syncNormalBgm(); });
+  characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); cleanupDuelPlayback(); clearFireEnding();clearTimeout(eventAutoTimer);modal.close(); updateUI(); syncNormalBgm(); }
+modal.addEventListener('close', () => { if(modal.open)return;characterVoice.stop();stopOpeningPrologue();cleanupChoiceUI(); cleanupDuelPlayback();clearFireEnding();clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); syncNormalBgm(); });
 function syncStageCursor() {
   rememberReadScenes(state);
   seenStageId = state.events.reduce((max, event) => Math.max(max, event.id), 0);
@@ -359,7 +360,7 @@ function showEvent(id,index=null,page=0,afterMorningBlackout=false) {
   const waiting=!state.ending&&(state.actOne?state.actOne.pending?.eventId===e.id:state.management.pending?.eventId===e.id);
   const c=state.actOne?(state.actOne.chapter===2?ACT_TWO_EVENTS:ACT_ONE_EVENTS)[e.actScene]:MANAGEMENT_CASES[e.caseId];
   const chosenChoices=new Set(state.actOne?(state.actOne.chapter===2?actTwoChosen(state):actOneChosenChoices(state)):[]);
-  const choices=waiting&&last?choiceUIHTML(e,state.actOne?(state.actOne.chapter===2?actTwoChoices(state,e.actScene):getActOneChoices(state,e.actScene)):c.choices,chosenChoices,failedChoiceKeys(state)):'';
+  const choices=waiting&&last?(e.duel?duelChoiceHTML:choiceUIHTML)(e,state.actOne?(state.actOne.chapter===2?actTwoChoices(state,e.actScene):getActOneChoices(state,e.actScene)):c.choices,chosenChoices,failedChoiceKeys(state)):'';
   const trouble=c?.call&&e.kind==='trouble'?troubleCardHTML(c.call,waiting&&cursor===0,state.actOne?.attempt??1):'';
   const firstFire=isFirstFireReply(e,state.actOne),firstStalker=isFirstStalkerReply(e);
   if(firstStalker)prepareFirstStalkerAssets();
@@ -370,9 +371,10 @@ function showEvent(id,index=null,page=0,afterMorningBlackout=false) {
   modal.classList.toggle('choice-mode',Boolean(choices));
   if(choices){e.choicePresented=true;save();}
   cleanupChoiceUI=mountChoiceUI(modal,state.actOne?.chapter===2?'hostess':'cat');
-  if(e.duel&&choices)modal.style.backgroundImage='linear-gradient(#100b0855,#100b0855),url("assets/apartments.png")';
+
   characterVoice.play(lines[cursor],e.id+':'+cursor+':'+pageIndex);
   characterVoice.prepare(cursor+1<lines.length?lines[cursor+1]:null);
+  cleanupDuelPlayback=mountDuelPlayback(e.duel?lines[cursor]:null,{advance:advanceConversation,reduced:matchMedia('(prefers-reduced-motion: reduce)').matches,blocked:()=>document.hidden||characterVoice.busy||modal.classList.contains('event-ui-hidden')||!!modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden});
   scheduleEventAuto();
   document.querySelector(last&&waiting?'[data-choice]:not([disabled])':last?(['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'[data-epilogue-done].primary-button':['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'[data-rewind-resume].primary-button':e.actScene==='act2-prologue'&&state.actOne.prologuePending?'[data-act2-prologue-done].primary-button':e.actScene==='prologue'?'[data-opening="3"].primary-button':'[data-close].primary-button'):'[data-dialogue-next]')?.focus({preventScroll:true});
 }
@@ -381,7 +383,7 @@ function scheduleEventAuto(){
   clearTimeout(eventAutoTimer);
   if(!eventAuto||!modal.open||!modal.classList.contains('conversation-modal')||!eventView)return;
   const current=state.events.find(e=>e.id===eventView.id),lines=current?eventConversation(current):[];
-  if(!lines.length)return;
+  if(!lines.length||current.duel&&(lines[eventView.index].duelAttack||lines[eventView.index].duelPlayback||lines[eventView.index].duelWindup))return;
   const last=eventView.index>=lines.length-1&&eventView.page>=messagePages(lines[eventView.index].text).length-1;
   const waiting=state.actOne?state.actOne.pending?.eventId===current.id:state.management.pending?.eventId===current.id;
   if(last&&waiting)return;
@@ -564,7 +566,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.19.06';
+const BUILD_VERSION='2026.10.19.07';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){

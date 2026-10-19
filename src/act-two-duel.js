@@ -23,9 +23,9 @@ export const duelChoices=round=>DUEL_ROUNDS[round]?.choices.map(([id,label,attac
 export function duelEncounterLines(round){return DUEL_ROUNDS[round].lines.map(line=>({...line,duelRound:round}));}
 export function duelReplyLines(round,choice){
  const weak=choice.delta<0;
- return [duelLine('manager',choice.label,'neutral',{duelRound:round}),
-  ...(weak?[dc('大家の口座も度胸も残高不足ニャ。'),duelLine('cat','出張お断りキックニャ！！','angry',{duelRound:round,duelAttack:'モク出動！',duelRank:1})]:[duelLine('manager',choice.attack,'angry',{duelRound:round,duelAttack:choice.attack,duelRank:choice.delta===7?4:choice.delta===3?3:2})]),
-  duelLine('narrator',weak?'廊下のモクが跳び出した。一直線の体当たりに、男は道路の向こうへすっ飛んだ。':'大家のひと言に男はのけぞり、足をもつれさせて逃げていった。','neutral',{duelRound:round,duelDefeated:true}),
+ return [duelLine('manager',choice.label,'neutral',{duelRound:round,duelWindup:true}),
+  ...(weak?[{...dc('大家の口座も度胸も残高不足ニャ。'),duelWindup:true},duelLine('cat','出張お断りキックニャ！！','angry',{duelRound:round,duelAttack:'モク出動！',duelRank:1})]:[duelLine('manager',choice.attack,'angry',{duelRound:round,duelAttack:choice.attack,duelRank:choice.delta===7?4:choice.delta===3?3:2})]),
+  duelLine('narrator',weak?'廊下のモクが跳び出した。一直線の体当たりに、男は道路の向こうへすっ飛んだ。':'大家のひと言に男はのけぞり、足をもつれさせて逃げていった。','neutral',{duelRound:round,duelDefeated:true,duelPlayback:true}),
   duelLine('hostess',weak?'……大家さんより、モクちゃんに頼む方が早いね。':choice.delta>=3?'今の、ずるい……♡ もっと言ってほしいな。':'ありがとう。……あたしからも、ちゃんと断るね。',weak?'tired':'shy',{duelRound:round,duelHeartUpdate:true}),
   dc(weak?'助っ人の報酬はツナ缶ニャ。':'大家、決め顔のまま鼻の下を伸ばすなニャ。'),dm(weak?'家賃と相殺な。':'伸ばしてねぇ！！')
  ].map(line=>({...line,duelRound:round}));

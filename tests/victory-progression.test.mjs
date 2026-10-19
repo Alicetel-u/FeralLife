@@ -22,7 +22,7 @@ test('cooking success and the actual victory button never replay the opening',()
    rememberReadScenes,automaticChapterScene,claimAutomaticScene,avoidedTrouble,troubleAvoidedHTML,startTroubleVictory,eventConversation,
    eventView:null,document:{hidden:false,documentElement:{classList:{contains:()=>false}}},
    modal:{open:true,classList:{contains:v=>classes.has(v)},querySelector:()=>({querySelector:()=>victoryButton}),close(){this.open=false;context.openNextStageEvent();}},
-   characterVoice:{stop(){}},stopOpeningPrologue(){},cleanupChoiceUI(){},clearFireEnding(){context.stopFireEnding?.();context.stopFireEnding=null;},stopFireEnding:null,eventAutoTimer:null,clearTimeout,
+   characterVoice:{stop(){}},stopOpeningPrologue(){},cleanupChoiceUI(){},cleanupDuelPlayback(){},clearFireEnding(){context.stopFireEnding?.();context.stopFireEnding=null;},stopFireEnding:null,eventAutoTimer:null,clearTimeout,
    save(){},updateUI(){},syncNormalBgm(){},
    showEvent(id){selected=context.state.events.find(e=>e.id===id);selected.read=true;opened.push(selected.actScene);classes.add('conversation-modal');context.modal.open=true;context.eventView={id,index:eventConversation(selected).length-1};},
    openModal(html){assert.match(html,/trouble-victory/);opened.push('victory');classes.clear();victoryButton=new EventTarget();victoryButton.focus=()=>{};},

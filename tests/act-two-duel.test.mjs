@@ -5,7 +5,7 @@ import {createGame,validateSave} from '../src/simulation.js';
 import {validActOne} from '../src/act-one.js';
 import {beginActTwo,advanceActTwo,answerActTwo,rewindActTwo,actTwoChoices} from '../src/act-two.js';
 import {DUEL_ART,DUEL_INTRO,DUEL_ROUNDS,duelChoices} from '../src/act-two-duel.js';
-import {duelStageHTML} from '../src/act-two-duel-stage.js';
+import {duelStageHTML,duelFrame,duelChoiceHTML,mountDuelPlayback} from '../src/act-two-duel-stage.js';
 import {eventConversation} from '../src/event-stage.js';
 import {storyCheckpointTarget} from '../src/story-checkpoints.js';
 
@@ -44,6 +44,50 @@ test('81 routes preserve saves at every round, resolve only after four enemies, 
  }
  assert.ok(counts.clear&&counts.yandere&&counts.domination);assert.ok(ultimateSafe,'ultimate is not an automatic BAD');
  console.log('Four-round route counts:',counts);
+});
+
+test('saved transcript keeps enemies gone after impact and hearts hidden until Luna reacts',()=>{
+ const s=duelStart();
+ for(const choice of ['vow','receipt','sleep','ultimate']){
+  const original=s.events.find(e=>e.id===s.actOne.pending.eventId),at=eventConversation(original).length-1;
+  assert.equal(duelFrame(original,at).defeated,false,'next opponent is visible');
+  const before=s.actOne.duel.hearts;
+  const reply=answerActTwo(s,original.id,choice),lines=eventConversation(reply);
+  const impact=lines.findIndex(l=>l.duelAttack),reaction=lines.findIndex(l=>l.duelHeartUpdate);
+  for(let i=0;i<reaction;i++)assert.equal(duelFrame(reply,i).hearts,before);
+  assert.equal(duelFrame(reply,reaction).hearts,s.actOne.duel.hearts);
+  assert.equal(duelFrame(reply,0).entrance,false,'answer never replays enemy arrival');
+  assert.doesNotMatch(duelStageHTML(reply,s.residents,impact),/duel-arriving/);
+  for(let i=impact+1;i<lines.length&&lines[i].duelRound===lines[impact].duelRound;i++){
+   assert.equal(duelFrame(reply,i).defeated,true,'retreat is permanent within this encounter');
+   assert.match(duelStageHTML(reply,s.residents,i),/duel-enemy duel-defeated/);
+  }
+  const restored=JSON.parse(JSON.stringify(reply));
+  assert.deepEqual(duelFrame(restored,reaction),duelFrame(reply,reaction));
+ }
+});
+
+test('dedicated commands keep existing ids, repeat history, and reserve gold for the final move',()=>{
+ for(let round=0;round<4;round++){
+  const choices=duelChoices(round),html=duelChoiceHTML({id:42},choices,new Set(['duel:'+choices[1].id]));
+  for(const choice of choices)assert.ok(html.includes(`data-choice="${choice.id}"`));
+  assert.equal((html.match(/data-case-event="42"/g)||[]).length,3);
+  assert.match(html,/選択済/);assert.equal(html.includes('duel-ultimate'),round===3);
+  assert.doesNotMatch(html,/ヤンデレ|BAD|2〜9|ハート.*[+-][137]/,'does not disclose the ending trick');
+ }
+});
+
+test('attack montage pauses for hidden tabs and menus, cancels stale callbacks, and leaves choices manual',()=>{
+ let id=0,advances=0,blocked=true;const timers=new Map();
+ const options={advance:()=>advances++,blocked:()=>blocked,schedule:fn=>{timers.set(++id,fn);return id;},cancel:id=>timers.delete(id)};
+ const tick=()=>{const [id,fn]=timers.entries().next().value;timers.delete(id);fn();};
+ const stop=mountDuelPlayback({duelAttack:'モク出動！'},options);
+ tick();assert.equal(advances,0);assert.equal(timers.size,1);
+ blocked=false;tick();assert.equal(advances,1);assert.equal(timers.size,0);stop();
+ const cancel=mountDuelPlayback({duelPlayback:true},options),stale=[...timers.values()][0];
+ cancel();assert.equal(timers.size,0);stale();assert.equal(advances,1);
+ mountDuelPlayback({duelRound:1,text:'会話'},options);assert.equal(timers.size,0);
+ mountDuelPlayback({duelEnding:'clear',duelDefeated:true},options);assert.equal(timers.size,0);
 });
 test('approved opening, supplied corrected art, ten hearts, original dialogue window and distinct ending CGs',()=>{
  assert.deepEqual(DUEL_INTRO.slice(0,6).map(l=>l.text),['大家さ〜ん♡ ちょっとお願いがあるんだけど','……嫌な予感しかしねぇ。','今日だけ、あたしの彼氏になってくれない？','はぁ！？ 昨日も似たようなことやっただろ！！','昨日は昨日。今日は今日♡','大家、彼氏のアルバイト始めたニャ？']);
