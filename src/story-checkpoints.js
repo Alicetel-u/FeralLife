@@ -12,10 +12,11 @@ export function validStoryCheckpoint(point,chapter){
  if(chapter===1&&point.scene==='dinner'&&s.hour===37&&a.pending===null&&JSON.stringify(a.completed)===JSON.stringify(['ash'])){
   return s.events?.some(e=>e.actScene==='dinner'&&e.hour===37)===true;
  }
- const routes=chapter===2?{bag:[57,57,[]],contract:[62,81,['bag']],duel:[84,84,['bag','contract']]}:{ash:[17,17,[]],dinner:[19,37,['ash']]};
+ const routes=chapter===2?{bag:[57,57,[]],contract:[62,81,['bag']],duel:[84,84,['bag']]}:{ash:[17,17,[]],dinner:[19,37,['ash']]};
  const route=routes[point.scene];if(!route)return false;
  const [min,max,completed]=route;
- return s.hour>=min&&(min===max?s.hour===max:s.hour<max)&&JSON.stringify(a.completed)===JSON.stringify(completed);
+ const legacyDuel=chapter===2&&point.scene==='duel'&&JSON.stringify(a.completed)===JSON.stringify(['bag','contract']);
+ return s.hour>=min&&(min===max?s.hour===max:s.hour<max)&&(legacyDuel||JSON.stringify(a.completed)===JSON.stringify(completed));
 }
 export function storyCheckpointTarget(state){
  if(state.actOne?.failure?.startsWith('duel-'))return {hour:84,label:'ルナに彼氏役を頼まれた昼'};

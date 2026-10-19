@@ -30,10 +30,10 @@ test('second act restores chapter entry or bag success, including old saves with
  for(const late of [false,true]){
   const s=finishFirst();beginActTwo(s);s.actOne.started=true;s.actOne.prologuePending=false;s.actOne.titlePending=false;
   advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,late?'loan':'guarantee');
-  if(late){advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'sign');}
+  if(late){advanceActTwo(s,100);for(const id of ['vow','shield','future','ultimate'])answerActTwo(s,s.actOne.pending.eventId,id);}
   for(const old of [false,true]){
-   const load=JSON.parse(JSON.stringify(s));if(old)delete load.actOne.rollbackPoint;
-   const next=rewindActTwo(load);assert.equal(next.hour,late?66:66);assert.deepEqual(next.actOne.completed,late?['bag']:[]);assert.equal(next.actOne.titlePending,false);assert.ok(validActOne(next)&&validateSave(next));assert.ok(next.actOne.memory.includes(late?'contract-sign':'bag-guarantee'));
+   const load=JSON.parse(JSON.stringify(s));if(old&&!late)delete load.actOne.rollbackPoint;
+   const next=rewindActTwo(load);assert.equal(next.hour,late?84:66);assert.deepEqual(next.actOne.completed,late?['bag']:[]);assert.equal(next.actOne.titlePending,false);assert.ok(validActOne(next)&&validateSave(next));assert.ok(next.actOne.memory.includes(late?'duel-yandere':'bag-guarantee'));
   }
  }
 });

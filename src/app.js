@@ -19,8 +19,8 @@ import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVic
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.20.02';
-import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, refreshDuelYandereEnding } from './act-two.js';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.20.03';
+import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
 import { debtEndingHTML, startDebtEnding } from './debt-ending.js';
@@ -62,6 +62,7 @@ let state, restored = false;
 let developerMode=false, debugTapCount=0, debugLastTap=0;
 try { const saved = previewResident || eventPreview || actTwoPreview || firstRewindPreview || firstFirePreview || firstStalkerPreview || observationPreview || managerPreview ? null : JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(saved) && validActOne(saved)) { state = saved; restored = true; } } catch {}
 state ||= previewResident || eventPreview ? createGame() : createActOne();
+retireActTwoContract(state);
 refreshDuelYandereEnding(state);
 clearLegacyObservationMemo(state);
 ensureManagement(state);
@@ -488,8 +489,8 @@ function showTitleHelp(){
 function showActNotebook(){
   if(state.actOne.chapter===2){
     const a=state.actOne,p=a.pending;
-    const choices=Object.values(ACT_TWO_EVENTS).flatMap(e=>e.choices.filter(c=>c.bad&&a.memory.includes(c.bad)).map(c=>`<article class="act-memory"><small>差し押さえの記憶</small><strong>${escape(c.label)}</strong><p>${escape(c.clue)}</p></article>`));
-    openModal(header('大家ノート / 第二幕',`${a.attempt}周目 — 建物を担保にしない。`)+`<div class="modal-body"><p class="modal-copy">ルナの借金と契約に要注意。危ない署名を避けよう。</p>${p?`<button class="manager-request" data-event="${p.eventId}"><strong>${escape(ACT_TWO_EVENTS[p.scene].call)}</strong><span>返事をする →</span></button>`:''}${choices.join('')||'<p class="modal-copy">失敗の記憶はまだありません。</p>'}</div><div class="modal-footer"><button class="primary-button" data-close>観察に戻る →</button></div>`);
+    const choices=Object.values(ACT_TWO_EVENTS).flatMap(e=>e.choices.filter(c=>c.bad&&a.memory.includes(c.bad)).map(c=>`<article class="act-memory"><small>失敗の記憶</small><strong>${escape(c.label)}</strong><p>${escape(c.clue)}</p></article>`));
+    openModal(header('大家ノート / 第二幕',`${a.attempt}周目 — ルナと住まいを守る。`)+`<div class="modal-body"><p class="modal-copy">待ち伏せと押しかける男たちに対処し、ルナと住まいを守ろう。</p>${p?`<button class="manager-request" data-event="${p.eventId}"><strong>${escape(ACT_TWO_EVENTS[p.scene].call)}</strong><span>返事をする →</span></button>`:''}${choices.join('')||'<p class="modal-copy">失敗の記憶はまだありません。</p>'}</div><div class="modal-footer"><button class="primary-button" data-close>観察に戻る →</button></div>`);
     return;
   }
   const a=state.actOne,p=a.pending;
@@ -567,7 +568,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.20.02';
+const BUILD_VERSION='2026.10.20.03';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -599,7 +600,7 @@ function showDebugChapterSelect(){
 function showDebugSceneSelect(chapter,page=0){
   const options=chapter==='1'
     ?[['intro','第一幕・オープニング'],['ash',ACT_ONE_EVENTS.ash.title],['ash-loop','灰皿：巻き戻り直後'],['ash-choices','灰皿：3択直前'],['dinner',ACT_ONE_EVENTS.dinner.title],['dinner-loop','料理：巻き戻り直後'],['dinner-choices','料理：3択直前'],['epilogue','第一幕・エピローグ']]
-    :[['opening','逃げる女 — オープニング'],['arrival','ルナ入居プロローグ'],['bag',ACT_TWO_EVENTS.bag.title],['bag-loop','待ち伏せ：巻き戻り直後'],['bag-choices','待ち伏せ：3択直前'],['contract',ACT_TWO_EVENTS.contract.title],['contract-loop','契約書：巻き戻り直後'],['contract-choices','契約書：3択直前'],['duel','第二トラブル：導入'],['duel-loop','第二トラブル：巻き戻り直後'],['duel-choices','第二トラブル：最初の三択'],['epilogue','第二幕・エピローグ']];
+    :[['opening','逃げる女 — オープニング'],['arrival','ルナ入居プロローグ'],['bag',ACT_TWO_EVENTS.bag.title],['bag-loop','待ち伏せ：巻き戻り直後'],['bag-choices','待ち伏せ：3択直前'],['duel','第二トラブル：導入'],['duel-loop','第二トラブル：巻き戻り直後'],['duel-choices','第二トラブル：最初の三択'],['epilogue','第二幕・エピローグ']];
   const pages=Math.ceil(options.length/4),current=Math.max(0,Math.min(pages-1,Number(page)||0));
   const buttons=options.slice(current*4,current*4+4).map(([id,label])=>[chapter+':'+id,label,'data-debug-scene']);
   if(current>0)buttons.push([chapter+':'+(current-1),'← 前のページ','data-debug-scene-page']);
@@ -630,16 +631,13 @@ function startDeveloperScene(target){
   }else{
     beginActTwo(next);
     next.actOne.started=true;next.actOne.titlePending=false;next.actOne.prologuePending=false;
-    if(phase&&scene==='contract')next.actOne.attempt=2;
     next.events.filter(e=>e.actScene==='act2-prologue').forEach(e=>e.read=true);
-    if(['bag','contract','duel','epilogue'].includes(scene)){
+    if(['bag','duel','epilogue'].includes(scene)){
       advanceActTwo(next,100);
       if(scene!=='bag'){
         answerActTwo(next,next.actOne.pending.eventId,'loan');
         advanceActTwo(next,100);
         if(['duel','epilogue'].includes(scene)){
-          answerActTwo(next,next.actOne.pending.eventId,'refuse');
-          advanceActTwo(next,100);
           if(scene==='epilogue'){for(const id of ['boundary','receipt','cancel','leave'])answerActTwo(next,next.actOne.pending.eventId,id);advanceActTwo(next,100);}
         }
       }

@@ -36,7 +36,7 @@ test('second act first incident and successful answer show both residents reacti
   for(const [text,emotion] of [['……っ！','surprised'],['……なんで……ここが……。','surprised'],['……お願い。もう帰って。','sad']])expectExpression(incident,text,emotion,s.residents,false);
   const reply=answerActTwo(s,s.actOne.pending.eventId,'loan');
   for(const [text,emotion] of [['忘れるなニャ！！','angry'],['そうなの♡ この人があたしの彼氏。','happy'],['……でも、ちょっと嬉しかったな♡','shy'],['あははっ♡','happy']])expectExpression(reply,text,emotion,s.residents,false);
-  advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'refuse');advanceActTwo(s,100);
+  advanceActTwo(s,100);
   for(const id of ['boundary','receipt','cancel','leave'])answerActTwo(s,s.actOne.pending.eventId,id);advanceActTwo(s,100);
   expectExpression(s.events.find(e=>e.actScene==='act2-epilogue'),'大家、酒はまだかニャ？','happy',s.residents);
 });

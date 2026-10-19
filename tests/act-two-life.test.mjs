@@ -21,7 +21,7 @@ test('Luna finishes her snack and walks to the entrance before the street troubl
  secondActLife(loaded);assert.equal(sampleJourney(oldLuna,loaded.hour).zone,'street');assert.notEqual(oldLuna.action,'eat');
  assert.ok(validateSave(JSON.parse(JSON.stringify(s))));
 });
-test('Luna unpacks, receives a visitor, goes to work and returns before the contract',()=>{
+test('Luna unpacks, receives a visitor, goes to work and returns before the minigame',()=>{
  const s=state(),luna=s.residents.find(r=>r.type==='hostess'),cat=s.residents.find(r=>r.type==='cat');
  assert.equal(luna.action,'clean');
  advanceActTwo(s,2.25);
@@ -33,7 +33,7 @@ test('Luna unpacks, receives a visitor, goes to work and returns before the cont
  advanceActTwo(s,6);assert.equal(luna.action,'outing');
  advanceActTwo(s,12.9);
  const p=sampleJourney(luna,s.hour);assert.equal(p.zone,'room');assert.equal(p.room,102);
- advanceActTwo(s,100);assert.equal(s.hour,81);assert.equal(s.actOne.pending.scene,'contract');
+ advanceActTwo(s,100);assert.equal(s.hour,84);assert.equal(s.actOne.pending.scene,'duel');
  assert.ok(validateSave(JSON.parse(JSON.stringify(s))));
 });
 test('authored neighbor chat follows saved dialogue and never creates a second ambient conversation',()=>{

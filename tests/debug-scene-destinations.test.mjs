@@ -19,11 +19,12 @@ test('debug event names match the scenes they actually open in both chapters',()
  vm.createContext(context);vm.runInContext(source,context);
  for(const chapter of ['1','2']){
   const destinations=[];
-  for(let page=0;page<(chapter==='1'?2:4);page++){
+  for(let page=0;page<(chapter==='1'?2:3);page++){
    vm.runInContext(`showDebugSceneSelect('${chapter}',${page})`,context);
    destinations.push(...context.options.filter(option=>option[2]==='data-debug-scene'));
    assert.ok(context.options.length<=6,'mobile pages have a bounded number of controls');
   }
+  if(chapter==='2'){assert.equal(destinations.length,9);assert.ok(destinations.every(([target])=>!target.includes('contract')));}
   for(const [target,label] of destinations){
    context.landed=null;vm.runInContext(`startDeveloperScene('${target}')`,context);
    const scene=target.split(':')[1];
@@ -60,7 +61,7 @@ test('second-act repeated bad endings return using in-world narration, including
  for(const late of [false,true]){
   const state=createActOne(42,[],2,true);beginActTwo(state);Object.assign(state.actOne,{started:true,titlePending:false,prologuePending:false,attempt:2});
   advanceActTwo(state,100);answerActTwo(state,state.actOne.pending.eventId,late?'loan':'return');
-  if(late){advanceActTwo(state,100);answerActTwo(state,state.actOne.pending.eventId,'sign');}
+  if(late){advanceActTwo(state,100);for(const id of ['vow','shield','future','ultimate'])answerActTwo(state,state.actOne.pending.eventId,id);}
   const next=rewindActTwo(state),event=next.events.find(e=>e.actScene==='act2-rewind');
   assert.doesNotMatch(JSON.stringify(eventConversation(event)),/開始時点|チェックポイント|事件を回避|第二幕/);
  }

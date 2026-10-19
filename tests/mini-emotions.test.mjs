@@ -140,7 +140,7 @@ test('chapter-two observation actually reaches both flirt reactions without edit
  for(let i=0;i<600;i++){tickObservation(s,.25);advanceActTwo(s,Math.min(.15,Math.max(0,observationClockLimit(s)-s.hour)));tickObservation(s,0);stepTalk(talk,s,i*250,false);if(miniLineEmotion(talk.bubbles[0])==='wicked')break;}
  assert.equal(miniLineEmotion(talk.bubbles[0]),'wicked');
  advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'loan');
- advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'refuse');
+ advanceActTwo(s,100);
  for(let i=0;i<50&&!(lunaNearby(s)&&secondActChat(s)?.key==='act2-chat-relief');i++)advanceActTwo(s,.1);
  assert.equal(secondActChat(s)?.key,'act2-chat-relief');
  talk=createTalk();stepTalk(talk,s,100,false);stepTalk(talk,s,100+SPEECH_MS.line,false);stepTalk(talk,s,100+SPEECH_MS.line*2,false);

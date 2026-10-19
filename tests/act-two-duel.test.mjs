@@ -14,7 +14,7 @@ import {storyCheckpointTarget} from '../src/story-checkpoints.js';
 function duelStart(){
  const s=beginActTwo(createGame(42));Object.assign(s.actOne,{started:true,titlePending:false,prologuePending:false});
  advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'loan');
- advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'refuse');advanceActTwo(s,100);
+ advanceActTwo(s,100);
  return s;
 }
 test('81 routes preserve saves at every round, resolve only after four enemies, and reach all outcomes',()=>{
@@ -38,7 +38,7 @@ test('81 routes preserve saves at every round, resolve only after four enemies, 
    advanceActTwo(s,100);assert.equal(s.actOne.status,'clear');assert.equal(s.hour,105);assert.ok(validActOne(s));
   }else{
    assert.equal(storyCheckpointTarget(s).hour,84);
-   const next=rewindActTwo(s);assert.equal(next.hour,84);assert.deepEqual(next.actOne.completed,['bag','contract']);
+   const next=rewindActTwo(s);assert.equal(next.hour,84);assert.deepEqual(next.actOne.completed,['bag']);
    assert.equal(next.actOne.duel.hearts,0);assert.ok(validActOne(next)&&validateSave(next));
    next.actOne.rewindIntroPending=false;advanceActTwo(next,1);
    assert.equal(next.actOne.pending.scene,'duel');assert.equal(next.actOne.duel.round,0);
@@ -127,7 +127,7 @@ test('Luna high-heart BAD develops through ordinary scenes and reserves the CG f
  }
  assert.equal(s.hour,84,'bad-ending passage of days never changes the rewind checkpoint');
  assert.equal(storyCheckpointTarget(s).hour,84);
- assert.deepEqual(rewindActTwo(s).actOne.completed,['bag','contract']);
+ assert.deepEqual(rewindActTwo(s).actOne.completed,['bag']);
  const legacy={duel:true,detail:'過去の会話',lines:[{speaker:'hostess',text:'過去の会話',duelEnding:'yandere'}]};
  assert.match(duelStageHTML(legacy,[]),/assets\/events\/duel\/yandere.png/,'old saved transcripts remain readable');
  for(const outcome of ['clear','domination'])assert.ok(duelEndingLines(outcome).every(l=>!l.duelEndingPhase));

@@ -40,7 +40,7 @@ export function secondActChat(state){
  const beat=LUNA_DAY.find(([at])=>at===luna.actTwoBeat),kind=beat?.[3];
  const chats={
   arrival:[['hostess','荷ほどき、まだ終わらないんだよね。'],['cat','今日はここまで、って決めるのも大事ニャ。'],['hostess','モクちゃん、それ毎日言ってない？']],
-  papers:[['hostess','あの荷物のこと、大家さんに確認しておこう。'],['cat','紙って小さいのに、面倒は大きいニャ。'],['hostess','うん。次はちゃんと読む。']],
+  papers:[['hostess','玄関のこと、大家さんに相談しておこう。'],['cat','困ったら、ひとりで抱え込まないニャ。'],['hostess','うん。ありがとう、モクちゃん。']],
   relief:[['hostess','片づけてたら、もうこんな時間。'],['cat','休憩の時間も片づけたらダメニャ。'],['hostess','ふふ。じゃあ、少しだけ休もうかな。']]
  };
  const lines=kind==='tea'?ACT_TWO_OBSERVATION_BEATS.find(b=>b.id==='luna-tea').lines.map(l=>[l.speaker,l.text]):chats[kind];
@@ -53,8 +53,8 @@ export function lunaMutters(state){
  if(p.moving)return [p.phase==='returning'?'ただいま。帰ったら少し休もう。':'忘れ物、ないよね。'];
  if(luna.action==='sleep')return ['……あと少しだけ……。'];
  if(state.hour<62)return ['仕事で使う荷物、そろそろ届くかな。','荷ほどきって、思ったより時間かかるね。'];
- if(state.hour<67)return ['あの書類のこと、もう一度確認しておこう。','知らない相手との買い物、気をつけなきゃ。'];
- if(state.hour<81)return ['今日の話、急いで返事しなくてもいいのかな……。','大家さんにも、ちゃんと相談しよう。'];
+ if(state.hour<67)return ['あの人、もう来ないといいな。','玄関に誰もいないと、ほっとする。'];
+ if(state.hour<81)return ['そろそろ帰る時間かな。','大家さんにも、ちゃんと相談しよう。'];
  if(luna.action==='eat')return ['ちゃんと食べてから、片づけの続きをしよう。'];
- return ['小さい文字まで、ちゃんと読む。忘れないようにしよう。','部屋が落ち着くと、ちょっと安心するね。'];
+ return ['困ったときは、ちゃんと相談しよう。','部屋が落ち着くと、ちょっと安心するね。'];
 }
