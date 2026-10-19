@@ -2,12 +2,21 @@ import {DUEL_ART,DUEL_ROUNDS} from './act-two-duel.js';
 import {eventConversation,eventStageHTML,eventEscape,eventIcon} from './event-stage.js';
 import {MINI_EMOTION_ART} from './mini-emotions.js';
 
+// Neighboring rows overlap the rectangular cells at a few edges. Keep the
+// character's feet while excluding those fragments in source-sheet coordinates.
+const DUEL_FRAME_CUTOUTS={
+ hostess:{confused:[[975,449,36,1],[923,857,21,8]],charm:[[285,863,26,1]],'flirt-wink':[[643,863,31,1]],wicked:[[1062,864,34,1]]},
+ cat:{exasperated:[[788,1171,18,39]]}
+};
+const cropRectPath=([x,y,w,h])=>`M${x} ${y}h${w}v${h}h-${w}Z`;
+
 function duelMini(type,emotion,classes,label){
  const sheet=MINI_EMOTION_ART[type],frame=sheet.frames[emotion];
  if(!frame)return `<img class="duel-mini ${classes}" src="${type==='cat'?'assets/characters/cat/observation-v4/stand.png':'assets/characters/hostess/observation-v4/stand.png'}" alt="${label}">`;
  const [width,height]=type==='cat'?[1145,1374]:[1204,1306];
- const [x,y,w,h]=frame,clipId=`duel-crop-${type}-${emotion}`;
- return `<svg class="duel-mini ${classes}" viewBox="${frame.join(' ')}" preserveAspectRatio="xMidYMax meet" role="img" aria-label="${label}"><defs><clipPath id="${clipId}" clipPathUnits="userSpaceOnUse"><rect x="${x}" y="${y}" width="${w}" height="${h}"/></clipPath></defs><image href="${sheet.src}" width="${width}" height="${height}" clip-path="url(#${clipId})"/></svg>`;
+ const clipId=`duel-crop-${type}-${emotion}`;
+ const cropPath=[frame,...(DUEL_FRAME_CUTOUTS[type]?.[emotion]||[])].map(cropRectPath).join(' ');
+ return `<svg class="duel-mini ${classes}" viewBox="${frame.join(' ')}" preserveAspectRatio="xMidYMax meet" role="img" aria-label="${label}"><defs><clipPath id="${clipId}" clipPathUnits="userSpaceOnUse"><path clip-rule="evenodd" d="${cropPath}"/></clipPath></defs><image href="${sheet.src}" width="${width}" height="${height}" clip-path="url(#${clipId})"/></svg>`;
 }
 
 // Derive presentation from the saved transcript. No animation state enters a save.
