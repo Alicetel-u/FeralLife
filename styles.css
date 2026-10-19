@@ -1765,3 +1765,7 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 
 .game-ink .conversation-modal.choice-mode .duel-stage .mobile-dialogue-tap{display:none}
 .duel-ending-scene .duel-field{top:0}
+.duel-story-backdrop{position:absolute;inset:0;z-index:-1;overflow:hidden}
+.duel-story-backdrop img{width:100%;height:100%;object-fit:cover;object-position:center}
+.duel-yandere-story .duel-story-backdrop::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 35%,#19131f77)}
+.duel-yandere-story[data-duel-phase="isolation"] .duel-story-backdrop img{filter:brightness(.75)}

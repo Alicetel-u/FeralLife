@@ -32,6 +32,14 @@ export function duelChoiceHTML(event,choices,history=new Set()){
 export function duelStageHTML(event,residents,index=0,page=0){
  const {line,round,ending,hearts,before,entrance,defeated,showResult}=duelFrame(event,index);
  if(line.duelRound===undefined&&!ending)return eventStageHTML(event,residents,index,page);
+ // Ordinary Luna comes first. The outcome alone must not reveal the final CG.
+ if(ending==='yandere'&&line.duelEndingPhase&&line.duelEndingPhase!=='reveal'){
+  const exterior=['relief','interference'].includes(line.duelEndingPhase);
+  const cast=line.duelEndingPhase==='relief'||line.speaker==='cat'?['hostess','cat']:['hostess'];
+  const stage=eventStageHTML({...event,cast},residents,index,page,{cinematic:true});
+  const shot=`<div class="duel-story-backdrop" aria-hidden="true"><img src="${exterior?'assets/apartments.png':'assets/events/first-fire-corridor.png'}" alt=""></div>`;
+  return stage.replace('class="event-stage ',`data-duel-phase="${line.duelEndingPhase}" class="event-stage duel-stage duel-yandere-story `).replace(/^(<div[^>]*>)/,'$1'+shot);
+ }
  const enemy=DUEL_ROUNDS[round],strike=!!line.duelAttack,delta=hearts-before,cleared=round+(defeated?1:0);
  const managerPose=strike?'assets/characters/manager/poses/angry.png':line.speaker==='manager'?'assets/characters/manager/poses/retort.png':'assets/characters/manager/idle.png';
  const lunaLine=eventConversation(event).slice(0,index+1).reverse().find(l=>l.duelRound===round&&l.speaker==='hostess');

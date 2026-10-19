@@ -4,8 +4,8 @@ import {existsSync,readFileSync} from 'node:fs';
 import vm from 'node:vm';
 import {createGame,validateSave} from '../src/simulation.js';
 import {validActOne} from '../src/act-one.js';
-import {beginActTwo,advanceActTwo,answerActTwo,rewindActTwo,actTwoChoices} from '../src/act-two.js';
-import {DUEL_ART,DUEL_INTRO,DUEL_ROUNDS,duelChoices,duelReplyLines} from '../src/act-two-duel.js';
+import {beginActTwo,advanceActTwo,answerActTwo,rewindActTwo,actTwoChoices,refreshDuelYandereEnding} from '../src/act-two.js';
+import {DUEL_ART,DUEL_INTRO,DUEL_ROUNDS,duelChoices,duelReplyLines,duelEndingLines} from '../src/act-two-duel.js';
 import {duelStageHTML,duelFrame,duelChoiceHTML,mountDuelPlayback,duelReadDelay} from '../src/act-two-duel-stage.js';
 import {messagePages} from '../src/message-pages.js';
 import {eventConversation} from '../src/event-stage.js';
@@ -99,9 +99,57 @@ test('approved opening, supplied corrected art, ten hearts, original dialogue wi
  assert.match(html,/stage-bubble/);assert.match(html,/stage-speaker/);assert.match(html,/duel-field/);
  assert.equal((html.match(/aria-hidden="true">♥/g)||[]).length,10);
  for(const id of ['vow','shield','future','ultimate'])answerActTwo(s,s.actOne.pending.eventId,id);
- const last=s.events.find(e=>e.duelOutcome==='yandere'),lines=eventConversation(last),at=lines.findIndex(l=>l.duelEnding);
+ const last=s.events.find(e=>e.duelOutcome==='yandere'),lines=eventConversation(last),at=lines.findIndex(l=>l.duelEndingPhase==='reveal');
  assert.match(duelStageHTML(last,s.residents,at),/assets\/events\/duel\/yandere.png/);
  assert.equal(DUEL_ROUNDS.length,4);
+});
+
+test('Luna high-heart BAD develops through ordinary scenes and reserves the CG for its final reveal',()=>{
+ const s=duelStart();
+ for(const id of ['vow','shield','future','ultimate'])answerActTwo(s,s.actOne.pending.eventId,id);
+ const ending=s.events.find(e=>e.duelOutcome==='yandere'),lines=eventConversation(ending);
+ const phases=[...new Set(lines.map(l=>l.duelEndingPhase).filter(Boolean))];
+ assert.deepEqual(phases,['relief','closeness','dependence','interference','isolation','reveal']);
+ const start=lines.findIndex(l=>l.duelEnding),reveal=lines.findIndex(l=>l.duelEndingPhase==='reveal');
+ assert.ok(reveal-start>=40,'emotional deterioration is developed before the final image');
+ assert.equal(lines.length-reveal,4,'only the final four lines use the yandere CG');
+ for(let index=start;index<lines.length;index++)for(let page=0;page<messagePages(lines[index].text).length;page++){
+  const html=duelStageHTML(ending,s.residents,index,page);
+  assert.match(html,/stage-bubble/);assert.match(html,/stage-speaker/);
+  assert.doesNotMatch(html,/duel-enemy|duel-hud|duel-result/);
+  if(index<reveal){assert.doesNotMatch(html,/assets\/events\/duel\/yandere.png/);assert.match(html,/data-character="hostess"/);}
+  else {assert.match(html,/assets\/events\/duel\/yandere.png/);assert.doesNotMatch(html,/stage-character/);}
+ }
+ const restored=JSON.parse(JSON.stringify(s)),saved=restored.events.find(e=>e.id===ending.id);
+ for(const phase of phases){
+  const at=lines.findIndex(l=>l.duelEndingPhase===phase);
+  assert.equal(duelStageHTML(saved,restored.residents,at),duelStageHTML(ending,s.residents,at));
+ }
+ assert.equal(s.hour,84,'bad-ending passage of days never changes the rewind checkpoint');
+ assert.equal(storyCheckpointTarget(s).hour,84);
+ assert.deepEqual(rewindActTwo(s).actOne.completed,['bag','contract']);
+ const legacy={duel:true,detail:'過去の会話',lines:[{speaker:'hostess',text:'過去の会話',duelEnding:'yandere'}]};
+ assert.match(duelStageHTML(legacy,[]),/assets\/events\/duel\/yandere.png/,'old saved transcripts remain readable');
+ for(const outcome of ['clear','domination'])assert.ok(duelEndingLines(outcome).every(l=>!l.duelEndingPhase));
+});
+
+test('unfinished legacy yandere saves resume the expanded ending without replaying fights or losing earlier incidents',()=>{
+ for(const cursorInEnding of [false,true]){
+  const s=duelStart();for(const id of ['vow','shield','future','ultimate'])answerActTwo(s,s.actOne.pending.eventId,id);
+  const event=s.events.find(e=>e.duelOutcome==='yandere'),start=event.lines.findIndex(l=>l.duelEnding);
+  const prefix=JSON.stringify(event.lines.slice(0,start)),history=JSON.stringify(s.actOne.duel.history),checkpoint=JSON.stringify(s.actOne.rollbackPoint);
+  event.lines=[...event.lines.slice(0,start),{speaker:'hostess',text:'これで邪魔する人はいないね。',duelEnding:'yandere'},{speaker:'manager',text:'……ルナ？',duelEnding:'yandere'}];
+  Object.assign(s.actOne.duel,{eventId:event.id,cursor:cursorInEnding?start+1:0,page:0});
+  const restored=JSON.parse(JSON.stringify(s));assert.equal(refreshDuelYandereEnding(restored),true);
+  const updated=restored.events.find(e=>e.id===event.id);
+  assert.equal(JSON.stringify(updated.lines.slice(0,start)),prefix);
+  assert.equal(updated.lines[start].duelEndingPhase,'relief');
+  assert.equal(restored.actOne.duel.cursor,cursorInEnding?start:0);
+  assert.equal(JSON.stringify(restored.actOne.duel.history),history);
+  assert.equal(JSON.stringify(restored.actOne.rollbackPoint),checkpoint);
+  assert.ok(validateSave(restored)&&validActOne(restored));assert.equal(refreshDuelYandereEnding(restored),false);
+  s.actOne.duel.dialogueComplete=true;assert.equal(refreshDuelYandereEnding(s),false);
+ }
 });
 
 test('each opponent gets one result stamp, including paginated defeats and the final victory dialogue',()=>{

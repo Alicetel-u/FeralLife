@@ -509,6 +509,20 @@ function openDuel(s){
  Object.assign(e,{actScene:'duel',cast:['hostess','cat'],stageOnly:true,duel:true,duelHearts:0,lines:[...DUEL_INTRO,...duelEncounterLines(0)]});
  a.pending={scene:'duel',eventId:e.id};
 }
+// Upgrade only an unfinished, active legacy BAD transcript. Earlier incidents,
+// choices and completed journal entries retain their original saved contents.
+export function refreshDuelYandereEnding(s){
+ const d=s.actOne?.duel;
+ if(!d||d.dialogueComplete||s.actOne.failure!=='duel-yandere')return false;
+ const event=s.events.find(e=>e.id===d.eventId&&e.duelOutcome==='yandere');
+ if(!event||event.lines.some(l=>l.duelEndingPhase))return false;
+ const start=event.lines.findIndex(l=>l.duelEnding==='yandere');
+ if(start<0)return false;
+ const offset=event.lines[0]?.text===event.detail?0:1;
+ event.lines=[...event.lines.slice(0,start),...duelEndingLines('yandere').filter(l=>l.duelEnding)];
+ if((d.cursor??0)>=start+offset){d.cursor=start+offset;d.page=0;}
+ return true;
+}
 function answerDuel(s,eventId,choiceId){
  const a=s.actOne,d=a.duel,p=a.pending;
  if(a.status!=='playing'||p?.eventId!==Number(eventId)||!d)return null;
