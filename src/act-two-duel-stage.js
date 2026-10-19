@@ -18,7 +18,8 @@ export function duelFrame(event,index=0){
  const before=event.duelPreviousHearts??event.duelHearts??0;
  const hearts=Math.max(0,Math.min(10,updated||ending||round>resolved?event.duelHearts??0:before));
  const entrance=line.duelRound!==undefined&&round>resolved&&cursor===lines.findIndex(l=>l.duelRound===round);
- return {line,round,ending,hearts,before,updated,entrance,defeated:!!line.duelDefeated||updated};
+ const showResult=!!line.duelDefeated&&!ending&&cursor===lines.findIndex(l=>l.duelRound===round&&l.duelDefeated);
+ return {line,round,ending,hearts,before,updated,entrance,showResult,defeated:!!line.duelDefeated||updated};
 }
 
 export function duelChoiceHTML(event,choices,history=new Set()){
@@ -29,7 +30,7 @@ export function duelChoiceHTML(event,choices,history=new Set()){
 }
 
 export function duelStageHTML(event,residents,index=0,page=0){
- const {line,round,ending,hearts,before,entrance,defeated}=duelFrame(event,index);
+ const {line,round,ending,hearts,before,entrance,defeated,showResult}=duelFrame(event,index);
  if(line.duelRound===undefined&&!ending)return eventStageHTML(event,residents,index,page);
  const enemy=DUEL_ROUNDS[round],strike=!!line.duelAttack,delta=hearts-before,cleared=round+(defeated?1:0);
  const managerPose=strike?'assets/characters/manager/poses/angry.png':line.speaker==='manager'?'assets/characters/manager/poses/retort.png':'assets/characters/manager/idle.png';
@@ -38,22 +39,27 @@ export function duelStageHTML(event,residents,index=0,page=0){
  const luna=duelMini('hostess',lunaEmotion,`duel-luna ${line.duelHeartUpdate?'duel-react':''}`,'ルナ');
  const moku=duelMini('cat',line.duelRank===1?'angry':line.speaker==='cat'?'exasperated':null,`duel-moku ${line.duelRank===1?'duel-charge':''} ${line.speaker==='cat'?'duel-speaking':''}`,'モク');
  const scene=ending&&ending!=='clear'?`<img class="duel-cg" src="${DUEL_ART[ending]}" alt="${ending==='yandere'?'独占するルナ':'管理椅子から見下ろすルナ'}">`:
- `<div class="duel-field"><div class="duel-set ${strike?'duel-striking rank-'+line.duelRank:''}"><img class="duel-building" src="assets/apartments.png" alt="">${luna}<img class="duel-mini duel-manager ${line.speaker==='manager'?'duel-speaking':''}" src="${managerPose}" alt="大家">${moku}<img class="duel-mini duel-enemy ${defeated?'duel-defeated':entrance?'duel-arriving':''}" src="${DUEL_ART[enemy.enemy]}" alt="${enemy.name}"><span class="duel-hit-ring" aria-hidden="true"></span></div>${entrance?`<div class="duel-arrival" aria-hidden="true"><small>${round===3?'最後の来訪者':'来訪者'}</small><strong>${enemy.name}</strong></div>`:''}${defeated&&!ending?'<div class="duel-result" aria-label="撃退成功">撃退！<span>あと'+(3-round)+'人</span></div>':''}</div>`;
+ `<div class="duel-field"><div class="duel-set ${strike?'duel-striking rank-'+line.duelRank:''}"><img class="duel-building" src="assets/apartments.png" alt="">${luna}<img class="duel-mini duel-manager ${line.speaker==='manager'?'duel-speaking':''}" src="${managerPose}" alt="大家">${moku}<img class="duel-mini duel-enemy ${defeated?'duel-defeated':entrance?'duel-arriving':''}" src="${DUEL_ART[enemy.enemy]}" alt="${enemy.name}"><span class="duel-hit-ring" aria-hidden="true"></span></div>${entrance?`<div class="duel-arrival" aria-hidden="true"><small>${round===3?'最後の来訪者':'来訪者'}</small><strong>${enemy.name}</strong></div>`:''}${showResult&&page===0?'<div class="duel-result" aria-label="撃退成功">撃退！<span>あと'+(3-round)+'人</span></div>':''}</div>`;
  const hud=ending?'':`<div class="duel-hud"><div class="duel-opponent"><span class="duel-round">${round===3?'最終戦':`${round+1}人目`}<small> / 4人</small></span><strong>${enemy.name}</strong><div class="duel-progress" aria-label="${cleared}人撃退済">${DUEL_ROUNDS.map((r,i)=>`<i class="${i<cleared?'done':i===round?'current':''}" aria-hidden="true"></i>`).join('')}</div></div><div class="duel-affection"><span class="duel-heart-label">ルナのハート <b>${hearts}<small> / 10</small></b></span><div class="duel-hearts" role="img" aria-label="ルナのハート ${hearts}個、最大10個">${Array.from({length:10},(_,i)=>`<span style="--heart-index:${Math.abs(i-before)}" class="${i<hearts?'lit':''} ${line.duelHeartUpdate&&i>=Math.min(before,hearts)&&i<Math.max(before,hearts)?'duel-heart-changed':''}" aria-hidden="true">♥</span>`).join('')}</div>${line.duelHeartUpdate?`<span class="duel-heart-delta ${delta<0?'down':''}" role="status">${delta>0?'+':''}${delta||'±0'}</span>`:''}</div></div>`;
- const cut=strike?`<div class="duel-impact rank-${line.duelRank}" aria-hidden="true"><strong>${eventEscape(line.duelAttack)}</strong></div>`:'';
+ const cut=strike&&page===0?`<div style="animation-duration:${duelReadDelay(line)}ms" class="duel-impact rank-${line.duelRank}" aria-hidden="true"><strong>${eventEscape(line.duelAttack)}</strong></div>`:'';
  const stage=eventStageHTML(event,residents,index,page,{hideCharacters:true,cinematic:true});
  return stage.replace('class="event-stage ',`class="event-stage duel-stage ${ending?'duel-ending-scene':''} `).replace(/^(<div[^>]*>)/,'$1'+scene+hud+cut);
 }
 
 // Only the brief attack montage advances itself; conversation and choices stay manual.
 // Cancel on every modal replacement and pause while menus, voice or hidden tabs are active.
-export function mountDuelPlayback(line,{advance,blocked,reduced=false,schedule=setTimeout,cancel=clearTimeout}){
- const delay=line?.duelAttack?(reduced?450:1550):line?.duelPlayback?1200:line?.duelWindup?1000:0;
- if(!delay)return ()=>{};
+export function duelReadDelay(line){
+ return Math.max(1800,Math.min(3200,Array.from(line?.text||'').length*65+650));
+}
+export function mountDuelPlayback(line,{advance,blocked,schedule=setTimeout,cancel=clearTimeout,now=()=>performance.now()}){
+ if(!line)return ()=>{};
+ // Reduced motion changes movement, never the time available to read a line.
+ const delay=line.duelAttack||line.duelWindup?duelReadDelay(line):line.duelPlayback?1800:0;
+ const readyAt=now()+(line.duelAttack?1400:650);
  let timer,stopped=false;
  const tick=()=>{if(stopped)return;if(blocked())timer=schedule(tick,200);else advance();};
- timer=schedule(tick,delay);
- return ()=>{stopped=true;cancel(timer);};
+ if(delay)timer=schedule(tick,delay);
+ return Object.assign(()=>{stopped=true;if(timer!==undefined)cancel(timer);},{canAdvance:()=>!stopped&&now()>=readyAt});
 }
 export function duelBadHTML(state){
  const y=state.actOne.failure==='duel-yandere';

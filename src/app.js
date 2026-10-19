@@ -19,7 +19,7 @@ import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVic
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.19.07';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.20.01';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo } from './act-two.js';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -374,7 +374,7 @@ function showEvent(id,index=null,page=0,afterMorningBlackout=false) {
 
   characterVoice.play(lines[cursor],e.id+':'+cursor+':'+pageIndex);
   characterVoice.prepare(cursor+1<lines.length?lines[cursor+1]:null);
-  cleanupDuelPlayback=mountDuelPlayback(e.duel?lines[cursor]:null,{advance:advanceConversation,reduced:matchMedia('(prefers-reduced-motion: reduce)').matches,blocked:()=>document.hidden||characterVoice.busy||modal.classList.contains('event-ui-hidden')||!!modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden});
+  cleanupDuelPlayback=mountDuelPlayback(e.duel?lines[cursor]:null,{advance:advanceConversation,blocked:()=>document.hidden||characterVoice.busy||modal.classList.contains('event-ui-hidden')||!!modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden});
   scheduleEventAuto();
   document.querySelector(last&&waiting?'[data-choice]:not([disabled])':last?(['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'[data-epilogue-done].primary-button':['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'[data-rewind-resume].primary-button':e.actScene==='act2-prologue'&&state.actOne.prologuePending?'[data-act2-prologue-done].primary-button':e.actScene==='prologue'?'[data-opening="3"].primary-button':'[data-close].primary-button'):'[data-dialogue-next]')?.focus({preventScroll:true});
 }
@@ -566,7 +566,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.19.07';
+const BUILD_VERSION='2026.10.20.01';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -713,7 +713,10 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-act2-finish'))showNextChapter();
   if(button.hasAttribute('data-act-replay'))resetActState(createActOne());
   if(button.dataset.actAdmit&&state.actOne?.status==='clear'&&!state.actOne.reward&&['hostess','fox'].includes(button.dataset.actAdmit)){state.actOne.reward=button.dataset.actAdmit;save();showActReward();}
-  if(button.hasAttribute('data-close')) closeModal();
+  if(button.hasAttribute('data-close')){
+    if(button.closest('.modal-footer')&&cleanupDuelPlayback.canAdvance?.()===false)return;
+    closeModal();
+  }
   if(button.dataset.room){state.selected=Number(button.dataset.room);updateCamera();updateRooms();updateProfile();updateUI();save();}
   if(button.dataset.view){autoFollow=false;renderer.view=button.dataset.view;updateCamera();updateUI();}
   if(button.dataset.camera){autoFollow=false;renderer.focus=button.dataset.camera==='focus';updateCamera();updateUI();}
@@ -757,6 +760,7 @@ function advanceConversation(){
   if(modal.classList.contains('event-ui-hidden')||modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden)return false;
   const current=state.events.find(x=>x.id===eventView.id);
   if(!current)return false;
+  if(current.duel&&cleanupDuelPlayback.canAdvance?.()===false)return false;
   const pages=messagePages(eventConversation(current)[eventView.index].text);
   if(eventView.page<pages.length-1){showEvent(eventView.id,eventView.index,eventView.page+1);return true;}
   if(eventView.index<eventConversation(current).length-1){showEvent(eventView.id,eventView.index+1);return true;}

@@ -1,11 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {existsSync} from 'node:fs';
+import {existsSync,readFileSync} from 'node:fs';
+import vm from 'node:vm';
 import {createGame,validateSave} from '../src/simulation.js';
 import {validActOne} from '../src/act-one.js';
 import {beginActTwo,advanceActTwo,answerActTwo,rewindActTwo,actTwoChoices} from '../src/act-two.js';
-import {DUEL_ART,DUEL_INTRO,DUEL_ROUNDS,duelChoices} from '../src/act-two-duel.js';
-import {duelStageHTML,duelFrame,duelChoiceHTML,mountDuelPlayback} from '../src/act-two-duel-stage.js';
+import {DUEL_ART,DUEL_INTRO,DUEL_ROUNDS,duelChoices,duelReplyLines} from '../src/act-two-duel.js';
+import {duelStageHTML,duelFrame,duelChoiceHTML,mountDuelPlayback,duelReadDelay} from '../src/act-two-duel-stage.js';
+import {messagePages} from '../src/message-pages.js';
 import {eventConversation} from '../src/event-stage.js';
 import {storyCheckpointTarget} from '../src/story-checkpoints.js';
 
@@ -100,4 +102,51 @@ test('approved opening, supplied corrected art, ten hearts, original dialogue wi
  const last=s.events.find(e=>e.duelOutcome==='yandere'),lines=eventConversation(last),at=lines.findIndex(l=>l.duelEnding);
  assert.match(duelStageHTML(last,s.residents,at),/assets\/events\/duel\/yandere.png/);
  assert.equal(DUEL_ROUNDS.length,4);
+});
+
+test('each opponent gets one result stamp, including paginated defeats and the final victory dialogue',()=>{
+ const s=duelStart();
+ for(const id of ['vow','shield','future','ultimate']){
+  const reply=answerActTwo(s,s.actOne.pending.eventId,id),lines=eventConversation(reply);
+  let stamps=0;
+  for(let index=0;index<lines.length;index++)for(let page=0;page<messagePages(lines[index].text).length;page++){
+   const html=duelStageHTML(reply,s.residents,index,page);
+   stamps+=(html.match(/class="duel-result"/g)||[]).length;
+   if(lines[index].duelHeartUpdate)assert.doesNotMatch(html,/class="duel-result"/);
+  }
+  assert.equal(stamps,1,`one stamp for ${id}`);
+ }
+});
+
+test('all twelve commands are spoken exactly once and attack bubbles use the spoken wording',()=>{
+ for(let round=0;round<4;round++)for(const choice of duelChoices(round)){
+  const lines=duelReplyLines(round,choice);
+  assert.equal(lines.filter(l=>l.speaker==='manager'&&l.text===choice.label).length,1);
+  assert.equal(lines[0].text,choice.label);
+  for(const line of lines.filter(l=>l.duelAttack))assert.equal(line.duelAttack,line.text);
+  if(choice.delta>=0)assert.equal(lines.filter(l=>l.speaker==='manager'&&l.duelAttack).length,1);
+ }
+ for(const round of DUEL_ROUNDS)for(const line of round.lines.filter(l=>l.speaker==='manager')){
+  assert.match(line.text,/誰|？/,'pre-choice landlord lines only ask questions, not settle the argument');
+ }
+});
+
+test('real dialogue advance rejects rapid taps for 650ms on every duel page and 1400ms on attacks',()=>{
+ const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
+ const source=app.slice(app.indexOf('function advanceConversation(){'),app.indexOf("modal.addEventListener('click',e=>{"));
+ let time=0,shown=0;
+ const event={id:1,duel:true,detail:'一行目',lines:[{text:'一行目'},{text:'二行目'},{text:'三行目'}]};
+ const context={state:{events:[event]},eventView:{id:1,index:0,page:0},eventConversation,messagePages,
+  modal:{open:true,classList:{contains:c=>c==='conversation-modal'},querySelector:sel=>sel==='.event-menu'?{hidden:true}:null},
+  showEvent(id,index,page=0){shown++;context.eventView={id,index,page};context.cleanupDuelPlayback=mountDuelPlayback(event.lines[index],{advance(){},blocked:()=>false,now:()=>time});}};
+ context.cleanupDuelPlayback=mountDuelPlayback(event.lines[0],{advance(){},blocked:()=>false,now:()=>time});
+ vm.createContext(context);vm.runInContext(source,context);
+ for(time=0;time<650;time+=100)assert.equal(context.advanceConversation(),false);
+ time=650;assert.equal(context.advanceConversation(),true);assert.equal(shown,1);
+ for(let i=0;i<5;i++)assert.equal(context.advanceConversation(),false);
+ time=1300;assert.equal(context.advanceConversation(),true);assert.equal(shown,2);
+ time=0;
+ const stop=mountDuelPlayback({text:'こいつの明日は、俺が守る！',duelAttack:true},{advance(){},blocked:()=>false,now:()=>time,schedule:()=>1,cancel(){}});
+ time=1399;assert.equal(stop.canAdvance(),false);time=1400;assert.equal(stop.canAdvance(),true);stop();assert.equal(stop.canAdvance(),false);
+ assert.ok(duelReadDelay({text:'忘れ物だけ返せ。今の暮らしは本人が決める！'})>=1800);
 });

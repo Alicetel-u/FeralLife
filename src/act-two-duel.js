@@ -9,22 +9,22 @@ export const DUEL_INTRO=[
  dm('彼氏でも夫でもねぇ。大家として話は聞く。お前も、自分で説明しろよ。'),dl('はぁい♡ 頼りにしてるね、大家さん。'),dc('モクは廊下で見守るニャ。手に負えなかったら呼ぶニャ。')
 ];
 export const DUEL_ROUNDS=[
- {enemy:'fiance',name:'花束の自称婚約者',lines:[dn('花束男「結婚するなら優しい人がいいって言ったよね？ 毎日おはようを送った！ つまり婚約だ！」'),dl('好みの話が、いつの間にか婚姻届に……。','surprised'),dm('朝の挨拶を役所に提出するな。'),dc('モクも大家におはようって言ったニャ。危なかったニャ。')],choices:[
- ['vow','こいつの明日は、俺が守る！','俺が守る！',3],['boundary','好みと約束は別だ。本人の返事を聞け！','約束は別だ！',1],['help','花束、モク宛てってことにできない？','モク、頼む！',-1]]},
- {enemy:'gifter',name:'買い物王',lines:[dn('買い物王「これだけ貢いだんだ！ 俺にはルナちゃんに会う権利がある！」'),dl('プレゼントは嬉しいけど、面会券は付いてないよ？'),dm('待て。その抱き枕、誰が売った。'),dl('……通販って便利だよね♡'),dc('本人より先に枕が入居しそうニャ。')],choices:[
- ['shield','金額でこいつの笑顔は買わせねぇ！','笑顔は売り物じゃねぇ！',3],['receipt','贈り物と交際は別会計だ！','別会計だ！',1],['discount','俺の家賃も、ついでに貢いでくれない？','モク、頼む！',-1]]},
- {enemy:'salesman',name:'うさんくさい勧誘男',lines:[dn('勧誘男「ルナさんは僕と夢を追うと！ まずは大家さんが最上位会員に……」'),dl('夢の話はしたけど、会費の話は初耳♡'),dm('夢に月額料金をつけるな！'),dc('寝るだけならモクが無料で教えるニャ。')],choices:[
- ['future','こいつの未来に、勝手な値札をつけるな！','未来を売るな！',3],['cancel','本人が断ってる。勧誘もここで終了だ！','勧誘終了！',1],['sleep','モク先生の無料お昼寝講座に変更で……','モク、頼む！',-1]]},
- {enemy:'boss',name:'黒服の迎え役',lines:[dn('黒服「迎えに来た。ルナ、お前が『いつでも戻る』と言ったんだろう」'),dl('あれはお店で忘れ物を受け取る話！ 働きに戻るとは言ってない！','angry'),dm('お前も言葉を省略しすぎだ！！'),dc('全員、都合のいいところだけ聞いてるニャ。'),dn('黒服が腕を組む。大家はルナの前に立った。')],choices:[
- ['ultimate','大家流超絶漢気奥義！','大家流超絶漢気奥義！',7],['leave','忘れ物だけ返せ。今の暮らしは本人が決める！','本人が決める！',1],['catapult','お引き取りは……こちらの猫まで！','モク、頼む！',-1]]}
+ {enemy:'fiance',name:'花束の自称婚約者',lines:[dn('花束男「結婚するなら優しい人がいいって言ったよね？ 毎日おはようを送った！ つまり婚約だ！」'),dl('好みの話が、いつの間にか婚姻届に……。','surprised'),dc('モクも大家におはようって言ったニャ。危なかったニャ。')],choices:[
+ ['vow','こいつの明日は、俺が守る！',3],['boundary','好みと約束は別だ。本人の返事を聞け！',1],['help','花束、モク宛てってことにできない？',-1]]},
+ {enemy:'gifter',name:'買い物王',lines:[dn('買い物王「これだけ貢いだんだ！ 俺にはルナちゃんに会う権利がある！」'),dl('そんなに買ってたの……？','surprised'),dm('待て。その抱き枕、誰が売った。'),dl('……通販って便利だよね♡'),dc('本人より先に枕が入居しそうニャ。')],choices:[
+ ['shield','金額でこいつの笑顔は買わせねぇ！',3],['receipt','贈り物と交際は別会計だ！',1],['discount','俺の家賃も、ついでに貢いでくれない？',-1]]},
+ {enemy:'salesman',name:'うさんくさい勧誘男',lines:[dn('勧誘男「ルナさんは僕と夢を追うと！ まずは大家さんが最上位会員に……」'),dl('夢の話はしたけど、会費の話は初耳♡'),dc('寝るだけならモクが無料で教えるニャ。')],choices:[
+ ['future','こいつの未来に、勝手な値札をつけるな！',3],['cancel','本人が断ってる。勧誘もここで終了だ！',1],['sleep','モク先生の無料お昼寝講座に変更で……',-1]]},
+ {enemy:'boss',name:'黒服の迎え役',lines:[dn('黒服「迎えに来た。ルナ、お前が『いつでも戻る』と言ったんだろう」'),dl('あれはお店で忘れ物を受け取る話！ 働きに戻るとは言ってない！','angry'),dc('全員、都合のいいところだけ聞いてるニャ。'),dn('黒服が腕を組む。大家はルナの前に立った。')],choices:[
+ ['ultimate','大家流超絶漢気奥義！',7],['leave','忘れ物だけ返せ。今の暮らしは本人が決める！',1],['catapult','お引き取りは……こちらの猫まで！',-1]]}
 ];
 export const duelOutcome=hearts=>hearts>=10?'yandere':hearts<=1?'domination':'clear';
-export const duelChoices=round=>DUEL_ROUNDS[round]?.choices.map(([id,label,attack,delta])=>({id,label,attack,delta}))||[];
+export const duelChoices=round=>DUEL_ROUNDS[round]?.choices.map(([id,label,delta])=>({id,label,attack:label,delta}))||[];
 export function duelEncounterLines(round){return DUEL_ROUNDS[round].lines.map(line=>({...line,duelRound:round}));}
 export function duelReplyLines(round,choice){
  const weak=choice.delta<0;
- return [duelLine('manager',choice.label,'neutral',{duelRound:round,duelWindup:true}),
-  ...(weak?[{...dc('大家の口座も度胸も残高不足ニャ。'),duelWindup:true},duelLine('cat','出張お断りキックニャ！！','angry',{duelRound:round,duelAttack:'モク出動！',duelRank:1})]:[duelLine('manager',choice.attack,'angry',{duelRound:round,duelAttack:choice.attack,duelRank:choice.delta===7?4:choice.delta===3?3:2})]),
+ return [duelLine('manager',choice.label,weak?'neutral':'angry',weak?{duelWindup:true}:{duelAttack:choice.label,duelRank:choice.delta===7?4:choice.delta===3?3:2}),
+  ...(weak?[{...dc('大家の口座も度胸も残高不足ニャ。'),duelWindup:true},duelLine('cat','出張お断りキックニャ！！','angry',{duelAttack:'出張お断りキックニャ！！',duelRank:1})]:[]),
   duelLine('narrator',weak?'廊下のモクが跳び出した。一直線の体当たりに、男は道路の向こうへすっ飛んだ。':'大家のひと言に男はのけぞり、足をもつれさせて逃げていった。','neutral',{duelRound:round,duelDefeated:true,duelPlayback:true}),
   duelLine('hostess',weak?'……大家さんより、モクちゃんに頼む方が早いね。':choice.delta>=3?'今の、ずるい……♡ もっと言ってほしいな。':'ありがとう。……あたしからも、ちゃんと断るね。',weak?'tired':'shy',{duelRound:round,duelHeartUpdate:true}),
   dc(weak?'助っ人の報酬はツナ缶ニャ。':'大家、決め顔のまま鼻の下を伸ばすなニャ。'),dm(weak?'家賃と相殺な。':'伸ばしてねぇ！！')
