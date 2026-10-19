@@ -198,3 +198,16 @@ test('real dialogue advance rejects rapid taps for 650ms on every duel page and 
  time=1399;assert.equal(stop.canAdvance(),false);time=1400;assert.equal(stop.canAdvance(),true);stop();assert.equal(stop.canAdvance(),false);
  assert.ok(duelReadDelay({text:'忘れ物だけ返せ。今の暮らしは本人が決める！'})>=1800);
 });
+
+test('only the yandere rewind gives the landlord a hint about affection and boundaries',()=>{
+ for(const [choices,hint] of [[['vow','shield','future','ultimate'],true],[['help','discount','sleep','catapult'],false]]){
+  const s=duelStart();for(const id of choices)answerActTwo(s,s.actOne.pending.eventId,id);
+  assert.equal(s.actOne.status,'bad');
+  const next=rewindActTwo(s),lines=next.events.find(e=>e.actScene==='act2-rewind').lines;
+  const thought=lines.find(line=>line.text.includes('気持ちが高まりすぎて'));
+  assert.equal(!!thought,hint);
+  if(hint){assert.equal(thought.innerVoice,true);assert.ok(lines.some(line=>line.innerVoice&&line.text.includes('甘い約束')));}
+  assert.equal(next.hour,84);assert.deepEqual(next.actOne.completed,['bag']);
+  assert.ok(validActOne(next)&&validateSave(next));
+ }
+});
