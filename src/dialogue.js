@@ -25,7 +25,7 @@ export function claimAutomaticScene(state,event) {
 }
 const AUTOMATIC_SCENES={
   1:new Set(['opening','prologue','ash','dinner','epilogue','rewind']),
-  2:new Set(['act2-prologue','bag','contract','act2-epilogue','act2-rewind'])
+  2:new Set(['act2-prologue','bag','contract','duel','act2-epilogue','act2-rewind'])
 };
 // A queued scene from the other chapter must not open when this chapter's dialogue closes.
 export function automaticChapterScene(event,act) {

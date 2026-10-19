@@ -5,7 +5,7 @@ import { messagePages } from './message-pages.js';
 // Shared left/right conversation view for requests, replies and ordinary journal scenes.
 import { EVENT_ART, EVENT_EXPRESSIONS, CHARACTER_ART, eventParticipants } from './character-art.js';
 import { CHARACTERS } from './simulation.js';
-const eventEscape = value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export const eventEscape = value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const eventSpeakerName = speaker=>speaker==='manager'?'あなた · 管理人':speaker==='narrator'?'けもの荘の記録':speaker==='mystery'?'謎の声':CHARACTERS[speaker]?.name||'住人';
 
 // Vector ornaments keep their shape at any display size, without platform emoji.

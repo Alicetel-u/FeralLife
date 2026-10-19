@@ -1,3 +1,4 @@
+import {DUEL_ROUNDS,duelChoices,duelEncounterLines,duelReplyLines,duelEndingLines} from '../src/act-two-duel.js';
 import {ACT_TWO_OBSERVATION_BEATS} from '../src/act-two-observation.js';
 import {secondActChat,lunaMutters} from '../src/act-two-life.js';
 import {OBSERVATION_BEATS} from '../src/act-one-observation.js';
@@ -92,7 +93,7 @@ export function extractVoiceScript(scope='intro') {
       }
     };
     const walk=(s,chapter,path,depth=0)=>{
-      if(depth>3)throw Error('Unexpected story branch depth');
+      if(depth>7)throw Error('Unexpected story branch depth');
       const advance=chapter===1?advanceActOne:advanceActTwo;
       if(chapter===1){
         // Visit the actual daily schedule on every safe branch, including travel
@@ -113,6 +114,16 @@ export function extractVoiceScript(scope='intro') {
       discover(s,chapter,path);
       if(!s.actOne.pending)return;
       const scene=s.actOne.pending.scene;
+      if(chapter===2&&scene==='duel'){
+        for(let round=0;round<4;round++){
+          add('act2/duel/round-'+round,duelEncounterLines(round));
+          for(const choice of duelChoices(round))add('act2/duel/'+round+'/'+choice.id,duelReplyLines(round,choice));
+        }
+        for(const ending of ['clear','yandere','domination'])add('act2/duel/'+ending,duelEndingLines(ending));
+        const next=structuredClone(s);
+        for(const id of ['boundary','receipt','cancel','leave'])answerActTwo(next,next.actOne.pending.eventId,id);
+        discover(next,chapter,path+'/duel');walk(next,chapter,path+'/duel',depth+1);return;
+      }
       const choices=chapter===1?getActOneChoices(s,scene):ACT_TWO_EVENTS[scene].choices;
       for(const choice of choices){
         const next=structuredClone(s);

@@ -563,14 +563,26 @@ export function validActOne(s){
   const a=s?.actOne;
   if(a?.chapter===2){
     if(a.version!==1||!Number.isInteger(a.attempt)||a.attempt<1||!Number.isInteger(a.seed)||!Array.isArray(a.memory)||!Array.isArray(a.completed)||!['playing','bad','clear'].includes(a.status))return false;
-    const scenes={bag:{at:62},contract:{at:81}},failures=['bag-guarantee','bag-loan','bag-return','contract-sign','contract-stamp'];
+    if(a.duel!==undefined){
+      const d=a.duel;
+      if(!Number.isInteger(d.round)||d.round<0||d.round>4||!Number.isInteger(d.hearts)||d.hearts<0||d.hearts>10||!Array.isArray(d.history)||d.history.length!==d.round)return false;
+      const ids=[['vow','boundary','help'],['shield','receipt','discount'],['future','cancel','sleep'],['ultimate','leave','catapult']];let hearts=0;
+      for(let round=0;round<d.round;round++){
+        const h=d.history[round],i=ids[round].indexOf(h?.choice);
+        if(i<0||h.round!==round||h.before!==hearts)return false;
+        hearts=Math.max(0,Math.min(10,hearts+[[3,1,-1],[3,1,-1],[3,1,-1],[7,1,-1]][round][i]));
+        if(h.after!==hearts)return false;
+      }
+      if(d.hearts!==hearts)return false;
+    }
+    const scenes={bag:{at:62},contract:{at:81},duel:{at:84}},failures=['bag-guarantee','bag-loan','bag-return','contract-sign','contract-stamp','duel-yandere','duel-domination'];
     const chosen=['bag:guarantee','bag:loan','bag:return','contract:sign','contract:stamp','contract:refuse'];
     if(a.failedChoices!==undefined&&(!Array.isArray(a.failedChoices)||a.failedChoices.some(x=>!chosen.includes(x))))return false;
     if(!Array.isArray(a.chosenChoices)||a.chosenChoices.some(x=>!chosen.includes(x))||a.memory.some(x=>!failures.includes(x))||a.completed.some(x=>!Object.hasOwn(scenes,x)))return false;
     if(s.hour<57||s.hour>105||s.residents.length!==2||!s.residents.some(r=>r.type==='hostess'))return false;
     if(a.pending!==null&&(!scenes[a.pending?.scene]||!s.events.some(e=>e.id===a.pending.eventId&&e.actScene===a.pending.scene)))return false;
     if(a.rollbackPoint!==undefined){const p=a.rollbackPoint,saved=p?.state;if(!scenes[p?.scene]||(p.kind==='story'?!validStoryCheckpoint(p,2):saved?.hour!==scenes[p.scene].at-.5)||saved?.actOne?.rollbackPoint!==undefined||saved?.actOne?.pending!==null||saved?.actOne?.status!=='playing'||!validateSave(saved)||!validActOne(saved))return false;}
-    return a.status==='playing'?!s.ending:a.status==='clear'?s.hour===105&&a.completed.length===2&&!!s.ending:failures.includes(a.failure)&&!!s.ending;
+    return a.status==='playing'?!s.ending:a.status==='clear'?s.hour===105&&[2,3].includes(a.completed.length)&&!!s.ending:failures.includes(a.failure)&&!!s.ending;
   }if(!a||a.version!==1||typeof a.started!=='boolean'||!Number.isInteger(a.attempt)||a.attempt<1||!Number.isInteger(a.seed)||!Array.isArray(a.memory)||!Array.isArray(a.completed)||!['playing','bad','clear'].includes(a.status))return false;
   if(a.rollbackPoint!==undefined){
     const point=a.rollbackPoint,event=(a.chapter===2?{'bag':{at:62},'contract':{at:81}}:ACT_ONE_EVENTS)[point?.scene],saved=point?.state;

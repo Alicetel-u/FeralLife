@@ -1660,3 +1660,28 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .debug-menu>p,.debug-menu>h2,.debug-menu>footer{grid-column:1/-1}
  .debug-menu>button{font-size:12px!important}
 }
+/* Second trouble: fixed picture play over the unchanged exterior. */
+.game-ink dialog.conversation-modal:has(.duel-stage) .conversation-body{background:#231827}
+.duel-stage .duel-field{position:absolute;inset:6% 0 21%;overflow:hidden;background:#251e29;z-index:-1}
+.duel-building{position:absolute;width:100%;height:100%;object-fit:fill;inset:0}
+.duel-mini{position:absolute;object-fit:contain;object-position:center bottom;height:24%;width:18%;bottom:4%;filter:drop-shadow(0 4px 2px #0006)}
+.duel-luna{left:29%;height:23%}.duel-manager{left:43%;height:25%}.duel-moku{left:23%;bottom:20%;height:21%;width:15%}.duel-enemy{left:66%;width:25%;height:32%;animation:duel-enter .4s ease-out both}
+.duel-hud{position:absolute;top:5%;left:50%;transform:translateX(-50%);z-index:3;min-width:min(90%,480px);padding:9px 18px;background:#21152bec;border:2px solid #f5dcad;color:#fff5e4;box-shadow:5px 5px #0007;text-align:center;font-weight:900}
+.duel-hearts{display:flex;justify-content:center;gap:clamp(2px,.6vw,8px);font-size:clamp(19px,3vw,32px);color:#655265}.duel-hearts .lit{color:#ff5d9b;text-shadow:0 0 9px #ff548c88}.duel-heart-pop{animation:duel-heart .45s ease-out}
+.duel-impact{position:absolute;inset:20% 2% auto;min-height:28%;display:grid;place-items:center;z-index:8;pointer-events:none;animation:duel-slam 1.1s ease-out both;filter:drop-shadow(6px 7px #1e0926)}
+.duel-impact::before{content:'';position:absolute;inset:0;background:#fff2d6;clip-path:polygon(0 40%,14% 31%,6% 8%,28% 17%,34% 0,46% 18%,64% 0,66% 21%,91% 8%,84% 33%,100% 42%,86% 57%,96% 90%,72% 79%,64% 100%,49% 81%,30% 99%,27% 77%,4% 92%,14% 62%)}
+.duel-impact strong{position:relative;padding:20px 9%;color:#c51d3c;font:1000 italic clamp(24px,5.6vw,78px)/1.2 var(--sans);text-shadow:2px 2px #fff,-2px -2px #fff;transform:rotate(-5deg);text-align:center}.duel-impact.rank-4::before{background:#ffdc61}.duel-impact.rank-4 strong{color:#8c1640}.duel-impact.rank-1 strong{color:#57479f}
+.duel-enemy.duel-defeated{animation:duel-fly .5s ease-in both}.duel-moku.duel-charge{animation:duel-charge .65s ease-in-out both}
+.duel-cg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;z-index:-1}
+.duel-stage .duel-cg{z-index:-1}.duel-bad{isolation:isolate;background:#19101e;min-height:100dvh!important;height:100dvh;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding: max(18px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom))}
+.duel-bad-copy{background:linear-gradient(transparent,#110c18f5 25%);padding:35px 20px 8px;width:100%;color:#fff4e9;text-align:center}.duel-bad-copy h2{font-size:clamp(26px,5vw,62px);margin:6px 0 12px;text-shadow:3px 3px #4d102d}.duel-bad-copy p{font-size:clamp(13px,2vw,18px);margin:9px 0}.duel-bad-copy .act-primary{margin-top:10px}
+@keyframes duel-enter{from{transform:translateX(180%)}to{transform:translateX(0)}}
+@keyframes duel-fly{to{transform:translate(260%,-40%) rotate(90deg);opacity:0}}
+@keyframes duel-charge{0%{transform:translate(0,0)}45%{transform:translate(240%,-70%) rotate(-25deg)}70%{transform:translate(290%,50%) rotate(15deg)}100%{transform:translate(0,0)}}
+@keyframes duel-slam{0%{opacity:0;transform:scale(1.8) rotate(-8deg)}12%,65%{opacity:1;transform:scale(1) rotate(0)}100%{opacity:0;transform:scale(1.08)}}
+@keyframes duel-heart{50%{transform:scale(1.12);filter:brightness(1.6)}}
+@media(max-width:700px){.duel-stage .duel-field{inset:15% -18% 27%}.duel-stage .duel-hud{top:8%;font-size:12px;min-width:85%;padding:5px 10px}.duel-stage .duel-mini{height:23%;bottom:5%}.duel-stage .duel-moku{bottom:20%;height:20%}.duel-stage .duel-enemy{height:29%;left:62%}.duel-stage .duel-manager{left:40%}.duel-stage .duel-luna{left:28%}.duel-stage .duel-impact{top:26%;min-height:20%}.duel-cg{object-position:50% 22%}.duel-bad .duel-cg{object-fit:cover;object-position:54% 15%}}
+@media(prefers-reduced-motion:reduce){.duel-stage *{animation:none!important}.duel-enemy.duel-defeated{opacity:0}.duel-impact{opacity:1}}
+.duel-stage .duel-field{inset:17% 0 auto;aspect-ratio:1000 / 562.5;height:auto}
+.conversation-modal:has(.duel-stage) .trouble-card{display:none}
+@media(max-width:700px){.duel-stage .duel-field{inset:24% -27.5% auto;aspect-ratio:1000 / 562.5;height:auto}}

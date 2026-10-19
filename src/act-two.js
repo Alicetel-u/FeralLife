@@ -1,4 +1,5 @@
 import {failedChoiceKeys} from './choice-history.js';
+import {DUEL_INTRO,duelChoices,duelEncounterLines,duelReplyLines,duelEndingLines,duelOutcome} from './act-two-duel.js';
 import { saveStoryCheckpoint, storyCheckpointTarget } from './story-checkpoints.js';
 import { createActOne,advanceActOne,answerActOne } from './act-one.js';
 import {advance,addEvent,admit} from './simulation.js';
@@ -330,9 +331,10 @@ export const ACT_TWO_EVENTS={
     {id:'refuse',label:'担保は絶対ダメだ！ 契約は持ち帰れ！',lines:[m('担保は絶対ダメだ！ 契約は持ち帰れ！'),l('surprised','でも、今日だけって……。'),m('今日しか考える時間をくれない契約なんて、なおさらダメだ！'),c('happy','じゃあモクのハンコも貸さないニャ。'),m('お前はそもそも持ってないだろ！'),n('大家は署名を拒み、昨日男が落としたメモと帳簿を照らし合わせた。売上金の数字は噛み合わず、店側が従業員への不当な請求をルナの横領に見せかけた疑いが浮かぶ。男は舌打ちして立ち去った。'),l('sad','……私が盗んだって言われても、信じないでくれたんだね。ありがとう、大家さん。'),m('次からは小さい文字ほど先に読め。')]}
   ]}
 };
-export const actTwoChoices=(s,scene)=>scene==='bag'&&s.actOne?.attempt===1?[{...ACT_TWO_EVENTS.bag.choices.find(choice=>choice.id==='guarantee'),label:'もう大丈夫だろ。今日はゆっくり休め。'}]:ACT_TWO_EVENTS[scene]?.choices||[];
+ACT_TWO_EVENTS.duel={at:84,title:'第二のトラブル：嘘つきルナを守れ！',call:'大家の漢気で撃退しろ！',detail:'4日目の昼。玄関でルナが大家の袖を引いた。',lines:DUEL_INTRO,choices:[]};
+export const actTwoChoices=(s,scene)=>scene==='duel'?duelChoices(s.actOne.duel?.round??0):scene==='bag'&&s.actOne?.attempt===1?[{...ACT_TWO_EVENTS.bag.choices.find(choice=>choice.id==='guarantee'),label:'もう大丈夫だろ。今日はゆっくり休め。'}]:ACT_TWO_EVENTS[scene]?.choices||[];
 export function actTwoChosen(s){
- const genuine=s.events.filter(e=>e.actChoice&&ACT_TWO_EVENTS[e.actScene]&&!e.choiceForced&&!(e.actScene==='bag'&&e.actChoice==='guarantee'&&e.choiceForced!==false&&e.lines?.length>5));
+ const genuine=s.events.filter(e=>!e.duel&&e.actChoice&&ACT_TWO_EVENTS[e.actScene]&&!e.choiceForced&&!(e.actScene==='bag'&&e.actChoice==='guarantee'&&e.choiceForced!==false&&e.lines?.length>5));
  const chosen=new Set([...(s.actOne.chosenChoices||[]),...genuine.map(e=>e.actScene+':'+e.actChoice)]);
  // The mandatory first-night reassurance shares an old id with a different later answer.
  if(!genuine.some(e=>e.actScene==='bag'&&e.actChoice==='guarantee')&&!failedChoiceKeys(s).has('bag:guarantee'))chosen.delete('bag:guarantee');
@@ -392,6 +394,7 @@ export function advanceActTwo(s,hours){
  while(s.hour<end){const next=Math.min(end,(Math.floor(s.hour*4+1e-7)+1)/4),delta=next-s.hour;advance(s,delta);secondActLife(s,delta);}
  s.pending=null;s.management.pending=null;s.management.queue=[];
  if(s.hour<at)return;
+ if(scene==='duel'){openDuel(s);return;}
  if(scene){const ev=ACT_TWO_EVENTS[scene],e=addEvent(s,'trouble',ev.title,ev.detail,[102]);e.actScene=scene;e.cast=['hostess','cat'];e.stageOnly=true;e.lines=(scene==='bag'?(a.attempt>1?[n('男「……あんたには関係ないだろ。」'),n('男は大家を押しのけようとする。'),n('モクが男の前に歩み出た。'),c('neutral','……おい。'),m('……今度は、どうする……？')]:[...ev.lines,...FIRST_STALKER_BEFORE_CHOICE]):ev.lines).map(x=>({...x}));a.pending={scene,eventId:e.id};}
  else{a.status='clear';a.epilogueSeen=false;const e=addEvent(s,'life','第二幕 エピローグ「残った鍵」','5日目9時。アパートは今日も大家のものだった。',[102]);e.actScene='act2-epilogue';e.cast=['hostess','cat'];e.stageOnly=true;e.lines=[
  n('5日目の朝。けもの荘の玄関には、差し押さえの貼り紙も、見知らぬ鍵もない。'),
@@ -429,6 +432,7 @@ export function advanceActTwo(s,hours){
  s.ending={name:'第二幕クリア — 残った鍵',text:'けもの荘は、借金のカタにならずに済んだ。'};}
 }
 export function answerActTwo(s,eventId,choiceId){
+ if(s.actOne?.pending?.scene==='duel')return answerDuel(s,eventId,choiceId);
  const a=s.actOne,p=a.pending,event=ACT_TWO_EVENTS[p?.scene];const choice=event?.choices.find(c=>c.id===choiceId);
  if(a.status!=='playing'||p?.eventId!==Number(eventId)||!choice)return null;
  const firstStalkerTragedy=p.scene==='bag'&&a.attempt===1&&choiceId==='guarantee';
@@ -441,6 +445,7 @@ export function answerActTwo(s,eventId,choiceId){
  return r;
 }
 export function rewindActTwo(s){
+ if(s.actOne?.failure?.startsWith('duel-'))return rewindDuel(s);
  const a=s.actOne;const scene=Object.keys(ACT_TWO_EVENTS).find(id=>ACT_TWO_EVENTS[id].choices.some(c=>c.bad===a.failure));
  let next;
  if(a.rollbackPoint?.kind==='story'&&a.rollbackPoint.scene===scene)next=JSON.parse(JSON.stringify(a.rollbackPoint.state));
@@ -493,5 +498,50 @@ export function rewindActTwo(s){
  if(firstStalkerLoop){advanceActTwo(next,ACT_TWO_EVENTS.bag.at-next.hour);}
  next.actOne.failedChoices=[...failedChoiceKeys(s)];
  next.actOne.rewindIntroPending=true;next.actOne.rewindIntroCursor=0;
+ return next;
+}
+
+function openDuel(s){
+ const a=s.actOne;
+ a.duel={round:0,hearts:0,history:[],cursor:0};
+ saveStoryCheckpoint(s,'duel','ルナに彼氏役を頼まれた昼');
+ const ev=ACT_TWO_EVENTS.duel,e=addEvent(s,'trouble',ev.title,ev.detail,[102]);
+ Object.assign(e,{actScene:'duel',cast:['hostess','cat'],stageOnly:true,duel:true,duelHearts:0,lines:[...DUEL_INTRO,...duelEncounterLines(0)]});
+ a.pending={scene:'duel',eventId:e.id};
+}
+function answerDuel(s,eventId,choiceId){
+ const a=s.actOne,d=a.duel,p=a.pending;
+ if(a.status!=='playing'||p?.eventId!==Number(eventId)||!d)return null;
+ const choice=duelChoices(d.round).find(c=>c.id===choiceId);
+ if(!choice)return null;
+ const original=s.events.find(e=>e.id===p.eventId);if(!original)return null;
+ original.read=true;original.actChoice=choiceId;
+ const before=d.hearts,round=d.round;
+ d.hearts=Math.max(0,Math.min(10,d.hearts+choice.delta));
+ d.history.push({round,choice:choiceId,before,after:d.hearts});d.round++;d.cursor=0;d.dialogueComplete=false;
+ const final=d.round===4,outcome=final?duelOutcome(d.hearts):null;
+ const lines=[...duelReplyLines(round,choice),...(final?duelEndingLines(outcome):duelEncounterLines(d.round))];
+ const r=addEvent(s,'life',final?'全員撃退！':'次の来訪者',lines[0].text,[102]);
+ Object.assign(r,{actScene:'duel',duel:true,cast:['hostess','cat'],stageOnly:true,duelHearts:d.hearts,duelPreviousHearts:before,duelResolvedRound:round,duelOutcome:outcome,lines});
+ a.pending=final?null:{scene:'duel',eventId:r.id};
+ if(final){
+  a.completed.push('duel');d.outcome=outcome;
+  if(outcome!=='clear'){
+   a.status='bad';a.failure='duel-'+outcome;
+   if(!a.memory.includes(a.failure))a.memory.push(a.failure);
+   s.ending={name:outcome==='yandere'?'BAD END — あなただけの大家さん':'BAD END — 大家さん、返事は？',text:outcome==='yandere'?'独占する愛に閉ざされ、けもの荘の経営は止まった。':'管理鍵も帳簿もルナの手に渡り、大家は経営の実権を失った。'};
+  }
+ }
+ return r;
+}
+function rewindDuel(s){
+ const a=s.actOne,point=a.rollbackPoint;
+ if(point?.scene!=='duel'||point.kind!=='story')throw new Error('Missing second-trouble checkpoint');
+ const next=JSON.parse(JSON.stringify(point.state));
+ next.actOne.rollbackPoint=JSON.parse(JSON.stringify(point));
+ Object.assign(next.actOne,{attempt:a.attempt+1,memory:[...a.memory],chosenChoices:actTwoChosen(s),failedChoices:[...failedChoiceKeys(s)],status:'playing',pending:null,rewindIntroPending:true,rewindIntroCursor:0,duel:{round:0,hearts:0,history:[],cursor:0}});
+ next.ending=null;next.pending=null;next.events.forEach(e=>e.read=true);
+ const intro=addEvent(next,'life','また、あの昼へ','玄関で、ルナが大家の袖を引いている。',[102]);
+ Object.assign(intro,{actScene:'act2-rewind',cast:['hostess','cat'],stageOnly:true,lines:[m('……鍵はある。帳簿も、俺の手に……。'),l('surprised','大家さん？ まだ何もお願いしてないよ？'),m('……今日は、最後まで気を抜かねぇ。'),c('neutral','大家、彼氏役にそんな覚悟が要るニャ？')]});
  return next;
 }

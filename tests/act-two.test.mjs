@@ -12,9 +12,9 @@ test('Luna joins automatically and opening is queued',()=>{
  assert.ok(s.events.some(e=>e.actScene==='act2-prologue'));
  assert.ok(validActOne(s)&&validateSave(s));
 });
-test('each act-two trouble offers one safe option and two bad options',()=>{
- assert.equal(Object.keys(ACT_TWO_EVENTS).length,2);
- for(const event of Object.values(ACT_TWO_EVENTS)){assert.equal(event.choices.length,3);assert.equal(event.choices.filter(c=>!!c.bad).length,2);}
+test('legacy act-two consultations retain one safe option and two bad options',()=>{
+ assert.equal(Object.keys(ACT_TWO_EVENTS).length,3);
+ for(const event of [ACT_TWO_EVENTS.bag,ACT_TWO_EVENTS.contract]){assert.equal(event.choices.length,3);assert.equal(event.choices.filter(c=>!!c.bad).length,2);}
 });
 test('first bad ending restores a playable checkpoint with memory',()=>{
  const s=create();start(s);advanceActTwo(s,9);
@@ -33,6 +33,8 @@ test('safe route reaches chapter-two epilogue at day five',()=>{
  advanceActTwo(s,9);answer(s,'loan');
  advanceActTwo(s,100);assert.equal(s.actOne.pending.scene,'contract');
  answer(s,'refuse');advanceActTwo(s,100);
+ for(const id of ['boundary','receipt','cancel','leave'])answer(s,id);
+ advanceActTwo(s,100);
  assert.equal(s.actOne.status,'clear');
  assert.equal(s.hour,105);
  assert.equal(s.events.find(e=>e.actScene==='act2-epilogue')?.lines?.length>5,true);
