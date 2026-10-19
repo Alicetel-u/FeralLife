@@ -1685,3 +1685,6 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .duel-stage .duel-field{inset:17% 0 auto;aspect-ratio:1000 / 562.5;height:auto}
 .conversation-modal:has(.duel-stage) .trouble-card{display:none}
 @media(max-width:700px){.duel-stage .duel-field{inset:24% -27.5% auto;aspect-ratio:1000 / 562.5;height:auto}}
+.game-ink dialog.conversation-modal:has(.event-stage.duel-stage):not(:has(.memory-whiteout)) .conversation-body{background:#231827}
+.duel-stage .duel-field{inset:4% auto auto 50%;width:min(100%,calc(68dvh * 1.7778));height:auto;aspect-ratio:1000 / 562.5;transform:translateX(-50%)}
+@media(max-width:700px){.duel-stage .duel-field{inset:14% auto auto 50%;width:155%;height:auto;aspect-ratio:1000 / 562.5}}
