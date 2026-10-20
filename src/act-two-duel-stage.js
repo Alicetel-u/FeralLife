@@ -59,11 +59,14 @@ export function duelStageHTML(event,residents,index=0,page=0){
   .duel-day-transition span{font-weight:900;font-size:clamp(34px,7vw,88px);letter-spacing:.075em;text-align:center;color:var(--duel-day-tint);text-shadow:0 0 25px var(--duel-day-tint);animation:duel-day-words 3s ease-in-out both}
   .duel-yandere-short[data-duel-phase="day-5"] .duel-day-transition{animation-duration:3.5s}
   .duel-yandere-short[data-duel-phase="day-5"] .duel-day-transition span{animation-duration:3.5s}
-  @keyframes duel-day-curtain{0%{opacity:0}17%,73%{opacity:1}100%{opacity:0;visibility:hidden}}
+  @keyframes duel-day-curtain{0%,79%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
+  .duel-day-opening .stage-bubble,.duel-day-opening .mobile-dialogue-tap,.duel-day-opening .stage-character{animation:duel-day-scene-reveal 3s step-end both}
+  .duel-day-opening[data-duel-phase="day-5"] .stage-bubble,.duel-day-opening[data-duel-phase="day-5"] .mobile-dialogue-tap,.duel-day-opening[data-duel-phase="day-5"] .stage-character{animation-duration:3.5s}
+  @keyframes duel-day-scene-reveal{0%,99%{visibility:hidden;opacity:0}100%{visibility:visible;opacity:1}}
   @keyframes duel-day-words{0%{opacity:0;transform:translateY(16px);filter:blur(9px)}30%,73%{opacity:1;transform:translateY(0);filter:blur(0)}100%{opacity:0;transform:translateY(-8px);filter:blur(4px)}}
   @media(prefers-reduced-motion:reduce){.duel-day-transition,.duel-day-transition span{animation-duration:3s;animation-timing-function:linear}.duel-yandere-short[data-duel-phase="day-5"] .duel-day-transition,.duel-yandere-short[data-duel-phase="day-5"] .duel-day-transition span{animation-duration:3.5s}.duel-day-transition span{filter:none!important;transform:none!important}}
   </style>`;
-  return stage.replace('class="event-stage ',`data-duel-phase="day-${day}" class="event-stage duel-stage duel-yandere-story duel-yandere-short `).replace(/^(<div[^>]*>)/,'$1'+storyBackdrop+calendar+style);
+  return stage.replace('class="event-stage ',`data-duel-phase="day-${day}" class="event-stage duel-stage duel-yandere-story duel-yandere-short ${line.duelDayStart?'duel-day-opening':''} `).replace(/^(<div[^>]*>)/,'$1'+storyBackdrop+calendar+style);
  }
 
  const enemy=DUEL_ROUNDS[round],strike=!!line.duelAttack,delta=hearts-before,cleared=round+(defeated?1:0);
