@@ -120,7 +120,7 @@ export function duelStageHTML(event,residents,index=0,page=0){
 export function duelReadDelay(line){
  return Math.max(1800,Math.min(3200,Array.from(line?.text||'').length*65+650));
 }
-export function mountDuelPlayback(line,{advance,blocked,schedule=setTimeout,cancel=clearTimeout,now=()=>performance.now()}){
+export function mountDuelPlayback(line,{advance,blocked,voiceOutcome=()=>null,schedule=setTimeout,cancel=clearTimeout,now=()=>performance.now()}){
  if(!line)return ()=>{};
  // Reduced motion changes movement, never the time available to read a line.
  // Attack callouts stay on-screen until the voice actually finishes.
@@ -129,9 +129,20 @@ export function mountDuelPlayback(line,{advance,blocked,schedule=setTimeout,canc
  const delay=attack?duelReadDelay(line):line.duelWindup?duelReadDelay(line):line.duelPlayback?1800:0;
  const readyAt=now()+(line.duelDayStart?(line.duelStoryDay===5?3500:3000):line.duelVictoryResult?2800:line.duelStartTitle?1550:attack?duelReadDelay(line):650);
  let timer,stopped=false;
- const tick=()=>{if(stopped)return;if(blocked())timer=schedule(tick,80);else advance();};
+ const canAdvance=()=>{
+  if(stopped||now()<readyAt||attack&&blocked())return false;
+  if(!attack)return true;
+  const outcome=voiceOutcome();
+  if(outcome==='playing'||outcome==='idle')return false;
+  if(outcome==='ended')return true;
+  // Missing/failed audio must not deadlock a playthrough. Keep the subtitle
+  // visible longer instead of incorrectly treating a failed play as completed.
+  if(outcome==='missing'||outcome==='error'||outcome==='timeout')return now()>=readyAt+1200;
+  return true; // Legacy callers without a voice outcome callback.
+ };
+ const tick=()=>{if(stopped)return;if(!canAdvance())timer=schedule(tick,80);else advance();};
  if(delay)timer=schedule(tick,delay);
- return Object.assign(()=>{stopped=true;if(timer!==undefined)cancel(timer);},{canAdvance:()=>!stopped&&now()>=readyAt&&(!attack||!blocked())});
+ return Object.assign(()=>{stopped=true;if(timer!==undefined)cancel(timer);},{canAdvance});
 }
 export function duelBadHTML(state){
  const y=state.actOne.failure==='duel-yandere';
