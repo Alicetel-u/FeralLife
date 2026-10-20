@@ -614,7 +614,16 @@ async function copyBootDiagnostics(button){
 function showDebugChapterSelect(){
   debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter']], 'data-debug-tools-back');
 }
-function showDebugSceneSelect(chapter,page=0){
+function showDebugSectionSelect(chapter){
+  if(chapter!=='2'){showDebugSceneSelect(chapter);return;}
+  debugMenuPage('第二幕｜ルナ編','確認したい場面のグループを選択してください。',[
+    ['prologue','01　プロローグ','data-debug-section','story'],
+    ['trouble1','02　トラブル1｜待ち伏せ事件','data-debug-section','start'],
+    ['trouble2','03　トラブル2｜漢気ミニゲーム','data-debug-section','battle'],
+    ['endings','04　エンディング・BAD END','data-debug-section','ending']
+  ],'data-debug-chapters-back');
+}
+function showDebugSceneSelect(chapter,page=0,section=null){
   // Label destinations by their exact entry point. The duel's first-choice warp
   // belongs to the chapter-two scene selector, not the top-level debug menu.
   const options=chapter==='1'
@@ -645,14 +654,21 @@ function showDebugSceneSelect(chapter,page=0){
       ['end-clear','正解END開始｜漢気バトル成功','ending'],
       ['epilogue','エンディング｜第二幕','ending']
     ];
-  const pageCount=Math.ceil(options.length/4),current=Math.max(0,Math.min(pageCount-1,page));
-  const buttons=options.slice(current*4,current*4+4).map(([id,label,kind])=>[chapter+':'+id,label,'data-debug-scene',kind]);
-  debugMenuPage(chapter==='1'?'第一幕｜シーンセレクト':'第二幕｜シーンセレクト','行きたい場面をタップして移動。色は場面の種類を表します。',buttons,'data-debug-chapters-back');
+  const sections={
+    prologue:['opening','arrival'],
+    trouble1:['bag','bag-choices','bag-loop','bad-bag'],
+    trouble2:['duel','duel-choices','duel-loop'],
+    endings:['end-yandere','end-domination','end-clear','epilogue']
+  };
+  const choices=chapter==='2'&&section&&sections[section]?options.filter(([id])=>sections[section].includes(id)):options;
+  const pageCount=Math.ceil(choices.length/4),current=Math.max(0,Math.min(pageCount-1,page));
+  const buttons=choices.slice(current*4,current*4+4).map(([id,label,kind])=>[chapter+':'+id,label,'data-debug-scene',kind]);
+  debugMenuPage(chapter==='1'?'第一幕｜シーンセレクト':({prologue:'ルナ編 ＞ プロローグ',trouble1:'ルナ編 ＞ トラブル1',trouble2:'ルナ編 ＞ トラブル2',endings:'ルナ編 ＞ エンディング'}[section]||'第二幕｜シーンセレクト'),'行きたい場面を選択。色は場面の種類を表します。',buttons,chapter==='2'&&section?'data-debug-sections-back':'data-debug-chapters-back');
   const actions=modal.querySelector('.persona-debug-actions');
   actions.insertAdjacentHTML('afterend',`<nav class="persona-debug-pagination" aria-label="シーン選択のページ切り替え">
-    <button type="button" class="persona-debug-page-button" data-debug-scene-page="${chapter}:${current-1}" ${current===0?'disabled':''} aria-label="前のページへ">◀　前へ</button>
+    <button type="button" class="persona-debug-page-button" data-debug-scene-page="${chapter}:${section||'all'}:${current-1}" ${current===0?'disabled':''} aria-label="前のページへ">◀　前へ</button>
     <span class="persona-debug-page-counter">PAGE <strong>${current+1} / ${pageCount}</strong></span>
-    <button type="button" class="persona-debug-page-button persona-debug-page-next" data-debug-scene-page="${chapter}:${current+1}" ${current===pageCount-1?'disabled':''} aria-label="次のページへ">次へ　▶</button>
+    <button type="button" class="persona-debug-page-button persona-debug-page-next" data-debug-scene-page="${chapter}:${section||'all'}:${current+1}" ${current===pageCount-1?'disabled':''} aria-label="次のページへ">次へ　▶</button>
   </nav>`);
   modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes');
 }
@@ -774,8 +790,10 @@ document.addEventListener('click',e=>{
   if(button.dataset.debugTool==='scenes'){showDebugChapterSelect();return;}
   if(button.dataset.debugTool==='boot'){showBootDiagnostics();return;}
   if(button.dataset.debugTool==='copy-boot'){copyBootDiagnostics(button);return;}
-  if(button.dataset.debugChapter){showDebugSceneSelect(button.dataset.debugChapter);return;}
-  if(button.dataset.debugScenePage){const [chapter,page]=button.dataset.debugScenePage.split(':');showDebugSceneSelect(chapter,Number(page));return;}
+  if(button.dataset.debugChapter){showDebugSectionSelect(button.dataset.debugChapter);return;}
+  if(button.hasAttribute('data-debug-sections-back')){showDebugSectionSelect('2');return;}
+  if(button.dataset.debugSection){showDebugSceneSelect('2',0,button.dataset.debugSection);return;}
+  if(button.dataset.debugScenePage){const [chapter,section,page]=button.dataset.debugScenePage.split(':');showDebugSceneSelect(chapter,Number(page),section==='all'?null:section);return;}
   if(button.dataset.debugScene){startDeveloperScene(button.dataset.debugScene);return;}
   if(button.dataset.opening)showOpening(Number(button.dataset.opening));
   if(button.hasAttribute('data-opening-continue'))showActTitle();
