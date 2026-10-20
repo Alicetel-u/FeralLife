@@ -1,4 +1,4 @@
-import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.20.42';
+import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.20.43';
 import {failedChoiceKeys} from './choice-history.js';
 import {secondActLife} from './act-two-life.js';
 import {storyScreenHTML} from './story-screens.js';
@@ -7,7 +7,7 @@ import {isFirstStalkerReply,firstStalkerStageHTML,prepareFirstStalkerAssets,need
 import { LUNA_MINI_EMOTIONS, MOKU_MINI_EMOTIONS } from './mini-emotions.js';
 import {isFirstFireReply,firstFireStageHTML} from './first-fire-stage.js';
 import {clearLegacyObservationMemo,observationView,observationClockLimit,tickObservation,inheritObservation} from './act-one-observation.js';
-import {createVoicePlayer} from './voice-player.js?v=2026.10.20.42';
+import {createVoicePlayer} from './voice-player.js?v=2026.10.20.43';
 const characterVoice=createVoicePlayer({chapter:()=>state?.actOne?.chapter,onPlaybackChange:active=>normalBgm.setVoiceActive(active)});
 document.addEventListener('pointerdown',()=>characterVoice.unlock(),{capture:true});
 document.addEventListener('keydown',()=>characterVoice.unlock(),{capture:true});
@@ -19,8 +19,8 @@ import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVic
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.20.42';
-import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.20.42';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.20.43';
+import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.20.43';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
 import { debtEndingHTML, startDebtEnding } from './debt-ending.js';
@@ -602,7 +602,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.20.42';
+const BUILD_VERSION='2026.10.20.43';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
