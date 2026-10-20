@@ -130,9 +130,12 @@ export function eventStageHTML(event,residents,index=0,page=0,{hideCharacters=fa
     const emotion=type==='hostess'&&event.actScene==='act2-rewind'
       ?LUNA_REWIND_REACTIONS.get(reaction?.text)||'sad':resolvedEmotion;
     const expression=EVENT_EXPRESSIONS[type]?.[emotion];
-    const arrivalBust=event.actScene==='act2-prologue'&&type==='hostess'&&emotion==='neutral';
-    const src=arrivalBust?'assets/events/busts/hostess-neutral.png':expression||EVENT_ART[type]||CHARACTER_ART[type]?.src,active=line.speaker===type;
-    const bustLayout=arrivalBust||!!expression&&(type!=='hostess'||expression!==EVENT_ART.hostess); // Chapter-two arrival always uses bust portraits; other scenes preserve Luna's approved neutral full-body art.
+    // Luna used to alternate between a full-body neutral image and bust emotion
+    // images; their different internal framing made her shrink between lines.
+    // Use the same portrait framing for all of her conversation emotions.
+    const lunaPortrait=type==='hostess';
+    const src=lunaPortrait&&emotion==='neutral'?'assets/events/busts/hostess-neutral.png':expression||EVENT_ART[type]||CHARACTER_ART[type]?.src,active=line.speaker===type;
+    const bustLayout=lunaPortrait||!!expression;
     return `<figure class="stage-character ${side} ${active?'speaking':''} ${bustLayout?'expression-art':'fullbody-art'}" data-emotion="${emotion}" data-character="${eventEscape(type||'narrator')}">${src?`<img src="${src}" alt="${eventEscape(eventSpeakerName(type))}のバストアップ（${EVENT_EMOTION_NAMES[emotion]}）">`:''}<figcaption>${eventEscape(eventSpeakerName(type||'narrator'))}</figcaption></figure>`;
   };
   const side=line.speaker==='manager'?'narration':line.speaker===left?'left':line.speaker===right?'right':'narration';
