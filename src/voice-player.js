@@ -88,7 +88,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
       // Keep a single stable speed for each attack. Repeated playbackRate
       // changes near the end can truncate buffered output on mobile browsers.
       // 1.5x retains urgency while leaving the final consonant intelligible.
-      audio.playbackRate=isAttack?(clip.fastFile?1:1):duelClip?(clip.speaker==='cat'||clip.performance?.startsWith('duel-moku')?1.16:1.25):1;
+      audio.playbackRate=isAttack?1:duelClip?(clip.speaker==='cat'||clip.performance?.startsWith('duel-moku')?1.16:1.25):1;
       // Do not seek over the beginning of an encoded recording: its first
       // phoneme may begin within the previous 120ms skip window.
       audio.onloadedmetadata=null;
