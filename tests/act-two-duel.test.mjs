@@ -165,7 +165,14 @@ test('dedicated commands keep existing ids, repeat history, and reserve gold for
   for(const choice of choices)assert.ok(html.includes(`data-choice="${choice.id}"`));
   assert.equal((html.match(/data-case-event="42"/g)||[]).length,3);
   assert.match(html,/選択済/);assert.equal(html.includes('duel-ultimate'),round===3);
-  assert.doesNotMatch(html,/ヤンデレ|BAD|2〜9|ハート.*[+-][137]/,'does not disclose the ending trick');
+  assert.doesNotMatch(html,/ヤンデレ|BAD|2〜9/,'does not disclose ending thresholds');
+  for(const choice of choices){
+   const button=html.split('<button').find(part=>part.includes('data-choice="'+choice.id+'"'));
+   const tier=choice.delta===7?'ultimate':choice.delta>=3?'high':choice.delta<0?'low':'medium';
+   assert.ok(button.includes('duel-expect-'+tier));
+   assert.ok(button.includes('ハート</span> '+(choice.delta>0?'+':'')+choice.delta));
+   assert.equal((button.match(/class="lit"/g)||[]).length,choice.delta===7?4:choice.delta>=3?3:choice.delta<0?1:2);
+  }
  }
 });
 
