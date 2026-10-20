@@ -1866,3 +1866,16 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @keyframes duel-final-title-impact{from{opacity:0;transform:translateY(-60px) scale(1.5)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes duel-final-heart-pop{0%{opacity:0;transform:scale(.2) rotate(-28deg)}70%{opacity:1;transform:scale(1.23) rotate(7deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
 @media(prefers-reduced-motion:reduce){.duel-final-result,.duel-final-title,.duel-final-heart{animation:none}}
+
+
+/* ONLY the yandere ending fade is hot pink; earlier dialogue, CG, and day cards keep their colors. */
+.duel-bad-yandere{background:#ff1493!important}
+.duel-bad-yandere::before{content:"";position:absolute;inset:0;z-index:2;background:#ff1493;pointer-events:none;animation:duel-hot-pink-curtain 4s ease-in-out both}
+.duel-bad-yandere .duel-cg{animation:duel-yandere-cg-out 3s ease-in forwards}
+.duel-bad-yandere .duel-bad-copy{position:relative;z-index:3;background:transparent;color:#fff;animation:duel-pink-end-title 4.9s ease both}
+.duel-bad-yandere .duel-bad-copy h2{color:#fff;text-shadow:2px 3px 0 #a00061}
+.duel-bad-yandere .duel-bad-copy p,.duel-bad-yandere .duel-bad-copy button{color:inherit}
+@keyframes duel-hot-pink-curtain{0%{opacity:0}65%,100%{opacity:1}}
+@keyframes duel-yandere-cg-out{0%{opacity:1}100%{opacity:0}}
+@keyframes duel-pink-end-title{0%,75%{opacity:0;visibility:hidden}100%{opacity:1;visibility:visible}}
+@media(prefers-reduced-motion:reduce){.duel-bad-yandere::before{animation:none;opacity:1}.duel-bad-yandere .duel-cg{animation:none;opacity:0}.duel-bad-yandere .duel-bad-copy{animation:none}}
