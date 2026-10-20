@@ -74,7 +74,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
       if(mobile||AudioContextType){mobileAudio ||= makeAudio();audio=mobileAudio;audio.src=clip.file;clearPrepared();}else if(prepared?.file===clip.file){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clip.file;}// Accelerate only battle dialogue. Playback rate preserves the original pitch
       // and reuses existing recordings, so there is no additional TTS cost.
       const duelClip=clip.performance?.startsWith('duel-');
-      audio.playbackRate=duelClip?1.16:1;
+      audio.playbackRate=duelClip?(clip.speaker==='cat'||clip.performance?.startsWith('duel-moku')?1.16:1.25):1;
       audio.preservesPitch=true;
       audio.mozPreservesPitch=true;
       audio.webkitPreservesPitch=true;
