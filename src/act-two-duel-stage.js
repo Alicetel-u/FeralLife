@@ -45,7 +45,9 @@ export function duelChoiceHTML(event,choices,history=new Set()){
 
 export function duelStageHTML(event,residents,index=0,page=0){
  const {line,round,ending,hearts,before,entrance,defeated,showResult}=duelFrame(event,index);
- // Keep the duel arena visible from the very first introductory line.\n // Enemy sprites still enter only when their round begins.
+ // The opening conversation belongs to the ordinary full-size character stage.
+ // Only switch to the mini-game when the first opponent actually speaks.
+ if(line.duelRound===undefined&&!ending)return eventStageHTML(event,residents,index,page,{cinematic:true});
  // Ordinary Luna comes first. The outcome alone must not reveal the final CG.
  if(ending==='yandere'&&line.duelStoryDay&&line.duelEndingPhase!=='reveal'){
   const day=line.duelStoryDay;
