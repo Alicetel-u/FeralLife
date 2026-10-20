@@ -1806,3 +1806,7 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .persona-debug footer{font:11px/1.5 monospace;color:#c5d0e1;text-align:center}
 @media(max-width:700px){.persona-debug{justify-content:flex-start;padding:48px 17px 20px}.persona-debug-actions{max-height:58dvh}.persona-debug-button{min-height:55px}}
 @media(prefers-reduced-motion:reduce){.persona-debug-button{transition:none}}
+
+/* Duel starts on its introduction, while enemies wait for the first encounter. */
+.duel-intro-scene .duel-enemy-waiting{opacity:0!important;visibility:hidden;animation:none!important;pointer-events:none}
+.duel-intro-scene .duel-set{filter:none}
