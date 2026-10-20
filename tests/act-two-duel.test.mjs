@@ -217,7 +217,8 @@ test('unfinished legacy yandere saves resume the expanded ending without replayi
   const restored=JSON.parse(JSON.stringify(s));assert.equal(refreshDuelYandereEnding(restored),true);
   const updated=restored.events.find(e=>e.id===event.id);
   assert.equal(JSON.stringify(updated.lines.slice(0,start)),prefix);
-  assert.equal(updated.lines[start].duelEndingPhase,'day-1');
+  assert.equal(updated.lines[start].speaker,'hostess','restored route begins with the new introduction');
+  assert.equal(updated.lines[start+6].duelEndingPhase,'day-1','five-day story follows six new introduction lines');
   assert.equal(restored.actOne.duel.cursor,cursorInEnding?start:0);
   assert.equal(JSON.stringify(restored.actOne.duel.history),history);
   assert.equal(JSON.stringify(restored.actOne.rollbackPoint),checkpoint);
