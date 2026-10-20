@@ -431,7 +431,7 @@ test('real dialogue advance rejects rapid taps for 650ms on every duel page and 
  time=1300;assert.equal(context.advanceConversation(),true);assert.equal(shown,2);
  time=0;let blockedVoice=true;
  const stop=mountDuelPlayback({text:'こいつの明日は、俺が守る！',duelAttack:true},{advance(){},blocked:()=>blockedVoice,now:()=>time,schedule:()=>1,cancel(){}});
- time=649;assert.equal(stop.canAdvance(),false);time=650;assert.equal(stop.canAdvance(),false);blockedVoice=false;assert.equal(stop.canAdvance(),true);stop();assert.equal(stop.canAdvance(),false);
+ time=649;assert.equal(stop.canAdvance(),false);time=650;assert.equal(stop.canAdvance(),false);blockedVoice=false;time=duelReadDelay({text:'こいつの明日は、俺が守る！',duelAttack:true})-1;assert.equal(stop.canAdvance(),false);time++;assert.equal(stop.canAdvance(),true);stop();assert.equal(stop.canAdvance(),false);
  assert.ok(duelReadDelay({text:'忘れ物だけ返せ。今の暮らしは本人が決める！'})>=1800);
 });
 
