@@ -91,7 +91,7 @@ test('all twelve answers give the three characters distinct exchanges with stabl
  assert.equal(assists.size,4);
 });
 test('both duel BAD endings rewind to the same afternoon and character scene',()=>{
- for(const [choices,outcome] of [[['vow','shield','future','ultimate'],'yandere'],[['silence','silence','silence','silence'],'domination']]){
+ for(const [choices,outcome] of [[['vow','shield','future','ultimate'],'yandere'],[['help','discount','sleep','catapult'],'domination']]){
   const state=duelStart();
   for(const choice of choices)answerActTwo(state,state.actOne.pending.eventId,choice);
   assert.equal(state.actOne.failure,'duel-'+outcome);
