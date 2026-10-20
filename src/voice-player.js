@@ -54,13 +54,14 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
   };
   let prepared=null;
   const clipFor=line=>{if(!line)return;const scoped=chapter()===2?{...line,voiceChapter:2}:line;return manifest[voiceLineKey(scoped)]||manifest[voiceLineKey(line)];};
+  const clipPath=clip=>clip.fastFile||clip.file;
   const clearPrepared=()=>{if(prepared){const old=prepared.audio;prepared=null;old.pause();old.removeAttribute?.('src');old.load?.();}};
   const prepare=line=>{
     const clip=prefs.enabled&&clipFor(line);
     if(!clip){clearPrepared();return;}
-    if(prepared?.file===clip.file)return;
+    if(prepared?.file===clipPath(clip))return;
     clearPrepared();
-    try{const next=makeAudio();next.preload='auto';next.src=clip.file;next.load?.();prepared={file:clip.file,audio:next};}catch{prepared=null;}
+    try{const next=makeAudio();next.preload='auto';next.src=clipPath(clip);next.load?.();prepared={file:clipPath(clip),audio:next};}catch{prepared=null;}
   };
   const save=()=>{try{storage?.setItem('feral-voice',JSON.stringify(prefs));}catch{}};
   const stop=()=>{token++;playbackOutcome='idle';clearTimeout(watchdog);if(audio){audio.pause();audio.removeAttribute('src');audio.load();}audio=null;active=false;blocked=false;onPlaybackChange(false);};
@@ -80,14 +81,14 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     if(!prefs.enabled||!clip){playbackOutcome='missing';return;}
     const version=token;
     try{
-      if(mobile||AudioContextType){mobileAudio ||= makeAudio();audio=mobileAudio;audio.src=clip.file;clearPrepared();}else if(prepared?.file===clip.file){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clip.file;}// Accelerate only battle dialogue. Playback rate preserves the original pitch
+      if(mobile||AudioContextType){mobileAudio ||= makeAudio();audio=mobileAudio;audio.src=clipPath(clip);clearPrepared();}else if(prepared?.file===clipPath(clip)){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clipPath(clip);}// Accelerate only battle dialogue. Playback rate preserves the original pitch
       // and reuses existing recordings, so there is no additional TTS cost.
       const duelClip=clip.performance?.startsWith('duel-');
       const isAttack=!!line?.duelAttack;
       // Keep a single stable speed for each attack. Repeated playbackRate
       // changes near the end can truncate buffered output on mobile browsers.
       // 1.5x retains urgency while leaving the final consonant intelligible.
-      audio.playbackRate=isAttack?1.5:duelClip?(clip.speaker==='cat'||clip.performance?.startsWith('duel-moku')?1.16:1.25):1;
+      audio.playbackRate=isAttack?(clip.fastFile?1:1):duelClip?(clip.speaker==='cat'||clip.performance?.startsWith('duel-moku')?1.16:1.25):1;
       // Do not seek over the beginning of an encoded recording: its first
       // phoneme may begin within the previous 120ms skip window.
       audio.onloadedmetadata=null;
