@@ -90,6 +90,21 @@ test('all twelve answers give the three characters distinct exchanges with stabl
  for(const speeches of Object.values(spoken))assert.equal(speeches.size,12);
  assert.equal(assists.size,4);
 });
+test('both duel BAD endings rewind to the same afternoon and character scene',()=>{
+ for(const [choices,outcome] of [[['vow','shield','future','ultimate'],'yandere'],[['silence','silence','silence','silence'],'domination']]){
+  const state=duelStart();
+  for(const choice of choices)answerActTwo(state,state.actOne.pending.eventId,choice);
+  assert.equal(state.actOne.failure,'duel-'+outcome);
+  const next=rewindActTwo(state),intro=next.events.find(e=>e.actScene==='act2-rewind');
+  assert.equal(next.hour,84);
+  assert.ok(intro?.lines?.length===10);
+  assert.equal(intro.lines[2].text,'……戻ったのか。まだ、ルナが俺に頼み事をする前に……。');
+  assert.equal(intro.lines[3].speaker,'hostess');
+  assert.equal(next.actOne.rewindIntroPending,true);
+  assert.equal(next.actOne.pending,null);
+ }
+});
+
 test('duel rewind must finish the character dialogue before replaying the mini-game',()=>{
  const s=duelStart();
  for(const id of ['vow','shield','future','ultimate'])answerActTwo(s,s.actOne.pending.eventId,id);
