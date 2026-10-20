@@ -10,6 +10,7 @@ import {duelStageHTML,duelFrame,duelChoiceHTML,mountDuelPlayback,duelReadDelay} 
 import {messagePages} from '../src/message-pages.js';
 import {eventConversation} from '../src/event-stage.js';
 import {storyCheckpointTarget} from '../src/story-checkpoints.js';
+import {rewindBeat,rewindTransitionHTML} from '../src/rewind-transition.js';
 
 function duelStart(){
  const s=beginActTwo(createGame(42));Object.assign(s.actOne,{started:true,titlePending:false,prologuePending:false});
@@ -237,4 +238,13 @@ test('only the yandere rewind gives the landlord a hint about affection and boun
   assert.equal(next.hour,84);assert.deepEqual(next.actOne.completed,['bag']);
   assert.ok(validActOne(next)&&validateSave(next));
  }
+});
+
+
+test('yandere clock animation says landlord reaction, not other routes\' resolve',()=>{
+ const clock=rewindBeat(7,2,true,2,'duel-yandere');
+ assert.equal(clock.phase,'clock');
+ assert.equal(clock.text,'ルナ……お前……');
+ assert.notEqual(rewindBeat(7,2,true,2,'duel-domination').text,clock.text);
+ assert.equal(rewindTransitionHTML('duel-yandere',2,true,2).includes('ルナ……お前……'),false,'do not reveal the line before clock phase');
 });
