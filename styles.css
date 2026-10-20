@@ -1714,6 +1714,12 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .game-ink .conversation-modal .duel-choices.choice-confirming .choice-selected{opacity:1;background:#71364b;transform:scale(1.02);border-color:#ffdc9f}
 .duel-choices .choice-history-badge{display:inline-block;margin:4px 0 0;font-size:9px;padding:1px 5px;color:#c9b4c2;border-color:#776273}
 .duel-choices .choice-hint{margin:0;font-size:10px;color:#b8a0af}
+.game-ink .conversation-modal .duel-choices .decision-choice.choice-exhausted,
+.game-ink .conversation-modal .duel-choices .decision-choice.choice-exhausted:hover{background:#302e33;border-color:#6d6872;border-left-color:#6d6872;cursor:not-allowed;transform:none;outline:none;filter:grayscale(1)}
+.game-ink .conversation-modal .duel-choices .choice-exhausted strong,
+.duel-choices .choice-exhausted .duel-command-icon,
+.duel-choices .choice-exhausted .duel-command-copy small,
+.duel-choices .choice-exhausted .duel-command-key{color:#a9a4ad;text-shadow:none}
 .duel-cg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;z-index:-1}
 .duel-bad{isolation:isolate;background:#19101e;min-height:100dvh!important;height:100dvh;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding:max(18px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom))}
 .duel-bad-copy{background:linear-gradient(transparent,#110c18f5 25%);padding:35px 20px 8px;width:100%;color:#fff4e9;text-align:center}.duel-bad-copy h2{font-size:clamp(26px,5vw,62px);margin:6px 0 12px;text-shadow:3px 3px #4d102d}.duel-bad-copy p{font-size:clamp(13px,2vw,18px);margin:9px 0}.duel-bad-copy .act-primary{margin-top:10px}

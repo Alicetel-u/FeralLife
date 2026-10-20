@@ -312,7 +312,7 @@ export const ACT_TWO_EVENTS={
   ]}
 };
 ACT_TWO_EVENTS.duel={at:84,title:'第二のトラブル：嘘つきルナを守れ！',call:'大家の漢気で撃退しろ！',detail:'4日目の昼。玄関でルナが大家の袖を引いた。',lines:DUEL_INTRO,choices:[]};
-export const actTwoChoices=(s,scene)=>scene==='duel'?duelChoices(s.actOne.duel?.round??0):scene==='bag'&&s.actOne?.attempt===1?[{...ACT_TWO_EVENTS.bag.choices.find(choice=>choice.id==='guarantee'),label:'もう大丈夫だろ。今日はゆっくり休め。'}]:ACT_TWO_EVENTS[scene]?.choices||[];
+export const actTwoChoices=(s,scene)=>scene==='duel'?duelChoices(s.actOne.duel?.round??0).map(choice=>s.actOne.memory?.includes('duel-yandere')?{...choice,restrained:true,disabled:choice.delta===3}:choice):scene==='bag'&&s.actOne?.attempt===1?[{...ACT_TWO_EVENTS.bag.choices.find(choice=>choice.id==='guarantee'),label:'もう大丈夫だろ。今日はゆっくり休め。'}]:ACT_TWO_EVENTS[scene]?.choices||[];
 export function actTwoChosen(s){
  const genuine=s.events.filter(e=>!e.duel&&e.actChoice&&ACT_TWO_EVENTS[e.actScene]&&!e.choiceForced&&!(e.actScene==='bag'&&e.actChoice==='guarantee'&&e.choiceForced!==false&&e.lines?.length>5));
  const chosen=new Set([...(s.actOne.chosenChoices||[]),...genuine.map(e=>e.actScene+':'+e.actChoice)]);
@@ -528,8 +528,8 @@ export function refreshDuelYandereEnding(s){
 function answerDuel(s,eventId,choiceId){
  const a=s.actOne,d=a.duel,p=a.pending;
  if(a.status!=='playing'||p?.eventId!==Number(eventId)||!d)return null;
- const choice=duelChoices(d.round).find(c=>c.id===choiceId);
- if(!choice)return null;
+ const choice=actTwoChoices(s,'duel').find(c=>c.id===choiceId);
+ if(!choice||choice.disabled)return null;
  const original=s.events.find(e=>e.id===p.eventId);if(!original)return null;
  original.read=true;original.actChoice=choiceId;
  const before=d.hearts,round=d.round;

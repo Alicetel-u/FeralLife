@@ -19,6 +19,51 @@ function duelStart(){
  return s;
 }
 
+test('yandere rewind disables every +3 answer after reload and rejects it without changing saves',()=>{
+ const failed=duelStart();
+ for(const id of ['vow','shield','future','ultimate'])answerActTwo(failed,failed.actOne.pending.eventId,id);
+ let s=JSON.parse(JSON.stringify(rewindActTwo(failed)));
+ s.actOne.rewindIntroPending=false;advanceActTwo(s,1);
+ for(let round=0;round<4;round++){
+  s=JSON.parse(JSON.stringify(s));
+  const choices=actTwoChoices(s,'duel'),id=s.actOne.pending.eventId;
+  const html=duelChoiceHTML(s.events.find(e=>e.id===id),choices);
+  assert.match(html,/大家の漢気！全力を出すな！/);
+  assert.ok(choices.every(choice=>choice.restrained));
+  for(const choice of choices){
+   assert.equal(!!choice.disabled,choice.delta===3);
+   const button=html.match(new RegExp(`<button[^>]*data-choice="${choice.id}"[^>]*>`))[0];
+   if(choice.delta===3){
+    assert.match(button,/choice-exhausted/);assert.match(button,/ disabled /);
+    const before=JSON.stringify(s);assert.equal(answerActTwo(s,id,choice.id),null);assert.equal(JSON.stringify(s),before);
+   }else assert.doesNotMatch(button,/ disabled /);
+  }
+  assert.ok(answerActTwo(s,id,choices.find(choice=>choice.delta===1).id));
+  assert.ok(validateSave(s)&&validActOne(s));
+ }
+ assert.equal(s.actOne.duel.outcome,'clear');
+});
+
+test('initial and low-heart retries keep strong choices, and the +7 ultimate remains available after yandere',()=>{
+ const first=duelStart();
+ assert.ok(actTwoChoices(first,'duel').every(choice=>!choice.disabled&&!choice.restrained));
+ assert.match(duelChoiceHTML({id:1},actTwoChoices(first,'duel')),/大家の漢気、見せてやれ！/);
+ for(const id of ['help','discount','sleep','catapult'])answerActTwo(first,first.actOne.pending.eventId,id);
+ let low=rewindActTwo(first);low.actOne.rewindIntroPending=false;advanceActTwo(low,1);
+ assert.ok(actTwoChoices(low,'duel').every(choice=>!choice.disabled&&!choice.restrained));
+ const high=duelStart();for(const id of ['vow','shield','future','ultimate'])answerActTwo(high,high.actOne.pending.eventId,id);
+ let retry=rewindActTwo(high);retry.actOne.rewindIntroPending=false;advanceActTwo(retry,1);
+ for(const id of ['help','discount','sleep'])answerActTwo(retry,retry.actOne.pending.eventId,id);
+ const ultimate=actTwoChoices(retry,'duel').find(choice=>choice.delta===7);
+ assert.equal(ultimate.disabled,false);assert.ok(answerActTwo(retry,retry.actOne.pending.eventId,ultimate.id));
+ assert.equal(retry.actOne.duel.outcome,'clear');
+ // Another low-heart failure must not erase the earlier yandere memory.
+ let again=rewindActTwo(high);again.actOne.rewindIntroPending=false;advanceActTwo(again,1);
+ for(const id of ['help','discount','sleep','catapult'])answerActTwo(again,again.actOne.pending.eventId,id);
+ again=JSON.parse(JSON.stringify(rewindActTwo(again)));again.actOne.rewindIntroPending=false;advanceActTwo(again,1);
+ assert.equal(actTwoChoices(again,'duel').find(choice=>choice.delta===3).disabled,true);
+});
+
 test('all twelve answers give the three characters distinct exchanges with stable playback markers',()=>{
  const spoken={hostess:new Set(),cat:new Set(),manager:new Set()},assists=new Set();
  for(let round=0;round<4;round++)for(const choice of duelChoices(round)){

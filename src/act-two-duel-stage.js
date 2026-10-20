@@ -33,9 +33,10 @@ export function duelFrame(event,index=0){
 }
 
 export function duelChoiceHTML(event,choices,history=new Set()){
- return `<section class="cinematic-choice duel-choices" aria-labelledby="choice-title"><div class="duel-choice-heading"><h2 id="choice-title">大家の漢気、見せてやれ！</h2><span>ひと言選んで、撃退！</span></div><div class="decision-panel" aria-label="大家の返事">${choices.map((choice,i)=>{
+ const restrained=choices.some(choice=>choice.restrained);
+ return `<section class="cinematic-choice duel-choices" aria-labelledby="choice-title"><div class="duel-choice-heading"><h2 id="choice-title">${restrained?'大家の漢気！全力を出すな！':'大家の漢気、見せてやれ！'}</h2><span>ひと言選んで、撃退！</span></div><div class="decision-panel" aria-label="大家の返事">${choices.map((choice,i)=>{
   const ultimate=choice.delta===7,assist=choice.delta<0,seen=history.has('duel:'+choice.id);
-  return `<button type="button" class="decision-choice duel-command ${ultimate?'duel-ultimate':''}" style="--choice-index:${i}" data-case-event="${event.id}" data-choice="${eventEscape(choice.id)}" aria-disabled="true"><span class="duel-command-icon" aria-hidden="true">${eventIcon(assist?'cat':ultimate?'spark':'chat')}</span><span class="duel-command-copy"><small>${ultimate?'切り札・超絶奥義':assist?'困ったときのモク頼み':i===0?'啖呵を切る':'きっぱり断る'}</small><strong>${eventEscape(choice.label)}</strong>${seen?'<span class="choice-history-badge">選択済</span>':''}</span><span class="duel-command-key" aria-hidden="true">${i+1}</span></button>`;
+  return `<button type="button" class="decision-choice duel-command ${ultimate?'duel-ultimate':''}${choice.disabled?' choice-exhausted':''}" style="--choice-index:${i}" data-case-event="${event.id}" data-choice="${eventEscape(choice.id)}" aria-disabled="true" ${choice.disabled?'disabled data-choice-exhausted="true"':''}><span class="duel-command-icon" aria-hidden="true">${eventIcon(assist?'cat':ultimate?'spark':'chat')}</span><span class="duel-command-copy"><small>${ultimate?'切り札・超絶奥義':assist?'困ったときのモク頼み':i===0?'啖呵を切る':'きっぱり断る'}</small><strong>${eventEscape(choice.label)}</strong>${seen?'<span class="choice-history-badge">選択済</span>':''}</span><span class="duel-command-key" aria-hidden="true">${i+1}</span></button>`;
  }).join('')}</div><p class="choice-hint">↑ ↓ / 数字で移動 · Enter で決定</p></section>`;
 }
 
