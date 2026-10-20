@@ -123,12 +123,15 @@ export function duelReadDelay(line){
 export function mountDuelPlayback(line,{advance,blocked,schedule=setTimeout,cancel=clearTimeout,now=()=>performance.now()}){
  if(!line)return ()=>{};
  // Reduced motion changes movement, never the time available to read a line.
- const delay=line.duelAttack||line.duelWindup?duelReadDelay(line):line.duelPlayback?1800:0;
- const readyAt=now()+(line.duelDayStart?(line.duelStoryDay===5?3500:3000):line.duelVictoryResult?2800:line.duelStartTitle?1550:line.duelAttack?1400:650);
+ // Attack callouts stay on-screen until the voice actually finishes.
+ // Do not allow taps to skip an in-flight attack recording.
+ const attack=!!line.duelAttack;
+ const delay=attack?650:line.duelWindup?duelReadDelay(line):line.duelPlayback?1800:0;
+ const readyAt=now()+(line.duelDayStart?(line.duelStoryDay===5?3500:3000):line.duelVictoryResult?2800:line.duelStartTitle?1550:attack?650:650);
  let timer,stopped=false;
- const tick=()=>{if(stopped)return;if(blocked())timer=schedule(tick,200);else advance();};
+ const tick=()=>{if(stopped)return;if(blocked())timer=schedule(tick,80);else advance();};
  if(delay)timer=schedule(tick,delay);
- return Object.assign(()=>{stopped=true;if(timer!==undefined)cancel(timer);},{canAdvance:()=>!stopped&&now()>=readyAt});
+ return Object.assign(()=>{stopped=true;if(timer!==undefined)cancel(timer);},{canAdvance:()=>!stopped&&now()>=readyAt&&(!attack||!blocked())});
 }
 export function duelBadHTML(state){
  const y=state.actOne.failure==='duel-yandere';
