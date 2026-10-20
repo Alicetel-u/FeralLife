@@ -41,8 +41,8 @@ test('Luna conversations keep her theme with Moku present while dedicated scene 
     [[luna,moku,'.duel-stage .duel-field'],{duel:true},{duelRound:0},'duel'],
     [[luna,moku],{duel:true},{},'luna'],
     [[luna,moku],{duel:true},{duelRound:0},'luna'],
-    [[luna,moku],{duel:true},{duelEnding:'yandere'},'luna'],
-    [[luna,moku],{duel:true},{duelEnding:'clear'},'luna'],
+    [[luna,moku,'.duel-stage .duel-field'],{duel:true},{duelEnding:'yandere'},'duel'],
+    [[luna,moku,'.duel-stage .duel-field'],{duel:true},{duelEnding:'clear'},'duel'],
     [[luna,'.trouble-card'],{}, {},'trouble'],[[luna,'.trouble-victory'],{}, {},'victory'],
     [[luna,'.duel-bad'],{}, {},'bad'],[[luna,'[data-act2-opening]'],{}, {},'uneasy']
   ]){
@@ -77,7 +77,7 @@ test('real scene selection starts duel music on entry and gives results priority
   const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
   for(const [line,screen,expected] of [
     [{},null,'normal'],[{duelRound:0},'.duel-stage .duel-field','duel'],[{duelRound:3,duelDefeated:true},'.duel-stage .duel-field','duel'],
-    [{duelRound:3,duelEnding:'clear'},null,'normal'],[{duelRound:3,duelEnding:'yandere'},null,'normal'],[{duelEnding:'yandere',duelEndingPhase:'day-1'},null,'normal'],[{duelEnding:'yandere',duelEndingPhase:'reveal'},null,'bad'],[{duelRound:3,duelEnding:'domination'},null,'bad'],
+    [{duelRound:3,duelEnding:'clear'},'.duel-stage .duel-field','duel'],[{duelRound:3,duelEnding:'yandere'},'.duel-stage .duel-field','duel'],[{duelEnding:'yandere',duelEndingPhase:'day-1'},null,'normal'],[{duelEnding:'yandere',duelEndingPhase:'reveal'},null,'bad'],[{duelRound:3,duelEnding:'domination'},null,'bad'],
     [{duelRound:3},'.duel-bad','bad'],[{duelRound:3},'.trouble-victory','victory']
   ]){
     let cue;
