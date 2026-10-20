@@ -7,21 +7,21 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
   // Apply character balance through Web Audio, including iOS where element volume is ignored.
   const mobile=typeof navigator!=='undefined'&&/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   const AudioContextType=(globalThis.AudioContext||globalThis.webkitAudioContext);
-  let context=null,source=null,gain=null,limiter=null,mobileAudio=null,unlocked=false;
+  let context=null,source=null,gain=null,limiter=null,mobileAudio=null,unlocked=false,attackTails=[];
   const speakerBoost=()=>(({manager:1.6,hostess:1.8}[voiceSpeaker(current?.line||{})]||1)*(current?.line?.duelAttack?1.35:1));
   const playbackGain=()=>(mobile?4:1)*prefs.volume*speakerBoost();
   const applyVolume=()=>{if(gain){gain.gain.value=playbackGain();if(audio)audio.volume=1;}else if(audio)audio.volume=Math.min(1,prefs.volume*speakerBoost());};
   const disconnect=()=>{
     // Disconnect EVERY Web Audio node. Otherwise each old compressor remains
     // connected to the destination, retaining a graph per dialogue line on iOS.
-    for(const node of [source,gain,limiter]){
+    for(const node of [source,gain,limiter,...attackTails]){
       try{node?.disconnect();}catch{}
     }
-    source=null;gain=null;limiter=null;
+    source=null;gain=null;limiter=null;attackTails=[];
   };
   const connectMobile=element=>{
     if(!AudioContextType)return;
-    if(source&&element===mobileAudio){gain.gain.value=playbackGain();element.volume=1;if(context.state==='suspended')context.resume().catch(()=>{});return;}
+    if(source&&element===mobileAudio){gain.gain.value=playbackGain();for(const [index,level] of [0.18,0.08].entries())if(attackTails[index*2+1])attackTails[index*2+1].gain.value=current?.line?.duelAttack?level:0;element.volume=1;if(context.state==='suspended')context.resume().catch(()=>{});return;}
     try{
       context ||= new AudioContextType();
       const node=context.createMediaElementSource(element);
@@ -33,6 +33,15 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
       comp.attack.value=0.003;comp.release.value=0.2;
       boost.gain.value=playbackGain();
       node.connect(boost);boost.connect(comp);comp.connect(context.destination);
+      // A light, finite echo softens abrupt endings in generated battle clips.
+      // It does not skip or truncate any part of the original recording.
+      for(const [seconds,level] of [[0.12,0.18],[0.24,0.08]]){
+        const delay=context.createDelay(0.5),wet=context.createGain();
+        delay.delayTime.value=seconds;
+        wet.gain.value=current?.line?.duelAttack?level:0;
+        comp.connect(delay);delay.connect(wet);wet.connect(context.destination);
+        attackTails.push(delay,wet);
+      }
       source=node;gain=boost;limiter=comp;
       // The current play is initiated by a tap, so resume inside that gesture.
       if(context.state==='suspended')context.resume().catch(()=>{});
