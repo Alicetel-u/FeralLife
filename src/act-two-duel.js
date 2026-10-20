@@ -100,7 +100,9 @@ export function duelYandereEndingLines(){
   ...day(3,'大家さんの予定、全部あたしのスマホに入れといたよ♡','……なんで俺より俺の予定に詳しいんだよ！？','neutral'),
   ...day(4,'今日の内見のお客さん？ 大家さんが疲れちゃうから、全部断っといた♡','おい！！ それ俺の仕事だぞ！？ 勝手に断るな！！','neutral'),
   ...day(5,'もう誰にも邪魔されないように、大家さんのお部屋、外から鍵かけちゃった♡','……おい、ルナ。冗談だろ……？ 開けろ！！','shy'),
-  {...dl('……ねえ、大家さん。これからは、あたし以外の声に返事しちゃダメだよ♡','shy'),duelEndingPhase:'reveal',duelStoryDay:5}
+  {...dl('……ねえ、大家さん。これからは、あたし以外の声に返事しちゃダメだよ♡','shy'),duelEndingPhase:'reveal',duelStoryDay:5},
+  {...dm('……頼む、ルナ。俺をここから出してくれ……。'),duelEndingPhase:'reveal',duelStoryDay:5},
+  {...dl('ふふっ♡ 大丈夫。あたしはずーっと、そばにいるからね♡','shy'),duelEndingPhase:'reveal',duelStoryDay:5}
  ];
 }
 
