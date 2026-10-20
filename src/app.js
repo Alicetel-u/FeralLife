@@ -1,4 +1,6 @@
-import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.21.2';
+import {refreshActTwoEpilogue} from './act-two-epilogue-script.js';
+import {actTwoEpilogueDirection,epilogueTransitionFor,actTwoEpilogueStageHTML,actTwoEpilogueCompleteHTML,prepareEpilogueAssets,startEpilogueTransition,playEpilogueSound} from './act-two-epilogue-stage.js';
+import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.21.3';
 import {failedChoiceKeys} from './choice-history.js';
 import {secondActLife} from './act-two-life.js';
 import {storyScreenHTML} from './story-screens.js';
@@ -7,7 +9,7 @@ import {isFirstStalkerReply,firstStalkerStageHTML,prepareFirstStalkerAssets,need
 import { LUNA_MINI_EMOTIONS, MOKU_MINI_EMOTIONS } from './mini-emotions.js';
 import {isFirstFireReply,firstFireStageHTML} from './first-fire-stage.js';
 import {clearLegacyObservationMemo,observationView,observationClockLimit,tickObservation,inheritObservation} from './act-one-observation.js';
-import {createVoicePlayer} from './voice-player.js?v=2026.10.21.2';
+import {createVoicePlayer} from './voice-player.js?v=2026.10.21.3';
 const characterVoice=createVoicePlayer({chapter:()=>state?.actOne?.chapter});
 document.addEventListener('pointerdown',()=>characterVoice.unlock(),{capture:true});
 document.addEventListener('keydown',()=>characterVoice.unlock(),{capture:true});
@@ -19,8 +21,8 @@ import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVic
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.21.2';
-import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.21.2';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.21.3';
+import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.21.3';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
 import { debtEndingHTML, startDebtEnding } from './debt-ending.js';
@@ -64,6 +66,7 @@ try { const saved = previewResident || eventPreview || actTwoPreview || firstRew
 state ||= previewResident || eventPreview ? createGame() : createActOne();
 retireActTwoContract(state);
 refreshDuelYandereEnding(state);
+refreshActTwoEpilogue(state);
 clearLegacyObservationMemo(state);
 ensureManagement(state);
 if(observationPreview){state.actOne.started=true;observationView(state);state.hour=17.08;state.events.forEach(e=>e.read=true);tickObservation(state,0);}
@@ -279,9 +282,17 @@ let stopFireEnding = null;
 let stopOpeningPrologue = () => {};
 let cleanupChoiceUI = () => {};
 let cleanupDuelPlayback = () => {};
+let stopEpilogueTransition=()=>{},stopEpilogueSound=()=>{},epilogueSwapping=false;
+function showEpilogueCut(kind,replace){
+ if(!modal.open)openModal('<section class="act-screen graphic-title epilogue-transition-base" aria-label="場面を切り替えています"></section>');
+ stopEpilogueTransition();characterVoice.stop();stopEpilogueSound();clearTimeout(eventAutoTimer);
+ stopEpilogueTransition=startEpilogueTransition(modal,kind,()=>{epilogueSwapping=true;try{replace();}finally{epilogueSwapping=false;}},()=>{stopEpilogueTransition=()=>{};syncNormalBgm();scheduleEventAuto();},{ready:prepareEpilogueAssets});
+ syncNormalBgm();
+}
 function clearFireEnding(){stopFireEnding?.();stopFireEnding=null;}
-function openModal(html) { html=storyScreenHTML(html);characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); cleanupDuelPlayback();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); replaceConversationContent($('modal-content'),html); modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); syncNormalBgm(); }
+function openModal(html) { if(!epilogueSwapping)stopEpilogueTransition();stopEpilogueSound();html=storyScreenHTML(html);characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); cleanupDuelPlayback();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); replaceConversationContent($('modal-content'),html); modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); syncNormalBgm(); }
 function closeModal() {
+  stopEpilogueTransition();stopEpilogueSound();
   const duelEvent=state.actOne?.duel&&state.events.find(e=>e.id===eventView?.id);
   if(duelEvent?.duel&&eventView.index===eventConversation(duelEvent).length-1){state.actOne.duel.dialogueComplete=true;save();}
   const event=modal.classList.contains('conversation-modal')&&state.actOne?state.events.find(e=>e.id===eventView?.id):null;
@@ -292,7 +303,7 @@ function closeModal() {
     return;
   }
   characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); cleanupDuelPlayback(); clearFireEnding();clearTimeout(eventAutoTimer);modal.close(); updateUI(); syncNormalBgm(); }
-modal.addEventListener('close', () => { if(modal.open)return;characterVoice.stop();stopOpeningPrologue();cleanupChoiceUI(); cleanupDuelPlayback();clearFireEnding();clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); syncNormalBgm(); });
+modal.addEventListener('close', () => { if(modal.open)return;stopEpilogueTransition();stopEpilogueSound();characterVoice.stop();stopOpeningPrologue();cleanupChoiceUI(); cleanupDuelPlayback();clearFireEnding();clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); syncNormalBgm(); });
 function syncStageCursor() {
   rememberReadScenes(state);
   seenStageId = state.events.reduce((max, event) => Math.max(max, event.id), 0);
@@ -338,7 +349,7 @@ function playStalkerImpactCue(line,key){
     osc.onended=()=>{osc.disconnect();filter.disconnect();gain.disconnect();ctx.close().catch(()=>{});};
   }catch{}
 }
-function showEvent(id,index=null,page=0,afterMorningBlackout=false) {
+function showEvent(id,index=null,page=0,afterMorningBlackout=false,afterEpilogueTransition=false) {
   const e = state.events.find(e => e.id === Number(id)); if (!e) return;
   if(e.actScene==='bag'&&state.actOne?.chapter===2)secondActLife(state);
   if (e.stageOnly || e.lines?.length) {
@@ -349,6 +360,9 @@ function showEvent(id,index=null,page=0,afterMorningBlackout=false) {
   e.read = true; rememberReadScenes(state); save(); updateJournal();
   if (!state.actOne && state.ending && e.id === state.events[0].id) { showEnding(); return; }
   const lines=eventConversation(e),cursor=Math.max(0,Math.min(index ?? (e.duel&&state.actOne?.duel?.eventId===e.id?state.actOne.duel.cursor:e.choicePresented?lines.length-1:0),lines.length-1));
+  const epilogueDirection=actTwoEpilogueDirection(e,cursor);
+  const epilogueCut=afterEpilogueTransition?null:epilogueTransitionFor(e,eventView?.id===e.id?eventView.index:null,cursor,page);
+  if(epilogueCut){showEpilogueCut(epilogueCut,()=>showEvent(id,cursor,page,afterMorningBlackout,true));return;}
   if(!afterMorningBlackout&&needsStalkerPreface(e,eventView,cursor)){
     openModal(stalkerPrefaceHTML());
     stopFireEnding=startStalkerPreface(modal.querySelector('.first-stalker-preface'),()=>showEvent(id,cursor,page,true));
@@ -381,10 +395,10 @@ function showEvent(id,index=null,page=0,afterMorningBlackout=false) {
   const trouble=c?.call&&e.kind==='trouble'?troubleCardHTML(c.call,waiting&&cursor===0,state.actOne?.attempt??1):'';
   const firstFire=isFirstFireReply(e,state.actOne),firstStalker=isFirstStalkerReply(e);
   if(firstStalker)prepareFirstStalkerAssets();
-  const forward=last&&e.actScene==='act2-prologue'&&state.actOne.prologuePending?'<button class="primary-button" data-act2-prologue-done aria-label="第二幕へ">'+eventIcon('next')+'</button>':last&&['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'<button class="primary-button" data-epilogue-done aria-label="第一幕を終える">'+eventIcon('next')+'</button>':last&&['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'<button class="primary-button" data-rewind-resume aria-label="'+(e.resumeChoice?(e.resumeScene==='dinner'?'料理の相談に戻る':'灰皿の返事をする'):'観察を再開')+'">'+eventIcon('next')+'</button>':last&&e.actScene==='prologue'?'<button class="primary-button" data-opening="3" aria-label="タイトル演出へ進む">'+eventIcon('next')+'</button>':last?(waiting?'<button class="event-return" data-close>返事は後で</button>':state.pending&&e.kind==='arrival'&&!e.rooms.length?'<button class="event-return" data-show-candidates>申込書を見る</button>':`<button class="primary-button" data-close aria-label="${firstStalker?'暗闇の先へ':firstFire?'火災の先へ':morningDirection?'結末へ':'観察に戻る'}">${eventIcon('next')}</button>`):`<button class="primary-button" data-dialogue-next aria-label="次のセリフ">${eventIcon('next')}</button>`;
+  const forward=last&&e.actScene==='act2-prologue'&&state.actOne.prologuePending?'<button class="primary-button" data-act2-prologue-done aria-label="第二幕へ">'+eventIcon('next')+'</button>':last&&['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'<button class="primary-button" data-epilogue-done aria-label="'+(state.actOne.chapter===2?'第二幕':'第一幕')+'を終える">'+eventIcon('next')+'</button>':last&&['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'<button class="primary-button" data-rewind-resume aria-label="'+(e.resumeChoice?(e.resumeScene==='dinner'?'料理の相談に戻る':'灰皿の返事をする'):'観察を再開')+'">'+eventIcon('next')+'</button>':last&&e.actScene==='prologue'?'<button class="primary-button" data-opening="3" aria-label="タイトル演出へ進む">'+eventIcon('next')+'</button>':last?(waiting?'<button class="event-return" data-close>返事は後で</button>':state.pending&&e.kind==='arrival'&&!e.rooms.length?'<button class="event-return" data-show-candidates>申込書を見る</button>':`<button class="primary-button" data-close aria-label="${firstStalker?'暗闇の先へ':firstFire?'火災の先へ':morningDirection?'結末へ':'観察に戻る'}">${eventIcon('next')}</button>`):`<button class="primary-button" data-dialogue-next aria-label="次のセリフ">${eventIcon('next')}</button>`;
   const showDebugDuelSplash=!!(e.duel&&debugDuelSplash?.id===e.id&&debugDuelSplash.index===cursor&&pageIndex===0);
   if(showDebugDuelSplash)debugDuelSplash=null;
-  const stageHTML=e.duel?duelStageHTML(showDebugDuelSplash?{...e,debugDuelSplash:true}:e,state.residents,cursor,pageIndex):firstStalker?firstStalkerStageHTML(e,state.residents,cursor,pageIndex):firstFire?firstFireStageHTML(e,state.residents,cursor,pageIndex):morningDirection?actTwoMorningStageHTML(e,state.residents,cursor,pageIndex):eventStageHTML(e,state.residents,cursor,pageIndex);
+  const stageHTML=epilogueDirection?actTwoEpilogueStageHTML(e,state.residents,cursor,pageIndex):e.duel?duelStageHTML(showDebugDuelSplash?{...e,debugDuelSplash:true}:e,state.residents,cursor,pageIndex):firstStalker?firstStalkerStageHTML(e,state.residents,cursor,pageIndex):firstFire?firstFireStageHTML(e,state.residents,cursor,pageIndex):morningDirection?actTwoMorningStageHTML(e,state.residents,cursor,pageIndex):eventStageHTML(e,state.residents,cursor,pageIndex);
   const toolbar=`<nav class="event-toolbar" aria-label="会話の操作"><button data-event-auto aria-pressed="${eventAuto}">${eventIcon('play')}<span>AUTO</span></button><button data-event-skip ${last?'disabled':''}>${eventIcon('skip')}<span>SKIP</span></button><button data-event-log aria-expanded="false">${eventIcon('log')}<span>LOG</span></button><button data-event-hide>${eventIcon('hide')}<span>HIDE</span></button><button data-event-menu aria-expanded="false">${eventIcon('menu')}<span>MENU</span></button></nav>`;
   openModal(`<h2 id="modal-title" class="conversation-title">${escape(c?.call&&e.kind==='trouble'?c.call:e.title)}</h2><div class="conversation-body" ${e.actScene==='act2-prologue'?'data-act-two-arrival':''} ${['bag','act2-rewind'].includes(e.actScene)&&state.actOne?.chapter===2?'data-act-two-stalker-exterior':''} ${e.actScene==='prologue'?'data-prologue':e.actScene==='rewind'&&state.actOne.rewindIntroPending?'data-rewind-intro':''}>${trouble}${stageHTML}${choices}${toolbar}<details class="conversation-log"><summary>会話履歴を閉じる</summary>${lines.map(l=>`<p style="${speakerColorStyle(l)}"><strong>${escape(l.memoryVoice?'大家（過去の声）':l.innerVoice?'大家（心の声）':l.speaker==='mystery'?'謎の声':CHARACTERS[l.speaker]?.name||(l.speaker==='manager'?'管理人':'記録'))}</strong> ${escape(l.text)}</p>`).join('')}</details><button class="voice-settings-open" data-event-menu aria-label="ボイス・会話設定">⚙</button><div class="event-menu" hidden><button data-event-auto aria-pressed="${eventAuto}">AUTO</button><button data-event-skip ${last?'disabled':''}>SKIP</button><button data-voice-toggle aria-pressed="${characterVoice.enabled}">ボイス ${characterVoice.enabled?'ON':'OFF'}</button><button data-bgm-toggle aria-pressed="${normalBgm.enabled}">BGM ${normalBgm.enabled?'ON':'OFF'}</button><label>BGM音量 <input type="range" data-bgm-volume min="0" max="1" step="0.05" value="${normalBgm.volume}"></label><label>ボイス音量 <input type="range" data-voice-volume min="0" max="1" step="0.05" value="${characterVoice.volume}"></label><button data-dialogue-back ${cursor===0?'disabled':''}>前のセリフへ</button><button data-event-menu>会話を続ける</button><button ${e.actScene==='act2-prologue'&&state.actOne.prologuePending?'data-act2-prologue-done':e.actScene==='prologue'?'data-opening="3"':['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'data-epilogue-done':['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'data-rewind-resume':'data-close'}>${e.actScene==='act2-prologue'&&state.actOne.prologuePending?'第二幕へ進む':e.actScene==='prologue'?'タイトル演出へ進む':['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'幕を終える':e.actScene==='rewind'&&state.actOne.rewindIntroPending?(e.resumeChoice?(e.resumeScene==='dinner'?'料理の相談に戻る':'灰皿の返事をする'):'観察を再開'):waiting?'返事を保留して観察へ':'観察画面に戻る'}</button></div></div><div class="modal-footer">${forward}</div><button class="event-restore" data-event-hide hidden aria-label="会話UIを再表示">${eventIcon('hide')} 表示を戻す</button>`);
   modal.classList.toggle('choice-mode',Boolean(choices));
@@ -393,6 +407,7 @@ function showEvent(id,index=null,page=0,afterMorningBlackout=false) {
 
   characterVoice.play(lines[cursor],e.id+':'+cursor+':'+pageIndex);
   characterVoice.prepare(cursor+1<lines.length?lines[cursor+1]:null);
+  if(epilogueDirection&&pageIndex===0)stopEpilogueSound=playEpilogueSound(epilogueDirection.line.epilogueSfx,normalBgm.enabled?normalBgm.volume:0);
   cleanupDuelPlayback=mountDuelPlayback(e.duel?{...lines[cursor],duelStartTitle:(cursor===0&&pageIndex===0)||showDebugDuelSplash}:null,{advance:advanceConversation,voiceOutcome:()=>characterVoice.outcome,blocked:()=>document.hidden||characterVoice.busy||modal.classList.contains('event-ui-hidden')||!!modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden});
   scheduleEventAuto();
   document.querySelector(last&&waiting?'[data-choice]:not([disabled])':last?(['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'[data-epilogue-done].primary-button':['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'[data-rewind-resume].primary-button':e.actScene==='act2-prologue'&&state.actOne.prologuePending?'[data-act2-prologue-done].primary-button':e.actScene==='prologue'?'[data-opening="3"].primary-button':'[data-close].primary-button'):'[data-dialogue-next]')?.focus({preventScroll:true});
@@ -400,7 +415,7 @@ function showEvent(id,index=null,page=0,afterMorningBlackout=false) {
 
 function scheduleEventAuto(){
   clearTimeout(eventAutoTimer);
-  if(!eventAuto||!modal.open||!modal.classList.contains('conversation-modal')||!eventView)return;
+  if(!eventAuto||!modal.open||!modal.classList.contains('conversation-modal')||!eventView||modal.querySelector('.epilogue-transition'))return;
   const current=state.events.find(e=>e.id===eventView.id),lines=current?eventConversation(current):[];
   if(!lines.length||current.duel&&(lines[eventView.index].duelAttack||lines[eventView.index].duelPlayback||lines[eventView.index].duelWindup))return;
   const last=eventView.index>=lines.length-1&&eventView.page>=messagePages(lines[eventView.index].text).length-1;
@@ -560,7 +575,7 @@ function showActTwoEnding(afterCinematic=false){
   openModal(`<section class="act-screen act-burn" data-chapter="2"><div class="ending-building" aria-hidden="true"><img src="assets/apartments.png" alt=""></div><img class="ending-character" src="${a.failure?.startsWith("bag-")?EVENT_EXPRESSIONS.cat.sad:EVENT_EXPRESSIONS.hostess.sad}" alt="${a.failure?.startsWith("bag-")?"灰田モク":"金城ルナ"}"><div class="act-ending-copy"><p class="act-kicker">BAD END / 第二幕 · ${a.attempt}周目</p><h2 id="modal-title">${escape(choice?.endingName||(a.failure?.startsWith("bag-")?"夜 逃 げ":"差 し 押 さ え"))}</h2><p class="act-ending-story">${escape(state.ending.text)}</p><p class="act-clue">${escape(choice?.clue||'契約書はよく読む。')}</p><p>大家「……アパートまで失ってたまるか！ 次こそは！」</p><button class="act-primary" data-act2-rewind>あの時へ、もう一度 ↶</button></div></section>`);return;
  }
  if(!a.epilogueSeen){const e=state.events.find(e=>e.actScene==='act2-epilogue');if(e){showEvent(e.id,a.epilogueCursor||0);return;}}
- openModal(`<section class="act-screen act-clear" data-chapter="2"><img class="ending-character" src="${EVENT_EXPRESSIONS.hostess.happy}" alt="金城ルナ"><div class="act-ending-copy"><p class="act-kicker">SECOND ACT COMPLETE</p><h2 id="modal-title">第二幕・完</h2><p class="act-ending-story">けもの荘は、借金のカタにならずに済んだ。</p><button class="act-primary" data-act2-finish>次章へ続く →</button></div></section>`);
+ openModal(actTwoEpilogueCompleteHTML());
 }
 function showActReward(){
   openModal(header('第二幕 PROLOGUE / 新しい住人','一枚の申込書が、けもの荘に届いた。',false)+`<div class="modal-body"><p class="modal-copy">けもの荘に届いた、一枚の入居申込書。</p><p class="modal-copy">果たして、新たな住人はどんな人物なのか。そして、モクとの共同生活はどうなってしまうのか——。</p><p class="modal-copy">第二幕の物語は、これから始まる。</p></div><div class="modal-footer"><button class="primary-button" data-act-replay>第一幕をもう一度遊ぶ →</button></div>`);
@@ -602,7 +617,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.21.2';
+const BUILD_VERSION='2026.10.21.3';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -683,13 +698,17 @@ function showDebugSceneSelect(chapter,page=0,section=null){
       ['end-yandere','BAD END開始｜ヤンデレ・AFTER DAY 01','ending'],
       ['end-domination','BAD END開始｜ルナに支配される','ending'],
       ['end-clear','正解END開始｜漢気バトル成功','ending'],
-      ['epilogue','エンディング｜第二幕','ending']
+      ['epilogue','エピローグ｜朝の玄関・みんなで','ending'],
+      ['epilogue-alone','エピローグ｜朝の玄関・大家一人','ending'],
+      ['epilogue-memory','エピローグ｜黒塗りの名簿の記憶','ending'],
+      ['epilogue-night','エピローグ｜その夜の102号室','ending'],
+      ['epilogue-secret','エピローグ｜ルナの秘密・鏡の前','ending']
     ];
   const sections={
     prologue:['opening','arrival'],
     trouble1:['bag','bag-choices','bag-loop','bad-bag'],
     trouble2:['duel','duel-choices','duel-loop'],
-    endings:['end-yandere','end-domination','end-clear','epilogue']
+    endings:['end-yandere','end-domination','end-clear','epilogue','epilogue-alone','epilogue-memory','epilogue-night','epilogue-secret']
   };
   const choices=chapter==='2'&&section&&sections[section]?options.filter(([id])=>sections[section].includes(id)):options;
   const pageCount=Math.ceil(choices.length/4),current=Math.max(0,Math.min(pageCount-1,page));
@@ -706,7 +725,8 @@ function showDebugSceneSelect(chapter,page=0,section=null){
 function startDeveloperScene(target){
   const [chapter,point]=target.split(':');
   const phase=point?.endsWith('-loop')?'loop':point?.endsWith('-choices')?'choices':null;
-  const scene=phase?point.slice(0,point.lastIndexOf('-')):point;
+  const epilogueTarget=chapter==='2'&&point.startsWith('epilogue-')?point.slice(9):null;
+  const scene=epilogueTarget?'epilogue':phase?point.slice(0,point.lastIndexOf('-')):point;
   const duelEndingTarget=chapter==='2'&&['end-yandere','end-domination','end-clear'].includes(scene);
   const troubleBadTarget=scene.startsWith('bad-')&&['ash','dinner','bag'].includes(scene.slice(4));
   const destination=troubleBadTarget?scene.slice(4):scene;
@@ -812,9 +832,10 @@ function startDeveloperScene(target){
   if(scene==='arrival'){next.actOne.prologuePending=true;}
   const name=scene==='arrival'?'act2-prologue':scene==='epilogue'?'act2-epilogue':scene;
   const event=next.events.find(e=>e.actScene===name);
-  if(event){event.read=false;showEvent(event.id);}else showActTwoTitle();
+  if(event){event.read=false;const jump=epilogueTarget?eventConversation(event).findIndex(line=>line.epilogueScene===epilogueTarget):0;showEvent(event.id,Math.max(0,jump));}else showActTwoTitle();
 }
 document.addEventListener('click',e=>{
+  if(modal.open&&modal.querySelector('.epilogue-transition'))return;
   const button=e.target.closest('button');if(!button)return;
   if(button.hasAttribute('data-debug-hotspot')){const now=performance.now();debugTapCount=now-debugLastTap>2500?1:debugTapCount+1;debugLastTap=now;if(debugTapCount>=3){debugTapCount=0;showDeveloperMenu();}return;}
   if(button.hasAttribute('data-debug-back')){showGameTitle();return;}
@@ -839,7 +860,7 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-act-start')){state.actOne.started=true;state.actOne.rewindTitlePending=false;save();closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();}
   if(button.hasAttribute('data-act2-prologue-done')&&state.actOne?.chapter===2){state.actOne.started=true;state.actOne.titlePending=false;state.actOne.prologuePending=false;const intro=state.events.find(e=>e.actScene==='act2-prologue');if(intro)intro.read=true;state.selected=102;autoFollow=true;cameraKey='';updateCamera();updateRooms();save();closeModal();openNextStageEvent();}
   if(button.hasAttribute('data-rewind-resume')&&state.actOne?.rewindIntroPending){state.actOne.rewindIntroPending=false;const intro=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-rewind':'rewind'));if(intro)intro.read=true;save();if(intro?.resumeChoice&&state.actOne.pending){showEvent(state.actOne.pending.eventId);return;}closeModal();}
-  if(button.hasAttribute('data-epilogue-done')&&state.actOne?.status==='clear'){state.actOne.epilogueSeen=true;const ep=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-epilogue':'epilogue'));if(ep)ep.read=true;save();showActEnding();}
+  if(button.hasAttribute('data-epilogue-done')&&state.actOne?.status==='clear'){state.actOne.epilogueSeen=true;const ep=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-epilogue':'epilogue'));if(ep)ep.read=true;save();if(state.actOne.chapter===2)showEpilogueCut('night',()=>showActEnding());else showActEnding();}
   if(button.hasAttribute('data-act-reward')&&state.actOne?.status==='clear')resetActState(beginActTwo(state));
   if(button.hasAttribute('data-act2-rewind')&&state.actOne?.chapter===2&&state.actOne.status==='bad')beginRewind(true);
   if(button.hasAttribute('data-act2-finish'))showNextChapter();
@@ -888,6 +909,7 @@ modal.addEventListener('toggle',e=>{
   if(e.target.matches('.conversation-log'))modal.querySelector('[data-event-log]')?.setAttribute('aria-expanded',String(e.target.open));
 },true);
 function advanceConversation(){
+  if(modal.querySelector('.epilogue-transition'))return false;
   if(!modal.open||!modal.classList.contains('conversation-modal')||!eventView)return false;
   if(modal.classList.contains('event-ui-hidden')||modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden)return false;
   const current=state.events.find(x=>x.id===eventView.id);
@@ -951,6 +973,8 @@ document.addEventListener('visibilitychange',()=>{lastTime=performance.now();if(
 const normalBgm=createNormalBgm();
 function paintSoundButton(){$('sound-button').setAttribute('aria-pressed',String(normalBgm.enabled));$('sound-button').innerHTML=normalBgm.label();}
 function syncNormalBgm(){
+  const epilogueStage=modal.open?modal.querySelector('.act-two-epilogue'):null;
+  const epilogueQuiet=modal.open&&(epilogueStage?.dataset.silent==='true'||!!modal.querySelector('.epilogue-transition,.epilogue-complete'));
   const morningStage=modal.open?modal.querySelector('.act-two-morning-stage'):null;
   const morningQuiet=modal.open&&(!!modal.querySelector('.act-two-morning-blackout')||morningStage?.dataset.quiet==='true');
   const firstFireStage=modal.open?modal.querySelector('.first-fire-stage'):null;
@@ -980,7 +1004,7 @@ function syncNormalBgm(){
   // Dedicated scene cues take precedence over character themes.
   const lunaVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="hostess"]');
   const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
-  return normalBgm.setScene(document.hidden||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
+  return normalBgm.setScene(document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
 }
 modal.addEventListener('luna-film-phase',()=>{syncNormalBgm();});
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});

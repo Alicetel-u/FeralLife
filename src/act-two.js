@@ -1,3 +1,4 @@
+import {ACT_TWO_EPILOGUE_LINES} from './act-two-epilogue-script.js';
 import {failedChoiceKeys} from './choice-history.js';
 import {DUEL_INTRO,duelChoices,duelEncounterLines,duelReplyLines,duelEndingLines,duelOutcome} from './act-two-duel.js?v=2026.10.20.38';
 import { saveStoryCheckpoint, storyCheckpointTarget } from './story-checkpoints.js';
@@ -395,39 +396,7 @@ export function advanceActTwo(s,hours){
  if(s.hour<at)return;
  if(scene==='duel'){openDuel(s);return;}
  if(scene){const ev=ACT_TWO_EVENTS[scene],e=addEvent(s,'trouble',ev.title,ev.detail,[102]);e.actScene=scene;e.cast=['hostess','cat'];e.stageOnly=true;e.lines=(scene==='bag'?(a.attempt>1?[n('男「……あんたには関係ないだろ。」'),n('男は大家を押しのけようとする。'),n('モクが男の前に歩み出た。'),c('neutral','……おい。'),m('……今度は、どうする……？')]:[...ev.lines,...FIRST_STALKER_BEFORE_CHOICE]):ev.lines).map(x=>({...x}));a.pending={scene,eventId:e.id};}
- else{a.status='clear';a.epilogueSeen=false;const e=addEvent(s,'life','第二幕 エピローグ「残った鍵」','5日目9時。アパートは今日も大家のものだった。',[102]);e.actScene='act2-epilogue';e.cast=['hostess','cat'];e.stageOnly=true;e.lines=[
- n('5日目の朝。けもの荘の玄関には、いつもの静けさが戻っていた。'),
- m('……やっと、いつもの大家の仕事に戻れるな。'),
- l('shy','大家さん、あのとき助けてくれてありがとう。'),
- c('happy','玄関前が静かだと、昼寝もはかどるニャ。'),
- m('お前たちが何もしなけりゃな！'),
- l('happy','お礼に、今夜ご飯おごるね。'),
- m('おっ、いいじゃねぇか。'),
- l('shy','……給料日になったら。'),
- c('tired','モクも明日から働くニャ。'),
- m('お前ら、明日って言えば許されると思うなよ！！'),
- n('大家もモクも、これで騒ぎは片づいたものと、ほっと息をついていた。'),
- n('大家が玄関の鍵を閉めようとした、そのときだった。手の中で鍵束が鳴る。その音に、別の乾いた音が重なった。'),
- ({...n('視界がぼやける。目の前が白く染まっていく。'),flashbackEffect:'whiteout'}),
- ({speaker:'mystery',emotion:'neutral',text:'お前は言われたとおりにすればいい。',flashbackEffect:'whiteout'}),
- ({...m('……でも、あの人たちは……。'),flashbackEffect:'whiteout',memoryVoice:true}),
- ({speaker:'mystery',emotion:'neutral',text:'余計なことは考えるな。',flashbackEffect:'whiteout'}),
- n('ハンコを押す乾いた音が響く。白い光が消え、玄関の景色が戻ってくる。'),
- m('……っ！？'),
- l('surprised','大家さん？ どうしたの？'),
- m('……いや。なんでもない。'),
- c('neutral','大家、酒はまだかニャ？'),
- m('今それどころじゃねぇよ！'),
- n('大家は首を振り、玄関の鍵をかけた。'),
- n('だが、静かな日々が続くかどうかは、また別の話。'),
- n('その夜。大家とモクが眠りについたあと。102号室にはルナ一人。'),
- n('ルナは鏡の前に座り、そっと引き出しの奥に手を伸ばした。'),
- n('かちり。小さく、鍵の開く音がする。中身は見えない。'),
- l('shy','……大家さん、ほんとにいい人♡'),
- n('鏡に映ったルナが、ゆっくりと口角を上げる。'),
- l('neutral','……あたし、嘘はついてないよ？'),
- l('shy','全部は、ね♡'),
- n('ルナは不敵に微笑んだ。誰も、その笑顔を見ていない。')];
+ else{a.status='clear';a.epilogueSeen=false;const e=addEvent(s,'life','第二幕 エピローグ「残った鍵」','5日目9時。アパートは今日も大家のものだった。',[102]);e.actScene='act2-epilogue';e.cast=['hostess','cat'];e.stageOnly=true;e.epilogueVersion=2;e.detail=ACT_TWO_EPILOGUE_LINES[0].text;e.lines=ACT_TWO_EPILOGUE_LINES.map(line=>({...line}));
  s.ending={name:'第二幕クリア — 残った鍵',text:'押しかける男たちを退け、けもの荘のいつもの暮らしを守り抜いた。'};}
 }
 export function answerActTwo(s,eventId,choiceId){

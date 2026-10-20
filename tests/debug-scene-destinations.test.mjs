@@ -20,18 +20,22 @@ test('debug event names match the scenes they actually open in both chapters',()
  vm.createContext(context);vm.runInContext(source,context);
  for(const chapter of ['1','2']){
   const destinations=[];
-  for(let page=0;page<(chapter==='1'?3:4);page++){
+  for(let page=0;page<(chapter==='1'?3:5);page++){
    vm.runInContext(`showDebugSceneSelect('${chapter}',${page})`,context);
    destinations.push(...context.options.filter(option=>option[2]==='data-debug-scene'));
    assert.ok(context.options.length<=6,'mobile pages have a bounded number of controls');
    assert.equal((context.pagination.match(/data-debug-scene-page=/g)||[]).length,2);
   }
-  if(chapter==='2'){assert.equal(destinations.length,13);assert.ok(destinations.every(([target])=>!target.includes('contract')));}
+  if(chapter==='2'){assert.equal(destinations.length,17);assert.ok(destinations.every(([target])=>!target.includes('contract')));}
   if(chapter==='2'){
-   const groups={prologue:['opening','arrival'],trouble1:['bag','bag-choices','bag-loop','bad-bag'],trouble2:['duel','duel-choices','duel-loop'],endings:['end-yandere','end-domination','end-clear','epilogue']};
+   const groups={prologue:['opening','arrival'],trouble1:['bag','bag-choices','bag-loop','bad-bag'],trouble2:['duel','duel-choices','duel-loop'],endings:['end-yandere','end-domination','end-clear','epilogue','epilogue-alone','epilogue-memory','epilogue-night','epilogue-secret']};
    for(const [section,expected] of Object.entries(groups)){
-    vm.runInContext(`showDebugSceneSelect('2',0,'${section}')`,context);
-    assert.deepEqual(Array.from(context.options,([id])=>id.split(':')[1]),expected);
+    const listed=[];
+    for(let page=0;page<Math.ceil(expected.length/4);page++){
+     vm.runInContext(`showDebugSceneSelect('2',${page},'${section}')`,context);
+     listed.push(...Array.from(context.options,([id])=>id.split(':')[1]));
+    }
+    assert.deepEqual(listed,expected);
    }
   }
   for(const [target,label] of destinations){
@@ -76,6 +80,10 @@ test('debug event names match the scenes they actually open in both chapters',()
     assert.equal(context.landed?.actScene,scene,target);assert.equal(context.landed?.title,events[scene].title,target);
     assert.match(label,/^トラブル開始｜/,target);
    }else if(scene==='epilogue')assert.equal(context.landed?.actScene,chapter==='1'?'epilogue':'act2-epilogue');
+   else if(scene.startsWith('epilogue-')){
+    assert.equal(context.landed?.actScene,'act2-epilogue');
+    assert.equal(eventConversation(context.landed)[context.index]?.epilogueScene,scene.slice(9));
+   }
    else if(scene==='arrival')assert.equal(context.landed?.actScene,'act2-prologue');
    else if(scene==='duel'){
     assert.equal(context.landed.actScene,'duel');
