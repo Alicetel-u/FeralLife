@@ -73,13 +73,9 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     const version=token;
     try{
       if(mobile||AudioContextType){mobileAudio ||= makeAudio();audio=mobileAudio;audio.src=clipPath(clip);clearPrepared();}else if(prepared?.file===clipPath(clip)){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clipPath(clip);}
-      // Attack clips are time-stretched offline. Raising playbackRate on a
-      // media element routed through Web Audio drops the end of the phrase.
-      const duelClip=clip.performance?.startsWith('duel-');
-      audio.playbackRate=line?.duelAttack?1:duelClip?(clip.speaker==='cat'||clip.performance?.startsWith('duel-moku')?1.16:1.25):1;
-      audio.preservesPitch=true;
-      audio.mozPreservesPitch=true;
-      audio.webkitPreservesPitch=true;
+      // Duel speed is already in the clip. A reused element must not keep a
+      // faster rate: Web Audio drops the end of that phrase.
+      audio.playbackRate=1;
       audio.volume=Math.min(1,prefs.volume*speakerBoost());connectMobile(audio);playbackOutcome='playing';active=true;
       startPlayback(version);
     }catch{playbackOutcome='error';active=false;}
@@ -103,6 +99,18 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
       if(context?.state==='suspended')context.resume().catch(()=>{});
       if(blocked&&current){const {line,identity}=current;current=null;play(line,identity);}},
     setEnabled(value){prefs.enabled=Boolean(value);save();if(!prefs.enabled){stop();clearPrepared();}else if(current){const {line,identity}=current;current=null;play(line,identity);}},
-    setVolume(value){prefs.volume=Math.max(0,Math.min(1,Number(value)||0));applyVolume();save();}
+    setVolume(value){prefs.volume=Math.max(0,Math.min(1,Number(value)||0));applyVolume();save();},
+    playStrike(line,volume){
+      if(!AudioContextType||!line?.duelAttack||!(volume>0))return;
+      try{
+        context ||= new AudioContextType();
+        if(context.state==='suspended')context.resume().catch(()=>{});
+        const osc=context.createOscillator(),gainNode=context.createGain(),t=context.currentTime;
+        osc.type='sawtooth';osc.frequency.setValueAtTime(line.duelRank===4?620:330,t);osc.frequency.exponentialRampToValueAtTime(65,t+.22);
+        gainNode.gain.setValueAtTime(volume*.07,t);gainNode.gain.exponentialRampToValueAtTime(.0001,t+.26);
+        osc.connect(gainNode);gainNode.connect(context.destination);osc.start(t);osc.stop(t+.27);
+        osc.onended=()=>{try{osc.disconnect();gainNode.disconnect();}catch{}};
+      }catch{}
+    }
   };
 }

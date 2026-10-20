@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFile} from 'node:fs/promises';
+import {access,readFile} from 'node:fs/promises';
 import {extractVoiceScript,planVoices} from '../tools/voice-script.mjs';
 import {voiceLineKey,voicePerformance} from '../src/voice-policy.js';
 import {createVoicePlayer} from '../src/voice-player.js';
+import {playDuelCue} from '../src/act-two-duel-stage.js';
 
 test('backgrounding pauses and resumes the current voice without stale play failures ending it',async()=>{
  const line={speaker:'cat',text:'一時停止ニャ。'},sounds=[];let rejectFirst,plays=0;
@@ -21,7 +22,7 @@ test('backgrounding pauses and resumes the current voice without stale play fail
  }finally{player.stop();}
 });
 
-test('duel attacks use pre-rendered speed files at native rate without affecting other voices',()=>{
+test('duel voices use pre-rendered speed files at native rate without affecting other voices',()=>{
  const battle={speaker:'manager',text:'いくぞ！',duelRound:0,duelAttack:true};
  const normal={speaker:'manager',text:'そうか。'};
  const sounds=[];
@@ -36,13 +37,62 @@ test('duel attacks use pre-rendered speed files at native rate without affecting
  assert.equal(sounds[0].playbackRate,1);
  assert.equal(sounds[0].src,'battle.attack.mp3');
  const moku={speaker:'cat',text:'ニャ！',duelRound:0};
- manifest[voiceLineKey(moku)]={file:'moku.mp3',performance:'duel-moku'};
+ manifest[voiceLineKey(moku)]={file:'moku.mp3',fastFile:'moku.pace.mp3',performance:'duel-moku'};
  player.play(moku,'moku');
- assert.equal(sounds.at(-1).playbackRate,1.16);
- assert.equal(sounds[0].preservesPitch,true);
+ assert.equal(sounds.at(-1).playbackRate,1);
+ assert.equal(sounds.at(-1).src,'moku.pace.mp3');
+ const luna={speaker:'hostess',text:'ねえ',duelRound:0};
+ manifest[voiceLineKey(luna)]={file:'luna.mp3',fastFile:'luna.pace.mp3',performance:'duel-luna'};
+ player.play(luna,'luna');
+ assert.equal(sounds.at(-1).playbackRate,1);
+ assert.equal(sounds.at(-1).src,'luna.pace.mp3');
  player.play(normal,'normal');
  assert.equal(sounds.at(-1).playbackRate,1);
+ assert.equal(sounds.at(-1).src,'normal.mp3');
  player.stop();
+});
+
+test('committed duel clips carry their speed and stay on disk',async()=>{
+ const {VOICE_MANIFEST}=await import('../src/voice-manifest.js');
+ let attacks=0,lines=0;
+ for(const entry of Object.values(VOICE_MANIFEST)){
+  if(!String(entry.performance||'').startsWith('duel-'))continue;
+  lines++;
+  const attack=entry.performance.endsWith('-attack');
+  if(attack)attacks++;
+  assert.match(entry.fastFile,attack?/\.attack\.mp3$/:/\.pace\.mp3$/);
+  await access(new URL('../'+entry.fastFile,import.meta.url));
+ }
+ assert.equal(attacks,12);
+ assert.ok(lines>attacks);
+});
+
+test('battle strike reuses one audio context and does not close the voice output',()=>{
+ const previous=globalThis.AudioContext;
+ let contexts=0,closed=0;
+ globalThis.AudioContext=class{
+  constructor(){contexts++;}
+  state='running';currentTime=0;destination={};
+  resume(){return Promise.resolve();}
+  close(){closed++;return Promise.resolve();}
+  createOscillator(){return {frequency:{setValueAtTime(){},exponentialRampToValueAtTime(){}},connect(){},start(){},stop(){},disconnect(){},set onended(fn){this.ended=fn;}};}
+  createGain(){return {gain:{setValueAtTime(){},exponentialRampToValueAtTime(){}},connect(){},disconnect(){}};}
+ };
+ try{
+  const player=createVoicePlayer({storage:null,manifest:{},makeAudio:()=>({play(){return Promise.resolve();},pause(){},load(){},removeAttribute(){}})});
+  player.playStrike({duelAttack:true,duelRank:4},.8);
+  player.playStrike({duelAttack:true,duelRank:1},.8);
+  assert.equal(contexts,1);
+  assert.equal(closed,0);
+  let strikes=0;
+  const voice={playStrike(){strikes++;}};
+  playDuelCue({duelAttack:true,duelRank:2},'strike-a',true,.5,voice);
+  playDuelCue({duelAttack:true,duelRank:2},'strike-a',true,.5,voice);
+  playDuelCue({duelAttack:true,duelRank:2},'strike-b',false,.5,voice);
+  assert.equal(strikes,1);
+  playDuelCue({duelAttack:true,duelRank:2},'strike-c',true,.5,voice);
+  assert.equal(strikes,2);
+ }finally{if(previous===undefined)delete globalThis.AudioContext;else globalThis.AudioContext=previous;}
 });
 
 test('discarding preloaded voices releases their media source and decoder',()=>{

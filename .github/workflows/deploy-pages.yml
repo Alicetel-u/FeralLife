@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Prepare pitch-preserving battle attack clips
+      - name: Prepare pitch-preserving duel voice clips
         run: |
           command -v ffmpeg || (sudo apt-get update && sudo apt-get install -y ffmpeg)
           node tools/build-attack-voices.mjs
