@@ -565,12 +565,14 @@ export function validActOne(s){
     if(a.version!==1||!Number.isInteger(a.attempt)||a.attempt<1||!Number.isInteger(a.seed)||!Array.isArray(a.memory)||!Array.isArray(a.completed)||!['playing','bad','clear'].includes(a.status))return false;
     if(a.duel!==undefined){
       const d=a.duel;
-      if(!Number.isInteger(d.round)||d.round<0||d.round>4||!Number.isInteger(d.hearts)||d.hearts<0||d.hearts>10||!Array.isArray(d.history)||d.history.length!==d.round)return false;
+      if(!Number.isInteger(d.round)||d.round<0||d.round>4||!Number.isInteger(d.hearts)||d.hearts< -8||d.hearts>16||!Array.isArray(d.history)||d.history.length!==d.round)return false;
       const ids=[['vow','boundary','help'],['shield','receipt','discount'],['future','cancel','sleep'],['ultimate','leave','catapult']];let hearts=0;
       for(let round=0;round<d.round;round++){
         const h=d.history[round],i=ids[round].indexOf(h?.choice);
         if(i<0||h.round!==round||h.before!==hearts)return false;
-        hearts=Math.max(0,Math.min(10,hearts+[[3,1,-1],[3,1,-1],[3,1,-1],[7,1,-1]][round][i]));
+        // Legacy rounds retain their saved, capped scores. New answers can cross zero and ten.
+        if(h.scoringVersion!==undefined&&h.scoringVersion!==2)return false;
+        hearts=h.scoringVersion===2?hearts+[[3,1,-2],[3,1,-2],[3,1,-2],[7,1,-2]][round][i]:Math.max(0,Math.min(10,hearts+[[3,1,-1],[3,1,-1],[3,1,-1],[7,1,-1]][round][i]));
         if(h.after!==hearts)return false;
       }
       if(d.hearts!==hearts)return false;

@@ -1960,3 +1960,27 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .game-ink .conversation-modal .duel-choices .decision-choice:not(.choice-selected):focus-visible{outline:none;transform:skewX(-5deg);box-shadow:3px 3px #000,-2px -2px var(--command-accent)}
  .game-ink .conversation-modal .duel-choices .decision-choice{-webkit-tap-highlight-color:transparent}
 }
+/* Signed affection and overflowing hearts keep the same ten-slot footprint. */
+.duel-heart-slot{position:relative;isolation:isolate}
+.duel-heart-gem .heart-spark{display:none;fill:#fff9cf}
+.duel-heart-gem.duel-heart-overflow{position:absolute;width:65%;right:-10%;top:-15%;z-index:1;filter:drop-shadow(0 1px 2px #5e1b1d)}
+.heart-negative .duel-heart-label b,.heart-negative .duel-final-count{color:#86d9ff;text-shadow:0 0 12px #2684df88,2px 2px #122956}
+.heart-negative .duel-hearts .lit{filter:drop-shadow(0 2px 1px #0b153a) drop-shadow(0 0 6px #3ab6ff99)}
+.heart-negative .lit .heart-body{fill:#3599f0;stroke:#bfefff}.heart-negative .lit .heart-facet{fill:#194fbb;opacity:.6}.heart-negative .lit .heart-glint{fill:#e9fbff;opacity:1}.heart-negative .lit .heart-edge{stroke:#90e9ff;opacity:1}
+.heart-hot .duel-heart-label b,.heart-hot .duel-final-count{color:#fff0a6;text-shadow:0 0 14px #ffa42b,2px 2px #953238}
+.heart-hot .duel-hearts .lit{filter:drop-shadow(0 2px 1px #7f1a35) drop-shadow(0 0 7px #ffb638bb)}
+.heart-hot .lit .heart-body{fill:#ffd151;stroke:#fff4c7;stroke-width:1.5}.heart-hot .lit .heart-facet{fill:#f36935;opacity:.65}.heart-hot .lit .heart-glint{fill:#fff;opacity:1}.heart-hot .lit .heart-edge{stroke:#fff4b7;opacity:1}
+.heart-hot .lit .heart-spark{display:block;transform-origin:28px 2px;animation:duel-gem-spark 2s calc(var(--heart-index)*110ms) ease-in-out infinite}
+.duel-affection.over-limit{border-color:#ffe18c;box-shadow:inset 0 0 0 3px #6a253a,0 0 18px #ffb42f66}
+.duel-limit-badge{position:absolute;right:18px;top:-10px;padding:2px 8px;background:#ffe18c;color:#621e32;border:1px solid #fff4c7;font:1000 10px/1.2 var(--sans);transform:rotate(3deg);box-shadow:2px 2px #712737}
+.duel-final-hearts.duel-hearts{margin-top:0;gap:clamp(10px,2.3vw,26px)}
+.duel-final-hearts.duel-hearts>span{width:100%;max-width:70px;filter:drop-shadow(0 5px 0 #671c4a)}
+.duel-final-heart.empty{opacity:1}.duel-final-heart .duel-heart-gem{width:100%}
+.duel-final-heart .duel-heart-gem.duel-heart-overflow{width:65%}
+.duel-final-result{gap:clamp(14px,4dvh,44px)}
+.duel-final-count{font:1000 clamp(28px,6vw,54px)/1 var(--sans);color:#ffabd2;font-variant-numeric:tabular-nums;text-shadow:0 0 12px #ff5fa67a}
+.duel-final-count small{font-size:.5em;color:#e0c4d4}.duel-final-count em{display:block;margin-top:10px;font:1000 14px/1 var(--sans);letter-spacing:.2em;color:#ffe18c}
+@keyframes duel-gem-spark{0%,100%{opacity:.45;transform:scale(.7) rotate(-10deg)}50%{opacity:1;transform:scale(1.15) rotate(10deg)}}
+@media(max-width:700px){.duel-limit-badge{right:12px;top:-8px;font-size:9px;padding:1px 6px}.duel-final-hearts.duel-hearts>span{max-width:60px}}
+@media(max-height:500px){.duel-final-hearts.duel-hearts{width:min(65vw,340px);gap:8px}.duel-final-hearts.duel-hearts>span{max-width:42px}.duel-final-result{gap:12px}.duel-final-title{font-size:clamp(30px,6vw,58px)}.duel-final-count{font-size:28px}.duel-final-count em{margin-top:6px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.heart-hot .lit .heart-spark{animation:none;opacity:1}}

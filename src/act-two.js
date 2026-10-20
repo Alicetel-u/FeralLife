@@ -1,5 +1,5 @@
 import {failedChoiceKeys} from './choice-history.js';
-import {DUEL_INTRO,duelChoices,duelEncounterLines,duelReplyLines,duelEndingLines,duelOutcome} from './act-two-duel.js?v=2026.10.20.09';
+import {DUEL_INTRO,duelChoices,duelEncounterLines,duelReplyLines,duelEndingLines,duelOutcome} from './act-two-duel.js?v=2026.10.20.37';
 import { saveStoryCheckpoint, storyCheckpointTarget } from './story-checkpoints.js';
 import { createActOne,advanceActOne,answerActOne } from './act-one.js';
 import {advance,addEvent,admit} from './simulation.js';
@@ -533,8 +533,8 @@ function answerDuel(s,eventId,choiceId){
  const original=s.events.find(e=>e.id===p.eventId);if(!original)return null;
  original.read=true;original.actChoice=choiceId;
  const before=d.hearts,round=d.round;
- d.hearts=Math.max(0,Math.min(10,d.hearts+choice.delta));
- d.history.push({round,choice:choiceId,before,after:d.hearts});d.round++;d.cursor=0;d.dialogueComplete=false;
+ d.hearts+=choice.delta;
+ d.history.push({round,choice:choiceId,before,after:d.hearts,scoringVersion:2});d.round++;d.cursor=0;d.dialogueComplete=false;
  const final=d.round===4,outcome=final?duelOutcome(d.hearts):null;
  const lines=[...duelReplyLines(round,choice),...(final?duelEndingLines(outcome):duelEncounterLines(d.round))];
  const r=addEvent(s,'life',final?'全員撃退！':'次の来訪者',lines[0].text,[102]);

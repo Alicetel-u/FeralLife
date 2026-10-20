@@ -53,7 +53,7 @@ test('initial and low-heart retries keep strong choices, and the +7 ultimate rem
  assert.ok(actTwoChoices(low,'duel').every(choice=>!choice.disabled&&!choice.restrained));
  const high=duelStart();for(const id of ['vow','shield','future','ultimate'])answerActTwo(high,high.actOne.pending.eventId,id);
  let retry=rewindActTwo(high);retry.actOne.rewindIntroPending=false;advanceActTwo(retry,1);
- for(const id of ['help','discount','sleep'])answerActTwo(retry,retry.actOne.pending.eventId,id);
+ for(const id of ['help','receipt','sleep'])answerActTwo(retry,retry.actOne.pending.eventId,id);
  const ultimate=actTwoChoices(retry,'duel').find(choice=>choice.delta===7);
  assert.equal(ultimate.disabled,false);assert.ok(answerActTwo(retry,retry.actOne.pending.eventId,ultimate.id));
  assert.equal(retry.actOne.duel.outcome,'clear');
@@ -133,7 +133,7 @@ test('81 routes preserve saves at every round, resolve only after four enemies, 
    const id=duelChoices(round)[index].id,pending=s.actOne.pending.eventId;
    const reply=answerActTwo(s,pending,id);assert.ok(reply);
    assert.equal(answerActTwo(s,pending,id),null,'stale event cannot apply damage twice');
-   assert.ok(s.actOne.duel.hearts>=0&&s.actOne.duel.hearts<=10);
+   assert.ok(s.actOne.duel.hearts>=-8&&s.actOne.duel.hearts<=16);
    assert.ok(validateSave(s)&&validActOne(s),`valid save pattern ${pattern}, round ${round}`);
    s=JSON.parse(JSON.stringify(s));
   }
@@ -151,6 +151,65 @@ test('81 routes preserve saves at every round, resolve only after four enemies, 
  }
  assert.ok(counts.clear&&counts.yandere&&counts.domination);assert.ok(ultimateSafe,'ultimate is not an automatic BAD');
  console.log('Four-round route counts:',counts);
+});
+
+test('Moku answers subtract two without a floor, strongest answers reach sixteen without a ceiling',()=>{
+ for(const [ids,total,outcome] of [[['help','discount','sleep','catapult'],-8,'domination'],[['vow','shield','future','ultimate'],16,'yandere']]){
+  const s=duelStart();let expected=0;
+  for(const id of ids){
+   const choice=actTwoChoices(s,'duel').find(choice=>choice.id===id);
+   if(choice.delta<0)assert.equal(choice.delta,-2);
+   const reply=answerActTwo(s,s.actOne.pending.eventId,id);expected+=choice.delta;
+   assert.equal(s.actOne.duel.hearts,expected);
+   assert.equal(reply.duelHearts,expected);
+   assert.equal(s.actOne.duel.history.at(-1).scoringVersion,2);
+   assert.ok(validActOne(JSON.parse(JSON.stringify(s))));
+  }
+  assert.equal(s.actOne.duel.hearts,total);assert.equal(s.actOne.duel.outcome,outcome);
+ }
+});
+
+test('signed and over-limit hearts stay hidden until the reaction, and appear in both HUD and final results',()=>{
+ const s=duelStart();
+ for(const [value,before] of [[-8,-6],[-2,0],[0,-2],[3,-2],[10,3],[11,4],[16,9]]){
+  const event={id:1,duel:true,duelHearts:value,duelPreviousHearts:before,duelResolvedRound:0,detail:'返事',lines:[
+   {speaker:'manager',text:'返事',duelRound:0},
+   {speaker:'hostess',text:'反応',duelRound:0,duelHeartUpdate:true}
+  ]};
+  assert.equal(duelFrame(event,0).hearts,before);assert.equal(duelFrame(event,1).hearts,value);
+  const html=duelStageHTML(event,s.residents,1);
+  assert.ok(html.includes(`<b>${value}<small> / 10</small></b>`));
+  assert.match(html,new RegExp(`感情メーター ${value}個、基準10個`));
+  assert.equal((html.match(/class="duel-heart-gem /g)||[]).length,Math.max(10,value));
+  assert.equal((html.match(/duel-heart-slot lit/g)||[]).length,Math.min(10,Math.abs(value)));
+  assert.equal(html.includes('heart-negative'),value<0);assert.equal(html.includes('heart-hot'),value>=10);
+  assert.equal(html.includes('限界突破'),value>10);
+  const final={...event,detail:'勝利',lines:[{speaker:'narrator',text:'勝利',duelVictoryResult:value>=10?'yandere':value<=1?'domination':'clear',duelRound:3,duelDefeated:true}]};
+  const result=duelStageHTML(final,s.residents,0);
+  assert.ok(result.includes(`<span class="duel-final-count">${value}<small> / 10</small>`));
+  assert.ok(result.includes(`ルナのハート ${value}個 / 10個`));
+ }
+});
+
+test('legacy capped histories retain their totals and support new signed answers after reload',()=>{
+ const legacy=duelStart();
+ for(const id of ['vow','discount']){
+  const before=legacy.actOne.duel.hearts;
+  const reply=answerActTwo(legacy,legacy.actOne.pending.eventId,id),h=legacy.actOne.duel.history.at(-1);
+  const after=Math.max(0,Math.min(10,before+(id==='vow'?3:-1)));
+  Object.assign(h,{before,after});delete h.scoringVersion;
+  legacy.actOne.duel.hearts=after;reply.duelHearts=after;reply.duelPreviousHearts=before;
+ }
+ assert.equal(legacy.actOne.duel.hearts,2);assert.ok(validActOne(legacy));
+ const restored=JSON.parse(JSON.stringify(legacy)),history=JSON.stringify(restored.actOne.duel.history);
+ answerActTwo(restored,restored.actOne.pending.eventId,'sleep');
+ assert.equal(restored.actOne.duel.hearts,0);assert.ok(validActOne(restored));
+ assert.equal(JSON.stringify(restored.actOne.duel.history.slice(0,2)),history,'past scores are unchanged');
+ answerActTwo(restored,restored.actOne.pending.eventId,'ultimate');
+ assert.equal(restored.actOne.duel.hearts,7);assert.equal(restored.actOne.duel.outcome,'clear');assert.ok(validActOne(restored));
+ for(const mutate of [s=>s.actOne.duel.hearts=17,s=>s.actOne.duel.history[2].after=-2,s=>s.actOne.duel.history[2].scoringVersion=3]){
+  const corrupt=JSON.parse(JSON.stringify(restored));mutate(corrupt);assert.equal(validActOne(corrupt),false);
+ }
 });
 
 test('saved transcript keeps enemies gone after impact and hearts hidden until Luna reacts',()=>{
@@ -183,10 +242,11 @@ test('dedicated commands keep existing ids, repeat history, and reserve gold for
   assert.doesNotMatch(html,/ヤンデレ|BAD|2〜9/,'does not disclose ending thresholds');
   for(const choice of choices){
    const button=html.split('<button').find(part=>part.includes('data-choice="'+choice.id+'"'));
-   const tier=choice.delta===7?'ultimate':choice.delta>=3?'high':choice.delta<0?'low':'medium';
+   const tier=choice.delta===7?'ultimate':choice.delta>=3?'high':choice.delta<0?'assist':'medium';
    assert.ok(button.includes('duel-expect-'+tier));
-   assert.ok(button.includes('ハート</span> '+(choice.delta>0?'+':'')+choice.delta));
-   assert.equal((button.match(/class="lit"/g)||[]).length,choice.delta===7?4:choice.delta>=3?3:choice.delta<0?1:2);
+   assert.ok(button.includes('ハート</span> '+(choice.delta<0?'？？？':(choice.delta>0?'+':'')+choice.delta)));
+   if(choice.delta<0){assert.match(button,/モクに頼る/);assert.doesNotMatch(button.replace(/<[^>]*>/g,''),/低期待|-[12]/);assert.doesNotMatch(button,/duel-expect-meter/);}
+   assert.equal((button.match(/class="lit"/g)||[]).length,choice.delta===7?4:choice.delta>=3?3:choice.delta<0?0:2);
   }
  }
 });
@@ -209,7 +269,7 @@ test('approved opening, supplied corrected art, ten hearts, original dialogue wi
  const s=duelStart(),e=s.events.find(e=>e.id===s.actOne.pending.eventId),index=eventConversation(e).length-1;
  const html=duelStageHTML(e,s.residents,index);
  assert.match(html,/stage-bubble/);assert.match(html,/stage-speaker/);assert.match(html,/duel-field/);
- assert.equal((html.match(/class="duel-heart-gem"/g)||[]).length,10);
+ assert.equal((html.match(/class="duel-heart-gem "/g)||[]).length,10);
  for(const id of ['vow','shield','future','ultimate'])answerActTwo(s,s.actOne.pending.eventId,id);
  const last=s.events.find(e=>e.duelOutcome==='yandere'),lines=eventConversation(last),at=lines.findIndex(l=>l.duelEndingPhase==='reveal');
  assert.match(duelStageHTML(last,s.residents,at),/assets\/events\/duel\/yandere.png/);
