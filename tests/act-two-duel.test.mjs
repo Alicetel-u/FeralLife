@@ -139,7 +139,7 @@ test('Luna high-heart BAD develops through ordinary scenes and reserves the CG f
  assert.deepEqual(phases,['day-1','day-2','day-3','day-4','day-5','reveal']);
  const start=lines.findIndex(l=>l.duelEnding),reveal=lines.findIndex(l=>l.duelEndingPhase==='reveal');
  assert.equal(reveal-start,10,'five daily exchanges precede the final image');
- assert.equal(lines.length-reveal,1,'only the final reveal uses the yandere CG');
+ assert.equal(lines.length-reveal,3,'the final three-line exchange uses the yandere CG');
  for(let index=start;index<lines.length;index++)for(let page=0;page<messagePages(lines[index].text).length;page++){
   const html=duelStageHTML(ending,s.residents,index,page);
   assert.match(html,/stage-bubble/);assert.match(html,/stage-speaker/);
