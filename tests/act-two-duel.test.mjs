@@ -288,6 +288,24 @@ test('dedicated commands keep existing ids, repeat history, and reserve gold for
  }
 });
 
+test('attack subtitle waits for actual voice completion, not merely an idle flag',()=>{
+ let time=0,outcome='playing',advanced=0,fn;
+ const stop=mountDuelPlayback({duelAttack:true,text:'こいつの明日は、俺が守る！'},{
+  advance:()=>advanced++,blocked:()=>false,voiceOutcome:()=>outcome,now:()=>time,
+  schedule:callback=>{fn=callback;return 1},cancel:()=>{}
+ });
+ time=5000;assert.equal(stop.canAdvance(),false,'active speech cannot disappear');
+ outcome='ended';assert.equal(stop.canAdvance(),true,'confirmed onended releases subtitle');
+ fn();assert.equal(advanced,1);stop();
+ time=0;outcome='error';
+ const failed=mountDuelPlayback({duelAttack:true,text:'失敗しても表示を維持！'},{
+  advance:()=>{},blocked:()=>false,voiceOutcome:()=>outcome,now:()=>time,schedule:()=>1,cancel:()=>{}
+ });
+ time=duelReadDelay({text:'失敗しても表示を維持！'});
+ assert.equal(failed.canAdvance(),false,'playback errors keep text visible longer');
+ time+=1200;assert.equal(failed.canAdvance(),true);failed();
+});
+
 test('attack montage pauses for hidden tabs and menus, cancels stale callbacks, and leaves choices manual',()=>{
  let id=0,advances=0,blocked=true;const timers=new Map();
  const options={advance:()=>advances++,blocked:()=>blocked,schedule:fn=>{timers.set(++id,fn);return id;},cancel:id=>timers.delete(id)};
