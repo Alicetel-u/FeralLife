@@ -1788,6 +1788,16 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .persona-debug-button.tone-chapter2{--debug-tone:#f3bb32}
 .persona-debug-button.tone-navigation{--debug-tone:#69aaff}
 .persona-debug-button.tone-utility{--debug-tone:#b49df4}
+/* Destination colors are consistent across both chapter scene selectors. */
+.persona-debug-button.tone-story{--debug-tone:#65aaff}
+.persona-debug-button.tone-start{--debug-tone:#ffc642}
+.persona-debug-button.tone-choice{--debug-tone:#40cfaa}
+.persona-debug-button.tone-rewind{--debug-tone:#c394f9}
+.persona-debug-button.tone-ending{--debug-tone:#f78ea9}
+.persona-debug-button.tone-battle{--debug-tone:#ff3152}
+.persona-debug:has([data-debug-scene]) .persona-debug-actions{max-height:62dvh}
+.persona-debug:has([data-debug-scene]) .persona-debug-button{min-height:49px}
+
 .persona-debug-button:hover,.persona-debug-button:focus-visible{translate:5px -2px;background:#26344c;outline:2px solid #fff;outline-offset:2px}
 .persona-debug-index{background:var(--debug-tone);color:#071020;padding:6px 9px;font-size:13px;font-weight:1000}
 .persona-debug-label{flex:1}
