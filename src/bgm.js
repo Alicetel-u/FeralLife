@@ -1,3 +1,4 @@
+export const DUEL_BGM_SRC = 'assets/audio/duel-ao-wo-isoide.mp3';
 export const NORMAL_BGM_SRC = 'assets/audio/normal-pop.mp3';
 export const MOKU_BGM_SRC = 'assets/audio/moku-theme.mp3';
 export const TROUBLE_BGM_SRC = 'assets/audio/trouble-persona.mp3';
@@ -21,7 +22,7 @@ function bgmTrack(provided,src){
   return audio;
 }
 
-const STINGS = new Set(['trouble', 'bad', 'title', 'clock', 'victory']);
+const STINGS = new Set(['trouble', 'bad', 'title', 'clock', 'victory', 'duel']);
 
 // Observation and everyday dialogue (including Moku's scenes) use Moku's theme.
 // The first-rewind dialogue selects uneasy explicitly.
@@ -32,9 +33,10 @@ export function bedCue(actOne) {
 // Moku's theme during ordinary play, uneasy air after the first time leap, countdown on the game title,
 // a persona sting on a trouble card, the result fanfare on a cleared trouble,
 // the fire track through a bad ending, and the clock piece once the rewind dial appears.
-export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio, uneasyAudio, victoryAudio, mokuAudio) {
+export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio, uneasyAudio, victoryAudio, mokuAudio, duelAudio) {
   const tracks = {
     normal: bgmTrack(normalAudio, NORMAL_BGM_SRC),
+    duel: bgmTrack(duelAudio, DUEL_BGM_SRC),
     moku: bgmTrack(mokuAudio, MOKU_BGM_SRC),
     trouble: bgmTrack(troubleAudio, TROUBLE_BGM_SRC),
     bad: bgmTrack(badAudio, BAD_END_BGM_SRC),
