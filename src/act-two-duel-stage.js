@@ -46,16 +46,16 @@ export function duelStageHTML(event,residents,index=0,page=0){
  if(ending==='yandere'&&line.duelStoryDay&&line.duelEndingPhase!=='reveal'){
   const day=line.duelStoryDay;
   const stage=eventStageHTML({...event,cast:['hostess']},residents,index,page,{cinematic:true});
-  const tint=['#ee9ab8','#d87b9d','#b95c7a','#913a55','#4b2033'][day-1];
+  const tint=['#ffc0dc','#f38ebc','#dd648f','#b72e55','#f04458'][day-1];
   const location=day>=5?'assets/events/first-fire-corridor.png':'assets/apartments.png';
   const storyBackdrop=`<div class="duel-story-backdrop" aria-hidden="true"><img src="${location}" alt=""></div>`;
   // A short, self-contained transition on the first speech of each day.
   // No timeouts, no simulation-state changes, no extra dialogue clicks.
   const calendar=line.duelDayStart?`<div class="duel-day-transition" aria-hidden="true"><span>DAY ${String(day).padStart(2,'0')}</span><small>―― ${day}日目 ――</small></div>`:'';
   const style=`<style>
-  .duel-yandere-short{--duel-day-tint:${tint}}
-  .duel-yandere-short .duel-story-backdrop:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,transparent 35%,var(--duel-day-tint));opacity:.27}
-  .duel-day-transition{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;background:#160e19;color:#fff;pointer-events:none;animation:duel-day-curtain 1.15s ease both}
+  .duel-yandere-short{--duel-day-tint:${tint};--duel-story-day:${day}}
+  .duel-yandere-short .duel-story-backdrop:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,transparent 35%,var(--duel-day-tint));opacity:calc(.12 + (var(--duel-story-day) - 1) * .09)}
+  .duel-day-transition{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;background:linear-gradient(145deg,#130f1b,#2f1022 65%,#07040b);border-top:9px solid var(--duel-day-tint);color:#fff;pointer-events:none;animation:duel-day-curtain 1.15s ease both}
   .duel-day-transition span{font-weight:900;font-size:clamp(42px,8vw,104px);letter-spacing:.1em;text-shadow:0 0 24px var(--duel-day-tint)}
   .duel-day-transition small{font-weight:700;letter-spacing:.3em;font-size:clamp(13px,2vw,22px);color:var(--duel-day-tint)}
   @keyframes duel-day-curtain{0%,42%{opacity:1}100%{opacity:0;visibility:hidden}}
