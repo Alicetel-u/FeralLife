@@ -1914,3 +1914,30 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 /* Keep the bottom rewind action legible once the pink curtain fills the screen. */
 .duel-bad-yandere .duel-bad-copy [data-act2-rewind]{background:#261026!important;color:#fff!important;border:2px solid #fff!important;text-shadow:none!important;box-shadow:0 5px 0 #8f0754,0 0 0 3px #ff1493;font-weight:900;opacity:1}
 .duel-bad-yandere .duel-bad-copy [data-act2-rewind]:focus-visible{outline:3px solid #fff;outline-offset:4px}
+
+/* Touch duel choices: no unselected option should look preselected.
+   The last-round ultimate command remains available, but has neutral borders. */
+@media (hover:none) and (pointer:coarse){
+ .game-ink .conversation-modal .duel-choices .duel-ultimate:not(.choice-exhausted){
+   border-color:#9f8c9a;
+   border-left-color:#9f8c9a;
+   background:#302333;
+   box-shadow:none;
+ }
+ .game-ink .conversation-modal .duel-choices .duel-ultimate:not(.choice-exhausted) strong,
+ .duel-choices .duel-ultimate:not(.choice-exhausted) .duel-command-copy small,
+ .duel-choices .duel-ultimate:not(.choice-exhausted) .duel-command-icon{
+   color:#fff1e7;
+   -webkit-text-stroke-color:transparent;
+   text-shadow:none;
+ }
+ .duel-choices .duel-ultimate:not(.choice-exhausted)::after{background:#817b87}
+ .game-ink .conversation-modal .duel-choices .decision-choice:not(.choice-selected):hover,
+ .game-ink .conversation-modal .duel-choices .decision-choice:not(.choice-selected):focus,
+ .game-ink .conversation-modal .duel-choices .decision-choice:not(.choice-selected):focus-visible{
+   outline:none;
+   transform:none;
+   box-shadow:none;
+ }
+ .game-ink .conversation-modal .duel-choices .decision-choice{-webkit-tap-highlight-color:transparent}
+}
