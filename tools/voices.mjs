@@ -1,7 +1,8 @@
 import {readFile,writeFile,mkdir,open,rename,stat,unlink} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {resolve,dirname,join} from 'node:path';
-import {extractVoiceScript,planVoices,digest,normalizeVoiceIds} from './voice-script.mjs';
+import {extractVoiceScript,extractCompleteVoiceScript,planVoices,digest,normalizeVoiceIds} from './voice-script.mjs';
+import {voicePerformance} from '../src/voice-policy.js';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const json=async path=>JSON.parse((await readFile(join(root,path),'utf8')).replace(/^\uFEFF/,''));
 const exists=async path=>{try{return (await stat(join(root,path))).size>0;}catch{return false;}};
@@ -22,10 +23,17 @@ const firstTragedy=args.includes('--first-tragedy');
 if(firstTragedy&&scope!=='act1')throw Error('First tragedy requires act1 scope');
 const filmOnly=args.includes('--film-only');
 if(filmOnly&&scope!=='act2-trouble1')throw Error('Film filter requires act2-trouble1 scope');
-const script=extractVoiceScript(scope).filter(row=>(!firstTragedy||row.source.includes('attempt-1/ash/trash/reply'))&&(!filmOnly||row.source.startsWith('act2/film/')));
+const fillMissing=scope==='missing';
+let script=(fillMissing?extractCompleteVoiceScript():extractVoiceScript(scope)).filter(row=>(!firstTragedy||row.source.includes('attempt-1/ash/trash/reply'))&&(!filmOnly||row.source.startsWith('act2/film/')));
+if(fillMissing){
+  const {VOICE_MANIFEST}=await import('../src/voice-manifest.js');
+  const missing=[];
+  for(const row of script)if(!VOICE_MANIFEST[row.lineKey]||!await exists(VOICE_MANIFEST[row.lineKey].file))missing.push({...row,performance:row.speaker==='manager'?'duel-manager':row.speaker==='cat'?'duel-moku':'duel-luna'});
+  script=missing;
+}
 const speaker=args.find(a=>a.startsWith('--speaker='))?.slice('--speaker='.length);
 if(speaker&&!['cat','manager','hostess'].includes(speaker))throw Error('Unknown speaker filter');
-if(speaker==='manager'&&!['intro','act1','act2-trouble1','act2-duel'].includes(scope))throw Error('Landlord generation is limited to supported chapter scopes');
+if(speaker==='manager'&&!['intro','act1','act2-trouble1','act2-duel','missing'].includes(scope))throw Error('Landlord generation is limited to supported chapter scopes');
 const pronunciationIssues=(await json('config/voice-pronunciation-issues.json')).issues;
 const pronunciationOnly=args.includes('--pronunciation-only');
 if(pronunciationOnly&&(sampleMoku||scope!=='intro'))throw Error('Pronunciation repair requires intro scope without sample mode');
@@ -42,7 +50,7 @@ const estimate=pending.reduce((n,r)=>n+r.billableCharacters*config.estimatedCred
 const report={scope,planId,model:config.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true,pronunciationReview,rows:rows.map(({line,request,...row})=>({...row,spokenInput:request.text,settings:request.voice_settings,tags:config.profiles[row.performance].tags}))};
 await atomic('.local/voice-plan.json',JSON.stringify(report,null,2)+'\n');
 await atomic('.local/voice-plan.md',[
-  scope==='act2-duel'?'# ミニゲームボイス・生成計画':'# 序盤ボイス・生成前確認',
+  fillMissing?'# 第一幕・第二幕の不足ボイス補完':scope==='act2-duel'?'# ミニゲームボイス・生成計画':'# 序盤ボイス・生成前確認',
   '',`対象: ${scope} / ${rows.length}件 / 新規 ${pending.length}件 / 推定 ${estimate}クレジット（実残高とは別）`,
   `モデル: ${config.model} / 承認ID: ${planId}`,
   '', scope==='act2-duel'?'ミニゲーム4戦の掛け合い・全選択肢・奥義と勝利の掛け声が対象。立ち絵の導入・BAD END・ナレーションは含みません。':scope==='intro'?'独り言は操作タイミングで表示順や有無が変わります。ナレーション・手紙・選択肢後の返答は含みません。':'選択肢の全分岐・周回・エピローグを含みます。ナレーション・手紙は除外します。',
@@ -54,7 +62,7 @@ if(!args.includes('--quiet'))console.table(report.rows.map((r,i)=>({no:i+1,sourc
 if(!args.includes('--quiet')&&pronunciationReview.length)console.table(pronunciationReview.map(issue=>({term:issue.term,reading:issue.reading,status:issue.status,lines:issue.sources.length})));
 console.log(JSON.stringify({scope,planId,model:config.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true}));
 if(!args.includes('--verify')&&!args.includes('--generate'))process.exit(0);
-const allowedGeneration=scope==='act2-trouble1'||scope==='act2-duel'||scope==='intro'||(scope==='act1'&&(['cat','manager'].includes(speaker)||firstTragedy)&&!sampleMoku&&!pronunciationOnly);
+const allowedGeneration=fillMissing||scope==='act2-trouble1'||scope==='act2-duel'||scope==='intro'||(scope==='act1'&&(['cat','manager'].includes(speaker)||firstTragedy)&&!sampleMoku&&!pronunciationOnly);
 if(args.includes('--generate')&&(!allowedGeneration||!args.includes('--approve='+planId)))throw Error('Generation requires an allowed scope and authorization of the current plan hash');
 let key;
 try{key=(await json('.local/elevenlabs.json')).apiKey;}catch{throw Error('Local API key missing. Run npm run voice:setup (do not paste key into chat).');}
@@ -89,6 +97,7 @@ const before=await verify();
 if(!args.includes('--generate'))process.exit(0);
 if(scope==='act2-trouble1'&&(unique.length>350||estimate>20000))throw Error('Abnormal trouble-one generation volume; review scope before spending');
 if(scope==='act2-duel'&&(unique.length>120||estimate>10000))throw Error('Abnormal mini-game generation volume; review scope before spending');
+if(fillMissing&&(unique.length>700||estimate>40000))throw Error('Abnormal missing-voice generation volume; review scope before spending');
 if(pending.some(r=>!r.voiceId))throw Error('Missing voice ID');
 if(!Number.isFinite(before.remaining)||before.remaining<estimate)throw Error('Insufficient or unavailable balance');
 // Exclusive lock and durable intent BEFORE the charged call. An ambiguous failure
@@ -120,6 +129,6 @@ try{
 async function publish(){
   let manifest={};
   const module=await import('../src/voice-manifest.js?time='+Date.now());manifest={...module.VOICE_MANIFEST};
-  for(const row of rows)if(await exists(row.file))manifest[row.lineKey]={file:row.file,hash:row.hash,source:row.source,speaker:row.speaker,text:row.text,performance:row.performance,model:config.model};
+  for(const row of rows)if(await exists(row.file))manifest[row.lineKey]={file:row.file,hash:row.hash,source:row.source,speaker:row.speaker,text:row.text,performance:fillMissing?voicePerformance(row.line):row.performance,...(fillMissing?{deliveryProfile:row.performance}:{}),model:config.model};
   await atomic('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
 }

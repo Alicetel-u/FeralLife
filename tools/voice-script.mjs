@@ -1,6 +1,6 @@
 import {DUEL_ROUNDS,duelChoices,duelEncounterLines,duelReplyLines,duelEndingLines} from '../src/act-two-duel.js';
 import {ACT_TWO_OBSERVATION_BEATS} from '../src/act-two-observation.js';
-import {secondActChat,lunaMutters} from '../src/act-two-life.js';
+import {secondActLife,secondActChat,lunaMutters} from '../src/act-two-life.js';
 import {OBSERVATION_BEATS} from '../src/act-one-observation.js';
 import {PROLOGUE_CUTS,INITIAL_MOKU_LINES} from '../src/opening-prologue.js';
 import {ACT_TWO_OPENING_SCENES} from '../src/act-two-opening.js';
@@ -11,6 +11,21 @@ import {voiceSpeaker,voicePerformance,voiceLineKey} from '../src/voice-policy.js
 import {createHash} from 'node:crypto';
 export const digest=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 export const normalizeVoiceIds=ids=>ids.characters?Object.fromEntries(Object.entries(ids.characters).map(([speaker,value])=>[speaker,value.voiceId||null])):ids;
+// Match playback's chapter-two lookup, including epilogues and all failure routes.
+export function extractCompleteVoiceScript(){
+  const ambient=[],state=createActOne(1,[],2,true);beginActTwo(state);
+  state.actOne.started=true;state.actOne.prologuePending=false;state.actOne.titlePending=false;
+  for(let tick=0;tick<=1920;tick++){
+    state.hour=57+tick/40;secondActLife(state,.025);
+    const lines=[...(secondActChat(state)?.lines||[]).map(([speaker,text])=>({speaker,text})),...lunaMutters(state).map(text=>({speaker:'hostess',text}))];
+    for(const line of lines)ambient.push({source:'act2/ambient/complete',line,speaker:voiceSpeaker(line)});
+  }
+  const rows=[...extractVoiceScript('all'),...extractVoiceScript('act2-trouble1'),...ambient].map(row=>{
+    const line=row.source.startsWith('act2/')?{...row.line,voiceChapter:2}:row.line;
+    return {...row,line,lineKey:voiceLineKey(line),performance:voicePerformance(line)};
+  });
+  return [...new Map(rows.map(row=>[row.lineKey,row])).values()];
+}
 export function extractVoiceScript(scope='intro') {
   if(!['intro','act1','act2','act2-trouble1','act2-duel','all'].includes(scope))throw Error('Unknown scope');
   const result=[];
