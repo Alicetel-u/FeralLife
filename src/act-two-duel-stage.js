@@ -76,7 +76,8 @@ export function duelStageHTML(event,residents,index=0,page=0){
  const hud=ending||intro?'':`<div class="duel-hud"><div class="duel-opponent"><span class="duel-round">${round===3?'最終戦':`${round+1}人目`}<small> / 4人</small></span><strong>${enemy.name}</strong><div class="duel-progress" aria-label="${cleared}人撃退済">${DUEL_ROUNDS.map((r,i)=>`<i class="${i<cleared?'done':i===round?'current':''}" aria-hidden="true"></i>`).join('')}</div></div><div class="duel-affection"><span class="duel-heart-label">ルナのハート <b>${hearts}<small> / 10</small></b></span><div class="duel-hearts" role="img" aria-label="ルナのハート ${hearts}個、最大10個">${Array.from({length:10},(_,i)=>`<span style="--heart-index:${Math.abs(i-before)}" class="${i<hearts?'lit':''} ${line.duelHeartUpdate&&i>=Math.min(before,hearts)&&i<Math.max(before,hearts)?'duel-heart-changed':''}" aria-hidden="true">♥</span>`).join('')}</div>${line.duelHeartUpdate?`<span class="duel-heart-delta ${delta<0?'down':''}" role="status">${delta>0?'+':''}${delta||'±0'}</span>`:''}</div></div>`;
  const cut=strike&&page===0?`<div style="animation-duration:${duelReadDelay(line)}ms" class="duel-impact rank-${line.duelRank}" aria-hidden="true"><strong>${eventEscape(line.duelAttack)}</strong></div>`:'';
  const stage=eventStageHTML(event,residents,index,page,{hideCharacters:true,cinematic:true});
- return stage.replace('class="event-stage ',`class="event-stage duel-stage ${ending?'duel-ending-scene':''} ${intro?'duel-intro-scene':''} `).replace(/^(<div[^>]*>)/,'$1'+scene+hud+cut);
+ const startTitle=intro&&index===0&&page===0?`<div class="duel-start-title" aria-label="ミニゲーム開始：嘘つきルナを守れ！"><div class="duel-start-slash" aria-hidden="true"></div><div class="duel-start-panel"><small>ACT 02 / TROUBLE 02</small><strong>嘘つきルナを守れ！</strong><span>大家の漢気で撃退しろ！</span><b>GAME START</b></div></div>`:'';
+ return stage.replace('class="event-stage ',`class="event-stage duel-stage ${ending?'duel-ending-scene':''} ${intro?'duel-intro-scene':''} `).replace(/^(<div[^>]*>)/,'$1'+scene+hud+cut+startTitle);
 }
 
 // Only the brief attack montage advances itself; conversation and choices stay manual.
@@ -88,7 +89,7 @@ export function mountDuelPlayback(line,{advance,blocked,schedule=setTimeout,canc
  if(!line)return ()=>{};
  // Reduced motion changes movement, never the time available to read a line.
  const delay=line.duelAttack||line.duelWindup?duelReadDelay(line):line.duelPlayback?1800:0;
- const readyAt=now()+(line.duelAttack?1400:650);
+ const readyAt=now()+(line.duelStartTitle?1550:line.duelAttack?1400:650);
  let timer,stopped=false;
  const tick=()=>{if(stopped)return;if(blocked())timer=schedule(tick,200);else advance();};
  if(delay)timer=schedule(tick,delay);
