@@ -71,7 +71,7 @@ test('real scene selection starts duel music on entry and gives results priority
   const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
   for(const [line,screen,expected] of [
     [{},null,'duel'],[{duelRound:0},null,'duel'],[{duelRound:3,duelDefeated:true},null,'duel'],
-    [{duelRound:3,duelEnding:'clear'},null,'normal'],[{duelRound:3,duelEnding:'yandere'},null,'normal'],
+    [{duelRound:3,duelEnding:'clear'},null,'normal'],[{duelRound:3,duelEnding:'yandere'},null,'normal'],[{duelRound:3,duelEnding:'domination'},null,'bad'],
     [{duelRound:3},'.duel-bad','bad'],[{duelRound:3},'.trouble-victory','victory']
   ]){
     let cue;
