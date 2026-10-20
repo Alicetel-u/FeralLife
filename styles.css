@@ -1810,3 +1810,18 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 /* Duel starts on its introduction, while enemies wait for the first encounter. */
 .duel-intro-scene .duel-enemy-waiting{opacity:0!important;visibility:hidden;animation:none!important;pointer-events:none}
 .duel-intro-scene .duel-set{filter:none}
+
+
+/* Short, lightweight title reveal at the first instant of Act 2's duel. */
+.duel-start-title{position:absolute;inset:0;z-index:35;display:grid;place-items:center;isolation:isolate;overflow:hidden;pointer-events:none;color:#fff;animation:duel-title-vanish 1.5s ease both}
+.duel-start-title::before{content:"";position:absolute;inset:0;background:#090a1ddc;z-index:-2}
+.duel-start-slash{position:absolute;inset:-30%;z-index:-1;background:linear-gradient(160deg,transparent 24%,#f42b5b 24% 53%,#ffe0e5 53% 55%,#080e23 55% 80%,transparent 80%);transform:rotate(-10deg);animation:duel-title-swipe .6s cubic-bezier(.18,.9,.2,1) both}
+.duel-start-panel{text-align:center;max-width:94%;padding:18px 24px 22px;transform:rotate(-3deg);text-shadow:4px 5px 0 #170915,0 8px 20px #0009;animation:duel-title-pop .55s cubic-bezier(.15,1.25,.25,1) both}
+.duel-start-panel small{display:block;font:900 clamp(11px,1.5vw,18px)/1.2 system-ui;letter-spacing:.24em;color:#ffe7a6}
+.duel-start-panel strong{display:block;font:1000 clamp(30px,6.5vw,88px)/1.13 system-ui;letter-spacing:-.065em;-webkit-text-stroke:clamp(1px,.24vw,3px) #1a0d20;filter:drop-shadow(0 0 9px #fff5)}
+.duel-start-panel span{display:block;margin-top:11px;font:900 clamp(16px,2.5vw,31px)/1.3 system-ui;color:#fff1c2}
+.duel-start-panel b{display:inline-block;margin-top:18px;padding:6px 22px;background:#fff;color:#11152a;font:1000 clamp(13px,2vw,22px) system-ui;letter-spacing:.22em;text-shadow:none;transform:skew(-12deg)}
+@keyframes duel-title-vanish{0%,70%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
+@keyframes duel-title-swipe{from{transform:translateX(-110%) rotate(-10deg)}to{transform:translateX(0) rotate(-10deg)}}
+@keyframes duel-title-pop{0%{opacity:0;transform:scale(.65) rotate(-8deg)}100%{opacity:1;transform:scale(1) rotate(-3deg)}}
+@media(prefers-reduced-motion:reduce){.duel-start-slash,.duel-start-panel{animation:none}.duel-start-title{animation:duel-title-vanish .65s linear both}}
