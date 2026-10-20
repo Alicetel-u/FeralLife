@@ -1,5 +1,5 @@
 import {failedChoiceKeys} from './choice-history.js';
-import {DUEL_INTRO,duelChoices,duelEncounterLines,duelReplyLines,duelEndingLines,duelOutcome} from './act-two-duel.js';
+import {DUEL_INTRO,duelChoices,duelEncounterLines,duelReplyLines,duelEndingLines,duelOutcome} from './act-two-duel.js?v=2026.10.20.09';
 import { saveStoryCheckpoint, storyCheckpointTarget } from './story-checkpoints.js';
 import { createActOne,advanceActOne,answerActOne } from './act-one.js';
 import {advance,addEvent,admit} from './simulation.js';
