@@ -947,7 +947,7 @@ function syncNormalBgm(){
   const duelLine=activeDialogue?.duel?eventConversation(activeDialogue)[eventView.index]:null;
   const yandereReveal=duelLine?.duelEnding==='yandere'&&duelLine.duelEndingPhase==='reveal';
   const dominationEnding=duelLine?.duelEnding==='domination';
-  const duel=!!activeDialogue?.duel&&!duelLine?.duelEnding;
+  const duel=!!activeDialogue?.duel&&(!duelLine?.duelEnding||duelLine.duelEnding==='yandere'&&!duelLine.duelEndingPhase);
   const victory=!bad&&!clock&&!title&&modal.open&&!!modal.querySelector('.trouble-victory,.act-one-complete');
   const trouble=!victory&&!bad&&!clock&&!title&&modal.open&&(!!modal.querySelector('.trouble-card')||activeDialogue?.actScene==='reply');
   const lunaFilm=modal.open?modal.querySelector('[data-act2-opening]'):null;
