@@ -33,7 +33,11 @@ test('duel voice plays faster with original pitch and normal scenes return to 1x
   const audio={play(){return Promise.resolve()},pause(){},removeAttribute(){},load(){}};sounds.push(audio);return audio;
  }});
  player.play(battle,'battle');
- assert.equal(sounds[0].playbackRate,1.16);
+ assert.equal(sounds[0].playbackRate,1.25);
+ const moku={speaker:'cat',text:'ニャ！',duelRound:0};
+ manifest[voiceLineKey(moku)]={file:'moku.mp3',performance:'duel-moku'};
+ player.play(moku,'moku');
+ assert.equal(sounds.at(-1).playbackRate,1.16);
  assert.equal(sounds[0].preservesPitch,true);
  player.play(normal,'normal');
  assert.equal(sounds.at(-1).playbackRate,1);
