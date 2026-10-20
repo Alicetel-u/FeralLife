@@ -558,9 +558,22 @@ function rewindDuel(s){
  Object.assign(next.actOne,{attempt:a.attempt+1,memory:[...a.memory],chosenChoices:actTwoChosen(s),failedChoices:[...failedChoiceKeys(s)],status:'playing',pending:null,rewindIntroPending:true,rewindIntroCursor:0,duel:{round:0,hearts:0,history:[],cursor:0}});
  next.ending=null;next.pending=null;next.events.forEach(e=>e.read=true);
  const intro=addEvent(next,'life','また、あの昼へ','玄関で、ルナが大家の袖を引いている。',[102]);
- Object.assign(intro,{actScene:'act2-rewind',cast:['hostess','cat'],stageOnly:true,lines:[m('……鍵はある。帳簿も、俺の手に……。'),l('surprised','大家さん？ まだ何もお願いしてないよ？'),...(a.failure==='duel-yandere'?[
-  {...m('……ルナは、気持ちが高まりすぎると、ああなっちまうのか。'),innerVoice:true},
-  {...m('今度は調子に乗って、期待させすぎないようにしねぇと……。'),innerVoice:true}
- ]:[]),m('……今日は、最後まで気を抜かねぇ。'),c('neutral','大家、彼氏役にそんな覚悟が要るニャ？')]});
+ Object.assign(intro,{actScene:'act2-rewind',cast:['hostess','cat'],stageOnly:true,lines:a.failure==='duel-yandere'?[
+  {...m('……っ！？ あの鍵の音が……消えた……？'),innerVoice:true},
+  n('目の前には、いつものけもの荘。閉じ込められた部屋ではなく、あの昼の玄関だった。'),
+  {...m('……戻ったのか。まだ、ルナが俺に頼み事をする前に……。'),innerVoice:true},
+  l('surprised','大家さん？ どうしたの？ まだ何もお願いしてないよ？'),
+  {...m('……ルナ。'),voicePerformance:'tragedy-shock'},
+  l('surprised','えっ？ な、なに？'),
+  {...m('……あいつは、守るって言葉をあんなふうに受け取っちまった。'),innerVoice:true},
+  {...m('今度は期待させすぎず、ちゃんと線を引かねぇと……。'),innerVoice:true},
+  m('……いや、なんでもねぇ。話なら聞く。ただし、できることとできないことは別だ。'),
+  c('neutral','大家、今日はやけに慎重ニャ。')
+ ]:[
+  m('……鍵はある。帳簿も、俺の手に……。'),
+  l('surprised','大家さん？ まだ何もお願いしてないよ？'),
+  m('……今日は、最後まで気を抜かねぇ。'),
+  c('neutral','大家、彼氏役にそんな覚悟が要るニャ？')
+ ]});
  return next;
 }
