@@ -306,8 +306,8 @@ test('attack subtitle waits for actual voice completion, not merely an idle flag
  });
  time=5000;assert.equal(stop.canAdvance(),false,'active speech cannot disappear');
  outcome='ended';assert.equal(stop.canAdvance(),false,'confirmed onended retains the attack tail');
- time+=349;assert.equal(stop.canAdvance(),false,'attack callout remains through the audible tail');
- time+=1;assert.equal(stop.canAdvance(),true,'attack callout releases after 350ms tail');
+ time+=449;assert.equal(stop.canAdvance(),false,'attack callout remains through the audible tail');
+ time+=1;assert.equal(stop.canAdvance(),true,'attack callout releases after 450ms tail');
  fn();assert.equal(advanced,1);stop();
  time=0;outcome='error';
  const failed=mountDuelPlayback({duelAttack:true,text:'失敗しても表示を維持！'},{
