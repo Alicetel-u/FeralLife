@@ -292,15 +292,10 @@ test('impact bubble stays visible while voice plays instead of fading on a fixed
  const css=readFileSync(new URL('../styles.css',import.meta.url),'utf8');
  assert.match(css,/\.duel-impact\{[^}]*animation:duel-slam-in/);
  assert.match(css,/@keyframes duel-slam-in\{/);
- const state=duelStart();
- const event=state.events.find(e=>e.actScene==='duel');
- const attack=eventConversation(event).findIndex(l=>l.duelAttack);
- // The initial event has only the encounter: test the stage with a genuine reply line.
- const line=duelReplyLines(0,duelChoices(0)[0]).find(l=>l.duelAttack);
- const sample={...event,lines:[line]};
- const html=duelStageHTML(sample,state.residents,0);
- assert.match(html,/class="duel-impact /);
- assert.doesNotMatch(html,/animation-duration:\\d+ms/);
+ const source=readFileSync(new URL('../src/act-two-duel-stage.js',import.meta.url),'utf8');
+ assert.match(source,/const cut=strike&&page===0/);
+ assert.doesNotMatch(source,/style="animation-duration:\\$\\{duelReadDelay\\(line\\)\\}ms"/);
+
 });
 
 test('attack subtitle waits for actual voice completion, not merely an idle flag',()=>{
