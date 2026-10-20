@@ -572,15 +572,17 @@ const BUILD_VERSION='2026.10.20.09';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
-  openModal(`<section class="act-screen debug-menu" style="height:100dvh;min-height:0;background:#111525;color:#f1eaf5;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:clamp(12px,3vw,32px);gap:clamp(4px,1dvh,10px);overflow:hidden">
-  <p style="letter-spacing:.2em;opacity:.65;margin:0;font-size:10px">DEVELOPER TOOLS</p>
-  <h2 id="modal-title" style="font-size:clamp(20px,4vw,32px);margin:0">${title}</h2>
-  <p style="opacity:.75;margin:0;text-align:center;font-size:12px">${subtitle}</p>
-  ${buttons.map(([id,label,attr])=>`<button type="button" ${attr}="${id}" style="width:min(480px,100%);min-height:44px;flex-shrink:0;background:#29314a;color:#fff;border:1px solid #71809a;border-radius:9px;font:inherit;padding:8px;cursor:pointer">${label}</button>`).join('')}
-  <button type="button" ${back} style="min-height:44px;flex-shrink:0;background:transparent;color:#c8c8d6;border:1px solid #777;padding:8px 24px;border-radius:8px">← 戻る</button><footer style="margin:0;text-align:center;font:11px/1.5 monospace;color:#aeb7d0">VERSION ${BUILD_VERSION}<br>最終更新 ${BUILD_UPDATED}</footer></section>`);
+  const tone=id=>id==='duel-direct'||id.includes('duel')?'battle':id==='boot'||id==='copy-boot'?'utility':id==='2'||id.startsWith('2:')?'chapter2':id==='1'||id.startsWith('1:')?'chapter1':'navigation';
+  openModal(`<section class="act-screen debug-menu persona-debug">
+    <div class="persona-debug-stripe" aria-hidden="true">DEBUG / SCENE SELECT / DEBUG /</div>
+    <header><span class="persona-debug-kicker">KEMONOSOU // DEVELOPER MODE</span><h2 id="modal-title">${title}</h2><p>${subtitle}</p></header>
+    <div class="persona-debug-actions">${buttons.map(([id,label,attr],i)=>`<button type="button" class="persona-debug-button tone-${tone(id)}" ${attr}="${eventEscape(id)}"><span class="persona-debug-index">${String(i+1).padStart(2,'0')}</span><span class="persona-debug-label">${eventEscape(label)}</span><span class="persona-debug-arrow" aria-hidden="true">↗</span></button>`).join('')}</div>
+    <button type="button" class="persona-debug-back" ${back}>← 戻る</button>
+    <footer>VERSION ${BUILD_VERSION}　/　${BUILD_UPDATED}</footer>
+  </section>`);
 }
 function showDeveloperMenu(){
-  debugMenuPage('開発者メニュー','デバッグ機能を選択してください。',[['scenes','シーンセレクト','data-debug-tool'],['boot','起動診断・計測結果のコピー','data-debug-tool']], 'data-debug-back');
+  debugMenuPage('開発者メニュー','テストしたい項目を選択',[['duel-direct','第二幕：漢気ミニゲームへ直行','data-debug-tool'],['scenes','シーンセレクト','data-debug-tool'],['boot','起動診断・計測結果のコピー','data-debug-tool']], 'data-debug-back');
 }
 function showBootDiagnostics(){
   debugMenuPage('起動診断','この端末で今回の起動にかかった時間です。結果は自動送信しません。',[['copy-boot','計測結果をコピー','data-debug-tool']], 'data-debug-tools-back');
@@ -689,7 +691,7 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-debug-back')){showGameTitle();return;}
   if(button.hasAttribute('data-debug-tools-back')){showDeveloperMenu();return;}
   if(button.hasAttribute('data-debug-chapters-back')){showDebugChapterSelect();return;}
-  if(button.dataset.debugTool==='scenes'){showDebugChapterSelect();return;}
+  if(button.dataset.debugTool==='duel-direct'){startDeveloperScene('2:duel-choices');return;}\n  if(button.dataset.debugTool==='scenes'){showDebugChapterSelect();return;}
   if(button.dataset.debugTool==='boot'){showBootDiagnostics();return;}
   if(button.dataset.debugTool==='copy-boot'){copyBootDiagnostics(button);return;}
   if(button.dataset.debugChapter){showDebugSceneSelect(button.dataset.debugChapter);return;}
