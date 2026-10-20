@@ -62,7 +62,10 @@ export function duelStageHTML(event,residents,index=0,page=0){
  const {line,round,ending,hearts,before,entrance,defeated,showResult}=duelFrame(event,index);
  // The opening conversation belongs to the ordinary full-size character stage.
  // Only switch to the mini-game when the first opponent actually speaks.
- if(line.duelRound===undefined&&!ending)return eventStageHTML(event,residents,index,page,{cinematic:true});
+ if(line.duelRound===undefined&&!ending){
+  const stage=eventStageHTML(event,residents,index,page,{cinematic:true});
+  return stage.replace('class="event-stage ','class="event-stage duel-opening-stage ').replace(/^(<div[^>]*>)/,'$1<img class="duel-opening-background" src="assets/apartments.png" alt="">');
+ }
  // Ordinary Luna comes first. The outcome alone must not reveal the final CG.
  if(ending==='yandere'&&line.duelStoryDay&&line.duelEndingPhase!=='reveal'){
   const day=line.duelStoryDay;

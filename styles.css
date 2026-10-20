@@ -1997,3 +1997,6 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @keyframes duel-cat-paw{0%{opacity:0;transform:scale(1.8) rotate(-25deg)}25%,65%{opacity:1;transform:scale(1) rotate(-12deg)}100%{opacity:0;transform:scale(.8) rotate(8deg)}}
 @media(prefers-reduced-motion:reduce){.duel-set.duel-cat-ultimate::before{display:none}.duel-paw-burst svg{animation:none;opacity:.75;transform:none}}
 .duel-impact.duel-cat-ultimate strong>span{display:block;white-space:nowrap}
+/* The pre-duel request happens at the apartment entrance, just like its rewind. */
+.game-ink .conversation-modal .event-stage.duel-opening-stage{background:#575447}
+.duel-opening-background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:-1;pointer-events:none}

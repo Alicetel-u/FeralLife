@@ -323,6 +323,7 @@ test('duel intro uses portraits until first opponent, including a replay after r
  for(let i=0;i<firstRound;i++){
   const html=duelStageHTML(intro,first.residents,i);
   assert.match(html,/stage-character/,'intro should show full-size character portraits');
+  assert.match(html,/class="duel-opening-background" src="assets\/apartments.png"/,'intro takes place outside at the apartment entrance');
   assert.doesNotMatch(html,/duel-field|duel-enemy/,'intro must not show mini-game arena');
  }
  assert.match(duelStageHTML(intro,first.residents,firstRound),/duel-field/);
@@ -333,6 +334,7 @@ test('duel intro uses portraits until first opponent, including a replay after r
  const restarted=replay.events.find(e=>e.id===replay.actOne.pending?.eventId);
  assert.ok(restarted);
  assert.match(duelStageHTML(restarted,replay.residents,0),/stage-character/);
+ assert.match(duelStageHTML(restarted,replay.residents,0),/duel-opening-background/);
 });
 
 test('Luna high-heart BAD develops through ordinary scenes and reserves the CG for its final reveal',()=>{
