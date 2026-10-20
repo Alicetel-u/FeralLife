@@ -131,7 +131,7 @@ export function mountDuelPlayback(line,{advance,blocked,voiceOutcome=()=>null,sc
  let timer,stopped=false;
  // Keep the final audible syllable and callout on screen after media 'ended'.
  // Some mobile decoders signal ended while their buffered output is still draining.
- const ATTACK_TAIL_MS=350;
+ const ATTACK_TAIL_MS=450;
  let voiceEndedAt=null;
  const canAdvance=()=>{
   if(stopped)return false;
