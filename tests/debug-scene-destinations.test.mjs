@@ -48,7 +48,9 @@ test('debug event names match the scenes they actually open in both chapters',()
      assert.ok(reply,target+' can answer immediately');assert.equal(context.state.actOne.status,'playing');
     }
    }else if(['ash','dinner','bag','contract'].includes(scene)){
-    assert.equal(context.landed?.actScene,scene,target);assert.equal(context.landed?.title,label,target);
+    const events=chapter==='1'?ACT_ONE_EVENTS:ACT_TWO_EVENTS;
+    assert.equal(context.landed?.actScene,scene,target);assert.equal(context.landed?.title,events[scene].title,target);
+    assert.match(label,/^トラブル開始｜/,target);
    }else if(scene==='epilogue')assert.equal(context.landed?.actScene,chapter==='1'?'epilogue':'act2-epilogue');
    else if(scene==='arrival')assert.equal(context.landed?.actScene,'act2-prologue');
    else if(scene==='duel')assert.equal(context.landed.actScene,'duel');

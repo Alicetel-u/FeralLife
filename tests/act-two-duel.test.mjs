@@ -17,6 +17,33 @@ function duelStart(){
  advanceActTwo(s,100);
  return s;
 }
+
+test('all twelve answers give the three characters distinct exchanges with stable playback markers',()=>{
+ const spoken={hostess:new Set(),cat:new Set(),manager:new Set()},assists=new Set();
+ for(let round=0;round<4;round++)for(const choice of duelChoices(round)){
+  const lines=duelReplyLines(round,choice),weak=choice.delta<0;
+  assert.equal(lines.length,weak?7:5,'keep the existing conversation pace');
+  assert.ok(lines.every(line=>line.duelRound===round&&typeof line.text==='string'&&line.text.length));
+  assert.equal(lines.filter(line=>line.duelDefeated).length,1);
+  assert.equal(lines.filter(line=>line.duelHeartUpdate).length,1);
+  assert.deepEqual(JSON.parse(JSON.stringify(lines)),lines,'saved dialogue needs no random state');
+  const reaction=lines.find(line=>line.duelHeartUpdate);
+  assert.equal(reaction.speaker,'hostess');
+  assert.equal(reaction.emotion,weak?'tired':choice.delta>=3?'shy':'neutral');
+  for(const speaker of Object.keys(spoken)){
+   const line=lines.filter(line=>line.speaker===speaker).at(-1);
+   assert.ok(!spoken[speaker].has(line.text),`${speaker} repeats across answers`);
+   spoken[speaker].add(line.text);
+  }
+  if(weak){
+   const attack=lines.find(line=>line.duelAttack);
+   assert.equal(attack.speaker,'cat');assert.equal(attack.text,attack.duelAttack);
+   assert.ok(!assists.has(attack.text));assists.add(attack.text);
+  }
+ }
+ for(const speeches of Object.values(spoken))assert.equal(speeches.size,12);
+ assert.equal(assists.size,4);
+});
 test('81 routes preserve saves at every round, resolve only after four enemies, and reach all outcomes',()=>{
  const counts={clear:0,yandere:0,domination:0};let ultimateSafe=0;
  for(let pattern=0;pattern<81;pattern++){

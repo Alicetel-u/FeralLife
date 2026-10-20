@@ -636,7 +636,10 @@ function showDebugSceneSelect(chapter,page=0){
       ['duel-loop','巻き戻り｜漢気バトルBAD後','rewind'],
       ['epilogue','エンディング｜第二幕','ending']
     ];
-  const buttons=options.map(([id,label,kind])=>[chapter+':'+id,label,'data-debug-scene',kind]);
+  const pageCount=Math.ceil(options.length/4),current=Math.max(0,Math.min(pageCount-1,page));
+  const buttons=options.slice(current*4,current*4+4).map(([id,label,kind])=>[chapter+':'+id,label,'data-debug-scene',kind]);
+  if(current>0)buttons.push([chapter+':'+(current-1),'前のページ','data-debug-scene-page']);
+  if(current<pageCount-1)buttons.push([chapter+':'+(current+1),'次のページ','data-debug-scene-page']);
   debugMenuPage(chapter==='1'?'第一幕｜シーンセレクト':'第二幕｜シーンセレクト','色で移動先を分類。トラブル開始と選択肢直前は別の地点です。',buttons,'data-debug-chapters-back');
 }
 function startDeveloperScene(target){

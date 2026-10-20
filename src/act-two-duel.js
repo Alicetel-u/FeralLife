@@ -21,13 +21,68 @@ export const DUEL_ROUNDS=[
 export const duelOutcome=hearts=>hearts>=10?'yandere':hearts<=1?'domination':'clear';
 export const duelChoices=round=>DUEL_ROUNDS[round]?.choices.map(([id,label,delta])=>({id,label,attack:label,delta}))||[];
 export function duelEncounterLines(round){return DUEL_ROUNDS[round].lines.map(line=>({...line,duelRound:round}));}
+// Each answer has its own short exchange. Stored transcripts remain unchanged on reload.
+const DUEL_REPLIES={
+ vow:{
+  retreat:'花束男は「明日まで！？」と声を裏返らせ、花束を抱えて走り去った。',
+  luna:'明日も守ってくれるんだ……♡ じゃあ、朝いちばんに会いに行ってもいい？',emotion:'shy',
+  moku:'大家、一日だけの彼氏が明日の予約まで取ってるニャ。',manager:'警備の話だ！！ 予約は取ってねぇ！'},
+ boundary:{
+  retreat:'花束男はルナの「婚約してません」を聞くと、花束で顔を隠して引き返した。',
+  luna:'好みを聞かれただけなのにね。……うん、婚約してないって、ちゃんと言えた。',emotion:'neutral',
+  moku:'おはようで婚約なら、モクは近所中と結婚してるニャ。',manager:'だから挨拶だけで籍は入らねぇんだよ。'},
+ help:{
+  windup:'勝手にモクの縁談をまとめるなニャ。',attack:'その縁談、お断りニャ！！',
+  retreat:'廊下から跳んできたモクの体当たりに、花束男は花びらを散らして逃げ出した。',
+  luna:'あたしの代わりにモクちゃんを差し出すの……？ 大家さん、そこは頑張ってよ。',emotion:'tired',
+  moku:'仲人料じゃなくて迷惑料を払うニャ。',manager:'悪かった！ 次から自分で断る！'},
+ shield:{
+  retreat:'買い物王は抱き枕をぎゅっと抱え、「返品だ！」と叫びながら遠ざかった。',
+  luna:'じゃあ、この笑顔は大家さんにあげる♡ ……お金じゃ買えないんだもんね？',emotion:'shy',
+  moku:'無料の笑顔がいちばん高くつきそうニャ。',manager:'勝手に見積もるな。俺は買ってねぇ。'},
+ receipt:{
+  retreat:'買い物王はレシートと抱き枕を交互に見て、通販の問い合わせ先を探しながら帰っていった。',
+  luna:'贈り物を受け取ったら、断っちゃいけない気がしてた。……そこは別でいいんだね。',emotion:'neutral',
+  moku:'じゃあツナ缶をもらっても、家賃は払わなくていいニャ？',manager:'それは別会計にならねぇ。払え。'},
+ discount:{
+  windup:'便乗して貢がせる相手を増やすなニャ。',attack:'押し売りまとめて返品ニャ！！',
+  retreat:'モクが廊下から跳びかかった。買い物王は抱き枕を盾にしながら、慌てて通りへ逃げた。',
+  luna:'大家さんまで貢いでもらう側に回らないでよ。……あたしを断る話はどこ行ったの？',emotion:'tired',
+  moku:'大家の抱き枕も売って穴埋めするニャ？',manager:'売るな！！ それで家賃の穴が埋まるか！'},
+ future:{
+  retreat:'勧誘男は申込書を背中に隠し、「またの機会に」と言い残して早足で去った。',
+  luna:'あたしの未来、そんなふうに考えてくれるんだ。……大家さんの隣も、空けといてね♡',emotion:'shy',
+  moku:'値札を剥がしたら、大家の隣に予約が入ったニャ。',manager:'隣室の入居審査みたいに言うな！'},
+ cancel:{
+  retreat:'勧誘男は開きかけたパンフレットを閉じ、営業用の笑顔のまま後ずさった。',
+  luna:'断っても話を続けられるから困ってたの。……あたし、もう入らないって言う。',emotion:'neutral',
+  moku:'モクも掃除当番を断ったら終了でいいニャ？',manager:'それは勧誘じゃなくて当番だ。ほうきを持て。'},
+ sleep:{
+  windup:'講座は休講ニャ。いまから実技だけやるニャ。',attack:'迷惑営業、おやすみニャ！！',
+  retreat:'モクは廊下を蹴って飛び出した。勧誘男は体当たりに押し出され、会員募集の声ごと遠ざかった。',
+  luna:'大家さん、断るところまでモクちゃんに丸投げ……。無料だからって頼りすぎじゃない？',emotion:'tired',
+  moku:'無料なのは昼寝だけニャ。起こした分は有料ニャ。',manager:'さっきまで普通に起きてただろ！'},
+ ultimate:{
+  retreat:'黒服は大家の剣幕に一歩退き、何か言い返そうとして、結局そのまま踵を返した。',
+  luna:'……あたしのために、そこまでしてくれるんだ。今の大家さん、ずっと見てたい……♡',emotion:'shy',
+  moku:'奥義のあともその構えニャ？ 肩、つるニャ。',manager:'……先に言え。もうちょっとつってる。'},
+ leave:{
+  retreat:'黒服はルナの返事を聞き、舌打ちをひとつ残して通りの向こうへ消えた。',
+  luna:'うん。忘れ物は受け取る。でも働きには戻らない。……あたしが、そう決めた。',emotion:'neutral',
+  moku:'ついでにモクの暮らしも、昼寝中心に決めたいニャ。',manager:'お前は最初からそう暮らしてるだろ。'},
+ catapult:{
+  windup:'受付から追い出しまでモク一匹に任せるなニャ。',attack:'お迎えごとお見送りニャ！！',
+  retreat:'モクが廊下から一直線に跳んだ。黒服は体当たりによろめき、振り返る間もなく道路へ逃げた。',
+  luna:'最後までモクちゃん任せなんだ……。大家さん、せめてあたしの前に立っててほしかった。',emotion:'tired',
+  moku:'本日の営業は終了ニャ。大家、モクの肩を揉むニャ。',manager:'……はいはい。まず爪をしまってくれ。'}
+};
 export function duelReplyLines(round,choice){
- const weak=choice.delta<0;
+ const weak=choice.delta<0,reply=DUEL_REPLIES[choice.id];
  return [duelLine('manager',choice.label,weak?'neutral':'angry',weak?{duelWindup:true}:{duelAttack:choice.label,duelRank:choice.delta===7?4:choice.delta===3?3:2}),
-  ...(weak?[{...dc('大家の口座も度胸も残高不足ニャ。'),duelWindup:true},duelLine('cat','出張お断りキックニャ！！','angry',{duelAttack:'出張お断りキックニャ！！',duelRank:1})]:[]),
-  duelLine('narrator',weak?'廊下のモクが跳び出した。一直線の体当たりに、男は道路の向こうへすっ飛んだ。':'大家のひと言に男はのけぞり、足をもつれさせて逃げていった。','neutral',{duelRound:round,duelDefeated:true,duelPlayback:true}),
-  duelLine('hostess',weak?'……大家さんより、モクちゃんに頼む方が早いね。':choice.delta>=3?'今の、ずるい……♡ もっと言ってほしいな。':'ありがとう。……あたしからも、ちゃんと断るね。',weak?'tired':'shy',{duelRound:round,duelHeartUpdate:true}),
-  dc(weak?'助っ人の報酬はツナ缶ニャ。':'大家、決め顔のまま鼻の下を伸ばすなニャ。'),dm(weak?'家賃と相殺な。':'伸ばしてねぇ！！')
+  ...(weak?[{...dc(reply.windup),duelWindup:true},duelLine('cat',reply.attack,'angry',{duelAttack:reply.attack,duelRank:1})]:[]),
+  duelLine('narrator',reply.retreat,'neutral',{duelDefeated:true,duelPlayback:true}),
+  duelLine('hostess',reply.luna,reply.emotion,{duelHeartUpdate:true}),
+  dc(reply.moku),dm(reply.manager)
  ].map(line=>({...line,duelRound:round}));
 }
 // This deterioration belongs only to the high-heart BAD branch.
