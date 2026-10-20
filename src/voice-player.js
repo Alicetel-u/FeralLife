@@ -74,7 +74,21 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
       if(mobile||AudioContextType){mobileAudio ||= makeAudio();audio=mobileAudio;audio.src=clip.file;clearPrepared();}else if(prepared?.file===clip.file){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clip.file;}// Accelerate only battle dialogue. Playback rate preserves the original pitch
       // and reuses existing recordings, so there is no additional TTS cost.
       const duelClip=clip.performance?.startsWith('duel-');
-      audio.playbackRate=line?.duelAttack?1.75:duelClip?(clip.speaker==='cat'||clip.performance?.startsWith('duel-moku')?1.16:1.25):1;
+      const isAttack=!!line?.duelAttack;
+      const battleSpeed=isAttack?1.75:duelClip?(clip.speaker==='cat'||clip.performance?.startsWith('duel-moku')?1.16:1.25):1;
+      audio.playbackRate=battleSpeed;
+      // Battle recordings contain a short opening pad. Seek only after metadata
+      // becomes available, keeping the attack voice responsive on mobile.
+      // Slow the final syllable slightly instead of chopping it at 1.75x.
+      audio.onloadedmetadata=isAttack?()=>{
+        if(version!==token||audio!==mobileAudio&&mobile||!Number.isFinite(audio.duration))return;
+        if(audio.duration>0.65&&audio.currentTime<0.05){try{audio.currentTime=Math.min(0.12,audio.duration*0.08);}catch{}}
+      }:null;
+      audio.ontimeupdate=isAttack?()=>{
+        if(version!==token||!Number.isFinite(audio.duration))return;
+        const remaining=audio.duration-audio.currentTime;
+        audio.playbackRate=remaining>0&&remaining<0.48?1.35:battleSpeed;
+      }:null;
       audio.preservesPitch=true;
       audio.mozPreservesPitch=true;
       audio.webkitPreservesPitch=true;
