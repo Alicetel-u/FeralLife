@@ -882,10 +882,11 @@ function syncNormalBgm(){
   // Quiet film cuts reduce Foley only; keep the uneasy BGM continuous.
   const filmPaused=!!lunaFilm&&lunaFilm.dataset.paused==='true';
   const firstRewindUneasy=lunaFilm||!bad&&!clock&&!title&&!victory&&!trouble&&['rewind','act2-rewind'].includes(activeDialogue?.actScene)&&state.actOne?.attempt===2&&state.actOne?.rewindIntroPending;
-  // Use Moku's theme only when her portrait is actually visible in the dialogue.
-  // Trouble stings always take precedence over character themes.
+  // Luna's theme holds through her shared conversations with Moku.
+  // Dedicated scene cues take precedence over character themes.
+  const lunaVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="hostess"]');
   const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
-  return normalBgm.setScene(document.hidden||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad?'bad':title?'title':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':mokuVisible?'moku':bedCue(state?.actOne));
+  return normalBgm.setScene(document.hidden||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad?'bad':title?'title':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
 }
 modal.addEventListener('luna-film-phase',()=>{syncNormalBgm();});
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});

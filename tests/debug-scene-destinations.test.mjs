@@ -12,6 +12,7 @@ const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 test('debug event names match the scenes they actually open in both chapters',()=>{
  const source=app.slice(app.indexOf('function showDebugSceneSelect('),app.indexOf("document.addEventListener('click',e=>{"));
  const context={ACT_ONE_EVENTS,ACT_TWO_EVENTS,createActOne,advanceActOne,answerActOne,rewindBeforeFire,beginActTwo,advanceActTwo,answerActTwo,rewindActTwo,eventConversation,developerMode:false,
+  modal:{querySelector:selector=>selector==='.persona-debug-actions'?{insertAdjacentHTML:(_,html)=>context.pagination=html}:null},
   debugMenuPage:(title,detail,options)=>context.options=options,resetActState:next=>context.state=next,
   showEvent:(id,index)=>{context.index=index;context.landed=context.state.events.find(e=>e.id===id);},showOpening:()=>context.landed='intro',
   showActTitle:()=>context.landed='unexpected-title',showActTwoTitle:()=>context.landed='unexpected-title',showActTwoOpening:()=>context.landed='opening',
@@ -23,6 +24,7 @@ test('debug event names match the scenes they actually open in both chapters',()
    vm.runInContext(`showDebugSceneSelect('${chapter}',${page})`,context);
    destinations.push(...context.options.filter(option=>option[2]==='data-debug-scene'));
    assert.ok(context.options.length<=6,'mobile pages have a bounded number of controls');
+   assert.equal((context.pagination.match(/data-debug-scene-page=/g)||[]).length,2);
   }
   if(chapter==='2'){assert.equal(destinations.length,9);assert.ok(destinations.every(([target])=>!target.includes('contract')));}
   for(const [target,label] of destinations){
