@@ -588,7 +588,7 @@ function debugMenuPage(title,subtitle,buttons,back){
   openModal(`<section class="act-screen debug-menu persona-debug">
     <div class="persona-debug-stripe" aria-hidden="true">DEBUG / SCENE SELECT / DEBUG /</div>
     <header><span class="persona-debug-kicker">KEMONOSOU // DEVELOPER MODE</span><h2 id="modal-title">${title}</h2><p>${subtitle}</p></header>
-    <div class="persona-debug-actions">${buttons.map(([id,label,attr,kind],i)=>`<button type="button" class="persona-debug-button tone-${tone(id,kind)}" ${attr}="${eventEscape(id)}"><span class="persona-debug-index">${String(i+1).padStart(2,'0')}</span><span class="persona-debug-label">${eventEscape(label)}</span><span class="persona-debug-arrow" aria-hidden="true">↗</span></button>`).join('')}</div>
+    <div class="persona-debug-actions">${buttons.map(([id,label,attr,kind],i)=>`<button type="button" class="persona-debug-button tone-${tone(id,kind)}" ${attr}="${escape(id)}"><span class="persona-debug-index">${String(i+1).padStart(2,'0')}</span><span class="persona-debug-label">${escape(label)}</span><span class="persona-debug-arrow" aria-hidden="true">↗</span></button>`).join('')}</div>
     <button type="button" class="persona-debug-back" ${back}>← 戻る</button>
     <footer>VERSION ${BUILD_VERSION}　/　${BUILD_UPDATED}</footer>
   </section>`);
