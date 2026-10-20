@@ -1,4 +1,4 @@
-import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.20.34';
+import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.20.36';
 import {failedChoiceKeys} from './choice-history.js';
 import {secondActLife} from './act-two-life.js';
 import {storyScreenHTML} from './story-screens.js';
@@ -19,8 +19,8 @@ import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVic
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.20.35';
-import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.20.34';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.20.36';
+import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.20.36';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
 import { debtEndingHTML, startDebtEnding } from './debt-ending.js';
@@ -121,6 +121,20 @@ function startWorldArt(){
 }
 function paintBootProgress(percent,label){window.kemonoBoot?.update(percent,label);}
 window.kemonoBoot?.modulesReady();
+// Keep the decoded elements themselves: START must reveal a complete poster.
+let titleArtImages=[],titleArtReady;
+function prepareTitleArt(){
+  if(titleArtReady)return titleArtReady;
+  const sources=['assets/apartments.png',EVENT_EXPRESSIONS.hostess.happy,EVENT_EXPRESSIONS.sister.happy,EVENT_EXPRESSIONS.cat.tired];
+  titleArtImages=sources.map(src=>{
+    const image=new Image();
+    image.alt='';image.decoding='async';image.fetchPriority='high';
+    image.src=src;
+    return image;
+  });
+  titleArtReady=Promise.all(titleArtImages.map(image=>image.decode()));
+  return titleArtReady;
+}
 const talk = createTalk(restored ? (state.events[0]?.id || 0) : 0);
 const modal = $('modal');
 if(state.actOne){
@@ -462,6 +476,12 @@ function showGameTitle(){
   debugTapCount=0;
   const continuing=state.actOne.started||state.actOne.chapter===2;
   openModal(`<section class="act-screen game-title graphic-title title-refined"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true"></span><span>つづきから</span></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true"></span><span>はじめから</span></button><button data-title-help><span class="title-menu-mark" aria-hidden="true"></span><span>遊び方</span></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div></section>`);
+  modal.querySelectorAll('.game-title img').forEach((placeholder,index)=>{
+    const image=titleArtImages[index];
+    if(!image)return;
+    image.className=placeholder.className;image.alt=placeholder.alt;
+    placeholder.replaceWith(image);
+  });
   modal.querySelector('.title-actions button')?.focus({preventScroll:true});
 }
 function showActTwoOpening(){
@@ -582,7 +602,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.20.34';
+const BUILD_VERSION='2026.10.20.36';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -1033,6 +1053,16 @@ updateCamera();updateRooms();updateUI();updateJournal();save();requestAnimationF
 if(restored)toast('前回の観察記の続きから。住人たちは、ここで待っていました。');
 async function finishBoot(){
 
+if(!previewType){
+  paintBootProgress(95,'タイトル画像を準備しています');
+  try{await prepareTitleArt();}
+  catch{
+    paintBootProgress(95,'画像を読み込めませんでした。再読み込みしてください');
+    const diagnostics=$('boot-diagnostics');
+    if(diagnostics){diagnostics.hidden=false;diagnostics.open=true;}
+    return;
+  }
+}
 paintBootProgress(100,'準備完了');
 // Two animation frames allow the 100% state to paint before the exit transition.
 await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));

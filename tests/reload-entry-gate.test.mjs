@@ -17,3 +17,59 @@ test('a restored fire waits at START without replaying or saving before the titl
   assert.equal(context.endingShown,false);
   assert.equal(context.state.ending,true);
 });
+
+function titleBootHarness(){
+  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
+  const setup=app.slice(app.indexOf('let titleArtImages='),app.indexOf('const talk ='));
+  const boot=app.slice(app.indexOf('async function finishBoot(){'),app.indexOf('\nfinishBoot();'));
+  const decodes=[],images=[],progress=[];
+  let start,shown=0,unlocks=0;
+  const gate={hidden:true,remove(){this.removed=true;},querySelector:()=>({addEventListener:(type,handler)=>{start=handler;}})};
+  const screen={classList:{add(){}},remove(){this.removed=true;}};
+  const diagnostics={hidden:true,open:false,remove(){}};
+  const elements={'entry-gate':gate,'boot-screen':screen,'boot-diagnostics':diagnostics};
+  const context={Image:class{constructor(){images.push(this);}decode(){return new Promise((resolve,reject)=>decodes.push({resolve,reject}));}},
+    EVENT_EXPRESSIONS:{hostess:{happy:'luna.png'},sister:{happy:'nemu.png'},cat:{tired:'moku.png'}},
+    previewType:null,paintBootProgress:(percent,label)=>progress.push({percent,label}),$:id=>elements[id],
+    requestAnimationFrame:fn=>fn(),setTimeout:fn=>fn(),matchMedia:()=>({matches:true}),
+    document:{documentElement:{classList:{remove(){}}},getElementById:id=>elements[id]},
+    window:{kemonoBoot:{destroy(){}}},location:{search:''},URLSearchParams,
+    state:{actOne:{}},startWorldArt(){},showGameTitle:()=>shown++,normalBgm:{unlock:()=>{unlocks++;return Promise.resolve();}}};
+  vm.createContext(context);vm.runInContext(setup+boot,context);
+  return {context,decodes,images,progress,gate,screen,diagnostics,start:()=>start,shown:()=>shown,unlocks:()=>unlocks};
+}
+
+test('START stays hidden until every title image is decoded, then opens the title in the audio-unlock click',async()=>{
+  const h=titleBootHarness(),pending=h.context.finishBoot();
+  assert.equal(h.images.length,4);
+  assert.deepEqual(h.images.map(image=>image.src),['assets/apartments.png','luna.png','nemu.png','moku.png']);
+  assert.equal(h.gate.hidden,true);assert.equal(h.screen.removed,undefined);
+  h.decodes.slice(0,3).forEach(decode=>decode.resolve());
+  await Promise.resolve();await Promise.resolve();
+  assert.equal(h.gate.hidden,true,'one undecoded image still holds the loading screen');
+  assert.ok(h.progress.every(step=>step.percent<100));
+  h.decodes[3].resolve();await pending;
+  assert.equal(h.gate.hidden,false);assert.equal(h.screen.removed,true);
+  assert.equal(h.shown(),0,'title still waits for the trusted START gesture');
+  await h.context.prepareTitleArt();assert.equal(h.images.length,4,'decoded images are retained');
+  h.start()();assert.equal(h.shown(),1);assert.equal(h.unlocks(),1);
+});
+
+test('a failed title image keeps the loading screen and exposes reload instead of an incomplete title',async()=>{
+  const h=titleBootHarness(),pending=h.context.finishBoot();
+  h.decodes[0].reject(new Error('image download failed'));await pending;
+  assert.equal(h.gate.hidden,true);assert.equal(h.screen.removed,undefined);
+  assert.equal(h.diagnostics.hidden,false);assert.equal(h.diagnostics.open,true);
+  assert.match(h.progress.at(-1).label,/再読み込み/);assert.equal(h.shown(),0);
+});
+
+test('title uses the same decoded image elements on first display and return visits',()=>{
+  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
+  const source=app.slice(app.indexOf('function showGameTitle(){'),app.indexOf('function showActTwoOpening(){'));
+  const images=Array.from({length:4},()=>({})),replaced=[];
+  const context={debugTapCount:0,state:{actOne:{started:false}},EVENT_EXPRESSIONS:{hostess:{happy:'luna'},sister:{happy:'nemu'},cat:{tired:'moku'}},
+    titleArtImages:images,openModal(){},modal:{querySelector:()=>null,querySelectorAll:()=>images.map((_,i)=>({className:i===0?'title-city':i===3?'title-moku':'',alt:'',replaceWith:image=>replaced.push(image)}))}};
+  vm.createContext(context);vm.runInContext(source+'\nshowGameTitle();showGameTitle();',context);
+  assert.deepEqual(replaced,[...images,...images]);
+  assert.equal(images[0].className,'title-city');assert.equal(images[3].className,'title-moku');
+});
