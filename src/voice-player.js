@@ -71,7 +71,14 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     if(!prefs.enabled||!clip)return;
     const version=token;
     try{
-      if(mobile||AudioContextType){mobileAudio ||= makeAudio();audio=mobileAudio;audio.src=clip.file;clearPrepared();}else if(prepared?.file===clip.file){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clip.file;}audio.volume=Math.min(1,prefs.volume*speakerBoost());connectMobile(audio);active=true;onPlaybackChange(true);
+      if(mobile||AudioContextType){mobileAudio ||= makeAudio();audio=mobileAudio;audio.src=clip.file;clearPrepared();}else if(prepared?.file===clip.file){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clip.file;}// Accelerate only battle dialogue. Playback rate preserves the original pitch
+      // and reuses existing recordings, so there is no additional TTS cost.
+      const duelClip=clip.performance?.startsWith('duel-');
+      audio.playbackRate=duelClip?1.16:1;
+      audio.preservesPitch=true;
+      audio.mozPreservesPitch=true;
+      audio.webkitPreservesPitch=true;
+      audio.volume=Math.min(1,prefs.volume*speakerBoost());connectMobile(audio);active=true;onPlaybackChange(true);
       startPlayback(version);
     }catch{active=false;onPlaybackChange(false);}
   };
