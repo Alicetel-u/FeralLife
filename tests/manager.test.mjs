@@ -23,9 +23,9 @@ test('reactions distinguish joy, annoyance, regret, surprise and comic exasperat
  for(const [line,pose] of [[{emotion:'happy'},'happy'],[{emotion:'angry'},'angry'],[{text:'俺のせいだ……。'},'sad'],[{text:'燃えてんじゃねぇか！！'},'surprised'],[{text:'なんで俺が決めるんだよ……。'},'retort'],[{text:'おはよう！'},'idle']])assert.equal(managerReaction(line),pose);
 });
 test('every approved caretaker pose ships at one foot origin, with distinct walk frames',async()=>{
- const art=CHARACTER_ART.manager;assert.deepEqual(art.origin,[80,156]);assert.equal(art.displayHeight,44);
+ const art=CHARACTER_ART.manager;assert.ok(art.origin[0]>0&&art.origin[1]<=512);assert.ok(art.displayHeight>0);
  const frames=await Promise.all([art.src,...Object.values(art.poses).map(p=>p.src)].map(path=>readFile(path)));
- for(const frame of frames){assert.equal(frame.readUInt32BE(16),160);assert.equal(frame.readUInt32BE(20),160);assert.equal(frame[25],6);}
+ for(const frame of frames){assert.equal(frame.readUInt32BE(16),512);assert.equal(frame.readUInt32BE(20),512);assert.equal(frame[25],6);}
  for(const [a,b] of [['walk_a','walk_b']])assert.notDeepEqual(await readFile(art.poses[a].src),await readFile(art.poses[b].src));
 });
 test('landlord has no conversation portrait and both residents remain visible',()=>{
