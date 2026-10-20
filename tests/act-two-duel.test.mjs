@@ -109,10 +109,10 @@ test('Luna high-heart BAD develops through ordinary scenes and reserves the CG f
  for(const id of ['vow','shield','future','ultimate'])answerActTwo(s,s.actOne.pending.eventId,id);
  const ending=s.events.find(e=>e.duelOutcome==='yandere'),lines=eventConversation(ending);
  const phases=[...new Set(lines.map(l=>l.duelEndingPhase).filter(Boolean))];
- assert.deepEqual(phases,['relief','closeness','dependence','interference','isolation','reveal']);
+ assert.deepEqual(phases,['day-1','day-2','day-3','day-4','day-5','reveal']);
  const start=lines.findIndex(l=>l.duelEnding),reveal=lines.findIndex(l=>l.duelEndingPhase==='reveal');
- assert.ok(reveal-start>=40,'emotional deterioration is developed before the final image');
- assert.equal(lines.length-reveal,4,'only the final four lines use the yandere CG');
+ assert.equal(reveal-start,10,'five daily exchanges precede the final image');
+ assert.equal(lines.length-reveal,1,'only the final reveal uses the yandere CG');
  for(let index=start;index<lines.length;index++)for(let page=0;page<messagePages(lines[index].text).length;page++){
   const html=duelStageHTML(ending,s.residents,index,page);
   assert.match(html,/stage-bubble/);assert.match(html,/stage-speaker/);
@@ -143,7 +143,7 @@ test('unfinished legacy yandere saves resume the expanded ending without replayi
   const restored=JSON.parse(JSON.stringify(s));assert.equal(refreshDuelYandereEnding(restored),true);
   const updated=restored.events.find(e=>e.id===event.id);
   assert.equal(JSON.stringify(updated.lines.slice(0,start)),prefix);
-  assert.equal(updated.lines[start].duelEndingPhase,'relief');
+  assert.equal(updated.lines[start].duelEndingPhase,'day-1');
   assert.equal(restored.actOne.duel.cursor,cursorInEnding?start:0);
   assert.equal(JSON.stringify(restored.actOne.duel.history),history);
   assert.equal(JSON.stringify(restored.actOne.rollbackPoint),checkpoint);

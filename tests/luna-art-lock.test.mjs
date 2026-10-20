@@ -25,16 +25,16 @@ test('the original Luna image bytes cannot silently be replaced', async () => {
   assert.equal(sha, approvedBlob, 'Luna art changed: approve the replacement before updating this baseline');
 });
 
-test('Luna dialogue preserves the approved neutral layout and changes emotion portraits', () => {
+test('Luna dialogue uses consistent bust framing for neutral and expressive portraits', () => {
   const event = {
     id: 1, cast: ['hostess'], rooms: [102],
     lines: [{ speaker: 'hostess', emotion: 'neutral', text: 'こんにちは！' }],
   };
   const html = eventStageHTML(event, [], 0);
   assert.match(html, /data-character="hostess"/);
-  assert.match(html, /src="assets\/events\/hostess\.png"/);
-  assert.match(html, /fullbody-art/);
-  assert.doesNotMatch(html, /busts\/hostess/);
+  assert.match(html, /src="assets\/events\/busts\/hostess-neutral\.png"/);
+  assert.match(html, /expression-art/);
+  assert.doesNotMatch(html, /fullbody-art/);
   for (const emotion of expressions.filter(e => e !== 'neutral')) {
     const scene = eventStageHTML({...event, lines:[{speaker:'hostess',emotion,text:'こんにちは！'}]},[],1);
     assert.match(scene, new RegExp(`busts/hostess-${emotion}\\.png`));
