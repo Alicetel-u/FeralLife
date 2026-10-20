@@ -626,6 +626,8 @@ function showDebugSceneSelect(chapter,page=0){
       ['dinner','トラブル開始｜料理','start'],
       ['dinner-choices','選択肢｜料理・3択直前','choice'],
       ['dinner-loop','巻き戻り｜料理','rewind'],
+      ['bad-ash','BAD END確認｜灰皿の火事','ending'],
+      ['bad-dinner','BAD END確認｜料理','ending'],
       ['epilogue','エンディング｜第一幕','ending']
     ]
     :[
@@ -634,6 +636,7 @@ function showDebugSceneSelect(chapter,page=0){
       ['bag','トラブル開始｜待ち伏せ事件','start'],
       ['bag-choices','選択肢｜待ち伏せ・3択直前','choice'],
       ['bag-loop','巻き戻り｜待ち伏せ事件','rewind'],
+      ['bad-bag','BAD END確認｜待ち伏せ事件','ending'],
       ['duel','トラブル開始｜嘘つきルナを守れ！','start'],
       ['duel-choices','ミニゲーム｜漢気バトル・最初の3択','battle'],
       ['duel-loop','巻き戻り｜漢気バトルBAD後','rewind'],
@@ -658,6 +661,8 @@ function startDeveloperScene(target){
   const phase=point?.endsWith('-loop')?'loop':point?.endsWith('-choices')?'choices':null;
   const scene=phase?point.slice(0,point.lastIndexOf('-')):point;
   const duelEndingTarget=chapter==='2'&&['end-yandere','end-domination','end-clear'].includes(scene);
+  const troubleBadTarget=scene.startsWith('bad-')&&['ash','dinner','bag'].includes(scene.slice(4));
+  const destination=troubleBadTarget?scene.slice(4):scene;
   if(!['1','2'].includes(chapter))return;
   developerMode=true;
   let next=createActOne(42,[],chapter==='1'&&['dinner','epilogue'].includes(scene)?2:1,true);
@@ -666,22 +671,22 @@ function startDeveloperScene(target){
     for(let step=0;step<12&&!next.actOne.pending&&next.actOne.status==='playing';step++)advanceActOne(next,100);
   };
   if(chapter==='1'){
-    if(scene==='dinner'||scene==='epilogue'){
+    if(destination==='dinner'||destination==='epilogue'){
       advanceFirstScene();
       answerActOne(next,next.actOne.pending.eventId,'water');
     }
-    if(scene==='epilogue'){
+    if(destination==='epilogue'){
       advanceFirstScene();
       answerActOne(next,next.actOne.pending.eventId,'coronation');
       advanceFirstScene();
-    }else if(scene==='ash'||scene==='dinner')advanceFirstScene();
+    }else if(destination==='ash'||destination==='dinner')advanceFirstScene();
   }else{
     beginActTwo(next);
     next.actOne.started=true;next.actOne.titlePending=false;next.actOne.prologuePending=false;
     next.events.filter(e=>e.actScene==='act2-prologue').forEach(e=>e.read=true);
-    if(['bag','duel','epilogue'].includes(scene)||duelEndingTarget){
+    if(['bag','duel','epilogue'].includes(scene)||duelEndingTarget||troubleBadTarget){
       advanceActTwo(next,100);
-      if(scene!=='bag'){
+      if(destination!=='bag'){
         answerActTwo(next,next.actOne.pending.eventId,'loan');
         advanceActTwo(next,100);
         if(['duel','epilogue'].includes(scene)||duelEndingTarget){
@@ -689,6 +694,18 @@ function startDeveloperScene(target){
         }
       }
     }
+  }
+  if(troubleBadTarget){
+    const chapterEvents=chapter==='1'?ACT_ONE_EVENTS:ACT_TWO_EVENTS;
+    const badChoice=chapterEvents[destination]?.choices?.find(choice=>choice.bad);
+    if(!badChoice||!next.actOne.pending)return;
+    const reply=(chapter==='1'?answerActOne:answerActTwo)(next,next.actOne.pending.eventId,badChoice.id);
+    if(!reply)return;
+    next.events.forEach(event=>event.read=true);
+    resetActState(next,false,true);
+    const badEvent=state.events.find(event=>event.id===reply.id);
+    if(badEvent){badEvent.read=false;showEvent(badEvent.id,0);}
+    return;
   }
   if(duelEndingTarget){
     const route=scene==='end-yandere'?['vow','shield','future','ultimate']:scene==='end-domination'?['help','discount','sleep','catapult']:['boundary','receipt','cancel','leave'];
