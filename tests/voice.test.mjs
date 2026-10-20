@@ -211,7 +211,6 @@ for(const mobile of [false,true])test(`character gain follows speaker and volume
   state='running';destination={};
   createMediaElementSource(){sources++;return node();}
   createGain(){const g={...node(),gain:{value:1}};gains.push(g);return g;}
-  createDelay(){return {...node(),delayTime:{value:0}};}
   createDynamicsCompressor(){const comp={...node(),threshold:{},knee:{},ratio:{},attack:{},release:{}};compressors.push(comp);return comp;}
  };
  let player;

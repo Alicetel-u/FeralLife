@@ -1,27 +1,27 @@
 import {VOICE_MANIFEST} from './voice-manifest.js';
 import {voiceLineKey,voiceSpeaker} from './voice-policy.js';
-export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Audio(),storage,chapter=()=>null,onPlaybackChange=()=>{}}={}) {
+export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Audio(),storage,chapter=()=>null}={}) {
   let prefs={enabled:true,volume:0.8};
   try{if(storage===undefined)storage=globalThis.localStorage;const saved=JSON.parse(storage?.getItem('feral-voice')||'null');if(saved&&typeof saved.enabled==='boolean'&&Number.isFinite(saved.volume))prefs={enabled:saved.enabled,volume:Math.max(0,Math.min(1,saved.volume))};}catch{}
   let audio=null,token=0,current=null,active=false,blocked=false,watchdog=null,suspended=false,playAttempt=0,playbackOutcome='idle';
   // Apply character balance through Web Audio, including iOS where element volume is ignored.
   const mobile=typeof navigator!=='undefined'&&/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   const AudioContextType=(globalThis.AudioContext||globalThis.webkitAudioContext);
-  let context=null,source=null,gain=null,limiter=null,mobileAudio=null,unlocked=false,attackTails=[];
+  let context=null,source=null,gain=null,limiter=null,mobileAudio=null,unlocked=false;
   const speakerBoost=()=>(({manager:1.6,hostess:1.8}[voiceSpeaker(current?.line||{})]||1)*(current?.line?.duelAttack?1.35:1));
   const playbackGain=()=>(mobile?4:1)*prefs.volume*speakerBoost();
   const applyVolume=()=>{if(gain){gain.gain.value=playbackGain();if(audio)audio.volume=1;}else if(audio)audio.volume=Math.min(1,prefs.volume*speakerBoost());};
   const disconnect=()=>{
     // Disconnect EVERY Web Audio node. Otherwise each old compressor remains
     // connected to the destination, retaining a graph per dialogue line on iOS.
-    for(const node of [source,gain,limiter,...attackTails]){
+    for(const node of [source,gain,limiter]){
       try{node?.disconnect();}catch{}
     }
-    source=null;gain=null;limiter=null;attackTails=[];
+    source=null;gain=null;limiter=null;
   };
   const connectMobile=element=>{
     if(!AudioContextType)return;
-    if(source&&element===mobileAudio){gain.gain.value=playbackGain();for(const [index,level] of [0.18,0.08].entries())if(attackTails[index*2+1])attackTails[index*2+1].gain.value=current?.line?.duelAttack?level:0;element.volume=1;if(context.state==='suspended')context.resume().catch(()=>{});return;}
+    if(source&&element===mobileAudio){gain.gain.value=playbackGain();element.volume=1;if(context.state==='suspended')context.resume().catch(()=>{});return;}
     try{
       context ||= new AudioContextType();
       const node=context.createMediaElementSource(element);
@@ -33,15 +33,6 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
       comp.attack.value=0.003;comp.release.value=0.2;
       boost.gain.value=playbackGain();
       node.connect(boost);boost.connect(comp);comp.connect(context.destination);
-      // A light, finite echo softens abrupt endings in generated battle clips.
-      // It does not skip or truncate any part of the original recording.
-      for(const [seconds,level] of [[0.12,0.18],[0.24,0.08]]){
-        const delay=context.createDelay(0.5),wet=context.createGain();
-        delay.delayTime.value=seconds;
-        wet.gain.value=current?.line?.duelAttack?level:0;
-        comp.connect(delay);delay.connect(wet);wet.connect(context.destination);
-        attackTails.push(delay,wet);
-      }
       source=node;gain=boost;limiter=comp;
       // The current play is initiated by a tap, so resume inside that gesture.
       if(context.state==='suspended')context.resume().catch(()=>{});
@@ -64,10 +55,10 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     try{const next=makeAudio();next.preload='auto';next.src=clipPath(clip);next.load?.();prepared={file:clipPath(clip),audio:next};}catch{prepared=null;}
   };
   const save=()=>{try{storage?.setItem('feral-voice',JSON.stringify(prefs));}catch{}};
-  const stop=()=>{token++;playbackOutcome='idle';clearTimeout(watchdog);if(audio){audio.pause();audio.removeAttribute('src');audio.load();}audio=null;active=false;blocked=false;onPlaybackChange(false);};
+  const stop=()=>{token++;playbackOutcome='idle';clearTimeout(watchdog);if(audio){audio.pause();audio.removeAttribute('src');audio.load();}audio=null;active=false;blocked=false;};
   const startPlayback=version=>{
     const attempt=++playAttempt;
-    const done=outcome=>{if(version===token&&attempt===playAttempt){playbackOutcome=outcome;active=false;onPlaybackChange(false);clearTimeout(watchdog);}};
+    const done=outcome=>{if(version===token&&attempt===playAttempt){playbackOutcome=outcome;active=false;clearTimeout(watchdog);}};
     audio.onended=()=>done('ended');audio.onerror=()=>done('error');
     if(suspended)return;
     clearTimeout(watchdog);watchdog=setTimeout(()=>done('timeout'),60000);
@@ -81,24 +72,17 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     if(!prefs.enabled||!clip){playbackOutcome='missing';return;}
     const version=token;
     try{
-      if(mobile||AudioContextType){mobileAudio ||= makeAudio();audio=mobileAudio;audio.src=clipPath(clip);clearPrepared();}else if(prepared?.file===clipPath(clip)){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clipPath(clip);}// Accelerate only battle dialogue. Playback rate preserves the original pitch
-      // and reuses existing recordings, so there is no additional TTS cost.
+      if(mobile||AudioContextType){mobileAudio ||= makeAudio();audio=mobileAudio;audio.src=clipPath(clip);clearPrepared();}else if(prepared?.file===clipPath(clip)){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clipPath(clip);}
+      // Attack clips are time-stretched offline. Raising playbackRate on a
+      // media element routed through Web Audio drops the end of the phrase.
       const duelClip=clip.performance?.startsWith('duel-');
-      const isAttack=!!line?.duelAttack;
-      // Keep a single stable speed for each attack. Repeated playbackRate
-      // changes near the end can truncate buffered output on mobile browsers.
-      // 1.5x retains urgency while leaving the final consonant intelligible.
-      audio.playbackRate=isAttack?1:duelClip?(clip.speaker==='cat'||clip.performance?.startsWith('duel-moku')?1.16:1.25):1;
-      // Do not seek over the beginning of an encoded recording: its first
-      // phoneme may begin within the previous 120ms skip window.
-      audio.onloadedmetadata=null;
-      audio.ontimeupdate=null;
+      audio.playbackRate=line?.duelAttack?1:duelClip?(clip.speaker==='cat'||clip.performance?.startsWith('duel-moku')?1.16:1.25):1;
       audio.preservesPitch=true;
       audio.mozPreservesPitch=true;
       audio.webkitPreservesPitch=true;
-      audio.volume=Math.min(1,prefs.volume*speakerBoost());connectMobile(audio);playbackOutcome='playing';active=true;onPlaybackChange(true);
+      audio.volume=Math.min(1,prefs.volume*speakerBoost());connectMobile(audio);playbackOutcome='playing';active=true;
       startPlayback(version);
-    }catch{playbackOutcome='error';active=false;onPlaybackChange(false);}
+    }catch{playbackOutcome='error';active=false;}
   };
   return {
     play,prepare,stop:()=>{if(!audio&&!prepared&&!current&&!active&&!blocked)return;stop();clearPrepared();current=null;},get busy(){return prefs.enabled&&active;},get outcome(){return playbackOutcome;},get enabled(){return prefs.enabled;},get volume(){return prefs.volume;},
