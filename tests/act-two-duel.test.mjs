@@ -242,9 +242,9 @@ test('only the yandere rewind gives the landlord a hint about affection and boun
 
 
 test('yandere clock animation says landlord reaction, not other routes\' resolve',()=>{
- const clock=rewindBeat(7,2,true,2,'duel-yandere');
+ const clock=rewindBeat(4,2,true,2,'duel-yandere');
  assert.equal(clock.phase,'clock');
  assert.equal(clock.text,'ルナ……お前……');
- assert.notEqual(rewindBeat(7,2,true,2,'duel-domination').text,clock.text);
+ assert.notEqual(rewindBeat(4,2,true,2,'duel-domination').text,clock.text);
  assert.equal(rewindTransitionHTML('duel-yandere',2,true,2).includes('ルナ……お前……'),false,'do not reveal the line before clock phase');
 });
