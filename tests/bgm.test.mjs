@@ -29,11 +29,11 @@ test('duel music loops continuously across dialogue, obeys controls and stops fo
   await bgm.setScene(false,'normal');assert.equal(duel.paused,true);assert.equal(normal.paused,false);
 });
 
-test('real scene selection uses duel music only for battle lines and gives results priority',async()=>{
+test('real scene selection starts duel music on entry and gives results priority',async()=>{
   const app=await readFile(new URL('../src/app.js',import.meta.url),'utf8');
   const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
   for(const [line,screen,expected] of [
-    [{},null,'normal'],[{duelRound:0},null,'duel'],[{duelRound:3,duelDefeated:true},null,'duel'],
+    [{},null,'duel'],[{duelRound:0},null,'duel'],[{duelRound:3,duelDefeated:true},null,'duel'],
     [{duelRound:3,duelEnding:'clear'},null,'normal'],[{duelRound:3,duelEnding:'yandere'},null,'normal'],
     [{duelRound:3},'.duel-bad','bad'],[{duelRound:3},'.trouble-victory','victory']
   ]){
