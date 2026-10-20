@@ -1699,7 +1699,7 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .duel-hit-ring{position:absolute;left:67%;bottom:17%;width:13%;aspect-ratio:1;border:8px solid #fff3bf;border-radius:50%;opacity:0;pointer-events:none;z-index:5}
 .duel-striking .duel-enemy{animation:duel-fly .55s .58s both}.duel-striking:not(.rank-1) .duel-manager{animation:duel-retort .85s both}.duel-striking .duel-hit-ring{animation:duel-ring .45s .53s both}.duel-striking.rank-4 .duel-hit-ring{border-color:#ffd65f;border-width:14px}
 .duel-moku.duel-charge{animation:duel-charge 1.2s both}.duel-react{animation:duel-react .5s both}
-.duel-impact{position:absolute;top:calc(100px + 6%);left:12%;right:12%;min-height:20%;display:grid;place-items:center;z-index:7;pointer-events:none;animation:duel-slam 1.4s both;filter:drop-shadow(5px 6px #1e0926)}
+.duel-impact{position:absolute;top:calc(100px + 6%);left:12%;right:12%;min-height:20%;display:grid;place-items:center;z-index:7;pointer-events:none;animation:duel-slam-in .22s ease-out both;filter:drop-shadow(5px 6px #1e0926)}
 .duel-impact::before{content:'';position:absolute;inset:0;background:#fff2d6;clip-path:polygon(0 40%,14% 31%,6% 8%,28% 17%,34% 0,46% 18%,64% 0,66% 21%,91% 8%,84% 33%,100% 42%,86% 57%,96% 90%,72% 79%,64% 100%,49% 81%,30% 99%,27% 77%,4% 92%,14% 62%)}
 .duel-impact strong{position:relative;padding:16px 8%;color:#c51d3c;font:1000 italic clamp(24px,4.8vw,68px)/1.25 var(--sans);text-shadow:2px 2px #fff,-2px -2px #fff;transform:rotate(-5deg);text-align:center}.duel-impact.rank-4::before{background:#ffdc61}.duel-impact.rank-4 strong{color:#8c1640}.duel-impact.rank-1 strong{color:#57479f}
 .game-ink .conversation-modal .duel-stage .stage-bubble{height:calc(var(--duel-dock) - 32px);max-height:none;bottom:20px;top:auto;padding:47px 5% 28px;min-height:0}
@@ -1745,6 +1745,7 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @keyframes duel-retort{0%,100%{transform:none}30%{transform:translateX(-8%) rotate(-6deg)}65%{transform:translateX(24%) rotate(8deg)}}
 @keyframes duel-charge{0%,12%{transform:none}44%{transform:translate(180%,-70%) rotate(-20deg)}56%{transform:translate(320%,55%) rotate(12deg)}75%{transform:translate(120%,-70%) rotate(-10deg)}100%{transform:none}}
 @keyframes duel-ring{0%{opacity:0;transform:scale(.2)}25%{opacity:1}100%{opacity:0;transform:scale(2.4)}}
+@keyframes duel-slam-in{from{opacity:0;transform:scale(1.35) rotate(-6deg)}to{opacity:1;transform:none}}
 @keyframes duel-slam{0%{opacity:0;transform:scale(1.35) rotate(-6deg)}16%,65%{opacity:1;transform:none}100%{opacity:0;transform:scale(1.05)}}
 @keyframes duel-heart{0%{transform:scale(.6);color:#fff1df}55%{transform:scale(1.45);color:#fff1df}100%{transform:none}}
 @keyframes duel-delta{from{opacity:0;translate:0 12px}to{opacity:1;translate:0}}
