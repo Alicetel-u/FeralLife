@@ -665,7 +665,7 @@ function startDeveloperScene(target){
   const destination=troubleBadTarget?scene.slice(4):scene;
   if(!['1','2'].includes(chapter))return;
   developerMode=true;
-  let next=createActOne(42,[],chapter==='1'&&['dinner','epilogue'].includes(scene)?2:1,true);
+  let next=createActOne(42,[],chapter==='1'&&['dinner','epilogue'].includes(destination)?2:1,true);
   // Observation movement may finish just after the event hour; enter the scene only once it is queued.
   const advanceFirstScene=()=>{
     for(let step=0;step<12&&!next.actOne.pending&&next.actOne.status==='playing';step++)advanceActOne(next,100);
