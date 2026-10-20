@@ -754,7 +754,9 @@ function startDeveloperScene(target){
   }
   if(phase){
     const events=chapter==='1'?ACT_ONE_EVENTS:ACT_TWO_EVENTS;
-    if(scene==='duel'){for(const id of ['vow','shield','future','ultimate'])answerActTwo(next,next.actOne.pending.eventId,id);next=rewindActTwo(next);}
+    // The first-choice destination is a fresh duel; only the rewind destination
+    // reconstructs a BAD ending and carries its learned choice restrictions.
+    if(scene==='duel'&&phase==='loop'){for(const id of ['vow','shield','future','ultimate'])answerActTwo(next,next.actOne.pending.eventId,id);next=rewindActTwo(next);}
     const choice=events[scene]?.choices.find(choice=>choice.bad);
     if(scene!=='duel'&&(!choice||!next.actOne.pending))return;
     if(scene!=='duel')(chapter==='1'?answerActOne:answerActTwo)(next,next.actOne.pending.eventId,choice.id);

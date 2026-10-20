@@ -39,10 +39,16 @@ test('debug event names match the scenes they actually open in both chapters',()
    const scene=target.split(':')[1];
    if(scene.endsWith('-loop')||scene.endsWith('-choices')){
     const [trouble,phase]=scene.split('-');
-    assert.equal(context.state.actOne.status,'playing');assert.ok(context.state.actOne.attempt>1);
+    assert.equal(context.state.actOne.status,'playing');
+    if(trouble==='duel'&&phase==='choices'){
+     assert.equal(context.state.actOne.attempt,1);
+     assert.equal(context.state.actOne.memory.includes('duel-yandere'),false);
+     assert.ok(actTwoChoices(context.state,'duel').every(choice=>!choice.disabled&&!choice.restrained));
+    }else assert.ok(context.state.actOne.attempt>1);
     if(phase==='loop'){
      assert.equal(context.landed.actScene,chapter==='1'?'rewind':'act2-rewind');assert.equal(context.index,0);
      assert.equal(context.state.actOne.rewindIntroPending,true);
+     if(trouble==='duel')assert.equal(actTwoChoices(context.state,'duel').find(choice=>choice.delta===3).disabled,true);
     }else{
      assert.equal(context.landed.actScene,trouble);assert.equal(context.state.actOne.pending.scene,trouble);
      assert.equal(context.index,eventConversation(context.landed).length-1);
@@ -52,7 +58,7 @@ test('debug event names match the scenes they actually open in both chapters',()
     assert.ok(validActOne(context.state)&&validateSave(context.state),target+' creates a valid state');
     if(phase==='choices'){
      const events=chapter==='1'?ACT_ONE_EVENTS:ACT_TWO_EVENTS;
-     const safe=trouble==='duel'?actTwoChoices(context.state,'duel')[1]:events[trouble].choices.find(choice=>!choice.bad);
+     const safe=trouble==='duel'?actTwoChoices(context.state,'duel').find(choice=>choice.delta===3):events[trouble].choices.find(choice=>!choice.bad);
      const reply=(chapter==='1'?answerActOne:answerActTwo)(context.state,context.landed.id,safe.id);
      assert.ok(reply,target+' can answer immediately');assert.equal(context.state.actOne.status,'playing');
     }
@@ -71,7 +77,11 @@ test('debug event names match the scenes they actually open in both chapters',()
     assert.match(label,/^トラブル開始｜/,target);
    }else if(scene==='epilogue')assert.equal(context.landed?.actScene,chapter==='1'?'epilogue':'act2-epilogue');
    else if(scene==='arrival')assert.equal(context.landed?.actScene,'act2-prologue');
-   else if(scene==='duel')assert.equal(context.landed.actScene,'duel');
+   else if(scene==='duel'){
+    assert.equal(context.landed.actScene,'duel');
+    assert.equal(context.state.actOne.memory.includes('duel-yandere'),false);
+    assert.ok(actTwoChoices(context.state,'duel').every(choice=>!choice.disabled));
+   }
    else assert.equal(context.landed,scene);
   }
  }
