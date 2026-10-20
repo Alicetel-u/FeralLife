@@ -3,7 +3,7 @@ import {voiceLineKey,voiceSpeaker} from './voice-policy.js';
 export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Audio(),storage,chapter=()=>null,onPlaybackChange=()=>{}}={}) {
   let prefs={enabled:true,volume:0.8};
   try{if(storage===undefined)storage=globalThis.localStorage;const saved=JSON.parse(storage?.getItem('feral-voice')||'null');if(saved&&typeof saved.enabled==='boolean'&&Number.isFinite(saved.volume))prefs={enabled:saved.enabled,volume:Math.max(0,Math.min(1,saved.volume))};}catch{}
-  let audio=null,token=0,current=null,active=false,blocked=false,watchdog=null,suspended=false,playAttempt=0;
+  let audio=null,token=0,current=null,active=false,blocked=false,watchdog=null,suspended=false,playAttempt=0,playbackOutcome='idle';
   // Apply character balance through Web Audio, including iOS where element volume is ignored.
   const mobile=typeof navigator!=='undefined'&&/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   const AudioContextType=(globalThis.AudioContext||globalThis.webkitAudioContext);
@@ -54,21 +54,21 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     try{const next=makeAudio();next.preload='auto';next.src=clip.file;next.load?.();prepared={file:clip.file,audio:next};}catch{prepared=null;}
   };
   const save=()=>{try{storage?.setItem('feral-voice',JSON.stringify(prefs));}catch{}};
-  const stop=()=>{token++;clearTimeout(watchdog);if(audio){audio.pause();audio.removeAttribute('src');audio.load();}audio=null;active=false;blocked=false;onPlaybackChange(false);};
+  const stop=()=>{token++;playbackOutcome='idle';clearTimeout(watchdog);if(audio){audio.pause();audio.removeAttribute('src');audio.load();}audio=null;active=false;blocked=false;onPlaybackChange(false);};
   const startPlayback=version=>{
     const attempt=++playAttempt;
-    const done=()=>{if(version===token&&attempt===playAttempt){active=false;onPlaybackChange(false);clearTimeout(watchdog);}};
-    audio.onended=done;audio.onerror=done;
+    const done=outcome=>{if(version===token&&attempt===playAttempt){playbackOutcome=outcome;active=false;onPlaybackChange(false);clearTimeout(watchdog);}};
+    audio.onended=()=>done('ended');audio.onerror=()=>done('error');
     if(suspended)return;
-    clearTimeout(watchdog);watchdog=setTimeout(done,60000);
-    try{Promise.resolve(audio.play()).catch(error=>{if(version!==token||attempt!==playAttempt||suspended)return;done();blocked=error?.name==='NotAllowedError';});}
-    catch{done();}
+    clearTimeout(watchdog);watchdog=setTimeout(()=>done('timeout'),60000);
+    try{Promise.resolve(audio.play()).catch(error=>{if(version!==token||attempt!==playAttempt||suspended)return;done('error');blocked=error?.name==='NotAllowedError';});}
+    catch{done('error');}
   };
   const play=(line,identity)=>{
     if(current?.identity===identity)return;
     stop();current=line?{line,identity}:null;
     const clip=clipFor(line);
-    if(!prefs.enabled||!clip)return;
+    if(!prefs.enabled||!clip){playbackOutcome='missing';return;}
     const version=token;
     try{
       if(mobile||AudioContextType){mobileAudio ||= makeAudio();audio=mobileAudio;audio.src=clip.file;clearPrepared();}else if(prepared?.file===clip.file){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clip.file;}// Accelerate only battle dialogue. Playback rate preserves the original pitch
@@ -78,12 +78,12 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
       audio.preservesPitch=true;
       audio.mozPreservesPitch=true;
       audio.webkitPreservesPitch=true;
-      audio.volume=Math.min(1,prefs.volume*speakerBoost());connectMobile(audio);active=true;onPlaybackChange(true);
+      audio.volume=Math.min(1,prefs.volume*speakerBoost());connectMobile(audio);playbackOutcome='playing';active=true;onPlaybackChange(true);
       startPlayback(version);
-    }catch{active=false;onPlaybackChange(false);}
+    }catch{playbackOutcome='error';active=false;onPlaybackChange(false);}
   };
   return {
-    play,prepare,stop:()=>{if(!audio&&!prepared&&!current&&!active&&!blocked)return;stop();clearPrepared();current=null;},get busy(){return prefs.enabled&&active;},get enabled(){return prefs.enabled;},get volume(){return prefs.volume;},
+    play,prepare,stop:()=>{if(!audio&&!prepared&&!current&&!active&&!blocked)return;stop();clearPrepared();current=null;},get busy(){return prefs.enabled&&active;},get outcome(){return playbackOutcome;},get enabled(){return prefs.enabled;},get volume(){return prefs.volume;},
     setSuspended(value){
       const next=Boolean(value);if(next===suspended)return;suspended=next;
       if(suspended){playAttempt++;clearTimeout(watchdog);audio?.pause();clearPrepared();}
