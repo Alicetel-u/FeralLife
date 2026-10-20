@@ -1681,10 +1681,20 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .duel-opponent{display:grid;grid-template-columns:auto 1fr;align-content:center;gap:4px 12px;min-width:0;padding:8px 15px;border-left:4px solid #df3452;background:#1c1422ed;box-shadow:0 4px 12px #0003}
 .duel-round{font-size:13px;font-weight:900;color:#ffc779;white-space:nowrap}.duel-round small{font-size:11px;color:#b3a0ad}.duel-opponent>strong{font-size:clamp(13px,1.6vw,22px);align-self:center;line-height:1.2}
 .duel-progress{grid-column:1/-1;display:flex;gap:5px;margin-top:4px}.duel-progress i{width:28px;height:4px;background:#614453;transform:skewX(-20deg)}.duel-progress .done{background:#ffcc7c}.duel-progress .current{background:#f05272}
-.duel-affection{position:relative;align-self:center;padding:8px 15px;background:#291a2bed;border:1px solid #a6587055;min-width:210px}
-.duel-heart-label{display:flex;justify-content:space-between;gap:16px;font-size:11px;font-weight:800;color:#f0b8ca}.duel-heart-label b{color:#fff1dc;font-size:15px;line-height:1}.duel-heart-label small{font-size:10px;color:#bfa1b1}
-.duel-hearts{display:flex;gap:4px;font-size:23px;line-height:1.35;color:#655064}.duel-hearts .lit{color:#ff709e;text-shadow:0 0 8px #f6508733}.duel-heart-changed{animation:duel-heart .55s calc(var(--heart-index)*65ms) both}
-.duel-heart-delta{position:absolute;right:8px;bottom:-21px;font-size:20px;font-weight:1000;color:#ff96b9;text-shadow:2px 2px #25152d;animation:duel-delta .7s both}.duel-heart-delta.down{color:#b9b4fa}
+.duel-affection{position:relative;isolation:isolate;align-self:center;width:clamp(310px,36vw,460px);min-width:280px;padding:10px 16px 12px;border:2px solid #eac498;border-radius:14px 4px;background:radial-gradient(ellipse at 50% 0,#a8436b66,transparent 70%),linear-gradient(135deg,#412137f5,#1c1426f5);box-shadow:0 6px 18px #08061288,0 0 18px #fb659c28,inset 0 0 0 3px #412c40,inset 0 0 0 4px #e5ad7b60,inset 0 1px 12px #ff8db82b}
+.duel-affection::before,.duel-affection::after{content:'';position:absolute;width:8px;height:8px;transform:rotate(45deg);background:linear-gradient(135deg,#fff6d5,#cc854f);border:1px solid #fff0c5;box-shadow:0 0 8px #f9d1a56b;pointer-events:none}
+.duel-affection::before{top:-5px;left:19px}.duel-affection::after{bottom:-5px;right:19px}
+.duel-heart-label{display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:14px;font-weight:900;letter-spacing:.04em;color:#ffe0e9;text-shadow:0 2px 3px #180f20}
+.duel-heart-label b{color:#fff1cc;font-size:27px;font-style:italic;font-variant-numeric:tabular-nums;line-height:1;text-shadow:0 0 12px #ff8fa95c,2px 2px #6a304a}.duel-heart-label small{font-size:12px;color:#d5b79c}
+.duel-hearts{display:flex;justify-content:space-between;gap:3px;font-size:32px;line-height:1;margin-top:6px}
+.duel-hearts>span{display:block;flex:1;min-width:0;max-width:38px;filter:drop-shadow(0 2px 1px #07040c)}
+.duel-heart-gem{display:block;width:100%;height:auto;overflow:visible}
+.duel-heart-gem .heart-body{fill:#493342;stroke:#93716d;stroke-width:1.1;stroke-linejoin:round}
+.duel-heart-gem .heart-facet{fill:#251d33;opacity:.35}.duel-heart-gem .heart-glint{fill:#9c7a8c;opacity:.35}.duel-heart-gem .heart-edge{fill:none;stroke:#b68d9b;stroke-width:1.1;stroke-linecap:round;opacity:.25}
+.duel-hearts .lit{filter:drop-shadow(0 2px 1px #230c24) drop-shadow(0 0 5px #ff4c9b99)}
+.duel-hearts .lit .heart-body{fill:#f9478d;stroke:#ffe2ba}.duel-hearts .lit .heart-facet{fill:#b51e65;opacity:.55}.duel-hearts .lit .heart-glint{fill:#fff6eb;opacity:.9}.duel-hearts .lit .heart-edge{stroke:#ffb6db;opacity:.9}
+.duel-heart-changed{animation:duel-heart .55s calc(var(--heart-index)*65ms) both}
+.duel-heart-delta{position:absolute;right:10px;bottom:-22px;padding:1px 10px;border:1px solid #e7ad98;border-radius:12px;background:#321c30;font-size:22px;font-weight:1000;color:#ffb1cf;text-shadow:2px 2px #25152d;animation:duel-delta .7s both}.duel-heart-delta.down{color:#b9b4fa}
 .duel-result{position:absolute;left:62%;top:32%;transform:rotate(-9deg);color:#ffe5a5;font:1000 italic clamp(32px,6vw,72px)/1 var(--sans);text-shadow:3px 3px #702a41,5px 5px #17101d;z-index:4;animation:duel-stamp .25s both}.duel-result span{display:block;text-align:center;margin-top:10px;font-size:13px;font-style:normal;letter-spacing:.15em;color:#fff0dc}
 .duel-hit-ring{position:absolute;left:67%;bottom:17%;width:13%;aspect-ratio:1;border:8px solid #fff3bf;border-radius:50%;opacity:0;pointer-events:none;z-index:5}
 .duel-striking .duel-enemy{animation:duel-fly .55s .58s both}.duel-striking:not(.rank-1) .duel-manager{animation:duel-retort .85s both}.duel-striking .duel-hit-ring{animation:duel-ring .45s .53s both}.duel-striking.rank-4 .duel-hit-ring{border-color:#ffd65f;border-width:14px}
@@ -1746,9 +1756,12 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .conversation-modal.choice-mode:has(.duel-stage){--duel-dock:clamp(260px,43dvh,330px)}
  .duel-hud{top:max(10px,env(safe-area-inset-top));left:3%;right:64px;display:grid;gap:5px}
  .duel-opponent{padding:5px 10px;gap:3px 8px}.duel-opponent>strong{font-size:13px}.duel-round{font-size:11px}.duel-round small{font-size:10px}.duel-progress{margin:0}.duel-progress i{width:24px;height:3px}
- .duel-affection{padding:4px 10px;min-width:0;display:flex;align-items:center;gap:7px}.duel-heart-label{font-size:10px;gap:5px;white-space:nowrap}.duel-heart-label b{font-size:12px}.duel-heart-label small{display:none}.duel-hearts{font-size:clamp(12px,4.1vw,18px);gap:1px;flex:1;min-width:0;justify-content:space-between}.duel-heart-delta{font-size:17px;bottom:-17px}
- .duel-field{top:103px}.duel-set{width:clamp(140%,177.78cqh,160%);left:45.5%}.duel-enemy{left:62%;height:34%}.duel-luna{left:28%}.duel-moku{left:24%;height:21%}
- .duel-arrival{right:6%;padding:7px 13px}.duel-arrival strong{font-size:17px}.duel-result{left:66%;top:25%;font-size:38px}.duel-impact{top:123px;left:3%;right:3%;min-height:17%}
+ .duel-affection{width:100%;padding:7px 10px 8px;min-width:0;display:block;border-radius:11px 3px}
+ .duel-heart-label{font-size:12px;gap:6px;letter-spacing:.025em;white-space:nowrap}.duel-heart-label b{font-size:23px}.duel-heart-label small{display:inline;font-size:10px}
+ .duel-hearts{font-size:25px;gap:3px;margin-top:4px}.duel-heart-delta{font-size:17px;bottom:-18px;padding:0 7px}
+
+ .duel-field{top:130px}.duel-set{width:clamp(140%,177.78cqh,160%);left:45.5%}.duel-enemy{left:62%;height:34%}.duel-luna{left:28%}.duel-moku{left:24%;height:21%}
+ .duel-arrival{right:6%;padding:7px 13px}.duel-arrival strong{font-size:17px}.duel-result{left:66%;top:25%;font-size:38px}.duel-impact{top:148px;left:3%;right:3%;min-height:17%}
  .game-ink .conversation-modal .duel-choices{gap:6px;padding:8px 4% max(8px,env(safe-area-inset-bottom))}
  .duel-choice-heading h2{font-size:17px}.duel-choice-heading>span{display:none}
  .game-ink .conversation-modal .duel-choices .decision-panel{grid-template-columns:1fr;gap:7px;padding:3px;flex:0 1 auto}
@@ -1760,7 +1773,7 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @media(min-width:701px){.duel-set{width:min(100%,310cqh)}}
 @media(max-height:500px) and (min-width:601px){
  .conversation-modal:has(.duel-stage){--duel-dock:145px}.conversation-modal.choice-mode:has(.duel-stage){--duel-dock:154px}
- .duel-hud{display:flex;top:6px;gap:8px}.duel-opponent{padding:4px 10px}.duel-affection{padding:3px 10px}.duel-field{top:68px}.duel-set{width:min(100%,310cqh);left:50%}
+ .duel-hud{display:flex;top:6px;gap:8px}.duel-opponent{padding:4px 10px}.duel-affection{width:clamp(260px,38vw,360px);min-width:240px;padding:4px 10px}.duel-heart-label{font-size:11px}.duel-heart-label b{font-size:20px}.duel-hearts{margin-top:3px;gap:3px}.duel-hearts>span{max-width:24px}.duel-field{top:68px}.duel-set{width:min(100%,310cqh);left:50%}
  .duel-impact{top:72px;min-height:20%}.duel-choice-heading h2{font-size:17px}
  .game-ink .conversation-modal .duel-choices{gap:5px;padding-top:6px}.game-ink .conversation-modal .duel-choices .decision-panel{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.game-ink .conversation-modal .duel-choices .decision-choice{min-height:76px;padding:6px 9px}.game-ink .conversation-modal .duel-choices .decision-choice strong{font-size:13px}.duel-command-icon{display:none}.duel-command-copy small{font-size:9px}
  .game-ink .conversation-modal .duel-stage .stage-bubble{padding:40px 5% 20px}.game-ink .conversation-modal .duel-stage .stage-bubble p{font-size:16px;line-height:1.4}

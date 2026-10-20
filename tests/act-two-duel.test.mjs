@@ -170,7 +170,7 @@ test('approved opening, supplied corrected art, ten hearts, original dialogue wi
  const s=duelStart(),e=s.events.find(e=>e.id===s.actOne.pending.eventId),index=eventConversation(e).length-1;
  const html=duelStageHTML(e,s.residents,index);
  assert.match(html,/stage-bubble/);assert.match(html,/stage-speaker/);assert.match(html,/duel-field/);
- assert.equal((html.match(/aria-hidden="true">♥/g)||[]).length,10);
+ assert.equal((html.match(/class="duel-heart-gem"/g)||[]).length,10);
  for(const id of ['vow','shield','future','ultimate'])answerActTwo(s,s.actOne.pending.eventId,id);
  const last=s.events.find(e=>e.duelOutcome==='yandere'),lines=eventConversation(last),at=lines.findIndex(l=>l.duelEndingPhase==='reveal');
  assert.match(duelStageHTML(last,s.residents,at),/assets\/events\/duel\/yandere.png/);
