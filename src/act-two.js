@@ -385,7 +385,7 @@ export function retireActTwoContract(s){
 }
 export function advanceActTwo(s,hours){
  retireActTwoContract(s);
- const a=s.actOne;if(!a.started||a.status!=='playing'||a.pending||a.prologuePending||hours<=0)return;
+ const a=s.actOne;if(!a.started||a.status!=='playing'||a.pending||a.prologuePending||a.rewindIntroPending||hours<=0)return;
  const at=nextActTwoAt(s),end=Math.min(at,s.hour+hours);
  const scene=Object.keys(ACT_TWO_EVENTS).find(id=>!a.completed.includes(id));
 
