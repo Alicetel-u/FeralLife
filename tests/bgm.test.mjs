@@ -108,7 +108,7 @@ test('rendered opening, battle and ending transcripts stop the battle audio outs
       const context={document:{hidden:false},state:{actOne:{chapter:2},events:[event]},eventView:{id:1,index},eventConversation,bedCue,
         modal:{open:true,classList:{contains:()=>true},querySelector:s=>s.split(',').some(part=>selectors.has(part))?{dataset:{}}:null},normalBgm:bgm};
       vm.createContext(context);await vm.runInContext(source+'\nsyncNormalBgm();',context);
-      const miniGame=Number.isInteger(line.duelRound)&&!line.duelEnding;
+      const miniGame=selectors.has('.duel-stage .duel-field')&&(!line.duelEnding||line.duelEnding==='clear'||line.duelEnding==='yandere'&&!line.duelEndingPhase);
       assert.equal(battle.paused,!miniGame,`battle audio at ${line.text}`);
       if(miniGame)checkedBattle++;else checkedPortraits++;
     }
