@@ -1,4 +1,4 @@
-import {DUEL_ART,DUEL_ROUNDS} from './act-two-duel.js';
+import {DUEL_ART,DUEL_ROUNDS} from './act-two-duel.js?v=2026.10.20.09';
 import {eventConversation,eventStageHTML,eventEscape,eventIcon} from './event-stage.js';
 import {MINI_EMOTION_ART} from './mini-emotions.js';
 
