@@ -12,13 +12,22 @@ import {createHash} from 'node:crypto';
 export const digest=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 export const normalizeVoiceIds=ids=>ids.characters?Object.fromEntries(Object.entries(ids.characters).map(([speaker,value])=>[speaker,value.voiceId||null])):ids;
 export function extractVoiceScript(scope='intro') {
-  if(!['intro','act1','act2','act2-trouble1','all'].includes(scope))throw Error('Unknown scope');
+  if(!['intro','act1','act2','act2-trouble1','act2-duel','all'].includes(scope))throw Error('Unknown scope');
   const result=[];
   const add=(source,lines)=>lines.forEach((line,index)=>{
     if(scope==='act2-trouble1')line={...line,voiceChapter:2};
     const speaker=voiceSpeaker(line);
     if(['cat','manager','hostess'].includes(speaker))result.push({source:source+':'+index,line,speaker,performance:voicePerformance(line),lineKey:voiceLineKey(line)});
   });
+  if(scope==='act2-duel'){
+    for(let round=0;round<4;round++){
+      add('act2/duel/round-'+round,duelEncounterLines(round));
+      for(const choice of duelChoices(round))add('act2/duel/'+round+'/'+choice.id,duelReplyLines(round,choice));
+    }
+    // The victory call belongs to the mini-game; full-size ending scenes do not.
+    add('act2/duel/victory',duelEndingLines('clear').filter(line=>!line.duelEnding));
+    return [...new Map(result.map(row=>[row.lineKey,row])).values()];
+  }
   if(['act2','act2-trouble1','all'].includes(scope))for(const beat of ACT_TWO_OBSERVATION_BEATS)add('act2/observation/'+beat.id,beat.lines);
   const state=createActOne(1);
   if(scope==='act2-trouble1'){
@@ -151,7 +160,8 @@ export function planVoices(rows,ids,config,pronunciations=[]){
     const profile=config.profiles[row.performance];
     if(config.model!=='eleven_v3'&&profile.tags.length)throw Error('Audio tags require the reviewed eleven_v3 model');
     // Change only the spoken spelling; displayed dialogue and lookup keys stay canonical.
-    const spokenText=[...pronunciations].sort((a,b)=>b.term.length-a.term.length).reduce((text,rule)=>text.replaceAll(rule.term,rule.reading),row.line.text);
+    const duelReadings=row.performance.startsWith('duel-')?[{term:'大家流',reading:'おおやりゅう'},{term:'漢気',reading:'おとこぎ'},{term:'煙ノ',reading:'けむりの'},{term:'肉球乱舞',reading:'にくきゅうらんぶ'}]:[];
+    const spokenText=[...duelReadings,...pronunciations].sort((a,b)=>b.term.length-a.term.length).reduce((text,rule)=>text.replaceAll(rule.term,rule.reading),row.line.text);
     const request={text:[...profile.tags,spokenText].join(' '),model_id:config.model,voice_settings:profile.settings};
     const voiceId=ids[row.speaker]||null;
     const hash=digest({voiceId,request,performance:row.performance,format:config.outputFormat});

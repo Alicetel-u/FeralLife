@@ -5,6 +5,12 @@ export function voiceSpeaker(line) {
 export function voicePerformance(line) {
   if(line.voicePerformance)return line.voicePerformance;
   if(line.innerVoice||line.speaker==='大家（心の声）')return 'inner';
+  if(Number.isInteger(line.duelRound)&&!line.duelEnding){
+    const speaker=voiceSpeaker(line);
+    if(speaker==='manager')return line.duelAttack?'duel-manager-attack':'duel-manager';
+    if(speaker==='cat')return line.duelAttack?'duel-moku-attack':'duel-moku';
+    if(speaker==='hostess')return 'duel-luna';
+  }
   if(line.voiceChapter===2)return actTwoVoicePerformance(line);
   if(voiceSpeaker(line)==='manager'&&/なんで俺が決める|結局、俺が決める|誰のせいだと思って/.test(line.text))return 'weary';
   if(voiceSpeaker(line)==='manager'&&/火を消せよ|誰のせいだよ|箱のせい|換気扇より先|煙だらけ/.test(line.text))return 'retort';

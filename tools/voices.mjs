@@ -5,7 +5,15 @@ import {extractVoiceScript,planVoices,digest,normalizeVoiceIds} from './voice-sc
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const json=async path=>JSON.parse((await readFile(join(root,path),'utf8')).replace(/^\uFEFF/,''));
 const exists=async path=>{try{return (await stat(join(root,path))).size>0;}catch{return false;}};
-const atomic=async(path,data)=>{await writeFile(join(root,path+'.tmp'),data);await rename(join(root,path+'.tmp'),join(root,path));};
+const atomic=async(path,data)=>{
+  await writeFile(join(root,path+'.tmp'),data);
+  // Windows can briefly lock the manifest while another process reads it.
+  // Retry only the local rename; a charged API request is never repeated here.
+  for(let attempt=0;;attempt++){
+    try{await rename(join(root,path+'.tmp'),join(root,path));return;}
+    catch(error){if(!['EPERM','EACCES','EBUSY'].includes(error.code)||attempt>=9)throw error;await new Promise(resolve=>setTimeout(resolve,100));}
+  }
+};
 const args=process.argv.slice(2),scope=args.find(a=>a.startsWith('--scope='))?.split('=')[1]||'intro';
 const ids=normalizeVoiceIds(await json('config/voice-ids.json')),config=await json('config/voice-performance.json');
 const sampleMoku=args.includes('--sample-moku');
@@ -17,7 +25,7 @@ if(filmOnly&&scope!=='act2-trouble1')throw Error('Film filter requires act2-trou
 const script=extractVoiceScript(scope).filter(row=>(!firstTragedy||row.source.includes('attempt-1/ash/trash/reply'))&&(!filmOnly||row.source.startsWith('act2/film/')));
 const speaker=args.find(a=>a.startsWith('--speaker='))?.slice('--speaker='.length);
 if(speaker&&!['cat','manager','hostess'].includes(speaker))throw Error('Unknown speaker filter');
-if(speaker==='manager'&&!['intro','act1','act2-trouble1'].includes(scope))throw Error('Landlord generation is limited to act1');
+if(speaker==='manager'&&!['intro','act1','act2-trouble1','act2-duel'].includes(scope))throw Error('Landlord generation is limited to supported chapter scopes');
 const pronunciationIssues=(await json('config/voice-pronunciation-issues.json')).issues;
 const pronunciationOnly=args.includes('--pronunciation-only');
 if(pronunciationOnly&&(sampleMoku||scope!=='intro'))throw Error('Pronunciation repair requires intro scope without sample mode');
@@ -34,10 +42,10 @@ const estimate=pending.reduce((n,r)=>n+r.billableCharacters*config.estimatedCred
 const report={scope,planId,model:config.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true,pronunciationReview,rows:rows.map(({line,request,...row})=>({...row,spokenInput:request.text,settings:request.voice_settings,tags:config.profiles[row.performance].tags}))};
 await atomic('.local/voice-plan.json',JSON.stringify(report,null,2)+'\n');
 await atomic('.local/voice-plan.md',[
-  '# 序盤ボイス・生成前確認',
+  scope==='act2-duel'?'# ミニゲームボイス・生成計画':'# 序盤ボイス・生成前確認',
   '',`対象: ${scope} / ${rows.length}件 / 新規 ${pending.length}件 / 推定 ${estimate}クレジット（実残高とは別）`,
   `モデル: ${config.model} / 承認ID: ${planId}`,
-  '', scope==='intro'?'独り言は操作タイミングで表示順や有無が変わります。ナレーション・手紙・選択肢後の返答は含みません。':'選択肢の全分岐・周回・エピローグを含みます。ナレーション・手紙は除外します。',
+  '', scope==='act2-duel'?'ミニゲーム4戦の掛け合い・全選択肢・奥義と勝利の掛け声が対象。立ち絵の導入・BAD END・ナレーションは含みません。':scope==='intro'?'独り言は操作タイミングで表示順や有無が変わります。ナレーション・手紙・選択肢後の返答は含みません。':'選択肢の全分岐・周回・エピローグを含みます。ナレーション・手紙は除外します。',
   '', '|順|話者|演技|本文文字数|台詞|','|---:|---|---|---:|---|',
   ...rows.map((r,i)=>`|${i+1}|${r.speaker}|${r.performance}|${r.characters}|${r.text.replaceAll('\n',' / ').replaceAll('|','\\|')}|`),
   '', '## 生成設定', '```json',JSON.stringify(config,null,2),'```',''
@@ -46,7 +54,7 @@ if(!args.includes('--quiet'))console.table(report.rows.map((r,i)=>({no:i+1,sourc
 if(!args.includes('--quiet')&&pronunciationReview.length)console.table(pronunciationReview.map(issue=>({term:issue.term,reading:issue.reading,status:issue.status,lines:issue.sources.length})));
 console.log(JSON.stringify({scope,planId,model:config.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true}));
 if(!args.includes('--verify')&&!args.includes('--generate'))process.exit(0);
-const allowedGeneration=scope==='act2-trouble1'||scope==='intro'||(scope==='act1'&&(['cat','manager'].includes(speaker)||firstTragedy)&&!sampleMoku&&!pronunciationOnly);
+const allowedGeneration=scope==='act2-trouble1'||scope==='act2-duel'||scope==='intro'||(scope==='act1'&&(['cat','manager'].includes(speaker)||firstTragedy)&&!sampleMoku&&!pronunciationOnly);
 if(args.includes('--generate')&&(!allowedGeneration||!args.includes('--approve='+planId)))throw Error('Generation requires an allowed scope and authorization of the current plan hash');
 let key;
 try{key=(await json('.local/elevenlabs.json')).apiKey;}catch{throw Error('Local API key missing. Run npm run voice:setup (do not paste key into chat).');}
@@ -80,6 +88,7 @@ async function verify(){
 const before=await verify();
 if(!args.includes('--generate'))process.exit(0);
 if(scope==='act2-trouble1'&&(unique.length>350||estimate>20000))throw Error('Abnormal trouble-one generation volume; review scope before spending');
+if(scope==='act2-duel'&&(unique.length>120||estimate>10000))throw Error('Abnormal mini-game generation volume; review scope before spending');
 if(pending.some(r=>!r.voiceId))throw Error('Missing voice ID');
 if(!Number.isFinite(before.remaining)||before.remaining<estimate)throw Error('Insufficient or unavailable balance');
 // Exclusive lock and durable intent BEFORE the charged call. An ambiguous failure

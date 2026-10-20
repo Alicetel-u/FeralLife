@@ -367,7 +367,68 @@
       "settings": {
         "stability": 0.5,
         "similarity_boost": 0.75,
-        "speed": 1.0
+        "speed": 1
+      }
+    },
+    "duel-manager": {
+      "direction": "ゲーム中の大家。声を前に出し、歯切れよく元気な掛け合い。ぼそぼそ話さず、明瞭な抑揚をつける。",
+      "tags": [
+        "[animated]",
+        "[confident]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.08
+      }
+    },
+    "duel-manager-attack": {
+      "direction": "大家の決め台詞と奥義。胸を張り、大きく明瞭な声で勢いよく叫ぶ。明るい熱血コメディ。",
+      "tags": [
+        "[excited]",
+        "[shouting]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.06
+      }
+    },
+    "duel-moku": {
+      "direction": "ゲーム中のモク。元気でコミカルな軽口。言葉もニャもはっきり発音し、脱力した小声にしない。",
+      "tags": [
+        "[animated]",
+        "[playful]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.08
+      }
+    },
+    "duel-moku-attack": {
+      "direction": "モクの猫パンチと奥義。楽しげに張りのある声で技名を力強く叫ぶ。ニャまで明瞭に。",
+      "tags": [
+        "[excited]",
+        "[shouting]",
+        "[playful]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.06
+      }
+    },
+    "duel-luna": {
+      "direction": "ゲーム中のルナ。明るくハキハキした反応。からかいや不満も聞き取りやすく、囁かず元気に。",
+      "tags": [
+        "[cheerfully]",
+        "[animated]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.07
       }
     }
   }

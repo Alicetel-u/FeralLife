@@ -4940,5 +4940,617 @@ export const VOICE_MANIFEST = {
     "text": "……ここなら……。",
     "performance": "luna-film-tense",
     "model": "eleven_v3"
+  },
+  "[\"hostess\",\"好みの話が、いつの間にか婚姻届に……。\",\"duel-luna\",false]": {
+    "file": "assets/voices/ff29cd05d7483e944b5918cd065444c599fd5e168bf464fcb6f47406b45b0983.mp3",
+    "hash": "ff29cd05d7483e944b5918cd065444c599fd5e168bf464fcb6f47406b45b0983",
+    "source": "act2/duel/round-0:1",
+    "speaker": "hostess",
+    "text": "好みの話が、いつの間にか婚姻届に……。",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"モクも大家におはようって言ったニャ。危なかったニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/a2b2b8d20b3509ba6533da394ead2916f6da4a62797db9270c06ce3112365e11.mp3",
+    "hash": "a2b2b8d20b3509ba6533da394ead2916f6da4a62797db9270c06ce3112365e11",
+    "source": "act2/duel/round-0:2",
+    "speaker": "cat",
+    "text": "モクも大家におはようって言ったニャ。危なかったニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"こいつの明日は、俺が守る！\",\"duel-manager-attack\",false]": {
+    "file": "assets/voices/3899a2edbf48c7776a62afd2b767c733dd61591b33349cdccb004bbe19950492.mp3",
+    "hash": "3899a2edbf48c7776a62afd2b767c733dd61591b33349cdccb004bbe19950492",
+    "source": "act2/duel/0/vow:0",
+    "speaker": "manager",
+    "text": "こいつの明日は、俺が守る！",
+    "performance": "duel-manager-attack",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"明日も守ってくれるんだ……♡ じゃあ、朝いちばんに会いに行ってもいい？\",\"duel-luna\",false]": {
+    "file": "assets/voices/6aa59324062c3b37e31f294951b99681bfe1199505f51e0c31e49426161b875a.mp3",
+    "hash": "6aa59324062c3b37e31f294951b99681bfe1199505f51e0c31e49426161b875a",
+    "source": "act2/duel/0/vow:2",
+    "speaker": "hostess",
+    "text": "明日も守ってくれるんだ……♡ じゃあ、朝いちばんに会いに行ってもいい？",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家、一日だけの彼氏が明日の予約まで取ってるニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/6acffeda609acbe6b230c554ee7504b6ae69321a512f0e84b85c15644ad7491f.mp3",
+    "hash": "6acffeda609acbe6b230c554ee7504b6ae69321a512f0e84b85c15644ad7491f",
+    "source": "act2/duel/0/vow:3",
+    "speaker": "cat",
+    "text": "大家、一日だけの彼氏が明日の予約まで取ってるニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"警備の話だ！！ 予約は取ってねぇ！\",\"duel-manager\",false]": {
+    "file": "assets/voices/3450e991c009223e54d8f400f72d481422a04ff02492f7a86d08599416e2abae.mp3",
+    "hash": "3450e991c009223e54d8f400f72d481422a04ff02492f7a86d08599416e2abae",
+    "source": "act2/duel/0/vow:4",
+    "speaker": "manager",
+    "text": "警備の話だ！！ 予約は取ってねぇ！",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"好みと約束は別だ。本人の返事を聞け！\",\"duel-manager-attack\",false]": {
+    "file": "assets/voices/d4f3c2b8334c3c487e2ee68b2cce9a538841af5157889f60091755f597442c2d.mp3",
+    "hash": "d4f3c2b8334c3c487e2ee68b2cce9a538841af5157889f60091755f597442c2d",
+    "source": "act2/duel/0/boundary:0",
+    "speaker": "manager",
+    "text": "好みと約束は別だ。本人の返事を聞け！",
+    "performance": "duel-manager-attack",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"好みを聞かれただけなのにね。……うん、婚約してないって、ちゃんと言えた。\",\"duel-luna\",false]": {
+    "file": "assets/voices/c45ec68e5405e001b1d82fe5f788d8e8a79345d2f628db738c8f6a22160efadc.mp3",
+    "hash": "c45ec68e5405e001b1d82fe5f788d8e8a79345d2f628db738c8f6a22160efadc",
+    "source": "act2/duel/0/boundary:2",
+    "speaker": "hostess",
+    "text": "好みを聞かれただけなのにね。……うん、婚約してないって、ちゃんと言えた。",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"おはようで婚約なら、モクは近所中と結婚してるニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/15797cf939ea8753297b74ae57591cfb84f42491d4d491a081c1a1883c295ac1.mp3",
+    "hash": "15797cf939ea8753297b74ae57591cfb84f42491d4d491a081c1a1883c295ac1",
+    "source": "act2/duel/0/boundary:3",
+    "speaker": "cat",
+    "text": "おはようで婚約なら、モクは近所中と結婚してるニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"だから挨拶だけで籍は入らねぇんだよ。\",\"duel-manager\",false]": {
+    "file": "assets/voices/2681a6f570ca29db8bf8e5497d7c7468cbe8d434329c03e5ebf5052996c87ec9.mp3",
+    "hash": "2681a6f570ca29db8bf8e5497d7c7468cbe8d434329c03e5ebf5052996c87ec9",
+    "source": "act2/duel/0/boundary:4",
+    "speaker": "manager",
+    "text": "だから挨拶だけで籍は入らねぇんだよ。",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"花束、モク宛てってことにできない？\",\"duel-manager\",false]": {
+    "file": "assets/voices/bc771b8a2279b0bff383a231944cb0add5f67bcf36b558862addd6fd85146bd1.mp3",
+    "hash": "bc771b8a2279b0bff383a231944cb0add5f67bcf36b558862addd6fd85146bd1",
+    "source": "act2/duel/0/help:0",
+    "speaker": "manager",
+    "text": "花束、モク宛てってことにできない？",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"勝手にモクの縁談をまとめるなニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/68fd1b310b5a28ca641cb775c3214153cfeb891ac07e363500ae2087622d6dfb.mp3",
+    "hash": "68fd1b310b5a28ca641cb775c3214153cfeb891ac07e363500ae2087622d6dfb",
+    "source": "act2/duel/0/help:1",
+    "speaker": "cat",
+    "text": "勝手にモクの縁談をまとめるなニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"その縁談、お断りニャ！！\",\"duel-moku-attack\",false]": {
+    "file": "assets/voices/1254884b70f0678fc365540a3f8e473de8ab95f4f38948853d0bac3a0b13b78b.mp3",
+    "hash": "1254884b70f0678fc365540a3f8e473de8ab95f4f38948853d0bac3a0b13b78b",
+    "source": "act2/duel/0/help:2",
+    "speaker": "cat",
+    "text": "その縁談、お断りニャ！！",
+    "performance": "duel-moku-attack",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"あたしの代わりにモクちゃんを差し出すの……？ 大家さん、そこは頑張ってよ。\",\"duel-luna\",false]": {
+    "file": "assets/voices/ad952621aa75fe7e99b7a40763dee24b33227c24a80f6c41fafc705bbd4a8a1b.mp3",
+    "hash": "ad952621aa75fe7e99b7a40763dee24b33227c24a80f6c41fafc705bbd4a8a1b",
+    "source": "act2/duel/0/help:4",
+    "speaker": "hostess",
+    "text": "あたしの代わりにモクちゃんを差し出すの……？ 大家さん、そこは頑張ってよ。",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"仲人料じゃなくて迷惑料を払うニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/8367e4803ef732905c618d0a5cd525e9cc1c8d5a7e0367f92f60a9b798aa86bf.mp3",
+    "hash": "8367e4803ef732905c618d0a5cd525e9cc1c8d5a7e0367f92f60a9b798aa86bf",
+    "source": "act2/duel/0/help:5",
+    "speaker": "cat",
+    "text": "仲人料じゃなくて迷惑料を払うニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"悪かった！ 次から自分で断る！\",\"duel-manager\",false]": {
+    "file": "assets/voices/7f5c37d381097987435af517770dd0d0949e9772772bd4e002f0ac76047f6c09.mp3",
+    "hash": "7f5c37d381097987435af517770dd0d0949e9772772bd4e002f0ac76047f6c09",
+    "source": "act2/duel/0/help:6",
+    "speaker": "manager",
+    "text": "悪かった！ 次から自分で断る！",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"そんなに買ってたの……？\",\"duel-luna\",false]": {
+    "file": "assets/voices/efcaa7230134a9dba50fb20fade60710b03dc7623062bc7f4e7ebe1f3674f16e.mp3",
+    "hash": "efcaa7230134a9dba50fb20fade60710b03dc7623062bc7f4e7ebe1f3674f16e",
+    "source": "act2/duel/round-1:1",
+    "speaker": "hostess",
+    "text": "そんなに買ってたの……？",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"待て。その抱き枕、誰が売った。\",\"duel-manager\",false]": {
+    "file": "assets/voices/30e1cd838053918f35076d6bec420b6b06f20ae65be8a70908a065114efb63ca.mp3",
+    "hash": "30e1cd838053918f35076d6bec420b6b06f20ae65be8a70908a065114efb63ca",
+    "source": "act2/duel/round-1:2",
+    "speaker": "manager",
+    "text": "待て。その抱き枕、誰が売った。",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……通販って便利だよね♡\",\"duel-luna\",false]": {
+    "file": "assets/voices/bc0da81241b6f640f079c3bd0b36305da5c0d4ed2c2a185a3a6d82198406627a.mp3",
+    "hash": "bc0da81241b6f640f079c3bd0b36305da5c0d4ed2c2a185a3a6d82198406627a",
+    "source": "act2/duel/round-1:3",
+    "speaker": "hostess",
+    "text": "……通販って便利だよね♡",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"本人より先に枕が入居しそうニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/d855a271846328fdf579c1d3b3c24417262e60d06717af29c37245690fe48455.mp3",
+    "hash": "d855a271846328fdf579c1d3b3c24417262e60d06717af29c37245690fe48455",
+    "source": "act2/duel/round-1:4",
+    "speaker": "cat",
+    "text": "本人より先に枕が入居しそうニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"金額でこいつの笑顔は買わせねぇ！\",\"duel-manager-attack\",false]": {
+    "file": "assets/voices/f523cef32a6fcb846761dfe0fc8e20300eb6951737f45bcd920db3e64559699d.mp3",
+    "hash": "f523cef32a6fcb846761dfe0fc8e20300eb6951737f45bcd920db3e64559699d",
+    "source": "act2/duel/1/shield:0",
+    "speaker": "manager",
+    "text": "金額でこいつの笑顔は買わせねぇ！",
+    "performance": "duel-manager-attack",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"じゃあ、この笑顔は大家さんにあげる♡ ……お金じゃ買えないんだもんね？\",\"duel-luna\",false]": {
+    "file": "assets/voices/45858761be33eb79c3d8164d1061f01d870cf4fb3b70f93ab46140fe4a0b5fb3.mp3",
+    "hash": "45858761be33eb79c3d8164d1061f01d870cf4fb3b70f93ab46140fe4a0b5fb3",
+    "source": "act2/duel/1/shield:2",
+    "speaker": "hostess",
+    "text": "じゃあ、この笑顔は大家さんにあげる♡ ……お金じゃ買えないんだもんね？",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"無料の笑顔がいちばん高くつきそうニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/6ef0ad1357944428a6b52394e78242506184b98f6cbe62f65cfed1b147e8a8a5.mp3",
+    "hash": "6ef0ad1357944428a6b52394e78242506184b98f6cbe62f65cfed1b147e8a8a5",
+    "source": "act2/duel/1/shield:3",
+    "speaker": "cat",
+    "text": "無料の笑顔がいちばん高くつきそうニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"勝手に見積もるな。俺は買ってねぇ。\",\"duel-manager\",false]": {
+    "file": "assets/voices/a7524ecee3f584a5be9921c84ccd5998d87f723be5eab81b1b0ad932561b62dd.mp3",
+    "hash": "a7524ecee3f584a5be9921c84ccd5998d87f723be5eab81b1b0ad932561b62dd",
+    "source": "act2/duel/1/shield:4",
+    "speaker": "manager",
+    "text": "勝手に見積もるな。俺は買ってねぇ。",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"贈り物と交際は別会計だ！\",\"duel-manager-attack\",false]": {
+    "file": "assets/voices/72b8c266cac3f3d97e01bd94e23a0153250cf7b3f812936e506d1a74abc5d674.mp3",
+    "hash": "72b8c266cac3f3d97e01bd94e23a0153250cf7b3f812936e506d1a74abc5d674",
+    "source": "act2/duel/1/receipt:0",
+    "speaker": "manager",
+    "text": "贈り物と交際は別会計だ！",
+    "performance": "duel-manager-attack",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"贈り物を受け取ったら、断っちゃいけない気がしてた。……そこは別でいいんだね。\",\"duel-luna\",false]": {
+    "file": "assets/voices/bfae93f3fc3e4e98abdafc711f1daa1defdec2296ba7631a674b5cc783e5eabd.mp3",
+    "hash": "bfae93f3fc3e4e98abdafc711f1daa1defdec2296ba7631a674b5cc783e5eabd",
+    "source": "act2/duel/1/receipt:2",
+    "speaker": "hostess",
+    "text": "贈り物を受け取ったら、断っちゃいけない気がしてた。……そこは別でいいんだね。",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"じゃあツナ缶をもらっても、家賃は払わなくていいニャ？\",\"duel-moku\",false]": {
+    "file": "assets/voices/e1eb787b5c91cd588311de8f73d6daabae9c299366d0ab5e480c8be4bbd24465.mp3",
+    "hash": "e1eb787b5c91cd588311de8f73d6daabae9c299366d0ab5e480c8be4bbd24465",
+    "source": "act2/duel/1/receipt:3",
+    "speaker": "cat",
+    "text": "じゃあツナ缶をもらっても、家賃は払わなくていいニャ？",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"それは別会計にならねぇ。払え。\",\"duel-manager\",false]": {
+    "file": "assets/voices/c6b5293f7bd90bbfb8d9527e776fa36ced0a47f40674c55c871fa97a947ac251.mp3",
+    "hash": "c6b5293f7bd90bbfb8d9527e776fa36ced0a47f40674c55c871fa97a947ac251",
+    "source": "act2/duel/1/receipt:4",
+    "speaker": "manager",
+    "text": "それは別会計にならねぇ。払え。",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"俺の家賃も、ついでに貢いでくれない？\",\"duel-manager\",false]": {
+    "file": "assets/voices/5e60a50e2298b095e153fd2808305a42c47ce726766632a817da9c95cbf60cec.mp3",
+    "hash": "5e60a50e2298b095e153fd2808305a42c47ce726766632a817da9c95cbf60cec",
+    "source": "act2/duel/1/discount:0",
+    "speaker": "manager",
+    "text": "俺の家賃も、ついでに貢いでくれない？",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"便乗して貢がせる相手を増やすなニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/0935c03c46516b6dc3d8987cee43b9b6587a1391a60564a04a4cf85c2f9188ee.mp3",
+    "hash": "0935c03c46516b6dc3d8987cee43b9b6587a1391a60564a04a4cf85c2f9188ee",
+    "source": "act2/duel/1/discount:1",
+    "speaker": "cat",
+    "text": "便乗して貢がせる相手を増やすなニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"押し売りまとめて返品ニャ！！\",\"duel-moku-attack\",false]": {
+    "file": "assets/voices/0c7c1f61c97773a91248232e3d88a9b7b7a21a54208a1e689a7ff3536f32ef79.mp3",
+    "hash": "0c7c1f61c97773a91248232e3d88a9b7b7a21a54208a1e689a7ff3536f32ef79",
+    "source": "act2/duel/1/discount:2",
+    "speaker": "cat",
+    "text": "押し売りまとめて返品ニャ！！",
+    "performance": "duel-moku-attack",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"大家さんまで貢いでもらう側に回らないでよ。……あたしを断る話はどこ行ったの？\",\"duel-luna\",false]": {
+    "file": "assets/voices/eb2e658454e54c8cfede6cfa7e3370c3eb27ead07ed2acabe5d1fb340f48d8fe.mp3",
+    "hash": "eb2e658454e54c8cfede6cfa7e3370c3eb27ead07ed2acabe5d1fb340f48d8fe",
+    "source": "act2/duel/1/discount:4",
+    "speaker": "hostess",
+    "text": "大家さんまで貢いでもらう側に回らないでよ。……あたしを断る話はどこ行ったの？",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家の抱き枕も売って穴埋めするニャ？\",\"duel-moku\",false]": {
+    "file": "assets/voices/2cb11c16302ca613af2d7728c1c09110ae4fd0320110ce223e6a46e094993285.mp3",
+    "hash": "2cb11c16302ca613af2d7728c1c09110ae4fd0320110ce223e6a46e094993285",
+    "source": "act2/duel/1/discount:5",
+    "speaker": "cat",
+    "text": "大家の抱き枕も売って穴埋めするニャ？",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"売るな！！ それで家賃の穴が埋まるか！\",\"duel-manager\",false]": {
+    "file": "assets/voices/2c45b5b1f144fc7debc971503ec80d4f7573c2bbb6fc0d4be7582497003d2830.mp3",
+    "hash": "2c45b5b1f144fc7debc971503ec80d4f7573c2bbb6fc0d4be7582497003d2830",
+    "source": "act2/duel/1/discount:6",
+    "speaker": "manager",
+    "text": "売るな！！ それで家賃の穴が埋まるか！",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"夢の話はしたけど、会費の話は初耳♡\",\"duel-luna\",false]": {
+    "file": "assets/voices/bb4d2dc70f62e2a2d332ad4c45eb5b7a2dfee7c41ca447e2be7976a8c6aa744f.mp3",
+    "hash": "bb4d2dc70f62e2a2d332ad4c45eb5b7a2dfee7c41ca447e2be7976a8c6aa744f",
+    "source": "act2/duel/round-2:1",
+    "speaker": "hostess",
+    "text": "夢の話はしたけど、会費の話は初耳♡",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"寝るだけならモクが無料で教えるニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/96ddd9f9ac5b749bb885d2549281cca8c57df7442b0b0dd0b658c821aedabda6.mp3",
+    "hash": "96ddd9f9ac5b749bb885d2549281cca8c57df7442b0b0dd0b658c821aedabda6",
+    "source": "act2/duel/round-2:2",
+    "speaker": "cat",
+    "text": "寝るだけならモクが無料で教えるニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"こいつの未来に、勝手な値札をつけるな！\",\"duel-manager-attack\",false]": {
+    "file": "assets/voices/e8096042de39c246a40a8ff3edee3f3f10868e40275a192bfbb8604788c87ed6.mp3",
+    "hash": "e8096042de39c246a40a8ff3edee3f3f10868e40275a192bfbb8604788c87ed6",
+    "source": "act2/duel/2/future:0",
+    "speaker": "manager",
+    "text": "こいつの未来に、勝手な値札をつけるな！",
+    "performance": "duel-manager-attack",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"あたしの未来、そんなふうに考えてくれるんだ。……大家さんの隣も、空けといてね♡\",\"duel-luna\",false]": {
+    "file": "assets/voices/e50eb1e52094905381bf0665c3d089deee901cae9993b431843c7c12fed2ebc5.mp3",
+    "hash": "e50eb1e52094905381bf0665c3d089deee901cae9993b431843c7c12fed2ebc5",
+    "source": "act2/duel/2/future:2",
+    "speaker": "hostess",
+    "text": "あたしの未来、そんなふうに考えてくれるんだ。……大家さんの隣も、空けといてね♡",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"値札を剥がしたら、大家の隣に予約が入ったニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/b63a5b3a956df7abca61470e8466a10c929756e5441ffa3517cc7badcafc8350.mp3",
+    "hash": "b63a5b3a956df7abca61470e8466a10c929756e5441ffa3517cc7badcafc8350",
+    "source": "act2/duel/2/future:3",
+    "speaker": "cat",
+    "text": "値札を剥がしたら、大家の隣に予約が入ったニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"隣室の入居審査みたいに言うな！\",\"duel-manager\",false]": {
+    "file": "assets/voices/e9542228f40a5af7a808a7e89204c66a1c0c498f099505dff31b929af23bc656.mp3",
+    "hash": "e9542228f40a5af7a808a7e89204c66a1c0c498f099505dff31b929af23bc656",
+    "source": "act2/duel/2/future:4",
+    "speaker": "manager",
+    "text": "隣室の入居審査みたいに言うな！",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"本人が断ってる。勧誘もここで終了だ！\",\"duel-manager-attack\",false]": {
+    "file": "assets/voices/bff2926986da61a0d755efdfa97a9ba321c9981f7a3c4cf0090f31b521ed40d4.mp3",
+    "hash": "bff2926986da61a0d755efdfa97a9ba321c9981f7a3c4cf0090f31b521ed40d4",
+    "source": "act2/duel/2/cancel:0",
+    "speaker": "manager",
+    "text": "本人が断ってる。勧誘もここで終了だ！",
+    "performance": "duel-manager-attack",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"断っても話を続けられるから困ってたの。……あたし、もう入らないって言う。\",\"duel-luna\",false]": {
+    "file": "assets/voices/5fcd16d6964b4c31518d1877b9d3ac1cf3639f233bc17597511a3efdec38370f.mp3",
+    "hash": "5fcd16d6964b4c31518d1877b9d3ac1cf3639f233bc17597511a3efdec38370f",
+    "source": "act2/duel/2/cancel:2",
+    "speaker": "hostess",
+    "text": "断っても話を続けられるから困ってたの。……あたし、もう入らないって言う。",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"モクも掃除当番を断ったら終了でいいニャ？\",\"duel-moku\",false]": {
+    "file": "assets/voices/654f03c8fe4362a1c097d8e1482615439289800c10fa314ae60acc80697c7f96.mp3",
+    "hash": "654f03c8fe4362a1c097d8e1482615439289800c10fa314ae60acc80697c7f96",
+    "source": "act2/duel/2/cancel:3",
+    "speaker": "cat",
+    "text": "モクも掃除当番を断ったら終了でいいニャ？",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"それは勧誘じゃなくて当番だ。ほうきを持て。\",\"duel-manager\",false]": {
+    "file": "assets/voices/02dfcba04a79cd257f45359c010a1ab95bf7b520405080e6a02063bf4e7b8628.mp3",
+    "hash": "02dfcba04a79cd257f45359c010a1ab95bf7b520405080e6a02063bf4e7b8628",
+    "source": "act2/duel/2/cancel:4",
+    "speaker": "manager",
+    "text": "それは勧誘じゃなくて当番だ。ほうきを持て。",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"モク先生の無料お昼寝講座に変更で……\",\"duel-manager\",false]": {
+    "file": "assets/voices/a3f1be51668cd2be3e518ff1d30c5a15f90ab4dc4339d2172666c6d889d79ef3.mp3",
+    "hash": "a3f1be51668cd2be3e518ff1d30c5a15f90ab4dc4339d2172666c6d889d79ef3",
+    "source": "act2/duel/2/sleep:0",
+    "speaker": "manager",
+    "text": "モク先生の無料お昼寝講座に変更で……",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"講座は休講ニャ。いまから実技だけやるニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/6e31a574f3a177b8f2ac616c23738ab41aa5a1e8de1b1aaa3121f3c2d37ec718.mp3",
+    "hash": "6e31a574f3a177b8f2ac616c23738ab41aa5a1e8de1b1aaa3121f3c2d37ec718",
+    "source": "act2/duel/2/sleep:1",
+    "speaker": "cat",
+    "text": "講座は休講ニャ。いまから実技だけやるニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"迷惑営業、おやすみニャ！！\",\"duel-moku-attack\",false]": {
+    "file": "assets/voices/5d03be70c45e555d98456ea78362526756be2396e62165535cc3f655519fcaec.mp3",
+    "hash": "5d03be70c45e555d98456ea78362526756be2396e62165535cc3f655519fcaec",
+    "source": "act2/duel/2/sleep:2",
+    "speaker": "cat",
+    "text": "迷惑営業、おやすみニャ！！",
+    "performance": "duel-moku-attack",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"大家さん、断るところまでモクちゃんに丸投げ……。無料だからって頼りすぎじゃない？\",\"duel-luna\",false]": {
+    "file": "assets/voices/54668c5b1104c0d314a36d247ea630c3de943957ad2170c6c4d60670b3c197fb.mp3",
+    "hash": "54668c5b1104c0d314a36d247ea630c3de943957ad2170c6c4d60670b3c197fb",
+    "source": "act2/duel/2/sleep:4",
+    "speaker": "hostess",
+    "text": "大家さん、断るところまでモクちゃんに丸投げ……。無料だからって頼りすぎじゃない？",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"無料なのは昼寝だけニャ。起こした分は有料ニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/431582d0e0f2c7842acfbc10605487afeaa6ec6d02c00342842e5382d86a4e18.mp3",
+    "hash": "431582d0e0f2c7842acfbc10605487afeaa6ec6d02c00342842e5382d86a4e18",
+    "source": "act2/duel/2/sleep:5",
+    "speaker": "cat",
+    "text": "無料なのは昼寝だけニャ。起こした分は有料ニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"さっきまで普通に起きてただろ！\",\"duel-manager\",false]": {
+    "file": "assets/voices/d406c2c0747d5694d5830b83a090d8c3abf9f92be88af67d75f2b55682c71277.mp3",
+    "hash": "d406c2c0747d5694d5830b83a090d8c3abf9f92be88af67d75f2b55682c71277",
+    "source": "act2/duel/2/sleep:6",
+    "speaker": "manager",
+    "text": "さっきまで普通に起きてただろ！",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"あれはお店で忘れ物を受け取る話！ 働きに戻るとは言ってない！\",\"duel-luna\",false]": {
+    "file": "assets/voices/700cf22d3ac1eb4a395cdd83b25211d6fee8bf8f35c5e81d5cef91eecf07b0c1.mp3",
+    "hash": "700cf22d3ac1eb4a395cdd83b25211d6fee8bf8f35c5e81d5cef91eecf07b0c1",
+    "source": "act2/duel/round-3:1",
+    "speaker": "hostess",
+    "text": "あれはお店で忘れ物を受け取る話！ 働きに戻るとは言ってない！",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"全員、都合のいいところだけ聞いてるニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/f85709fa610d7fd86778d19d3661abee702463f55872db202f9f16253ab937f3.mp3",
+    "hash": "f85709fa610d7fd86778d19d3661abee702463f55872db202f9f16253ab937f3",
+    "source": "act2/duel/round-3:2",
+    "speaker": "cat",
+    "text": "全員、都合のいいところだけ聞いてるニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"大家流超絶漢気奥義！\",\"duel-manager-attack\",false]": {
+    "file": "assets/voices/8b8be93f3cf876d6d895468e1f03357b9be3655ec39b314cef72d63ee74471c4.mp3",
+    "hash": "8b8be93f3cf876d6d895468e1f03357b9be3655ec39b314cef72d63ee74471c4",
+    "source": "act2/duel/3/ultimate:0",
+    "speaker": "manager",
+    "text": "大家流超絶漢気奥義！",
+    "performance": "duel-manager-attack",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……あたしのために、そこまでしてくれるんだ。今の大家さん、ずっと見てたい……♡\",\"duel-luna\",false]": {
+    "file": "assets/voices/7d9f7b84d7b5cd83dc3acb20422dc29189fe2fc29bcbcf3a3409926c07d34ad6.mp3",
+    "hash": "7d9f7b84d7b5cd83dc3acb20422dc29189fe2fc29bcbcf3a3409926c07d34ad6",
+    "source": "act2/duel/3/ultimate:2",
+    "speaker": "hostess",
+    "text": "……あたしのために、そこまでしてくれるんだ。今の大家さん、ずっと見てたい……♡",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"奥義のあともその構えニャ？ 肩、つるニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/aad6c1f9449df427d348eaa25169f9c906010fe433b8c886f9139710803c732c.mp3",
+    "hash": "aad6c1f9449df427d348eaa25169f9c906010fe433b8c886f9139710803c732c",
+    "source": "act2/duel/3/ultimate:3",
+    "speaker": "cat",
+    "text": "奥義のあともその構えニャ？ 肩、つるニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……先に言え。もうちょっとつってる。\",\"duel-manager\",false]": {
+    "file": "assets/voices/bde60869cc1f47d6a91f63c89e97f494878a9599898a0e0aa794aa3d244238ee.mp3",
+    "hash": "bde60869cc1f47d6a91f63c89e97f494878a9599898a0e0aa794aa3d244238ee",
+    "source": "act2/duel/3/ultimate:4",
+    "speaker": "manager",
+    "text": "……先に言え。もうちょっとつってる。",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"忘れ物だけ返せ。今の暮らしは本人が決める！\",\"duel-manager-attack\",false]": {
+    "file": "assets/voices/e94d8bafae0567302aa24ee41d520030f524192389caca2deaf8c9be1b56fcc2.mp3",
+    "hash": "e94d8bafae0567302aa24ee41d520030f524192389caca2deaf8c9be1b56fcc2",
+    "source": "act2/duel/3/leave:0",
+    "speaker": "manager",
+    "text": "忘れ物だけ返せ。今の暮らしは本人が決める！",
+    "performance": "duel-manager-attack",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"うん。忘れ物は受け取る。でも働きには戻らない。……あたしが、そう決めた。\",\"duel-luna\",false]": {
+    "file": "assets/voices/40c4bf26cef829c01efd21820fc7358c421b57bc1bbbbcc943df1533d9249a8f.mp3",
+    "hash": "40c4bf26cef829c01efd21820fc7358c421b57bc1bbbbcc943df1533d9249a8f",
+    "source": "act2/duel/3/leave:2",
+    "speaker": "hostess",
+    "text": "うん。忘れ物は受け取る。でも働きには戻らない。……あたしが、そう決めた。",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"ついでにモクの暮らしも、昼寝中心に決めたいニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/6d5e4a118c6cf60c17eb8f02b719868547acde887df2147d6d83447daef67fee.mp3",
+    "hash": "6d5e4a118c6cf60c17eb8f02b719868547acde887df2147d6d83447daef67fee",
+    "source": "act2/duel/3/leave:3",
+    "speaker": "cat",
+    "text": "ついでにモクの暮らしも、昼寝中心に決めたいニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"お前は最初からそう暮らしてるだろ。\",\"duel-manager\",false]": {
+    "file": "assets/voices/112e9f9829f7e29b968dddf14637065602c88eadc976b28fffac53a4769bf9df.mp3",
+    "hash": "112e9f9829f7e29b968dddf14637065602c88eadc976b28fffac53a4769bf9df",
+    "source": "act2/duel/3/leave:4",
+    "speaker": "manager",
+    "text": "お前は最初からそう暮らしてるだろ。",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"モク流奥義・煙ノ肉球乱舞を頼む！\",\"duel-manager\",false]": {
+    "file": "assets/voices/5dc40032f1fa0dcf6f6517f97120a140efaaab9b2bfacff040e7c7b4a60d8bf7.mp3",
+    "hash": "5dc40032f1fa0dcf6f6517f97120a140efaaab9b2bfacff040e7c7b4a60d8bf7",
+    "source": "act2/duel/3/catapult:0",
+    "speaker": "manager",
+    "text": "モク流奥義・煙ノ肉球乱舞を頼む！",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"煙幕代はツナ缶三つニャ。目、閉じとくニャ！\",\"duel-moku\",false]": {
+    "file": "assets/voices/bb6571a2e24656694f8409a41ef3812740d9552141f0183adb82820eec8d7348.mp3",
+    "hash": "bb6571a2e24656694f8409a41ef3812740d9552141f0183adb82820eec8d7348",
+    "source": "act2/duel/3/catapult:1",
+    "speaker": "cat",
+    "text": "煙幕代はツナ缶三つニャ。目、閉じとくニャ！",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"モク流奥義・煙ノ肉球乱舞ニャ！！\",\"duel-moku-attack\",false]": {
+    "file": "assets/voices/9404bba4aa5b25397e732dcdc52781c6474a1293c8d33b0b2cbf88cedd9d1c97.mp3",
+    "hash": "9404bba4aa5b25397e732dcdc52781c6474a1293c8d33b0b2cbf88cedd9d1c97",
+    "source": "act2/duel/3/catapult:2",
+    "speaker": "cat",
+    "text": "モク流奥義・煙ノ肉球乱舞ニャ！！",
+    "performance": "duel-moku-attack",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"最後までモクちゃん任せなんだ……。大家さん、せめてあたしの前に立っててほしかった。\",\"duel-luna\",false]": {
+    "file": "assets/voices/c221df5bbc78fd3b0da645f1fe162ce2280cf073e0ab75905f9041aa5a2e3eb9.mp3",
+    "hash": "c221df5bbc78fd3b0da645f1fe162ce2280cf073e0ab75905f9041aa5a2e3eb9",
+    "source": "act2/duel/3/catapult:4",
+    "speaker": "hostess",
+    "text": "最後までモクちゃん任せなんだ……。大家さん、せめてあたしの前に立っててほしかった。",
+    "performance": "duel-luna",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"煙に巻いてお見送りニャ。大家、ツナ缶は三つニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/8ef419c54583950540b5a4e36f326456684cd43e4f6c1c9441c19b6de8b9568e.mp3",
+    "hash": "8ef419c54583950540b5a4e36f326456684cd43e4f6c1c9441c19b6de8b9568e",
+    "source": "act2/duel/3/catapult:5",
+    "speaker": "cat",
+    "text": "煙に巻いてお見送りニャ。大家、ツナ缶は三つニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"分かったから、俺の顔に煙を吐くな！！\",\"duel-manager\",false]": {
+    "file": "assets/voices/195ff10e670700bef1a7b9167f5fd4018cc1dcdf5f0c0107be54b50e933d5a22.mp3",
+    "hash": "195ff10e670700bef1a7b9167f5fd4018cc1dcdf5f0c0107be54b50e933d5a22",
+    "source": "act2/duel/3/catapult:6",
+    "speaker": "manager",
+    "text": "分かったから、俺の顔に煙を吐くな！！",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……全員、帰った！\",\"duel-manager\",false]": {
+    "file": "assets/voices/34193f44e2d6105b2da19b40e5ac28afd80f5593ae808d242635d4fb08538c28.mp3",
+    "hash": "34193f44e2d6105b2da19b40e5ac28afd80f5593ae808d242635d4fb08538c28",
+    "source": "act2/duel/victory:1",
+    "speaker": "manager",
+    "text": "……全員、帰った！",
+    "performance": "duel-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"玄関前の渋滞解消ニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/6d473db06a38ed7ba20bbd888433de42b51284558eb92bfbc7dcfafbc0f18120.mp3",
+    "hash": "6d473db06a38ed7ba20bbd888433de42b51284558eb92bfbc7dcfafbc0f18120",
+    "source": "act2/duel/victory:2",
+    "speaker": "cat",
+    "text": "玄関前の渋滞解消ニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3"
   }
 };
