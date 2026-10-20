@@ -969,7 +969,7 @@ function syncNormalBgm(){
   const dominationEnding=duelLine?.duelEnding==='domination';
   // A duel event also contains full-size introductory/ending conversations.
   // Play the battle track only while an actual round is on the mini-game field.
-  const duel=!!activeDialogue?.duel&&Number.isInteger(duelLine?.duelRound)&&!duelLine.duelEnding&&!!modal.querySelector('.duel-stage .duel-field');
+  const duel=!!activeDialogue?.duel&&!!modal.querySelector('.duel-stage .duel-field')&&(!duelLine?.duelEnding||duelLine.duelEnding==='clear'||duelLine.duelEnding==='yandere'&&!duelLine.duelEndingPhase);
   const victory=!bad&&!clock&&!title&&modal.open&&!!modal.querySelector('.trouble-victory,.act-one-complete');
   const trouble=!victory&&!bad&&!clock&&!title&&modal.open&&(!!modal.querySelector('.trouble-card')||activeDialogue?.actScene==='reply');
   const lunaFilm=modal.open?modal.querySelector('[data-act2-opening]'):null;
