@@ -21,23 +21,20 @@ test('backgrounding pauses and resumes the current voice without stale play fail
  }finally{player.stop();}
 });
 
-test('duel voice plays faster with original pitch and normal scenes return to 1x',()=>{
+test('duel attacks use pre-rendered speed files at native rate without affecting other voices',()=>{
  const battle={speaker:'manager',text:'いくぞ！',duelRound:0,duelAttack:true};
  const normal={speaker:'manager',text:'そうか。'};
  const sounds=[];
  const manifest={
-  [voiceLineKey(battle)]:{file:'battle.mp3',performance:'duel-manager-attack'},
+  [voiceLineKey(battle)]:{file:'battle.mp3',fastFile:'battle.attack.mp3',performance:'duel-manager-attack'},
   [voiceLineKey(normal)]:{file:'normal.mp3',performance:'normal'}
  };
  const player=createVoicePlayer({storage:null,manifest,makeAudio:()=>{
   const audio={play(){return Promise.resolve()},pause(){},removeAttribute(){},load(){}};sounds.push(audio);return audio;
  }});
  player.play(battle,'battle');
- assert.equal(sounds[0].playbackRate,1.75);
- const lunaAttack={speaker:'hostess',text:'そこっ！',duelRound:1,duelAttack:true};
- manifest[voiceLineKey(lunaAttack)]={file:'luna-attack.mp3',performance:'duel-luna'};
- player.play(lunaAttack,'luna-attack');
- assert.equal(sounds.at(-1).playbackRate,1.75);
+ assert.equal(sounds[0].playbackRate,1);
+ assert.equal(sounds[0].src,'battle.attack.mp3');
  const moku={speaker:'cat',text:'ニャ！',duelRound:0};
  manifest[voiceLineKey(moku)]={file:'moku.mp3',performance:'duel-moku'};
  player.play(moku,'moku');
