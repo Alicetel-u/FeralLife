@@ -1769,3 +1769,30 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .duel-story-backdrop img{width:100%;height:100%;object-fit:cover;object-position:center}
 .duel-yandere-story .duel-story-backdrop::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 35%,#19131f77)}
 .duel-yandere-story[data-duel-phase="isolation"] .duel-story-backdrop img{filter:brightness(.75)}
+
+
+/* Persona-inspired developer-only screen: bold diagonal blocks and functional color coding. */
+.persona-debug{position:relative;isolation:isolate;width:100%;height:100dvh;min-height:0;overflow:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,2vh,22px);padding:clamp(20px,4vw,48px);box-sizing:border-box;background:#0a111d!important;color:#fff!important}
+.persona-debug::before{content:"";position:absolute;z-index:-2;inset:-25%;background:linear-gradient(153deg,transparent 0 28%,#ee253f 28% 50%,transparent 50% 63%,#1854bd 63% 77%,transparent 77%);transform:rotate(-8deg);opacity:.88}
+.persona-debug::after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(125deg,#0c1022ef 16%,#0c1022b9 78%),repeating-linear-gradient(-15deg,transparent 0 45px,#ffffff15 45px 47px)}
+.persona-debug-stripe{position:absolute;top:15px;left:-8%;width:116%;transform:rotate(-4deg);background:#fff;color:#071020;font:900 clamp(10px,1.6vw,17px) system-ui;padding:6px;text-align:center;letter-spacing:.2em;white-space:nowrap}
+.persona-debug header{width:min(660px,100%);text-align:left;margin-top:16px;transform:rotate(-1deg)}
+.persona-debug-kicker{display:inline-block;background:#f3f2e8;color:#111624;padding:5px 12px;font:900 11px system-ui;letter-spacing:.16em;transform:skew(-8deg)}
+.persona-debug h2{font:1000 clamp(29px,5.6vw,56px)/1.13 system-ui!important;text-shadow:5px 6px 0 #03060b;margin:9px 0 4px!important;letter-spacing:-.06em}
+.persona-debug header p{font:600 13px/1.5 system-ui;color:#dce4f8;margin:0}
+.persona-debug-actions{width:min(660px,100%);display:grid;gap:10px;max-height:53dvh;overflow-y:auto;overflow-x:hidden;padding:5px 7px 5px 3px}
+.persona-debug-button{--debug-tone:#c7d4ed;width:100%;min-height:58px;display:flex;align-items:center;gap:12px;text-align:left;background:#0c1627;border:2px solid var(--debug-tone);border-left:13px solid var(--debug-tone);border-radius:0;color:#fff;box-shadow:5px 5px 0 #030611;font:800 clamp(13px,1.8vw,18px)/1.3 system-ui;padding:10px 13px;cursor:pointer;transform:skew(-5deg);transition:translate .14s,background .14s}
+.persona-debug-button>*{transform:skew(5deg)}
+.persona-debug-button.tone-battle{--debug-tone:#ff3152}
+.persona-debug-button.tone-chapter1{--debug-tone:#35cbb5}
+.persona-debug-button.tone-chapter2{--debug-tone:#f3bb32}
+.persona-debug-button.tone-navigation{--debug-tone:#69aaff}
+.persona-debug-button.tone-utility{--debug-tone:#b49df4}
+.persona-debug-button:hover,.persona-debug-button:focus-visible{translate:5px -2px;background:#26344c;outline:2px solid #fff;outline-offset:2px}
+.persona-debug-index{background:var(--debug-tone);color:#071020;padding:6px 9px;font-size:13px;font-weight:1000}
+.persona-debug-label{flex:1}
+.persona-debug-arrow{font-size:25px;color:var(--debug-tone)}
+.persona-debug-back{border:2px solid #fff;background:#fff;color:#111827;font:900 14px system-ui;padding:9px 25px;min-height:44px;cursor:pointer;transform:rotate(-2deg)}
+.persona-debug footer{font:11px/1.5 monospace;color:#c5d0e1;text-align:center}
+@media(max-width:700px){.persona-debug{justify-content:flex-start;padding:48px 17px 20px}.persona-debug-actions{max-height:58dvh}.persona-debug-button{min-height:55px}}
+@media(prefers-reduced-motion:reduce){.persona-debug-button{transition:none}}
