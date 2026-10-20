@@ -515,7 +515,18 @@ function showActEnding(afterFire=false){
 }
 function showActTwoEnding(afterCinematic=false){
  const a=state.actOne;
- if(a.status==='bad'&&a.failure?.startsWith('duel-')){openModal(duelBadHTML(state));return;}
+ if(a.status==='bad'&&a.failure?.startsWith('duel-')){
+  openModal(duelBadHTML(state));
+  if(a.failure==='duel-yandere'){
+    // Leave time for the pink fade, ending title, and landlord's final words.
+    // Cancel if the player leaves this screen or uses the manual rewind button.
+    const timer=setTimeout(()=>{
+      if(modal.open&&modal.querySelector('.duel-bad-yandere'))beginRewind();
+    },9500);
+    stopFireEnding=()=>clearTimeout(timer);
+  }
+  return;
+ }
  if(a.status==='bad'){
   if(a.failure==='bag-guarantee'&&a.attempt===1){
    beginRewind(true);return;
