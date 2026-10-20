@@ -28,7 +28,7 @@ import { bedCue, createNormalBgm } from './bgm.js';
 import { createGame, advance, admit, addEvent, ROOMS, CHARACTERS, NEEDS, ACTIONS, dateAt, formatTime, atmosphere, validateSave } from './simulation.js';
 import { createTalk, stepTalk, claimAutomaticScene, rememberReadScenes, automaticChapterScene } from './dialogue.js';
 import { WorldRenderer, roomBounds, drawPortrait } from './renderer.js';
-import { loadCharacterArt, loadRoomArt, EVENT_ART, EVENT_EXPRESSIONS, eventParticipants } from './character-art.js';
+import { CHARACTER_ART, loadCharacterArt, loadRoomArt, EVENT_ART, EVENT_EXPRESSIONS, eventParticipants } from './character-art.js';
 import { sampleJourney, motionLabel } from './movement.js';
 import { MANAGEMENT_CASES } from './event-cases.js';
 import { ensureManagement, managementSummary, managementImpact, openManagementCase, resolveManagementCase } from './management.js';
