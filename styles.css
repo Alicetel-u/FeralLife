@@ -1837,3 +1837,17 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @keyframes duel-arcade-flash{0%{background:#fff}15%{background:#bd1048ec}35%,100%{background:#080915dd}}
 @media(max-width:700px){.duel-start-panel strong{font-size:clamp(26px,6.5vw,48px);letter-spacing:-.08em}.duel-start-panel{padding:32px 0}}
 @media(prefers-reduced-motion:reduce){.duel-start-panel,.duel-start-title::before{animation:none}}
+
+
+/* Dedicated scene navigation: paging must never get lost among warp destinations. */
+.persona-debug-scenes{justify-content:center;gap:12px}
+.persona-debug-scenes .persona-debug-actions{width:min(660px,100%);flex:0 1 auto;min-height:0;max-height:min(48dvh,420px);overflow-y:auto;overscroll-behavior:contain}
+.persona-debug-pagination{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:stretch;width:min(660px,100%);flex-shrink:0;padding:10px 0 2px;border-top:2px solid #ffffff68}
+.persona-debug-page-button{min-height:58px;padding:12px 9px;border:3px solid #fff;background:#fff;color:#101426;box-shadow:4px 5px 0 #060814;font:1000 clamp(15px,2vw,21px)/1.2 system-ui;cursor:pointer}
+.persona-debug-page-next:not(:disabled){background:#ffd345;border-color:#fff;color:#15131a;box-shadow:4px 5px 0 #060814,0 0 20px #ffc64250}
+.persona-debug-page-button:not(:disabled):hover,.persona-debug-page-button:not(:disabled):focus-visible{outline:3px solid #ff3152;outline-offset:3px;filter:brightness(1.08)}
+.persona-debug-page-button:disabled{opacity:.34;cursor:not-allowed;box-shadow:none}
+.persona-debug-page-counter{display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:84px;font:900 11px/1.4 system-ui;color:#b8c9e8;letter-spacing:.1em}
+.persona-debug-page-counter strong{font:1000 clamp(18px,2.4vw,26px)/1.3 system-ui;color:#fff;white-space:nowrap}
+.persona-debug-scenes .persona-debug-back{margin-top:4px}
+@media(max-width:700px){.persona-debug-scenes{justify-content:flex-start;padding-top:48px}.persona-debug-scenes .persona-debug-actions{max-height:52dvh}.persona-debug-pagination{gap:6px}.persona-debug-page-button{min-height:60px;padding:12px 6px}.persona-debug-page-counter{min-width:71px}}
