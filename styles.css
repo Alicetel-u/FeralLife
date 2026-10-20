@@ -1879,3 +1879,9 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @keyframes duel-yandere-cg-out{0%{opacity:1}100%{opacity:0}}
 @keyframes duel-pink-end-title{0%,75%{opacity:0;visibility:hidden}100%{opacity:1;visibility:visible}}
 @media(prefers-reduced-motion:reduce){.duel-bad-yandere::before{animation:none;opacity:1}.duel-bad-yandere .duel-cg{animation:none;opacity:0}.duel-bad-yandere .duel-bad-copy{animation:none}}
+
+/* Pink is reserved for the actual yandere ending fade, never the earlier scene. */
+.duel-bad-yandere .duel-yandere-last-words{margin:16px auto 5px;font-size:clamp(18px,3vw,30px);font-weight:800;color:#fff;text-shadow:0 3px 9px #a50068;animation:duel-last-words-appear 7.1s ease both}
+.duel-bad-yandere [data-act2-rewind]{animation:duel-last-words-appear 8s ease both}
+@keyframes duel-last-words-appear{0%,75%{opacity:0;visibility:hidden}100%{opacity:1;visibility:visible}}
+@media(prefers-reduced-motion:reduce){.duel-bad-yandere .duel-yandere-last-words,.duel-bad-yandere [data-act2-rewind]{animation:none}}
