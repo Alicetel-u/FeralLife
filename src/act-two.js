@@ -517,7 +517,7 @@ export function refreshDuelYandereEnding(s){
  if(!event)return false;
  // Older builds already stored duelEndingPhase values (relief, closeness, etc).
  // Only the five-day format is current; migrate unfinished legacy transcripts.
- if(event.lines.some(l=>l.duelStoryDay===1&&l.duelDayStart))return false;
+ if(event.lines.some(l=>l.duelStoryDay===1&&l.duelDayStart)&&event.lines.filter(l=>l.duelEndingPhase==='reveal').length===3)return false;
  const start=event.lines.findIndex(l=>l.duelEnding==='yandere');
  if(start<0)return false;
  const offset=event.lines[0]?.text===event.detail?0:1;
@@ -545,7 +545,7 @@ function answerDuel(s,eventId,choiceId){
   if(outcome!=='clear'){
    a.status='bad';a.failure='duel-'+outcome;
    if(!a.memory.includes(a.failure))a.memory.push(a.failure);
-   s.ending={name:outcome==='yandere'?'BAD END — あなただけの大家さん':'BAD END — 大家さん、返事は？',text:outcome==='yandere'?'独占する愛に閉ざされ、けもの荘の経営は止まった。':'管理鍵も帳簿もルナの手に渡り、大家は経営の実権を失った。'};
+   s.ending={name:outcome==='yandere'?'BAD END — わたしだけの大家さん♡':'BAD END — 大家さん、返事は？',text:outcome==='yandere'?'独占する愛に閉ざされ、けもの荘の経営は止まった。':'管理鍵も帳簿もルナの手に渡り、大家は経営の実権を失った。'};
   }
  }
  return r;
