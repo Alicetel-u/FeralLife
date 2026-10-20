@@ -85,7 +85,7 @@ export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1
   const moving=opts.pose?.startsWith('walk')||action==='outing';
   const emotion=opts.emotion||(!art?.image?'relieved':null);
   const allowsEmotion=(!moving||type==='patron')&&action!=='sleep'&&(!['eat','drink','clean','smoke'].includes(action)||opts.emotionActive);
-  if((allowsEmotion&&emotion&&emotion!=='neutral'&&emotion!=='tired')||(!art?.image&&MINI_EMOTION_ART[type]?.image)){
+  if(type!=='manager'&&((allowsEmotion&&emotion&&emotion!=='neutral'&&emotion!=='tired')||(!art?.image&&MINI_EMOTION_ART[type]?.image))){
     const fallbackEmotion=(moving&&type!=='patron')||action==='sleep'?'relieved':emotion==='tired'?'sad':emotion&&miniEmotionFrameName(type,emotion)?emotion:'relieved';
     const step=moving&&!opts.reduced?Math.sin(tick*11)*.35*scale:0;
     if(drawMiniEmotion(ctx,type,x,y+step,tick,scale,direction,fallbackEmotion,{moving,baseHeight:art?.image?art.displayHeight:26,reduced:opts.reduced})){
@@ -94,7 +94,8 @@ export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1
     }
   }
   if (art?.image) {
-    const pose = opts.pose && opts.pose !== 'base' ? art.poses?.[opts.pose] : null;
+    const poseName = type==='manager'&&!moving&&opts.emotionActive&&art.poses?.[emotion]?emotion:opts.pose;
+    const pose = poseName && poseName !== 'base' ? art.poses?.[poseName] : null;
     const image = pose?.image || art.image, origin = pose?.image ? pose.origin : art.origin;
     // 基本立ち絵と同じ比率で全ポーズを描く。
     const px = art.displayHeight / art.image.height;

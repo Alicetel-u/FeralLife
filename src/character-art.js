@@ -94,18 +94,42 @@ function observationCharacterArt(type){
 }
 export const CHARACTER_ART = {
   manager: {
-    src:'assets/characters/manager/idle.png',portraitSrc:'assets/characters/manager/idle.png',displayHeight:44,origin:[80,156],image:null,portrait:null,
+    src:'assets/characters/manager/new-poses/daily/idle.png',portraitSrc:'assets/characters/manager/idle.png',displayHeight:44,origin:[80,156],image:null,portrait:null,
     poses:{
-      walk_a:catPose('assets/characters/manager/poses/walk_a.png',[80,156]),
-      walk_b:catPose('assets/characters/manager/poses/walk_b.png',[80,156]),
-      clean_a:catPose('assets/characters/manager/poses/clean_a.png',[80,156]),
-      clean_b:catPose('assets/characters/manager/poses/clean_b.png',[80,156]),
-      happy:catPose('assets/characters/manager/poses/happy.png',[80,156]),
-      angry:catPose('assets/characters/manager/poses/angry.png',[80,156]),
-      sad:catPose('assets/characters/manager/poses/sad.png',[80,156]),
-      surprised:catPose('assets/characters/manager/poses/surprised.png',[80,156]),
-      retort:catPose('assets/characters/manager/poses/retort.png',[80,156])
-    },actionPoses:{idle:'base',chat:'base',clean:['clean_a','clean_b']}
+      battle_badend:catPose('assets/characters/manager/new-poses/act2-battle/badend.png',[80,156]),
+      battle_fail:catPose('assets/characters/manager/new-poses/act2-battle/fail.png',[80,156]),
+      battle_kime_mid:catPose('assets/characters/manager/new-poses/act2-battle/kime_mid.png',[80,156]),
+      battle_kime_strong:catPose('assets/characters/manager/new-poses/act2-battle/kime_strong.png',[80,156]),
+      battle_kime_weak:catPose('assets/characters/manager/new-poses/act2-battle/kime_weak.png',[80,156]),
+      battle_ougi:catPose('assets/characters/manager/new-poses/act2-battle/ougi.png',[80,156]),
+      battle_protect:catPose('assets/characters/manager/new-poses/act2-battle/protect.png',[80,156]),
+      battle_stand_proud:catPose('assets/characters/manager/new-poses/act2-battle/stand_proud.png',[80,156]),
+      battle_victory:catPose('assets/characters/manager/new-poses/act2-battle/victory.png',[80,156]),
+      clean:catPose('assets/characters/manager/new-poses/daily/clean.png',[80,156]),
+      idle:catPose('assets/characters/manager/new-poses/daily/idle.png',[80,156]),
+      sit:catPose('assets/characters/manager/new-poses/daily/sit.png',[80,156]),
+      sleep:catPose('assets/characters/manager/new-poses/daily/sleep.png',[80,156]),
+      smartphone:catPose('assets/characters/manager/new-poses/daily/smartphone.png',[80,156]),
+      talk:catPose('assets/characters/manager/new-poses/daily/talk.png',[80,156]),
+      think:catPose('assets/characters/manager/new-poses/daily/think.png',[80,156]),
+      walk_a:catPose('assets/characters/manager/new-poses/daily/walk_a.png',[80,156]),
+      walk_b:catPose('assets/characters/manager/new-poses/daily/walk_b.png',[80,156]),
+      angry:catPose('assets/characters/manager/new-poses/emotions/angry.png',[80,156]),
+      happy:catPose('assets/characters/manager/new-poses/emotions/happy.png',[80,156]),
+      neutral:catPose('assets/characters/manager/new-poses/emotions/neutral.png',[80,156]),
+      sad:catPose('assets/characters/manager/new-poses/emotions/sad.png',[80,156]),
+      serious:catPose('assets/characters/manager/new-poses/emotions/serious.png',[80,156]),
+      shy:catPose('assets/characters/manager/new-poses/emotions/shy.png',[80,156]),
+      surprised:catPose('assets/characters/manager/new-poses/emotions/surprised.png',[80,156]),
+      tired:catPose('assets/characters/manager/new-poses/emotions/tired.png',[80,156]),
+      troubled:catPose('assets/characters/manager/new-poses/emotions/troubled.png',[80,156]),
+      clean_a:catPose('assets/characters/manager/new-poses/daily/clean.png',[80,156]),
+      clean_b:catPose('assets/characters/manager/new-poses/daily/clean.png',[80,156]),
+      retort:catPose('assets/characters/manager/new-poses/emotions/troubled.png',[80,156]),
+      confused:catPose('assets/characters/manager/new-poses/emotions/troubled.png',[80,156]),
+      scared:catPose('assets/characters/manager/new-poses/emotions/surprised.png',[80,156]),
+      relieved:catPose('assets/characters/manager/new-poses/emotions/happy.png',[80,156])
+    },actionPoses:{idle:'idle',chat:'talk',clean:'clean'}
   },
   ann: {
     src: 'assets/characters/ann/poses/stand.png', portraitSrc: 'assets/characters/ann/idle.png', displayHeight: 43, origin: [64, 126], image: null, portrait: null,

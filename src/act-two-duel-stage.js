@@ -51,7 +51,8 @@ export function duelStageHTML(event,residents,index=0,page=0){
   return stage.replace('class="event-stage ',`data-duel-phase="${line.duelEndingPhase}" class="event-stage duel-stage duel-yandere-story `).replace(/^(<div[^>]*>)/,'$1'+shot);
  }
  const enemy=DUEL_ROUNDS[round],strike=!!line.duelAttack,delta=hearts-before,cleared=round+(defeated?1:0);
- const managerPose=strike?'assets/characters/manager/poses/angry.png':line.speaker==='manager'?'assets/characters/manager/poses/retort.png':'assets/characters/manager/idle.png';
+ const managerPoses={stand:'assets/characters/manager/new-poses/act2-battle/stand_proud.png',protect:'assets/characters/manager/new-poses/act2-battle/protect.png',weak:'assets/characters/manager/new-poses/act2-battle/kime_weak.png',mid:'assets/characters/manager/new-poses/act2-battle/kime_mid.png',strong:'assets/characters/manager/new-poses/act2-battle/kime_strong.png',ultimate:'assets/characters/manager/new-poses/act2-battle/ougi.png',fail:'assets/characters/manager/new-poses/act2-battle/fail.png',victory:'assets/characters/manager/new-poses/act2-battle/victory.png'};
+ const managerPose=ending==='clear'?managerPoses.victory:strike?managerPoses[({1:'weak',2:'mid',3:'strong',4:'ultimate'})[line.duelRank]||'strong']:line.duelWindup?managerPoses.weak:line.duelRank===1?managerPoses.fail:line.speaker==='manager'?managerPoses.protect:managerPoses.stand;
  const lunaLine=eventConversation(event).slice(0,index+1).reverse().find(l=>l.duelRound===round&&l.speaker==='hostess');
  const lunaEmotion=({shy:'charm',tired:'confused'})[lunaLine?.emotion]||lunaLine?.emotion;
  const luna=duelMini('hostess',lunaEmotion,`duel-luna ${line.duelHeartUpdate?'duel-react':''}`,'ルナ');
