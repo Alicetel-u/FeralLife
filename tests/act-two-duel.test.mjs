@@ -90,6 +90,23 @@ test('all twelve answers give the three characters distinct exchanges with stabl
  for(const speeches of Object.values(spoken))assert.equal(speeches.size,12);
  assert.equal(assists.size,4);
 });
+test('duel rewind must finish the character dialogue before replaying the mini-game',()=>{
+ const s=duelStart();
+ for(const id of ['vow','shield','future','ultimate'])answerActTwo(s,s.actOne.pending.eventId,id);
+ const next=rewindActTwo(s);
+ const intro=next.events.find(e=>e.actScene==='act2-rewind');
+ assert.ok(intro);
+ assert.equal(next.actOne.rewindIntroPending,true);
+ const originalEvents=next.events.length;
+ advanceActTwo(next,100);
+ assert.equal(next.events.length,originalEvents,'time advancement cannot queue duel during rewind dialogue');
+ assert.equal(next.actOne.pending,null);
+ assert.ok(next.events.some(e=>e.id===intro.id&&!e.read));
+ next.actOne.rewindIntroPending=false;
+ advanceActTwo(next,100);
+ assert.equal(next.actOne.pending?.scene,'duel','game becomes available after rewind intro finishes');
+});
+
 test('81 routes preserve saves at every round, resolve only after four enemies, and reach all outcomes',()=>{
  const counts={clear:0,yandere:0,domination:0};let ultimateSafe=0;
  for(let pattern=0;pattern<81;pattern++){
