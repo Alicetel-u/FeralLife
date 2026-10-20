@@ -107,7 +107,7 @@ export function mountDuelPlayback(line,{advance,blocked,schedule=setTimeout,canc
 }
 export function duelBadHTML(state){
  const y=state.actOne.failure==='duel-yandere';
- return `<section class="act-screen graphic-title duel-bad ${y?'duel-bad-yandere':''}"><img class="duel-cg" src="${y?DUEL_ART.yandere:DUEL_ART.domination}" alt="金城ルナ"><div class="duel-bad-copy"><p>BAD END</p><h2 id="modal-title">${y?'わたしだけの大家さん♡':'大家さん、返事は？'}</h2>${y?'<p class="duel-yandere-last-words">大家「ルナ……お前……」</p>':`<p>${eventEscape(state.ending.text)}</p>`}<button class="act-primary" data-act2-rewind>${y?'時計へ ↶':'あの昼へ、もう一度 ↶'}</button></div></section>`;
+ return `<section class="act-screen graphic-title duel-bad ${y?'duel-bad-yandere':''}"><img class="duel-cg" src="${y?DUEL_ART.yandere:DUEL_ART.domination}" alt="金城ルナ"><div class="duel-bad-copy"><p>BAD END</p><h2 id="modal-title">${y?'わたしだけの大家さん♡':'大家さん、返事は？'}</h2>${y?'':`<p>${eventEscape(state.ending.text)}</p>`}<button class="act-primary" data-act2-rewind>${y?'時計へ ↶':'あの昼へ、もう一度 ↶'}</button></div></section>`;
 }
 let duelLastCue='';
 export function playDuelCue(line,key,enabled,volume){
