@@ -307,9 +307,9 @@ test('attack subtitle waits for actual voice completion, not merely an idle flag
 });
 
 test('attack montage pauses for hidden tabs and menus, cancels stale callbacks, and leaves choices manual',()=>{
- let id=0,advances=0,blocked=true;const timers=new Map();
- const options={advance:()=>advances++,blocked:()=>blocked,schedule:fn=>{timers.set(++id,fn);return id;},cancel:id=>timers.delete(id)};
- const tick=()=>{const [id,fn]=timers.entries().next().value;timers.delete(id);fn();};
+ let id=0,advances=0,blocked=true,time=0;const timers=new Map();
+ const options={advance:()=>advances++,blocked:()=>blocked,now:()=>time,schedule:fn=>{timers.set(++id,fn);return id;},cancel:id=>timers.delete(id)};
+ const tick=()=>{time+=4000;const [id,fn]=timers.entries().next().value;timers.delete(id);fn();};
  const stop=mountDuelPlayback({duelAttack:'モク出動！'},options);
  tick();assert.equal(advances,0);assert.equal(timers.size,1);
  blocked=false;tick();assert.equal(advances,1);assert.equal(timers.size,0);stop();
