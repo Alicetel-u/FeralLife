@@ -7,8 +7,9 @@ const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const manifestPath=resolve(root,'src/voice-manifest.js');
 const original=await readFile(manifestPath,'utf8');
 const prefix='export const VOICE_MANIFEST = ';
-if(!original.startsWith(prefix))throw new Error('Unexpected voice manifest format');
-const manifest=JSON.parse(original.slice(prefix.length).trim().replace(/;$/,''));
+const declaration=original.indexOf(prefix);
+if(declaration<0)throw new Error('Voice manifest declaration missing');
+const manifest=JSON.parse(original.slice(declaration+prefix.length).trim().replace(/;$/,''));
 let processed=0;
 for(const entry of Object.values(manifest)){
  if(!['duel-manager-attack','duel-moku-attack'].includes(entry.performance))continue;
@@ -21,5 +22,5 @@ for(const entry of Object.values(manifest)){
  entry.fastFile=fastFile;processed++;
 }
 if(processed!==12)throw new Error('Expected 12 battle attack voices; found '+processed);
-await writeFile(manifestPath,prefix+JSON.stringify(manifest,null,2)+';\n');
+await writeFile(manifestPath,original.slice(0,declaration)+prefix+JSON.stringify(manifest,null,2)+';\n');
 console.log('Created '+processed+' pitch-preserving 1.5x battle clips with a short quiet audio tail');
