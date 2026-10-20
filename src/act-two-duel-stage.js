@@ -1,4 +1,4 @@
-import {DUEL_ART,DUEL_ROUNDS} from './act-two-duel.js?v=2026.10.20.37';
+import {DUEL_ART,DUEL_ROUNDS} from './act-two-duel.js?v=2026.10.20.38';
 import {eventConversation,eventStageHTML,eventEscape,eventIcon} from './event-stage.js';
 import {MINI_EMOTION_ART} from './mini-emotions.js';
 
@@ -35,11 +35,11 @@ export function duelFrame(event,index=0){
 export function duelChoiceHTML(event,choices,history=new Set()){
  const restrained=choices.some(choice=>choice.restrained);
  return `<section class="cinematic-choice duel-choices" aria-labelledby="choice-title"><div class="duel-choice-heading"><h2 id="choice-title">${restrained?'大家の漢気！全力を出すな！':'大家の漢気、見せてやれ！'}</h2><span>ひと言選んで、撃退！</span></div><div class="decision-panel" aria-label="大家の返事">${choices.map((choice,i)=>{
-  const ultimate=choice.delta===7,assist=choice.delta<0,seen=history.has('duel:'+choice.id);
+  const ultimate=choice.delta===7,assist=choice.delta<0,catUltimate=choice.id==='catapult',seen=history.has('duel:'+choice.id);
   const tier=ultimate?'ultimate':choice.delta>=3?'high':assist?'assist':'medium';
   const expectation=ultimate?'超高期待':choice.delta>=3?'高期待':assist?'モクに頼る':'中期待';
   const gain=assist?'？？？':`${choice.delta>0?'+':''}${choice.delta}`;
-  return `<button type="button" class="decision-choice duel-command duel-expect-${tier} ${ultimate?'duel-ultimate':assist?'duel-assist':''}${choice.disabled?' choice-exhausted':''}" style="--choice-index:${i}" data-case-event="${event.id}" data-choice="${eventEscape(choice.id)}" aria-disabled="true" ${choice.disabled?'disabled data-choice-exhausted="true"':''}><span class="duel-command-icon" aria-hidden="true">${eventIcon(assist?'cat':ultimate?'spark':'chat')}</span><span class="duel-command-copy"><span class="duel-expectation"><b>${expectation}</b><span class="duel-gain"><span aria-hidden="true">♥</span><span class="sr-only">ハート</span> ${gain}</span>${assist?'':`<span class="duel-expect-meter" aria-hidden="true">${[1,2,3,4].map(level=>`<i${level<=(ultimate?4:choice.delta>=3?3:assist?1:2)?' class="lit"':''}></i>`).join('')}</span>`}</span><strong class="duel-command-line">${eventEscape(choice.label)}</strong>${seen?'<span class="choice-history-badge">選択済</span>':''}</span><span class="duel-command-key" aria-hidden="true">${i+1}</span></button>`;
+  return `<button type="button" class="decision-choice duel-command duel-expect-${tier} ${ultimate?'duel-ultimate':assist?'duel-assist':''}${catUltimate?' duel-cat-command':''}${choice.disabled?' choice-exhausted':''}" style="--choice-index:${i}" data-case-event="${event.id}" data-choice="${eventEscape(choice.id)}" aria-disabled="true" ${choice.disabled?'disabled data-choice-exhausted="true"':''}><span class="duel-command-icon" aria-hidden="true">${eventIcon(assist?'cat':ultimate?'spark':'chat')}</span><span class="duel-command-copy"><span class="duel-expectation"><b>${expectation}</b><span class="duel-gain"><span aria-hidden="true">♥</span><span class="sr-only">ハート</span> ${gain}</span>${assist?'':`<span class="duel-expect-meter" aria-hidden="true">${[1,2,3,4].map(level=>`<i${level<=(ultimate?4:choice.delta>=3?3:assist?1:2)?' class="lit"':''}></i>`).join('')}</span>`}</span><strong class="duel-command-line">${eventEscape(choice.label)}</strong>${seen?'<span class="choice-history-badge">選択済</span>':''}</span><span class="duel-command-key" aria-hidden="true">${i+1}</span></button>`;
  }).join('')}</div></section>`;
 }
 
@@ -54,6 +54,9 @@ function duelHeartSlots(hearts,before=hearts,updated=false,final=false){
  }).join('');
 }
 const duelHeartMood=hearts=>hearts<0?'heart-negative':hearts>=10?'heart-hot'+(hearts>10?' over-limit':''):'';
+function duelPawBurst(){
+ return `<span class="duel-paw-burst" aria-hidden="true">${Array.from({length:5},(_,i)=>`<svg style="--paw-index:${i}" viewBox="0 0 64 64"><ellipse cx="13" cy="23" rx="7" ry="10"/><ellipse cx="27" cy="14" rx="7" ry="10"/><ellipse cx="43" cy="16" rx="7" ry="10"/><ellipse cx="54" cy="29" rx="7" ry="10"/><path d="M12 47c0-8 8-20 20-20s20 12 20 20c0 14-13 8-20 8s-20 6-20-8Z"/></svg>`).join('')}</span>`;
+}
 
 export function duelStageHTML(event,residents,index=0,page=0){
  const {line,round,ending,hearts,before,entrance,defeated,showResult}=duelFrame(event,index);
@@ -97,9 +100,9 @@ export function duelStageHTML(event,residents,index=0,page=0){
  const intro=line.duelRound===undefined&&!ending;
  const legacyYandereReveal=ending==='yandere'&&!line.duelEndingPhase&&!event.lines?.some(item=>item.duelEndingPhase);
  const scene=(ending==='domination'||(ending==='yandere'&&line.duelEndingPhase==='reveal')||legacyYandereReveal)?`<img class="duel-cg" src="${DUEL_ART[ending]}" alt="${ending==='yandere'?'独占するルナ':'管理椅子から見下ろすルナ'}">`:
- `<div class="duel-field"><div class="duel-set ${strike?'duel-striking rank-'+line.duelRank:''}"><img class="duel-building" src="assets/apartments.png" alt="">${luna}<img class="duel-mini duel-manager ${line.speaker==='manager'?'duel-speaking':''}" src="${managerPose}" alt="大家">${moku}<img class="duel-mini duel-enemy ${intro?'duel-enemy-waiting ':''}${defeated?'duel-defeated':entrance?'duel-arriving':''}" src="${DUEL_ART[enemy.enemy]}" alt="${enemy.name}"><span class="duel-hit-ring" aria-hidden="true"></span></div>${entrance?`<div class="duel-arrival" aria-hidden="true"><small>${round===3?'最後の来訪者':'来訪者'}</small><strong>${enemy.name}</strong></div>`:''}${showResult&&page===0?'<div class="duel-result" aria-label="撃退成功">撃退！<span>あと'+(3-round)+'人</span></div>':''}</div>`;
+ `<div class="duel-field"><div class="duel-set ${strike?'duel-striking rank-'+line.duelRank:''}${line.duelCatUltimate?' duel-cat-ultimate':''}"><img class="duel-building" src="assets/apartments.png" alt="">${luna}<img class="duel-mini duel-manager ${line.speaker==='manager'?'duel-speaking':''}" src="${managerPose}" alt="大家">${moku}<img class="duel-mini duel-enemy ${intro?'duel-enemy-waiting ':''}${defeated?'duel-defeated':entrance?'duel-arriving':''}" src="${DUEL_ART[enemy.enemy]}" alt="${enemy.name}"><span class="duel-hit-ring" aria-hidden="true"></span></div>${entrance?`<div class="duel-arrival" aria-hidden="true"><small>${round===3?'最後の来訪者':'来訪者'}</small><strong>${enemy.name}</strong></div>`:''}${showResult&&page===0?'<div class="duel-result" aria-label="撃退成功">撃退！<span>あと'+(3-round)+'人</span></div>':''}</div>`;
  const hud=ending||intro?'':`<div class="duel-hud"><div class="duel-opponent"><span class="duel-round">${round===3?'最終戦':`${round+1}人目`}<small> / 4人</small></span><strong>${enemy.name}</strong><div class="duel-progress" aria-label="${cleared}人撃退済">${DUEL_ROUNDS.map((r,i)=>`<i class="${i<cleared?'done':i===round?'current':''}" aria-hidden="true"></i>`).join('')}</div></div><div class="duel-affection ${duelHeartMood(hearts)}">${hearts>10?'<span class="duel-limit-badge">限界突破</span>':''}<span class="duel-heart-label">ルナの感情メーター <b>${hearts}<small> / 10</small></b></span><div class="duel-hearts" role="img" aria-label="ルナの感情メーター ${hearts}個、基準10個">${duelHeartSlots(hearts,before,line.duelHeartUpdate)}</div>${line.duelHeartUpdate?`<span class="duel-heart-delta ${delta<0?'down':''}" role="status">${delta>0?'+':''}${delta||'±0'}</span>`:''}</div></div>`;
- const cut=strike&&page===0?`<div style="animation-duration:${duelReadDelay(line)}ms" class="duel-impact rank-${line.duelRank}" aria-hidden="true"><strong>${eventEscape(line.duelAttack)}</strong></div>`:'';
+ const cut=strike&&page===0?`<div style="animation-duration:${duelReadDelay(line)}ms" class="duel-impact rank-${line.duelRank}${line.duelCatUltimate?' duel-cat-ultimate':''}" aria-hidden="true"><strong>${line.duelCatUltimate?'<span>'+eventEscape(line.duelAttack).replace('・','・</span><span>')+'</span>':eventEscape(line.duelAttack)}</strong>${line.duelCatUltimate?duelPawBurst():''}</div>`:'';
  const stage=eventStageHTML(event,residents,index,page,{hideCharacters:true,cinematic:true});
  const resultOutcome=line.duelVictoryResult;
  const resultLabel={yandere:'超完全勝利！',clear:'完全勝利！',domination:'完全勝利？'}[resultOutcome];

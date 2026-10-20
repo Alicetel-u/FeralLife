@@ -1,4 +1,4 @@
-import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.20.37';
+import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.20.38';
 import {failedChoiceKeys} from './choice-history.js';
 import {secondActLife} from './act-two-life.js';
 import {storyScreenHTML} from './story-screens.js';
@@ -19,8 +19,8 @@ import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVic
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.20.37';
-import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.20.37';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.20.38';
+import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.20.38';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
 import { debtEndingHTML, startDebtEnding } from './debt-ending.js';
@@ -602,7 +602,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.20.37';
+const BUILD_VERSION='2026.10.20.38';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -967,7 +967,9 @@ function syncNormalBgm(){
   const duelLine=activeDialogue?.duel?eventConversation(activeDialogue)[eventView.index]:null;
   const yandereReveal=duelLine?.duelEnding==='yandere'&&duelLine.duelEndingPhase==='reveal';
   const dominationEnding=duelLine?.duelEnding==='domination';
-  const duel=!!activeDialogue?.duel&&(!duelLine?.duelEnding||duelLine.duelEnding==='yandere'&&!duelLine.duelEndingPhase);
+  // A duel event also contains full-size introductory/ending conversations.
+  // Play the battle track only while an actual round is on the mini-game field.
+  const duel=!!activeDialogue?.duel&&Number.isInteger(duelLine?.duelRound)&&!duelLine.duelEnding&&!!modal.querySelector('.duel-stage .duel-field');
   const victory=!bad&&!clock&&!title&&modal.open&&!!modal.querySelector('.trouble-victory,.act-one-complete');
   const trouble=!victory&&!bad&&!clock&&!title&&modal.open&&(!!modal.querySelector('.trouble-card')||activeDialogue?.actScene==='reply');
   const lunaFilm=modal.open?modal.querySelector('[data-act2-opening]'):null;

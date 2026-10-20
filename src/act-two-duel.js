@@ -16,7 +16,7 @@ export const DUEL_ROUNDS=[
  {enemy:'salesman',name:'うさんくさい勧誘男',lines:[dn('勧誘男「ルナさんは僕と夢を追うと！ まずは大家さんが最上位会員に……」'),dl('夢の話はしたけど、会費の話は初耳♡'),dc('寝るだけならモクが無料で教えるニャ。')],choices:[
  ['future','こいつの未来に、勝手な値札をつけるな！',3],['cancel','本人が断ってる。勧誘もここで終了だ！',1],['sleep','モク先生の無料お昼寝講座に変更で……',-2]]},
  {enemy:'boss',name:'黒服の迎え役',lines:[dn('黒服「迎えに来た。ルナ、お前が『いつでも戻る』と言ったんだろう」'),dl('あれはお店で忘れ物を受け取る話！ 働きに戻るとは言ってない！','angry'),dc('全員、都合のいいところだけ聞いてるニャ。'),dn('黒服が腕を組む。大家はルナの前に立った。')],choices:[
- ['ultimate','大家流超絶漢気奥義！',7],['leave','忘れ物だけ返せ。今の暮らしは本人が決める！',1],['catapult','お引き取りは……こちらの猫まで！',-2]]}
+ ['ultimate','大家流超絶漢気奥義！',7],['leave','忘れ物だけ返せ。今の暮らしは本人が決める！',1],['catapult','モク流奥義・煙ノ肉球乱舞を頼む！',-4]]}
 ];
 export const duelOutcome=hearts=>hearts>=10?'yandere':hearts<=1?'domination':'clear';
 export const duelChoices=round=>DUEL_ROUNDS[round]?.choices.map(([id,label,delta])=>({id,label,attack:label,delta}))||[];
@@ -71,15 +71,15 @@ const DUEL_REPLIES={
   luna:'うん。忘れ物は受け取る。でも働きには戻らない。……あたしが、そう決めた。',emotion:'neutral',
   moku:'ついでにモクの暮らしも、昼寝中心に決めたいニャ。',manager:'お前は最初からそう暮らしてるだろ。'},
  catapult:{
-  windup:'受付から追い出しまでモク一匹に任せるなニャ。',attack:'お迎えごとお見送りニャ！！',
-  retreat:'モクが廊下から一直線に跳んだ。黒服は体当たりによろめき、振り返る間もなく道路へ逃げた。',
+  windup:'煙幕代はツナ缶三つニャ。目、閉じとくニャ！',attack:'モク流奥義・煙ノ肉球乱舞ニャ！！',
+  retreat:'モクが吐いた煙が黒服の目の前でふわりと広がった。煙の中から肉球がぽふぽふぽふっと頬を連打する。黒服は両頬を押さえ、道路へ逃げていった。',
   luna:'最後までモクちゃん任せなんだ……。大家さん、せめてあたしの前に立っててほしかった。',emotion:'tired',
-  moku:'本日の営業は終了ニャ。大家、モクの肩を揉むニャ。',manager:'……はいはい。まず爪をしまってくれ。'}
+  moku:'煙に巻いてお見送りニャ。大家、ツナ缶は三つニャ。',manager:'分かったから、俺の顔に煙を吐くな！！'}
 };
 export function duelReplyLines(round,choice){
  const weak=choice.delta<0,reply=DUEL_REPLIES[choice.id];
  return [duelLine('manager',choice.label,weak?'neutral':'angry',weak?{duelWindup:true}:{duelAttack:choice.label,duelRank:choice.delta===7?4:choice.delta===3?3:2}),
-  ...(weak?[{...dc(reply.windup),duelWindup:true},duelLine('cat',reply.attack,'angry',{duelAttack:reply.attack,duelRank:1})]:[]),
+  ...(weak?[{...dc(reply.windup),duelWindup:true},duelLine('cat',reply.attack,'angry',{duelAttack:reply.attack,duelRank:1,...(choice.id==='catapult'?{duelCatUltimate:true}:{})})]:[]),
   duelLine('narrator',reply.retreat,'neutral',{duelDefeated:true,duelPlayback:true}),
   duelLine('hostess',reply.luna,reply.emotion,{duelHeartUpdate:true}),
   dc(reply.moku),dm(reply.manager)

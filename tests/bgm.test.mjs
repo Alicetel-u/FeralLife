@@ -3,6 +3,9 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 import { NORMAL_BGM_SRC, MOKU_BGM_SRC, LUNA_BGM_SRC, DUEL_BGM_SRC, bedCue, createNormalBgm } from '../src/bgm.js';
+import {DUEL_INTRO,duelEncounterLines,duelEndingLines} from '../src/act-two-duel.js';
+import {duelStageHTML} from '../src/act-two-duel-stage.js';
+import {eventConversation} from '../src/event-stage.js';
 
 function fakeAudio() {
   return {
@@ -35,7 +38,10 @@ test('Luna conversations keep her theme with Moku present while dedicated scene 
   const luna='.event-stage .stage-character[data-character="hostess"]',moku='.event-stage .stage-character[data-character="cat"]';
   for(const [visible,event,line,expected] of [
     [[luna],{}, {},'luna'],[[luna,moku],{}, {},'luna'],[[moku],{}, {},'moku'],[[],{}, {},'normal'],
-    [[luna,moku],{duel:true},{duelRound:0},'duel'],
+    [[luna,moku,'.duel-stage .duel-field'],{duel:true},{duelRound:0},'duel'],
+    [[luna,moku],{duel:true},{},'luna'],
+    [[luna,moku],{duel:true},{duelRound:0},'luna'],
+    [[luna,moku],{duel:true},{duelEnding:'yandere'},'luna'],
     [[luna,moku],{duel:true},{duelEnding:'clear'},'luna'],
     [[luna,'.trouble-card'],{}, {},'trouble'],[[luna,'.trouble-victory'],{}, {},'victory'],
     [[luna,'.duel-bad'],{}, {},'bad'],[[luna,'[data-act2-opening]'],{}, {},'uneasy']
@@ -70,8 +76,8 @@ test('real scene selection starts duel music on entry and gives results priority
   const app=await readFile(new URL('../src/app.js',import.meta.url),'utf8');
   const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
   for(const [line,screen,expected] of [
-    [{},null,'duel'],[{duelRound:0},null,'duel'],[{duelRound:3,duelDefeated:true},null,'duel'],
-    [{duelRound:3,duelEnding:'clear'},null,'normal'],[{duelRound:3,duelEnding:'yandere'},null,'duel'],[{duelEnding:'yandere',duelEndingPhase:'day-1'},null,'normal'],[{duelEnding:'yandere',duelEndingPhase:'reveal'},null,'bad'],[{duelRound:3,duelEnding:'domination'},null,'bad'],
+    [{},null,'normal'],[{duelRound:0},'.duel-stage .duel-field','duel'],[{duelRound:3,duelDefeated:true},'.duel-stage .duel-field','duel'],
+    [{duelRound:3,duelEnding:'clear'},null,'normal'],[{duelRound:3,duelEnding:'yandere'},null,'normal'],[{duelEnding:'yandere',duelEndingPhase:'day-1'},null,'normal'],[{duelEnding:'yandere',duelEndingPhase:'reveal'},null,'bad'],[{duelRound:3,duelEnding:'domination'},null,'bad'],
     [{duelRound:3},'.duel-bad','bad'],[{duelRound:3},'.trouble-victory','victory']
   ]){
     let cue;
@@ -81,6 +87,33 @@ test('real scene selection starts duel music on entry and gives results priority
       normalBgm:{setScene:(_,name)=>{cue=name;}}};
     vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);assert.equal(cue,expected);
   }
+});
+
+test('rendered opening, battle and ending transcripts stop the battle audio outside real mini-game rounds',async()=>{
+  const app=await readFile(new URL('../src/app.js',import.meta.url),'utf8');
+  const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
+  const battle=fakeAudio();
+  const bgm=createNormalBgm(fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),battle,fakeAudio());
+  await bgm.unlock();
+  const samples=[{lines:[...DUEL_INTRO,...duelEncounterLines(0)]},...['clear','yandere','domination'].map(outcome=>({lines:duelEndingLines(outcome)}))];
+  let checkedBattle=0,checkedPortraits=0;
+  for(const sample of samples){
+    const event={id:1,duel:true,cast:['hostess','cat'],detail:sample.lines[0].text,...sample};
+    const lines=eventConversation(event);
+    for(let index=0;index<lines.length;index++){
+      const html=duelStageHTML(event,[],index),line=lines[index];
+      const selectors=new Set();
+      if(html.includes('class="duel-field"'))selectors.add('.duel-stage .duel-field');
+      for(const type of ['hostess','cat'])if(html.includes(`data-character="${type}"`))selectors.add(`.event-stage .stage-character[data-character="${type}"]`);
+      const context={document:{hidden:false},state:{actOne:{chapter:2},events:[event]},eventView:{id:1,index},eventConversation,bedCue,
+        modal:{open:true,classList:{contains:()=>true},querySelector:s=>s.split(',').some(part=>selectors.has(part))?{dataset:{}}:null},normalBgm:bgm};
+      vm.createContext(context);await vm.runInContext(source+'\nsyncNormalBgm();',context);
+      const miniGame=Number.isInteger(line.duelRound)&&!line.duelEnding;
+      assert.equal(battle.paused,!miniGame,`battle audio at ${line.text}`);
+      if(miniGame)checkedBattle++;else checkedPortraits++;
+    }
+  }
+  assert.ok(checkedBattle>0&&checkedPortraits>0);
 });
 
 test('normal bgm waits for a gesture, then loops until a cinematic', async () => {

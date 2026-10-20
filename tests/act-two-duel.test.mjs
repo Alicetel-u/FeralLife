@@ -90,6 +90,28 @@ test('all twelve answers give the three characters distinct exchanges with stabl
  for(const speeches of Object.values(spoken))assert.equal(speeches.size,12);
  assert.equal(assists.size,4);
 });
+
+test('last Moku answer calls the approved smoke-paw ultimate while preserving its hidden minus-four effect',()=>{
+ const choice=duelChoices(3).find(choice=>choice.id==='catapult');
+ assert.match(choice.label,/モク流奥義・煙ノ肉球乱舞/);assert.equal(choice.delta,-4);
+ const html=duelChoiceHTML({id:1},duelChoices(3));
+ const button=html.split('<button').find(part=>part.includes('data-choice="catapult"'));
+ assert.match(button,/duel-cat-command/);assert.match(button,/モクに頼る/);assert.match(button,/ハート<\/span> ？？？/);
+ const lines=duelReplyLines(3,choice),attack=lines.find(line=>line.duelAttack);
+ assert.equal(lines.length,7);assert.equal(attack.speaker,'cat');assert.equal(attack.duelRank,1);
+ assert.equal(attack.duelCatUltimate,true);assert.equal(attack.text,'モク流奥義・煙ノ肉球乱舞ニャ！！');
+ assert.match(lines.find(line=>line.duelDefeated).text,/煙.*肉球/);
+ const event={id:1,duel:true,cast:['hostess','cat'],detail:lines[0].text,lines};
+ const at=eventConversation(event).findIndex(line=>line.duelCatUltimate);
+ const stage=duelStageHTML(event,[],at);
+ assert.match(stage,/duel-striking rank-1 duel-cat-ultimate/);assert.match(stage,/duel-paw-burst/);
+ assert.equal((stage.match(/--paw-index:/g)||[]).length,5);
+ assert.equal(duelStageHTML(JSON.parse(JSON.stringify(event)),[],at),stage,'reload retains the same ultimate');
+ for(let round=0;round<3;round++){
+  const ordinary=duelChoices(round).find(choice=>choice.delta<0);
+  assert.ok(duelReplyLines(round,ordinary).every(line=>!line.duelCatUltimate));
+ }
+});
 test('both duel BAD endings rewind to the same afternoon and character scene',()=>{
  for(const [choices,outcome] of [[['vow','shield','future','ultimate'],'yandere'],[['help','discount','sleep','catapult'],'domination']]){
   const state=duelStart();
@@ -133,7 +155,7 @@ test('81 routes preserve saves at every round, resolve only after four enemies, 
    const id=duelChoices(round)[index].id,pending=s.actOne.pending.eventId;
    const reply=answerActTwo(s,pending,id);assert.ok(reply);
    assert.equal(answerActTwo(s,pending,id),null,'stale event cannot apply damage twice');
-   assert.ok(s.actOne.duel.hearts>=-8&&s.actOne.duel.hearts<=16);
+   assert.ok(s.actOne.duel.hearts>=-10&&s.actOne.duel.hearts<=16);
    assert.ok(validateSave(s)&&validActOne(s),`valid save pattern ${pattern}, round ${round}`);
    s=JSON.parse(JSON.stringify(s));
   }
@@ -153,20 +175,35 @@ test('81 routes preserve saves at every round, resolve only after four enemies, 
  console.log('Four-round route counts:',counts);
 });
 
-test('Moku answers subtract two without a floor, strongest answers reach sixteen without a ceiling',()=>{
- for(const [ids,total,outcome] of [[['help','discount','sleep','catapult'],-8,'domination'],[['vow','shield','future','ultimate'],16,'yandere']]){
+test('Moku answers subtract two, the final ultimate subtracts four, and scores span minus ten to sixteen',()=>{
+ for(const [ids,total,outcome] of [[['help','discount','sleep','catapult'],-10,'domination'],[['vow','shield','future','ultimate'],16,'yandere']]){
   const s=duelStart();let expected=0;
   for(const id of ids){
    const choice=actTwoChoices(s,'duel').find(choice=>choice.id===id);
-   if(choice.delta<0)assert.equal(choice.delta,-2);
+   if(choice.delta<0)assert.equal(choice.delta,id==='catapult'?-4:-2);
    const reply=answerActTwo(s,s.actOne.pending.eventId,id);expected+=choice.delta;
    assert.equal(s.actOne.duel.hearts,expected);
    assert.equal(reply.duelHearts,expected);
-   assert.equal(s.actOne.duel.history.at(-1).scoringVersion,2);
+   assert.equal(s.actOne.duel.history.at(-1).scoringVersion,3);
    assert.ok(validActOne(JSON.parse(JSON.stringify(s))));
   }
   assert.equal(s.actOne.duel.hearts,total);assert.equal(s.actOne.duel.outcome,outcome);
  }
+});
+
+test('previous minus-two final answers remain valid and unfinished version-two saves use minus four going forward',()=>{
+ const old=duelStart();
+ for(const id of ['help','discount','sleep'])answerActTwo(old,old.actOne.pending.eventId,id);
+ old.actOne.duel.history.forEach(h=>h.scoringVersion=2);
+ assert.equal(old.actOne.duel.hearts,-6);assert.ok(validActOne(old));
+ const resumed=JSON.parse(JSON.stringify(old));
+ answerActTwo(resumed,resumed.actOne.pending.eventId,'catapult');
+ assert.equal(resumed.actOne.duel.hearts,-10);assert.ok(validActOne(resumed));
+ const legacy=JSON.parse(JSON.stringify(resumed)),h=legacy.actOne.duel.history.at(-1);
+ h.scoringVersion=2;h.after=-8;legacy.actOne.duel.hearts=-8;
+ const reply=legacy.events.find(e=>e.duelOutcome==='domination');reply.duelHearts=-8;
+ assert.ok(validActOne(legacy));assert.ok(validateSave(legacy));
+ assert.equal(legacy.actOne.duel.hearts,-8,'completed old answers keep their original total');
 });
 
 test('signed and over-limit hearts stay hidden until the reaction, and appear in both HUD and final results',()=>{
@@ -207,7 +244,7 @@ test('legacy capped histories retain their totals and support new signed answers
  assert.equal(JSON.stringify(restored.actOne.duel.history.slice(0,2)),history,'past scores are unchanged');
  answerActTwo(restored,restored.actOne.pending.eventId,'ultimate');
  assert.equal(restored.actOne.duel.hearts,7);assert.equal(restored.actOne.duel.outcome,'clear');assert.ok(validActOne(restored));
- for(const mutate of [s=>s.actOne.duel.hearts=17,s=>s.actOne.duel.history[2].after=-2,s=>s.actOne.duel.history[2].scoringVersion=3]){
+ for(const mutate of [s=>s.actOne.duel.hearts=17,s=>s.actOne.duel.history[2].after=-2,s=>s.actOne.duel.history[2].scoringVersion=999]){
   const corrupt=JSON.parse(JSON.stringify(restored));mutate(corrupt);assert.equal(validActOne(corrupt),false);
  }
 });
