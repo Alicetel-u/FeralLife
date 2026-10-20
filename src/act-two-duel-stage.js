@@ -129,12 +129,21 @@ export function mountDuelPlayback(line,{advance,blocked,voiceOutcome=()=>null,sc
  const delay=attack?duelReadDelay(line):line.duelWindup?duelReadDelay(line):line.duelPlayback?1800:0;
  const readyAt=now()+(line.duelDayStart?(line.duelStoryDay===5?3500:3000):line.duelVictoryResult?2800:line.duelStartTitle?1550:attack?duelReadDelay(line):650);
  let timer,stopped=false;
+ // Keep the final audible syllable and callout on screen after media 'ended'.
+ // Some mobile decoders signal ended while their buffered output is still draining.
+ const ATTACK_TAIL_MS=350;
+ let voiceEndedAt=null;
  const canAdvance=()=>{
-  if(stopped||now()<readyAt||attack&&blocked())return false;
+  if(stopped)return false;
+  const outcome=attack?voiceOutcome():null;
+  if(attack){
+   if(outcome==='ended')voiceEndedAt??=now();
+   else voiceEndedAt=null;
+  }
+  if(now()<readyAt||attack&&blocked())return false;
   if(!attack)return true;
-  const outcome=voiceOutcome();
   if(outcome==='playing'||outcome==='idle')return false;
-  if(outcome==='ended')return true;
+  if(outcome==='ended')return now()>=voiceEndedAt+ATTACK_TAIL_MS;
   // Missing/failed audio must not deadlock a playthrough. Keep the subtitle
   // visible longer instead of incorrectly treating a failed play as completed.
   if(outcome==='missing'||outcome==='error'||outcome==='timeout')return now()>=readyAt+1200;
