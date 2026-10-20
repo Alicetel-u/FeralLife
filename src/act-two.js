@@ -514,7 +514,10 @@ export function refreshDuelYandereEnding(s){
  const d=s.actOne?.duel;
  if(!d||d.dialogueComplete||s.actOne.failure!=='duel-yandere')return false;
  const event=s.events.find(e=>e.id===d.eventId&&e.duelOutcome==='yandere');
- if(!event||event.lines.some(l=>l.duelEndingPhase))return false;
+ if(!event)return false;
+ // Older builds already stored duelEndingPhase values (relief, closeness, etc).
+ // Only the five-day format is current; migrate unfinished legacy transcripts.
+ if(event.lines.some(l=>l.duelStoryDay===1&&l.duelDayStart))return false;
  const start=event.lines.findIndex(l=>l.duelEnding==='yandere');
  if(start<0)return false;
  const offset=event.lines[0]?.text===event.detail?0:1;
