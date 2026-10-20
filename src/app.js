@@ -572,17 +572,29 @@ const BUILD_VERSION='2026.10.20.10';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
-  const tone=id=>id==='duel-direct'||id.includes('duel')?'battle':id==='boot'||id==='copy-boot'?'utility':id==='2'||id.startsWith('2:')?'chapter2':id==='1'||id.startsWith('1:')?'chapter1':'navigation';
+  const tone=(id,kind)=>{
+    if(kind)return kind;
+    if(id==='boot'||id==='copy-boot')return 'utility';
+    if(id==='1')return 'chapter1';
+    if(id==='2')return 'chapter2';
+    if(id==='scenes')return 'navigation';
+    if(id.endsWith('-loop'))return 'rewind';
+    if(id.endsWith('-choices'))return 'choice';
+    if(/:(ash|dinner|bag|duel)$/.test(id))return 'start';
+    if(id.endsWith(':epilogue'))return 'ending';
+    if(id.includes(':opening')||id.includes(':intro')||id.includes(':arrival'))return 'story';
+    return 'navigation';
+  };
   openModal(`<section class="act-screen debug-menu persona-debug">
     <div class="persona-debug-stripe" aria-hidden="true">DEBUG / SCENE SELECT / DEBUG /</div>
     <header><span class="persona-debug-kicker">KEMONOSOU // DEVELOPER MODE</span><h2 id="modal-title">${title}</h2><p>${subtitle}</p></header>
-    <div class="persona-debug-actions">${buttons.map(([id,label,attr],i)=>`<button type="button" class="persona-debug-button tone-${tone(id)}" ${attr}="${eventEscape(id)}"><span class="persona-debug-index">${String(i+1).padStart(2,'0')}</span><span class="persona-debug-label">${eventEscape(label)}</span><span class="persona-debug-arrow" aria-hidden="true">↗</span></button>`).join('')}</div>
+    <div class="persona-debug-actions">${buttons.map(([id,label,attr,kind],i)=>`<button type="button" class="persona-debug-button tone-${tone(id,kind)}" ${attr}="${eventEscape(id)}"><span class="persona-debug-index">${String(i+1).padStart(2,'0')}</span><span class="persona-debug-label">${eventEscape(label)}</span><span class="persona-debug-arrow" aria-hidden="true">↗</span></button>`).join('')}</div>
     <button type="button" class="persona-debug-back" ${back}>← 戻る</button>
     <footer>VERSION ${BUILD_VERSION}　/　${BUILD_UPDATED}</footer>
   </section>`);
 }
 function showDeveloperMenu(){
-  debugMenuPage('開発者メニュー','テストしたい項目を選択',[['duel-direct','第二幕：漢気ミニゲームへ直行','data-debug-tool'],['scenes','シーンセレクト','data-debug-tool'],['boot','起動診断・計測結果のコピー','data-debug-tool']], 'data-debug-back');
+  debugMenuPage('開発者メニュー','テストしたい項目を選択',[['scenes','シーンセレクト（第一幕・第二幕）','data-debug-tool'],['boot','起動診断・計測結果のコピー','data-debug-tool']], 'data-debug-back');
 }
 function showBootDiagnostics(){
   debugMenuPage('起動診断','この端末で今回の起動にかかった時間です。結果は自動送信しません。',[['copy-boot','計測結果をコピー','data-debug-tool']], 'data-debug-tools-back');
@@ -600,14 +612,32 @@ function showDebugChapterSelect(){
   debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter']], 'data-debug-tools-back');
 }
 function showDebugSceneSelect(chapter,page=0){
+  // Label destinations by their exact entry point. The duel's first-choice warp
+  // belongs to the chapter-two scene selector, not the top-level debug menu.
   const options=chapter==='1'
-    ?[['intro','第一幕・オープニング'],['ash',ACT_ONE_EVENTS.ash.title],['ash-loop','灰皿：巻き戻り直後'],['ash-choices','灰皿：3択直前'],['dinner',ACT_ONE_EVENTS.dinner.title],['dinner-loop','料理：巻き戻り直後'],['dinner-choices','料理：3択直前'],['epilogue','第一幕・エピローグ']]
-    :[['opening','逃げる女 — オープニング'],['arrival','ルナ入居プロローグ'],['bag',ACT_TWO_EVENTS.bag.title],['bag-loop','待ち伏せ：巻き戻り直後'],['bag-choices','待ち伏せ：3択直前'],['duel','第二トラブル：導入'],['duel-loop','第二トラブル：巻き戻り直後'],['duel-choices','第二トラブル：最初の三択'],['epilogue','第二幕・エピローグ']];
-  const pages=Math.ceil(options.length/4),current=Math.max(0,Math.min(pages-1,Number(page)||0));
-  const buttons=options.slice(current*4,current*4+4).map(([id,label])=>[chapter+':'+id,label,'data-debug-scene']);
-  if(current>0)buttons.push([chapter+':'+(current-1),'← 前のページ','data-debug-scene-page']);
-  if(current<pages-1)buttons.push([chapter+':'+(current+1),'次のページ →','data-debug-scene-page']);
-  debugMenuPage(chapter==='1'?'第一幕のポイント':'第二幕のポイント',`開始地点を選んでください。 ${current+1} / ${pages}`,buttons, 'data-debug-chapters-back');
+    ?[
+      ['intro','物語｜第一幕オープニング','story'],
+      ['ash','トラブル開始｜灰皿の火事','start'],
+      ['ash-choices','選択肢｜灰皿・3択直前','choice'],
+      ['ash-loop','巻き戻り｜灰皿の火事','rewind'],
+      ['dinner','トラブル開始｜料理','start'],
+      ['dinner-choices','選択肢｜料理・3択直前','choice'],
+      ['dinner-loop','巻き戻り｜料理','rewind'],
+      ['epilogue','エンディング｜第一幕','ending']
+    ]
+    :[
+      ['opening','物語｜第二幕オープニング映像','story'],
+      ['arrival','物語｜ルナ入居プロローグ','story'],
+      ['bag','トラブル開始｜待ち伏せ事件','start'],
+      ['bag-choices','選択肢｜待ち伏せ・3択直前','choice'],
+      ['bag-loop','巻き戻り｜待ち伏せ事件','rewind'],
+      ['duel','トラブル開始｜嘘つきルナを守れ！','start'],
+      ['duel-choices','ミニゲーム｜漢気バトル・最初の3択','battle'],
+      ['duel-loop','巻き戻り｜漢気バトルBAD後','rewind'],
+      ['epilogue','エンディング｜第二幕','ending']
+    ];
+  const buttons=options.map(([id,label,kind])=>[chapter+':'+id,label,'data-debug-scene',kind]);
+  debugMenuPage(chapter==='1'?'第一幕｜シーンセレクト':'第二幕｜シーンセレクト','色で移動先を分類。トラブル開始と選択肢直前は別の地点です。',buttons,'data-debug-chapters-back');
 }
 function startDeveloperScene(target){
   const [chapter,point]=target.split(':');
@@ -691,7 +721,7 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-debug-back')){showGameTitle();return;}
   if(button.hasAttribute('data-debug-tools-back')){showDeveloperMenu();return;}
   if(button.hasAttribute('data-debug-chapters-back')){showDebugChapterSelect();return;}
-  if(button.dataset.debugTool==='duel-direct'){startDeveloperScene('2:duel-choices');return;}\n  if(button.dataset.debugTool==='scenes'){showDebugChapterSelect();return;}
+  if(button.dataset.debugTool==='scenes'){showDebugChapterSelect();return;}
   if(button.dataset.debugTool==='boot'){showBootDiagnostics();return;}
   if(button.dataset.debugTool==='copy-boot'){copyBootDiagnostics(button);return;}
   if(button.dataset.debugChapter){showDebugSceneSelect(button.dataset.debugChapter);return;}
