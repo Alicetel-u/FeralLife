@@ -1704,22 +1704,28 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .game-ink .conversation-modal .duel-choices{position:absolute;inset:auto 0 0;height:var(--duel-dock);padding:12px 4% max(8px,env(safe-area-inset-bottom));display:flex;justify-content:center;gap:10px;background:linear-gradient(#19131ff5,#19131f);animation:choice-dim .16s both;font-family:var(--sans);color:#fff0da;box-sizing:border-box}
 .duel-choices::before{display:none}.duel-choice-heading{width:100%;display:flex;align-items:baseline;justify-content:space-between;gap:8px}.duel-choice-heading h2{font-size:clamp(17px,2.2vw,26px);margin:0;border-left:4px solid #ed4868;padding-left:10px}.duel-choice-heading>span{font-size:11px;color:#ccb5c0}
 .game-ink .conversation-modal .duel-choices .decision-panel{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:4px;margin:0;overflow:visible;max-height:none;flex:0 1 auto}
-.game-ink .conversation-modal .duel-choices .decision-choice{display:flex;align-items:center;gap:12px;min-height:110px;padding:16px 12px;border:1px solid #b8a189;border-left:4px solid #e14d6b;transform:none;background:linear-gradient(115deg,#382534,#211924);box-shadow:3px 4px #08060d;border-radius:2px;flex-wrap:nowrap;animation:duel-command .3s calc(var(--choice-index)*70ms) both;min-width:0}
+.game-ink .conversation-modal .duel-choices .decision-choice{display:flex;align-items:center;gap:12px;min-height:110px;padding:16px 12px;border:1px solid #c2788f;border-left:5px solid #ff567b;transform:none;background:linear-gradient(150deg,transparent 67%,#ea496b18 67% 70%,transparent 70%),linear-gradient(115deg,#482438,#1d1825);box-shadow:3px 4px #08060d,inset 0 1px #ffb0bf35;border-radius:2px;flex-wrap:nowrap;position:relative;isolation:isolate;animation:duel-command .3s calc(var(--choice-index)*70ms) both;min-width:0}
 .duel-command-icon{color:#f5d9c3;flex:none}.duel-command-icon .event-icon{width:24px;height:24px}.duel-command-copy{display:block;min-width:0;flex:1;text-align:left}.duel-command-copy small{display:block;color:#c9a4b7;font-size:10px;margin-bottom:5px;letter-spacing:.05em}
-.game-ink .conversation-modal .duel-choices .decision-choice strong{display:block;font:800 clamp(15px,1.6vw,22px)/1.5 var(--sans);letter-spacing:.01em;color:#fff1dd;overflow-wrap:anywhere}
-.duel-command-key{font-size:12px;border:1px solid #ae8598;padding:3px 6px;color:#cfb1bf;align-self:flex-start}
+.game-ink .conversation-modal .duel-choices .decision-choice strong{display:block;font:italic 900 clamp(17px,1.8vw,25px)/1.35 "Yu Gothic","Hiragino Kaku Gothic ProN","Meiryo",sans-serif;letter-spacing:.025em;color:#fff5df;overflow-wrap:anywhere;transform:skewX(-4deg);padding:1px 3px 4px 0;-webkit-text-stroke:.45px #fff5df;paint-order:stroke fill;text-shadow:2px 2px 0 #18101e,3px 3px 0 #ad3456}
+.duel-command-key{font-style:italic;font-weight:900;font-size:12px;border:1px solid #ae8598;padding:3px 6px;color:#cfb1bf;align-self:flex-start}
 .game-ink .conversation-modal .duel-choices .duel-ultimate{border-color:#fbd677;background:linear-gradient(115deg,#64432d,#2b1d29);border-left-color:#ffd15e}.duel-ultimate .duel-command-copy small,.duel-ultimate .duel-command-icon{color:#ffe2a4}
 .game-ink .conversation-modal .duel-choices .decision-choice:hover,.game-ink .conversation-modal .duel-choices .decision-choice:focus-visible{background:#503046;border-color:#ffe7c6;transform:translateY(-3px);outline:2px solid #ffce8f;outline-offset:2px}
 .game-ink .conversation-modal .duel-choices.choice-confirming .decision-choice{opacity:.18;transition:opacity .2s}
 .game-ink .conversation-modal .duel-choices.choice-confirming .choice-selected{opacity:1;background:#71364b;transform:scale(1.02);border-color:#ffdc9f}
 .duel-choices .choice-history-badge{display:inline-block;margin:4px 0 0;font-size:9px;padding:1px 5px;color:#c9b4c2;border-color:#776273}
-.duel-choices .choice-hint{margin:0;font-size:10px;color:#b8a0af}
+.duel-choices .decision-choice::after{content:'';position:absolute;top:5px;right:5px;width:30px;height:3px;background:#ff638a;transform:skewX(-35deg);pointer-events:none;opacity:.7}
+.game-ink .conversation-modal .duel-choices .duel-assist{border-left-color:#8fa8be;background:linear-gradient(150deg,transparent 67%,#a9c3d918 67% 70%,transparent 70%),linear-gradient(115deg,#29313f,#1c1925)}
+.duel-choices .duel-assist::after{background:#9bbbd2}
+.game-ink .conversation-modal .duel-choices .duel-assist strong{text-shadow:2px 2px #11151f,3px 3px #536d88}
+.duel-choices .duel-ultimate::after{background:#ffe5a1}
+.game-ink .conversation-modal .duel-choices .duel-ultimate strong{color:#fff0b8;-webkit-text-stroke-color:#fff0b8;text-shadow:2px 2px #2d1720,3px 3px #b17823}
 .game-ink .conversation-modal .duel-choices .decision-choice.choice-exhausted,
 .game-ink .conversation-modal .duel-choices .decision-choice.choice-exhausted:hover{background:#302e33;border-color:#6d6872;border-left-color:#6d6872;cursor:not-allowed;transform:none;outline:none;filter:grayscale(1)}
 .game-ink .conversation-modal .duel-choices .choice-exhausted strong,
 .duel-choices .choice-exhausted .duel-command-icon,
 .duel-choices .choice-exhausted .duel-command-copy small,
-.duel-choices .choice-exhausted .duel-command-key{color:#a9a4ad;text-shadow:none}
+.duel-choices .choice-exhausted .duel-command-key{color:#a9a4ad;text-shadow:none;-webkit-text-stroke:0;transform:none}
+.duel-choices .choice-exhausted::after{background:#817b87}
 .duel-cg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;z-index:-1}
 .duel-bad{isolation:isolate;background:#19101e;min-height:100dvh!important;height:100dvh;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding:max(18px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom))}
 .duel-bad-copy{background:linear-gradient(transparent,#110c18f5 25%);padding:35px 20px 8px;width:100%;color:#fff4e9;text-align:center}.duel-bad-copy h2{font-size:clamp(26px,5vw,62px);margin:6px 0 12px;text-shadow:3px 3px #4d102d}.duel-bad-copy p{font-size:clamp(13px,2vw,18px);margin:9px 0}.duel-bad-copy .act-primary{margin-top:10px}
@@ -1747,7 +1753,7 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .duel-choice-heading h2{font-size:17px}.duel-choice-heading>span{display:none}
  .game-ink .conversation-modal .duel-choices .decision-panel{grid-template-columns:1fr;gap:7px;padding:3px;flex:0 1 auto}
  .game-ink .conversation-modal .duel-choices .decision-choice{min-height:0;padding:8px 10px;gap:10px}
- .game-ink .conversation-modal .duel-choices .decision-choice strong{font-size:14px;line-height:1.4}
+ .game-ink .conversation-modal .duel-choices .decision-choice strong{font-size:15px;line-height:1.35}
  .duel-command-copy small{font-size:9px;margin-bottom:2px}.duel-command-icon .event-icon{width:22px;height:22px}.duel-command-key{align-self:center}.duel-choices .choice-history-badge{float:right;margin:0;font-size:8px}.duel-choices .choice-hint{display:none}
  .duel-cg{object-position:50% 22%}.duel-bad .duel-cg{object-position:54% 15%}
 }
