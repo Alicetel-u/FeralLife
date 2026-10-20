@@ -216,6 +216,28 @@ test('approved opening, supplied corrected art, ten hearts, original dialogue wi
  assert.equal(DUEL_ROUNDS.length,4);
 });
 
+test('duel intro uses portraits until first opponent, including a replay after rewind',()=>{
+ const first=duelStart();
+ const intro=first.events.find(e=>e.actScene==='duel'&&e.duel);
+ assert.ok(intro);
+ const lines=eventConversation(intro);
+ const firstRound=lines.findIndex(l=>l.duelRound===0);
+ assert.ok(firstRound>5);
+ for(let i=0;i<firstRound;i++){
+  const html=duelStageHTML(intro,first.residents,i);
+  assert.match(html,/stage-character/,'intro should show full-size character portraits');
+  assert.doesNotMatch(html,/duel-field|duel-enemy/,'intro must not show mini-game arena');
+ }
+ assert.match(duelStageHTML(intro,first.residents,firstRound),/duel-field/);
+ for(const id of ['vow','shield','future','ultimate'])answerActTwo(first,first.actOne.pending.eventId,id);
+ const replay=rewindActTwo(first);
+ replay.actOne.rewindIntroPending=false;
+ advanceActTwo(replay,100);
+ const restarted=replay.events.find(e=>e.id===replay.actOne.pending?.eventId);
+ assert.ok(restarted);
+ assert.match(duelStageHTML(restarted,replay.residents,0),/stage-character/);
+});
+
 test('Luna high-heart BAD develops through ordinary scenes and reserves the CG for its final reveal',()=>{
  const s=duelStart();
  for(const id of ['vow','shield','future','ultimate'])answerActTwo(s,s.actOne.pending.eventId,id);
