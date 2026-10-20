@@ -10,9 +10,9 @@ import {eventConversation} from '../src/event-stage.js';
 
 const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 test('debug event names match the scenes they actually open in both chapters',()=>{
- const source=app.slice(app.indexOf('function showDebugSceneSelect('),app.indexOf("document.addEventListener('click',e=>{"));
+ const source=app.slice(app.indexOf('function showDebugSectionSelect('),app.indexOf("document.addEventListener('click',e=>{"));
  const context={ACT_ONE_EVENTS,ACT_TWO_EVENTS,createActOne,advanceActOne,answerActOne,rewindBeforeFire,beginActTwo,advanceActTwo,answerActTwo,rewindActTwo,eventConversation,developerMode:false,
-  modal:{querySelector:selector=>selector==='.persona-debug-actions'?{insertAdjacentHTML:(_,html)=>context.pagination=html}:null},
+  modal:{querySelector:selector=>selector==='.persona-debug-actions'?{insertAdjacentHTML:(_,html)=>context.pagination=html}:selector==='.persona-debug'?{classList:{add(){}}}:null},
   debugMenuPage:(title,detail,options)=>context.options=options,resetActState:next=>context.state=next,
   showEvent:(id,index)=>{context.index=index;context.landed=context.state.events.find(e=>e.id===id);},showOpening:()=>context.landed='intro',
   showActTitle:()=>context.landed='unexpected-title',showActTwoTitle:()=>context.landed='unexpected-title',showActTwoOpening:()=>context.landed='opening',
@@ -20,13 +20,20 @@ test('debug event names match the scenes they actually open in both chapters',()
  vm.createContext(context);vm.runInContext(source,context);
  for(const chapter of ['1','2']){
   const destinations=[];
-  for(let page=0;page<(chapter==='1'?2:3);page++){
+  for(let page=0;page<(chapter==='1'?3:4);page++){
    vm.runInContext(`showDebugSceneSelect('${chapter}',${page})`,context);
    destinations.push(...context.options.filter(option=>option[2]==='data-debug-scene'));
    assert.ok(context.options.length<=6,'mobile pages have a bounded number of controls');
    assert.equal((context.pagination.match(/data-debug-scene-page=/g)||[]).length,2);
   }
-  if(chapter==='2'){assert.equal(destinations.length,9);assert.ok(destinations.every(([target])=>!target.includes('contract')));}
+  if(chapter==='2'){assert.equal(destinations.length,13);assert.ok(destinations.every(([target])=>!target.includes('contract')));}
+  if(chapter==='2'){
+   const groups={prologue:['opening','arrival'],trouble1:['bag','bag-choices','bag-loop','bad-bag'],trouble2:['duel','duel-choices','duel-loop'],endings:['end-yandere','end-domination','end-clear','epilogue']};
+   for(const [section,expected] of Object.entries(groups)){
+    vm.runInContext(`showDebugSceneSelect('2',0,'${section}')`,context);
+    assert.deepEqual(Array.from(context.options,([id])=>id.split(':')[1]),expected);
+   }
+  }
   for(const [target,label] of destinations){
    context.landed=null;vm.runInContext(`startDeveloperScene('${target}')`,context);
    const scene=target.split(':')[1];
@@ -49,6 +56,15 @@ test('debug event names match the scenes they actually open in both chapters',()
      const reply=(chapter==='1'?answerActOne:answerActTwo)(context.state,context.landed.id,safe.id);
      assert.ok(reply,target+' can answer immediately');assert.equal(context.state.actOne.status,'playing');
     }
+   }else if(scene.startsWith('bad-')){
+    assert.equal(context.landed?.actScene,'reply',target);
+    assert.equal(context.state.actOne.status,'bad',target);
+    assert.ok(validActOne(context.state)&&validateSave(context.state),target+' creates a valid BAD state');
+   }else if(scene.startsWith('end-')){
+    assert.equal(context.landed?.actScene,'duel',target);
+    assert.equal(context.landed?.duelOutcome,scene.slice(4),target);
+    assert.equal(eventConversation(context.landed)[context.index]?.duelEnding,scene.slice(4),target);
+    assert.ok(validActOne(context.state)&&validateSave(context.state),target+' creates a valid ending state');
    }else if(['ash','dinner','bag','contract'].includes(scene)){
     const events=chapter==='1'?ACT_ONE_EVENTS:ACT_TWO_EVENTS;
     assert.equal(context.landed?.actScene,scene,target);assert.equal(context.landed?.title,events[scene].title,target);
