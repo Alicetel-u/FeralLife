@@ -637,6 +637,9 @@ function showDebugSceneSelect(chapter,page=0){
       ['duel','トラブル開始｜嘘つきルナを守れ！','start'],
       ['duel-choices','ミニゲーム｜漢気バトル・最初の3択','battle'],
       ['duel-loop','巻き戻り｜漢気バトルBAD後','rewind'],
+      ['end-yandere','BAD END開始｜ヤンデレ・AFTER DAY 01','ending'],
+      ['end-domination','BAD END開始｜ルナに支配される','ending'],
+      ['end-clear','正解END開始｜漢気バトル成功','ending'],
       ['epilogue','エンディング｜第二幕','ending']
     ];
   const pageCount=Math.ceil(options.length/4),current=Math.max(0,Math.min(pageCount-1,page));
@@ -654,6 +657,7 @@ function startDeveloperScene(target){
   const [chapter,point]=target.split(':');
   const phase=point?.endsWith('-loop')?'loop':point?.endsWith('-choices')?'choices':null;
   const scene=phase?point.slice(0,point.lastIndexOf('-')):point;
+  const duelEndingTarget=chapter==='2'&&['end-yandere','end-domination','end-clear'].includes(scene);
   if(!['1','2'].includes(chapter))return;
   developerMode=true;
   let next=createActOne(42,[],chapter==='1'&&['dinner','epilogue'].includes(scene)?2:1,true);
@@ -675,16 +679,34 @@ function startDeveloperScene(target){
     beginActTwo(next);
     next.actOne.started=true;next.actOne.titlePending=false;next.actOne.prologuePending=false;
     next.events.filter(e=>e.actScene==='act2-prologue').forEach(e=>e.read=true);
-    if(['bag','duel','epilogue'].includes(scene)){
+    if(['bag','duel','epilogue'].includes(scene)||duelEndingTarget){
       advanceActTwo(next,100);
       if(scene!=='bag'){
         answerActTwo(next,next.actOne.pending.eventId,'loan');
         advanceActTwo(next,100);
-        if(['duel','epilogue'].includes(scene)){
+        if(['duel','epilogue'].includes(scene)||duelEndingTarget){
           if(scene==='epilogue'){for(const id of ['boundary','receipt','cancel','leave'])answerActTwo(next,next.actOne.pending.eventId,id);advanceActTwo(next,100);}
         }
       }
     }
+  }
+  if(duelEndingTarget){
+    const route=scene==='end-yandere'?['vow','shield','future','ultimate']:scene==='end-domination'?['help','discount','sleep','catapult']:['boundary','receipt','cancel','leave'];
+    let lastResult=null;
+    for(const id of route){
+      if(!next.actOne.pending)break;
+      lastResult=answerActTwo(next,next.actOne.pending.eventId,id);
+    }
+    if(!lastResult||next.actOne.duel?.round!==4)return;
+    const ending=scene.slice(4);
+    const lines=eventConversation(lastResult);
+    const firstEnding=lines.findIndex(line=>line.duelEnding===ending);
+    if(firstEnding<0)return;
+    next.events.forEach(event=>event.read=true);
+    resetActState(next,false,true);
+    const result=state.events.find(event=>event.id===lastResult.id);
+    if(result){result.read=false;showEvent(result.id,firstEnding);}
+    return;
   }
   if(phase){
     const events=chapter==='1'?ACT_ONE_EVENTS:ACT_TWO_EVENTS;
