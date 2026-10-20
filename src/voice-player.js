@@ -8,7 +8,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
   const mobile=typeof navigator!=='undefined'&&/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   const AudioContextType=(globalThis.AudioContext||globalThis.webkitAudioContext);
   let context=null,source=null,gain=null,limiter=null,mobileAudio=null,unlocked=false;
-  const speakerBoost=()=>({manager:1.6,hostess:1.8}[voiceSpeaker(current?.line||{})]||1);
+  const speakerBoost=()=>(({manager:1.6,hostess:1.8}[voiceSpeaker(current?.line||{})]||1)*(current?.line?.duelAttack?1.35:1));
   const playbackGain=()=>(mobile?4:1)*prefs.volume*speakerBoost();
   const applyVolume=()=>{if(gain){gain.gain.value=playbackGain();if(audio)audio.volume=1;}else if(audio)audio.volume=Math.min(1,prefs.volume*speakerBoost());};
   const disconnect=()=>{
@@ -74,7 +74,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
       if(mobile||AudioContextType){mobileAudio ||= makeAudio();audio=mobileAudio;audio.src=clip.file;clearPrepared();}else if(prepared?.file===clip.file){audio=prepared.audio;prepared=null;}else{audio=makeAudio();audio.preload='auto';audio.src=clip.file;}// Accelerate only battle dialogue. Playback rate preserves the original pitch
       // and reuses existing recordings, so there is no additional TTS cost.
       const duelClip=clip.performance?.startsWith('duel-');
-      audio.playbackRate=duelClip?(clip.speaker==='cat'||clip.performance?.startsWith('duel-moku')?1.16:1.25):1;
+      audio.playbackRate=line?.duelAttack?1.55:duelClip?(clip.speaker==='cat'||clip.performance?.startsWith('duel-moku')?1.16:1.25):1;
       audio.preservesPitch=true;
       audio.mozPreservesPitch=true;
       audio.webkitPreservesPitch=true;
