@@ -289,14 +289,13 @@ test('dedicated commands keep existing ids, repeat history, and reserve gold for
 });
 
 test('impact bubble stays visible while voice plays instead of fading on a fixed timer',async()=>{
- const css=await readFile(new URL('../styles.css',import.meta.url),'utf8');
+ const css=readFileSync(new URL('../styles.css',import.meta.url),'utf8');
  assert.match(css,/\.duel-impact\{[^}]*animation:duel-slam-in/);
  assert.match(css,/@keyframes duel-slam-in\{/);
  const state=duelStart();
  const event=state.events.find(e=>e.actScene==='duel');
  const attack=eventConversation(event).findIndex(l=>l.duelAttack);
  // The initial event has only the encounter: test the stage with a genuine reply line.
- const {duelReplyLines,duelChoices}=await import('../src/act-two-duel.js');
  const line=duelReplyLines(0,duelChoices(0)[0]).find(l=>l.duelAttack);
  const sample={...event,lines:[line]};
  const html=duelStageHTML(sample,state.residents,0);
