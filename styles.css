@@ -1885,3 +1885,7 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .duel-bad-yandere [data-act2-rewind]{animation:duel-last-words-appear 8s ease both}
 @keyframes duel-last-words-appear{0%,75%{opacity:0;visibility:hidden}100%{opacity:1;visibility:visible}}
 @media(prefers-reduced-motion:reduce){.duel-bad-yandere .duel-yandere-last-words,.duel-bad-yandere [data-act2-rewind]{animation:none}}
+
+/* Keep the bottom rewind action legible once the pink curtain fills the screen. */
+.duel-bad-yandere .duel-bad-copy [data-act2-rewind]{background:#261026!important;color:#fff!important;border:2px solid #fff!important;text-shadow:none!important;box-shadow:0 5px 0 #8f0754,0 0 0 3px #ff1493;font-weight:900;opacity:1}
+.duel-bad-yandere .duel-bad-copy [data-act2-rewind]:focus-visible{outline:3px solid #fff;outline-offset:4px}
