@@ -43,13 +43,27 @@ export function duelStageHTML(event,residents,index=0,page=0){
  const {line,round,ending,hearts,before,entrance,defeated,showResult}=duelFrame(event,index);
  if(line.duelRound===undefined&&!ending)return eventStageHTML(event,residents,index,page);
  // Ordinary Luna comes first. The outcome alone must not reveal the final CG.
- if(ending==='yandere'&&line.duelEndingPhase&&line.duelEndingPhase!=='reveal'){
-  const exterior=['relief','interference'].includes(line.duelEndingPhase);
-  const cast=line.duelEndingPhase==='relief'||line.speaker==='cat'?['hostess','cat']:['hostess'];
-  const stage=eventStageHTML({...event,cast},residents,index,page,{cinematic:true});
-  const shot=`<div class="duel-story-backdrop" aria-hidden="true"><img src="${exterior?'assets/apartments.png':'assets/events/first-fire-corridor.png'}" alt=""></div>`;
-  return stage.replace('class="event-stage ',`data-duel-phase="${line.duelEndingPhase}" class="event-stage duel-stage duel-yandere-story `).replace(/^(<div[^>]*>)/,'$1'+shot);
+ if(ending==='yandere'&&line.duelStoryDay&&line.duelEndingPhase!=='reveal'){
+  const day=line.duelStoryDay;
+  const stage=eventStageHTML({...event,cast:['hostess']},residents,index,page,{cinematic:true});
+  const tint=['#ee9ab8','#d87b9d','#b95c7a','#913a55','#4b2033'][day-1];
+  const location=day>=5?'assets/events/first-fire-corridor.png':'assets/apartments.png';
+  const storyBackdrop=`<div class="duel-story-backdrop" aria-hidden="true"><img src="${location}" alt=""></div>`;
+  // A short, self-contained transition on the first speech of each day.
+  // No timeouts, no simulation-state changes, no extra dialogue clicks.
+  const calendar=line.duelDayStart?`<div class="duel-day-transition" aria-hidden="true"><span>DAY ${String(day).padStart(2,'0')}</span><small>―― ${day}日目 ――</small></div>`:'';
+  const style=`<style>
+  .duel-yandere-short{--duel-day-tint:${tint}}
+  .duel-yandere-short .duel-story-backdrop:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,transparent 35%,var(--duel-day-tint));opacity:.27}
+  .duel-day-transition{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;background:#160e19;color:#fff;pointer-events:none;animation:duel-day-curtain 1.15s ease both}
+  .duel-day-transition span{font-weight:900;font-size:clamp(42px,8vw,104px);letter-spacing:.1em;text-shadow:0 0 24px var(--duel-day-tint)}
+  .duel-day-transition small{font-weight:700;letter-spacing:.3em;font-size:clamp(13px,2vw,22px);color:var(--duel-day-tint)}
+  @keyframes duel-day-curtain{0%,42%{opacity:1}100%{opacity:0;visibility:hidden}}
+  @media(prefers-reduced-motion:reduce){.duel-day-transition{animation-duration:.5s}}
+  </style>`;
+  return stage.replace('class="event-stage ',`data-duel-phase="day-${day}" class="event-stage duel-stage duel-yandere-story duel-yandere-short `).replace(/^(<div[^>]*>)/,'$1'+storyBackdrop+calendar+style);
  }
+
  const enemy=DUEL_ROUNDS[round],strike=!!line.duelAttack,delta=hearts-before,cleared=round+(defeated?1:0);
  const managerPoses={stand:'assets/characters/manager/new-poses/act2-battle/stand_proud.png',protect:'assets/characters/manager/new-poses/act2-battle/protect.png',weak:'assets/characters/manager/new-poses/act2-battle/kime_weak.png',mid:'assets/characters/manager/new-poses/act2-battle/kime_mid.png',strong:'assets/characters/manager/new-poses/act2-battle/kime_strong.png',ultimate:'assets/characters/manager/new-poses/act2-battle/ougi.png',fail:'assets/characters/manager/new-poses/act2-battle/fail.png',victory:'assets/characters/manager/new-poses/act2-battle/victory.png'};
  const managerPose=ending==='clear'?managerPoses.victory:strike?managerPoses[({1:'weak',2:'mid',3:'strong',4:'ultimate'})[line.duelRank]||'strong']:line.duelWindup?managerPoses.weak:line.duelRank===1?managerPoses.fail:line.speaker==='manager'?managerPoses.protect:managerPoses.stand;
