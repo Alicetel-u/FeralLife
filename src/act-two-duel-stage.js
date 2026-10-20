@@ -51,15 +51,17 @@ export function duelStageHTML(event,residents,index=0,page=0){
   const storyBackdrop=`<div class="duel-story-backdrop" aria-hidden="true"><img src="${location}" alt=""></div>`;
   // A short, self-contained transition on the first speech of each day.
   // No timeouts, no simulation-state changes, no extra dialogue clicks.
-  const calendar=line.duelDayStart?`<div class="duel-day-transition" aria-hidden="true"><span>DAY ${String(day).padStart(2,'0')}</span><small>―― ${day}日目 ――</small></div>`:'';
+  const calendar=line.duelDayStart?`<div class="duel-day-transition" aria-label="あの日から${day}日目"><span>AFTER DAY ${String(day).padStart(2,'0')}</span></div>`:'';
   const style=`<style>
   .duel-yandere-short{--duel-day-tint:${tint};--duel-story-day:${day}}
   .duel-yandere-short .duel-story-backdrop:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,transparent 35%,var(--duel-day-tint));opacity:calc(.12 + (var(--duel-story-day) - 1) * .09)}
-  .duel-day-transition{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;background:linear-gradient(145deg,#130f1b,#2f1022 65%,#07040b);border-top:9px solid var(--duel-day-tint);color:#fff;pointer-events:none;animation:duel-day-curtain 1.15s ease both}
-  .duel-day-transition span{font-weight:900;font-size:clamp(42px,8vw,104px);letter-spacing:.1em;text-shadow:0 0 24px var(--duel-day-tint)}
-  .duel-day-transition small{font-weight:700;letter-spacing:.3em;font-size:clamp(13px,2vw,22px);color:var(--duel-day-tint)}
-  @keyframes duel-day-curtain{0%,42%{opacity:1}100%{opacity:0;visibility:hidden}}
-  @media(prefers-reduced-motion:reduce){.duel-day-transition{animation-duration:.5s}}
+  .duel-day-transition{position:absolute;inset:0;z-index:30;display:flex;justify-content:center;align-items:center;padding:24px;box-sizing:border-box;background:linear-gradient(145deg,#110f1beb,#24101deF 70%,#07040bf5);color:#fff;pointer-events:none;animation:duel-day-curtain 3s ease-in-out both}
+  .duel-day-transition span{font-weight:900;font-size:clamp(34px,7vw,88px);letter-spacing:.075em;text-align:center;color:var(--duel-day-tint);text-shadow:0 0 25px var(--duel-day-tint);animation:duel-day-words 3s ease-in-out both}
+  .duel-yandere-short[data-duel-phase="day-5"] .duel-day-transition{animation-duration:3.5s}
+  .duel-yandere-short[data-duel-phase="day-5"] .duel-day-transition span{animation-duration:3.5s}
+  @keyframes duel-day-curtain{0%{opacity:0}17%,73%{opacity:1}100%{opacity:0;visibility:hidden}}
+  @keyframes duel-day-words{0%{opacity:0;transform:translateY(16px);filter:blur(9px)}30%,73%{opacity:1;transform:translateY(0);filter:blur(0)}100%{opacity:0;transform:translateY(-8px);filter:blur(4px)}}
+  @media(prefers-reduced-motion:reduce){.duel-day-transition,.duel-day-transition span{animation-duration:3s;animation-timing-function:linear}.duel-yandere-short[data-duel-phase="day-5"] .duel-day-transition,.duel-yandere-short[data-duel-phase="day-5"] .duel-day-transition span{animation-duration:3.5s}.duel-day-transition span{filter:none!important;transform:none!important}}
   </style>`;
   return stage.replace('class="event-stage ',`data-duel-phase="day-${day}" class="event-stage duel-stage duel-yandere-story duel-yandere-short `).replace(/^(<div[^>]*>)/,'$1'+storyBackdrop+calendar+style);
  }
@@ -94,7 +96,7 @@ export function mountDuelPlayback(line,{advance,blocked,schedule=setTimeout,canc
  if(!line)return ()=>{};
  // Reduced motion changes movement, never the time available to read a line.
  const delay=line.duelAttack||line.duelWindup?duelReadDelay(line):line.duelPlayback?1800:0;
- const readyAt=now()+(line.duelVictoryResult?2800:line.duelStartTitle?1550:line.duelAttack?1400:650);
+ const readyAt=now()+(line.duelDayStart?(line.duelStoryDay===5?3500:3000):line.duelVictoryResult?2800:line.duelStartTitle?1550:line.duelAttack?1400:650);
  let timer,stopped=false;
  const tick=()=>{if(stopped)return;if(blocked())timer=schedule(tick,200);else advance();};
  if(delay)timer=schedule(tick,delay);
