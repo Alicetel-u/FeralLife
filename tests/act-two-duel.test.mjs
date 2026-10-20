@@ -184,6 +184,7 @@ test('Luna high-heart BAD develops through ordinary scenes and reserves the CG f
  const phases=[...new Set(lines.map(l=>l.duelEndingPhase).filter(Boolean))];
  assert.deepEqual(phases,['day-1','day-2','day-3','day-4','day-5','reveal']);
  const start=lines.findIndex(l=>l.duelStoryDay===1),reveal=lines.findIndex(l=>l.duelEndingPhase==='reveal');
+ for(let index=0;index<start;index++)if(lines[index].duelEnding==='yandere')assert.doesNotMatch(duelStageHTML(ending,s.residents,index),/assets\/events\/duel\/yandere\.png/,'post-duel introduction must not show final CG');
  assert.equal(lines.filter(l=>l.duelEnding==='yandere'&&!l.duelEndingPhase).length,6,'six introduction lines before five days');
  assert.equal(reveal-start,10,'five daily exchanges precede the final image');
  assert.equal(lines.length-reveal,3,'the final three-line exchange uses the yandere CG');
