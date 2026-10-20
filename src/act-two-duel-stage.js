@@ -126,8 +126,8 @@ export function mountDuelPlayback(line,{advance,blocked,schedule=setTimeout,canc
  // Attack callouts stay on-screen until the voice actually finishes.
  // Do not allow taps to skip an in-flight attack recording.
  const attack=!!line.duelAttack;
- const delay=attack?650:line.duelWindup?duelReadDelay(line):line.duelPlayback?1800:0;
- const readyAt=now()+(line.duelDayStart?(line.duelStoryDay===5?3500:3000):line.duelVictoryResult?2800:line.duelStartTitle?1550:attack?650:650);
+ const delay=attack?duelReadDelay(line):line.duelWindup?duelReadDelay(line):line.duelPlayback?1800:0;
+ const readyAt=now()+(line.duelDayStart?(line.duelStoryDay===5?3500:3000):line.duelVictoryResult?2800:line.duelStartTitle?1550:attack?duelReadDelay(line):650);
  let timer,stopped=false;
  const tick=()=>{if(stopped)return;if(blocked())timer=schedule(tick,80);else advance();};
  if(delay)timer=schedule(tick,delay);
