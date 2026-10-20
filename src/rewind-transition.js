@@ -33,7 +33,7 @@ export function rewindBeat(t,attempt=1,afterFire=false,chapter=1){
 }
 export function rewindTransitionHTML(failure,attempt=1,afterFire=false,chapter=1){
   const restored=chapter===2?'assets/apartments.png':'assets/rooms/cat/interior-illustrated-v1.png';
-  return `<section class="act-screen rewind-screen" data-rewind-phase="${afterFire?'dark':'fire'}" data-chapter="${chapter}" ${afterFire?'data-after-fire':''}>${afterFire?'':fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${chapter===2&&attempt===1?'':afterFire?'……もう一度、やり直せるなら。':attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="${restored}" alt="${chapter===2?'元に戻ったけもの荘':'元に戻った101号室'}"><div class="rewind-white-fade" aria-hidden="true"></div></section>`;
+  return `<section class="act-screen rewind-screen" data-rewind-phase="${afterFire?'dark':'fire'}" data-chapter="${chapter}" ${afterFire?'data-after-fire':''}>${afterFire?'':fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${chapter===2&&failure==='duel-yandere'?'ルナ……お前……':chapter===2&&attempt===1?'':afterFire?'……もう一度、やり直せるなら。':attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="${restored}" alt="${chapter===2?'元に戻ったけもの荘':'元に戻った101号室'}"><div class="rewind-white-fade" aria-hidden="true"></div></section>`;
 }
 
 export function startRewindTransition(root,failure,finish,sound,attempt=1,targetTime=17,afterFire=false,clockAudio=null){
