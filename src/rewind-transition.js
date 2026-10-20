@@ -13,7 +13,7 @@ export function automaticFirstRewind(state){
   const a=state?.actOne;
   return !!a&&a.chapter!==2&&a.attempt===1&&a.status==='bad'&&a.failure?.startsWith('ash-');
 }
-export function rewindBeat(t,attempt=1,afterFire=false,chapter=1){
+export function rewindBeat(t,attempt=1,afterFire=false,chapter=1,failure=''){
   const repeat=attempt>1,fireEnd=afterFire?0:repeat?8:4,clockStart=fireEnd+(afterFire&&attempt===1?5.6:afterFire?2.5:1);
   const phase=t<fireEnd?'fire':t<clockStart?'dark':t<clockStart+4?'clock':'return';
   let text='',kind='spoken';
@@ -24,16 +24,16 @@ export function rewindBeat(t,attempt=1,afterFire=false,chapter=1){
     }else{text=t<2?'嘘だろ……。':'俺が……俺のせいで……。';kind='inner';}
   }
   if(phase==='dark'&&afterFire){text=attempt===1?(t<1.1?'ドクン……':t<2.35?'ドクンッ！！':'くそっ！俺も煙を吸い過ぎたか…意識が…'):'……もう一度、やり直せるなら。';kind='inner';}
-  if(phase==='dark'&&chapter===2){text=t<2.35?'':attempt===1?'……ルナ……。':'……もう一度、やり直せるなら。';kind='inner';}
+  if(phase==='dark'&&chapter===2){text=failure==='duel-yandere'?'':t<2.35?'':attempt===1?'……ルナ……。':'……もう一度、やり直せるなら。';kind='inner';}
   if(phase==='clock'){
-    text=repeat?'次こそは……絶対に守ってやる！':'';
+    text=chapter===2&&failure==='duel-yandere'?'ルナ……お前……':repeat?'次こそは……絶対に守ってやる！':'';
     kind='inner';
   }
   return {phase,text,kind,clockStart,finished:t>=clockStart+5.5};
 }
 export function rewindTransitionHTML(failure,attempt=1,afterFire=false,chapter=1){
   const restored=chapter===2?'assets/apartments.png':'assets/rooms/cat/interior-illustrated-v1.png';
-  return `<section class="act-screen rewind-screen" data-rewind-phase="${afterFire?'dark':'fire'}" data-chapter="${chapter}" ${afterFire?'data-after-fire':''}>${afterFire?'':fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${chapter===2&&failure==='duel-yandere'?'ルナ……お前……':chapter===2&&attempt===1?'':afterFire?'……もう一度、やり直せるなら。':attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="${restored}" alt="${chapter===2?'元に戻ったけもの荘':'元に戻った101号室'}"><div class="rewind-white-fade" aria-hidden="true"></div></section>`;
+  return `<section class="act-screen rewind-screen" data-rewind-phase="${afterFire?'dark':'fire'}" data-chapter="${chapter}" ${afterFire?'data-after-fire':''}>${afterFire?'':fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${chapter===2&&failure==='duel-yandere'?'':chapter===2&&attempt===1?'':afterFire?'……もう一度、やり直せるなら。':attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="${restored}" alt="${chapter===2?'元に戻ったけもの荘':'元に戻った101号室'}"><div class="rewind-white-fade" aria-hidden="true"></div></section>`;
 }
 
 export function startRewindTransition(root,failure,finish,sound,attempt=1,targetTime=17,afterFire=false,clockAudio=null){
@@ -52,7 +52,7 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
     }catch{}
   }
   const chapter=Number(root.dataset.chapter)||1;
-  const clockStart=rewindBeat(0,attempt,afterFire,chapter).clockStart;
+  const clockStart=rewindBeat(0,attempt,afterFire,chapter,failure).clockStart;
   function tick(now){
     if(finished)return;
     if(!root.isConnected){cleanup();return;}
@@ -64,7 +64,7 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
       ||clockElapsed>=Math.max(20,Number.isFinite(clockAudio?.duration)?clockAudio.duration+3:20);
     if(clockElapsed>=4&&(musicDone||(unavailable&&clockElapsed>=5.5)))clockComplete=true;
     const shownTime=Math.min(t,clockStart+3.99);
-    const beat=rewindBeat(shownTime,attempt,afterFire,chapter),next=beat.phase;
+    const beat=rewindBeat(shownTime,attempt,afterFire,chapter,failure),next=beat.phase;
     const voice=root.querySelector('.rewind-voice');voice.textContent=beat.text;voice.dataset.voiceKind=beat.kind;voice.style.opacity=beat.text?'1':'0';
     if(phase!==next){
       phase=next;root.dataset.rewindPhase=phase;
