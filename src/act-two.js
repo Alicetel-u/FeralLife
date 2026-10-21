@@ -395,6 +395,7 @@ export function advanceActTwo(s,hours){
  s.pending=null;s.management.pending=null;s.management.queue=[];
  if(s.hour<at)return;
  if(scene==='duel'){openDuel(s);return;}
+ if(scene==='bag'&&s.actOne.rollbackPoint?.state?.hour!==ACT_TWO_EVENTS.bag.at)saveStoryCheckpoint(s,'bag','男が玄関に現れた夕暮れ');
  if(scene){const ev=ACT_TWO_EVENTS[scene],e=addEvent(s,'trouble',ev.title,ev.detail,[102]);e.actScene=scene;e.cast=['hostess','cat'];e.stageOnly=true;e.lines=(scene==='bag'?(a.attempt>1?[n('男「……あんたには関係ないだろ。」'),n('男は大家を押しのけようとする。'),n('モクが男の前に歩み出た。'),c('neutral','……おい。'),m('……今度は、どうする……？')]:[...ev.lines,...FIRST_STALKER_BEFORE_CHOICE]):ev.lines).map(x=>({...x}));a.pending={scene,eventId:e.id};}
  else{a.status='clear';a.epilogueSeen=false;const e=addEvent(s,'life','第二幕 エピローグ「残った鍵」','5日目9時。アパートは今日も大家のものだった。',[102]);e.actScene='act2-epilogue';e.cast=['hostess','cat'];e.stageOnly=true;e.epilogueVersion=2;e.detail=ACT_TWO_EPILOGUE_LINES[0].text;e.lines=ACT_TWO_EPILOGUE_LINES.map(line=>({...line}));
  s.ending={name:'第二幕クリア — 残った鍵',text:'押しかける男たちを退け、けもの荘のいつもの暮らしを守り抜いた。'};}
@@ -426,6 +427,7 @@ export function rewindActTwo(s){
  if(s.actOne.rollbackPoint?.kind==='story')next.actOne.rollbackPoint=JSON.parse(JSON.stringify(s.actOne.rollbackPoint));
  next.actOne.attempt=a.attempt+1;next.actOne.skipUnlockedScene=scene;next.actOne.memory=[...a.memory];next.actOne.chosenChoices=actTwoChosen(s);next.actOne.status='playing';next.actOne.pending=null;next.actOne.prologuePending=false;next.actOne.titlePending=false;next.actOne.started=true;next.ending=null;next.pending=null;next.events.forEach(e=>e.read=true);
  const firstStalkerLoop=scene==='bag'&&a.attempt===1;
+ if(scene==='bag')advanceActTwo(next,Math.max(0.001,ACT_TWO_EVENTS.bag.at-next.hour));
  const intro=addEvent(next,'life',firstStalkerLoop?'初めての巻き戻し':'また、事件の前へ',firstStalkerLoop?'102号室の暗闇が途切れ、夕暮れの景色が戻っている。':storyCheckpointTarget(s).label+'に時間が戻っている。',[102]);
  intro.actScene='act2-rewind';intro.cast=['hostess','cat'];intro.stageOnly=true;intro.read=false;
  intro.revealCharacterAt=firstStalkerLoop?3:0;
@@ -463,7 +465,6 @@ export function rewindActTwo(s){
   c('tired','大家、寝不足ニャ？'),
   m('お前らのせいでな！！')
  ];
- if(firstStalkerLoop){advanceActTwo(next,ACT_TWO_EVENTS.bag.at-next.hour);}
  next.actOne.failedChoices=[...failedChoiceKeys(s)];
  next.actOne.rewindIntroPending=true;next.actOne.rewindIntroCursor=0;
  return next;
@@ -518,6 +519,17 @@ function answerDuel(s,eventId,choiceId){
   }
  }
  return r;
+}
+// Complete the rewind through the same scenario entry used in normal play.
+// Infer the duel destination as well, for saves made before resumeDuel existed.
+export function resumeActTwoRewind(s){
+ const a=s.actOne;
+ if(a?.chapter!==2||!a.rewindIntroPending)return null;
+ a.rewindIntroPending=false;
+ const intro=s.events.find(e=>e.actScene==='act2-rewind');
+ if(intro)intro.read=true;
+ if(!a.pending)advanceActTwo(s,Math.max(0.001,nextActTwoAt(s)-s.hour));
+ return a.pending?.eventId??null;
 }
 function rewindDuel(s){
  const a=s.actOne,point=a.rollbackPoint;

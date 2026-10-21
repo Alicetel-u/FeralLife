@@ -12,6 +12,7 @@ export function validStoryCheckpoint(point,chapter){
  if(chapter===1&&point.scene==='dinner'&&s.hour===37&&a.pending===null&&JSON.stringify(a.completed)===JSON.stringify(['ash'])){
   return s.events?.some(e=>e.actScene==='dinner'&&e.hour===37)===true;
  }
+ if(chapter===2&&point.scene==='bag'&&s.hour===66&&a.pending===null&&a.completed.length===0)return true;
  const routes=chapter===2?{bag:[57,57,[]],contract:[62,81,['bag']],duel:[84,84,['bag']]}:{ash:[17,17,[]],dinner:[19,37,['ash']]};
  const route=routes[point.scene];if(!route)return false;
  const [min,max,completed]=route;
@@ -19,6 +20,7 @@ export function validStoryCheckpoint(point,chapter){
  return s.hour>=min&&(min===max?s.hour===max:s.hour<max)&&(legacyDuel||JSON.stringify(a.completed)===JSON.stringify(completed));
 }
 export function storyCheckpointTarget(state){
+ if(state.actOne?.chapter===2&&state.actOne.failure?.startsWith('bag-'))return {hour:66,label:'男が玄関に現れた夕暮れ'};
  if(state.actOne?.failure?.startsWith('duel-'))return {hour:84,label:'ルナに彼氏役を頼まれた昼'};
  const a=state.actOne,second=a.chapter===2,late=second?a.failure?.startsWith('contract-'):a.failure?.startsWith('dinner-');
  const point=a.rollbackPoint;

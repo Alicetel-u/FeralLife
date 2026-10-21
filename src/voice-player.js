@@ -98,7 +98,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
       }
       if(context?.state==='suspended')context.resume().catch(()=>{});
       if(blocked&&current){const {line,identity}=current;current=null;play(line,identity);}},
-    setEnabled(value){prefs.enabled=Boolean(value);save();if(!prefs.enabled){stop();clearPrepared();}else if(current){const {line,identity}=current;current=null;play(line,identity);}},
+    setEnabled(value){prefs.enabled=Boolean(value);save();if(!prefs.enabled){stop();playbackOutcome='missing';clearPrepared();}else if(current){const {line,identity}=current;current=null;play(line,identity);}},
     setVolume(value){prefs.volume=Math.max(0,Math.min(1,Number(value)||0));applyVolume();save();},
     playStrike(line,volume){
       if(!AudioContextType||!line?.duelAttack||!(volume>0))return;

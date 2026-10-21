@@ -150,7 +150,7 @@ export function mountDuelPlayback(line,{advance,blocked,onDayReveal,voiceOutcome
   if(outcome==='missing'||outcome==='error'||outcome==='timeout')return now()>=readyAt+1200;
   return true; // Legacy callers without a voice outcome callback.
  };
- const tick=()=>{if(stopped)return;if(!canAdvance())timer=schedule(tick,80);else advance();};
+ const tick=()=>{if(stopped)return;if(blocked()||!canAdvance())timer=schedule(tick,80);else advance();};
  if(delay)timer=schedule(tick,delay);
  return Object.assign(()=>{stopped=true;if(timer!==undefined)cancel(timer);if(revealTimer!==undefined)cancel(revealTimer);},{canAdvance});
 }
