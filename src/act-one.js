@@ -468,6 +468,7 @@ export function rewindBeforeFire(s){
   next.actOne.chosenChoices=actOneChosenChoices(s);
   next.actOne.failedChoices=[...failedChoiceKeys(s)];
   next.actOne.started=true;next.actOne.status='playing';next.actOne.pending=null;
+  delete next.actOne.conversation;
   next.actOne.rewindIntroPending=false;next.actOne.rewindTitlePending=false;
   next.ending=null;next.pending=null;
   next.events.forEach(e=>e.read=true);

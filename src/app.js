@@ -1,3 +1,4 @@
+import {resumeConversation,rememberConversation,clearConversation} from './conversation-progress.js';
 import {refreshActTwoEpilogue} from './act-two-epilogue-script.js';
 import {actTwoEpilogueDirection,epilogueTransitionFor,actTwoEpilogueStageHTML,actTwoEpilogueCompleteHTML,prepareEpilogueAssets,startEpilogueTransition,playEpilogueSound} from './act-two-epilogue-stage.js';
 import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.21.4';
@@ -292,6 +293,7 @@ function showEpilogueCut(kind,replace){
 function clearFireEnding(){stopFireEnding?.();stopFireEnding=null;}
 function openModal(html) { if(!epilogueSwapping)stopEpilogueTransition();stopEpilogueSound();html=storyScreenHTML(html);characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); cleanupDuelPlayback();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); replaceConversationContent($('modal-content'),html); modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); syncNormalBgm(); }
 function closeModal() {
+  if(modal.classList.contains('conversation-modal')&&eventView){clearConversation(state,eventView.id);save();}
   stopEpilogueTransition();stopEpilogueSound();
   const duelEvent=state.actOne?.duel&&state.events.find(e=>e.id===eventView?.id);
   if(duelEvent?.duel&&eventView.index===eventConversation(duelEvent).length-1){state.actOne.duel.dialogueComplete=true;save();}
@@ -359,8 +361,9 @@ function showEvent(id,index=null,page=null,afterMorningBlackout=false,afterEpilo
   }
   e.read = true; rememberReadScenes(state); save(); updateJournal();
   if (!state.actOne && state.ending && e.id === state.events[0].id) { showEnding(); return; }
-  const lines=eventConversation(e),cursor=Math.max(0,Math.min(index ?? (e.duel&&state.actOne?.duel?.eventId===e.id?state.actOne.duel.cursor:e.choicePresented?lines.length-1:0),lines.length-1));
-  page??=index===null&&e.duel&&state.actOne?.duel?.eventId===e.id?state.actOne.duel.page||0:0;
+  const savedPosition=index===null?resumeConversation(state):null;
+  const lines=eventConversation(e),cursor=Math.max(0,Math.min(index ?? (savedPosition?.event.id===e.id?savedPosition.cursor:e.duel&&state.actOne?.duel?.eventId===e.id?state.actOne.duel.cursor:e.choicePresented?lines.length-1:0),lines.length-1));
+  page??=savedPosition?.event.id===e.id?savedPosition.page:index===null&&e.duel&&state.actOne?.duel?.eventId===e.id?state.actOne.duel.page||0:0;
   const epilogueDirection=actTwoEpilogueDirection(e,cursor);
   const epilogueCut=afterEpilogueTransition?null:epilogueTransitionFor(e,eventView?.id===e.id?eventView.index:null,cursor,page);
   if(epilogueCut){showEpilogueCut(epilogueCut,()=>showEvent(id,cursor,page,afterMorningBlackout,true));return;}
@@ -384,6 +387,7 @@ function showEvent(id,index=null,page=null,afterMorningBlackout=false,afterEpilo
   }
   const pages=messagePages(lines[cursor].text),pageIndex=Math.min(page,pages.length-1),last=cursor===lines.length-1&&pageIndex===pages.length-1;
   eventView={id:e.id,index:cursor,page:pageIndex};
+  rememberConversation(state,e,cursor,pageIndex);save();
   if(e.duel&&state.actOne?.duel){state.actOne.duel.cursor=cursor;state.actOne.duel.eventId=e.id;state.actOne.duel.page=pageIndex;save();}
   playDuelCue(lines[cursor],e.id+':'+cursor,normalBgm.enabled,normalBgm.volume,characterVoice);
   playStalkerImpactCue(lines[cursor],e.id+':'+cursor);
@@ -515,6 +519,8 @@ function showActTitle(){
   if(state.actOne.attempt>1)stopFireEnding=startFireEnding(modal.querySelector('.act-title-fire .fire-cinematic'),null,()=>{},{ambient:true});
 }
 function continueGame(){
+  const conversation=resumeConversation(state);
+  if(conversation){showEvent(conversation.event.id,conversation.cursor,conversation.page);return;}
   const d=state.actOne?.duel,e=d&&state.events.find(e=>e.id===d.eventId);
   if(e?.duel&&!d.dialogueComplete){showEvent(e.id,d.cursor||0,d.page||0);return;}
   if(state.actOne.rewindIntroPending){showEvent(state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-rewind':'rewind')).id,state.actOne.rewindIntroCursor||0);return;}
@@ -863,7 +869,7 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-act-start')){state.actOne.started=true;state.actOne.rewindTitlePending=false;save();closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();}
   if(button.hasAttribute('data-act2-prologue-done')&&state.actOne?.chapter===2){state.actOne.started=true;state.actOne.titlePending=false;state.actOne.prologuePending=false;const intro=state.events.find(e=>e.actScene==='act2-prologue');if(intro)intro.read=true;state.selected=102;autoFollow=true;cameraKey='';updateCamera();updateRooms();save();closeModal();openNextStageEvent();}
   if(button.hasAttribute('data-rewind-resume')&&state.actOne?.rewindIntroPending){if(state.actOne.chapter===2){const eventId=resumeActTwoRewind(state);save();if(eventId!==null){showEvent(eventId,0);return;}closeModal();return;}state.actOne.rewindIntroPending=false;const intro=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-rewind':'rewind'));if(intro)intro.read=true;save();if(intro?.resumeChoice&&state.actOne.pending){showEvent(state.actOne.pending.eventId);return;}closeModal();}
-  if(button.hasAttribute('data-epilogue-done')&&state.actOne?.status==='clear'){state.actOne.epilogueSeen=true;const ep=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-epilogue':'epilogue'));if(ep)ep.read=true;save();if(state.actOne.chapter===2)showEpilogueCut('night',()=>showActEnding());else showActEnding();}
+  if(button.hasAttribute('data-epilogue-done')&&state.actOne?.status==='clear'){state.actOne.epilogueSeen=true;const ep=state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-epilogue':'epilogue'));if(ep){ep.read=true;clearConversation(state,ep.id);}save();if(state.actOne.chapter===2)showEpilogueCut('night',()=>showActEnding());else showActEnding();}
   if(button.hasAttribute('data-act-reward')&&state.actOne?.status==='clear')resetActState(beginActTwo(state));
   if(button.hasAttribute('data-act2-rewind')&&state.actOne?.chapter===2&&state.actOne.status==='bad')beginRewind(true);
   if(button.hasAttribute('data-act2-finish'))showNextChapter();

@@ -87,7 +87,7 @@ test('real dialogue cursor selection keeps a saved duel page unless a new line i
  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
  const source=app.slice(app.indexOf('  const lines=eventConversation(e),cursor='),app.indexOf('  const epilogueDirection=actTwoEpilogueDirection(e,cursor);'));
  for(const index of [null,0]){
-  const context={e:{id:12,duel:true},state:{actOne:{duel:{eventId:12,cursor:1,page:1}}},index,page:null,eventConversation:()=>[{text:'a'},{text:'b'}]};
+  const context={savedPosition:null,e:{id:12,duel:true},state:{actOne:{duel:{eventId:12,cursor:1,page:1}}},index,page:null,eventConversation:()=>[{text:'a'},{text:'b'}]};
   vm.createContext(context);const result=vm.runInContext(source+';({cursor,page})',context);
   assert.equal(result.cursor,index===null?1:0);assert.equal(result.page,index===null?1:0);
  }

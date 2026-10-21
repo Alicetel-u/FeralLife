@@ -1,3 +1,4 @@
+import {clearConversation} from '../src/conversation-progress.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
@@ -19,7 +20,7 @@ test('cooking success and the actual victory button never replay the opening',()
   const classes=new Set(),opened=[];
   const context={state:null,restored:false,eventPreview:false,previewResident:null,stageQueue:[],seenStageId:0,stageScanState:null,stageScanNextId:-1,
    ACT_ONE_EVENTS,ACT_TWO_EVENTS,createActOne,advanceActOne,answerActOne,beginActTwo,advanceActTwo,answerActTwo,developerMode:false,
-   rememberReadScenes,automaticChapterScene,claimAutomaticScene,avoidedTrouble,troubleAvoidedHTML,startTroubleVictory,eventConversation,
+   rememberReadScenes,automaticChapterScene,claimAutomaticScene,clearConversation,avoidedTrouble,troubleAvoidedHTML,startTroubleVictory,eventConversation,
    eventView:null,document:{hidden:false,documentElement:{classList:{contains:()=>false}}},
    modal:{open:true,classList:{contains:v=>classes.has(v)},querySelector:()=>({querySelector:()=>victoryButton}),close(){this.open=false;context.openNextStageEvent();}},
    stopEpilogueTransition(){},stopEpilogueSound(){},characterVoice:{stop(){}},stopOpeningPrologue(){},cleanupChoiceUI(){},cleanupDuelPlayback(){},clearFireEnding(){context.stopFireEnding?.();context.stopFireEnding=null;},stopFireEnding:null,eventAutoTimer:null,clearTimeout,
