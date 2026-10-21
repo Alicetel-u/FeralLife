@@ -405,11 +405,13 @@ function showEvent(id,index=null,page=0,afterMorningBlackout=false,afterEpilogue
   if(choices){e.choicePresented=true;save();}
   cleanupChoiceUI=mountChoiceUI(modal,state.actOne?.chapter===2?'hostess':'cat');
 
-  characterVoice.play(lines[cursor],e.id+':'+cursor+':'+pageIndex);
+  const playCurrentVoice=()=>{characterVoice.play(lines[cursor],e.id+':'+cursor+':'+pageIndex);scheduleEventAuto();};
+  const waitingForDay=e.duel&&lines[cursor].duelDayStart;
+  if(!waitingForDay)characterVoice.play(lines[cursor],e.id+':'+cursor+':'+pageIndex);
   characterVoice.prepare(cursor+1<lines.length?lines[cursor+1]:null);
   if(epilogueDirection&&pageIndex===0)stopEpilogueSound=playEpilogueSound(epilogueDirection.line.epilogueSfx,normalBgm.enabled?normalBgm.volume:0);
-  cleanupDuelPlayback=mountDuelPlayback(e.duel?{...lines[cursor],duelStartTitle:(cursor===0&&pageIndex===0)||showDebugDuelSplash}:null,{advance:advanceConversation,voiceOutcome:()=>characterVoice.outcome,blocked:()=>document.hidden||characterVoice.busy||modal.classList.contains('event-ui-hidden')||!!modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden});
-  scheduleEventAuto();
+  cleanupDuelPlayback=mountDuelPlayback(e.duel?{...lines[cursor],duelStartTitle:(cursor===0&&pageIndex===0)||showDebugDuelSplash}:null,{onDayReveal:playCurrentVoice,advance:advanceConversation,voiceOutcome:()=>characterVoice.outcome,blocked:()=>document.hidden||characterVoice.busy||modal.classList.contains('event-ui-hidden')||!!modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden});
+  if(!waitingForDay)scheduleEventAuto();
   document.querySelector(last&&waiting?'[data-choice]:not([disabled])':last?(['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'[data-epilogue-done].primary-button':['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'[data-rewind-resume].primary-button':e.actScene==='act2-prologue'&&state.actOne.prologuePending?'[data-act2-prologue-done].primary-button':e.actScene==='prologue'?'[data-opening="3"].primary-button':'[data-close].primary-button'):'[data-dialogue-next]')?.focus({preventScroll:true});
 }
 

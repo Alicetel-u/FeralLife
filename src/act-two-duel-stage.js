@@ -120,7 +120,7 @@ export function duelStageHTML(event,residents,index=0,page=0){
 export function duelReadDelay(line){
  return Math.max(1800,Math.min(3200,Array.from(line?.text||'').length*65+650));
 }
-export function mountDuelPlayback(line,{advance,blocked,voiceOutcome=()=>null,schedule=setTimeout,cancel=clearTimeout,now=()=>performance.now()}){
+export function mountDuelPlayback(line,{advance,blocked,onDayReveal,voiceOutcome=()=>null,schedule=setTimeout,cancel=clearTimeout,now=()=>performance.now()}){
  if(!line)return ()=>{};
  // Reduced motion changes movement, never the time available to read a line.
  // Attack callouts stay on-screen until the voice actually finishes.
@@ -128,7 +128,8 @@ export function mountDuelPlayback(line,{advance,blocked,voiceOutcome=()=>null,sc
  const attack=!!line.duelAttack;
  const delay=attack?duelReadDelay(line):line.duelWindup?duelReadDelay(line):line.duelPlayback?1800:0;
  const readyAt=now()+(line.duelDayStart?(line.duelStoryDay===5?3500:3000):line.duelVictoryResult?2800:line.duelStartTitle?1550:attack?duelReadDelay(line):650);
- let timer,stopped=false;
+ let timer,revealTimer,stopped=false;
+ if(line.duelDayStart&&onDayReveal)revealTimer=schedule(()=>{if(!stopped)onDayReveal();},line.duelStoryDay===5?3500:3000);
  // Keep the final audible syllable and callout on screen after media 'ended'.
  // Some mobile decoders signal ended while their buffered output is still draining.
  const ATTACK_TAIL_MS=450;
@@ -151,7 +152,7 @@ export function mountDuelPlayback(line,{advance,blocked,voiceOutcome=()=>null,sc
  };
  const tick=()=>{if(stopped)return;if(!canAdvance())timer=schedule(tick,80);else advance();};
  if(delay)timer=schedule(tick,delay);
- return Object.assign(()=>{stopped=true;if(timer!==undefined)cancel(timer);},{canAdvance});
+ return Object.assign(()=>{stopped=true;if(timer!==undefined)cancel(timer);if(revealTimer!==undefined)cancel(revealTimer);},{canAdvance});
 }
 export function duelBadHTML(state){
  const y=state.actOne.failure==='duel-yandere';

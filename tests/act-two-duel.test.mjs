@@ -486,3 +486,17 @@ test('yandere clock animation says landlord reaction, not other routes\' resolve
  assert.notEqual(rewindBeat(4,2,true,2,'duel-domination').text,clock.text);
  assert.equal(rewindTransitionHTML('duel-yandere',2,true,2).includes('ルナ……お前……'),false,'do not reveal the line before clock phase');
 });
+
+
+test('after-day voice waits for the curtain and cancels on scene replacement',()=>{
+ for(const day of [1,2,3,4,5]){
+  let time=0,spoken=0;const timers=new Map();let id=0;
+  const stop=mountDuelPlayback({duelDayStart:true,duelStoryDay:day},{advance(){},blocked:()=>false,now:()=>time,
+   onDayReveal(){spoken++;},schedule(fn,delay){timers.set(++id,{fn,delay});return id;},cancel(key){timers.delete(key);}});
+  assert.equal(spoken,0);
+  const [{fn,delay}]=timers.values();assert.equal(delay,day===5?3500:3000);
+  time=delay-1;assert.equal(stop.canAdvance(),false);
+  time=delay;fn();assert.equal(spoken,1);assert.equal(stop.canAdvance(),true);
+  stop();assert.equal(timers.size,0);fn();assert.equal(spoken,1);
+ }
+});
