@@ -9,7 +9,7 @@ export function choiceUIHTML(event,choices,history=new Set(),failed=new Set()) {
   const icon=choiceAssetPaths[['trash','balcony','freezer','water','bag','loan','document','stamp','refuse','meal','flame','cat'].indexOf(choiceIcons[choice.id]||'cat')];
   return `<button type="button" class="decision-choice${seen?' previously-chosen':''}${exhausted?' choice-exhausted':''}" style="--choice-index:${i}" data-case-event="${event.id}" data-choice="${choiceEscape(choice.id)}" aria-disabled="true" ${exhausted?'disabled data-choice-exhausted="true"':''}><img class="choice-icon" src="${icon}" alt=""><strong>${choiceEscape(choice.label)}</strong>${seen?'<span class="choice-history-badge">選択済</span>':''}<span class="choice-arrow" aria-hidden="true">↗</span></button>`;
  }).join('');
- return '<section class="cinematic-choice graphic-choice" aria-labelledby="choice-title"><div class="choice-heading"><span class="choice-emblem" aria-hidden="true">'+eventIcon('cat')+'</span><h2 id="choice-title">大家の返事は？</h2><p>どう返すか、選択してください。</p></div><div class="decision-panel" aria-label="大家の返事">'+cards+'</div><p class="choice-hint">↑ ↓ / 数字で移動 · Enter で決定</p></section>';
+ return '<section class="cinematic-choice graphic-choice" aria-labelledby="choice-title"><div class="choice-heading"><span class="choice-emblem" aria-hidden="true">'+eventIcon('cat')+'</span><h2 id="choice-title">大家の返事は？</h2><p>どう返すか、選択してください。</p></div><div class="decision-panel" aria-label="大家の返事">'+cards+'</div></section>';
 }
 export function mountChoiceUI(modal, roomType='cat') {
  const panel=modal.querySelector('.cinematic-choice');

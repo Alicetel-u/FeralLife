@@ -93,8 +93,9 @@ function observationCharacterArt(type){
   ...(type==='cat'?{smokeTip:{base:[18,-56]}}:{})};
 }
 export const CHARACTER_ART = {
+  // Match Moku's visible height: the 512px idle art has a 420px body.
   manager: {
-    src:'assets/characters/manager/new-poses/daily/idle.png',portraitSrc:'assets/characters/manager/idle.png',displayHeight:41.26415842,origin:[256.5,505],image:null,portrait:null,
+    src:'assets/characters/manager/new-poses/daily/idle.png',portraitSrc:'assets/characters/manager/idle.png',displayHeight:53.63809524,origin:[256.5,474],image:null,portrait:null,
     poses:{
       battle_badend:catPose('assets/characters/manager/new-poses/act2-battle/badend.png',[212.0,497]),
       battle_fail:catPose('assets/characters/manager/new-poses/act2-battle/fail.png',[294.0,477]),
@@ -105,15 +106,15 @@ export const CHARACTER_ART = {
       battle_protect:catPose('assets/characters/manager/new-poses/act2-battle/protect.png',[229.5,494]),
       battle_stand_proud:catPose('assets/characters/manager/new-poses/act2-battle/stand_proud.png',[235.0,504]),
       battle_victory:catPose('assets/characters/manager/new-poses/act2-battle/victory.png',[219.5,494]),
-      clean:catPose('assets/characters/manager/new-poses/daily/clean.png',[210.5,502]),
-      idle:catPose('assets/characters/manager/new-poses/daily/idle.png',[256.5,505]),
-      sit:catPose('assets/characters/manager/new-poses/daily/sit.png',[241.0,512]),
-      sleep:catPose('assets/characters/manager/new-poses/daily/sleep.png',[240.5,485]),
-      smartphone:catPose('assets/characters/manager/new-poses/daily/smartphone.png',[228.5,492]),
-      talk:catPose('assets/characters/manager/new-poses/daily/talk.png',[246.0,508]),
-      think:catPose('assets/characters/manager/new-poses/daily/think.png',[269.0,481]),
-      walk_a:catPose('assets/characters/manager/new-poses/daily/walk_a.png',[260.0,503]),
-      walk_b:catPose('assets/characters/manager/new-poses/daily/walk_b.png',[245.5,479]),
+      clean:catPose('assets/characters/manager/new-poses/daily/clean.png',[210.5,483]),
+      idle:catPose('assets/characters/manager/new-poses/daily/idle.png',[256.5,474]),
+      sit:catPose('assets/characters/manager/new-poses/daily/sit.png',[241.0,464]),
+      sleep:catPose('assets/characters/manager/new-poses/daily/sleep.png',[240.5,457]),
+      smartphone:catPose('assets/characters/manager/new-poses/daily/smartphone.png',[228.5,480]),
+      talk:catPose('assets/characters/manager/new-poses/daily/talk.png',[246.0,474]),
+      think:catPose('assets/characters/manager/new-poses/daily/think.png',[269.0,478]),
+      walk_a:catPose('assets/characters/manager/new-poses/daily/walk_a.png',[260.0,476]),
+      walk_b:catPose('assets/characters/manager/new-poses/daily/walk_b.png',[245.5,475]),
       angry:catPose('assets/characters/manager/new-poses/emotions/angry.png',[232.5,493]),
       happy:catPose('assets/characters/manager/new-poses/emotions/happy.png',[251.0,492]),
       neutral:catPose('assets/characters/manager/new-poses/emotions/neutral.png',[256.0,492]),
@@ -123,8 +124,8 @@ export const CHARACTER_ART = {
       surprised:catPose('assets/characters/manager/new-poses/emotions/surprised.png',[215.5,495]),
       tired:catPose('assets/characters/manager/new-poses/emotions/tired.png',[253.0,493]),
       troubled:catPose('assets/characters/manager/new-poses/emotions/troubled.png',[243.0,492]),
-      clean_a:catPose('assets/characters/manager/new-poses/daily/clean.png',[210.5,502]),
-      clean_b:catPose('assets/characters/manager/new-poses/daily/clean.png',[210.5,502]),
+      clean_a:catPose('assets/characters/manager/new-poses/daily/clean.png',[210.5,483]),
+      clean_b:catPose('assets/characters/manager/new-poses/daily/clean.png',[210.5,483]),
       retort:catPose('assets/characters/manager/new-poses/emotions/troubled.png',[243.0,492]),
       confused:catPose('assets/characters/manager/new-poses/emotions/troubled.png',[243.0,492]),
       scared:catPose('assets/characters/manager/new-poses/emotions/surprised.png',[215.5,495]),
