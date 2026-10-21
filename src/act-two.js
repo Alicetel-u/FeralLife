@@ -528,13 +528,13 @@ function rewindDuel(s){
  next.ending=null;next.pending=null;next.events.forEach(e=>e.read=true);
  const intro=addEvent(next,'life','また、あの昼へ','玄関で、ルナが大家の袖を引いている。',[102]);
  Object.assign(intro,{actScene:'act2-rewind',cast:['hostess','cat'],stageOnly:true,lines:a.failure==='duel-yandere'?[
-  {...m('……っ！？ あの鍵の音が……消えた……？'),innerVoice:true},
+  {...m('……っ！？ 俺、部屋に閉じ込められてたはずじゃ……。'),innerVoice:true},
   n('目の前には、いつものけもの荘。閉じ込められた部屋ではなく、あの昼の玄関だった。'),
   {...m('……戻ったのか。まだ、ルナが俺に頼み事をする前に……。'),innerVoice:true},
   l('surprised','大家さん？ どうしたの？ まだ何もお願いしてないよ？'),
   {...m('……ルナ。'),voicePerformance:'tragedy-shock'},
   l('surprised','えっ？ な、なに？'),
-  {...m('……ルナは、気持ちが高まりすぎると、守るって言葉もあんなふうに受け取っちまうのか。'),innerVoice:true},
+  {...m('……気持ちが高まると、あんなふうになっちまうのか。'),innerVoice:true},
   {...m('今度は調子に乗って、期待させすぎないように……ちゃんと線を引かねぇと。'),innerVoice:true},
   m('……いや、なんでもねぇ。話なら聞く。ただし、できることとできないことは別だ。'),
   c('neutral','大家、今日はやけに慎重ニャ。')
