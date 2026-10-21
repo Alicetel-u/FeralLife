@@ -133,3 +133,31 @@ test('an exterior view points an indoor voice at that room door', () => {
   assert.ok(Math.abs(place.x - door.x) < 1);
   assert.ok(Math.abs(place.y - door.y) < 1);
 });
+
+
+test('cleanup speech follows the actual animated resident instead of its stationary journey',()=>{
+ const state={hour:17.1,selected:101,actOne:{started:true},residents:[{type:'cat',room:101,action:'clean',lifeBeat:17,needs:{},trash:0}]};
+ const renderer=view('interior');
+ renderer.ctx=new Proxy({},{get:(object,key)=>object[key]??(()=>{})});
+ const positions=[];
+ for(const time of [0,1.5,2.5,4.6,6,8]){
+  renderer.animTime=time;renderer.drawInteriorResident(state,state.residents[0],time);
+  const bubble=renderer.speechAnchor(state,'cat');
+  assert.ok(Math.abs(bubble.x-renderer.followCharacterX*WORLD_WIDTH/1200)<.001,'tail must follow the same position as the rendered character');
+  positions.push(bubble.x);
+ }
+ assert.ok(Math.max(...positions)-Math.min(...positions)>200,'cleanup must exercise the real walking animation');
+});
+
+test('phone-search speech follows every discovery and interpolation without modifying the save',()=>{
+ const state={hour:23.9,selected:101,actOne:{started:true,observation:{current:{id:'phone-search',index:0,elapsed:0}}},residents:[{type:'cat',room:101,action:'idle',needs:{},trash:0}]};
+ const renderer=view('interior');renderer.ctx=new Proxy({},{get:(object,key)=>object[key]??(()=>{})});renderer.animTime=0;
+ const positions=[];
+ for(const index of [0,1,2])for(const elapsed of [0,.55,1.1]){
+  Object.assign(state.actOne.observation.current,{index,elapsed});const before=JSON.stringify(state);
+  renderer.drawInteriorResident(state,state.residents[0],0);const bubble=renderer.speechAnchor(state,'cat');
+  assert.ok(Math.abs(bubble.x-renderer.followCharacterX*WORLD_WIDTH/1200)<.001,'camera and speech must track the same searching resident');
+  assert.equal(JSON.stringify(state),before);positions.push(bubble.x);
+ }
+ assert.ok(Math.max(...positions)-Math.min(...positions)>300);
+});

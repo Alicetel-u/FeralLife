@@ -277,8 +277,11 @@ export class WorldRenderer {
     }
     ctx.restore();
   }
+  interiorResidentPosition(state,r,t=this.animTime||0) {
+    return phoneSearchWalk(state,r,firstEveningCleanup(state,r,sampleJourney(r,state.hour,ACTIONS[r.action].place),t),t);
+  }
   drawInteriorResident(state,r,t) {
-    const p=phoneSearchWalk(state,r,firstEveningCleanup(state,r,sampleJourney(r,state.hour,ACTIONS[r.action].place),t),t);
+    const p=this.interiorResidentPosition(state,r,t);
     if(p.zone==='away'||p.zone==='street'||p.zone==='stairs')return;
     const base=exteriorRoomBounds(p.room||r.room), b=roomBounds(p.room||r.room,this.focusRoom);if(!b)return;
     const ctx=this.ctx,x=b.x+(p.x-base.x)/base.w*b.w,y=p.zone==='hall'?b.y+b.h+16:b.y+(p.y-base.y)/base.h*b.h;
@@ -376,7 +379,7 @@ export class WorldRenderer {
     }
     const selected = state.residents.find(person => person.room === state.selected);
     const selectedPos = selected ? sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
-    const p = sampleJourney(resident, state.hour, ACTIONS[resident.action].place);
+    const p = this.view==='interior'?this.interiorResidentPosition(state,resident):sampleJourney(resident, state.hour, ACTIONS[resident.action].place);
     const S = WORLD_WIDTH / 1200;
     const absent = p.zone === 'away' || p.zone === 'street' || p.zone === 'stairs';
     if (this.view === 'exterior') {
