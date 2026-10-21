@@ -120,6 +120,7 @@ test('both duel BAD endings rewind to the same afternoon and character scene',()
   const next=rewindActTwo(state),intro=next.events.find(e=>e.actScene==='act2-rewind');
   assert.equal(next.hour,84);
   assert.ok(intro?.lines?.length===10);
+  assert.equal(intro.resumeDuel,true);
   assert.equal(intro.lines[2].text,'……戻ったのか。まだ、ルナが俺に頼み事をする前に……。');
   assert.equal(intro.lines[3].speaker,'hostess');
   assert.equal(next.actOne.rewindIntroPending,true);
@@ -140,7 +141,9 @@ test('duel rewind must finish the character dialogue before replaying the mini-g
  assert.equal(next.actOne.pending,null);
  assert.ok(next.events.some(e=>e.id===intro.id&&!e.read));
  next.actOne.rewindIntroPending=false;
- advanceActTwo(next,100);
+ advanceActTwo(next,0.001);
+ assert.equal(next.hour,84,'resume opens the duel without observation time passing');
+ assert.equal(next.events.find(e=>e.id===next.actOne.pending.eventId).lines[0].text,DUEL_INTRO[0].text);
  assert.equal(next.actOne.pending?.scene,'duel','game becomes available after rewind intro finishes');
 });
 

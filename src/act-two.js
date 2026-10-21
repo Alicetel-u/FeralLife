@@ -527,7 +527,7 @@ function rewindDuel(s){
  Object.assign(next.actOne,{attempt:a.attempt+1,memory:[...a.memory],chosenChoices:actTwoChosen(s),failedChoices:[...failedChoiceKeys(s)],status:'playing',pending:null,rewindIntroPending:true,rewindIntroCursor:0,duel:{round:0,hearts:0,history:[],cursor:0}});
  next.ending=null;next.pending=null;next.events.forEach(e=>e.read=true);
  const intro=addEvent(next,'life','また、あの昼へ','玄関で、ルナが大家の袖を引いている。',[102]);
- Object.assign(intro,{actScene:'act2-rewind',cast:['hostess','cat'],stageOnly:true,lines:a.failure==='duel-yandere'?[
+ Object.assign(intro,{actScene:'act2-rewind',resumeDuel:true,cast:['hostess','cat'],stageOnly:true,lines:a.failure==='duel-yandere'?[
   {...m('……っ！？ 俺、部屋に閉じ込められてたはずじゃ……。'),innerVoice:true},
   n('目の前には、いつものけもの荘。閉じ込められた部屋ではなく、あの昼の玄関だった。'),
   {...m('……戻ったのか。まだ、ルナが俺に頼み事をする前に……。'),innerVoice:true},
