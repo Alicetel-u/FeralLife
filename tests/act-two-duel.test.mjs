@@ -93,7 +93,7 @@ test('all twelve answers give the three characters distinct exchanges with stabl
 
 test('last Moku answer calls the approved smoke-paw ultimate while preserving its hidden minus-four effect',()=>{
  const choice=duelChoices(3).find(choice=>choice.id==='catapult');
- assert.match(choice.label,/モク流奥義・煙ノ肉球乱舞/);assert.equal(choice.delta,-4);
+ assert.match(choice.label,/モク！.*助けて/);assert.doesNotMatch(choice.label,/奥義|肉球乱舞/);assert.equal(choice.delta,-4);
  const html=duelChoiceHTML({id:1},duelChoices(3));
  const button=html.split('<button').find(part=>part.includes('data-choice="catapult"'));
  assert.match(button,/duel-cat-command/);assert.match(button,/モクに頼る/);assert.match(button,/ハート<\/span> ？？？/);
@@ -502,4 +502,14 @@ test('after-day voice waits for the curtain and cancels on scene replacement',()
   time=delay;fn();assert.equal(spoken,1);assert.equal(stop.canAdvance(),true);
   stop();assert.equal(timers.size,0);fn();assert.equal(spoken,1);
  }
+});
+
+test('landlord ultimate guards Luna with a dedicated effect only on its attack page',()=>{
+ const lines=duelReplyLines(3,duelChoices(3).find(choice=>choice.id==='ultimate'));
+ const event={id:1,duel:true,cast:['hostess','cat'],detail:lines[0].text,lines};
+ const at=eventConversation(event).findIndex(line=>line.duelRank===4);
+ assert.match(duelStageHTML(event,[],at),/class="duel-manager-aura"/);
+ assert.doesNotMatch(duelStageHTML(event,[],at,1),/class="duel-manager-aura"/);
+ assert.doesNotMatch(duelStageHTML(event,[],at+1),/class="duel-manager-aura"/);
+ assert.match(lines.find(line=>line.duelDefeated).text,/両腕を広げ、ルナを背にかばった/);
 });
