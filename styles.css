@@ -1741,7 +1741,7 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .duel-bad-copy{background:linear-gradient(transparent,#110c18f5 25%);padding:35px 20px 8px;width:100%;color:#fff4e9;text-align:center}.duel-bad-copy h2{font-size:clamp(26px,5vw,62px);margin:6px 0 12px;text-shadow:3px 3px #4d102d}.duel-bad-copy p{font-size:clamp(13px,2vw,18px);margin:9px 0}.duel-bad-copy .act-primary{margin-top:10px}
 @keyframes duel-enter{from{transform:translateX(180%);opacity:0}to{transform:none;opacity:1}}
 @keyframes duel-name{0%{opacity:0;translate:40px}18%,75%{opacity:1;translate:0}100%{opacity:0;translate:-10px}}
-@keyframes duel-fly{0%,12%{transform:none;opacity:1}100%{transform:translate(240%,-50%) rotate(80deg);opacity:0}}
+@keyframes duel-fly{0%,12%{transform:none;opacity:1}100%{transform:translate(180vw,-35vh) rotate(120deg);opacity:1}}
 @keyframes duel-retort{0%,100%{transform:none}30%{transform:translateX(-8%) rotate(-6deg)}65%{transform:translateX(24%) rotate(8deg)}}
 @keyframes duel-charge{0%,12%{transform:none}44%{transform:translate(180%,-70%) rotate(-20deg)}56%{transform:translate(320%,55%) rotate(12deg)}75%{transform:translate(120%,-70%) rotate(-10deg)}100%{transform:none}}
 @keyframes duel-ring{0%{opacity:0;transform:scale(.2)}25%{opacity:1}100%{opacity:0;transform:scale(2.4)}}
@@ -2071,3 +2071,9 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @keyframes duel-guard-glow{0%{opacity:0}25%,65%{opacity:1}100%{opacity:0}}
 @keyframes duel-guard-plant{0%{translate:0 8px;scale:.95}20%,100%{translate:0 0;scale:1.08}}
 @media(prefers-reduced-motion:reduce){.duel-manager-aura{animation:none;opacity:.45}.duel-manager-aura i{display:none}.duel-striking.rank-4 .duel-manager{animation:none}}
+
+/* Speak the complete ultimate first, then strike and visibly launch the opponent. */
+.duel-striking.rank-4 .duel-enemy{animation:duel-fly .9s .25s cubic-bezier(.25,.6,.6,1) both}
+.duel-ultimate-waiting .duel-enemy,.duel-ultimate-waiting .duel-manager,.duel-ultimate-waiting .duel-hit-ring,.duel-ultimate-waiting .duel-striking.rank-4::after,.duel-ultimate-waiting .duel-manager-aura,.duel-ultimate-waiting .duel-manager-aura i{animation-play-state:paused!important}
+.duel-ultimate-waiting .duel-manager-aura,.duel-ultimate-waiting .duel-hit-ring,.duel-ultimate-waiting .duel-striking.rank-4::after{visibility:hidden}
+@media(prefers-reduced-motion:reduce){.duel-ultimate-waiting .duel-enemy{opacity:1!important}.duel-stage:not(.duel-ultimate-waiting) .duel-striking.rank-4 .duel-enemy{opacity:1;transform:translateX(180vw)}}

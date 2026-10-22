@@ -389,7 +389,7 @@ function showEvent(id,index=null,page=null,afterMorningBlackout=false,afterEpilo
   eventView={id:e.id,index:cursor,page:pageIndex};
   rememberConversation(state,e,cursor,pageIndex);save();
   if(e.duel&&state.actOne?.duel){state.actOne.duel.cursor=cursor;state.actOne.duel.eventId=e.id;state.actOne.duel.page=pageIndex;save();}
-  playDuelCue(lines[cursor],e.id+':'+cursor,normalBgm.enabled,normalBgm.volume,characterVoice);
+  if(lines[cursor].duelRank!==4)playDuelCue(lines[cursor],e.id+':'+cursor,normalBgm.enabled,normalBgm.volume,characterVoice);
   playStalkerImpactCue(lines[cursor],e.id+':'+cursor);
   if(['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending){state.actOne.rewindIntroCursor=cursor;save();}
   if(['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen){state.actOne.epilogueCursor=cursor;save();}
@@ -415,7 +415,10 @@ function showEvent(id,index=null,page=null,afterMorningBlackout=false,afterEpilo
   if(!waitingForDay)characterVoice.play(lines[cursor],e.id+':'+cursor+':'+pageIndex);
   characterVoice.prepare(cursor+1<lines.length?lines[cursor+1]:null);
   if(epilogueDirection&&pageIndex===0)stopEpilogueSound=playEpilogueSound(epilogueDirection.line.epilogueSfx,normalBgm.enabled?normalBgm.volume:0);
-  cleanupDuelPlayback=mountDuelPlayback(e.duel?{...lines[cursor],duelStartTitle:(cursor===0&&pageIndex===0)||showDebugDuelSplash}:null,{onDayReveal:playCurrentVoice,advance:advanceConversation,voiceOutcome:()=>characterVoice.outcome,blocked:()=>document.hidden||characterVoice.busy||modal.classList.contains('event-ui-hidden')||!!modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden});
+  cleanupDuelPlayback=mountDuelPlayback(e.duel?{...lines[cursor],duelStartTitle:(cursor===0&&pageIndex===0)||showDebugDuelSplash}:null,{onDayReveal:playCurrentVoice,onAttack:()=>{
+    modal.querySelector('.duel-ultimate-waiting')?.classList.remove('duel-ultimate-waiting');
+    playDuelCue(lines[cursor],e.id+':'+cursor,normalBgm.enabled,normalBgm.volume,characterVoice);
+  },advance:advanceConversation,voiceOutcome:()=>characterVoice.outcome,blocked:()=>document.hidden||characterVoice.busy||modal.classList.contains('event-ui-hidden')||!!modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden});
   if(!waitingForDay)scheduleEventAuto();
   document.querySelector(last&&waiting?'[data-choice]:not([disabled])':last?(['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'[data-epilogue-done].primary-button':['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'[data-rewind-resume].primary-button':e.actScene==='act2-prologue'&&state.actOne.prologuePending?'[data-act2-prologue-done].primary-button':e.actScene==='prologue'?'[data-opening="3"].primary-button':'[data-close].primary-button'):'[data-dialogue-next]')?.focus({preventScroll:true});
 }

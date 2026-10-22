@@ -113,7 +113,7 @@ export function duelStageHTML(event,residents,index=0,page=0){
  const resultHearts=duelHeartSlots(hearts,hearts,false,true);
  const finalResult=resultLabel&&page===0?`<div class="duel-final-result duel-final-${resultOutcome} ${duelHeartMood(hearts)}" role="img" aria-label="${resultLabel} ルナのハート ${hearts}個 / 10個"><strong class="duel-final-title">${resultLabel}</strong><div class="duel-final-hearts duel-hearts">${resultHearts}</div><span class="duel-final-count">${hearts}<small> / 10</small>${hearts>10?'<em>限界突破</em>':''}</span></div>`:'';
  const startTitle=((intro&&index===0&&page===0)||event.debugDuelSplash)&&page===0?`<div class="duel-start-title" aria-label="ミニゲーム開始：嘘つきルナを守れ！"><div class="duel-start-slash" aria-hidden="true"></div><div class="duel-start-panel"><strong>嘘つきルナを守れ！</strong></div></div>`:'';
- return stage.replace('class="event-stage ',`class="event-stage duel-stage ${ending?'duel-ending-scene':''} ${intro?'duel-intro-scene':''} `).replace(/^(<div[^>]*>)/,'$1'+scene+hud+ultimateAura+cut+startTitle+finalResult);
+ return stage.replace('class="event-stage ',`class="event-stage duel-stage ${strike&&line.duelRank===4?'duel-ultimate-waiting':''} ${ending?'duel-ending-scene':''} ${intro?'duel-intro-scene':''} `).replace(/^(<div[^>]*>)/,'$1'+scene+hud+ultimateAura+cut+startTitle+finalResult);
 }
 
 // Only the brief attack montage advances itself; conversation and choices stay manual.
@@ -121,7 +121,7 @@ export function duelStageHTML(event,residents,index=0,page=0){
 export function duelReadDelay(line){
  return Math.max(1800,Math.min(3200,Array.from(line?.text||'').length*65+650));
 }
-export function mountDuelPlayback(line,{advance,blocked,onDayReveal,voiceOutcome=()=>null,schedule=setTimeout,cancel=clearTimeout,now=()=>performance.now()}){
+export function mountDuelPlayback(line,{advance,blocked,onDayReveal,onAttack,voiceOutcome=()=>null,schedule=setTimeout,cancel=clearTimeout,now=()=>performance.now()}){
  if(!line)return ()=>{};
  // Reduced motion changes movement, never the time available to read a line.
  // Attack callouts stay on-screen until the voice actually finishes.
@@ -134,7 +134,12 @@ export function mountDuelPlayback(line,{advance,blocked,onDayReveal,voiceOutcome
  // Keep the final audible syllable and callout on screen after media 'ended'.
  // Some mobile decoders signal ended while their buffered output is still draining.
  const ATTACK_TAIL_MS=450;
- let voiceEndedAt=null;
+ let voiceEndedAt=null,attackStartedAt=null;
+ const finishAttack=()=>{
+  if(line.duelRank!==4)return true;
+  if(attackStartedAt===null){attackStartedAt=now();onAttack?.();}
+  return now()>=attackStartedAt+1600;
+ };
  const canAdvance=()=>{
   if(stopped)return false;
   const outcome=attack?voiceOutcome():null;
@@ -145,11 +150,11 @@ export function mountDuelPlayback(line,{advance,blocked,onDayReveal,voiceOutcome
   if(now()<readyAt||attack&&blocked())return false;
   if(!attack)return true;
   if(outcome==='playing'||outcome==='idle')return false;
-  if(outcome==='ended')return now()>=voiceEndedAt+ATTACK_TAIL_MS;
+  if(outcome==='ended')return now()>=voiceEndedAt+ATTACK_TAIL_MS&&finishAttack();
   // Missing/failed audio must not deadlock a playthrough. Keep the subtitle
   // visible longer instead of incorrectly treating a failed play as completed.
-  if(outcome==='missing'||outcome==='error'||outcome==='timeout')return now()>=readyAt+1200;
-  return true; // Legacy callers without a voice outcome callback.
+  if(outcome==='missing'||outcome==='error'||outcome==='timeout')return now()>=readyAt+1200&&finishAttack();
+  return finishAttack(); // Legacy callers without a voice outcome callback.
  };
  const tick=()=>{if(stopped)return;if(blocked()||!canAdvance())timer=schedule(tick,80);else advance();};
  if(delay)timer=schedule(tick,delay);

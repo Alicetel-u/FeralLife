@@ -513,3 +513,27 @@ test('landlord ultimate guards Luna with a dedicated effect only on its attack p
  assert.doesNotMatch(duelStageHTML(event,[],at+1),/class="duel-manager-aura"/);
  assert.match(lines.find(line=>line.duelDefeated).text,/両腕を広げ、ルナを背にかばった/);
 });
+
+test('landlord ultimate launches only after its spoken name and preserves the complete flight',()=>{
+ let time=0,outcome='playing',strikes=0,blocked=false;
+ const stop=mountDuelPlayback({duelAttack:'大家流超絶漢気奥義！',duelRank:4,text:'大家流超絶漢気奥義！'},{
+  now:()=>time,voiceOutcome:()=>outcome,blocked:()=>blocked,advance:()=>{},onAttack:()=>strikes++,schedule:()=>1,cancel:()=>{}
+ });
+ time=5000;assert.equal(stop.canAdvance(),false);assert.equal(strikes,0);
+ outcome='ended';assert.equal(stop.canAdvance(),false);
+ time+=450;blocked=true;assert.equal(stop.canAdvance(),false);assert.equal(strikes,0);
+ blocked=false;assert.equal(stop.canAdvance(),false);assert.equal(strikes,1);
+ time+=1599;assert.equal(stop.canAdvance(),false);assert.equal(strikes,1);
+ time++;assert.equal(stop.canAdvance(),true);assert.equal(strikes,1);
+ stop();
+});
+test('ultimate stays in windup initially and its opponent flies without fading away',()=>{
+ const lines=duelReplyLines(3,duelChoices(3).find(c=>c.id==='ultimate'));
+ const event={id:1,duel:true,cast:['hostess','cat'],detail:lines[0].text,lines};
+ const index=eventConversation(event).findIndex(l=>l.duelRank===4);
+ assert.match(duelStageHTML(event,[],index),/duel-ultimate-waiting/);
+ assert.doesNotMatch(duelStageHTML(event,[],index+1),/duel-ultimate-waiting/);
+ const css=readFileSync(new URL('../styles.css',import.meta.url),'utf8');
+ assert.match(css,/@keyframes duel-fly\{[^}]*\}100%\{[^}]*translate\(180vw,-35vh\)[^}]*opacity:1/);
+ assert.match(lines.find(l=>l.duelDefeated).text,/弾き飛ばされ/);
+});
