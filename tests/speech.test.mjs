@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { wrapSpeechText, WorldRenderer, WORLD_WIDTH } from '../src/renderer.js';
 import { createOuting, homeSpot, sampleJourney } from '../src/movement.js';
+import {exteriorFeet} from '../src/exterior-occlusion.js';
 import { speakerColors } from '../src/speaker-colors.js';
 
 function view(name, focus = true, room = 101) {
@@ -69,9 +70,9 @@ test('a visible resident keeps the speech tail on the head, indoors and outdoors
   const street = outing('cat', 101, streetHour);
   const renderer = view('exterior');
   const place = renderer.speechAnchor(street.state, 'cat');
-  const head = renderer.projectExterior(street.pos.x, street.pos.y - 80 * 0.86, street.pos);
-  const spriteTop = renderer.projectExterior(street.pos.x, street.pos.y - 80, street.pos);
-  const oldLift = renderer.projectExterior(street.pos.x, street.pos.y - 108, street.pos);
+  const head = renderer.projectExterior(street.pos.x, exteriorFeet(street.pos).y - 80 * 0.86, street.pos);
+  const spriteTop = renderer.projectExterior(street.pos.x, exteriorFeet(street.pos).y - 80, street.pos);
+  const oldLift = renderer.projectExterior(street.pos.x, exteriorFeet(street.pos).y - 108, street.pos);
   assert.equal(place.tail, true);
   assert.equal(place.source, '');
   assert.ok(Math.abs(place.y - head.y) < 1);

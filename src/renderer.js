@@ -6,7 +6,7 @@ import { ROOMS, CHARACTERS, ACTIONS, dateAt } from './simulation.js';
 import { CHARACTER_ART, ROOM_ART, SCENE_ART } from './character-art.js';
 import { exteriorRoomBounds, sampleJourney, sampleCompanion, motionLabel } from './movement.js';
 import { drawCharacterEffects, spriteMotion } from './effects.js';
-import { drawExteriorForeground } from './exterior-occlusion.js';
+import { drawExteriorForeground, exteriorFeet } from './exterior-occlusion.js';
 
 export const WORLD_WIDTH = 1920;
 export const WORLD_HEIGHT = 1080;
@@ -248,14 +248,19 @@ export class WorldRenderer {
     rect(ctx,0,0,1000,562.5,`rgba(16,27,49,${darkness})`);
     if(darkness>.3)for(let i=0;i<36;i++)rect(ctx,noise(i,2,1)*1000,noise(i,3,2)*115,1,1,'#e9dcc277');
     const caretaker=this.managerPosition||{x:650,y:513,zone:'street'},caretakerPose=this.managerPreviewPose||managerFrame(this.managerTarget||managerTarget(state,this.bubbles),t,this.managerMoving);
-    if(CHARACTER_ART.manager?.image){
-      rect(ctx,caretaker.x-13,caretaker.y+1,26,3,'#17211b66');
-      drawSprite(ctx,'manager',caretaker.x,caretaker.y,t,'idle',80/44,this.managerMoving?caretaker.direction:(this.managerTarget?.direction||1),{pose:caretakerPose,...this.miniReaction('manager',t)});
-      ctx.save();ctx.beginPath();ctx.rect(caretaker.x-70,caretaker.y-115,140,120);ctx.clip();
-      drawExteriorForeground(ctx,SCENE_ART.image,caretaker,darkness);ctx.restore();
-    }
-    const people=state.residents.map(r=>({r,p:sampleJourney(r,state.hour,ACTIONS[r.action].place)})).sort((a,b)=>a.p.y-b.p.y);
+    const people=state.residents.map(r=>({r,p:exteriorFeet(sampleJourney(r,state.hour,ACTIONS[r.action].place))}));
+    people.push({r:null,p:exteriorFeet(caretaker)});
+    people.sort((a,b)=>a.p.y-b.p.y);
     for(const {r,p} of people) {
+      if(!r){
+        if(CHARACTER_ART.manager?.image){
+          rect(ctx,p.x-13,p.y+1,26,3,'#17211b66');
+          drawSprite(ctx,'manager',p.x,p.y,t,'idle',80/44,this.managerMoving?p.direction:(this.managerTarget?.direction||1),{pose:caretakerPose,...this.miniReaction('manager',t)});
+          ctx.save();ctx.beginPath();ctx.rect(p.x-70,p.y-115,140,120);ctx.clip();
+          drawExteriorForeground(ctx,SCENE_ART.image,p,darkness);ctx.restore();
+        }
+        continue;
+      }
       if(p.zone==='room'||p.zone==='away'||p.x<-45||p.x>1045)continue;
       const baseHeight=CHARACTER_ART[r.type]?.image?44:26;
       const scale=80/baseHeight;
@@ -375,7 +380,7 @@ export class WorldRenderer {
     if (!resident) {
       if(type!=='manager'||this.view!=='exterior'||!this.managerPosition)return null;
       const selected=state.residents.find(r=>r.room===state.selected),p=selected?sampleJourney(selected,state.hour,ACTIONS[selected.action].place):null;
-      return {...this.projectExterior(this.managerPosition.x,this.managerPosition.y-80*.86,p),tail:true,source:''};
+      return {...this.projectExterior(this.managerPosition.x,exteriorFeet(this.managerPosition).y-80*.86,p),tail:true,source:''};
     }
     const selected = state.residents.find(person => person.room === state.selected);
     const selectedPos = selected ? sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
@@ -395,7 +400,7 @@ export class WorldRenderer {
         const at = this.projectExterior(side < 0 ? 0 : 1000, p.y - 80 * 0.86, selectedPos);
         return { x: side < 0 ? 72 : WORLD_WIDTH - 72, y: at.y, tail: true, source: '外出中の声' };
       }
-      return { ...this.projectExterior(p.x, p.y - 80 * ((CHARACTER_ART[type]?.displayHeight||44)/44) * 0.86, selectedPos), tail: true, source: '' };
+      return { ...this.projectExterior(p.x, exteriorFeet(p).y - 80 * ((CHARACTER_ART[type]?.displayHeight||44)/44) * 0.86, selectedPos), tail: true, source: '' };
     }
     if (!absent) {
       const b = roomBounds(p.room || resident.room, this.focusRoom);
