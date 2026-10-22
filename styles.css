@@ -2081,3 +2081,11 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 /* Hold the final ultimate silhouette through Luna's reaction and Moku's punchline. */
 .duel-manager.duel-manager-held{animation:none!important;translate:0 0;scale:1.08}
 @media(prefers-reduced-motion:reduce){.duel-manager.duel-manager-held{scale:1}}
+
+/* Local residual sparks: the landlord stays rigid while only the arcs twitch. */
+.duel-static-electricity{position:absolute;left:41.5%;bottom:2%;width:20%;height:35%;z-index:4;pointer-events:none;overflow:visible;filter:drop-shadow(0 0 3px #76caff)}
+.duel-static-electricity path{stroke:#d8f7ff;stroke-width:3;opacity:.3;animation:duel-static-tickle 2.1s steps(1,end) infinite}
+.duel-static-electricity path:nth-child(2){animation-delay:-.7s;stroke:#ffeca1}.duel-static-electricity path:nth-child(3){animation-delay:-1.4s;stroke-width:1.5}
+.duel-ultimate-waiting .duel-static-electricity{visibility:hidden}
+@keyframes duel-static-tickle{0%,42%,62%,100%{opacity:.3}18%,54%{opacity:1}24%,58%{opacity:.55}}
+@media(prefers-reduced-motion:reduce){.duel-static-electricity path{animation:none!important;opacity:.4}}

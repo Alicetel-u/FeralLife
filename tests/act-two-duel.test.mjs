@@ -560,3 +560,18 @@ test('landlord remains frozen in his ultimate pose throughout the follow-up exch
  const ordinary=duelReplyLines(3,duelChoices(3).find(c=>c.id==='leave'));
  assert.doesNotMatch(duelStageHTML({...event,lines:ordinary},[],ordinary.length),/duel-manager-held/);
 });
+
+test('residual electricity accompanies the ultimate pose through every response page only',()=>{
+ const lines=duelReplyLines(3,duelChoices(3).find(c=>c.id==='ultimate'));
+ const event={id:1,duel:true,cast:['hostess','cat'],detail:lines[0].text,lines:[...lines,...duelEndingLines('clear')]};
+ const conversation=eventConversation(event),end=conversation.findIndex(l=>l.duelVictoryResult);
+ for(let i=0;i<end;i++)for(const page of [0,1]){
+  const html=duelStageHTML(event,[],i,page);
+  assert.match(html,/duel-static-electricity/);
+  assert.match(html,/src="assets\/characters\/manager\/new-poses\/act2-battle\/ougi.png"/);
+  if(i>0)assert.match(html,/duel-manager-held/);
+ }
+ assert.doesNotMatch(duelStageHTML(event,[],end),/duel-static-electricity|duel-manager-held/);
+ const normal=duelReplyLines(3,duelChoices(3).find(c=>c.id==='leave'));
+ assert.doesNotMatch(duelStageHTML({...event,detail:normal[0].text,lines:normal},[],1),/duel-static-electricity/);
+});

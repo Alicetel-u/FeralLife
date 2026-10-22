@@ -32,5 +32,15 @@ export function replaceConversationContent(container,html){
   }
   next.replaceWith(previous);
  }
+ // Keep the actual ultimate image and sparks mounted across the follow-up lines.
+ // Replacing these nodes briefly resets the silhouette and the electricity cycle.
+ if(nextStage?.querySelector('.duel-manager-held')&&previousStage){
+  for(const selector of ['.duel-manager','.duel-static-electricity']){
+   const previous=previousStage.querySelector(selector),next=nextStage.querySelector(selector);
+   if(!previous||!next||previous.getAttribute('src')!==next.getAttribute('src'))continue;
+   previous.setAttribute('class',next.getAttribute('class'));
+   next.replaceWith(previous);
+  }
+ }
  container.replaceChildren(template.content);
 }
