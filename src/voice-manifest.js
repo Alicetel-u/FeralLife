@@ -4888,58 +4888,82 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"hostess\",\"……はぁ、はぁ……っ。\",\"luna-film-tense\",false]": {
-    "file": "assets/voices/2f0e389580c2ae8dca9d5794df4fdd7325e7a4873641a3d7a11264d194f1e93e.mp3",
-    "hash": "2f0e389580c2ae8dca9d5794df4fdd7325e7a4873641a3d7a11264d194f1e93e",
+    "file": "assets/voices/35649652f5248b79557d975e5ee964241318d0f5ca7ac77c5aef4f15aef54c50.film.mp3",
+    "hash": "35649652f5248b79557d975e5ee964241318d0f5ca7ac77c5aef4f15aef54c50",
     "source": "act2/film/heel:0",
     "speaker": "hostess",
     "text": "……はぁ、はぁ……っ。",
     "performance": "luna-film-tense",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -14,
+      "truePeakDBTP": -1.5
+    }
   },
   "[\"hostess\",\"……ここまで来れば……。\",\"luna-film-tense\",false]": {
-    "file": "assets/voices/fcdce9eee7f8aa56027f5a9e00f680b47a240d994784e686bae57bef13e0ce6f.mp3",
-    "hash": "fcdce9eee7f8aa56027f5a9e00f680b47a240d994784e686bae57bef13e0ce6f",
+    "file": "assets/voices/873ca173c99c7b243ce5a748b111b1148dc4da0c6ea37da0ca33bc1703de2c9a.film.mp3",
+    "hash": "873ca173c99c7b243ce5a748b111b1148dc4da0c6ea37da0ca33bc1703de2c9a",
     "source": "act2/film/listen:0",
     "speaker": "hostess",
     "text": "……ここまで来れば……。",
     "performance": "luna-film-tense",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -14,
+      "truePeakDBTP": -1.5
+    }
   },
   "[\"hostess\",\"……しつこい……。\",\"luna-film-tense\",false]": {
-    "file": "assets/voices/b2296689622891591b68e3895ed00ee7ffae5741f4a3bea43fe481797ec767ac.mp3",
-    "hash": "b2296689622891591b68e3895ed00ee7ffae5741f4a3bea43fe481797ec767ac",
+    "file": "assets/voices/532e548e354d1fd6efbcb1de80f78f2c8661de5ef252af99753be0239af0bc6f.film.mp3",
+    "hash": "532e548e354d1fd6efbcb1de80f78f2c8661de5ef252af99753be0239af0bc6f",
     "source": "act2/film/call:0",
     "speaker": "hostess",
     "text": "……しつこい……。",
     "performance": "luna-film-tense",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -14,
+      "truePeakDBTP": -1.5
+    }
   },
   "[\"hostess\",\"……あたし、そんなに悪いことしたかな……。\",\"luna-film-tense\",false]": {
-    "file": "assets/voices/dcd6b3a548083084bee0528827b4b5fdb05f42c6ea4fea7fd2e0a144b7934611.mp3",
-    "hash": "dcd6b3a548083084bee0528827b4b5fdb05f42c6ea4fea7fd2e0a144b7934611",
+    "file": "assets/voices/f7ced9f8ff21033db3405f59a36c8ca52505d027253cb6f095ecf376f4e25cd8.film.mp3",
+    "hash": "f7ced9f8ff21033db3405f59a36c8ca52505d027253cb6f095ecf376f4e25cd8",
     "source": "act2/film/dismiss:0",
     "speaker": "hostess",
     "text": "……あたし、そんなに悪いことしたかな……。",
     "performance": "luna-film-tense",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -14,
+      "truePeakDBTP": -1.5
+    }
   },
   "[\"hostess\",\"……入居者、募集……？\",\"luna-film-tense\",false]": {
-    "file": "assets/voices/3f3f7a3e97803ddd33bebba3e8a46c2135b8bde8bbaf0f76d8be04d3bff2fe95.mp3",
-    "hash": "3f3f7a3e97803ddd33bebba3e8a46c2135b8bde8bbaf0f76d8be04d3bff2fe95",
+    "file": "assets/voices/59b4b58e4b9a38149ba45bf483e22201fd90f69a70b32b447364e241b3e8bff0.film.mp3",
+    "hash": "59b4b58e4b9a38149ba45bf483e22201fd90f69a70b32b447364e241b3e8bff0",
     "source": "act2/film/notice:0",
     "speaker": "hostess",
     "text": "……入居者、募集……？",
     "performance": "luna-film-tense",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -14,
+      "truePeakDBTP": -1.5
+    }
   },
   "[\"hostess\",\"……ここなら……。\",\"luna-film-tense\",false]": {
-    "file": "assets/voices/f730103acd3b1583bba5e0f7a348242e161991cb55c76749465558d080f64c5d.mp3",
-    "hash": "f730103acd3b1583bba5e0f7a348242e161991cb55c76749465558d080f64c5d",
+    "file": "assets/voices/483cea1a45ba1a088e1eee7d08956b3a38ac1ffb7c76d194b4e92f5d229d3691.film.mp3",
+    "hash": "483cea1a45ba1a088e1eee7d08956b3a38ac1ffb7c76d194b4e92f5d229d3691",
     "source": "act2/film/reveal:0",
     "speaker": "hostess",
     "text": "……ここなら……。",
     "performance": "luna-film-tense",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -14,
+      "truePeakDBTP": -1.5
+    }
   },
   "[\"hostess\",\"好みの話が、いつの間にか婚姻届に……。\",\"duel-luna\",false]": {
     "file": "assets/voices/ff29cd05d7483e944b5918cd065444c599fd5e168bf464fcb6f47406b45b0983.mp3",

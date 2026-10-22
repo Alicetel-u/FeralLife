@@ -223,6 +223,10 @@ test('act-two trouble-one scope includes the film, arrival, observation, all fir
  const config=JSON.parse(await readFile(new URL('../config/voice-performance.json',import.meta.url)));
  const plan=planVoices(rows,ids,config);
  assert.ok(plan.every(r=>r.voiceId&&r.request.text));
+ const vacancy=plan.find(r=>r.source.startsWith('act2/film/')&&r.text.includes('入居者'));
+ assert.match(vacancy.request.text,/にゅうきょしゃ、ぼしゅう/);
+ assert.doesNotMatch(vacancy.request.text,/whispers|softly|breathlessly/);
+ assert.match(vacancy.request.text,/panicked/);
  assert.ok(plan.filter(r=>r.speaker==='hostess').every(r=>r.voiceId==='0sLdAOQEyDDSrsr4uwND'));
  assert.equal(voicePerformance({speaker:'cat',text:'いつものモクニャ。'}),'moku');
  assert.equal(voicePerformance({speaker:'hostess',text:'……怖かった。',emotion:'sad',voiceChapter:2}),'luna-serious');

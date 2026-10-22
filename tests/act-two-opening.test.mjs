@@ -10,8 +10,8 @@ test('full opening uses stills and a single transparent seated character without
  for(const shot of shots){assert.ok(existsSync(shot.image));assert.ok(shot.duration>0);}
  assert.ok(existsSync(ACT_TWO_SEATED_ART));
  assert.ok(!shots.some(s=>/sheet|poses/.test(s.image)));
- assert.ok(ACT_TWO_OPENING_DURATION>=33&&ACT_TWO_OPENING_DURATION<=38);
- assert.deepEqual(shots.map(s=>s.shot),['heel','chase','listen','call','dismiss','collapse','notice','reveal','out']);
+ assert.ok(ACT_TWO_OPENING_DURATION>=30&&ACT_TWO_OPENING_DURATION<=38);
+ assert.deepEqual(shots.map(s=>s.shot),['heel','chase','listen','call','dismiss','notice','reveal','out']);
 });
 test('notification and readable rental notice precede the building reveal',()=>{
  const call=shots.findIndex(s=>s.shot==='call'),notice=shots.findIndex(s=>s.shot==='notice'),reveal=shots.findIndex(s=>s.shot==='reveal');
@@ -21,7 +21,7 @@ test('notification and readable rental notice precede the building reveal',()=>{
  assert.equal(actTwoOpeningFrame(call,.7).notification,true);
  assert.ok(actTwoOpeningHTML().includes('まだ話は<br>終わっていない'));
  assert.ok(actTwoOpeningHTML().includes('入居者募集'));
- assert.ok(shots.find(s=>s.shot==='collapse').cues.length===0);
+ assert.ok(!shots.some(s=>s.shot==='collapse'));
  assert.equal(shots.find(s=>s.shot==='chase').pose,undefined);
  assert.equal(shots[call].pose,undefined);
  assert.ok(shots.every(s=>!s.pose));
@@ -64,7 +64,7 @@ test('rebuilt escape and phone shots use composed artwork and settle before list
  assert.equal(actTwoOpeningFrame(chase,shots[chase].duration).rig,actTwoOpeningFrame(listen,0).rig);
  assert.ok(!shots.some(s=>s.shot==='blind'));
 });
-test('dismiss still blacks out into the existing collapse',()=>{
+test('dismiss blacks out directly into the rental notice',()=>{
  const dismiss=shots.findIndex(s=>s.shot==='dismiss'),collapse=dismiss+1;
  assert.equal(shots[dismiss].image,'assets/events/luna-dismiss-v2.png');
  assert.notEqual(shots[dismiss].image,shots[dismiss-1].image);
@@ -77,10 +77,9 @@ test('dismiss still blacks out into the existing collapse',()=>{
  assert.equal(actTwoOpeningFrame(dismiss,shots[dismiss].duration).black,1);
  assert.equal(actTwoOpeningFrame(collapse,0).black,0);
  assert.deepEqual(shots.slice(collapse).map(s=>[s.shot,s.image,s.events.map(e=>e.type).join(','),s.cues.map(c=>c.id).join(',')]),[
-  ['collapse','assets/events/luna-courtyard-plate.png','land',''],
   ['notice','assets/events/luna-rental-insert.png','','vacancy'],
   ['reveal','assets/events/luna-courtyard-plate.png','','shelter'],
   ['out','assets/events/luna-courtyard-plate.png','','']
  ]);
- assert.equal(shots[collapse].events[0].at,.05);
+ assert.equal(shots[collapse].shot,'notice');
 });

@@ -176,7 +176,8 @@ export function planVoices(rows,ids,config,pronunciations=[]){
     if(config.model!=='eleven_v3'&&profile.tags.length)throw Error('Audio tags require the reviewed eleven_v3 model');
     // Change only the spoken spelling; displayed dialogue and lookup keys stay canonical.
     const duelReadings=row.performance.startsWith('duel-')?[{term:'大家流',reading:'おおやりゅう'},{term:'漢気',reading:'おとこぎ'},{term:'煙ノ',reading:'けむりの'},{term:'肉球乱舞',reading:'にくきゅうらんぶ'}]:[];
-    const spokenText=[...duelReadings,...pronunciations].sort((a,b)=>b.term.length-a.term.length).reduce((text,rule)=>text.replaceAll(rule.term,rule.reading),row.line.text);
+    const filmReadings=row.performance==='luna-film-tense'?[{term:'入居者',reading:'にゅうきょしゃ'},{term:'募集',reading:'ぼしゅう'}]:[];
+    const spokenText=[...filmReadings,...duelReadings,...pronunciations].sort((a,b)=>b.term.length-a.term.length).reduce((text,rule)=>text.replaceAll(rule.term,rule.reading),row.line.text);
     const request={text:[...profile.tags,spokenText].join(' '),model_id:config.model,voice_settings:profile.settings};
     const voiceId=ids[row.speaker]||null;
     const hash=digest({voiceId,request,performance:row.performance,format:config.outputFormat});
