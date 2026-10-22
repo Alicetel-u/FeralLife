@@ -2077,3 +2077,7 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .duel-ultimate-waiting .duel-enemy,.duel-ultimate-waiting .duel-manager,.duel-ultimate-waiting .duel-hit-ring,.duel-ultimate-waiting .duel-striking.rank-4::after,.duel-ultimate-waiting .duel-manager-aura,.duel-ultimate-waiting .duel-manager-aura i{animation-play-state:paused!important}
 .duel-ultimate-waiting .duel-manager-aura,.duel-ultimate-waiting .duel-hit-ring,.duel-ultimate-waiting .duel-striking.rank-4::after{visibility:hidden}
 @media(prefers-reduced-motion:reduce){.duel-ultimate-waiting .duel-enemy{opacity:1!important}.duel-stage:not(.duel-ultimate-waiting) .duel-striking.rank-4 .duel-enemy{opacity:1;transform:translateX(180vw)}}
+
+/* Hold the final ultimate silhouette through Luna's reaction and Moku's punchline. */
+.duel-manager.duel-manager-held{animation:none!important;translate:0 0;scale:1.08}
+@media(prefers-reduced-motion:reduce){.duel-manager.duel-manager-held{scale:1}}

@@ -537,3 +537,26 @@ test('ultimate stays in windup initially and its opponent flies without fading a
  assert.match(css,/@keyframes duel-fly\{[^}]*\}100%\{[^}]*translate\(180vw,-35vh\)[^}]*opacity:1/);
  assert.match(lines.find(l=>l.duelDefeated).text,/弾き飛ばされ/);
 });
+
+test('landlord remains frozen in his ultimate pose throughout the follow-up exchange and reload',()=>{
+ const lines=duelReplyLines(3,duelChoices(3).find(c=>c.id==='ultimate'));
+ const event={id:1,duel:true,cast:['hostess','cat'],detail:lines[0].text,lines};
+ const conversation=eventConversation(event),attack=conversation.findIndex(l=>l.duelRank===4);
+ for(let index=attack+1;index<conversation.length;index++){
+  const html=duelStageHTML(event,[],index);
+  assert.match(html,/duel-manager-held/);
+  assert.match(html,/src="assets\/characters\/manager\/new-poses\/act2-battle\/ougi.png"/);
+  assert.doesNotMatch(html,/duel-striking|duel-manager-aura|duel-ultimate-waiting/);
+  assert.equal(duelStageHTML(JSON.parse(JSON.stringify(event)),[],index),html);
+ }
+ const victory={...event,lines:[...lines,...duelEndingLines('clear')]};
+ const victoryIndex=eventConversation(victory).findIndex(l=>l.duelVictoryResult);
+ assert.doesNotMatch(duelStageHTML(victory,[],victoryIndex),/duel-manager-held/);
+ for(const outcome of ['clear','yandere','domination']){
+  const ending={...event,lines:[...lines,...duelEndingLines(outcome)]};
+  const index=eventConversation(ending).findIndex(l=>l.duelEnding===outcome);
+  assert.doesNotMatch(duelStageHTML(ending,[],index),/duel-manager-held/);
+ }
+ const ordinary=duelReplyLines(3,duelChoices(3).find(c=>c.id==='leave'));
+ assert.doesNotMatch(duelStageHTML({...event,lines:ordinary},[],ordinary.length),/duel-manager-held/);
+});
