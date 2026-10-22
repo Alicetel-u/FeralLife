@@ -64,11 +64,13 @@ function duelStaticElectricity(){
 
 export function duelStageHTML(event,residents,index=0,page=0){
  const {line,round,ending,hearts,before,entrance,defeated,showResult}=duelFrame(event,index);
+ const intro=line.duelRound===undefined&&!ending;
+ const startTitle=((intro&&index===0&&page===0)||event.debugDuelSplash)&&page===0?`<div class="duel-start-title" aria-label="ミニゲーム開始：嘘つきルナを守れ！"><div class="duel-start-slash" aria-hidden="true"></div><div class="duel-start-panel"><strong>嘘つきルナを守れ！</strong></div></div>`:'';
  // The opening conversation belongs to the ordinary full-size character stage.
  // Only switch to the mini-game when the first opponent actually speaks.
- if(line.duelRound===undefined&&!ending){
+ if(intro){
   const stage=eventStageHTML(event,residents,index,page,{cinematic:true});
-  return stage.replace('class="event-stage ','class="event-stage duel-opening-stage ').replace(/^(<div[^>]*>)/,'$1<img class="duel-opening-background" src="assets/apartments.png" alt="">');
+  return stage.replace('class="event-stage ','class="event-stage duel-opening-stage ').replace(/^(<div[^>]*>)/,'$1<img class="duel-opening-background" src="assets/apartments.png" alt="">'+startTitle);
  }
  // Ordinary Luna comes first. The outcome alone must not reveal the final CG.
  if(ending==='yandere'&&line.duelStoryDay&&line.duelEndingPhase!=='reveal'){
@@ -108,7 +110,7 @@ export function duelStageHTML(event,residents,index=0,page=0){
  const lunaEmotion=({shy:'charm',tired:'confused'})[lunaLine?.emotion]||lunaLine?.emotion;
  const luna=duelMini('hostess',lunaEmotion,`duel-luna ${line.duelHeartUpdate?'duel-react':''}`,'ルナ');
  const moku=duelMini('cat',line.duelRank===1?'angry':line.speaker==='cat'?'exasperated':null,`duel-moku ${line.duelRank===1?'duel-charge':''} ${line.speaker==='cat'?'duel-speaking':''}`,'モク');
- const intro=line.duelRound===undefined&&!ending;
+
  const legacyYandereReveal=ending==='yandere'&&!line.duelEndingPhase&&!event.lines?.some(item=>item.duelEndingPhase);
  const scene=(ending==='domination'||(ending==='yandere'&&line.duelEndingPhase==='reveal')||legacyYandereReveal)?`<img class="duel-cg" src="${DUEL_ART[ending]}" alt="${ending==='yandere'?'独占するルナ':'管理椅子から見下ろすルナ'}">`:
  `<div class="duel-field"><div class="duel-set ${strike?'duel-striking rank-'+line.duelRank:''}${line.duelCatUltimate?' duel-cat-ultimate':''}"><img class="duel-building" src="assets/apartments.png" alt="">${luna}<img class="duel-mini duel-manager ${holdUltimate?'duel-manager-held':''} ${line.speaker==='manager'?'duel-speaking':''}" src="${managerPose}" alt="大家">${ultimateStatic?duelStaticElectricity():''}${moku}<img class="duel-mini duel-enemy ${intro?'duel-enemy-waiting ':''}${defeated?'duel-defeated':entrance?'duel-arriving':''}" src="${DUEL_ART[enemy.enemy]}" alt="${enemy.name}"><span class="duel-hit-ring" aria-hidden="true"></span></div>${entrance?`<div class="duel-arrival" aria-hidden="true"><small>${round===3?'最後の来訪者':'来訪者'}</small><strong>${enemy.name}</strong></div>`:''}${showResult&&page===0?'<div class="duel-result" aria-label="撃退成功">撃退！<span>あと'+(3-round)+'人</span></div>':''}</div>`;
@@ -120,7 +122,7 @@ export function duelStageHTML(event,residents,index=0,page=0){
  const resultLabel={yandere:'超完全勝利！',clear:'完全勝利！',domination:'完全勝利？'}[resultOutcome];
  const resultHearts=duelHeartSlots(hearts,hearts,false,true);
  const finalResult=resultLabel&&page===0?`<div class="duel-final-result duel-final-${resultOutcome} ${duelHeartMood(hearts)}" role="img" aria-label="${resultLabel} ルナのハート ${hearts}個 / 10個"><strong class="duel-final-title">${resultLabel}</strong><div class="duel-final-hearts duel-hearts">${resultHearts}</div><span class="duel-final-count">${hearts}<small> / 10</small>${hearts>10?'<em>限界突破</em>':''}</span></div>`:'';
- const startTitle=((intro&&index===0&&page===0)||event.debugDuelSplash)&&page===0?`<div class="duel-start-title" aria-label="ミニゲーム開始：嘘つきルナを守れ！"><div class="duel-start-slash" aria-hidden="true"></div><div class="duel-start-panel"><strong>嘘つきルナを守れ！</strong></div></div>`:'';
+
  return stage.replace('class="event-stage ',`class="event-stage duel-stage ${strike&&line.duelRank===4?'duel-ultimate-waiting':''} ${ending?'duel-ending-scene':''} ${intro?'duel-intro-scene':''} `).replace(/^(<div[^>]*>)/,'$1'+scene+hud+ultimateAura+cut+startTitle+finalResult);
 }
 

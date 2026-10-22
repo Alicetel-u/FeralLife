@@ -575,3 +575,18 @@ test('residual electricity accompanies the ultimate pose through every response 
  const normal=duelReplyLines(3,duelChoices(3).find(c=>c.id==='leave'));
  assert.doesNotMatch(duelStageHTML({...event,detail:normal[0].text,lines:normal},[],1),/duel-static-electricity/);
 });
+
+test('start splash appears on the full-size opening once, including rewind and debug destinations',()=>{
+ const s=duelStart(),event=s.events.find(e=>e.id===s.actOne.pending.eventId);
+ const opening=duelStageHTML(event,s.residents,0);
+ assert.match(opening,/duel-opening-stage/);assert.match(opening,/duel-start-title/);
+ assert.match(opening,/ミニゲーム開始：嘘つきルナを守れ！/);
+ assert.doesNotMatch(duelStageHTML(event,s.residents,0,1),/duel-start-title/);
+ assert.doesNotMatch(duelStageHTML(event,s.residents,1),/duel-start-title/);
+ const firstEnemy=eventConversation(event).findIndex(l=>l.duelRound===0);
+ assert.doesNotMatch(duelStageHTML(event,s.residents,firstEnemy),/duel-start-title/);
+ assert.match(duelStageHTML({...event,debugDuelSplash:true},s.residents,firstEnemy),/duel-start-title/);
+ const replay=JSON.parse(JSON.stringify(event));assert.match(duelStageHTML(replay,s.residents,0),/duel-start-title/);
+ const reply=duelReplyLines(0,duelChoices(0)[0]);
+ assert.doesNotMatch(duelStageHTML({...event,detail:reply[0].text,lines:reply},[],0),/duel-start-title/);
+});
