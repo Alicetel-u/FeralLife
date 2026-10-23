@@ -1,5 +1,6 @@
 import { GAME_MODULES } from './tools/game-modules.mjs';
 import { readFile, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -11,7 +12,7 @@ const [html, css, ...modules] = await Promise.all([
 ]);
 let script = modules.map(source => source.replace(/^import .*;\r?\n/gm, '').replace(/^export /gm, '')).join('\n\n');
 // コード中の画像と通常BGMを data URL として埋め込む（差分ポーズを増やしてもここの修正は不要）
-const assetPaths = [...new Set(script.replace(/assets\/voices\/[a-f0-9]+\.mp3/g,'').match(/assets\/[\w\-./]+\.(?:png|svg|mp3)/g) || [])];
+const assetPaths = [...new Set(script.replace(/assets\/voices\/[a-f0-9]+\.mp3/g,'').match(/assets\/[\w\-./]+\.(?:png|svg|mp3)/g) || [])].filter(path=>path!=='assets/audio/the-midnight-crossing.mp3'||existsSync(join(root,path)));
 const assetMime = path => path.endsWith('.svg') ? 'image/svg+xml' : path.endsWith('.mp3') ? 'audio/mpeg' : 'image/png';
 // Store each unchanged asset once, then share its URL across all references.
 const embeddedAssets = await Promise.all(assetPaths.map(async path => {

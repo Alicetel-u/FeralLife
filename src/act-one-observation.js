@@ -397,7 +397,7 @@ export function finishObservationLine(state){
  if(c.index>=beat.lines.length){
   if(!o.done.includes(beat.id))o.done.push(beat.id);
   if(!o.seen.includes(beat.id))o.seen.push(beat.id);
-  o.current=null;o.gap=secondObservation(state)||observationPhase(state)===0?.65:1.5;
+  o.current=null;o.gap=secondObservation(state)||observationPhase(state)===0?.45:.85;
  }
  return true;
 }
@@ -407,7 +407,7 @@ export function tickObservation(state,seconds,{stopped=false,voiceBusy=false}={}
  if(o.gap>0){o.gap=Math.max(0,o.gap-dt);return;}
  if(!o.current){const beat=obsBeats(state).find(b=>!o.done.includes(b.id));if(beat&&state.hour>=beat.at-1e-7&&observationInPlace(state,beat))o.current={id:beat.id,index:0,elapsed:0};return;}
  const c=o.current,beat=observationBeats(state).find(b=>b.id===c.id);c.elapsed+=dt;
- if(!voiceBusy&&c.elapsed>=(secondObservation(state)||observationPhase(state)===0?observationLineSeconds(beat.lines[c.index]):Math.max(3.6,Array.from(beat.lines[c.index].text).length*.095)))finishObservationLine(state);
+ if(!voiceBusy&&c.elapsed>=(secondObservation(state)||observationPhase(state)===0?observationLineSeconds(beat.lines[c.index]):Math.max(2.7,Array.from(beat.lines[c.index].text).length*.075)))finishObservationLine(state);
 }
 export function skipObservation(state){
  if(!canSkipObservation(state))return false;
@@ -423,4 +423,4 @@ export function inheritObservation(previous,next){
  after.seen=[...new Set([...after.seen,...before.seen])];
 }
 
-export function observationLineSeconds(line){return Math.min(4.2,Math.max(2.1,1+Array.from(line?.text||'').length*.065));}
+export function observationLineSeconds(line){return Math.min(3.7,Math.max(2.0,1+Array.from(line?.text||'').length*.058));}

@@ -2,6 +2,8 @@ export const DUEL_BGM_SRC = 'assets/audio/duel-ao-wo-isoide.mp3';
 export const NORMAL_BGM_SRC = 'assets/audio/normal-pop.mp3';
 export const LUNA_BGM_SRC = 'assets/audio/luna-odayakana-gogo.mp3';
 export const MOKU_BGM_SRC = 'assets/audio/moku-theme.mp3';
+// Optional until the supplied track is committed to assets/audio.
+export const OPENING_BGM_SRC = 'assets/audio/the-midnight-crossing.mp3';
 export const TROUBLE_BGM_SRC = 'assets/audio/trouble-persona.mp3';
 export const BAD_END_BGM_SRC = 'assets/audio/bad-end-fire.mp3';
 export const TITLE_BGM_SRC = 'assets/audio/title-countdown.mp3';
@@ -23,7 +25,7 @@ function bgmTrack(provided,src){
   return audio;
 }
 
-const STINGS = new Set(['trouble', 'bad', 'title', 'clock', 'victory', 'duel']);
+const STINGS = new Set(['trouble', 'bad', 'title', 'clock', 'victory', 'duel', 'opening']);
 
 // Observation uses the normal bed; dialogue selects character themes explicitly.
 // The first-rewind dialogue selects uneasy explicitly.
@@ -34,11 +36,12 @@ export function bedCue(actOne) {
 // Moku's theme during ordinary play, uneasy air after the first time leap, countdown on the game title,
 // a persona sting on a trouble card, the result fanfare on a cleared trouble,
 // the fire track through a bad ending, and the clock piece once the rewind dial appears.
-export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio, uneasyAudio, victoryAudio, mokuAudio, duelAudio, lunaAudio) {
+export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio, uneasyAudio, victoryAudio, mokuAudio, duelAudio, lunaAudio, openingAudio) {
   const tracks = {
     normal: bgmTrack(normalAudio, NORMAL_BGM_SRC),
     duel: bgmTrack(duelAudio, DUEL_BGM_SRC),
     moku: bgmTrack(mokuAudio, MOKU_BGM_SRC),
+    opening: bgmTrack(openingAudio ?? (typeof Audio === 'undefined' ? normalAudio : null), OPENING_BGM_SRC),
     luna: bgmTrack(lunaAudio, LUNA_BGM_SRC),
     trouble: bgmTrack(troubleAudio, TROUBLE_BGM_SRC),
     bad: bgmTrack(badAudio, BAD_END_BGM_SRC),
@@ -67,14 +70,20 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
   let suppressed = false;
   let unlocked = false;
   let cue = 'normal';
+  let openingUnavailable = false;
   const sync = async () => {
-    const active = tracks[cue];
+    // Until the optional new music file is published, preserve the old title
+    // theme instead of leaving the opening completely silent.
+    const active = cue === 'opening' && openingUnavailable ? tracks.title : tracks[cue];
     for (const audio of Object.values(tracks)) if (audio !== active) audio.pause();
     if (!unlocked || !enabled || volume === 0 || suppressed) { active.pause(); return false; }
     if (active.ended && cue === 'clock') return true;
     if (!active.paused) return true;
     try { await active.play(); return true; }
-    catch { return false; }
+    catch {
+      if(cue === 'opening' && !openingUnavailable){openingUnavailable = true;return sync();}
+      return false;
+    }
   };
   return {
     get enabled() { return enabled; },
