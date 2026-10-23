@@ -1703,7 +1703,7 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .duel-impact::before{content:'';position:absolute;inset:0;background:#fff2d6;clip-path:polygon(0 40%,14% 31%,6% 8%,28% 17%,34% 0,46% 18%,64% 0,66% 21%,91% 8%,84% 33%,100% 42%,86% 57%,96% 90%,72% 79%,64% 100%,49% 81%,30% 99%,27% 77%,4% 92%,14% 62%)}
 .duel-impact strong{position:relative;padding:16px 8%;color:#c51d3c;font:1000 italic clamp(24px,4.8vw,68px)/1.25 var(--sans);text-shadow:2px 2px #fff,-2px -2px #fff;transform:rotate(-5deg);text-align:center}.duel-impact.rank-4::before{background:#ffdc61}.duel-impact.rank-4 strong{color:#8c1640}.duel-impact.rank-1 strong{color:#57479f}
 .game-ink .conversation-modal .duel-stage .stage-bubble{height:calc(var(--duel-dock) - 32px);max-height:none;bottom:20px;top:auto;padding:47px 5% 28px;min-height:0}
-.game-ink .conversation-modal .duel-stage .stage-bubble p{font-size:clamp(18px,calc(1.75vw + 2px),27px);line-height:1.55;overflow:visible;max-height:none}
+.game-ink .conversation-modal .duel-stage .stage-bubble p{font-size:clamp(21px,calc(2vw + 3px),30px);line-height:1.5;overflow:visible;max-height:none}
 .game-ink .conversation-modal .duel-stage .stage-speaker{top:8px;height:28px;padding:4px 15px;min-width:140px;gap:8px}
 .game-ink .conversation-modal .duel-stage .speaker-name{font-size:14px}
 .game-ink .conversation-modal .duel-stage .speaker-paw{width:14px;height:14px}
@@ -1777,7 +1777,7 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .duel-hud{display:flex;top:6px;gap:8px}.duel-opponent{padding:4px 10px}.duel-affection{width:clamp(260px,38vw,360px);min-width:240px;padding:4px 10px}.duel-heart-label{font-size:11px}.duel-heart-label b{font-size:20px}.duel-hearts{margin-top:3px;gap:3px}.duel-hearts>span{max-width:24px}.duel-field{top:68px}.duel-set{width:min(100%,310cqh);left:50%}
  .duel-impact{top:72px;min-height:20%}.duel-choice-heading h2{font-size:17px}
  .game-ink .conversation-modal .duel-choices{gap:5px;padding-top:6px}.game-ink .conversation-modal .duel-choices .decision-panel{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.game-ink .conversation-modal .duel-choices .decision-choice{min-height:76px;padding:6px 9px}.game-ink .conversation-modal .duel-choices .decision-choice strong{font-size:13px}.duel-command-icon{display:none}.duel-command-copy small{font-size:9px}
- .game-ink .conversation-modal .duel-stage .stage-bubble{padding:38px 5% 16px}.game-ink .conversation-modal .duel-stage .stage-bubble p{font-size:18px;line-height:1.4}
+ .game-ink .conversation-modal .duel-stage .stage-bubble{padding:38px 5% 16px}.game-ink .conversation-modal .duel-stage .stage-bubble p{font-size:20px;line-height:1.35}
 }
 @media(prefers-reduced-motion:reduce){
  .duel-stage *,.duel-choices *{animation:none!important;transition:none!important}.duel-arrival{display:none}.duel-striking .duel-enemy{opacity:0}.duel-impact{opacity:1}.duel-choices .choice-selected{transform:none!important}
