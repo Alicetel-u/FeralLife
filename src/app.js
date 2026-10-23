@@ -1129,10 +1129,12 @@ function frame(now){
       const emptyClock=observing&&!observing.beat&&!talk.bubbles.length&&!characterVoice.busy;
       const moku=state.residents.find(r=>r.type==='cat');
       const walkingOutside=moku?.journey?.path.some(p=>p.zone!=='room')&&sampleJourney(moku,state.hour).moving;
-      const sleepingThroughNight=emptyClock&&state.actOne.chapter!==2&&state.actOne.completed.includes('dinner')&&state.actOne.observation?.done.includes('blanket')&&moku?.action==='sleep'&&state.hour<53&&!sampleJourney(moku,state.hour).moving;
+      // The final sleep montage is a scene transition, not an idle-only speed boost.
+      // Spoken ambient bubbles and voice playback must not prevent its clock zoom.
+      const sleepingThroughNight=state.actOne.chapter!==2&&state.actOne.completed.includes('dinner')&&state.actOne.observation?.done.includes('blanket')&&!state.actOne.pending&&state.hour>=38.4&&state.hour<53&&moku?.action==='sleep'&&!sampleJourney(moku,state.hour).moving&&!observing?.beat;
       document.body.classList.toggle('sleep-night-warp',!!sleepingThroughNight);
       // Keep exterior walking readable without slowing indoor gags or voiced beats.
-      const clockSpeed=sleepingThroughNight?60:walkingOutside?Math.min(speed,3):emptyClock&&speed===6?12:speed;
+      const clockSpeed=sleepingThroughNight?30:walkingOutside?Math.min(speed,3):emptyClock&&speed===6?12:speed;
       const clockLimit=sleepingThroughNight?Math.min(53,observationClockLimit(state)):observationClockLimit(state);
       const dt=Math.min(seconds*clockSpeed/10,Math.max(0,clockLimit-state.hour));
       if(state.actOne.chapter===2)advanceActTwo(state,dt);else advanceActOne(state,dt);
