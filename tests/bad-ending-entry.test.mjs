@@ -22,7 +22,7 @@ test('first tragedy transition connects the two story backgrounds instead of end
 });
 test('silent transition waits for final voice and pauses while tab is hidden',()=>{
  const cut={dataset:{},style:{setProperty(){}},isConnected:true};
- const host={get firstElementChild(){return cut;},remove(){cut.isConnected=false;},innerHTML:''};
+ const host={isConnected:true,get firstElementChild(){return cut;},remove(){this.isConnected=false;cut.isConnected=false;},innerHTML:''};
  const doc={hidden:false,createElement:()=>host};
  const modal={ownerDocument:doc,append:()=>{}};
  let callback,clock=0,swap=0,busy=true;
