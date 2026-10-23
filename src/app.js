@@ -315,9 +315,11 @@ function showEpilogueCut(kind,replace){
 function clearFireEnding(){stopFireEnding?.();stopFireEnding=null;}
 function openModal(html) { if(!epilogueSwapping)stopEpilogueTransition();stopEpilogueSound();html=storyScreenHTML(html);characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); cleanupDuelPlayback();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); replaceConversationContent($('modal-content'),html); modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); syncNormalBgm(); }
 function closeModal() {
-  if(enterBadEnding())return;
-  if(modal.classList.contains('conversation-modal')&&eventView){clearConversation(state,eventView.id);save();}
+  // Delayed BAD END entry keeps the current conversation and voice alive.
+  const enteringBad=typeof enterBadEnding==='function'&&enterBadEnding();
+  if(!enteringBad&&modal.classList.contains('conversation-modal')&&eventView){clearConversation(state,eventView.id);save();}
   stopEpilogueTransition();stopEpilogueSound();
+  if(enteringBad)return;
   const duelEvent=state.actOne?.duel&&state.events.find(e=>e.id===eventView?.id);
   if(duelEvent?.duel&&eventView.index===eventConversation(duelEvent).length-1){state.actOne.duel.dialogueComplete=true;save();}
   const event=modal.classList.contains('conversation-modal')&&state.actOne?state.events.find(e=>e.id===eventView?.id):null;
@@ -631,7 +633,7 @@ function beginRewind(afterFire=false){
 }
 let rewindWhiteoutPending=false;
 function resetActState(next,resume=false,skipInitialScreen=false){
- stopBadEntry();stopBadEntry=()=>{};badEntryActive=false;
+ if(typeof stopBadEntry==='function'){stopBadEntry();stopBadEntry=()=>{};badEntryActive=false;}
   const reveal=rewindWhiteoutPending;rewindWhiteoutPending=false;
   let whiteout=null;
   if(reveal){whiteout=document.createElement('div');whiteout.className='rewind-scene-reveal';document.body.append(whiteout);}
@@ -760,7 +762,6 @@ function showDebugSceneSelect(chapter,page=0,section=null){
   modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes');
 }
 function startDeveloperScene(target){
- stopBadEntry();stopBadEntry=()=>{};badEntryActive=false;
   const [chapter,point]=target.split(':');
   const phase=point?.endsWith('-loop')?'loop':point?.endsWith('-choices')?'choices':null;
   const epilogueTarget=chapter==='2'&&point.startsWith('epilogue-')?point.slice(9):null;
