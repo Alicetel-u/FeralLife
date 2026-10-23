@@ -8,7 +8,7 @@ import {storyScreenHTML} from './story-screens.js';
 import {actTwoMorningDirection,actTwoMorningStageHTML,startMorningBlackout,prepareMorningBirds} from './act-two-bad-stage.js';
 import {isFirstStalkerReply,firstStalkerStageHTML,prepareFirstStalkerAssets,needsStalkerPreface,stalkerPrefaceHTML,startStalkerPreface} from './first-stalker-stage.js';
 import { LUNA_MINI_EMOTIONS, MOKU_MINI_EMOTIONS } from './mini-emotions.js';
-import {isFirstFireReply,firstFireStageHTML} from './first-fire-stage.js';
+import {isFirstFireReply,firstFireCut,firstFireStageHTML} from './first-fire-stage.js';
 import {clearLegacyObservationMemo,observationView,observationClockLimit,tickObservation,inheritObservation} from './act-one-observation.js';
 import {createVoicePlayer} from './voice-player.js?v=2026.10.21.4';
 const characterVoice=createVoicePlayer({chapter:()=>state?.actOne?.chapter});
@@ -286,25 +286,13 @@ let cleanupChoiceUI = () => {};
 let cleanupDuelPlayback = () => {};
 let stopEpilogueTransition=()=>{},stopEpilogueSound=()=>{},epilogueSwapping=false;
 let stopBadEntry=()=>{},badEntryActive=false;
-function badEndingConversationReady(){
- if(endingShown||!state.actOne||state.actOne.status!=='bad'||!state.ending||!modal.open||!modal.classList.contains('conversation-modal')||!eventView)return false;
- const event=state.events.find(e=>e.id===eventView.id);
- if(!event||state.actOne.pending?.eventId===event.id)return false;
- const lines=eventConversation(event);
- return eventView.index===lines.length-1&&eventView.page===messagePages(lines.at(-1).text).length-1;
-}
-function enterBadEnding(){
- if(badEntryActive)return true;
- if(!badEndingConversationReady())return false;
- const eventId=eventView.id,failure=state.actOne.failure;
+function showFirstFireCorridorCut(id,cursor,page){
  badEntryActive=true;
  clearTimeout(eventAutoTimer);
- stopBadEntry=startBadEndingEntry(modal,failure,()=>{
-   clearConversation(state,eventId);save();
-   showActEnding();
-   badEntryActive=false;
+ stopBadEntry=startBadEndingEntry(modal,'corridor',()=>{
+  badEntryActive=false;
+  showEvent(id,cursor,page,false,false,true);
  },{voiceBusy:()=>characterVoice.busy});
- return true;
 }
 function showEpilogueCut(kind,replace){
  if(!modal.open)openModal('<section class="act-screen graphic-title epilogue-transition-base" aria-label="場面を切り替えています"></section>');
@@ -315,11 +303,9 @@ function showEpilogueCut(kind,replace){
 function clearFireEnding(){stopFireEnding?.();stopFireEnding=null;}
 function openModal(html) { if(!epilogueSwapping)stopEpilogueTransition();stopEpilogueSound();html=storyScreenHTML(html);characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); cleanupDuelPlayback();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); replaceConversationContent($('modal-content'),html); modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); syncNormalBgm(); }
 function closeModal() {
-  // Delayed BAD END entry keeps the current conversation and voice alive.
-  const enteringBad=typeof enterBadEnding==='function'&&enterBadEnding();
-  if(!enteringBad&&modal.classList.contains('conversation-modal')&&eventView){clearConversation(state,eventView.id);save();}
+  if(badEntryActive)return;
+  if(modal.classList.contains('conversation-modal')&&eventView){clearConversation(state,eventView.id);save();}
   stopEpilogueTransition();stopEpilogueSound();
-  if(enteringBad)return;
   const duelEvent=state.actOne?.duel&&state.events.find(e=>e.id===eventView?.id);
   if(duelEvent?.duel&&eventView.index===eventConversation(duelEvent).length-1){state.actOne.duel.dialogueComplete=true;save();}
   const event=modal.classList.contains('conversation-modal')&&state.actOne?state.events.find(e=>e.id===eventView?.id):null;
@@ -376,7 +362,7 @@ function playStalkerImpactCue(line,key){
     osc.onended=()=>{osc.disconnect();filter.disconnect();gain.disconnect();ctx.close().catch(()=>{});};
   }catch{}
 }
-function showEvent(id,index=null,page=null,afterMorningBlackout=false,afterEpilogueTransition=false) {
+function showEvent(id,index=null,page=null,afterMorningBlackout=false,afterEpilogueTransition=false,afterBadSceneCut=false) {
   const e = state.events.find(e => e.id === Number(id)); if (!e) return;
   if(e.actScene==='bag'&&state.actOne?.chapter===2)secondActLife(state);
   if (e.stageOnly || e.lines?.length) {
@@ -389,6 +375,12 @@ function showEvent(id,index=null,page=null,afterMorningBlackout=false,afterEpilo
   const savedPosition=index===null?resumeConversation(state):null;
   const lines=eventConversation(e),cursor=Math.max(0,Math.min(index ?? (savedPosition?.event.id===e.id?savedPosition.cursor:e.duel&&state.actOne?.duel?.eventId===e.id?state.actOne.duel.cursor:e.choicePresented?lines.length-1:0),lines.length-1));
   page??=savedPosition?.event.id===e.id?savedPosition.page:index===null&&e.duel&&state.actOne?.duel?.eventId===e.id?state.actOne.duel.page||0:0;
+  // First tragedy: leave Moku's room before the fire; never overlay flames or extra text.
+  if(!afterBadSceneCut&&isFirstFireReply(e,state.actOne)&&eventView?.id===e.id
+    &&firstFireCut(lines,eventView.index)==='trust'&&firstFireCut(lines,cursor)==='departure'
+    &&cursor>eventView.index){
+   showFirstFireCorridorCut(id,cursor,page);return;
+  }
   const epilogueDirection=actTwoEpilogueDirection(e,cursor);
   const epilogueCut=afterEpilogueTransition?null:epilogueTransitionFor(e,eventView?.id===e.id?eventView.index:null,cursor,page);
   if(epilogueCut){showEpilogueCut(epilogueCut,()=>showEvent(id,cursor,page,afterMorningBlackout,true));return;}
@@ -652,7 +644,7 @@ function resetActState(next,resume=false,skipInitialScreen=false){
   if(state.actOne.chapter===2){if(state.actOne.titlePending){showActTwoOpening();return;}const e=state.events.find(e=>e.actScene===(state.actOne.prologuePending?'act2-prologue':'act2-rewind'));if(e&&(state.actOne.prologuePending||state.actOne.rewindIntroPending)){showEvent(e.id,state.actOne.rewindIntroCursor||0);return;}showActTwoTitle();return;}
   if(state.actOne.rewindIntroPending)showEvent(state.events.find(e=>e.actScene==='rewind').id,state.actOne.rewindIntroCursor||0);else showActTitle();
 }
-modal.addEventListener('cancel',e=>{if(badEntryActive||modal.querySelector('.bad-entry-host')){e.preventDefault();return;}if(state.actOne?.status==='bad'&&modal.classList.contains('conversation-modal')){e.preventDefault();enterBadEnding();return;}const current=state.events.find(x=>x.id===eventView?.id);if(modal.classList.contains('conversation-modal')&&state.actOne&&eventView?.index===eventConversation(current||{}).length-1&&avoidedTrouble(current,state.actOne.chapter)){e.preventDefault();closeModal();return;}if(state.actOne&&(modal.classList.contains('act-modal')||modal.querySelector('[data-prologue],[data-rewind-intro]')))e.preventDefault();});
+modal.addEventListener('cancel',e=>{if(badEntryActive||modal.querySelector('.bad-entry-host')){e.preventDefault();return;}const current=state.events.find(x=>x.id===eventView?.id);if(modal.classList.contains('conversation-modal')&&state.actOne&&eventView?.index===eventConversation(current||{}).length-1&&avoidedTrouble(current,state.actOne.chapter)){e.preventDefault();closeModal();return;}if(state.actOne&&(modal.classList.contains('act-modal')||modal.querySelector('[data-prologue],[data-rewind-intro]')))e.preventDefault();});
 function showEnding() {
   if (!state.ending) return;
   if(state.actOne){showActEnding();return;}
