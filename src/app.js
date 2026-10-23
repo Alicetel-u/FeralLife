@@ -1117,14 +1117,17 @@ function frame(now){
       const caption=document.createElement('div');caption.id='night-montage-caption';caption.className='night-montage-caption';document.body.append(caption);
     }
     if(lateNightWarp){
-      if(state.hour<36.65){advanceActOne(state,Math.min(36.65-state.hour,seconds*lateNightWarp.rate));const caption=document.querySelector('#night-montage-caption');if(caption)caption.textContent=nightMontageCaption(state.hour);}
+      if(state.hour<36.65){advanceActOne(state,Math.min(36.65-state.hour,seconds*lateNightWarp.rate));const caption=document.querySelector('#night-montage-caption');if(caption)caption.textContent=nightMontageCaption(state.hour);if(state.hour>=36.65)removeNightMontage();}
       else {lateNightWarp.tail+=seconds;if(lateNightWarp.tail>=.65){lateNightWarp=null;removeNightMontage();}}
     }else if(state.actOne){
       // Compress uneventful hours while leaving voiced observation beats at rest.
       // The observation clock limit ensures no upcoming authored beat is skipped.
       const observing=observationView(state);
       const emptyClock=observing&&!observing.beat&&!talk.bubbles.length&&!characterVoice.busy;
-      const clockSpeed=emptyClock&&speed===6?12:speed;
+      const moku=state.residents.find(r=>r.type==='cat');
+      const walkingOutside=moku?.journey?.path.some(p=>p.zone!=='room')&&sampleJourney(moku,state.hour).moving;
+      // Keep exterior walking readable without slowing indoor gags or voiced beats.
+      const clockSpeed=walkingOutside?Math.min(speed,3):emptyClock&&speed===6?12:speed;
       const dt=Math.min(seconds*clockSpeed/10,Math.max(0,observationClockLimit(state)-state.hour));
       if(state.actOne.chapter===2)advanceActTwo(state,dt);else advanceActOne(state,dt);
     }else advance(state,seconds*speed/10);
