@@ -14,7 +14,7 @@ const ENTRIES={
 };
 const FALLBACK={kind:'debt',caption:'一枚の紙が、けもの荘の運命を変えた。',hold:1200,veil:1000,linger:1200};
 export function badEndingEntryPlan(failure){
- const plan=ENTRIES[failure]||(failure?.startsWith('duel-')?ENTRIES['duel-domination']:FALLBACK);
+ const plan=ENTRIES[failure]||((failure?.startsWith('ash-')||failure?.startsWith('dinner-'))?ENTRIES['ash-trash']:failure?.startsWith('duel-')?ENTRIES['duel-domination']:failure?.startsWith('bag-')?ENTRIES['bag-return']:FALLBACK);
  return {...plan,fadeOut:700,total:plan.hold+plan.veil+plan.linger};
 }
 export function badEndingEntryHTML(failure){
