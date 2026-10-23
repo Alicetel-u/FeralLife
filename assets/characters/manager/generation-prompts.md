@@ -56,3 +56,11 @@ Per-image instructions:
 - `retort`: Big comic facepalm above sunglasses, other arm flung out palm-up, drooping shoulders, incredulous wry half-grin. Exasperation rather than rage.
 
 `tools/prepare-manager-art.py` packages the generated RGBA images into 160×160 game frames using nearest-neighbor scaling. Original generation outputs are preserved in `sources/`. They are not copied to the public game package; only referenced game sprites are shipped.
+
+## clean-v2 (2026-10-23)
+
+Built-in ImageGen, transparent RGBA. References: `new-poses/daily/idle.png` (identity, head proportions, style) and `new-poses/daily/clean.png` (sweeping pose). Runtime aliases `clean`, `clean_a`, and `clean_b` all use `new-poses/daily/clean-v2.png`; the original remains available.
+
+Prompt: Use case: identity-preserve. Edit a transparent game character sprite. Image 1 is the exact approved landlord appearance and drawing style; image 2 is the sweeping pose to improve. Produce ONE full-body landlord holding a broom in the sweeping pose of image 2, but match image 1 exactly in large head size relative to body, face, spiral eyes, hair silhouette, stocky proportions, brown sweater, trousers, shoes, line weight and shading. Current sweeping head is too small and looks like a different illustration; fix this. Keep the same tired comic expression as image 1. No redesign, no added accessories, no background, no text, no shadows on ground. Character upright, entire hair and shoes visible, broom angled down to the left, hands naturally holding it. Transparent background. Use a square 512-like composition with top of hair around 54/512 and shoe soles around 474/512; body center at 256/512. Match the visible body height of image 1, do not shrink character to fit the broom.
+
+Framing only: generated 1254x1254 RGBA scaled uniformly by `420/(1158-131)` with Lanczos into a 512x512 transparent frame. Shoe anchor `(685,1158)` maps to `(256.5,474)`. Hair-to-shoe height matches idle at 420px; broom extends below the shoe baseline without reducing the body. No creative pixel edits.
