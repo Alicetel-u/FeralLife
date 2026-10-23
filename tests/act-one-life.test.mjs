@@ -13,7 +13,7 @@ test('first act walks the hall, returns before ash, stays awake until lunch and 
  advanceActOne(s,10);assert.equal(s.hour,37);assert.equal(sampleJourney(m,s.hour,'fridge').zone,'room');assert.equal(m.action,'eat');
  answerActOne(s,s.actOne.pending.eventId,'coronation');advanceActOne(s,1.5);assert.equal(m.action,'sleep');assert.match(firstActMutters(s)[0],/すぅ/);
  advanceActOne(s,14);assert.equal(m.action,'sleep');assert.equal(sampleJourney(m,s.hour).moving,false);
- advanceActOne(s,2.55);assert.equal(sampleJourney(m,s.hour).zone,'street');
+ advanceActOne(s,2.55);assert.equal(sampleJourney(m,s.hour).zone,'hall');
  advanceActOne(s,100);assert.equal(s.hour,57);assert.equal(s.actOne.status,'clear');assert.equal(m.storyUntil,undefined);
 });
 test('small steps and jump-to-event keep identical story pacing; mid-walk saves resume deterministically',()=>{
@@ -59,7 +59,7 @@ test('safe cooking leads to uninterrupted sleep, morning outside, then a return 
  const r=s.residents[0];
  while(s.hour<52.99){advanceActOne(s,Math.min(.1,52.99-s.hour));if(s.hour>=38.4){assert.equal(r.action,'sleep');assert.equal(sampleJourney(r,s.hour).moving,false);}}
  while(s.hour<55.05)advanceActOne(s,Math.min(.05,55.05-s.hour));
- assert.equal(sampleJourney(r,s.hour).zone,'street');assert.equal(sampleJourney(r,s.hour).moving,false);
+ assert.equal(sampleJourney(r,s.hour).zone,'hall');assert.equal(sampleJourney(r,s.hour).moving,false);
  while(s.actOne.status==='playing')advanceActOne(s,.05);
  assert.equal(s.hour,57);assert.equal(sampleJourney(r,s.hour).zone,'room');assert.equal(sampleJourney(r,s.hour).moving,false);
  const ending=s.events.find(e=>e.actScene==='epilogue');assert.ok(ending);assert.ok(!ending.lines.some(l=>l.text.includes('昨日の夜から起きてる')));

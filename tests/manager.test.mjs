@@ -136,22 +136,26 @@ test('listening in the first evening encounter puts the broom away until the enc
  assert.equal(managerFrame(alone,0),'clean_a');assert.equal(managerFrame(alone,.4),'clean_b');
 });
 
-test('morning encounter keeps the caretaker planted through every speaker and the return home',async()=>{
+test('morning encounter restores the original doorstep approach and banter',async()=>{
  const {createDeveloperObservation}=await import('../src/debug-observation.js');
  const {OBSERVATION_BEATS}=await import('../src/act-one-observation.js');
+ const {sampleJourney}=await import('../src/movement.js');
  const s=createDeveloperObservation('1','hall'),beat=OBSERVATION_BEATS.find(b=>b.id==='hall');
- assert.equal(beat.lines[0].text,'お、起きたのか。');
+ assert.equal(beat.place,'hall');assert.equal(beat.lines[0].text,'お、起きたのか。');
  assert.equal(beat.lines[1].text,'寝すぎて疲れたから、気分転換ニャ。');
- let p=advanceManager(null,managerTarget(s),.1);
+ const cat=s.residents.find(r=>r.type==='cat'),spot=sampleJourney(cat,s.hour);
+ assert.deepEqual([spot.x,spot.y,spot.zone],[410,440,'hall']);
+ assert.ok(cat.journey.path.every(p=>p.zone!=='street'&&p.zone!=='stairs'));
+ const target=managerTarget(s);assert.deepEqual([target.x,target.y,target.zone],[520,440,'hall']);
+ let p=advanceManager(null,target,.1);assert.equal(p.moving,true);
+ for(let frame=0;frame<100;frame++)p=advanceManager(p,target,.1);
  for(const line of beat.lines){
-  const target=managerTarget(s,[line]);assert.deepEqual([target.x,target.y,target.zone],[650,513,'street']);assert.equal(target.chat,true);
-  for(let frame=0;frame<30;frame++)p=advanceManager(p,target,.1);
-  assert.equal(p.moving,false);assert.deepEqual([p.x,p.y],[650,513]);
+  const next=managerTarget(s,[line]);assert.deepEqual([next.x,next.y,next.zone],[520,440,'hall']);
+  p=advanceManager(p,next,.1);assert.equal(p.moving,false);
  }
  s.actOne.observation.current=null;s.actOne.observation.done.push('hall');
  while(s.actOne.status==='playing'){
-  advanceActOne(s,.05);const target=managerTarget(s);
-  assert.deepEqual([target.x,target.y,target.zone],[650,513,'street']);
-  p=advanceManager(p,target,.1);assert.equal(p.moving,false);
+  advanceActOne(s,.05);assert.ok(!['street','stairs'].includes(sampleJourney(cat,s.hour).zone));
  }
+ assert.equal(sampleJourney(cat,s.hour).zone,'room');
 });

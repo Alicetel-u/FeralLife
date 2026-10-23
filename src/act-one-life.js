@@ -6,7 +6,7 @@ export const MOKU_DAY = [
   [23.25,'idle','table','灰皿のあとにひと息'],[23.85,'idle','center','スマホを探す'],[24.1,'tv','tv','テレビを見て夜更かし'],
   [36.5,'eat','fridge','空腹で料理の準備'],
   [37.25,'eat','table','火を使わずに昼食'],[38,'sleep','bed','朝までぐっすり眠る'],
-  [53,'outside','street','朝の外の空気を吸う'],[54.6,'meet','street','朝の大家に近づく'],[55.2,'home','table','101号室へ戻る']
+  [53,'walk','hall','部屋を出てすぐの廊下で気分転換'],[55.2,'idle','table','廊下から101号室へ戻る']
 ];
 const places={smoke:'window',eat:'fridge',sleep:'bed',tv:'tv',clean:'center',drink:'table',idle:'table'};
 function mokuHomeJourney(start,hour){

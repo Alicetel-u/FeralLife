@@ -238,7 +238,7 @@ export const OBSERVATION_BEATS=[
     ]
   },
   {
-    id:'hall',phase:2,at:55.05,title:'よく寝た朝、大家とばったり',place:'street',
+    id:'hall',phase:2,at:55.05,title:'朝、部屋の前で大家とばったり',place:'hall',
     lines:[
       {speaker:'manager',name:'大家',emotion:'neutral',text:'お、起きたのか。'},
       {speaker:'cat',name:'モク',emotion:'neutral',text:'寝すぎて疲れたから、気分転換ニャ。'},
