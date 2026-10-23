@@ -4,6 +4,7 @@ import {actTwoEpilogueDirection,epilogueTransitionFor,actTwoEpilogueStageHTML,ac
 import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.23.2';
 import {failedChoiceKeys} from './choice-history.js';
 import {secondActLife} from './act-two-life.js';
+import {developerObservationBeats,createDeveloperObservation} from './debug-observation.js';
 import {storyScreenHTML} from './story-screens.js';
 import {actTwoMorningDirection,actTwoMorningStageHTML,startMorningBlackout,prepareMorningBirds} from './act-two-bad-stage.js';
 import {isFirstStalkerReply,firstStalkerStageHTML,prepareFirstStalkerAssets,needsStalkerPreface,stalkerPrefaceHTML,startStalkerPreface} from './first-stalker-stage.js';
@@ -680,7 +681,6 @@ const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFo
 function debugMenuPage(title,subtitle,buttons,back){
   const tone=(id,kind)=>{
     if(kind)return kind;
-    if(id==='boot'||id==='copy-boot')return 'utility';
     if(id==='1')return 'chapter1';
     if(id==='2')return 'chapter2';
     if(id==='scenes')return 'navigation';
@@ -700,19 +700,18 @@ function debugMenuPage(title,subtitle,buttons,back){
   </section>`);
 }
 function showDeveloperMenu(){
-  debugMenuPage('開発者メニュー','テストしたい項目を選択',[['scenes','シーンセレクト（第一幕・第二幕）','data-debug-tool'],['boot','起動診断・計測結果のコピー','data-debug-tool']], 'data-debug-back');
+  debugMenuPage('開発者メニュー','テストしたい項目を選択',[['scenes','シーンセレクト（第一幕・第二幕）','data-debug-tool'],['observation','観察モード（第一幕・第二幕）','data-debug-tool']], 'data-debug-back');
 }
-function showBootDiagnostics(){
-  debugMenuPage('起動診断','この端末で今回の起動にかかった時間です。結果は自動送信しません。',[['copy-boot','計測結果をコピー','data-debug-tool']], 'data-debug-tools-back');
-  const area=document.createElement('textarea');area.id='debug-boot-report';area.readOnly=true;area.setAttribute('aria-label','起動診断の計測結果');
-  area.value=window.kemonoBoot?.getReport?.()||'この版には起動計測がありません。最新版を再読み込みしてください。';
-  area.style.cssText='width:min(100%,640px);min-height:36vh;flex-shrink:0;box-sizing:border-box;overflow:auto;white-space:pre;background:#080b11;color:#e8edf6;border:1px solid #71809a;padding:12px;font:12px/1.5 monospace;user-select:text;-webkit-user-select:text';
-  modal.querySelector('footer').before(area);
+function showDebugObservationChapters(){
+  debugMenuPage('観察モード','確認する幕を選択。通常セーブには影響しません。',[['1','第一幕 — モクの日常','data-debug-observation-chapter'],['2','第二幕 — ルナの引っ越し初日','data-debug-observation-chapter']],'data-debug-tools-back');
 }
-async function copyBootDiagnostics(button){
-  const area=$('debug-boot-report');if(!area)return;
-  try{await navigator.clipboard.writeText(area.value);button.textContent='コピーしました';}
-  catch{area.focus();area.select();area.setSelectionRange(0,area.value.length);button.textContent='選択された結果を長押ししてコピーしてください';}
+function showDebugObservationSelect(chapter,page=0){
+  const beats=developerObservationBeats(chapter),pages=Math.ceil(beats.length/4);
+  if(!pages)return;
+  const current=Math.max(0,Math.min(pages-1,page));
+  debugMenuPage(chapter==='1'?'第一幕｜観察モード':'第二幕｜観察モード','選んだ掛け合いの最初から再生します。',beats.slice(current*4,current*4+4).map(b=>[chapter+':'+b.id,b.title,'data-debug-observation']),'data-debug-observation-back');
+  modal.querySelector('.persona-debug-actions').insertAdjacentHTML('afterend',`<nav class="persona-debug-pagination" aria-label="観察モードのページ切り替え"><button type="button" class="persona-debug-page-button" data-debug-observation-page="${chapter}:${current-1}" ${current===0?'disabled':''}>◀　前へ</button><span class="persona-debug-page-counter">PAGE <strong>${current+1} / ${pages}</strong></span><button type="button" class="persona-debug-page-button persona-debug-page-next" data-debug-observation-page="${chapter}:${current+1}" ${current===pages-1?'disabled':''}>次へ　▶</button></nav>`);
+  modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes');
 }
 function showDebugChapterSelect(){
   debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter']], 'data-debug-tools-back');
@@ -899,8 +898,11 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-debug-tools-back')){showDeveloperMenu();return;}
   if(button.hasAttribute('data-debug-chapters-back')){showDebugChapterSelect();return;}
   if(button.dataset.debugTool==='scenes'){showDebugChapterSelect();return;}
-  if(button.dataset.debugTool==='boot'){showBootDiagnostics();return;}
-  if(button.dataset.debugTool==='copy-boot'){copyBootDiagnostics(button);return;}
+  if(button.dataset.debugTool==='observation'){showDebugObservationChapters();return;}
+  if(button.hasAttribute('data-debug-observation-back')){showDebugObservationChapters();return;}
+  if(button.dataset.debugObservationChapter){showDebugObservationSelect(button.dataset.debugObservationChapter);return;}
+  if(button.dataset.debugObservationPage){const [chapter,page]=button.dataset.debugObservationPage.split(':');showDebugObservationSelect(chapter,Number(page));return;}
+  if(button.dataset.debugObservation){const [chapter,id]=button.dataset.debugObservation.split(':');const next=createDeveloperObservation(chapter,id);if(next){developerMode=true;lateNightWarp=null;removeNightMontage();resetActState(next,false,true);}return;}
   if(button.dataset.debugChapter){showDebugSectionSelect(button.dataset.debugChapter);return;}
   if(button.hasAttribute('data-debug-sections-back')){showDebugSectionSelect('2');return;}
   if(button.dataset.debugSection){showDebugSceneSelect('2',0,button.dataset.debugSection);return;}
