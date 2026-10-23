@@ -1067,6 +1067,8 @@ dialog.act-modal:has(.debt-cinematic){width:100vw;height:100dvh;max-width:100vw;
 
 /* First-act overnight montage: enlarge the existing observation HUD clock. */
 .game-ink .masthead{transition:top .55s cubic-bezier(.15,.8,.25,1),left .55s cubic-bezier(.15,.8,.25,1),right .55s cubic-bezier(.15,.8,.25,1),transform .55s cubic-bezier(.15,.8,.25,1)}
+.game-ink.late-night-warp .masthead{position:fixed;inset:max(20%,calc(env(safe-area-inset-top) + 64px)) auto auto 50%;z-index:90;transform:translate(-50%,-50%) rotate(-3deg) scale(1.8)}
+@media(max-width:700px){.game-ink.late-night-warp .masthead{transform:translate(-50%,-50%) rotate(-3deg) scale(1.05)}}
 @media(prefers-reduced-motion:reduce){.game-ink .masthead{transition:none}}
 
 /* Continue centered cinematic captions into the post-fire rewind sequence. */
