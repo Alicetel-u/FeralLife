@@ -43,7 +43,7 @@ test('landlord walks in alternating frames, faces travel direction, then resumes
  let p=advanceManager(null,target,.1);
  assert.equal(p.moving,true);assert.equal(p.direction,-1);
  assert.equal(managerFrame(target,0,p.moving),'walk_a');
- assert.equal(managerFrame(target,.25,p.moving),'walk_b');
+ assert.equal(managerFrame(target,.4,p.moving),'walk_b');
  const paused=advanceManager(p,target,0);assert.deepEqual(paused,p);
  for(let i=0;i<4;i++)p=advanceManager(p,target,.1);
  assert.equal(p.x,610);assert.equal(p.moving,false);
@@ -86,4 +86,37 @@ test('landlord sprite is covered by clipped foreground with matching night tint'
   assert.ok(calls.slice(drawn,foreground).some(c=>c[0]==='clip'));
   assert.ok(calls.slice(foreground).some(c=>c[0]==='fillStyle'&&c[1]==='rgba(16,27,49,0.57)'));
  }finally{SCENE_ART.image=previousScene;CHARACTER_ART.manager.image=previousSprite;}
+});
+
+test('all observation poses use the matched master and a fixed pivot without legacy daily art',async()=>{
+ const art=CHARACTER_ART.manager;
+ assert.ok(art.src.includes('/matched-v3/'));assert.equal(art.portraitSrc,art.src);
+ const metadata=JSON.parse(await readFile('assets/characters/manager/matched-v3/asset.json','utf8'));
+ for(const [name,pose] of Object.entries(art.poses)){
+  if(name.startsWith('battle_'))continue;
+  assert.ok(pose.src.includes('/matched-v3/'),name);
+  assert.deepEqual(pose.origin,[256,492],name);
+ }
+ assert.ok(Math.abs(art.displayHeight*metadata.standingBodyHeight/512-44)<1e-6);
+ assert.notDeepEqual(await readFile(art.poses.clean_a.src),await readFile(art.poses.clean_b.src));
+ const walk=['walk_a','walk_pass_a','walk_b','walk_pass_b'];
+ assert.equal(new Set(walk.map(name=>metadata.poses[name].packagingScale)).size,1,'entire gait has one source scale');
+ assert.equal(new Set(walk.map(name=>art.poses[name].src)).size,4);
+});
+
+test('landlord gait follows distance through four phases and does not advance on pause',()=>{
+ const target={x:900,y:513,zone:'street',chat:false,direction:1};
+ const frames=['walk_a','walk_pass_a','walk_b','walk_pass_b'];
+ for(let i=0;i<8;i++){
+  assert.equal(managerFrame(target,0,true,i*20),frames[i%4]);
+  assert.equal(managerFrame(target,999,true,i*20),frames[i%4],'global time cannot change a planted gait phase');
+ }
+ let p=advanceManager(null,target,.1);
+ assert.equal(p.walkDistance,10);assert.equal(p.direction,1);
+ const paused=advanceManager(p,target,0);assert.deepEqual(paused,p);
+ assert.equal(managerFrame(target,20,true,paused.walkDistance),managerFrame(target,0,true,p.walkDistance));
+ let quarter=advanceManager(null,target,.025);
+ for(let i=0;i<3;i++)quarter=advanceManager(quarter,target,.025);
+ assert.equal(quarter.walkDistance,p.walkDistance);assert.equal(quarter.x,p.x);
+ p=advanceManager(p,{...target,x:400},.1);assert.equal(p.direction,-1);assert.equal(p.walkDistance,20);
 });

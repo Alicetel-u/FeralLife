@@ -24,17 +24,22 @@ export function managerTarget(state,bubbles=[]){
  if(visitor){const {p}=visitor;return {x:Math.min(930,p.x+110),y:p.y,zone:p.zone,chat:true,direction:-1,pose:speaking?.speaker==='manager'?managerReaction(speaking):'idle'};}
  return {x:650,y:513,zone:'street',chat:false,direction:1,pose:'clean'};
 }
-export function managerFrame(target,t,moving=false){
- if(moving)return Math.floor(t*4)%2?'walk_b':'walk_a';
+// Four phases follow travelled distance, so pauses and frame rate never make
+// the feet step in place or jump to an unrelated global animation phase.
+export function managerFrame(target,t,moving=false,walkDistance=null){
+ if(moving){
+  const phase=walkDistance===null?t*5:walkDistance/20;
+  return ['walk_a','walk_pass_a','walk_b','walk_pass_b'][Math.floor(phase)%4];
+ }
  return target.chat?target.pose:(Math.floor(t*3)%2?'clean_b':'clean_a');
 }
 export function advanceManager(current,target,seconds){
  const p=current||{x:650,y:513,zone:'street',goalZone:'street',route:[]};
  const route=p.goalZone!==target.zone?(target.zone==='hall'?[{x:815,y:513},{x:777,y:440}]:[{x:777,y:440},{x:815,y:513}]):[...(p.route||[])];
- let x=p.x,y=p.y,budget=Math.max(0,Math.min(.1,seconds))*100;
- while(budget>0){const next=route[0]||target,dx=next.x-x,dy=next.y-y,d=Math.hypot(dx,dy);if(d<=budget){x=next.x;y=next.y;budget-=d;if(route.length){route.shift();continue;}break;}x+=dx*budget/d;y+=dy*budget/d;break;}
+ let x=p.x,y=p.y,travelled=0,budget=Math.max(0,Math.min(.1,seconds))*100;
+ while(budget>0){const next=route[0]||target,dx=next.x-x,dy=next.y-y,d=Math.hypot(dx,dy);if(d<=budget){x=next.x;y=next.y;budget-=d;travelled+=d;if(route.length){route.shift();continue;}break;}x+=dx*budget/d;y+=dy*budget/d;travelled+=budget;break;}
  const moving=route.length>0||Math.hypot(target.x-x,target.y-y)>.01;
  const direction=Math.abs(x-p.x)>.001?Math.sign(x-p.x):(p.direction||target.direction||1);
  const zone=route.length===1?'stairs':route.length>1?(target.zone==='hall'?'street':'hall'):target.zone;
- return {x,y,zone,goalZone:target.zone,route,moving,direction};
+ return {x,y,zone,goalZone:target.zone,route,moving,direction,walkDistance:(p.walkDistance||0)+travelled};
 }

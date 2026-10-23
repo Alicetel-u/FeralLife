@@ -1,0 +1,348 @@
+{
+  "master": "../new-poses/emotions/neutral.png",
+  "method": "Built-in ImageGen, matched daily sheet and four-frame walking cycle; framing only",
+  "standingBodyHeight": 455,
+  "displayHeight": 49.512087912087914,
+  "origin": [
+    256,
+    492
+  ],
+  "poses": {
+    "idle": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        150,
+        372
+      ],
+      "packagingScale": 1.267409470752089,
+      "sourceBodyHeight": 359
+    },
+    "clean_a": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        181,
+        354
+      ],
+      "packagingScale": 1.3037249283667622,
+      "sourceBodyHeight": 349
+    },
+    "clean_b": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        147,
+        354
+      ],
+      "packagingScale": 1.3074712643678161,
+      "sourceBodyHeight": 348
+    },
+    "sit": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        147,
+        354
+      ],
+      "packagingScale": 1.267409470752089,
+      "sourceBodyHeight": 331
+    },
+    "sleep": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        229,
+        199
+      ],
+      "packagingScale": 1.267409470752089,
+      "sourceBodyHeight": 188
+    },
+    "smartphone": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        103,
+        338
+      ],
+      "packagingScale": 1.3501483679525224,
+      "sourceBodyHeight": 337
+    },
+    "talk": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        116,
+        340
+      ],
+      "packagingScale": 1.338235294117647,
+      "sourceBodyHeight": 340
+    },
+    "think": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        137,
+        340
+      ],
+      "packagingScale": 1.3421828908554572,
+      "sourceBodyHeight": 339
+    },
+    "walk_a": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        392,
+        613
+      ],
+      "packagingScale": 0.7831325301204819,
+      "sourceBodyHeight": 581
+    },
+    "walk_pass_a": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        264,
+        617
+      ],
+      "packagingScale": 0.7831325301204819,
+      "sourceBodyHeight": 583
+    },
+    "walk_b": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        392,
+        588
+      ],
+      "packagingScale": 0.7831325301204819,
+      "sourceBodyHeight": 580
+    },
+    "walk_pass_b": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        265,
+        590
+      ],
+      "packagingScale": 0.7831325301204819,
+      "sourceBodyHeight": 581
+    },
+    "angry": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        232.5,
+        491
+      ],
+      "packagingScale": 0.9912854030501089,
+      "sourceBodyHeight": 459
+    },
+    "happy": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        251,
+        489
+      ],
+      "packagingScale": 0.9848484848484849,
+      "sourceBodyHeight": 462
+    },
+    "neutral": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        256,
+        488
+      ],
+      "packagingScale": 1.0,
+      "sourceBodyHeight": 455
+    },
+    "sad": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        235,
+        489
+      ],
+      "packagingScale": 0.974304068522484,
+      "sourceBodyHeight": 467
+    },
+    "serious": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        261,
+        494
+      ],
+      "packagingScale": 0.959915611814346,
+      "sourceBodyHeight": 474
+    },
+    "shy": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        226,
+        492
+      ],
+      "packagingScale": 0.9891304347826086,
+      "sourceBodyHeight": 460
+    },
+    "surprised": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        215.5,
+        491
+      ],
+      "packagingScale": 0.9978070175438597,
+      "sourceBodyHeight": 456
+    },
+    "tired": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        253,
+        490
+      ],
+      "packagingScale": 1.002202643171806,
+      "sourceBodyHeight": 454
+    },
+    "troubled": {
+      "origin": [
+        256,
+        492
+      ],
+      "frame": [
+        512,
+        512
+      ],
+      "sourceAnchor": [
+        243,
+        490
+      ],
+      "packagingScale": 0.9978070175438597,
+      "sourceBodyHeight": 456
+    }
+  }
+}

@@ -1,3 +1,5 @@
+> Current observation set: `matched-v3/`. The older prompts below are historical; see `matched-v3/sources/prompts.md` and `docs/manager-sprite.md` for current identity, framing and gait rules.
+
 # Approved spiral-eye redesign (2026-10-16)
 
 Built-in ImageGen. Approved idle reused directly. All eight current sources use charcoal crayon spiral eyes and subtle mauve eye bags, without sunglasses. Hair, clothing, chibi identity and original poses are preserved. The instructions below supersede the historical sunglasses design recorded afterward.

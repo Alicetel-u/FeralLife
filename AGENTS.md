@@ -32,6 +32,11 @@
 - Note: this is a **public** GitHub repository; files under `docs/story/` can be read by anyone, even if they aren't linked from the game.
 - Run the existing build and tests for gameplay changes whenever possible.
 
+## Landlord sprite consistency
+- Use the matched landlord observation set described in `docs/manager-sprite.md`. Do not mix the old 160px/daily generations with the new expression master or try to disguise different proportions with runtime pose-specific scale multipliers.
+- New poses must match the reference face, head/body proportions, line style and camera, then use consistent frame/pivot preparation. Review idle, sweeping, all gait frames and every speech reaction together at actual game size.
+- Walking must be a coherent cycle with a stable head/torso and opposing foot phases, advanced by actual movement distance. Verify both travel directions, stop/start, pauses and sprite loading; never validate walking from isolated stills alone.
+
 ## Production deployment
 - The user requests production deployment after each completed change. After building and passing the existing tests, commit the intended task changes and push to `main` to trigger `.github/workflows/deploy-pages.yml`.
 - Verify the GitHub Pages workflow succeeds and report the production URL. If deployment fails, investigate and report the actual state.

@@ -93,9 +93,10 @@ function observationCharacterArt(type){
   ...(type==='cat'?{smokeTip:{base:[18,-56]}}:{})};
 }
 export const CHARACTER_ART = {
-  // Match Moku's visible height: the 512px idle art has a 420px body.
+  // One matched observation set: fixed 512px frames, 455px standing body.
+  // Runtime uses ONE scale and pivot for idle, sweeping, walking and reactions.
   manager: {
-    src:'assets/characters/manager/new-poses/daily/idle.png',portraitSrc:'assets/characters/manager/idle.png',displayHeight:53.63809524,origin:[256.5,474],image:null,portrait:null,
+    src:'assets/characters/manager/matched-v3/idle.png',portraitSrc:'assets/characters/manager/matched-v3/idle.png',displayHeight:49.51208791208791,origin:[256,492],image:null,portrait:null,
     poses:{
       battle_badend:catPose('assets/characters/manager/new-poses/act2-battle/badend.png',[212.0,497]),
       battle_fail:catPose('assets/characters/manager/new-poses/act2-battle/fail.png',[294.0,477]),
@@ -106,30 +107,32 @@ export const CHARACTER_ART = {
       battle_protect:catPose('assets/characters/manager/new-poses/act2-battle/protect.png',[229.5,494]),
       battle_stand_proud:catPose('assets/characters/manager/new-poses/act2-battle/stand_proud.png',[235.0,504]),
       battle_victory:catPose('assets/characters/manager/new-poses/act2-battle/victory.png',[219.5,494]),
-      clean:catPose('assets/characters/manager/new-poses/daily/clean-v2.png',[256.5,474]),
-      idle:catPose('assets/characters/manager/new-poses/daily/idle.png',[256.5,474]),
-      sit:catPose('assets/characters/manager/new-poses/daily/sit.png',[241.0,464]),
-      sleep:catPose('assets/characters/manager/new-poses/daily/sleep.png',[240.5,457]),
-      smartphone:catPose('assets/characters/manager/new-poses/daily/smartphone.png',[228.5,480]),
-      talk:catPose('assets/characters/manager/new-poses/daily/talk.png',[246.0,474]),
-      think:catPose('assets/characters/manager/new-poses/daily/think.png',[269.0,478]),
-      walk_a:catPose('assets/characters/manager/new-poses/daily/walk_a.png',[260.0,476]),
-      walk_b:catPose('assets/characters/manager/new-poses/daily/walk_b.png',[245.5,475]),
-      angry:catPose('assets/characters/manager/new-poses/emotions/angry.png',[232.5,493]),
-      happy:catPose('assets/characters/manager/new-poses/emotions/happy.png',[251.0,492]),
-      neutral:catPose('assets/characters/manager/new-poses/emotions/neutral.png',[256.0,492]),
-      sad:catPose('assets/characters/manager/new-poses/emotions/sad.png',[235.0,492]),
-      serious:catPose('assets/characters/manager/new-poses/emotions/serious.png',[261.0,498]),
-      shy:catPose('assets/characters/manager/new-poses/emotions/shy.png',[226.0,495]),
-      surprised:catPose('assets/characters/manager/new-poses/emotions/surprised.png',[215.5,495]),
-      tired:catPose('assets/characters/manager/new-poses/emotions/tired.png',[253.0,493]),
-      troubled:catPose('assets/characters/manager/new-poses/emotions/troubled.png',[243.0,492]),
-      clean_a:catPose('assets/characters/manager/new-poses/daily/clean-v2.png',[256.5,474]),
-      clean_b:catPose('assets/characters/manager/new-poses/daily/clean-v2.png',[256.5,474]),
-      retort:catPose('assets/characters/manager/new-poses/emotions/troubled.png',[243.0,492]),
-      confused:catPose('assets/characters/manager/new-poses/emotions/troubled.png',[243.0,492]),
-      scared:catPose('assets/characters/manager/new-poses/emotions/surprised.png',[215.5,495]),
-      relieved:catPose('assets/characters/manager/new-poses/emotions/happy.png',[251.0,492])
+      clean:catPose('assets/characters/manager/matched-v3/clean_a.png',[256,492]),
+      idle:catPose('assets/characters/manager/matched-v3/idle.png',[256,492]),
+      sit:catPose('assets/characters/manager/matched-v3/sit.png',[256,492]),
+      sleep:catPose('assets/characters/manager/matched-v3/sleep.png',[256,492]),
+      smartphone:catPose('assets/characters/manager/matched-v3/smartphone.png',[256,492]),
+      talk:catPose('assets/characters/manager/matched-v3/talk.png',[256,492]),
+      think:catPose('assets/characters/manager/matched-v3/think.png',[256,492]),
+      walk_a:catPose('assets/characters/manager/matched-v3/walk_a.png',[256,492]),
+      walk_pass_a:catPose('assets/characters/manager/matched-v3/walk_pass_a.png',[256,492]),
+      walk_pass_b:catPose('assets/characters/manager/matched-v3/walk_pass_b.png',[256,492]),
+      walk_b:catPose('assets/characters/manager/matched-v3/walk_b.png',[256,492]),
+      angry:catPose('assets/characters/manager/matched-v3/angry.png',[256,492]),
+      happy:catPose('assets/characters/manager/matched-v3/happy.png',[256,492]),
+      neutral:catPose('assets/characters/manager/matched-v3/neutral.png',[256,492]),
+      sad:catPose('assets/characters/manager/matched-v3/sad.png',[256,492]),
+      serious:catPose('assets/characters/manager/matched-v3/serious.png',[256,492]),
+      shy:catPose('assets/characters/manager/matched-v3/shy.png',[256,492]),
+      surprised:catPose('assets/characters/manager/matched-v3/surprised.png',[256,492]),
+      tired:catPose('assets/characters/manager/matched-v3/tired.png',[256,492]),
+      troubled:catPose('assets/characters/manager/matched-v3/troubled.png',[256,492]),
+      clean_a:catPose('assets/characters/manager/matched-v3/clean_a.png',[256,492]),
+      clean_b:catPose('assets/characters/manager/matched-v3/clean_b.png',[256,492]),
+      retort:catPose('assets/characters/manager/matched-v3/troubled.png',[256,492]),
+      confused:catPose('assets/characters/manager/matched-v3/troubled.png',[256,492]),
+      scared:catPose('assets/characters/manager/matched-v3/surprised.png',[256,492]),
+      relieved:catPose('assets/characters/manager/matched-v3/happy.png',[256,492])
     },actionPoses:{idle:'idle',chat:'talk',clean:'clean'}
   },
   ann: {
@@ -230,12 +233,16 @@ export function loadRoomArt(onReady,onSettled) {
   return Promise.all(Object.values(ROOM_ART).map(art=>assignImage(art,'image',art.src,onReady).finally(()=>onSettled?.())));
 }
 export function loadCharacterArt(onReady,onSettled) {
-  // 初期画面の背景とモクだけを優先。それ以外はブラウザのアイドル時間に少しずつ。
+  // 背景・モク・大家の観察用セットを優先。大家の動作を旧/未読込画像で代用しない。
   const first=[
     assignImage(SCENE_ART,'image',SCENE_ART.src,onReady),
     ...['cat','manager'].flatMap(type=>{
       const art=CHARACTER_ART[type];
-      return [assignImage(art,'image',art.src,onReady),assignImage(art,'portrait',art.portraitSrc,onReady),assignImage(MINI_EMOTION_ART[type],'image',MINI_EMOTION_ART[type].src,onReady)];
+      const tasks=[assignImage(art,'image',art.src,onReady),assignImage(art,'portrait',art.portraitSrc,onReady)];
+      if(type==='manager')return [...tasks,...Object.entries(art.poses)
+        .filter(([name])=>!name.startsWith('battle_'))
+        .map(([,pose])=>assignImage(pose,'image',pose.src,onReady))];
+      return [...tasks,assignImage(MINI_EMOTION_ART[type],'image',MINI_EMOTION_ART[type].src,onReady)];
     })
   ];
   const remaining=[];
@@ -245,7 +252,7 @@ export function loadCharacterArt(onReady,onSettled) {
       remaining.push(()=>assignImage(art,'image',art.src,onReady));
       remaining.push(()=>assignImage(art,'portrait',art.portraitSrc,onReady));
     }
-    for (const pose of Object.values(art.poses||{})) remaining.push(()=>assignImage(pose,'image',pose.src,onReady));
+    for (const [name,pose] of Object.entries(art.poses||{})) if(type!=='manager'||name.startsWith('battle_'))remaining.push(()=>assignImage(pose,'image',pose.src,onReady));
   }
   const initial=first.map(task=>task.finally(()=>onSettled?.()));
   Promise.all(initial).then(()=>{
