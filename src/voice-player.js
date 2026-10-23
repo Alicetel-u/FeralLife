@@ -8,7 +8,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
   const mobile=typeof navigator!=='undefined'&&/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   const AudioContextType=(globalThis.AudioContext||globalThis.webkitAudioContext);
   let context=null,source=null,gain=null,limiter=null,mobileAudio=null,unlocked=false;
-  const speakerBoost=()=>(({manager:1.6,hostess:1.8}[voiceSpeaker(current?.line||{})]||1)*(current?.line?.duelAttack?1.35:1));
+  const speakerBoost=()=>(({manager:1.6,hostess:1.8}[voiceSpeaker(current?.line||{})]||1)*(current?.line?.duelAttack?1.35:1)*(Number.isFinite(current?.line?.voiceGain)?Math.max(0,Math.min(1,current.line.voiceGain)):1));
   const playbackGain=()=>(mobile?4:1)*prefs.volume*speakerBoost();
   const applyVolume=()=>{if(gain){gain.gain.value=playbackGain();if(audio)audio.volume=1;}else if(audio)audio.volume=Math.min(1,prefs.volume*speakerBoost());};
   const disconnect=()=>{
