@@ -83,3 +83,11 @@ test('dismiss blacks out directly into the rental notice',()=>{
  ]);
  assert.equal(shots[collapse].shot,'notice');
 });
+
+test('opening voice mix moderates Luna loudness without changing normal conversations',()=>{
+ const cues=shots.flatMap(shot=>shot.cues);
+ assert.equal(cues.length,6);
+ assert.ok(cues.every(cue=>cue.voiceGain>0&&cue.voiceGain<=0.65));
+ assert.equal(cues.find(cue=>cue.id==='persistent').voiceGain,0.55);
+ assert.equal(cues.find(cue=>cue.id==='breath').voiceGain,0.58);
+});
