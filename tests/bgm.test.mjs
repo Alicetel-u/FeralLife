@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
-import { NORMAL_BGM_SRC, MOKU_BGM_SRC, LUNA_BGM_SRC, DUEL_BGM_SRC, bedCue, createNormalBgm } from '../src/bgm.js';
+import { NORMAL_BGM_SRC, MOKU_BGM_SRC, LUNA_BGM_SRC, DUEL_BGM_SRC, OPENING_BGM_SRC, bedCue, createNormalBgm } from '../src/bgm.js';
 import {DUEL_INTRO,duelEncounterLines,duelEndingLines} from '../src/act-two-duel.js';
 import {duelStageHTML} from '../src/act-two-duel-stage.js';
 import {eventConversation} from '../src/event-stage.js';
@@ -285,4 +285,29 @@ test('packaged bgm files are mp3s', async () => {
     assert.ok(file.length > 100000);
     assert.ok(file[0] === 0xff || file.subarray(0, 3).toString() === 'ID3');
   }
+});
+
+test('opening BGM switches to Moku on chapter one title',async()=>{
+ assert.equal(OPENING_BGM_SRC,'assets/audio/the-midnight-crossing.mp3');
+ const opening=fakeAudio(),moku=fakeAudio();
+ const bgm=createNormalBgm(fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),moku,fakeAudio(),fakeAudio(),opening);
+ await bgm.unlock();await bgm.setScene(false,'opening');
+ assert.equal(opening.paused,false);
+ opening.currentTime=18;await bgm.setScene(false,'opening');assert.equal(opening.currentTime,18);
+ await bgm.setScene(false,'moku');assert.equal(opening.paused,true);assert.equal(moku.paused,false);
+});
+test('prologue, logo and chapter title use distinct cue selectors',async()=>{
+ const app=await readFile(new URL('../src/app.js',import.meta.url),'utf8');
+ const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
+ for(const [selector,scene,expected] of [
+  ['.cinematic-prologue',null,'opening'],['.opening-reveal',null,'opening'],
+  [null,'prologue','opening'],['.act-title[data-chapter="1"]',null,'moku'],
+  ['.act-title[data-chapter="2"]',null,'luna'],['.game-title',null,'title']]){
+   let cue;
+   const context={document:{hidden:false},state:{actOne:{chapter:1},events:[{id:1,actScene:scene}]},eventView:{id:1,index:0},eventConversation:()=>[{}],bedCue:()=> 'normal',
+    modal:{open:true,classList:{contains:()=>!!scene},querySelector:q=>q.split(',').some(x=>x===selector)?{dataset:{}}:null},
+    normalBgm:{setScene:(_,name)=>{cue=name;}}};
+   vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);
+   assert.equal(cue,expected,String(selector||scene));
+ }
 });
