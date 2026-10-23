@@ -1009,6 +1009,7 @@ function syncNormalBgm(){
   const clock=modal.open&&!!rewind&&(rewind.dataset.rewindPhase==='clock'||rewind.dataset.rewindPhase==='return');
   const bad=!clock&&modal.open&&!modal.querySelector('.act-title')&&(firstFireDanger||!!modal.querySelector('.fire-cinematic,.debt-cinematic,.act-burn,.rewind-screen,.duel-bad'));
   const title=!bad&&!clock&&modal.open&&!!modal.querySelector('.game-title,.title-help');
+  const actTwoTitle=!bad&&!clock&&modal.open&&!!modal.querySelector('.act-title[data-chapter="2"]');
   const activeDialogue=modal.open&&modal.classList.contains('conversation-modal')?state.events.find(e=>e.id===eventView?.id):null;
   const duelLine=activeDialogue?.duel?eventConversation(activeDialogue)[eventView.index]:null;
   const yandereReveal=duelLine?.duelEnding==='yandere'&&duelLine.duelEndingPhase==='reveal';
@@ -1026,7 +1027,7 @@ function syncNormalBgm(){
   // Dedicated scene cues take precedence over character themes.
   const lunaVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="hostess"]');
   const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
-  return normalBgm.setScene(document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
+  return normalBgm.setScene(document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':actTwoTitle?'luna':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
 }
 modal.addEventListener('luna-film-phase',()=>{syncNormalBgm();});
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
