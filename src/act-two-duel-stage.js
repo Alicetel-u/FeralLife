@@ -65,7 +65,8 @@ function duelStaticElectricity(){
 export function duelStageHTML(event,residents,index=0,page=0){
  const {line,round,ending,hearts,before,entrance,defeated,showResult}=duelFrame(event,index);
  const intro=line.duelRound===undefined&&!ending;
- const startTitle=((intro&&index===0&&page===0)||event.debugDuelSplash)&&page===0?`<div class="duel-start-title" aria-label="ミニゲーム開始：嘘つきルナを守れ！"><div class="duel-start-slash" aria-hidden="true"></div><div class="duel-start-panel"><strong>嘘つきルナを守れ！</strong></div></div>`:'';
+ const firstBattleLine=line.duelRound===0&&!ending&&eventConversation(event).slice(0,index).every(previous=>previous.duelRound===undefined);
+ const startTitle=(firstBattleLine||event.debugDuelSplash)&&page===0?`<div class="duel-start-title" aria-label="ミニゲーム開始：嘘つきルナを守れ！"><div class="duel-start-slash" aria-hidden="true"></div><div class="duel-start-panel"><strong>嘘つきルナを守れ！</strong></div></div>`:'';
  // The opening conversation belongs to the ordinary full-size character stage.
  // Only switch to the mini-game when the first opponent actually speaks.
  if(intro){
