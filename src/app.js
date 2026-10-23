@@ -10,7 +10,7 @@ import {actTwoMorningDirection,actTwoMorningStageHTML,startMorningBlackout,prepa
 import {isFirstStalkerReply,firstStalkerStageHTML,prepareFirstStalkerAssets,needsStalkerPreface,stalkerPrefaceHTML,startStalkerPreface} from './first-stalker-stage.js';
 import { LUNA_MINI_EMOTIONS, MOKU_MINI_EMOTIONS } from './mini-emotions.js';
 import {isFirstFireReply,firstFireCut,firstFireStageHTML} from './first-fire-stage.js';
-import {clearLegacyObservationMemo,observationView,observationClockLimit,tickObservation,inheritObservation} from './act-one-observation.js';
+import {clearLegacyObservationMemo,observationView,observationClockLimit,tickObservation,inheritObservation,firstActSleepClockReady} from './act-one-observation.js';
 import {createVoicePlayer} from './voice-player.js?v=2026.10.23.2';
 const characterVoice=createVoicePlayer({chapter:()=>state?.actOne?.chapter});
 document.addEventListener('pointerdown',()=>characterVoice.unlock(),{capture:true});
@@ -1102,7 +1102,7 @@ let lateNightWarp = null;
 function nightMontageCaption(hour){
   return hour<27?'「あと一本だけ見るニャ。」':hour<30?'「……これ、続きが気になるニャ。」':hour<34?'「……もう朝かニャ？ まあいいニャ。」':'「……あれ、もう昼ニャ……？」';
 }
-function removeNightMontage(){document.querySelector('#night-montage-caption')?.remove();document.body.classList.remove('late-night-warp');}
+function removeNightMontage(){document.querySelector('#night-montage-caption')?.remove();document.body.classList.remove('late-night-warp','sleep-night-warp');}
 
 function frame(now){
   const seconds=Math.min(.25,Math.max(0,(now-lastTime)/1000));lastTime=now;
@@ -1111,17 +1111,29 @@ function frame(now){
   if(now-lastResolutionCheck>500){lastResolutionCheck=now;if(renderer.resizeToDisplay())worldRenderGate.state=null;}
   const stopped=document.documentElement.classList.contains('game-booting')||paused||modal.open||!!state.ending||!!document.querySelector('#entry-gate:not([hidden])');
   const observationStopped=stopped||document.body.classList.contains('controls-expanded');
-  if(observationStopped||lateNightWarp||state.actOne?.chapter===2)document.body.classList.remove('sleep-night-warp');
+  if(observationStopped&&lateNightWarp?.kind==='sleep'){lateNightWarp=null;removeNightMontage();}
   tickObservation(state,seconds,{stopped:observationStopped,voiceBusy:characterVoice.busy});
   if(!observationStopped&&!talk.chapterChat){
     const firstNight=state.actOne?.chapter!==2&&state.actOne?.completed?.includes('ash')&&!state.actOne?.completed?.includes('dinner')&&!state.actOne?.pending&&state.hour>=24.1&&state.hour<36.65;
     if(!lateNightWarp&&firstNight&&observationView(state)?.beat==null&&state.actOne?.observation?.done?.includes('tv-late')&&!state.actOne?.observation?.done?.includes('before-dinner')){
-      lateNightWarp={rate:(36.65-state.hour)/6.5,tail:0};document.body.classList.add('late-night-warp');
+      lateNightWarp={kind:'tv',rate:(36.65-state.hour)/6.5,tail:0};document.body.classList.add('late-night-warp');
       const caption=document.createElement('div');caption.id='night-montage-caption';caption.className='night-montage-caption';document.body.append(caption);
     }
+    if(!lateNightWarp&&firstActSleepClockReady(state)){
+      // Reuse the original overnight clock animation instead of toggling a class every frame.
+      lateNightWarp={kind:'sleep',rate:(53-state.hour)/6.5,tail:0};
+      document.body.classList.add('late-night-warp','sleep-night-warp');
+    }
     if(lateNightWarp){
-      if(state.hour<36.65){advanceActOne(state,Math.min(36.65-state.hour,seconds*lateNightWarp.rate));const caption=document.querySelector('#night-montage-caption');if(caption)caption.textContent=nightMontageCaption(state.hour);if(state.hour>=36.65)removeNightMontage();}
-      else {lateNightWarp.tail+=seconds;if(lateNightWarp.tail>=.65){lateNightWarp=null;removeNightMontage();}}
+      const endHour=lateNightWarp.kind==='sleep'?53:36.65;
+      if(state.hour<endHour){
+        const limit=lateNightWarp.kind==='sleep'?Math.min(endHour,observationClockLimit(state)):endHour;
+        advanceActOne(state,Math.max(0,Math.min(limit-state.hour,seconds*lateNightWarp.rate)));
+        if(lateNightWarp.kind==='tv'){
+          const caption=document.querySelector('#night-montage-caption');if(caption)caption.textContent=nightMontageCaption(state.hour);
+        }
+        if(state.hour>=endHour)removeNightMontage();
+      }else {lateNightWarp.tail+=seconds;if(lateNightWarp.tail>=.65){lateNightWarp=null;removeNightMontage();}}
     }else if(state.actOne){
       // Compress uneventful hours while leaving voiced observation beats at rest.
       // The observation clock limit ensures no upcoming authored beat is skipped.
@@ -1129,13 +1141,9 @@ function frame(now){
       const emptyClock=observing&&!observing.beat&&!talk.bubbles.length&&!characterVoice.busy;
       const moku=state.residents.find(r=>r.type==='cat');
       const walkingOutside=moku?.journey?.path.some(p=>p.zone!=='room')&&sampleJourney(moku,state.hour).moving;
-      // The final sleep montage is a scene transition, not an idle-only speed boost.
-      // Spoken ambient bubbles and voice playback must not prevent its clock zoom.
-      const sleepingThroughNight=state.actOne.chapter!==2&&state.actOne.completed.includes('dinner')&&state.actOne.observation?.done.includes('blanket')&&!state.actOne.pending&&state.hour>=38.4&&state.hour<53&&moku?.action==='sleep'&&!sampleJourney(moku,state.hour).moving&&!observing?.beat;
-      document.body.classList.toggle('sleep-night-warp',!!sleepingThroughNight);
       // Keep exterior walking readable without slowing indoor gags or voiced beats.
-      const clockSpeed=sleepingThroughNight?30:walkingOutside?Math.min(speed,3):emptyClock&&speed===6?12:speed;
-      const clockLimit=sleepingThroughNight?Math.min(53,observationClockLimit(state)):observationClockLimit(state);
+      const clockSpeed=walkingOutside?Math.min(speed,3):emptyClock&&speed===6?12:speed;
+      const clockLimit=observationClockLimit(state);
       const dt=Math.min(seconds*clockSpeed/10,Math.max(0,clockLimit-state.hour));
       if(state.actOne.chapter===2)advanceActTwo(state,dt);else advanceActOne(state,dt);
     }else advance(state,seconds*speed/10);

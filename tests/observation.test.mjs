@@ -2,7 +2,7 @@ import {sampleJourney} from '../src/movement.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createActOne,advanceActOne,answerActOne,validActOne,rewindBeforeFire} from '../src/act-one.js';
-import {OBSERVATION_BEATS,observationState,observationClockLimit,tickObservation,observationView,finishObservationLine,canSkipObservation,skipObservation,inheritObservation} from '../src/act-one-observation.js';
+import {OBSERVATION_BEATS,observationState,observationClockLimit,tickObservation,observationView,finishObservationLine,canSkipObservation,skipObservation,inheritObservation,firstActSleepClockReady} from '../src/act-one-observation.js';
 import {extractVoiceScript} from '../tools/voice-script.mjs';
 const start=()=>{const s=createActOne();s.actOne.started=true;observationState(s);return s;};
 const step=(s,stopped=false)=>{tickObservation(s,.25,{stopped});if(!stopped)advanceActOne(s,Math.min(.15,Math.max(0,observationClockLimit(s)-s.hour)));tickObservation(s,0,{stopped});};
@@ -60,4 +60,24 @@ test('landlord replies only while Moku is physically outside or in the hall, bef
 test('legacy memo data and inspection holds are removed on migration',()=>{
  const s=start();s.actOne.observation={version:1,notes:['seat'],done:[],seen:[],current:{id:'seat',index:0,elapsed:1,inspecting:true}};
  const o=observationState(s);assert.equal('notes' in o,false);assert.equal(o.version,2);assert.equal('notes' in observationView(s),false);
+});
+
+test('final sleep reuses the overnight clock after bedtime lines without skipping observation dialogue',()=>{
+ const s=createActOne(42,[],2,true);
+ observationState(s);
+ advanceActOne(s,100);answerActOne(s,s.actOne.pending.eventId,'water');
+ advanceActOne(s,100);answerActOne(s,s.actOne.pending.eventId,'coronation');
+ advanceActOne(s,1.6);
+ const o=observationState(s);
+ assert.equal(firstActSleepClockReady(s),false,'bedtime scene must finish first');
+ o.done.push('blanket');o.current={id:'blanket',index:0,elapsed:0};
+ assert.equal(firstActSleepClockReady(s),false,'active dialogue is not skipped');
+ o.current=null;o.gap=.85;
+ assert.equal(firstActSleepClockReady(s),false,'post-dialogue gap stays intact');
+ o.gap=0;
+ assert.equal(firstActSleepClockReady(s),true,'sleep montage starts for settled sleeping Moku');
+ advanceActOne(s,53-s.hour);
+ assert.equal(s.hour,53);assert.equal(firstActSleepClockReady(s),false,'clock returns before morning walk');
+ assert.equal(s.residents[0].action,'idle');
+ assert.ok(validActOne(s));
 });

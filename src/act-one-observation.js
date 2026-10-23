@@ -273,6 +273,12 @@ export function observationState(state){
 }
 export function observationActive(state){return !!state.actOne&&(state.actOne.chapter!==2||secondObservation(state))&&state.actOne.started&&!state.actOne.prologuePending&&!state.actOne.rewindIntroPending&&state.actOne.status==='playing'&&!state.actOne.pending;}
 const obsBeats=state=>observationBeats(state).filter(b=>b.phase===observationPhase(state));
+// Begin the final sleep time-lapse only after Moku's bedtime dialogue has finished.
+export function firstActSleepClockReady(state){
+ if(!observationActive(state)||state.actOne.chapter===2||!state.actOne.completed.includes('dinner')||state.hour<38.4||state.hour>=53)return false;
+ const o=observationState(state),moku=state.residents.find(r=>r.type==='cat');
+ return !!o?.done.includes('blanket')&&!o.current&&o.gap<=0&&moku?.action==='sleep'&&!sampleJourney(moku,state.hour).moving;
+}
 export function canSkipObservation(state){const o=observationState(state);return observationActive(state)&&obsBeats(state).every(b=>o.done.includes(b.id)||o.seen.includes(b.id));}
 function observationInPlace(state,beat){
  const cat=state.residents.find(r=>r.type==='cat');
