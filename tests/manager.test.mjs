@@ -120,3 +120,18 @@ test('landlord gait follows distance through four phases and does not advance on
  assert.equal(quarter.walkDistance,p.walkDistance);assert.equal(quarter.x,p.x);
  p=advanceManager(p,{...target,x:400},.1);assert.equal(p.direction,-1);assert.equal(p.walkDistance,20);
 });
+
+
+test('listening in the first evening encounter puts the broom away until the encounter ends',()=>{
+ const s=createActOne(42,[],2,true);advanceActOne(s,2.5);
+ const before=JSON.stringify(s);
+ for(const bubbles of [[{speaker:'cat',text:'大家',emotion:'neutral'}],[],[{speaker:'manager',text:'ああ。',emotion:'neutral'}]]){
+  const target=managerTarget(s,bubbles);
+  assert.equal(target.chat,true);assert.equal(target.pose,'idle');
+  for(const time of [0,.4,1])assert.equal(managerFrame(target,time),'idle');
+ }
+ assert.equal(JSON.stringify(s),before,'pose changes must not mutate the save');
+ s.residents.find(r=>r.type==='cat').lifeBeat=19;
+ const alone=managerTarget(s);assert.equal(alone.chat,false);
+ assert.equal(managerFrame(alone,0),'clean_a');assert.equal(managerFrame(alone,.4),'clean_b');
+});
