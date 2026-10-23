@@ -472,7 +472,8 @@ export function rewindBeforeFire(s){
   next.actOne.rewindIntroPending=false;next.actOne.rewindTitlePending=false;
   next.ending=null;next.pending=null;
   next.events.forEach(e=>e.read=true);
-  const firstLoop=s.actOne.attempt===1;
+  const firstLoop=s.actOne.attempt===1&&scene==='ash';
+  const firstCookingLoop=s.actOne.attempt===1&&scene==='dinner';
   const resumeAtAsh=scene==='ash';
   if(resumeAtAsh){
     // Restore the unanswered consultation, not the afternoon observation route.
@@ -523,6 +524,13 @@ export function rewindBeforeFire(s){
     ac('surprised','それが……さっき吸ったやつ、まだ熱いニャ。'),
     an('モクの口ぶりも、さっきと同じだ。吸い殻は、まだ捨てられていない。'),
     {...am('だったら……今度こそ、間違えられねぇ。'),innerVoice:true}
+  ]:firstCookingLoop?[
+    an('焦げた臭いが消えた。昼下がりの101号室で、モクが眠そうにフライパンを握っている。'),
+    am('……モク！？ お前、無事なのか！？'),
+    ac('tired','腹減ってるだけニャ。大家、どうすればいいニャ……？'),
+    an('壁の時計は、13時。料理を始めようとしていた、あの時刻だった。'),
+    {...am('……戻ったのか。火を使わせたら、また……。'),innerVoice:true},
+    {...am('今度こそ、間違えられねぇ。'),innerVoice:true}
   ]:[
     an('炎の音が遠ざかる。見慣れた101号室。'+storyCheckpointTarget(s).label+'に戻っていた。'),
     {...am('……また戻った。今度こそ大丈夫だと思ったのに。'),innerVoice:true},

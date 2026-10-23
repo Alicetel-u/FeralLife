@@ -121,7 +121,7 @@ test('both duel BAD endings rewind to the same afternoon and character scene',()
   assert.equal(next.hour,84);
   assert.ok(intro?.lines?.length===10);
   assert.equal(intro.resumeDuel,true);
-  assert.equal(intro.lines[2].text,'……戻ったのか。まだ、ルナが俺に頼み事をする前に……。');
+  assert.equal(intro.lines[2].text,'……戻ったのか。ルナに彼氏役を頼まれた、あの時に……。');
   assert.equal(intro.lines[3].speaker,'hostess');
   assert.equal(next.actOne.rewindIntroPending,true);
   assert.equal(next.actOne.pending,null);
@@ -473,7 +473,7 @@ test('only the yandere rewind gives the landlord a hint about affection and boun
   const s=duelStart();for(const id of choices)answerActTwo(s,s.actOne.pending.eventId,id);
   assert.equal(s.actOne.status,'bad');
   const next=rewindActTwo(s),lines=next.events.find(e=>e.actScene==='act2-rewind').lines;
-  const thought=lines.find(line=>line.text.includes('気持ちが高まると'));
+  const thought=lines.find(line=>line.text.includes('助けるつもりが'));
   assert.equal(!!thought,hint);
   if(hint){assert.equal(thought.innerVoice,true);assert.ok(lines.some(line=>line.innerVoice&&line.text.includes('期待させすぎない')));}
   assert.equal(next.hour,84);assert.deepEqual(next.actOne.completed,['bag']);

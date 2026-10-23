@@ -1,7 +1,7 @@
 import {ACT_TWO_EPILOGUE_LINES} from './act-two-epilogue-script.js';
 import {failedChoiceKeys} from './choice-history.js';
 import {DUEL_INTRO,duelChoices,duelEncounterLines,duelReplyLines,duelEndingLines,duelOutcome} from './act-two-duel.js?v=2026.10.20.38';
-import { saveStoryCheckpoint, storyCheckpointTarget } from './story-checkpoints.js';
+import { saveStoryCheckpoint, storyCheckpointTarget, resumeStoryRewind } from './story-checkpoints.js';
 import { createActOne,advanceActOne,answerActOne } from './act-one.js';
 import {advance,addEvent,admit} from './simulation.js';
 import { actExpression } from './act-expressions.js';
@@ -523,13 +523,8 @@ function answerDuel(s,eventId,choiceId){
 // Complete the rewind through the same scenario entry used in normal play.
 // Infer the duel destination as well, for saves made before resumeDuel existed.
 export function resumeActTwoRewind(s){
- const a=s.actOne;
- if(a?.chapter!==2||!a.rewindIntroPending)return null;
- a.rewindIntroPending=false;
- const intro=s.events.find(e=>e.actScene==='act2-rewind');
- if(intro)intro.read=true;
- if(!a.pending)advanceActTwo(s,Math.max(0.001,nextActTwoAt(s)-s.hour));
- return a.pending?.eventId??null;
+ if(s.actOne?.chapter!==2)return null;
+ return resumeStoryRewind(s,()=>advanceActTwo(s,Math.max(0.001,nextActTwoAt(s)-s.hour)));
 }
 function rewindDuel(s){
  const a=s.actOne,point=a.rollbackPoint;
@@ -542,24 +537,24 @@ function rewindDuel(s){
  Object.assign(intro,{actScene:'act2-rewind',resumeDuel:true,cast:['hostess','cat'],stageOnly:true,lines:a.failure==='duel-yandere'?[
   {...m('……っ！？ 俺、部屋に閉じ込められてたはずじゃ……。'),innerVoice:true},
   n('目の前には、いつものけもの荘。閉じ込められた部屋ではなく、あの昼の玄関だった。'),
-  {...m('……戻ったのか。まだ、ルナが俺に頼み事をする前に……。'),innerVoice:true},
-  l('surprised','大家さん？ どうしたの？ まだ何もお願いしてないよ？'),
+  {...m('……戻ったのか。ルナに彼氏役を頼まれた、あの時に……。'),innerVoice:true},
+  l('surprised','大家さん？ どうしたの？'),
   {...m('……ルナ。'),voicePerformance:'tragedy-shock'},
   l('surprised','えっ？ な、なに？'),
-  {...m('……気持ちが高まると、あんなふうになっちまうのか。'),innerVoice:true},
+  {...m('……助けるつもりが、あんなことになるなんて……。'),innerVoice:true},
   {...m('今度は調子に乗って、期待させすぎないように……ちゃんと線を引かねぇと。'),innerVoice:true},
-  m('……いや、なんでもねぇ。話なら聞く。ただし、できることとできないことは別だ。'),
+  m('……いや、なんでもねぇ。力にはなる。ただし、できることとできないことは別だ。'),
   c('neutral','大家、今日はやけに慎重ニャ。')
  ]:[
   {...m('……っ！？ 俺は……どうしてここに……？'),innerVoice:true},
   n('目の前には、いつものけもの荘。ルナに鍵も帳簿も取り上げられる前、あの昼の玄関だった。'),
-  {...m('……戻ったのか。まだ、ルナが俺に頼み事をする前に……。'),innerVoice:true},
-  l('surprised','大家さん？ どうしたの？ まだ何もお願いしてないよ？'),
+  {...m('……戻ったのか。ルナに彼氏役を頼まれた、あの時に……。'),innerVoice:true},
+  l('surprised','大家さん？ どうしたの？'),
   {...m('……ルナ。'),voicePerformance:'tragedy-shock'},
   l('surprised','えっ？ な、なに？'),
   {...m('……鍵も帳簿も、まだ俺の手にある。今度は全部言いなりになんかならねぇ。'),innerVoice:true},
   {...m('頼まれても、大家として決めるべきことは俺が決める……。'),innerVoice:true},
-  m('……いや、なんでもねぇ。話なら聞く。ただし、判断するのは俺だ。'),
+  m('……いや、なんでもねぇ。力にはなる。ただし、判断するのは俺だ。'),
   c('neutral','大家、今日はやけに慎重ニャ。')
  ]});
  return next;

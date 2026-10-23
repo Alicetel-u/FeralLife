@@ -1,7 +1,9 @@
+import {eventConversation} from '../src/event-stage.js';
+import {messagePages} from '../src/message-pages.js';
 import{readFileSync}from'node:fs';
 import test from 'node:test';import assert from 'node:assert/strict';
 import{automaticFirstRewind,rewindBeat,rewindTransitionHTML}from'../src/rewind-transition.js';
-import{storyCheckpointTarget,validStoryCheckpoint}from'../src/story-checkpoints.js';
+import{storyCheckpointTarget,validStoryCheckpoint,resumeStoryRewind}from'../src/story-checkpoints.js';
 import{validateSave}from'../src/simulation.js';
 import{getActOneChoices,createActOne,advanceActOne,answerActOne,rewindBeforeFire,validActOne}from'../src/act-one.js';
 test('only the unavoidable first ash fire bypasses the results page and keeps checkpoint and memory',()=>{
@@ -52,7 +54,7 @@ test('finishing the reunion opens the pending answer instead of observation',()=
  const state=rewindBeforeFire(s),app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
  const branch=app.slice(app.indexOf("  if(button.hasAttribute('data-rewind-resume')"),app.indexOf("  if(button.hasAttribute('data-epilogue-done')"));
  let opened=null,closed=false,saves=0;
- new Function('state','button','save','closeModal','showEvent',branch)(state,{hasAttribute:key=>key==='data-rewind-resume'},()=>saves++,()=>closed=true,id=>opened=id);
+ new Function('resumeStoryRewind','eventConversation','messagePages','state','button','save','closeModal','showEvent',branch)(resumeStoryRewind,eventConversation,messagePages,state,{hasAttribute:key=>key==='data-rewind-resume'},()=>saves++,()=>closed=true,id=>opened=id);
  assert.equal(state.actOne.rewindIntroPending,false);assert.equal(opened,state.actOne.pending.eventId);assert.equal(closed,false);assert.equal(saves,1);
  assert.equal(state.events.find(e=>e.actScene==='rewind').read,true);
 });

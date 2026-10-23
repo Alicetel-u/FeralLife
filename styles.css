@@ -2089,3 +2089,10 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .duel-ultimate-waiting .duel-static-electricity{visibility:hidden}
 @keyframes duel-static-tickle{0%,42%,62%,100%{opacity:.3}18%,54%{opacity:1}24%,58%{opacity:.55}}
 @media(prefers-reduced-motion:reduce){.duel-static-electricity path{animation:none!important;opacity:.4}}
+
+/* Rewind handoff holds the existing scene while choices are immediately ready.
+   Do not repeat the skipped conversation text or its tap-to-advance controls. */
+.rewind-choice-ready .stage-bubble,
+.rewind-choice-ready .stage-page,
+.rewind-choice-ready .message-continuation,
+.rewind-choice-ready .mobile-dialogue-tap { visibility: hidden; pointer-events: none; }

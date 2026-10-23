@@ -11,6 +11,9 @@
 
 ## Narrative presentation (mandatory)
 - After a failed trouble, rewind to the beginning of that same trouble, preserving earlier resolved incidents. Keep the clock target and resumed dialogue consistent with that point; use this policy for future trouble implementations.
+- After the dedicated post-loop dialogue, resume directly at the failed trouble's choices. Do not replay its opening, consultation, or battle introduction. Apply this to every future chapter (including acts three and four).
+- Use `resumeStoryRewind` in `src/story-checkpoints.js` for this handoff; chapter-specific code must reconstruct the real unanswered incident before it returns. Preserve prior resolved incidents, failed-choice history, save compatibility, and the trouble's clock target. For multi-round battles, reset that trouble to its first round and initial meter.
+- Keep post-loop portrait dialogue separate from minigame dialogue. Write it to end naturally before the choice screen; do not insert an opponent's battle lines into the portrait conversation. Verify direct choices after reload and repeated loops, and keep debug loop/choice destinations aligned.
 - Keep dialogue and narration inside the story world. Do not describe chapter starts, checkpoints, choice branches, screen fades, or other implementation/staging instructions as narrative text. Describe what characters perceive instead.
 - Developer menus may use technical labels, but their scene names must match their actual destinations and current scenario definitions.
 - Keep debug scene-select destinations for each trouble's opening, post-rewind dialogue, and immediate pre-choice state. Build these through the real scenario/rewind logic, preserve normal saves, and paginate menus to fit one mobile screen as points grow.

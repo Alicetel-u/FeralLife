@@ -1,3 +1,5 @@
+import {eventConversation} from '../src/event-stage.js';
+import {messagePages} from '../src/message-pages.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -35,7 +37,7 @@ test('every repeated first-trouble failure restores its beginning and clock targ
  }
 });
 
-test('real resume button reaches trouble opening without observation, including saved pre-fix duel rewinds',()=>{
+test('real resume button reaches choices without replaying trouble dialogue, including saved pre-fix duel rewinds',()=>{
  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
  const branch=app.slice(app.indexOf("  if(button.hasAttribute('data-rewind-resume')"),app.indexOf("  if(button.hasAttribute('data-epilogue-done')"));
  for(const route of ['bag','yandere','domination'])for(const legacy of [false,true]){
@@ -43,9 +45,10 @@ test('real resume button reaches trouble opening without observation, including 
   if(route==='bag')answer(s,'guarantee');
   else {answer(s,'loan');advanceActTwo(s,100);for(const id of route==='yandere'?['vow','shield','future','ultimate']:['help','discount','sleep','catapult'])answer(s,id);}
   s=structuredClone(rewindActTwo(s));if(legacy)delete s.events.find(e=>e.actScene==='act2-rewind').resumeDuel;
-  const context={state:s,resumeActTwoRewind,button:{hasAttribute:()=>true},save(){valid(s);},showEvent(id,index){context.landed={id,index};},closeModal(){assert.fail('must not return to observation');}};
+  const context={state:s,resumeActTwoRewind,eventConversation,messagePages,button:{hasAttribute:()=>true},save(){valid(s);},showEvent(id,index){context.landed={id,index};},closeModal(){assert.fail('must not return to observation');}};
   vm.createContext(context);vm.runInContext('(function(){'+branch+'})()',context);
-  assert.equal(context.landed.id,s.actOne.pending.eventId);assert.equal(context.landed.index,0);
+  assert.equal(context.landed.id,s.actOne.pending.eventId);assert.equal(context.landed.index,eventConversation(s.events.find(e=>e.id===s.actOne.pending.eventId)).length-1);
+  assert.equal(s.events.find(e=>e.id===s.actOne.pending.eventId).rewindChoiceReady,true);
   assert.equal(s.hour,route==='bag'?66:84);assert.equal(s.actOne.rewindIntroPending,false);
   assert.deepEqual(s.actOne.completed,route==='bag'?[]:['bag']);valid(s);
  }

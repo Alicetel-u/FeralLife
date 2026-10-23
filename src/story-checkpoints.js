@@ -28,3 +28,23 @@ export function storyCheckpointTarget(state){
  if(!second&&!late)return {hour:23,label:'灰皿の相談を受けた夜'};
  return {hour:point?.kind==='story'&&validStoryCheckpoint(point,second?2:1)?point.state.hour:second?(late?62:57):(late?23:17),label:second?(late?'あの男が立ち去った夕暮れ':'ルナが越してきた日'):(late?'灰皿の吸い殻を片づけた夜':'初めてモクの部屋を訪ねた夕暮れ')};
 }
+
+// Shared handoff for every chapter: restore the real incident first, then expose
+// its unanswered choices. Chapter-specific setup belongs in openPending.
+// Keep transcripts/checkpoints intact; only presentation state changes here.
+export function resumeStoryRewind(state,openPending=()=>{}){
+ const a=state.actOne;
+ if(!a?.rewindIntroPending)return null;
+ a.rewindIntroPending=false;
+ const intro=state.events.findLast(e=>e.actScene==='rewind'||e.actScene?.endsWith('-rewind'));
+ if(intro)intro.read=true;
+ const checkpoint=a.rollbackPoint;
+ if(!a.pending)openPending();
+ if(checkpoint)a.rollbackPoint=checkpoint;
+ const event=state.events.find(e=>e.id===a.pending?.eventId);
+ if(!event)return null;
+ delete a.conversation;
+ event.choicePresented=true;
+ event.rewindChoiceReady=true;
+ return event.id;
+}
