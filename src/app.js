@@ -1103,7 +1103,7 @@ function frame(now){
       // The observation clock limit ensures no upcoming authored beat is skipped.
       const observing=observationView(state);
       const emptyClock=observing&&!observing.beat&&!talk.bubbles.length&&!characterVoice.busy;
-      const clockSpeed=emptyClock?Math.max(speed,12):speed;
+      const clockSpeed=emptyClock?speed===6?12:speed;
       const dt=Math.min(seconds*clockSpeed/10,Math.max(0,observationClockLimit(state)-state.hour));
       if(state.actOne.chapter===2)advanceActTwo(state,dt);else advanceActOne(state,dt);
     }else advance(state,seconds*speed/10);
