@@ -2132,3 +2132,34 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .rewind-choice-ready .stage-page,
 .rewind-choice-ready .message-continuation,
 .rewind-choice-ready .mobile-dialogue-tap { visibility: hidden; pointer-events: none; }
+
+/* Story-specific BAD END exit. Overlays the LAST dialogue (including its voice)
+   and remains above the modal-content when the existing cinematic loads. */
+.bad-entry-host{position:absolute;inset:0;z-index:110;pointer-events:auto;overflow:hidden}
+.bad-entry-cut{position:absolute;inset:0;overflow:hidden;display:grid;place-items:center;isolation:isolate;opacity:0;visibility:hidden;color:#fff5e9;transition:opacity var(--bad-veil-ms,900ms) ease-in-out,visibility 0s linear var(--bad-veil-ms,900ms);background:#0b0b13}
+.bad-entry-cut[data-phase="veil"],.bad-entry-cut[data-phase="still"],.bad-entry-cut[data-phase="covered"]{opacity:1;visibility:visible;transition:opacity var(--bad-veil-ms,900ms) ease-in-out}
+.bad-entry-cut[data-phase="reveal"]{opacity:0;visibility:visible;transition:opacity var(--bad-reveal-ms,700ms) ease-out}
+.bad-entry-grain,.bad-entry-light{position:absolute;inset:0;pointer-events:none}
+.bad-entry-grain{opacity:.25;background:repeating-linear-gradient(0deg,transparent 0 3px,#fff1 4px,transparent 5px 9px)}
+.bad-entry-light{opacity:.7;animation:bad-entry-breath 2.5s ease-in-out infinite alternate}
+.bad-entry-cut[data-kind="fire"]{background:radial-gradient(ellipse at 48% 100%,#86290c 0,#301718 35%,#09080c 80%)}
+.bad-entry-cut[data-kind="fire"] .bad-entry-light{background:radial-gradient(ellipse at 65% 108%,#ff9e3570,transparent 53%);animation:bad-entry-fire 1s ease-in-out infinite alternate}
+.bad-entry-cut[data-kind="stalker"]{background:linear-gradient(145deg,#191622,#07070c 65%,#010103)}
+.bad-entry-cut[data-kind="stalker"] .bad-entry-light{background:linear-gradient(90deg,transparent 41%,#a1a6cb24 46%,transparent 51%);animation:bad-entry-stalker 2s step-end infinite}
+.bad-entry-cut[data-kind="absence"]{background:linear-gradient(180deg,#2f3442,#111622 53%,#06080e)}
+.bad-entry-cut[data-kind="absence"] .bad-entry-light{background:radial-gradient(ellipse at 50% -20%,#afc6dc4b,transparent 65%)}
+.bad-entry-cut[data-kind="debt"]{background:linear-gradient(156deg,#4e4341,#231d24 49%,#07080c)}
+.bad-entry-cut[data-kind="debt"] .bad-entry-light{background:linear-gradient(114deg,transparent 0 43%,#f4dfbe29 44% 46%,transparent 47% 100%)}
+.bad-entry-cut[data-kind="obsession"]{background:radial-gradient(ellipse at 57% 65%,#4c203d,#1e1325 45%,#0a0710 90%)}
+.bad-entry-cut[data-kind="obsession"] .bad-entry-light{background:radial-gradient(circle at 60% 60%,#b05c8570,transparent 35%)}
+.bad-entry-cut[data-kind="submission"]{background:linear-gradient(160deg,#24192e,#0e0c1a 60%,#030309)}
+.bad-entry-cut[data-kind="submission"] .bad-entry-light{background:repeating-linear-gradient(118deg,transparent 0 130px,#997da01a 131px 140px,transparent 141px 250px)}
+.bad-entry-caption{position:relative;max-width:min(85vw,720px);margin:0;padding:20px 28px;font:700 clamp(18px,2.4vw,30px)/1.8 "Yu Gothic","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;letter-spacing:.12em;text-align:center;text-shadow:0 4px 20px #000;opacity:0;transform:translateY(12px);transition:opacity .7s ease,transform .7s ease}
+.bad-entry-cut[data-phase="still"] .bad-entry-caption,.bad-entry-cut[data-phase="covered"] .bad-entry-caption{opacity:1;transform:none}
+@keyframes bad-entry-breath{from{opacity:.25;transform:scale(1)}to{opacity:.7;transform:scale(1.08)}}
+@keyframes bad-entry-fire{from{opacity:.35;transform:translateX(-2%)}to{opacity:.95;transform:translateX(3%)}}
+@keyframes bad-entry-stalker{0%,80%{opacity:.05}90%{opacity:.65}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){
+ .bad-entry-cut,.bad-entry-caption{transition-duration:.01ms!important}
+ .bad-entry-grain,.bad-entry-light{animation:none!important}
+}
