@@ -34,7 +34,7 @@ test('all phases follow completed events and new speech is extracted directly fr
  const s=start();s.actOne.completed=['ash'];s.hour=19;assert.equal(observationView(s).total,4);
  s.actOne.completed.push('dinner');s.hour=37;assert.equal(observationView(s).total,2);
  const rows=extractVoiceScript('act1').filter(r=>r.source.startsWith('act1/observation/'));
- assert.equal(rows.length,35);assert.deepEqual(rows.map(r=>r.line.text),OBSERVATION_BEATS.flatMap(b=>b.lines.map(l=>l.text)));
+ assert.equal(rows.length,34);assert.deepEqual(rows.map(r=>r.line.text),OBSERVATION_BEATS.flatMap(b=>b.lines.map(l=>l.text)));
  assert.equal(extractVoiceScript('intro').some(r=>r.source.startsWith('act1/observation/')),false);
 });
 

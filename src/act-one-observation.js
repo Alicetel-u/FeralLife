@@ -240,12 +240,11 @@ export const OBSERVATION_BEATS=[
   {
     id:'hall',phase:2,at:55.05,title:'よく寝た朝、大家とばったり',place:'street',
     lines:[
-      {speaker:'cat',name:'モク',emotion:'happy',text:'おはようニャ。あー、よく寝たニャ！'},
-      {speaker:'manager',name:'大家',emotion:'tired',text:'こっちはお前のせいで寝不足だよ。'},
-      {speaker:'cat',name:'モク',emotion:'surprised',text:'大家も寝ればよかったニャ。'},
-      {speaker:'manager',name:'大家',emotion:'angry',text:'火の元が心配で寝られなかったんだよ！'},
-      {speaker:'cat',name:'モク',emotion:'happy',text:'じゃあ安心して寝るニャ。今日は料理しないニャ。'},
-      {speaker:'manager',name:'大家',emotion:'tired',text:'安心のさせ方がおかしいだろ……。'}
+      {speaker:'manager',name:'大家',emotion:'neutral',text:'お、起きたのか。'},
+      {speaker:'cat',name:'モク',emotion:'neutral',text:'寝すぎて疲れたから、気分転換ニャ。'},
+      {speaker:'manager',name:'大家',emotion:'neutral',text:'休憩のあとに休憩するなよ。'},
+      {speaker:'cat',name:'モク',emotion:'neutral',text:'歩いてるニャ。今はかなり活動的ニャ。'},
+      {speaker:'manager',name:'大家',emotion:'neutral',text:'……まあ、部屋にこもってるよりいいか。'}
     ]
   }
 ];

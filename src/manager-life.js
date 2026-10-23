@@ -13,9 +13,11 @@ export function managerReaction(line){
  return 'idle';
 }
 export function managerTarget(state,bubbles=[]){
- if(state.actOne?.chapter!==2&&state.actOne?.started&&!state.actOne?.completed?.includes('ash')&&!state.actOne?.pending){
+ if(state.actOne?.chapter!==2&&state.actOne?.started&&(!state.actOne?.completed?.includes('ash')||state.actOne?.completed?.includes('dinner'))&&!state.actOne?.pending){
   const speaking=bubbles[0];const p=state.residents.find(r=>r.type==='cat');
-  const meeting=p?.lifeBeat===19.3;
+  // Moku approaches the same planted caretaker in the evening and next morning.
+  // Do not chase her position or change destination when the speaker changes.
+  const meeting=p?.lifeBeat===19.3||p?.lifeBeat===54.6;
   return {x:650,y:513,zone:'street',chat:meeting,direction:1,pose:meeting?(speaking?.speaker==='manager'?managerReaction(speaking):'idle'):'clean'};
  }
  const outside=state.residents.map(r=>({r,p:sampleJourney(r,state.hour,ACTIONS[r.action].place)})).filter(({p})=>p.zone==='street'||(p.zone==='hall'&&p.y>=430));
