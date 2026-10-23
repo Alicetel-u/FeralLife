@@ -4,18 +4,21 @@ import {readFileSync} from 'node:fs';
 import {badEndingEntryPlan,badEndingEntryHTML,startBadEndingEntry} from '../src/bad-ending-entry.js';
 
 test('silent room-to-corridor transition has no extra BAD END writing or fire imagery',()=>{
- const plan=badEndingEntryPlan('corridor'),html=badEndingEntryHTML();
+ const plan=badEndingEntryPlan('corridor'),html=badEndingEntryHTML('corridor');
  assert.equal(plan.kind,'corridor');
- assert.ok(plan.hold>=500&&plan.veil>=450);
+ assert.ok(plan.hold<=300&&plan.veil<=320,'first corridor must be brisk');
  assert.doesNotMatch(html,/bad-entry-caption|焦げ|燃え|火/);
  assert.match(html,/data-kind="corridor"/);
 });
 test('first tragedy transition connects the two story backgrounds instead of ending dialogue',()=>{
  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
  const stage=readFileSync(new URL('../src/first-fire-stage.js',import.meta.url),'utf8');
- assert.match(app,/firstFireCut\(lines,eventView.index\)==='trust'/);
+ assert.match(app,/firstFireCut\(lines,previous\)==='trust'/);
  assert.match(app,/firstFireCut\(lines,cursor\)==='departure'/);
- assert.match(app,/showFirstFireCorridorCut\(id,cursor,page\)/);
+ assert.match(app,/badSceneCutKind\(/);
+ assert.match(app,/failure.startsWith\('dinner-'\)/);
+ assert.match(app,/failure.startsWith\('bag-'\)/);
+ assert.match(app,/showBadSceneCut\(id,cursor,page,badCut/);
  assert.doesNotMatch(app,/function enterBadEnding\(/);
  assert.match(stage,/first-fire-corridor.png/);
  assert.match(stage,/if\(inside\)return eventStageHTML/);
