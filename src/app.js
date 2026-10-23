@@ -1,4 +1,4 @@
-import {resumeConversation,rememberConversation,clearConversation} from './conversation-progress.js';
+import {resumeConversation,rememberConversation,clearConversation,continueDestination} from './conversation-progress.js?v=2026.10.23.1';
 import {refreshActTwoEpilogue} from './act-two-epilogue-script.js';
 import {actTwoEpilogueDirection,epilogueTransitionFor,actTwoEpilogueStageHTML,actTwoEpilogueCompleteHTML,prepareEpilogueAssets,startEpilogueTransition,playEpilogueSound} from './act-two-epilogue-stage.js';
 import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.21.4';
@@ -548,14 +548,19 @@ function showActTitle(){
   if(state.actOne.attempt>1)stopFireEnding=startFireEnding(modal.querySelector('.act-title-fire .fire-cinematic'),null,()=>{},{ambient:true});
 }
 function continueGame(){
-  const conversation=resumeConversation(state);
-  if(conversation){showEvent(conversation.event.id,conversation.cursor,conversation.page);return;}
-  const d=state.actOne?.duel,e=d&&state.events.find(e=>e.id===d.eventId);
-  if(e?.duel&&!d.dialogueComplete){showEvent(e.id,d.cursor||0,d.page||0);return;}
-  if(state.actOne.rewindIntroPending){showEvent(state.events.find(e=>e.actScene===(state.actOne.chapter===2?'act2-rewind':'rewind')).id,state.actOne.rewindIntroCursor||0);return;}
-  if(state.actOne.rewindTitlePending){showActTitle();return;}
-  if(state.actOne.chapter===2&&state.actOne.titlePending){showActTwoOpening();return;}
-  if(state.actOne.chapter===2&&state.actOne.prologuePending){const e=state.events.find(e=>e.actScene==='act2-prologue');if(e){showEvent(e.id);return;}}
+  // A retired chapter-title flag must not replace observation or a pending trouble.
+  if(state.actOne?.rewindTitlePending){state.actOne.rewindTitlePending=false;save();}
+  const destination=continueDestination(state);
+  if(destination.type==='event'){
+    if(destination.cursor===undefined)showEvent(destination.id);
+    else showEvent(destination.id,destination.cursor,destination.page??0);
+    return;
+  }
+  if(destination.type==='act2-opening'){showActTwoOpening();return;}
+  if(destination.type==='rewind'){
+    const next=state.actOne.chapter===2?rewindActTwo(state):rewindBeforeFire(state);
+    if(next){resetActState(next,true);return;}
+  }
   closeModal();if(state.ending)showActEnding();else if(state.actOne.pending)showEvent(state.actOne.pending.eventId);else openNextStageEvent();
 }
 function showTitleHelp(){
@@ -575,6 +580,8 @@ function showActNotebook(){
 }
 function showActEnding(afterFire=false){
   endingShown=true;
+  // Remember that the ending movie has started so a later Continue skips its replay.
+  if(state.actOne?.status==='bad'&&!state.actOne.outcomeSeen){state.actOne.outcomeSeen=true;save();}
   if(state.actOne.chapter===2){showActTwoEnding();return;}
   const a=state.actOne,bad=a.status==='bad';
   if(bad&&!afterFire){
@@ -656,7 +663,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.21.4';
+const BUILD_VERSION='2026.10.23.1';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){

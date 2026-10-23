@@ -50,7 +50,7 @@ test('event-driven shakes stop in quiet shots and reduced motion preserves compo
 test('story and both old preview links invoke the same full opening; prototype is disconnected',()=>{
  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
  assert.match(app,/function showActTwoOpening\(\)\{\s*openModal\(actTwoOpeningHTML\(\)\);\s*stopOpeningPrologue=startActTwoOpening/);
- assert.match(app,/state\.actOne\.chapter===2&&state\.actOne\.titlePending\)\{showActTwoOpening\(\)/);
+ assert.match(app,/type==='act2-opening'\)\{showActTwoOpening\(\)/);
  assert.match(app,/\['act-two-opening','luna-motion'\]\.includes\(previewType\)/);
  assert.ok(!/startLunaMotion|lunaMotionHTML/.test(app));
 });
