@@ -238,7 +238,14 @@ export const OBSERVATION_BEATS=[
     ]
   },
   {
-    id:'hall',phase:2,at:55.05,title:'朝、部屋の前で大家とばったり',place:'hall',
+    id:'wake-up',phase:2,at:55,title:'朝7時、おはようニャ',
+    lines:[
+      {speaker:'cat',name:'モク',emotion:'happy',text:'……ふぁ。おはようニャ。よく寝たニャ。'},
+      {speaker:'cat',name:'モク',emotion:'neutral',text:'朝の空気を吸ってくるニャ。……ついでにタバコもニャ。'}
+    ]
+  },
+  {
+    id:'hall',phase:2,at:55.6,title:'朝、部屋の前で大家とばったり',place:'hall',
     lines:[
       {speaker:'manager',name:'大家',emotion:'neutral',text:'お、起きたのか。'},
       {speaker:'cat',name:'モク',emotion:'neutral',text:'寝すぎて疲れたから、気分転換ニャ。'},
@@ -275,7 +282,7 @@ export function observationActive(state){return !!state.actOne&&(state.actOne.ch
 const obsBeats=state=>observationBeats(state).filter(b=>b.phase===observationPhase(state));
 // Begin the final sleep time-lapse only after Moku's bedtime dialogue has finished.
 export function firstActSleepClockReady(state){
- if(!observationActive(state)||state.actOne.chapter===2||!state.actOne.completed.includes('dinner')||state.hour<38.4||state.hour>=53)return false;
+ if(!observationActive(state)||state.actOne.chapter===2||!state.actOne.completed.includes('dinner')||state.hour<38.4||state.hour>=55)return false;
  const o=observationState(state),moku=state.residents.find(r=>r.type==='cat');
  return !!o?.done.includes('blanket')&&!o.current&&o.gap<=0&&moku?.action==='sleep'&&!sampleJourney(moku,state.hour).moving;
 }

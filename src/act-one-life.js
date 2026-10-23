@@ -6,7 +6,7 @@ export const MOKU_DAY = [
   [23.25,'idle','table','灰皿のあとにひと息'],[23.85,'idle','center','スマホを探す'],[24.1,'tv','tv','テレビを見て夜更かし'],
   [36.5,'eat','fridge','空腹で料理の準備'],
   [37.25,'eat','table','火を使わずに昼食'],[38,'sleep','bed','朝までぐっすり眠る'],
-  [53,'walk','hall','部屋を出てすぐの廊下で気分転換'],[55.2,'idle','table','廊下から101号室へ戻る']
+  [55,'idle','bed','朝7時、ベッドで目を覚ます'],[55.15,'walk','hall','部屋を出てすぐの廊下で気分転換'],[56,'idle','table','廊下から101号室へ戻る']
 ];
 const places={smoke:'window',eat:'fridge',sleep:'bed',tv:'tv',clean:'center',drink:'table',idle:'table'};
 function mokuHomeJourney(start,hour){
@@ -27,7 +27,7 @@ export function firstActLife(state, delta=0){
   const beat=preparing?MOKU_DAY.find(([at])=>at===preparing):MOKU_DAY.findLast(([at])=>at<=state.hour)||MOKU_DAY[0];
   r.storyUntil=58;
   if(r.lifeBeat!==beat[0]){
-    const start=sampleJourney(r,state.hour,places[r.action]||'table');
+    const start=beat[0]===55.15?{...homeSpot(101,'bed'),x:homeSpot(101,'bed').x+10,y:homeSpot(101,'bed').y+23}:sampleJourney(r,state.hour,places[r.action]||'table');
     r.previous=r.action;r.action=beat[1]==='outside'?'smoke':['meet','home','walk'].includes(beat[1])?'idle':beat[1];r.actionAge=0;r.targetRoom=null;r.lifeBeat=beat[0];
     if(beat[1]==='outside'){
       const path=[start,{x:331,y:440,zone:'hall',room:101},{x:777,y:440,zone:'hall',room:103},{x:815,y:513,zone:'street'},{x:865,y:513,zone:'street'}];

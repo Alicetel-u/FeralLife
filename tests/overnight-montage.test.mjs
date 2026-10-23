@@ -18,7 +18,7 @@ test('sleep shows a settled pose, a full night and a held dawn before waking',()
   assert.equal(s.residents[0].action,'sleep');assert.equal(f.finished,false);
  }
  const dawn=overnightMontageFrame('sleep',start,6.7);assert.ok(dawn.dawn>.8);
- const end=overnightMontageFrame('sleep',start,6.81);assert.equal(end.finished,true);assert.equal(end.hour,53);
+ const end=overnightMontageFrame('sleep',start,6.81);assert.equal(end.finished,true);assert.equal(end.hour,55);
  advanceActOne(s,end.hour-s.hour);assert.equal(s.residents[0].action,'idle');
 });
 

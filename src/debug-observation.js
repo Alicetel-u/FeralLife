@@ -22,6 +22,7 @@ export function createDeveloperObservation(chapter,id){
   }
   advance(next,Math.min(.05,beat.at-next.hour));
  }
+ if(next.hour<beat.at)advance(next,beat.at-next.hour);
  next.actOne.observation={version:2,seen:[],done:beats.slice(0,index).map(b=>b.id),current:null,gap:0};
  for(let step=0;step<600&&!next.actOne.observation.current&&!next.actOne.pending;step++){
   tickObservation(next,0);

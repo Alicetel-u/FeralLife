@@ -1,3 +1,4 @@
+import {createDeveloperObservation} from '../src/debug-observation.js';
 import {sampleJourney} from '../src/movement.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -32,9 +33,9 @@ test('legacy saves migrate without replaying past scenes; malformed observation 
 });
 test('all phases follow completed events and new speech is extracted directly from game data',()=>{
  const s=start();s.actOne.completed=['ash'];s.hour=19;assert.equal(observationView(s).total,4);
- s.actOne.completed.push('dinner');s.hour=37;assert.equal(observationView(s).total,2);
+ s.actOne.completed.push('dinner');s.hour=37;assert.equal(observationView(s).total,3);
  const rows=extractVoiceScript('act1').filter(r=>r.source.startsWith('act1/observation/'));
- assert.equal(rows.length,34);assert.deepEqual(rows.map(r=>r.line.text),OBSERVATION_BEATS.flatMap(b=>b.lines.map(l=>l.text)));
+ assert.equal(rows.length,36);assert.deepEqual(rows.map(r=>r.line.text),OBSERVATION_BEATS.flatMap(b=>b.lines.map(l=>l.text)));
  assert.equal(extractVoiceScript('intro').some(r=>r.source.startsWith('act1/observation/')),false);
 });
 
@@ -44,7 +45,7 @@ test('every safe phase completes before the next event and the original ending r
   step(s);
   if(s.actOne.pending){const scene=s.actOne.pending.scene;assert.equal(observationView(s).done,observationView(s).total);answerActOne(s,s.actOne.pending.eventId,scene==='ash'?'water':'coronation');count++;}
  }
- assert.equal(count,2);assert.equal(s.actOne.status,'clear');assert.equal(s.hour,57);assert.equal(s.actOne.observation.seen.length,10);assert.ok(validActOne(s));
+ assert.equal(count,2);assert.equal(s.actOne.status,'clear');assert.equal(s.hour,57);assert.equal(s.actOne.observation.seen.length,11);assert.ok(validActOne(s));
 });
 
 test('landlord replies only while Moku is physically outside or in the hall, before returning for trouble',()=>{
@@ -76,8 +77,22 @@ test('final sleep reuses the overnight clock after bedtime lines without skippin
  assert.equal(firstActSleepClockReady(s),false,'post-dialogue gap stays intact');
  o.gap=0;
  assert.equal(firstActSleepClockReady(s),true,'sleep montage starts for settled sleeping Moku');
- advanceActOne(s,53-s.hour);
- assert.equal(s.hour,53);assert.equal(firstActSleepClockReady(s),false,'clock returns before morning walk');
+ advanceActOne(s,55-s.hour);
+ assert.equal(s.hour,55);assert.equal(firstActSleepClockReady(s),false,'clock returns before morning walk');
  assert.equal(s.residents[0].action,'idle');
  assert.ok(validActOne(s));
+});
+
+test('seven oclock wake-up finishes before Moku leaves for the original hallway encounter',()=>{
+ const s=createDeveloperObservation('1','wake-up'),r=s.residents[0];
+ assert.equal(s.hour,55);assert.equal(r.action,'idle');assert.equal(s.actOne.observation.current.id,'wake-up');
+ assert.equal(firstActSleepClockReady(s),false);
+ for(let i=0;i<20;i++){
+  tickObservation(s,.25,{voiceBusy:true});advanceActOne(s,Math.max(0,observationClockLimit(s)-s.hour));
+  assert.equal(s.hour,55);assert.equal(r.lifeBeat,55);
+ }
+ while(s.actOne.observation.current?.id==='wake-up')tickObservation(s,.25);
+ while(s.actOne.observation.gap>0)tickObservation(s,.25);
+ while(s.hour<55.6){advanceActOne(s,Math.min(.02,Math.max(0,observationClockLimit(s)-s.hour),55.6-s.hour));tickObservation(s,0);}
+ assert.equal(observationView(s).identity,'hall:0');assert.equal(sampleJourney(r,s.hour).zone,'hall');
 });

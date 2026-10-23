@@ -3,7 +3,7 @@
 const gagClamp=n=>Math.max(0,Math.min(1,n));
 const gagEase=n=>{n=gagClamp(n);return n*n*(3-2*n);};
 const gagMix=(a,b,p)=>a+(b-a)*gagEase(p);
-export const OBSERVATION_GAGS=['seat','ash-sign','phone-search','tv-late','before-dinner','blanket','last-morning','luna-unpack','luna-tidy','luna-neighbor','luna-tea','luna-before-outing'];
+export const OBSERVATION_GAGS=['seat','ash-sign','phone-search','tv-late','before-dinner','blanket','wake-up','last-morning','luna-unpack','luna-tidy','luna-neighbor','luna-tea','luna-before-outing'];
 export function observationComedy(state,resident,{reduced=false}={}){
  const act=state.actOne,o=act?.observation;
  if(!act?.started||act.status!=='playing'||act.pending||act.rewindIntroPending||act.prologuePending||!o)return null;
@@ -11,6 +11,7 @@ export function observationComedy(state,resident,{reduced=false}={}){
  // Let a punchline settle during the existing inter-scene pause.
  if(!c&&o.gap>0&&o.done?.length)c={id:o.done.at(-1),index:99,elapsed:3};
  if(!c&&resident.type==='cat'&&resident.lifeBeat===17&&o.done?.includes('seat'))c={id:'seat',index:4,elapsed:3};
+ if(!c&&resident.type==='cat'&&resident.lifeBeat===55&&o.done?.includes('wake-up'))c={id:'wake-up',index:1,elapsed:3};
  if(!c&&act.chapter===2&&state.hour<65&&o.done?.includes('luna-tea'))c={id:'luna-tea',index:5,elapsed:3};
  if(!c||!OBSERVATION_GAGS.includes(c.id))return null;
  const i=c.index||0,e=Math.max(0,c.elapsed||0),p=reduced?1:gagEase(e/.65),late=reduced?1:gagEase((e-.45)/.65);
@@ -48,6 +49,9 @@ export function observationComedy(state,resident,{reduced=false}={}){
   if(!cat)return null;d.pose='sleep';d.action='sleep';
   d.rotate=0;
   d.reaction=i===1?'sleepy':null;break;
+ case 'wake-up':
+  if(!cat)return null;d.pose=i===0?'sit':'stand';d.action='idle';
+  if(i>=1){d.dx=10*p;d.dy=23*p;}d.reaction=i===0?'sleepy':null;break;
  case 'last-morning':
   if(!cat)return null;d.pose=i===0?'drink':i===1?'stand':'sit';d.action=i===0?'drink':'idle';
   prop('can',35,0);if(i===1)d.reaction='discover';if(i>=2)d.reaction='proud';break;

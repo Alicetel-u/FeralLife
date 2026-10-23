@@ -1,6 +1,6 @@
 // Presentation time is independent of the story clock; endpoints keep the next scene intact.
 export function overnightMontageFrame(kind,startHour,elapsed){
- const sleep=kind==='sleep',endHour=sleep?53:36.65;
+ const sleep=kind==='sleep',endHour=sleep?55:36.65;
  const hold=sleep?1.2:.7,travel=sleep?4.5:6.8,tail=sleep?1.1:.9;
  const time=Math.max(0,elapsed),progress=Math.max(0,Math.min(1,(time-hold)/travel));
  const finished=time>=hold+travel+tail;

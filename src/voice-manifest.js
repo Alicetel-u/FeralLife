@@ -7825,5 +7825,23 @@ export const VOICE_MANIFEST = {
     "text": "ちゃんと寝たから、今日はもう働いた気分ニャ。",
     "performance": "moku-happy",
     "model": "eleven_v3"
+  },
+  "[\"cat\",\"……ふぁ。おはようニャ。よく寝たニャ。\",\"moku-happy\",false]": {
+    "file": "assets/voices/d59ca867e8a603221733b6a433cdbd27cd800ffe78d5c9111221784ae51d3987.mp3",
+    "hash": "d59ca867e8a603221733b6a433cdbd27cd800ffe78d5c9111221784ae51d3987",
+    "source": "act1/observation/wake-up:0",
+    "speaker": "cat",
+    "text": "……ふぁ。おはようニャ。よく寝たニャ。",
+    "performance": "moku-happy",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"朝の空気を吸ってくるニャ。……ついでにタバコもニャ。\",\"moku\",false]": {
+    "file": "assets/voices/b59819f1838f269b122f61be02d8b97aa03cd5cf670328508cbd5c9e505cc1cb.mp3",
+    "hash": "b59819f1838f269b122f61be02d8b97aa03cd5cf670328508cbd5c9e505cc1cb",
+    "source": "act1/observation/wake-up:1",
+    "speaker": "cat",
+    "text": "朝の空気を吸ってくるニャ。……ついでにタバコもニャ。",
+    "performance": "moku",
+    "model": "eleven_v3"
   }
 };

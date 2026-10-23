@@ -1145,7 +1145,8 @@ function frame(now){
       const moku=state.residents.find(r=>r.type==='cat');
       const walkingOutside=moku?.journey?.path.some(p=>p.zone!=='room')&&sampleJourney(moku,state.hour).moving;
       // Keep exterior walking readable without slowing indoor gags or voiced beats.
-      const clockSpeed=walkingOutside?Math.min(speed,3):emptyClock&&speed===6?12:speed;
+      const awakeMorning=state.actOne.chapter!==2&&state.actOne.completed.includes('dinner')&&state.hour>=55;
+      const clockSpeed=walkingOutside?Math.min(speed,3):emptyClock&&speed===6&&!awakeMorning?12:speed;
       const clockLimit=observationClockLimit(state);
       const dt=Math.min(seconds*clockSpeed/10,Math.max(0,clockLimit-state.hour));
       if(state.actOne.chapter===2)advanceActTwo(state,dt);else advanceActOne(state,dt);
