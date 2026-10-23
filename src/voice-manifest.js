@@ -343,13 +343,17 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"cat\",\"これで灰皿スッキリニャ！\",\"moku-happy\",false]": {
-    "file": "assets/voices/20d776ed526ee6b1a49e080edf60de3b2d63ad5c96ab206598bea4d4881ed232.mp3",
-    "hash": "20d776ed526ee6b1a49e080edf60de3b2d63ad5c96ab206598bea4d4881ed232",
+    "file": "assets/voices/9a9eff91429de2a1a670c1f462d84646f9ad24706f9b45a6d033d248a2601280.repair.mp3",
+    "hash": "9a9eff91429de2a1a670c1f462d84646f9ad24706f9b45a6d033d248a2601280",
     "source": "act1/ash/balcony:3",
     "speaker": "cat",
     "text": "これで灰皿スッキリニャ！",
     "performance": "moku-happy",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"cat\",\"……大家。なんか下が明るいニャ。\",\"moku\",false]": {
     "file": "assets/voices/32e920ef84d9897d9ec40a1deaf539289373fa72ae96d0341c1989f9b438d9c4.mp3",
@@ -469,13 +473,17 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"cat\",\"灰皿を溺れさせるニャ！？\",\"moku-surprised\",false]": {
-    "file": "assets/voices/1c60cd126ac8bdb0d69b352935ff767725e73fff2e8ef0f887c66d4276e0a7a2.mp3",
-    "hash": "1c60cd126ac8bdb0d69b352935ff767725e73fff2e8ef0f887c66d4276e0a7a2",
+    "file": "assets/voices/4429e91a891c6bfc316e5e57bd1dba82755ac9f1aaa780b15e29a3124d76fa0c.repair.mp3",
+    "hash": "4429e91a891c6bfc316e5e57bd1dba82755ac9f1aaa780b15e29a3124d76fa0c",
     "source": "act1/ash/water:1",
     "speaker": "cat",
     "text": "灰皿を溺れさせるニャ！？",
     "performance": "moku-surprised",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"cat\",\"……最初からそう言えニャ！\",\"moku\",false]": {
     "file": "assets/voices/2efd7fa26ba3fddf10fb699f3c1e004d3cbdc4f0e85abbe480048c3e24e17ce1.mp3",
@@ -1261,13 +1269,17 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"cat\",\"更年期かニャ？\",\"moku\",false]": {
-    "file": "assets/voices/443802fdc9abc8bd3d0f879000648553211f9071c4cf0f056b2cd4d192510d9a.mp3",
-    "hash": "443802fdc9abc8bd3d0f879000648553211f9071c4cf0f056b2cd4d192510d9a",
+    "file": "assets/voices/36c3090d405b1180e8ec12b6f96c45eb2e2113b08836a03948dc832179759195.repair.mp3",
+    "hash": "36c3090d405b1180e8ec12b6f96c45eb2e2113b08836a03948dc832179759195",
     "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:13",
     "speaker": "cat",
     "text": "更年期かニャ？",
     "performance": "moku",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"cat\",\"大家、なんか笑ってるニャ。\",\"moku-surprised\",false]": {
     "file": "assets/voices/d9b924affffb6f13231679888eb881d9288725a7951aec20f967213859378f3b.mp3",
@@ -1369,13 +1381,17 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"cat\",\"大家、何ぼーっとしてるニャ？\",\"moku-surprised\",false]": {
-    "file": "assets/voices/f4536f0b21aceccc2ad671cab8f6ae3801c5ab41942da1438e2d445787c46c44.mp3",
-    "hash": "f4536f0b21aceccc2ad671cab8f6ae3801c5ab41942da1438e2d445787c46c44",
+    "file": "assets/voices/7e5f27a2c7efd362d587eaaf150fc1a1fee532b4cecca75885e35e1beaa874ac.repair.mp3",
+    "hash": "7e5f27a2c7efd362d587eaaf150fc1a1fee532b4cecca75885e35e1beaa874ac",
     "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:59",
     "speaker": "cat",
     "text": "大家、何ぼーっとしてるニャ？",
     "performance": "moku-surprised",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"cat\",\"じゃあ酒買ってきてニャ。\",\"moku-happy\",false]": {
     "file": "assets/voices/f840e0d6b20015c5f4b54a8ed9f7f93e7dd38a99a952eabce4825f38bce32576.mp3",
@@ -2566,13 +2582,17 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"笑ってねぇよ。\",\"normal\",false]": {
-    "file": "assets/voices/79ba4a5c9f340ef1ae00f2a846427b94ea6f2adf531cb08a1ca1a164a0b74406.mp3",
-    "hash": "79ba4a5c9f340ef1ae00f2a846427b94ea6f2adf531cb08a1ca1a164a0b74406",
+    "file": "assets/voices/4c4c88ad2b14d499c45a712a57ad4b5eef748ad835c18505f30d413d29a5883a.repair.mp3",
+    "hash": "4c4c88ad2b14d499c45a712a57ad4b5eef748ad835c18505f30d413d29a5883a",
     "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:19",
     "speaker": "manager",
     "text": "笑ってねぇよ。",
     "performance": "normal",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"manager\",\"せっかくいい気分だったのに台無しだよ！\",\"normal\",false]": {
     "file": "assets/voices/7b83eb8938f6b69809b7e6be510b8fba9fc38851ff45d9bd179cff502ab4a2b0.mp3",
@@ -2611,13 +2631,17 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……入居申込書？\",\"normal\",false]": {
-    "file": "assets/voices/8bb9026331ed1c99bb52eac62aeac527b57cbaa80ae6a69b75e364e3281c20cd.mp3",
-    "hash": "8bb9026331ed1c99bb52eac62aeac527b57cbaa80ae6a69b75e364e3281c20cd",
+    "file": "assets/voices/2894a6f7e4c6a54a432b77d4b0f315fce21a3aebc53004719e8c52e615b2b96a.repair.mp3",
+    "hash": "2894a6f7e4c6a54a432b77d4b0f315fce21a3aebc53004719e8c52e615b2b96a",
     "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:30",
     "speaker": "manager",
     "text": "……入居申込書？",
     "performance": "normal",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"manager\",\"こんなボロアパートに？\",\"normal\",false]": {
     "file": "assets/voices/5151854ffbc6e33e1fbf4d5887d9dc3724d6322921c2b415dea1539aeb12573a.mp3",
@@ -2755,76 +2779,108 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"とりあえず、ゴミ袋にまとめて捨てとけ。\",\"normal\",false]": {
-    "file": "assets/voices/9a871d80b31845ed4bce0468384801eb12ddfbc3d69e7e6c7d24982bf4d79228.mp3",
-    "hash": "9a871d80b31845ed4bce0468384801eb12ddfbc3d69e7e6c7d24982bf4d79228",
+    "file": "assets/voices/64f2a0d6a50c1002617e95de5145ef51902d26991ca9e452fd65a081bc16328a.repair.mp3",
+    "hash": "64f2a0d6a50c1002617e95de5145ef51902d26991ca9e452fd65a081bc16328a",
     "source": "act1/runtime/attempt-1/ash/trash/reply:0",
     "speaker": "manager",
     "text": "とりあえず、ゴミ袋にまとめて捨てとけ。",
     "performance": "normal",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"cat\",\"ゴミ袋でいいのかニャ？\",\"moku\",false]": {
-    "file": "assets/voices/bb9e5906bd870db15687f5f93db7a2930bf9d4b8a8eea44e9458a1df1a3e3c4b.mp3",
-    "hash": "bb9e5906bd870db15687f5f93db7a2930bf9d4b8a8eea44e9458a1df1a3e3c4b",
+    "file": "assets/voices/eeff1d457a58d6549dcb006571234cd2d623570077a3f9d033e157105f4ff640.repair.mp3",
+    "hash": "eeff1d457a58d6549dcb006571234cd2d623570077a3f9d033e157105f4ff640",
     "source": "act1/runtime/attempt-1/ash/trash/reply:1",
     "speaker": "cat",
     "text": "ゴミ袋でいいのかニャ？",
     "performance": "moku",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"manager\",\"ああ。いつまでも灰皿いっぱいにしておくわけにもいかねえだろ。\",\"normal\",false]": {
-    "file": "assets/voices/03546b5795a06c36619f2c252b7b9d0b0fc23c537d7ea940a4ccb75863eb9090.mp3",
-    "hash": "03546b5795a06c36619f2c252b7b9d0b0fc23c537d7ea940a4ccb75863eb9090",
+    "file": "assets/voices/7d12b4e693c9b8549dabff2349c52292d75a6b980a549854d2a93647cf62b9d3.repair.mp3",
+    "hash": "7d12b4e693c9b8549dabff2349c52292d75a6b980a549854d2a93647cf62b9d3",
     "source": "act1/runtime/attempt-1/ash/trash/reply:2",
     "speaker": "manager",
     "text": "ああ。いつまでも灰皿いっぱいにしておくわけにもいかねえだろ。",
     "performance": "normal",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"cat\",\"わかったニャ。大家がそう言うならそうするニャ。\",\"moku\",false]": {
-    "file": "assets/voices/c239a37f5f2df532d6a5af01133966e61b64da7fe76cb2b084cf720037ceaf8d.mp3",
-    "hash": "c239a37f5f2df532d6a5af01133966e61b64da7fe76cb2b084cf720037ceaf8d",
+    "file": "assets/voices/16c6c4468973f2a0661c1844e78325226b58824f7e412724cd1e8619c7a8364f.repair.mp3",
+    "hash": "16c6c4468973f2a0661c1844e78325226b58824f7e412724cd1e8619c7a8364f",
     "source": "act1/runtime/attempt-1/ash/trash/reply:3",
     "speaker": "cat",
     "text": "わかったニャ。大家がそう言うならそうするニャ。",
     "performance": "moku",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"manager\",\"……なんだよ、妙に素直だな。\",\"normal\",false]": {
-    "file": "assets/voices/94f3f1c79d17ff5d015da69f9f7302442ecfd036ff80e91011d8caf4efa7d267.mp3",
-    "hash": "94f3f1c79d17ff5d015da69f9f7302442ecfd036ff80e91011d8caf4efa7d267",
+    "file": "assets/voices/856fdadffe82eac8f56ae8609efcb04d04c2dd7884fee956c5f2bc8d5611ae07.repair.mp3",
+    "hash": "856fdadffe82eac8f56ae8609efcb04d04c2dd7884fee956c5f2bc8d5611ae07",
     "source": "act1/runtime/attempt-1/ash/trash/reply:4",
     "speaker": "manager",
     "text": "……なんだよ、妙に素直だな。",
     "performance": "normal",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"cat\",\"だって大家だろ？ 信用してるニャ。\",\"moku-happy\",false]": {
-    "file": "assets/voices/b34814ff288b4472346ad4834f6ca33d98043a127faf188cc718ff2b82a9e568.mp3",
-    "hash": "b34814ff288b4472346ad4834f6ca33d98043a127faf188cc718ff2b82a9e568",
+    "file": "assets/voices/ce5de942ebd86bdc3c502ca55b3adc4d21f601d26f5d0e1092fc8b3fe6c89120.repair.mp3",
+    "hash": "ce5de942ebd86bdc3c502ca55b3adc4d21f601d26f5d0e1092fc8b3fe6c89120",
     "source": "act1/runtime/attempt-1/ash/trash/reply:5",
     "speaker": "cat",
     "text": "だって大家だろ？ 信用してるニャ。",
     "performance": "moku-happy",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"manager\",\"そういうときだけ都合よく信用するなよ。\",\"normal\",false]": {
-    "file": "assets/voices/331fd953fe5f5931b686da994c14433f17d3546aeee4a3fe210741c9725dc213.mp3",
-    "hash": "331fd953fe5f5931b686da994c14433f17d3546aeee4a3fe210741c9725dc213",
+    "file": "assets/voices/15590c7a91a36da04d6e48d7fd78559c39e0bf479861bb7c6f0ffc30e37e62ca.repair.mp3",
+    "hash": "15590c7a91a36da04d6e48d7fd78559c39e0bf479861bb7c6f0ffc30e37e62ca",
     "source": "act1/runtime/attempt-1/ash/trash/reply:6",
     "speaker": "manager",
     "text": "そういうときだけ都合よく信用するなよ。",
     "performance": "normal",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"cat\",\"にゃはは。じゃ、ありがとニャ！\",\"moku-happy\",false]": {
-    "file": "assets/voices/4c9be4b2817d267bd6129d39468a2643f44404675de059e6ad32c23faa337074.mp3",
-    "hash": "4c9be4b2817d267bd6129d39468a2643f44404675de059e6ad32c23faa337074",
+    "file": "assets/voices/ed0eee73c59bad66a5b333b52ff5ff098375b8641d64286ad5f1dbdce469a9b3.repair.mp3",
+    "hash": "ed0eee73c59bad66a5b333b52ff5ff098375b8641d64286ad5f1dbdce469a9b3",
     "source": "act1/runtime/attempt-1/ash/trash/reply:7",
     "speaker": "cat",
     "text": "にゃはは。じゃ、ありがとニャ！",
     "performance": "moku-happy",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"manager\",\"……なんだ、あの煙？\",\"tragedy-shock\",false]": {
     "file": "assets/voices/b13f1653c889b1daeb7ba85892a65d83db1c3024fa96a32b06e9c34c6ee5f4c3.mp3",
@@ -2872,22 +2928,31 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"cat\",\"煙が……前が見えないニャ……！\",\"tragedy-fear\",false]": {
-    "file": "assets/voices/7eaa752be2ba8eca376bd02150217fb5425251a5a03348df81c0ede841370148.mp3",
-    "hash": "7eaa752be2ba8eca376bd02150217fb5425251a5a03348df81c0ede841370148",
+    "file": "assets/voices/f6c86955c9423e8f5a5f6ef9bec09ee9cf10a8e7ce4266006a36e6697d4ee612.repair.mp3",
+    "hash": "f6c86955c9423e8f5a5f6ef9bec09ee9cf10a8e7ce4266006a36e6697d4ee612",
     "source": "act1/runtime/attempt-1/ash/trash/reply:16",
     "speaker": "cat",
     "text": "煙が……前が見えないニャ……！",
     "performance": "tragedy-fear",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"manager\",\"待ってろ！！ 今そっちに——！\",\"tragedy-panic\",false]": {
-    "file": "assets/voices/35205995cef33204add7863cc11058ded779efee33e86757a605a5d37d8db0dd.mp3",
-    "hash": "35205995cef33204add7863cc11058ded779efee33e86757a605a5d37d8db0dd",
+    "file": "assets/voices/96c0db3458892694f23b034617652e99cf5e2555320dd2a1075fc13f5619fa80.repair.mp3",
+    "hash": "96c0db3458892694f23b034617652e99cf5e2555320dd2a1075fc13f5619fa80",
     "source": "act1/runtime/attempt-1/ash/trash/reply:17",
     "speaker": "manager",
     "text": "待ってろ！！ 今そっちに——！",
     "performance": "tragedy-panic",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "volumeGain": 0.5,
+    "audioMastering": {
+      "integratedLUFS": -20,
+      "truePeakDBTP": -6
+    }
   },
   "[\"cat\",\"大家……助け……\",\"tragedy-fading\",false]": {
     "file": "assets/voices/5f1bcb9f2eb3607ee4894fa79128ffb3d325741c4b8efa07de17b3c92a882b4b.mp3",
@@ -2908,13 +2973,17 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"おい……返事しろよ……！\",\"tragedy-grief\",false]": {
-    "file": "assets/voices/49027786f723f286263841179809d54a26c172ca217ebfbab7fc0b476a574a5c.mp3",
-    "hash": "49027786f723f286263841179809d54a26c172ca217ebfbab7fc0b476a574a5c",
+    "file": "assets/voices/95d2e907763994bec0291d1400a94da73d3dbc7f19b959617ff4639e413a01c5.repair.mp3",
+    "hash": "95d2e907763994bec0291d1400a94da73d3dbc7f19b959617ff4639e413a01c5",
     "source": "act1/runtime/attempt-1/ash/trash/reply:22",
     "speaker": "manager",
     "text": "おい……返事しろよ……！",
     "performance": "tragedy-grief",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
   },
   "[\"manager\",\"モク……頼む、返事をしてくれ。\",\"tragedy-grief\",false]": {
     "file": "assets/voices/a72ee4a69a6a904272e2e6c8c788de433cafa19eaa1e41fb431572395c4e0abc.mp3",
@@ -7604,5 +7673,58 @@ export const VOICE_MANIFEST = {
     "performance": "duel-luna",
     "model": "eleven_v3",
     "fastFile": "assets/voices/a8fdaad46918c68822bc9939dccbfd9c50ff23d9a379725e8419bd7ddef14830.pace.mp3"
+  },
+  "[\"manager\",\"……何があったんだよ、このアパート。\\nまずは、たった一人の住人に会ってみるか。\",\"inner\",false]": {
+    "file": "assets/voices/6c113219bbbdd5c8f201eb3ab7fb7ab9f25ff22ac46735a475729765af0920a1.repair.mp3",
+    "hash": "6c113219bbbdd5c8f201eb3ab7fb7ab9f25ff22ac46735a475729765af0920a1",
+    "source": "prologue:5",
+    "speaker": "manager",
+    "text": "……何があったんだよ、このアパート。\nまずは、たった一人の住人に会ってみるか。",
+    "performance": "inner",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
+  },
+  "[\"cat\",\"モクですニャ。よろしくニャ。\",\"moku\",false]": {
+    "file": "assets/voices/f9a2d50f9381a0c856fb746a7090a81cb4cfd35339c594de044f55e6d0479418.repair.mp3",
+    "hash": "f9a2d50f9381a0c856fb746a7090a81cb4cfd35339c594de044f55e6d0479418",
+    "source": "act1/opening:1",
+    "speaker": "cat",
+    "text": "モクですニャ。よろしくニャ。",
+    "performance": "moku",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
+  },
+  "[\"cat\",\"大家、やっぱり頼りになるニャ。\",\"moku\",false]": {
+    "file": "assets/voices/997b0dd0cd6156cb7af6bdc3914da48a2d1c44a97fef2ae02c7d5b504e21436c.repair.mp3",
+    "hash": "997b0dd0cd6156cb7af6bdc3914da48a2d1c44a97fef2ae02c7d5b504e21436c",
+    "source": "act1/observation/after-ash:1",
+    "speaker": "cat",
+    "text": "大家、やっぱり頼りになるニャ。",
+    "performance": "moku",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    }
+  },
+  "[\"cat\",\"忘れ物ひとつで、本人まで回収しに来るなニャ。\",\"duel-moku\",false]": {
+    "file": "assets/voices/fac36812fcff6a0e73bbdae1e9c364e9af087d9279494d4d70685ad3e08a4e86.repair.mp3",
+    "hash": "fac36812fcff6a0e73bbdae1e9c364e9af087d9279494d4d70685ad3e08a4e86",
+    "source": "act2/runtime/attempt-1/bag/loan/duel/duel:7",
+    "speaker": "cat",
+    "text": "忘れ物ひとつで、本人まで回収しに来るなニャ。",
+    "performance": "duel-moku",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3
+    },
+    "fastFile": "assets/voices/fac36812fcff6a0e73bbdae1e9c364e9af087d9279494d4d70685ad3e08a4e86.repair.pace.mp3"
   }
 };

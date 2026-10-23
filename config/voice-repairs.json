@@ -1,0 +1,256 @@
+{
+  "description": "2026-10-23 user-reported dialogue and pronunciation repairs; match exact speaker and displayed text only.",
+  "lines": [
+    {
+      "speaker": "manager",
+      "text": "……何があったんだよ、このアパート。\nまずは、たった一人の住人に会ってみるか。",
+      "spokenText": "……なにがあったんだよ、このアパート。まずは、たったひとりの住人に会ってみるか。"
+    },
+    {
+      "speaker": "cat",
+      "text": "モクですニャ。よろしくニャ。",
+      "spokenText": "モクですニャ。よろしくニャ。",
+      "tags": [
+        "[conversational]",
+        "[lighthearted]"
+      ]
+    },
+    {
+      "speaker": "manager",
+      "text": "とりあえず、ゴミ袋にまとめて捨てとけ。",
+      "spokenText": "とりあえず、ゴミぶくろにまとめて、捨てとけ。",
+      "tags": [
+        "[conversational]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 1
+      }
+    },
+    {
+      "speaker": "cat",
+      "text": "ゴミ袋でいいのかニャ？",
+      "spokenText": "ゴミぶくろでいいのかニャ？",
+      "tags": [
+        "[conversational]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 1
+      }
+    },
+    {
+      "speaker": "manager",
+      "text": "ああ。いつまでも灰皿いっぱいにしておくわけにもいかねえだろ。",
+      "spokenText": "ああ。いつまでも、はいざら、いっぱいにしておくわけにもいかねえだろ。",
+      "tags": [
+        "[conversational]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 1
+      }
+    },
+    {
+      "speaker": "cat",
+      "text": "わかったニャ。大家がそう言うならそうするニャ。",
+      "spokenText": "わかったニャ。おおやがそう言うなら、そうするニャ。",
+      "tags": [
+        "[conversational]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 1
+      }
+    },
+    {
+      "speaker": "manager",
+      "text": "……なんだよ、妙に素直だな。",
+      "spokenText": "……なんだよ。みょうに素直だな。",
+      "tags": [
+        "[conversational]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 1
+      }
+    },
+    {
+      "speaker": "cat",
+      "text": "だって大家だろ？ 信用してるニャ。",
+      "spokenText": "だって、おおやだろ？ しんようしてるニャ。",
+      "tags": [
+        "[conversational]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 1
+      }
+    },
+    {
+      "speaker": "manager",
+      "text": "そういうときだけ都合よく信用するなよ。",
+      "spokenText": "そういうときだけ、つごうよく信用するなよ。",
+      "tags": [
+        "[conversational]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 1
+      }
+    },
+    {
+      "speaker": "cat",
+      "text": "にゃはは。じゃ、ありがとニャ！",
+      "spokenText": "にゃはは。じゃ、ありがとニャ！",
+      "tags": [
+        "[conversational]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 1
+      }
+    },
+    {
+      "speaker": "cat",
+      "text": "煙が……前が見えないニャ……！",
+      "spokenText": "けむりが……まえが見えないニャ……！",
+      "tags": [
+        "[scared]",
+        "[strained]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 0.95
+      }
+    },
+    {
+      "speaker": "manager",
+      "text": "待ってろ！！ 今そっちに——！",
+      "spokenText": "まってろ！ いま、そっちに！",
+      "tags": [
+        "[urgent]",
+        "[strained]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 1
+      }
+    },
+    {
+      "speaker": "manager",
+      "text": "おい……返事しろよ……！",
+      "spokenText": "おい……へんじ、しろよ……。",
+      "tags": [
+        "[sad]",
+        "[pleading]",
+        "[shaky voice]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 0.9
+      }
+    },
+    {
+      "speaker": "cat",
+      "text": "これで灰皿スッキリニャ！",
+      "spokenText": "これで、はいざら、スッキリニャ！",
+      "tags": [
+        "[happy]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 0.98
+      }
+    },
+    {
+      "speaker": "cat",
+      "text": "灰皿を溺れさせるニャ！？",
+      "spokenText": "はいざらを、おぼれさせるニャ！？",
+      "tags": [
+        "[surprised]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 0.95
+      }
+    },
+    {
+      "speaker": "cat",
+      "text": "大家、やっぱり頼りになるニャ。",
+      "spokenText": "おおや、やっぱり、たよりになるニャ。",
+      "tags": [
+        "[conversational]",
+        "[happy]"
+      ]
+    },
+    {
+      "speaker": "cat",
+      "text": "更年期かニャ？",
+      "spokenText": "こうねんき、かニャ？",
+      "tags": [
+        "[conversational]",
+        "[teasing]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 0.95
+      }
+    },
+    {
+      "speaker": "manager",
+      "text": "笑ってねぇよ。",
+      "spokenText": "わらってねぇよ。",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 0.95
+      }
+    },
+    {
+      "speaker": "manager",
+      "text": "……入居申込書？",
+      "spokenText": "……にゅうきょもうしこみしょ？",
+      "tags": [
+        "[surprised]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 0.95
+      }
+    },
+    {
+      "speaker": "cat",
+      "text": "大家、何ぼーっとしてるニャ？",
+      "spokenText": "おおや、なに、ぼーっとしてるニャ？",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 0.95
+      }
+    },
+    {
+      "speaker": "cat",
+      "text": "忘れ物ひとつで、本人まで回収しに来るなニャ。",
+      "spokenText": "わすれものひとつで、ほんにんまで回収しに来るなニャ。",
+      "tags": [
+        "[animated]",
+        "[lighthearted]"
+      ]
+    }
+  ]
+}

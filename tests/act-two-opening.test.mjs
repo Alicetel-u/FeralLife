@@ -91,3 +91,10 @@ test('opening voice mix moderates Luna loudness without changing normal conversa
  assert.equal(cues.find(cue=>cue.id==='persistent').voiceGain,0.55);
  assert.equal(cues.find(cue=>cue.id==='breath').voiceGain,0.58);
 });
+
+test('normal film loading has no preparation caption but retains recovery controls',()=>{
+ const html=actTwoOpeningHTML();assert.doesNotMatch(html,/映像を準備しています/);
+ assert.match(html,/data-film-retry hidden/);
+ const source=readFileSync(new URL('../src/act-two-opening.js',import.meta.url),'utf8');
+ assert.match(source,/画像の読み込みに失敗しました/);
+});

@@ -46,7 +46,7 @@ export function actTwoOpeningHTML(){
  <div class="luna-film-frame"><div class="luna-film-rig"><div class="luna-film-camera"><img class="luna-film-image" alt=""><div class="luna-film-phone-ui" aria-label="スマートフォンの通知" hidden><span>メッセージ</span><p>まだ話は<br>終わっていない</p></div></div><div class="luna-film-foreground"><div class="luna-film-contact-shadow"></div><img class="luna-film-person" src="${ACT_TWO_SEATED_ART}" alt="地面に座り込んだルナの後ろ姿"></div></div><div class="luna-film-shade"></div><div class="luna-film-phone-light"></div><div class="luna-film-notice" hidden><small>けもの荘</small><strong>入居者募集</strong><span>お気軽にお問い合わせください</span></div><div class="luna-film-grain"></div><div class="luna-film-black"></div></div>
  <p class="luna-film-subtitle" aria-live="polite" aria-atomic="true"></p>
  <div class="luna-film-controls"><button type="button" data-film-pause aria-label="一時停止" aria-pressed="false">Ⅱ</button><button type="button" data-film-next aria-label="次のカットへ">次へ</button><button type="button" data-film-skip>スキップ</button></div>
- <div class="luna-film-loading" role="status"><span>映像を準備しています…</span><button type="button" data-film-retry hidden>もう一度読み込む</button></div></section>`;
+ <div class="luna-film-loading" role="status"><span></span><button type="button" data-film-retry hidden>もう一度読み込む</button></div></section>`;
 }
 
 // Small Foley sounds, separate from BGM and future speech recordings.
@@ -122,7 +122,7 @@ export function startActTwoOpening(root,onDone,voice=null,sound=null){
  };
  const toggle=()=>{if(!ready)return;paused=!paused;section.dataset.paused=String(paused);pause.textContent=paused?'▶':'Ⅱ';pause.setAttribute('aria-label',paused?'再生':'一時停止');pause.setAttribute('aria-pressed',String(paused));last=null;if(paused){voice?.stop();foley.pause();}else{activeCue=null;foley.scene(!!ACT_TWO_OPENING_SCENES[index].quiet);}announce();};
  const load=()=>{
-  const version=++loadVersion;ready=false;loading.hidden=false;loading.querySelector('span').textContent='映像を準備しています…';loading.querySelector('button').hidden=true;
+  const version=++loadVersion;ready=false;loading.hidden=false;loading.querySelector('span').textContent='';loading.querySelector('button').hidden=true;
   const sources=[...new Set([...ACT_TWO_OPENING_SCENES.map(s=>s.image),ACT_TWO_SEATED_ART])];
   Promise.all(sources.map(src=>new Promise((resolve,reject)=>{const asset=new Image();asset.onload=async()=>{try{await asset.decode?.();decodedAssets.set(src,asset);resolve();}catch(error){reject(error);}};asset.onerror=reject;asset.src=src;}))).then(()=>{if(destroyed||version!==loadVersion)return;ready=true;last=null;loading.hidden=true;show();}).catch(()=>{if(destroyed||version!==loadVersion)return;loading.querySelector('span').textContent='画像の読み込みに失敗しました';loading.querySelector('button').hidden=false;});
  };

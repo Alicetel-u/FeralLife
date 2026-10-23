@@ -169,7 +169,7 @@ export function extractVoiceScript(scope='intro') {
   }
   return result;
 }
-export function planVoices(rows,ids,config,pronunciations=[]){
+export function planVoices(rows,ids,config,pronunciations=[],repairs=[]){
   ids=normalizeVoiceIds(ids);
   return rows.map(row=>{
     const profile=config.profiles[row.performance];
@@ -177,8 +177,9 @@ export function planVoices(rows,ids,config,pronunciations=[]){
     // Change only the spoken spelling; displayed dialogue and lookup keys stay canonical.
     const duelReadings=row.performance.startsWith('duel-')?[{term:'大家流',reading:'おおやりゅう'},{term:'漢気',reading:'おとこぎ'},{term:'煙ノ',reading:'けむりの'},{term:'肉球乱舞',reading:'にくきゅうらんぶ'}]:[];
     const filmReadings=row.performance==='luna-film-tense'?[{term:'入居者',reading:'にゅうきょしゃ'},{term:'募集',reading:'ぼしゅう'}]:[];
-    const spokenText=[...filmReadings,...duelReadings,...pronunciations].sort((a,b)=>b.term.length-a.term.length).reduce((text,rule)=>text.replaceAll(rule.term,rule.reading),row.line.text);
-    const request={text:[...profile.tags,spokenText].join(' '),model_id:config.model,voice_settings:profile.settings};
+    const repair=repairs.find(r=>r.speaker===row.speaker&&r.text===row.line.text);
+    const spokenText=repair?.spokenText??[...filmReadings,...duelReadings,...pronunciations].sort((a,b)=>b.term.length-a.term.length).reduce((text,rule)=>text.replaceAll(rule.term,rule.reading),row.line.text);
+    const request={text:[...(repair?.tags||profile.tags),spokenText].join(' '),model_id:config.model,voice_settings:{...profile.settings,...repair?.settings}};
     const voiceId=ids[row.speaker]||null;
     const hash=digest({voiceId,request,performance:row.performance,format:config.outputFormat});
     return {...row,text:row.line.text,voiceId,request,hash,file:'assets/voices/'+hash+'.mp3',characters:Array.from(row.line.text).length,billableCharacters:Array.from(request.text).length,direction:profile.direction};

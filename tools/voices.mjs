@@ -23,8 +23,11 @@ const firstTragedy=args.includes('--first-tragedy');
 if(firstTragedy&&scope!=='act1')throw Error('First tragedy requires act1 scope');
 const filmOnly=args.includes('--film-only');
 if(filmOnly&&scope!=='act2-trouble1')throw Error('Film filter requires act2-trouble1 scope');
+const repairOnly=scope==='repairs';
+const repairs=(await json('config/voice-repairs.json')).lines;
 const fillMissing=scope==='missing';
-let script=(fillMissing?extractCompleteVoiceScript():extractVoiceScript(scope)).filter(row=>(!firstTragedy||row.source.includes('attempt-1/ash/trash/reply'))&&(!filmOnly||row.source.startsWith('act2/film/')));
+let script=(fillMissing||repairOnly?extractCompleteVoiceScript():extractVoiceScript(scope)).filter(row=>(!firstTragedy||row.source.includes('attempt-1/ash/trash/reply'))&&(!filmOnly||row.source.startsWith('act2/film/')));
+if(repairOnly)script=script.filter(row=>repairs.some(r=>r.speaker===row.speaker&&r.text===row.line.text));
 if(fillMissing){
   const {VOICE_MANIFEST}=await import('../src/voice-manifest.js');
   const missing=[];
@@ -33,12 +36,12 @@ if(fillMissing){
 }
 const speaker=args.find(a=>a.startsWith('--speaker='))?.slice('--speaker='.length);
 if(speaker&&!['cat','manager','hostess'].includes(speaker))throw Error('Unknown speaker filter');
-if(speaker==='manager'&&!['intro','act1','act2-trouble1','act2-duel','missing'].includes(scope))throw Error('Landlord generation is limited to supported chapter scopes');
+if(speaker==='manager'&&!['intro','act1','act2-trouble1','act2-duel','missing','repairs'].includes(scope))throw Error('Landlord generation is limited to supported chapter scopes');
 const pronunciationIssues=(await json('config/voice-pronunciation-issues.json')).issues;
 const pronunciationOnly=args.includes('--pronunciation-only');
 if(pronunciationOnly&&(sampleMoku||scope!=='intro'))throw Error('Pronunciation repair requires intro scope without sample mode');
 const selectedScript=pronunciationOnly?script.filter(row=>pronunciationIssues.some(issue=>row.line.text.includes(issue.term))):sampleMoku?script.filter(row=>row.speaker==='cat').slice(0,2):script;
-const rows=planVoices(speaker?selectedScript.filter(row=>row.speaker===speaker):selectedScript,ids,config,pronunciationIssues);
+const rows=planVoices(speaker?selectedScript.filter(row=>row.speaker===speaker):selectedScript,ids,config,pronunciationIssues,repairs);
 const pronunciationReview=pronunciationIssues.map(issue=>({...issue,sources:rows.filter(row=>row.text.includes(issue.term)).map(row=>row.source)})).filter(issue=>issue.sources.length);
 await mkdir(join(root,'.local'),{recursive:true});
 const planId=digest(rows.map(r=>({source:r.source,hash:r.hash})));
@@ -62,7 +65,7 @@ if(!args.includes('--quiet'))console.table(report.rows.map((r,i)=>({no:i+1,sourc
 if(!args.includes('--quiet')&&pronunciationReview.length)console.table(pronunciationReview.map(issue=>({term:issue.term,reading:issue.reading,status:issue.status,lines:issue.sources.length})));
 console.log(JSON.stringify({scope,planId,model:config.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true}));
 if(!args.includes('--verify')&&!args.includes('--generate'))process.exit(0);
-const allowedGeneration=fillMissing||scope==='act2-trouble1'||scope==='act2-duel'||scope==='intro'||(scope==='act1'&&(['cat','manager'].includes(speaker)||firstTragedy)&&!sampleMoku&&!pronunciationOnly);
+const allowedGeneration=repairOnly||fillMissing||scope==='act2-trouble1'||scope==='act2-duel'||scope==='intro'||(scope==='act1'&&(['cat','manager'].includes(speaker)||firstTragedy)&&!sampleMoku&&!pronunciationOnly);
 if(args.includes('--generate')&&(!allowedGeneration||!args.includes('--approve='+planId)))throw Error('Generation requires an allowed scope and authorization of the current plan hash');
 let key;
 try{key=(await json('.local/elevenlabs.json')).apiKey;}catch{throw Error('Local API key missing. Run npm run voice:setup (do not paste key into chat).');}
@@ -93,6 +96,7 @@ async function verify(){
   const actual={characterCount:balance.character_count,characterLimit:balance.character_limit,remaining:balance.character_limit-balance.character_count};
   console.log('Actual account balance (separate from estimate): '+JSON.stringify(actual));return actual;
 }
+if(repairOnly&&unique.length>30)throw Error('Unexpected repair volume');
 const before=await verify();
 if(!args.includes('--generate'))process.exit(0);
 if(scope==='act2-trouble1'&&(unique.length>350||estimate>20000))throw Error('Abnormal trouble-one generation volume; review scope before spending');

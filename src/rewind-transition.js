@@ -47,8 +47,14 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
       heartbeatAudio ||= new AudioContext();
       const start=heartbeatAudio.currentTime,osc=heartbeatAudio.createOscillator(),gain=heartbeatAudio.createGain();
       osc.type='sine';osc.frequency.setValueAtTime(64,start);osc.frequency.exponentialRampToValueAtTime(38,start+.25);
-      gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.48,start+.035);gain.gain.exponentialRampToValueAtTime(.0001,start+.3);
+      gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.68,start+.035);gain.gain.exponentialRampToValueAtTime(.0001,start+.3);
       osc.connect(gain);gain.connect(heartbeatAudio.destination);osc.start(start);osc.stop(start+.31);
+      // A quieter upper harmonic keeps the pulse audible on small phone speakers.
+      const overtone=heartbeatAudio.createOscillator(),presence=heartbeatAudio.createGain();
+      overtone.type='triangle';overtone.frequency.setValueAtTime(128,start);overtone.frequency.exponentialRampToValueAtTime(76,start+.25);
+      presence.gain.setValueAtTime(.0001,start);presence.gain.exponentialRampToValueAtTime(.12,start+.035);presence.gain.exponentialRampToValueAtTime(.0001,start+.3);
+      overtone.connect(presence);presence.connect(heartbeatAudio.destination);overtone.start(start);overtone.stop(start+.31);
+      osc.onended=()=>{osc.disconnect();gain.disconnect();};overtone.onended=()=>{overtone.disconnect();presence.disconnect();};
     }catch{}
   }
   const chapter=Number(root.dataset.chapter)||1;

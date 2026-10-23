@@ -5,7 +5,7 @@ export const PROLOGUE_CUTS = [
  {shot:'letter',image:'assets/prologue/letter.png',speaker:'前大家からの手紙',text:'おめでとうございます。\nあなたは本日から「けもの荘」の大家です。'},
  {shot:'income',image:'assets/prologue/letter.png',speaker:'前大家からの手紙',text:'現在の入居者は1名。\n家賃収入は期待しないでください。'},
  {shot:'warning',image:'assets/prologue/keys.png',speaker:'前大家からの手紙',text:'なお、私はもう関わりたくありません。\n\n前大家より'},
- {shot:'door',image:'assets/prologue/door.png',speaker:'大家（心の声）',text:'……何があったんだよ、この家。\nまずは、たった一人の住人に会ってみるか。'}
+ {shot:'door',image:'assets/prologue/door.png',speaker:'大家（心の声）',text:'……何があったんだよ、このアパート。\nまずは、たった一人の住人に会ってみるか。'}
 ];
 const prologueEscape = text=>String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function openingPrologueHTML(){

@@ -154,7 +154,7 @@ export const OBSERVATION_BEATS=[
         "speaker": "cat",
         "name": "モク",
         "emotion": "neutral",
-        "text": "大家、やっぱりと頼りになるニャ。"
+        "text": "大家、やっぱり頼りになるニャ。"
       }
     ]
   },

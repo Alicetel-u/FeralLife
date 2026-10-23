@@ -42,3 +42,15 @@ test('rapid deliberate clicks reveal text then advance without dead-time; finish
   handlers.get('click')(click);t.mock.timers.tick(179);assert.equal(calls,0);t.mock.timers.tick(1);assert.equal(calls,1);clean();assert.equal(handlers.size,0);
  }finally{if(oldMotion===undefined)delete globalThis.matchMedia;else globalThis.matchMedia=oldMotion;if(oldImage===undefined)delete globalThis.Image;else globalThis.Image=oldImage;}
 });
+
+test('opening names the apartment and removes only the first repeated new-landlord greeting',async()=>{
+ assert.ok(PROLOGUE_CUTS.some(c=>c.text.includes('何があったんだよ、このアパート。')));
+ const {createActOne}=await import('../src/act-one.js');
+ const first=createActOne(42,[],1,true),later=createActOne(42,[],3,true);
+ assert.ok(first.events.some(e=>e.lines?.some(l=>l.text==='モクですニャ。よろしくニャ。')));
+ assert.ok(!first.events.some(e=>e.lines?.some(l=>l.text.includes('新しい大家？'))));
+ assert.ok(later.events.some(e=>e.lines?.some(l=>l.text==='新しい大家？ モクですニャ。よろしくニャ。')));
+ const {OBSERVATION_BEATS}=await import('../src/act-one-observation.js');
+ const text=JSON.stringify(OBSERVATION_BEATS);
+ assert.ok(text.includes('大家、やっぱり頼りになるニャ。'));assert.ok(!text.includes('やっぱりと頼り'));
+});

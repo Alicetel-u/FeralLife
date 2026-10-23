@@ -123,8 +123,10 @@ test('lively landlord keeps inner voice separate, uses audition settings and pre
   }
  }
  const {VOICE_MANIFEST}=await import('../src/voice-manifest.js');
- for(const r of plan.filter(r=>r.speaker==='cat'&&!r.source.includes('attempt-1/ash/trash/reply')))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
- for(const r of plan.filter(r=>r.speaker==='manager'&&r.performance!=='inner'&&!r.source.includes('attempt-1/ash/trash/reply')))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
+ const repairs=JSON.parse(await readFile(new URL('../config/voice-repairs.json',import.meta.url))).lines;
+ const unchanged=r=>!repairs.some(f=>f.speaker===r.speaker&&f.text===r.text);
+ for(const r of plan.filter(r=>r.speaker==='cat'&&unchanged(r)&&!r.source.includes('attempt-1/ash/trash/reply')))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
+ for(const r of plan.filter(r=>r.speaker==='manager'&&r.performance!=='inner'&&unchanged(r)&&!r.source.includes('attempt-1/ash/trash/reply')))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
 });
 
 test('act1 extraction covers revised branches, epilogue and the complete daily schedule',async()=>{
@@ -279,4 +281,24 @@ for(const mobile of [false,true])test(`character gain follows speaker and volume
   player.play({...lines[0],speaker:'大家（心の声）'},'inner');
   player.setVolume(0.25);assert.equal(gains[0].gain.value,(mobile?4:1)*0.25*1.6);
  }finally{player?.stop();if(old===undefined)delete globalThis.AudioContext;else globalThis.AudioContext=old;if(descriptor)Object.defineProperty(globalThis,'navigator',descriptor);else delete globalThis.navigator;}
+});
+
+test('reported voice repairs change spoken input only for the exact matching speaker and text',async()=>{
+ const config=JSON.parse(await readFile(new URL('../config/voice-performance.json',import.meta.url)));
+ const repairs=JSON.parse(await readFile(new URL('../config/voice-repairs.json',import.meta.url))).lines;
+ const {extractCompleteVoiceScript}=await import('../tools/voice-script.mjs');
+ const rows=extractCompleteVoiceScript();
+ const original=planVoices(rows,{manager:'m',cat:'c',hostess:'l'},config);
+ const fixed=planVoices(rows,{manager:'m',cat:'c',hostess:'l'},config,[],repairs);
+ for(let i=0;i<rows.length;i++){
+  const rule=repairs.find(r=>r.speaker===rows[i].speaker&&r.text===rows[i].line.text);
+  assert.equal(fixed[i].lineKey,original[i].lineKey);
+  if(rule){assert.ok(fixed[i].request.text.includes(rule.spokenText));assert.notEqual(fixed[i].hash,original[i].hash);}
+  else assert.equal(fixed[i].hash,original[i].hash);
+ }
+});
+test('a mastered shout can reduce its own amplification without changing other voices',()=>{
+ const l={speaker:'manager',text:'叫び'},a={play:()=>Promise.resolve(),pause(){},load(){},removeAttribute(){}};
+ const p=createVoicePlayer({storage:null,manifest:{[voiceLineKey(l)]:{file:'shout.mp3',volumeGain:.5}},makeAudio:()=>a});
+ try{p.play(l,'shout');assert.equal(a.volume,.8*1.6*.5);}finally{p.stop();}
 });
