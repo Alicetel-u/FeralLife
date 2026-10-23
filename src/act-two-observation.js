@@ -1,37 +1,46 @@
 const lunaLine=(text,emotion='happy')=>({speaker:'hostess',name:'ルナ',emotion,text});
 const mokuLine=(text,emotion='neutral')=>({speaker:'cat',name:'モク',emotion,text});
 
-// Small domestic scenes before the visitor arrives. No incident knowledge yet.
+// Stable IDs preserve existing observation saves. Every scene is now a shared conversation.
 export const ACT_TWO_OBSERVATION_BEATS=[
- {id:'luna-unpack',phase:0,at:57.08,title:'ルナ、荷ほどき開始',lines:[
-  lunaLine('まずは服をしまって、お化粧品を並べて……。'),
-  lunaLine('あれ、靴が片方ない。……あった、バッグの中！','surprised'),
-  lunaLine('よし。誰が来ても大丈夫。押し入れさえ開けなければ♡','shy')
+ {id:'luna-unpack',phase:0,at:57.08,title:'強いやつ、ください',together:true,lines:[
+  lunaLine('モクちゃん、何か飲む？'),
+  mokuLine('強いやつニャ。','happy'),
+  lunaLine('コーヒー、濃いめでいい？'),
+  mokuLine('そっちの強さじゃないニャ。','surprised'),
+  lunaLine('じゃあ、お水。肝臓に優しいほうで。','shy'),
+  mokuLine('引っ越してきたのに、もう母親ニャ。','tired')
  ]},
- {id:'luna-neighbor',phase:0,at:59.1,title:'モク流・ご近所あいさつ',together:true,lines:[
-  mokuLine('引っ越しお疲れニャ。差し入れの受付はこちらニャ。','happy'),
-  lunaLine('あれ？ もらうの、あたしのほうじゃない？','surprised'),
-  mokuLine('新生活を応援する気持ちは持ってきたニャ。'),
-  lunaLine('手ぶらだけど、口はよく動くんだね。'),
-  mokuLine('口なら家賃もかからないニャ。','happy'),
-  lunaLine('ふふっ。じゃあ、お茶だけ飲んでいく？')
+ {id:'luna-neighbor',phase:0,at:59.1,title:'褒めると、こうなる',together:true,lines:[
+  lunaLine('モクちゃんって、頼りになるね。'),
+  mokuLine('……何を運ぶニャ？','surprised'),
+  lunaLine('まだ何も頼んでないよ。','surprised'),
+  mokuLine('なら、もう一回言ってほしいニャ。','happy'),
+  lunaLine('モクちゃん、頼りになるね♡','shy'),
+  mokuLine('よし。今ので今日は働いたニャ。','happy')
  ]},
- {id:'luna-tidy',phase:0,at:61.08,title:'102号室をぴかぴかに',lines:[
-  lunaLine('鏡、よし。テーブル、よし。窓も拭いて……。'),
-  lunaLine('うん、明るくなった。ここ、けっこう好きかも。'),
-  lunaLine('……あとは押し入れね。今日は開けない約束だった♡','shy')
+ {id:'luna-tidy',phase:0,at:61.08,title:'記念写真の必勝法',together:true,lines:[
+  lunaLine('引っ越し記念に、一枚撮ろうよ。'),
+  mokuLine('顔が小さく写る場所はどこニャ？'),
+  lunaLine('少し後ろに下がるといいよ。'),
+  mokuLine('このくらいニャ？'),
+  lunaLine('うん。……モクちゃん、画面から消えた。','surprised'),
+  mokuLine('大成功ニャ。顔の大きさ、ゼロニャ。','happy')
  ]},
- {id:'luna-tea',phase:0,at:63.1,title:'お茶と働き者の口',together:true,lines:[
-  lunaLine('モクちゃん、お茶のおかわりは？'),
-  mokuLine('もらうニャ。片づけを見てたら疲れたニャ。','tired'),
-  lunaLine('見てただけで？','surprised'),
-  mokuLine('心の中では、ずっと応援してたニャ。'),
-  lunaLine('じゃあ、心の中でお皿も洗っておいて♡','shy'),
-  mokuLine('……急に眠くなってきたニャ。','tired')
+ {id:'luna-tea',phase:0,at:63.1,title:'恋愛相談、お腹がすいてる場合',together:true,lines:[
+  lunaLine('好きな人に「会いたい」って送るなら、何時がいい？','shy'),
+  mokuLine('ごはんの前ニャ。'),
+  lunaLine('お腹すいてると、会いたくなるの？','surprised'),
+  mokuLine('「何か食べた？」までセットで送るニャ。'),
+  lunaLine('それ、好きな人への連絡？','surprised'),
+  mokuLine('ごはんを出してくれそうな人への連絡ニャ。','happy')
  ]},
- {id:'luna-before-outing',phase:0,at:65.08,title:'ルナ、お出かけの支度',lines:[
-  lunaLine('出かける前に、ひと口だけ。お腹が鳴ったら台無しだし。'),
-  lunaLine('スマホと鍵、よし。リップも……うん、よし♡','shy'),
-  lunaLine('帰ったら続きを片づけよう。今度こそ押し入れも、ね。')
+ {id:'luna-before-outing',phase:0,at:65.08,title:'モク流、不審者の見分け方',together:true,lines:[
+  lunaLine('じゃ、お仕事行ってくるね。お留守番、頼める？'),
+  mokuLine('任せるニャ。不審な人は入れないニャ。','happy'),
+  lunaLine('頼もしい。誰か来たら、まずどうする？'),
+  mokuLine('何か持ってきたか聞くニャ。'),
+  lunaLine('手ぶらだったら？'),
+  mokuLine('不審者ニャ。')
  ]}
 ];

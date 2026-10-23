@@ -318,7 +318,7 @@ export class WorldRenderer {
       ctx.save();ctx.translate(x-12,y-2);ctx.rotate(-Math.PI/2);ctx.scale(motion.sy,1);drawSprite(ctx,r.type,0,0,t,'sleep',scale*.72);ctx.restore();
     } else {
       ctx.save();ctx.translate(x+motion.dx*u,fy);if(motion.rotate)ctx.rotate(motion.rotate);ctx.scale(1,motion.sy);
-      drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint,...this.miniReaction(r.type,t,r),poseLocked:!!comedy});ctx.restore();
+      drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint,...this.miniReaction(r.type,t,r),poseLocked:!!comedy&&!comedy.conversation});ctx.restore();
     }
     const tip=CHARACTER_ART[r.type]?.image?CHARACTER_ART[r.type].smokeTip?.[pose]:[72,-50];
     drawCharacterEffects(ctx,{type:r.type,x,y:fy,u,dir:p.direction,t,action,pose,moving:p.moving,needs:r.needs,trash:p.zone==='room'?r.trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip});

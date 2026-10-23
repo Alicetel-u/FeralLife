@@ -17,7 +17,8 @@ export function extractCompleteVoiceScript(){
   state.actOne.started=true;state.actOne.prologuePending=false;state.actOne.titlePending=false;
   for(let tick=0;tick<=1920;tick++){
     state.hour=57+tick/40;secondActLife(state,.025);
-    const lines=[...(secondActChat(state)?.lines||[]).map(([speaker,text])=>({speaker,text})),...lunaMutters(state).map(text=>({speaker:'hostess',text}))];
+    const chat=secondActChat(state);
+    const lines=[...(!chat?.observationId?chat?.lines||[]:[]).map(([speaker,text])=>({speaker,text})),...lunaMutters(state).map(text=>({speaker:'hostess',text}))];
     for(const line of lines)ambient.push({source:'act2/ambient/complete',line,speaker:voiceSpeaker(line)});
   }
   const rows=[...extractVoiceScript('all'),...extractVoiceScript('act2-trouble1'),...ambient].map(row=>{
@@ -53,7 +54,7 @@ export function extractVoiceScript(scope='intro') {
     const ambient=new Set();
     for(let i=0;i<1000&&!state.actOne.pending;i++){
       const chat=secondActChat(state);
-      if(chat&&!ambient.has(chat.key)){ambient.add(chat.key);add('act2/observation/'+chat.key,chat.lines.map(([speaker,text])=>({speaker,text})));}
+      if(chat&&!chat.observationId&&!ambient.has(chat.key)){ambient.add(chat.key);add('act2/observation/'+chat.key,chat.lines.map(([speaker,text])=>({speaker,text})));}
       for(const text of lunaMutters(state))if(!ambient.has(text)){ambient.add(text);add('act2/ambient',[{speaker:'hostess',text}]);}
       advanceActTwo(state,.025);
     }

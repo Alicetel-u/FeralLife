@@ -35,6 +35,8 @@ if(fillMissing){
   script=missing;
 }
 const speaker=args.find(a=>a.startsWith('--speaker='))?.slice('--speaker='.length);
+const sourcePrefix=args.find(a=>a.startsWith('--source-prefix='))?.slice('--source-prefix='.length);
+if(sourcePrefix)script=script.filter(row=>row.source.startsWith(sourcePrefix));
 // Preserve each scene's original performance when filling a narrowly scoped rewrite.
 if(args.includes('--only-missing')){
   const {VOICE_MANIFEST}=await import('../src/voice-manifest.js');

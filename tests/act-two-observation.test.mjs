@@ -39,3 +39,23 @@ test('reload, pause, voice playback, and legacy saves preserve the right observa
  delete s.actOne.observation;s.hour=64;
  assert.equal(observationView(s).done,4,'old saves skip scenes whose scheduled time has passed');
 });
+
+test('all five rewrites are shared, voiced conversations with no chores and distinct final beats',()=>{
+ const expected=['引っ越してきたのに、もう母親ニャ。','よし。今ので今日は働いたニャ。','大成功ニャ。顔の大きさ、ゼロニャ。','ごはんを出してくれそうな人への連絡ニャ。','不審者ニャ。'];
+ for(const [index,beat] of ACT_TWO_OBSERVATION_BEATS.entries()){
+  assert.equal(beat.together,true);assert.equal(beat.lines.length,6);
+  assert.equal(beat.lines.at(-1).text,expected[index]);
+  assert.equal(new Set(beat.lines.map(l=>l.speaker)).size,2);
+  assert.ok(!beat.lines.some(l=>/掃除|ぴかぴか|荷ほどき|押し入れ|皿を洗/.test(l.text)));
+ }
+});
+
+test('Moku stays with Luna between conversations and returns normally when she leaves',()=>{
+ const s=start();advanceActTwo(s,1.5);
+ const cat=s.residents.find(r=>r.type==='cat'),luna=s.residents.find(r=>r.type==='hostess');
+ for(const hour of [59.1,61.08,63.1,65.08]){
+  advanceActTwo(s,hour-s.hour);
+  for(const r of [cat,luna]){const p=sampleJourney(r,s.hour);assert.equal(p.room,102);assert.equal(p.moving,false);assert.notEqual(r.action,'clean');}
+ }
+ advanceActTwo(s,.42);assert.ok(sampleJourney(cat,s.hour).moving||sampleJourney(cat,s.hour).room===101);
+});

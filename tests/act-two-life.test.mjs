@@ -9,9 +9,9 @@ import {sampleJourney} from '../src/movement.js';
 import {validateSave} from '../src/simulation.js';
 function state(){const s=createActOne(91);beginActTwo(s);s.actOne.started=true;s.actOne.prologuePending=false;s.events.forEach(e=>e.read=true);observationView(s);return s;}
 
-test('Luna finishes her snack and walks to the entrance before the street trouble',()=>{
+test('Luna finishes her conversation and walks to the entrance before the street trouble',()=>{
  const s=state(),luna=s.residents.find(r=>r.type==='hostess');
- advanceActTwo(s,8.08);assert.equal(luna.action,'eat');assert.equal(sampleJourney(luna,s.hour).zone,'room');
+ advanceActTwo(s,8.08);assert.equal(luna.action,'chat');assert.equal(sampleJourney(luna,s.hour).zone,'room');
  advanceActTwo(s,.42);assert.equal(luna.action,'idle');assert.equal(sampleJourney(luna,s.hour).moving,true);
  advanceActTwo(s,100);const pos=sampleJourney(luna,s.hour);
  assert.equal(s.actOne.pending.scene,'bag');assert.equal(s.hour,66);
@@ -23,7 +23,7 @@ test('Luna finishes her snack and walks to the entrance before the street troubl
 });
 test('Luna unpacks, receives a visitor, goes to work and returns before the minigame',()=>{
  const s=state(),luna=s.residents.find(r=>r.type==='hostess'),cat=s.residents.find(r=>r.type==='cat');
- assert.equal(luna.action,'clean');
+ assert.equal(luna.action,'chat');
  advanceActTwo(s,2.25);
  assert.equal(lunaNearby(s),true);
  assert.equal(sampleJourney(cat,s.hour).room,102);
@@ -38,10 +38,10 @@ test('Luna unpacks, receives a visitor, goes to work and returns before the mini
 });
 test('authored neighbor chat follows saved dialogue and never creates a second ambient conversation',()=>{
  const s=state(),talk=createTalk();s.actOne.observation.done.push('luna-unpack');advanceActTwo(s,2.25);tickObservation(s,0);
- stepTalk(talk,s,100,false);assert.equal(talk.bubbles[0].speaker,'cat');assert.equal(talk.chapterChat,null);
+ stepTalk(talk,s,100,false);assert.equal(talk.bubbles[0].speaker,'hostess');assert.equal(talk.chapterChat,null);
  assert.ok(lunaNearby(s));
  tickObservation(s,.25);tickObservation(s,.25);finishObservationLine(s);
- stepTalk(talk,s,200,false);assert.equal(talk.bubbles[0].speaker,'hostess');
+ stepTalk(talk,s,200,false);assert.equal(talk.bubbles[0].speaker,'cat');
  assert.equal(talk.bubbles[0].text,observationView(s).line.text);
 });
 

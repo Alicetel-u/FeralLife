@@ -2,8 +2,8 @@ import {createRoomMove,createVisit,createOuting,createEntranceMove,sampleJourney
 import {ACT_TWO_OBSERVATION_BEATS} from './act-two-observation.js';
 
 const LUNA_DAY=[
- [57,'clean','center'],[58.5,'idle','table','arrival'],[61,'clean','center'],
- [62.25,'idle','table','tea'],[65,'eat','fridge'],[65.25,'idle','entrance'],
+ [57,'chat','table','arrival'],[58.5,'chat','table','arrival'],[61,'chat','table','photo'],
+ [62.25,'chat','table','tea'],[65,'chat','table','farewell'],[65.25,'idle','entrance'],
  [67,'outing','hall'],[80,'idle','table'],[81.25,'clean','table'],
  [83,'idle','table','relief'],[87,'sleep','bed'],[95,'eat','fridge'],
  [97,'clean','center'],[103,'idle','window']
@@ -13,6 +13,8 @@ export function secondActLife(state,delta=0){
  if(state.actOne?.chapter!==2||state.actOne.status!=='playing')return;
  const luna=state.residents.find(r=>r.type==='hostess'),cat=state.residents.find(r=>r.type==='cat');if(!luna)return;
  const beat=LUNA_DAY.findLast(([at])=>at<=state.hour)||LUNA_DAY[0];
+ // Old saves may still have a cleaning/snack pose or a short visit at this beat.
+ if(state.hour<65.25&&!state.actOne.completed.includes('bag')&&(luna.action==='clean'||luna.action==='eat'||cat?.journey?.returnAt<65.25))delete luna.actTwoBeat;
  for(const r of [luna,cat].filter(Boolean))r.storyUntil=106;
  if(luna.actTwoBeat!==beat[0]){
   const start=sampleJourney(luna,state.hour,POSITIONS[luna.action]||'table');
@@ -21,8 +23,8 @@ export function secondActLife(state,delta=0){
   if(cat){
    const from=sampleJourney(cat,state.hour,POSITIONS[cat.action]||'table');
    cat.previous=cat.action;cat.action=beat[3]?'chat':state.hour%24<8?'sleep':'tv';cat.actionAge=0;cat.targetRoom=beat[3]?luna.room:null;
-   cat.journey=beat[3]?createVisit(cat,state.hour,from,luna.room):createRoomMove(cat,state.hour,from,cat.action==='sleep'?'bed':'tv');
-   if(beat[3]){cat.journey.reason='ルナと立ち話';cat.journey.returnAt=cat.journey.arriveAt+1;cat.journey.endsAt=cat.journey.returnAt+(cat.journey.arriveAt-cat.journey.startedAt);}
+   cat.journey=beat[3]?(from.zone==='room'&&from.room===luna.room?createRoomMove({...cat,room:luna.room},state.hour,from,'center'):createVisit(cat,state.hour,from,luna.room)):createRoomMove(cat,state.hour,from,cat.action==='sleep'?'bed':'tv');
+   if(beat[3]){cat.journey.reason='ルナと立ち話';cat.journey.returnAt=state.hour<65.25?Math.max(65.25,cat.journey.arriveAt+1):cat.journey.arriveAt+1;cat.journey.endsAt=cat.journey.returnAt+(cat.journey.arriveAt-cat.journey.startedAt);}
   }
  }
  if(luna.action==='sleep')luna.needs.sleep=Math.max(0,luna.needs.sleep-delta*18);
@@ -38,13 +40,9 @@ export function secondActChat(state){
  if(!lunaNearby(state))return null;
  const luna=state.residents.find(r=>r.type==='hostess');
  const beat=LUNA_DAY.find(([at])=>at===luna.actTwoBeat),kind=beat?.[3];
- const chats={
-  arrival:[['hostess','荷ほどき、まだ終わらないんだよね。'],['cat','今日はここまで、って決めるのも大事ニャ。'],['hostess','モクちゃん、それ毎日言ってない？']],
-  papers:[['hostess','玄関のこと、大家さんに相談しておこう。'],['cat','困ったら、ひとりで抱え込まないニャ。'],['hostess','うん。ありがとう、モクちゃん。']],
-  relief:[['hostess','片づけてたら、もうこんな時間。'],['cat','休憩の時間も片づけたらダメニャ。'],['hostess','ふふ。じゃあ、少しだけ休もうかな。']]
- };
- const lines=kind==='tea'?ACT_TWO_OBSERVATION_BEATS.find(b=>b.id==='luna-tea').lines.map(l=>[l.speaker,l.text]):chats[kind];
- return lines?{key:'act2-chat-'+kind,lines}:null;
+ const observed={arrival:'luna-unpack',photo:'luna-tidy',tea:'luna-tea',farewell:'luna-before-outing'};
+ const lines=observed[kind]?ACT_TWO_OBSERVATION_BEATS.find(b=>b.id===observed[kind]).lines.map(l=>[l.speaker,l.text]):kind==='relief'?[['hostess','やっと、ひと息つけるね。'],['cat','休憩なら、いつでもつきあうニャ。'],['hostess','そこは頼りになるね。']]:null;
+ return lines?{key:'act2-chat-'+kind,lines,observationId:observed[kind]||null}:null;
 }
 export function lunaMutters(state){
  const luna=state.residents.find(r=>r.type==='hostess');if(!luna)return [];

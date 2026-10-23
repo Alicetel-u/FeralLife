@@ -56,26 +56,26 @@ export function observationComedy(state,resident,{reduced=false}={}){
   if(!cat)return null;d.pose=i===0?'drink':i===1?'stand':'sit';d.action=i===0?'drink':'idle';
   prop('can',35,0);if(i===1)d.reaction='discover';if(i>=2)d.reaction='proud';break;
  case 'luna-unpack':
-  if(!luna)return null;d.pose=i<2?'stand':'chat';d.action='idle';d.rotate=!reduced&&i===0?-.05*p:0;
-  prop('bag',-37,0);prop('shoe',i===0?-37:i===1?gagMix(-37,32,late):32,i===1?-28*Math.sin(late*Math.PI):0,{angle:i===1?late*2:0});
-  d.reaction=i===1&&late>.4?'discover':i>=2?'proud':null;break;
- case 'luna-tidy':
-  if(!luna)return null;d.pose=i<2?'stand':'chat';d.action='idle';
-  d.dx=i===0?gagMix(-8,8,p):8;d.reaction=i<2?'sparkle':'oops';prop('cloth',26,-46);break;
+  if(!cat&&!luna)return null;d.pose=cat&&i>=5?'sit':'chat';d.action='idle';
+  if(luna&&i>=4||cat&&i>=5)prop('glass',24,-39);if(cat&&i===3)d.reaction='question';if(cat&&i>=5)d.reaction='oops';break;
  case 'luna-neighbor':
-  if(!cat&&!luna)return null;
-  d.pose=cat?'chat':i===1?'stand':'chat';
-  d.reaction=cat?(i===0?'proud':i===2?'sparkle':null):(i===1?'question':null);break;
+  if(!cat&&!luna)return null;d.pose=cat&&i>=5?'sit':'chat';
+  d.reaction=cat?(i===1?'question':i>=5?'proud':null):i===2?'question':null;break;
+ case 'luna-tidy':
+  if(!cat&&!luna)return null;d.pose='chat';
+  if(cat){d.dx=i>=3?gagMix(0,-24,p):0;d.direction=-1;d.reaction=i>=5?'proud':null;}
+  else {prop('phone',24,-60);if(i>=4)prop('photo',48,-89,{missingCat:true});d.reaction=i===4?'question':null;}break;
  case 'luna-tea':
-  if(!cat&&!luna)return null;
-  if(cat){d.pose=i>=5?'sleep':i===1?'drink':'sit';d.action=i>=5?'sleep':i===1?'drink':'idle';d.reaction=i===3?'proud':null;}
-  else {d.pose=i===0?'drink':'chat';d.action=i===0?'drink':'idle';d.reaction=i===2?'question':null;}
-  // The empty dish remains beside the newly "sleeping" cat.
-  if(cat)prop('dish',35,0);break;
+  if(!cat&&!luna)return null;d.pose='chat';
+  if(luna){prop('phone',22,-53);d.reaction=i===2||i===4?'question':null;}
+  else d.reaction=i===1||i===3?'hungry':i>=5?'proud':null;break;
  case 'luna-before-outing':
-  if(!luna)return null;d.pose=i===0?'eat':i===1?'stand':'chat';d.action=i===0?'eat':'idle';
-  if(i>=1){prop('phone',22,-53);prop('keys',-22,-42);d.reaction=i===1?'sparkle':'proud';}break;
+  if(!cat&&!luna)return null;d.pose=cat&&i===1?'stand':'chat';
+  if(luna){prop('phone',22,-53);prop('keys',-22,-42);}
+  else d.reaction=i===1?'proud':i>=5?'call':null;break;
+
  }
+ if(c.id.startsWith('luna-'))d.conversation=true;
  return d;
 }
 
@@ -95,6 +95,8 @@ export function drawObservationComedy(ctx,d,x,y,u,{reduced=false}={}){
    case 'stub':box(-3,-2,6,3,'#d6c4a1');box(2,-2,2,3,'#66554c');break;
    case 'cloth':box(-8,-3,16,6,'#a5d4d2');break;
    case 'dish':box(-12,-3,24,3,'#f1e8d6');box(-8,0,16,2,'#9ca5aa');break;
+   case 'glass':box(-6,-15,12,16,'#cee9e8');box(-4,-8,8,7,'#99cbd5');box(-6,-16,12,2,'#edf7ed');break;
+   case 'photo':box(-23,-17,46,34,'#fff2d5');box(-20,-14,40,25,'#b8d6d2');box(-10,-8,11,15,'#cc8494');box(-11,-11,13,8,'#49343a');if(!prop.missingCat){box(6,-8,10,15,'#292932');box(5,-13,4,6,'#292932');box(14,-13,4,6,'#292932');}break;
    case 'keys':ctx.strokeStyle='#e8cc75';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,-9,4,0,Math.PI*2);ctx.moveTo(0,-5);ctx.lineTo(0,5);ctx.lineTo(4,5);ctx.stroke();break;
   }
   ctx.restore();
