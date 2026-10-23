@@ -6,6 +6,7 @@ import { ROOMS, CHARACTERS, ACTIONS, dateAt } from './simulation.js';
 import { CHARACTER_ART, ROOM_ART, SCENE_ART } from './character-art.js';
 import { exteriorRoomBounds, sampleJourney, sampleCompanion, motionLabel } from './movement.js';
 import { drawCharacterEffects, spriteMotion } from './effects.js';
+import {observationComedy,drawObservationComedy} from './observation-comedy.js';
 import { drawExteriorForeground, exteriorFeet } from './exterior-occlusion.js';
 
 export const WORLD_WIDTH = 1920;
@@ -84,7 +85,7 @@ export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1
   const art = CHARACTER_ART[type];
   const moving=opts.pose?.startsWith('walk')||action==='outing';
   const emotion=opts.emotion||(!art?.image?'relieved':null);
-  const allowsEmotion=(!moving||type==='patron')&&action!=='sleep'&&(!['eat','drink','clean','smoke'].includes(action)||opts.emotionActive);
+  const allowsEmotion=!opts.poseLocked&&(!moving||type==='patron')&&action!=='sleep'&&(!['eat','drink','clean','smoke'].includes(action)||opts.emotionActive);
   if(type!=='manager'&&((allowsEmotion&&emotion&&emotion!=='neutral'&&emotion!=='tired')||(!art?.image&&MINI_EMOTION_ART[type]?.image))){
     const fallbackEmotion=(moving&&type!=='patron')||action==='sleep'?'relieved':emotion==='tired'?'sad':emotion&&miniEmotionFrameName(type,emotion)?emotion:'relieved';
     const step=moving&&!opts.reduced?Math.sin(tick*11)*.35*scale:0;
@@ -283,7 +284,11 @@ export class WorldRenderer {
     ctx.restore();
   }
   interiorResidentPosition(state,r,t=this.animTime||0) {
-    return phoneSearchWalk(state,r,firstEveningCleanup(state,r,sampleJourney(r,state.hour,ACTIONS[r.action].place),t),t);
+    const comedy=observationComedy(state,r,{reduced:this.reducedMotion});
+    const base=sampleJourney(r,state.hour,ACTIONS[r.action].place);
+    const p=phoneSearchWalk(state,r,comedy?base:firstEveningCleanup(state,r,base,t),t);
+    if(!comedy||p.zone!=='room'||p.moving)return p;
+    return {...p,x:p.x+comedy.dx,y:p.y+comedy.dy,direction:comedy.direction};
   }
   drawInteriorResident(state,r,t) {
     const p=this.interiorResidentPosition(state,r,t);
@@ -292,9 +297,13 @@ export class WorldRenderer {
     const ctx=this.ctx,x=b.x+(p.x-base.x)/base.w*b.w,y=p.zone==='hall'?b.y+b.h+16:b.y+(p.y-base.y)/base.h*b.h;
     if(this.focus && p.zone==='room' && r.room===state.selected)this.followCharacterX=x;
     const height=this.focus?300:144,baseHeight=CHARACTER_ART[r.type]?.image?44:26,scale=height/baseHeight;
-    const u=height/128, sleeping=r.action==='sleep'&&!p.moving&&p.zone==='room';
-    const action=p.moving?'outing':r.action;
-    const pose=resolvePose(r.type,action,p.moving,t,state.hour), motion=spriteMotion(action,p.moving,r.needs,t,pose);
+    const comedy=p.zone==='room'?observationComedy(state,r,{reduced:this.reducedMotion}):null;
+    const u=height/128, action=p.moving?'outing':comedy?.action||r.action;
+    const sleeping=action==='sleep'&&!p.moving&&p.zone==='room';
+    const preferred=!p.moving&&comedy?.pose;
+    const pose=preferred&&CHARACTER_ART[r.type]?.poses?.[preferred]?.image?preferred:resolvePose(r.type,action,p.moving,t,state.hour);
+    const motion=spriteMotion(action,p.moving,r.needs,t,pose);
+    if(comedy&&!p.moving)motion.rotate=(motion.rotate||0)+comedy.rotate;
     const fy=y+(p.moving?Math.sin(t*11)*2:0);
     ctx.save();ctx.beginPath();ctx.rect(b.x,b.y,b.w,b.h+27);ctx.clip();
     rect(ctx,x-height*(pose==='sleep'?.26:.18),y+3,height*(pose==='sleep'?.52:.36),5,'#23302255');
@@ -303,10 +312,11 @@ export class WorldRenderer {
       ctx.save();ctx.translate(x-12,y-2);ctx.rotate(-Math.PI/2);ctx.scale(motion.sy,1);drawSprite(ctx,r.type,0,0,t,'sleep',scale*.72);ctx.restore();
     } else {
       ctx.save();ctx.translate(x+motion.dx*u,fy);if(motion.rotate)ctx.rotate(motion.rotate);ctx.scale(1,motion.sy);
-      drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint,...this.miniReaction(r.type,t,r)});ctx.restore();
+      drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint,...this.miniReaction(r.type,t,r),poseLocked:!!comedy});ctx.restore();
     }
     const tip=CHARACTER_ART[r.type]?.image?CHARACTER_ART[r.type].smokeTip?.[pose]:[72,-50];
     drawCharacterEffects(ctx,{type:r.type,x,y:fy,u,dir:p.direction,t,action,pose,moving:p.moving,needs:r.needs,trash:p.zone==='room'?r.trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip});
+    drawObservationComedy(ctx,comedy,x,fy,u,{reduced:this.reducedMotion});
     if(['stream','sell','gamble','shop','collect'].includes(r.action)&&!p.moving&&!this.speaking?.has(r.type)){ctx.fillStyle='#efe3c3';ctx.font=`${this.focus?32:20}px monospace`;ctx.fillText(ACTIONS[r.action].icon,x+height*.15,y-height);}
     ctx.restore();
   }
