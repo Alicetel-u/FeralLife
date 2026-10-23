@@ -286,13 +286,28 @@ let cleanupChoiceUI = () => {};
 let cleanupDuelPlayback = () => {};
 let stopEpilogueTransition=()=>{},stopEpilogueSound=()=>{},epilogueSwapping=false;
 let stopBadEntry=()=>{},badEntryActive=false;
-function showFirstFireCorridorCut(id,cursor,page){
+function showBadSceneCut(id,cursor,page,kind,afterMorningBlackout=false){
  badEntryActive=true;
  clearTimeout(eventAutoTimer);
- stopBadEntry=startBadEndingEntry(modal,'corridor',()=>{
+ stopBadEntry=startBadEndingEntry(modal,kind,()=>{
   badEntryActive=false;
-  showEvent(id,cursor,page,false,false,true);
+  showEvent(id,cursor,page,afterMorningBlackout,false,true);
  },{voiceBusy:()=>characterVoice.busy});
+}
+function badSceneCutKind(e,lines,previous,cursor){
+ if(e.actScene!=='reply'||!state.actOne||state.actOne.status!=='bad'||previous<0||cursor!==previous+1)return null;
+ const failure=state.actOne.failure||'';
+ const target=lines[cursor]?.text||'';
+ if(state.actOne.chapter===1){
+  if(failure==='ash-trash'&&isFirstFireReply(e,state.actOne)&&firstFireCut(lines,previous)==='trust'&&firstFireCut(lines,cursor)==='departure')return 'corridor';
+  if(failure.startsWith('ash-')&&failure!=='ash-trash'&&/数分後。|ベランダの外から|火は床のゴミ/.test(target))return 'fire';
+  if(failure.startsWith('dinner-')&&/その瞬間|気がつくと|しばらくして|数分後|煙が/.test(target))return 'fire';
+ }else if(failure.startsWith('bag-')){
+  // Never repeat the existing first-stalker preface or morning blackout.
+  if(isFirstStalkerReply(e))return null;
+  if(/その夜。|二人は大家の部屋へ|数日後。/.test(target))return 'night';
+ }
+ return null;
 }
 function showEpilogueCut(kind,replace){
  if(!modal.open)openModal('<section class="act-screen graphic-title epilogue-transition-base" aria-label="場面を切り替えています"></section>');
@@ -377,12 +392,9 @@ function showEvent(id,index=null,page=null,afterMorningBlackout=false,afterEpilo
   const epilogueDirection=actTwoEpilogueDirection(e,cursor);
   const epilogueCut=afterEpilogueTransition?null:epilogueTransitionFor(e,eventView?.id===e.id?eventView.index:null,cursor,page);
   if(epilogueCut){showEpilogueCut(epilogueCut,()=>showEvent(id,cursor,page,afterMorningBlackout,true));return;}
-  // First tragedy: leave Moku's room before the fire; never overlay flames or extra text.
-  if(!afterBadSceneCut&&isFirstFireReply(e,state.actOne)&&eventView?.id===e.id
-    &&firstFireCut(lines,eventView.index)==='trust'&&firstFireCut(lines,cursor)==='departure'
-    &&cursor>eventView.index){
-   showFirstFireCorridorCut(id,cursor,page);return;
-  }
+  // Transitions belong at authored scene boundaries, never before the BAD END result.
+  const badCut=!afterBadSceneCut&&eventView?.id===e.id?badSceneCutKind(e,lines,eventView.index,cursor):null;
+  if(badCut){showBadSceneCut(id,cursor,page,badCut,afterMorningBlackout);return;}
 
   if(!afterMorningBlackout&&needsStalkerPreface(e,eventView,cursor)){
     openModal(stalkerPrefaceHTML());
