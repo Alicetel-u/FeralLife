@@ -34,7 +34,7 @@ test('silent transition waits for final voice and pauses while tab is hidden',()
  for(const n of [0,1000,2000])callback(n);
  assert.equal(swap,0);busy=false;
  for(const n of [2100,2220,2340])callback(n);
- assert.equal(cut.dataset.phase,'hold');
+ assert.equal(cut.dataset.phase,'veil');
  doc.hidden=true;callback(5000);doc.hidden=false;
  for(let n=5200;n<11000&&swap===0;n+=100)callback(n);
  assert.equal(swap,1);stop();
