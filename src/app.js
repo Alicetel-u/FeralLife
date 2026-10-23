@@ -1037,6 +1037,8 @@ window.addEventListener('pagehide',save);
 document.addEventListener('visibilitychange',()=>{lastTime=performance.now();if(document.hidden)save();characterVoice.setSuspended(document.hidden);syncNormalBgm();});
 
 const normalBgm=createNormalBgm();
+// Fetch only the title bed while the image/START gate is still visible. No autoplay.
+normalBgm.preload('title');
 function paintSoundButton(){$('sound-button').setAttribute('aria-pressed',String(normalBgm.enabled));$('sound-button').innerHTML=normalBgm.label();}
 function syncNormalBgm(){
   const epilogueStage=modal.open?modal.querySelector('.act-two-epilogue'):null;

@@ -311,3 +311,17 @@ test('prologue, logo and chapter title use distinct cue selectors',async()=>{
    assert.equal(cue,expected,String(selector||scene));
  }
 });
+
+test('prewarming loads only selected tracks and never unlocks playback or rewinds them',async()=>{
+ const tracks=Array.from({length:11},()=>({...fakeAudio(),loads:0,load(){this.loads++;}}));
+ const bgm=createNormalBgm(...tracks),[normal,trouble,bad,title,clock,uneasy,victory,moku,duel,luna,opening]=tracks;
+ bgm.preload('title');assert.equal(title.loads,1);assert.equal(title.preload,'auto');assert.ok(tracks.every(a=>a.paused));
+ assert.equal(normal.loads,0);assert.equal(duel.loads,0);
+ await bgm.setScene(false,'title');assert.equal(title.loads,1);assert.equal(opening.loads,1);assert.equal(title.paused,true);
+ await bgm.unlock();assert.equal(title.paused,false);
+ title.currentTime=12;bgm.preload('title');await bgm.setScene(false,'title');
+ assert.equal(title.currentTime,12);assert.equal(title.loads,1);
+ await bgm.setScene(false,'opening');assert.equal(opening.loads,1);assert.equal(moku.loads,1);assert.equal(opening.paused,false);
+ await bgm.setScene(true,'bad');assert.equal(bad.paused,true);assert.equal(clock.loads,1);
+ await bgm.setScene(false,'clock');assert.equal(clock.loop,false);assert.equal(clock.loads,1);
+});

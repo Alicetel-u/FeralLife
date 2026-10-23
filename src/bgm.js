@@ -51,6 +51,15 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
     victory: bgmTrack(victoryAudio, VICTORY_BGM_SRC),
   };
   tracks.clock.loop = false;
+  const warmed=new Set();
+  const warm=name=>{
+    const audio=tracks[name];if(!audio||warmed.has(audio))return;
+    warmed.add(audio);audio.preload='auto';
+    // load() on a playing media element would restart it. Warm each track once.
+    if(audio.paused)try{audio.load?.();}catch{}
+  };
+  const upcoming={title:'opening',opening:'moku',normal:'trouble',moku:'trouble',luna:'duel',trouble:'victory',bad:'clock',clock:'uneasy'};
+
   let enabled = true;
   let volume = 0.35;
   try {
@@ -74,6 +83,7 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
   const sync = async () => {
     // If the opening file cannot play, keep the title theme instead of silence.
     const active = cue === 'opening' && openingUnavailable ? tracks.title : tracks[cue];
+    warm(cue==='opening'&&openingUnavailable?'title':cue);
     for (const audio of Object.values(tracks)) if (audio !== active) audio.pause();
     if (!unlocked || !enabled || volume === 0 || suppressed) { active.pause(); return false; }
     if (active.ended && cue === 'clock') return true;
@@ -85,6 +95,7 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
     }
   };
   return {
+    preload(...names) { for(const name of names)warm(name); },
     get enabled() { return enabled; },
     get volume() { return volume; },
     setVolume(value) { volume = Math.max(0, Math.min(1, Number(value) || 0)); try { globalThis.localStorage?.setItem('feral-bgm-volume', String(volume)); } catch {} syncLevel(); return sync(); },
@@ -99,6 +110,7 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
       const name = STINGS.has(nextCue) || nextCue === 'uneasy' || nextCue === 'moku' || nextCue === 'luna' ? nextCue : 'normal';
       if (STINGS.has(name) && cue !== name) tracks[name].currentTime = 0;
       cue = name;
+      warm(name);if(upcoming[name])warm(upcoming[name]);
       return sync();
     },
   };
