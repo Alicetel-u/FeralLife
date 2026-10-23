@@ -4,10 +4,19 @@
 // Silent scene cut; only the first Act I room-to-corridor change uses this.
 // Other endings keep their authored cinematic staging unchanged.
 export function badEndingEntryPlan(failure){
- return {kind:'corridor',hold:750,veil:550,linger:350,fadeOut:650,total:1650};
+ const variants={
+  corridor:{hold:260,veil:300,linger:100,fadeOut:360},
+  fire:{hold:430,veil:440,linger:190,fadeOut:430},
+  night:{hold:480,veil:510,linger:220,fadeOut:480},
+  absence:{hold:520,veil:560,linger:240,fadeOut:520},
+  duel:{hold:470,veil:470,linger:220,fadeOut:430}
+ };
+ const plan=variants[failure]||variants.night;
+ return {...plan,kind:failure in variants?failure:'night',total:plan.hold+plan.veil+plan.linger};
 }
-export function badEndingEntryHTML(){
- return '<div class="bad-entry-cut" data-phase="hold" data-kind="corridor" aria-hidden="true"><div class="bad-entry-grain"></div><div class="bad-entry-light"></div></div>';
+export function badEndingEntryHTML(failure){
+ const {kind}=badEndingEntryPlan(failure);
+ return `<div class="bad-entry-cut" data-phase="hold" data-kind="${kind}" aria-hidden="true"><div class="bad-entry-grain"></div><div class="bad-entry-light"></div></div>`;
 }
 export function startBadEndingEntry(modal,failure,onSwap,{voiceBusy=()=>false,raf=callback=>requestAnimationFrame(callback),cancel=id=>cancelAnimationFrame(id)}={}){
  const plan=badEndingEntryPlan(failure),doc=modal.ownerDocument;
