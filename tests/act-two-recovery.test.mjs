@@ -7,6 +7,7 @@ import vm from 'node:vm';
 import {createGame,validateSave} from '../src/simulation.js';
 import {validActOne} from '../src/act-one.js';
 import {beginActTwo,advanceActTwo,answerActTwo,rewindActTwo,resumeActTwoRewind} from '../src/act-two.js';
+import {continueDestination,rememberConversation} from '../src/conversation-progress.js';
 import {storyCheckpointTarget,validStoryCheckpoint} from '../src/story-checkpoints.js';
 import {createVoicePlayer} from '../src/voice-player.js';
 import {voiceLineKey} from '../src/voice-policy.js';
@@ -35,6 +36,25 @@ test('every repeated first-trouble failure restores its beginning and clock targ
    answer(s,repeat%2?'guarantee':'return');valid(s);
   }
  }
+});
+
+test('chapter two Continue keeps an in-progress tragedy and does not open its ending cinematic',()=>{
+ let s=start();advanceActTwo(s,100);
+ const consultation=s.events.find(e=>e.id===s.actOne.pending.eventId);
+ rememberConversation(s,consultation,2,0);
+ const reply=answer(s,'guarantee');
+ assert.equal(continueDestination(s).id,reply.id);
+ rememberConversation(s,reply,4,1);
+ assert.deepEqual(continueDestination(s),{type:'event',id:reply.id,cursor:4,page:1});
+ delete s.actOne.conversation;reply.read=true;
+ assert.deepEqual(continueDestination(s),{type:'event',id:reply.id,cursor:0,page:0});
+ s.actOne.outcomeSeen=true;
+ assert.equal(continueDestination(s).type,'rewind');
+ const duel=start();advanceActTwo(duel,100);answer(duel,'loan');advanceActTwo(duel,100);
+ for(const id of ['vow','shield','future','ultimate'])answer(duel,id);
+ const event=duel.events.findLast(e=>e.duel);
+ event.read=true;Object.assign(duel.actOne.duel,{eventId:event.id,dialogueComplete:false,cursor:3,page:1});
+ assert.deepEqual(continueDestination(duel),{type:'event',id:event.id,cursor:3,page:1});
 });
 
 test('real resume button reaches choices without replaying trouble dialogue, including saved pre-fix duel rewinds',()=>{
