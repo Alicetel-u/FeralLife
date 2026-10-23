@@ -295,7 +295,14 @@ function showBadSceneCut(id,cursor,page,kind,afterMorningBlackout=false){
  },{voiceBusy:()=>characterVoice.busy});
 }
 function badSceneCutKind(e,lines,previous,cursor){
- if(e.actScene!=='reply'||!state.actOne||state.actOne.status!=='bad'||previous<0||cursor!==previous+1)return null;
+ if(!state.actOne||state.actOne.status!=='bad'||previous<0||cursor!==previous+1)return null;
+ // Victory aftermath and its alternate outcomes use the first authored ending line.
+ if(e.duel){
+  const current=lines[cursor],prior=lines[previous];
+  return (current?.duelEnding==='yandere'||current?.duelEnding==='domination')
+    &&prior?.duelEnding!==current.duelEnding?'duel':null;
+ }
+ if(e.actScene!=='reply')return null;
  const failure=state.actOne.failure||'';
  const target=lines[cursor]?.text||'';
  if(state.actOne.chapter===1){
