@@ -1100,7 +1100,7 @@ const worldRenderGate = new WorldRenderGate();
 let lastResolutionCheck=-Infinity;
 let lateNightWarp = null;
 function nightMontageCaption(hour){
-  return hour<27?'00:30　「あと一本だけ見るニャ。」':hour<30?'03:00　「……これ、続きが気になるニャ。」':hour<34?'06:00　「……もう朝かニャ？ まあいいニャ。」':'12:30　「……あれ、もう昼ニャ……？」';
+  return hour<27?'「あと一本だけ見るニャ。」':hour<30?'「……これ、続きが気になるニャ。」':hour<34?'「……もう朝かニャ？ まあいいニャ。」':'「……あれ、もう昼ニャ……？」';
 }
 function removeNightMontage(){document.querySelector('#night-montage-caption')?.remove();document.body.classList.remove('late-night-warp');}
 

@@ -132,7 +132,7 @@ test('lively landlord keeps inner voice separate, uses audition settings and pre
 test('act1 extraction covers revised branches, epilogue and the complete daily schedule',async()=>{
  const rows=extractVoiceScript('act1').filter(row=>row.speaker==='cat');
  const texts=new Set(rows.map(row=>row.text||row.line.text));
- for(const text of ['唐揚げ弁当。大盛り。あとプリンも頼むニャ。','大家。歓迎会するニャ？','腹が減ったニャ……。でも、まぶたも重いニャ。','……あと五分だけニャ。','そろそろ部屋に戻るニャ。','気づいたら朝ニャ。昨日の続きのつもりだったニャ。'])assert.ok(texts.has(text),text);
+ for(const text of ['唐揚げ弁当。大盛り。あとプリンも頼むニャ。','大家。歓迎会するニャ？','腹が減ったニャ……。でも、まぶたも重いニャ。','……すぅ……すぅ……。','少し歩くニャ。座りっぱなしで足が固まったニャ。','よく寝たニャ。朝の空気は気持ちいいニャ。'])assert.ok(texts.has(text),text);
  const ids=JSON.parse(await readFile(new URL('../config/voice-ids.json',import.meta.url)));
  const config=JSON.parse(await readFile(new URL('../config/voice-performance.json',import.meta.url)));
  assert.ok(planVoices(rows,ids,config).every(row=>row.voiceId==='0ptCJp0xgdabdcpVtCB5'));

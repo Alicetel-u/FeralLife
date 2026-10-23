@@ -35,6 +35,13 @@ if(fillMissing){
   script=missing;
 }
 const speaker=args.find(a=>a.startsWith('--speaker='))?.slice('--speaker='.length);
+// Preserve each scene's original performance when filling a narrowly scoped rewrite.
+if(args.includes('--only-missing')){
+  const {VOICE_MANIFEST}=await import('../src/voice-manifest.js');
+  const missing=[];
+  for(const row of script)if(!VOICE_MANIFEST[row.lineKey]||!await exists(VOICE_MANIFEST[row.lineKey].file))missing.push(row);
+  script=missing;
+}
 if(speaker&&!['cat','manager','hostess'].includes(speaker))throw Error('Unknown speaker filter');
 if(speaker==='manager'&&!['intro','act1','act2-trouble1','act2-duel','missing','repairs'].includes(scope))throw Error('Landlord generation is limited to supported chapter scopes');
 const pronunciationIssues=(await json('config/voice-pronunciation-issues.json')).issues;

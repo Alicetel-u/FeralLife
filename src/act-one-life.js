@@ -5,10 +5,8 @@ export const MOKU_DAY = [
   [17,'clean','center','通り道を片づける'],[17.25,'outside','street','外へ出て一服'],[19.3,'meet','street','大家に近づく'],[20.6,'home','table','部屋へ帰る'],[22.5,'smoke','window','灰皿の前で一服'],
   [23.25,'idle','table','灰皿のあとにひと息'],[23.85,'idle','center','スマホを探す'],[24.1,'tv','tv','テレビを見て夜更かし'],
   [36.5,'eat','fridge','空腹で料理の準備'],
-  [37.25,'eat','table','カップ麺で昼食'],[38,'sleep','bed','食後のうたた寝'],
-  [41,'walk','hall','夕方の気分転換'],[46,'eat','fridge','夕食'],
-  [47,'tv','tv','また夜更かし'],
-  [54,'idle','table','朝まで起きていた'],[56.5,'drink','table','朝の缶を開ける']
+  [37.25,'eat','table','火を使わずに昼食'],[38,'sleep','bed','朝までぐっすり眠る'],
+  [53,'outside','street','朝の外の空気を吸う'],[54.6,'meet','street','朝の大家に近づく'],[55.2,'home','table','101号室へ戻る']
 ];
 const places={smoke:'window',eat:'fridge',sleep:'bed',tv:'tv',clean:'center',drink:'table',idle:'table'};
 function mokuHomeJourney(start,hour){
@@ -63,14 +61,14 @@ export function firstActMutters(state){
   const h=state.hour;
   if(state.actOne.pending?.scene==='ash')return ['灰皿がいっぱいニャ。まだ熱いし、大家に聞くニャ。'];
   if(state.actOne.pending?.scene==='dinner')return ['腹が減ったニャ……。でも、まぶたも重いニャ。'];
-  if(r.action==='sleep')return ['……あと五分だけニャ。'];
+  if(r.action==='sleep')return ['……すぅ……すぅ……。'];
   if(r.action==='eat')return h<37?['冷蔵庫に何か残ってたはずニャ。まず中を見てみるニャ。','食べ終わったら、容器だけでも片づけるニャ。']:['火を使わずに済むご飯、楽でいいニャ。洗い物も少ないニャ。'];
-  if(r.action==='drink')return ['もう朝ニャ。寝てないから、まだ昨日のつもりニャ。'];
+  if(r.action==='drink')return ['よく寝たあとの一本は格別ニャ。'];
   if(r.action==='smoke'&&state.actOne.completed.includes('ash'))return ['吸い殻の火は消したニャ。大家にまた怒鳴られるのはごめんニャ。'];
   if(r.lifeBeat===17.25)return ['窓を少し開けるニャ。部屋の空気が煙たくなってきたニャ。'];
   if(h<19)return r.action==='smoke'?['灰皿、そろそろいっぱいニャ。捨てる場所を考えないとニャ。']:['テレビの続きが気になるニャ。あと一本だけ見たら動くニャ。','新しい大家、声が大きいニャ。静かすぎるよりはいいかニャ。'];
   if(h<32)return ['次の動画を見たら終わりニャ。……また次が出てきたニャ。','時計、見なきゃよかったニャ。もうこんな時間ニャ。'];
   if(h<37)return r.action==='clean'?['缶を三本拾ったニャ。今日はもう、かなり働いたニャ。']:['朝まで動画を見てしまったニャ。目を閉じたら、そのまま寝そうニャ。','お腹が鳴ったニャ。何か食べたいけど、立つのが面倒ニャ。'];
-  if(h>=54)return ['気づいたら朝ニャ。昨日の続きのつもりだったニャ。','今日は静かニャ。こういう朝なら、悪くないニャ。'];
+  if(h>=53)return ['よく寝たニャ。朝の空気は気持ちいいニャ。','今日は静かニャ。こういう朝なら、悪くないニャ。'];
   return ['今日はもう料理しないニャ。コンロもちゃんと消えてるニャ。','この番組を見終わったら寝るニャ。……昨日も言った気がするニャ。'];
 }

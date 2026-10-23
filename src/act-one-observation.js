@@ -231,126 +231,27 @@ export const OBSERVATION_BEATS=[
     ]
   },
   {
-    "id": "blanket",
-    "phase": 2,
-    "at": 38.4,
-    "title": "ようやく休憩",
-    "lines": [
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "……あと五分ニャ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "……五分って、こんなに短かったかニャ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "今のは練習ニャ。ここから本番ニャ……。"
-      }
+    id:'blanket',phase:2,at:38.4,title:'火の元を確かめて、おやすみ',
+    lines:[
+      {speaker:'cat',name:'モク',emotion:'tired',text:'火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。'},
+      {speaker:'cat',name:'モク',emotion:'tired',text:'テレビもおしまいニャ。おやすみニャ……。'}
     ]
   },
   {
-    "id": "hall",
-    "phase": 2,
-    "at": 42,
-    "title": "廊下でばったり",
-    "lines": [
-      {
-        "speaker": "manager",
-        "name": "大家",
-        "emotion": "neutral",
-        "text": "お、起きたのか。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "寝すぎて疲れたから、気分転換ニャ。"
-      },
-      {
-        "speaker": "manager",
-        "name": "大家",
-        "emotion": "neutral",
-        "text": "休憩のあとに休憩するなよ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "歩いてるニャ。今はかなり活動的ニャ。"
-      },
-      {
-        "speaker": "manager",
-        "name": "大家",
-        "emotion": "neutral",
-        "text": "……まあ、部屋にこもってるよりいいか。"
-      }
-    ],
-    "place": "hall"
-  },
-  {
-    "id": "quiet-evening",
-    "phase": 2,
-    "at": 47.5,
-    "title": "静かな夜",
-    "lines": [
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "今日はもう料理しないニャ。片づけもしないニャ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "……片づけはしてもよかったニャ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "でも、今から動くとこの番組を見逃すニャ。"
-      }
-    ]
-  },
-  {
-    "id": "last-morning",
-    "phase": 2,
-    "at": 56.8,
-    "title": "いつもどおりの朝",
-    "lines": [
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "朝ニャ。缶はまだあるし、テレビもつくニャ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "……あの缶、昨日どかしたやつニャ。"
-      },
-      {
-        "speaker": "cat",
-        "name": "モク",
-        "emotion": "neutral",
-        "text": "今日はちゃんと捨てるニャ。まず座って、順番を考えるニャ。"
-      }
+    id:'hall',phase:2,at:55.05,title:'よく寝た朝、大家とばったり',place:'street',
+    lines:[
+      {speaker:'cat',name:'モク',emotion:'happy',text:'おはようニャ。あー、よく寝たニャ！'},
+      {speaker:'manager',name:'大家',emotion:'tired',text:'こっちはお前のせいで寝不足だよ。'},
+      {speaker:'cat',name:'モク',emotion:'surprised',text:'大家も寝ればよかったニャ。'},
+      {speaker:'manager',name:'大家',emotion:'angry',text:'火の元が心配で寝られなかったんだよ！'},
+      {speaker:'cat',name:'モク',emotion:'happy',text:'じゃあ安心して寝るニャ。今日は料理しないニャ。'},
+      {speaker:'manager',name:'大家',emotion:'tired',text:'安心のさせ方がおかしいだろ……。'}
     ]
   }
 ];
 const secondObservation=state=>state.actOne?.chapter===2&&!state.actOne.completed?.includes('bag')&&state.residents.some(r=>r.type==='hostess');
 const observationBeats=state=>secondObservation(state)?ACT_TWO_OBSERVATION_BEATS:OBSERVATION_BEATS;
-const obsPhaseNames=['モクの最初の晩','夜更かしの代償','何も起こらない一日'];
+const obsPhaseNames=['モクの最初の晩','夜更かしの代償','ぐっすり眠った翌朝'];
 export function observationPhase(state){if(secondObservation(state))return 0;return state.actOne?.completed?.includes('dinner')?2:state.actOne?.completed?.includes('ash')?1:0;}
 export function clearLegacyObservationMemo(state){
  const a=state.actOne;if(!a)return;

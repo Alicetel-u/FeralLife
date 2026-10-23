@@ -285,7 +285,13 @@ export class WorldRenderer {
   }
   interiorResidentPosition(state,r,t=this.animTime||0) {
     const comedy=observationComedy(state,r,{reduced:this.reducedMotion});
-    const base=sampleJourney(r,state.hour,ACTIONS[r.action].place);
+    let base=sampleJourney(r,state.hour,ACTIONS[r.action].place);
+    // Align settled sleep (including old saved routes) with the painted mattress.
+    // A character merely pretending to sleep during tea stays in her current seat.
+    if(r.action==='sleep'&&!base.moving&&base.zone==='room'&&ROOM_LAYOUTS[r.type]){
+      const room=exteriorRoomBounds(base.room||r.room),[bx,by]=ROOM_LAYOUTS[r.type].spots.bed;
+      base={...base,x:room.x+bx,y:room.y+by,direction:1};
+    }
     const p=phoneSearchWalk(state,r,comedy?base:firstEveningCleanup(state,r,base,t),t);
     if(!comedy||p.zone!=='room'||p.moving)return p;
     return {...p,x:p.x+comedy.dx,y:p.y+comedy.dy,direction:comedy.direction};

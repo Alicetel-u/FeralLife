@@ -25,7 +25,7 @@ function firstActComplete(){
 }
 test('first act epilogue changes expression through disbelief, exhaustion, anger and celebration',()=>{
   const s=firstActComplete(),e=s.events.find(e=>e.actScene==='epilogue');
-  for(const [text,emotion] of [['ニャ？ 誰がニャ？','surprised'],['昨日の夜から起きてるから、まだ昨日ニャ。','tired'],['気持ち悪いニャ。','angry'],['大家。歓迎会するニャ？','happy']])expectExpression(e,text,emotion,s.residents);
+  for(const [text,emotion] of [['ニャ？ 誰がニャ？','surprised'],['ちゃんと寝たから、今日はもう働いた気分ニャ。','happy'],['気持ち悪いニャ。','angry'],['大家。歓迎会するニャ？','happy']])expectExpression(e,text,emotion,s.residents);
 });
 test('second act first incident and successful answer show both residents reacting',()=>{
   const s=firstActComplete();beginActTwo(s);s.actOne.started=true;s.actOne.prologuePending=false;

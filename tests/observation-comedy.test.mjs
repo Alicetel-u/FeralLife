@@ -18,13 +18,13 @@ test('cleaning has a preparation, two misplaced cans, then a seated punchline',(
  assert.equal(observationComedy(s,cat).pose,'sit','she does not instantly resume cleaning after declaring herself finished');
 });
 
-test('phone was held from the start, and the tired cat wakes then lies back down',()=>{
+test('phone was held from the start, and bedtime keeps the tired cat asleep',()=>{
  for(const i of [0,1,2]){
   const d=observationComedy(stateFor('phone-search',i),cat);
   assert.equal(d.props.filter(p=>p.kind==='phone').length,1);
   if(i<2)assert.ok(d.props[0].y>-50);else assert.ok(d.props[0].y<-60);
  }
- assert.deepEqual([0,1,2].map(i=>observationComedy(stateFor('blanket',i),cat).pose),['sleep','sit','sleep']);
+ assert.deepEqual([0,1,2].map(i=>observationComedy(stateFor('blanket',i),cat).pose),['sleep','sleep','sleep']);
 });
 
 test('shared tea scene leaves an empty dish while Moku feigns sleep',()=>{
@@ -87,4 +87,16 @@ test('camera and speech follow directed cleanup positions without altering the s
   assert.equal(JSON.stringify(s),before);positions.push(anchor.x);
  }
  assert.ok(Math.max(...positions)-Math.min(...positions)>200);
+});
+
+test('settled sleepers align with the painted bed even in a legacy saved route',()=>{
+ for(const type of ['cat','hostess']){
+  const s=createActOne(42,[],2,true),r=s.residents[0];
+  r.type=type;r.action='sleep';s.hour=45;
+  r.journey={kind:'room',startedAt:38,arriveAt:38.2,returnAt:38.2,endsAt:38.2,path:[{x:300,y:435,zone:'room',room:101},{x:266,y:423,zone:'room',room:101}],back:[],reason:'',actionAfter:'sleep',returned:false};
+  const renderer=new WorldRenderer({getContext:()=>({})}),before=JSON.stringify(s);
+  const p=renderer.interiorResidentPosition(s,r);
+  assert.deepEqual([p.x,p.y],[252,412]);assert.equal(p.direction,1);
+  assert.equal(JSON.stringify(s),before);
+ }
 });

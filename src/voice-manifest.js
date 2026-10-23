@@ -7726,5 +7726,104 @@ export const VOICE_MANIFEST = {
       "truePeakDBTP": -3
     },
     "fastFile": "assets/voices/fac36812fcff6a0e73bbdae1e9c364e9af087d9279494d4d70685ad3e08a4e86.repair.pace.mp3"
+  },
+  "[\"cat\",\"火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。\",\"moku\",false]": {
+    "file": "assets/voices/c5b74779364e1014798eb1c163b79fe0c1fc43046b49ea559843926041e08a75.mp3",
+    "hash": "c5b74779364e1014798eb1c163b79fe0c1fc43046b49ea559843926041e08a75",
+    "source": "act1/observation/blanket:0",
+    "speaker": "cat",
+    "text": "火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。",
+    "performance": "moku",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"テレビもおしまいニャ。おやすみニャ……。\",\"moku\",false]": {
+    "file": "assets/voices/7499d9eeec6f1e3f44befd7ec5bca8e75c78e04cdfbe0bf1f6140a1f84cdc056.mp3",
+    "hash": "7499d9eeec6f1e3f44befd7ec5bca8e75c78e04cdfbe0bf1f6140a1f84cdc056",
+    "source": "act1/observation/blanket:1",
+    "speaker": "cat",
+    "text": "テレビもおしまいニャ。おやすみニャ……。",
+    "performance": "moku",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"おはようニャ。あー、よく寝たニャ！\",\"moku-happy\",false]": {
+    "file": "assets/voices/c847ec977549ff0b5a404d405bd508feb84a6beaa9e38e6b92d3b54c105f0e8f.mp3",
+    "hash": "c847ec977549ff0b5a404d405bd508feb84a6beaa9e38e6b92d3b54c105f0e8f",
+    "source": "act1/observation/hall:0",
+    "speaker": "cat",
+    "text": "おはようニャ。あー、よく寝たニャ！",
+    "performance": "moku-happy",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家も寝ればよかったニャ。\",\"moku-surprised\",false]": {
+    "file": "assets/voices/ff48b495ea968d9df8ddcca1c11b26cd844b7f472d0a54d6411b04734f14d31e.mp3",
+    "hash": "ff48b495ea968d9df8ddcca1c11b26cd844b7f472d0a54d6411b04734f14d31e",
+    "source": "act1/observation/hall:2",
+    "speaker": "cat",
+    "text": "大家も寝ればよかったニャ。",
+    "performance": "moku-surprised",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"じゃあ安心して寝るニャ。今日は料理しないニャ。\",\"moku-happy\",false]": {
+    "file": "assets/voices/83ff7dc16e9c8a08c40c1d6ea0406aa7c18d47c7766df529226ef0ee2a50d147.mp3",
+    "hash": "83ff7dc16e9c8a08c40c1d6ea0406aa7c18d47c7766df529226ef0ee2a50d147",
+    "source": "act1/observation/hall:4",
+    "speaker": "cat",
+    "text": "じゃあ安心して寝るニャ。今日は料理しないニャ。",
+    "performance": "moku-happy",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……すぅ……すぅ……。\",\"moku\",false]": {
+    "file": "assets/voices/4d31c03b60baef9e426d923d37fe7fb3f9868a696ffd36cb337e34b862cbc9d0.mp3",
+    "hash": "4d31c03b60baef9e426d923d37fe7fb3f9868a696ffd36cb337e34b862cbc9d0",
+    "source": "act1/ambient/runtime/attempt-2/ash/water/dinner/coronation/38.150:0",
+    "speaker": "cat",
+    "text": "……すぅ……すぅ……。",
+    "performance": "moku",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"よく寝たニャ。朝の空気は気持ちいいニャ。\",\"moku\",false]": {
+    "file": "assets/voices/ed3115355dc8325e3e2da011e8b3e1484b884cbc995690eb38d0e2e783b3598f.mp3",
+    "hash": "ed3115355dc8325e3e2da011e8b3e1484b884cbc995690eb38d0e2e783b3598f",
+    "source": "act1/ambient/runtime/attempt-2/ash/water/dinner/coronation/56.800:0",
+    "speaker": "cat",
+    "text": "よく寝たニャ。朝の空気は気持ちいいニャ。",
+    "performance": "moku",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"こっちはお前のせいで寝不足だよ。\",\"normal\",false]": {
+    "file": "assets/voices/4b0934b02bc107be1e590e6d75a91e1468e611d5b68ad21795ed52a4d9465e17.mp3",
+    "hash": "4b0934b02bc107be1e590e6d75a91e1468e611d5b68ad21795ed52a4d9465e17",
+    "source": "act1/observation/hall:1",
+    "speaker": "manager",
+    "text": "こっちはお前のせいで寝不足だよ。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"火の元が心配で寝られなかったんだよ！\",\"normal\",false]": {
+    "file": "assets/voices/78b82fbc96892489adbe26d1b61a8c4f58cc4576f084a5950b820572f6f56691.mp3",
+    "hash": "78b82fbc96892489adbe26d1b61a8c4f58cc4576f084a5950b820572f6f56691",
+    "source": "act1/observation/hall:3",
+    "speaker": "manager",
+    "text": "火の元が心配で寝られなかったんだよ！",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"安心のさせ方がおかしいだろ……。\",\"normal\",false]": {
+    "file": "assets/voices/a01f977203e8bcb9b2a9c01846f18145e8737be366446c14f8a8e21dac26fde5.mp3",
+    "hash": "a01f977203e8bcb9b2a9c01846f18145e8737be366446c14f8a8e21dac26fde5",
+    "source": "act1/observation/hall:5",
+    "speaker": "manager",
+    "text": "安心のさせ方がおかしいだろ……。",
+    "performance": "normal",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"ちゃんと寝たから、今日はもう働いた気分ニャ。\",\"moku-happy\",false]": {
+    "file": "assets/voices/1888417656bc8a98d4260dd0d0d10065d93af2119b1d7fb23909f63574d295e8.mp3",
+    "hash": "1888417656bc8a98d4260dd0d0d10065d93af2119b1d7fb23909f63574d295e8",
+    "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:10",
+    "speaker": "cat",
+    "text": "ちゃんと寝たから、今日はもう働いた気分ニャ。",
+    "performance": "moku-happy",
+    "model": "eleven_v3"
   }
 };

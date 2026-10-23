@@ -45,8 +45,8 @@ export function observationComedy(state,resident,{reduced=false}={}){
   if(!cat)return null;d.pose=i===0?'sit':i===1?'stand':'eat';d.action=i>=2?'eat':'idle';
   d.reaction=i===1?'hungry':null;d.rotate=!reduced&&i===1?-.045*p:0;break;
  case 'blanket':
-  if(!cat)return null;d.pose=i===1?'sit':'sleep';d.action=i===1?'idle':'sleep';
-  d.rotate=!reduced&&i===1?.045*Math.sin(Math.min(e,1)*Math.PI):0;
+  if(!cat)return null;d.pose='sleep';d.action='sleep';
+  d.rotate=0;
   d.reaction=i===1?'sleepy':null;break;
  case 'last-morning':
   if(!cat)return null;d.pose=i===0?'drink':i===1?'stand':'sit';d.action=i===0?'drink':'idle';

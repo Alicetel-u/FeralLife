@@ -8,7 +8,7 @@ import {validateSave} from '../src/simulation.js';
 
 for(const chapter of ['1','2'])test(`every chapter ${chapter} observation destination starts its real first line and can continue`,()=>{
  const beats=developerObservationBeats(chapter);
- assert.equal(beats.length,chapter==='1'?12:5);
+ assert.equal(beats.length,chapter==='1'?10:5);
  for(const beat of beats){
   const s=createDeveloperObservation(chapter,beat.id);
   assert.ok(s,beat.id);assert.ok(validActOne(s)&&validateSave(s),beat.id);
