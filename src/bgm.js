@@ -2,7 +2,7 @@ export const DUEL_BGM_SRC = 'assets/audio/duel-ao-wo-isoide.mp3';
 export const NORMAL_BGM_SRC = 'assets/audio/normal-pop.mp3';
 export const LUNA_BGM_SRC = 'assets/audio/luna-odayakana-gogo.mp3';
 export const MOKU_BGM_SRC = 'assets/audio/moku-theme.mp3';
-// Optional until the supplied track is committed to assets/audio.
+// First-act letter prologue, foyer exchange, and logo card.
 export const OPENING_BGM_SRC = 'assets/audio/the-midnight-crossing.mp3';
 export const TROUBLE_BGM_SRC = 'assets/audio/trouble-persona.mp3';
 export const BAD_END_BGM_SRC = 'assets/audio/bad-end-fire.mp3';
@@ -72,8 +72,7 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
   let cue = 'normal';
   let openingUnavailable = false;
   const sync = async () => {
-    // Until the optional new music file is published, preserve the old title
-    // theme instead of leaving the opening completely silent.
+    // If the opening file cannot play, keep the title theme instead of silence.
     const active = cue === 'opening' && openingUnavailable ? tracks.title : tracks[cue];
     for (const audio of Object.values(tracks)) if (audio !== active) audio.pause();
     if (!unlocked || !enabled || volume === 0 || suppressed) { active.pause(); return false; }
