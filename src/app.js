@@ -1111,6 +1111,7 @@ function frame(now){
   if(now-lastResolutionCheck>500){lastResolutionCheck=now;if(renderer.resizeToDisplay())worldRenderGate.state=null;}
   const stopped=document.documentElement.classList.contains('game-booting')||paused||modal.open||!!state.ending||!!document.querySelector('#entry-gate:not([hidden])');
   const observationStopped=stopped||document.body.classList.contains('controls-expanded');
+  if(observationStopped||lateNightWarp||state.actOne?.chapter===2)document.body.classList.remove('sleep-night-warp');
   tickObservation(state,seconds,{stopped:observationStopped,voiceBusy:characterVoice.busy});
   if(!observationStopped&&!talk.chapterChat){
     const firstNight=state.actOne?.chapter!==2&&state.actOne?.completed?.includes('ash')&&!state.actOne?.completed?.includes('dinner')&&!state.actOne?.pending&&state.hour>=24.1&&state.hour<36.65;
@@ -1129,6 +1130,7 @@ function frame(now){
       const moku=state.residents.find(r=>r.type==='cat');
       const walkingOutside=moku?.journey?.path.some(p=>p.zone!=='room')&&sampleJourney(moku,state.hour).moving;
       const sleepingThroughNight=emptyClock&&state.actOne.chapter!==2&&state.actOne.completed.includes('dinner')&&state.actOne.observation?.done.includes('blanket')&&moku?.action==='sleep'&&state.hour<53&&!sampleJourney(moku,state.hour).moving;
+      document.body.classList.toggle('sleep-night-warp',!!sleepingThroughNight);
       // Keep exterior walking readable without slowing indoor gags or voiced beats.
       const clockSpeed=sleepingThroughNight?60:walkingOutside?Math.min(speed,3):emptyClock&&speed===6?12:speed;
       const clockLimit=sleepingThroughNight?Math.min(53,observationClockLimit(state)):observationClockLimit(state);
