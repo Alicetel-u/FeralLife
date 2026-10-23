@@ -1092,13 +1092,21 @@ function frame(now){
   if(!observationStopped&&!talk.chapterChat){
     const firstNight=state.actOne?.chapter!==2&&state.actOne?.completed?.includes('ash')&&!state.actOne?.completed?.includes('dinner')&&!state.actOne?.pending&&state.hour>=24.1&&state.hour<36.65;
     if(!lateNightWarp&&firstNight&&observationView(state)?.beat==null&&state.actOne?.observation?.done?.includes('tv-late')&&!state.actOne?.observation?.done?.includes('before-dinner')){
-      lateNightWarp={rate:(36.65-state.hour)/11,tail:0};document.body.classList.add('late-night-warp');
+      lateNightWarp={rate:(36.65-state.hour)/6.5,tail:0};document.body.classList.add('late-night-warp');
       const caption=document.createElement('div');caption.id='night-montage-caption';caption.className='night-montage-caption';document.body.append(caption);
     }
     if(lateNightWarp){
       if(state.hour<36.65){advanceActOne(state,Math.min(36.65-state.hour,seconds*lateNightWarp.rate));const caption=document.querySelector('#night-montage-caption');if(caption)caption.textContent=nightMontageCaption(state.hour);}
-      else {lateNightWarp.tail+=seconds;if(lateNightWarp.tail>=1.1){lateNightWarp=null;removeNightMontage();}}
-    }else if(state.actOne)(state.actOne.chapter===2?advanceActTwo(state,Math.min(seconds*speed/10,Math.max(0,observationClockLimit(state)-state.hour))):advanceActOne(state,Math.min(seconds*speed/10,Math.max(0,observationClockLimit(state)-state.hour))));else advance(state,seconds*speed/10);
+      else {lateNightWarp.tail+=seconds;if(lateNightWarp.tail>=.65){lateNightWarp=null;removeNightMontage();}}
+    }else if(state.actOne){
+      // Compress uneventful hours while leaving voiced observation beats at rest.
+      // The observation clock limit ensures no upcoming authored beat is skipped.
+      const observing=observationView(state);
+      const emptyClock=observing&&!observing.beat&&!talk.bubbles.length&&!characterVoice.busy;
+      const clockSpeed=emptyClock?Math.max(speed,12):speed;
+      const dt=Math.min(seconds*clockSpeed/10,Math.max(0,observationClockLimit(state)-state.hour));
+      if(state.actOne.chapter===2)advanceActTwo(state,dt);else advanceActOne(state,dt);
+    }else advance(state,seconds*speed/10);
   }
   tickObservation(state,0,{stopped:observationStopped,voiceBusy:characterVoice.busy});
   queueFreshStageEvents();
