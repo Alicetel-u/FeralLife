@@ -280,7 +280,7 @@ test('victory fanfare replaces trouble on a cleared result and does not restart 
 });
 
 test('packaged bgm files are mp3s', async () => {
-  for (const name of ['luna-odayakana-gogo.mp3', 'duel-ao-wo-isoide.mp3', 'moku-theme.mp3', 'trouble-persona.mp3', 'bad-end-fire.mp3', 'title-countdown.mp3', 'clock-rewind.mp3', 'uneasy-air.mp3', 'victory-fanfare.mp3']) {
+  for (const name of ['luna-odayakana-gogo.mp3', 'duel-ao-wo-isoide.mp3', 'moku-theme.mp3', 'the-midnight-crossing.mp3', 'trouble-persona.mp3', 'bad-end-fire.mp3', 'title-countdown.mp3', 'clock-rewind.mp3', 'uneasy-air.mp3', 'victory-fanfare.mp3']) {
     const file = await readFile(new URL('../assets/audio/' + name, import.meta.url));
     assert.ok(file.length > 100000);
     assert.ok(file[0] === 0xff || file.subarray(0, 3).toString() === 'ID3');
