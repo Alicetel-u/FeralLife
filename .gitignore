@@ -6,3 +6,8 @@
 
 # Local credentials and generation journal
 /.local/
+
+# Local install, browser audit output, and machine-specific notes.
+/node_modules/
+/output/
+/occlusion-*.local
