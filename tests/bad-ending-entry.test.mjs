@@ -23,7 +23,7 @@ test('BAD END entry styles match fire, stalker, absence, and duel outcomes',()=>
 
 test('the ending overlay waits for the last voice, then pauses with a hidden tab and swaps once',()=>{
  const node={isConnected:true,dataset:{},style:{setProperty(){}}};
- const host={innerHTML:'',get firstElementChild(){return node;},remove(){node.isConnected=false;}};
+ const host={isConnected:true,innerHTML:'',get firstElementChild(){return node;},remove(){this.isConnected=false;node.isConnected=false;}};
  const doc={hidden:false,createElement(){return host;}};
  const modal={ownerDocument:doc,append(element){assert.equal(element,host);}};
  let callback,frame=0,cancelled=0,swap=0,voice=true;
@@ -51,9 +51,9 @@ test('the ending overlay waits for the last voice, then pauses with a hidden tab
 test('BAD END entry is wired to the last dialogue rather than opening a result instantly',()=>{
  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
  assert.match(app,/startBadEndingEntry\(modal,failure/);
- assert.match(app,/function closeModal\(\) \{\s*if\(enterBadEnding\(\)\)return;/);
+ assert.match(app,/const enteringBad=typeof enterBadEnding==='function'&&enterBadEnding\(\)/);
  assert.match(app,/characterVoice\.busy/);
- assert.match(app,/if\(enterBadEnding\(\)\)return;/);
+ assert.match(app,/if\(enteringBad\)return;/);
  assert.match(app,/bad-entry-host/);
  assert.match(app,/function resetActState[\s\S]{0,120}stopBadEntry\(\)/);
 });
