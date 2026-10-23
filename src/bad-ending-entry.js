@@ -1,26 +1,13 @@
 // A story beat between the final failed reply and the existing BAD END cinematic.
 // The current dialogue stays mounted until its voice finishes; no saved timer or
 // chapter state is added. The veil remains across the destination screen swap.
-const ENTRIES={
- 'ash-trash':{kind:'fire',caption:'……焦げた匂いがする。',hold:1150,veil:850,linger:950},
- 'ash-balcony':{kind:'fire',caption:'小さな火種が、夜風に流されていく。',hold:1100,veil:900,linger:1050},
- 'ash-freezer':{kind:'fire',caption:'……火は、まだ消えていなかった。',hold:1200,veil:850,linger:1050},
- 'dinner-turbo':{kind:'fire',caption:'笑い声の向こうで、火が跳ねた。',hold:1100,veil:900,linger:1050},
- 'dinner-show':{kind:'fire',caption:'さっきまでの声が、途切れた。',hold:1250,veil:900,linger:1100},
- 'bag-guarantee':{kind:'stalker',caption:'返事は、なかった。',hold:1400,veil:800,linger:1300},
- 'bag-return':{kind:'absence',caption:'けもの荘から、ひとつ灯りが消えた。',hold:1350,veil:1100,linger:1250},
- 'duel-yandere':{kind:'obsession',caption:'ルナは、まだ笑っていた。',hold:1300,veil:1000,linger:1300},
- 'duel-domination':{kind:'submission',caption:'大家は、もう言い返せなかった。',hold:1450,veil:950,linger:1250}
-};
-const BAD_ENTRY_FALLBACK={kind:'debt',caption:'一枚の紙が、けもの荘の運命を変えた。',hold:1200,veil:1000,linger:1200};
+// Silent scene cut; only the first Act I room-to-corridor change uses this.
+// Other endings keep their authored cinematic staging unchanged.
 export function badEndingEntryPlan(failure){
- const plan=ENTRIES[failure]||((failure?.startsWith('ash-')||failure?.startsWith('dinner-'))?ENTRIES['ash-trash']:failure?.startsWith('duel-')?ENTRIES['duel-domination']:failure?.startsWith('bag-')?ENTRIES['bag-return']:BAD_ENTRY_FALLBACK);
- return {...plan,fadeOut:700,total:plan.hold+plan.veil+plan.linger};
+ return {kind:'corridor',hold:750,veil:550,linger:350,fadeOut:650,total:1650};
 }
-export function badEndingEntryHTML(failure){
- const {kind,caption}=badEndingEntryPlan(failure);
- // Captions are authored constants, never interpolated user content.
- return `<div class="bad-entry-cut" data-phase="hold" data-kind="${kind}" aria-hidden="true"><div class="bad-entry-grain"></div><div class="bad-entry-light"></div><p class="bad-entry-caption">${caption}</p></div>`;
+export function badEndingEntryHTML(){
+ return '<div class="bad-entry-cut" data-phase="hold" data-kind="corridor" aria-hidden="true"><div class="bad-entry-grain"></div><div class="bad-entry-light"></div></div>';
 }
 export function startBadEndingEntry(modal,failure,onSwap,{voiceBusy=()=>false,raf=callback=>requestAnimationFrame(callback),cancel=id=>cancelAnimationFrame(id)}={}){
  const plan=badEndingEntryPlan(failure),doc=modal.ownerDocument;
