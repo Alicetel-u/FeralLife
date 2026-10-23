@@ -25,6 +25,7 @@ import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
 import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.21.4';
 import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, resumeActTwoRewind, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.21.4';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
+import { startBadEndingEntry } from './bad-ending-entry.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
 import { debtEndingHTML, startDebtEnding } from './debt-ending.js';
 import { bedCue, createNormalBgm } from './bgm.js';
@@ -284,6 +285,27 @@ let stopOpeningPrologue = () => {};
 let cleanupChoiceUI = () => {};
 let cleanupDuelPlayback = () => {};
 let stopEpilogueTransition=()=>{},stopEpilogueSound=()=>{},epilogueSwapping=false;
+let stopBadEntry=()=>{},badEntryActive=false;
+function badEndingConversationReady(){
+ if(endingShown||!state.actOne||state.actOne.status!=='bad'||!state.ending||!modal.open||!modal.classList.contains('conversation-modal')||!eventView)return false;
+ const event=state.events.find(e=>e.id===eventView.id);
+ if(!event||state.actOne.pending?.eventId===event.id)return false;
+ const lines=eventConversation(event);
+ return eventView.index===lines.length-1&&eventView.page===messagePages(lines.at(-1).text).length-1;
+}
+function enterBadEnding(){
+ if(badEntryActive)return true;
+ if(!badEndingConversationReady())return false;
+ const eventId=eventView.id,failure=state.actOne.failure;
+ badEntryActive=true;
+ clearTimeout(eventAutoTimer);
+ stopBadEntry=startBadEndingEntry(modal,failure,()=>{
+   clearConversation(state,eventId);save();
+   showActEnding();
+   badEntryActive=false;
+ },{voiceBusy:()=>characterVoice.busy});
+ return true;
+}
 function showEpilogueCut(kind,replace){
  if(!modal.open)openModal('<section class="act-screen graphic-title epilogue-transition-base" aria-label="場面を切り替えています"></section>');
  stopEpilogueTransition();characterVoice.stop();stopEpilogueSound();clearTimeout(eventAutoTimer);
@@ -293,8 +315,11 @@ function showEpilogueCut(kind,replace){
 function clearFireEnding(){stopFireEnding?.();stopFireEnding=null;}
 function openModal(html) { if(!epilogueSwapping)stopEpilogueTransition();stopEpilogueSound();html=storyScreenHTML(html);characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); cleanupDuelPlayback();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); replaceConversationContent($('modal-content'),html); modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); syncNormalBgm(); }
 function closeModal() {
-  if(modal.classList.contains('conversation-modal')&&eventView){clearConversation(state,eventView.id);save();}
+  // Delayed BAD END entry keeps the current conversation and voice alive.
+  const enteringBad=typeof enterBadEnding==='function'&&enterBadEnding();
+  if(!enteringBad&&modal.classList.contains('conversation-modal')&&eventView){clearConversation(state,eventView.id);save();}
   stopEpilogueTransition();stopEpilogueSound();
+  if(enteringBad)return;
   const duelEvent=state.actOne?.duel&&state.events.find(e=>e.id===eventView?.id);
   if(duelEvent?.duel&&eventView.index===eventConversation(duelEvent).length-1){state.actOne.duel.dialogueComplete=true;save();}
   const event=modal.classList.contains('conversation-modal')&&state.actOne?state.events.find(e=>e.id===eventView?.id):null;
@@ -426,7 +451,7 @@ function showEvent(id,index=null,page=null,afterMorningBlackout=false,afterEpilo
 
 function scheduleEventAuto(){
   clearTimeout(eventAutoTimer);
-  if(!eventAuto||!modal.open||!modal.classList.contains('conversation-modal')||!eventView||modal.querySelector('.epilogue-transition'))return;
+  if(!eventAuto||!modal.open||!modal.classList.contains('conversation-modal')||!eventView||modal.querySelector('.epilogue-transition,.bad-entry-host'))return;
   const current=state.events.find(e=>e.id===eventView.id),lines=current?eventConversation(current):[];
   if(!lines.length||current.duel&&(lines[eventView.index].duelAttack||lines[eventView.index].duelPlayback||lines[eventView.index].duelWindup))return;
   const last=eventView.index>=lines.length-1&&eventView.page>=messagePages(lines[eventView.index].text).length-1;
@@ -615,6 +640,7 @@ function beginRewind(afterFire=false){
 }
 let rewindWhiteoutPending=false;
 function resetActState(next,resume=false,skipInitialScreen=false){
+ if(typeof stopBadEntry==='function'){stopBadEntry();stopBadEntry=()=>{};badEntryActive=false;}
   const reveal=rewindWhiteoutPending;rewindWhiteoutPending=false;
   let whiteout=null;
   if(reveal){whiteout=document.createElement('div');whiteout.className='rewind-scene-reveal';document.body.append(whiteout);}
@@ -626,7 +652,7 @@ function resetActState(next,resume=false,skipInitialScreen=false){
   if(state.actOne.chapter===2){if(state.actOne.titlePending){showActTwoOpening();return;}const e=state.events.find(e=>e.actScene===(state.actOne.prologuePending?'act2-prologue':'act2-rewind'));if(e&&(state.actOne.prologuePending||state.actOne.rewindIntroPending)){showEvent(e.id,state.actOne.rewindIntroCursor||0);return;}showActTwoTitle();return;}
   if(state.actOne.rewindIntroPending)showEvent(state.events.find(e=>e.actScene==='rewind').id,state.actOne.rewindIntroCursor||0);else showActTitle();
 }
-modal.addEventListener('cancel',e=>{const current=state.events.find(x=>x.id===eventView?.id);if(modal.classList.contains('conversation-modal')&&state.actOne&&eventView?.index===eventConversation(current||{}).length-1&&avoidedTrouble(current,state.actOne.chapter)){e.preventDefault();closeModal();return;}if(state.actOne&&(modal.classList.contains('act-modal')||modal.querySelector('[data-prologue],[data-rewind-intro]')))e.preventDefault();});
+modal.addEventListener('cancel',e=>{if(badEntryActive||modal.querySelector('.bad-entry-host')){e.preventDefault();return;}if(state.actOne?.status==='bad'&&modal.classList.contains('conversation-modal')){e.preventDefault();enterBadEnding();return;}const current=state.events.find(x=>x.id===eventView?.id);if(modal.classList.contains('conversation-modal')&&state.actOne&&eventView?.index===eventConversation(current||{}).length-1&&avoidedTrouble(current,state.actOne.chapter)){e.preventDefault();closeModal();return;}if(state.actOne&&(modal.classList.contains('act-modal')||modal.querySelector('[data-prologue],[data-rewind-intro]')))e.preventDefault();});
 function showEnding() {
   if (!state.ending) return;
   if(state.actOne){showActEnding();return;}
@@ -855,7 +881,7 @@ function startDeveloperScene(target){
   if(event){event.read=false;const jump=epilogueTarget?eventConversation(event).findIndex(line=>line.epilogueScene===epilogueTarget):0;showEvent(event.id,Math.max(0,jump));}else showActTwoTitle();
 }
 document.addEventListener('click',e=>{
-  if(modal.open&&modal.querySelector('.epilogue-transition'))return;
+  if(modal.open&&modal.querySelector('.epilogue-transition,.bad-entry-host'))return;
   const button=e.target.closest('button');if(!button)return;
   if(button.hasAttribute('data-debug-hotspot')){const now=performance.now();debugTapCount=now-debugLastTap>2500?1:debugTapCount+1;debugLastTap=now;if(debugTapCount>=3){debugTapCount=0;showDeveloperMenu();}return;}
   if(button.hasAttribute('data-debug-back')){showGameTitle();return;}
@@ -938,7 +964,7 @@ modal.addEventListener('toggle',e=>{
   if(e.target.matches('.conversation-log'))modal.querySelector('[data-event-log]')?.setAttribute('aria-expanded',String(e.target.open));
 },true);
 function advanceConversation(){
-  if(modal.querySelector('.epilogue-transition'))return false;
+  if(modal.querySelector('.epilogue-transition,.bad-entry-host'))return false;
   if(!modal.open||!modal.classList.contains('conversation-modal')||!eventView)return false;
   if(modal.classList.contains('event-ui-hidden')||modal.querySelector('.conversation-log[open]')||!modal.querySelector('.event-menu')?.hidden)return false;
   const current=state.events.find(x=>x.id===eventView.id);

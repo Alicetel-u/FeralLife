@@ -576,17 +576,54 @@ test('residual electricity accompanies the ultimate pose through every response 
  assert.doesNotMatch(duelStageHTML({...event,detail:normal[0].text,lines:normal},[],1),/duel-static-electricity/);
 });
 
-test('start splash appears on the full-size opening once, including rewind and debug destinations',()=>{
+test('start splash appears on the first battle round, including rewind and debug destinations',()=>{
  const s=duelStart(),event=s.events.find(e=>e.id===s.actOne.pending.eventId);
  const opening=duelStageHTML(event,s.residents,0);
- assert.match(opening,/duel-opening-stage/);assert.match(opening,/duel-start-title/);
- assert.match(opening,/ミニゲーム開始：嘘つきルナを守れ！/);
- assert.doesNotMatch(duelStageHTML(event,s.residents,0,1),/duel-start-title/);
+ assert.match(opening,/duel-opening-stage/);
+ assert.doesNotMatch(opening,/duel-start-title/,'start splash belongs to the battle, not its long introduction');
  assert.doesNotMatch(duelStageHTML(event,s.residents,1),/duel-start-title/);
  const firstEnemy=eventConversation(event).findIndex(l=>l.duelRound===0);
- assert.doesNotMatch(duelStageHTML(event,s.residents,firstEnemy),/duel-start-title/);
+ const battleStart=duelStageHTML(event,s.residents,firstEnemy);
+ assert.match(battleStart,/duel-start-title/);
+ assert.match(battleStart,/ミニゲーム開始：嘘つきルナを守れ！/);
+ assert.doesNotMatch(duelStageHTML(event,s.residents,firstEnemy,1),/duel-start-title/);
+ assert.doesNotMatch(duelStageHTML(event,s.residents,firstEnemy+1),/duel-start-title/);
  assert.match(duelStageHTML({...event,debugDuelSplash:true},s.residents,firstEnemy),/duel-start-title/);
- const replay=JSON.parse(JSON.stringify(event));assert.match(duelStageHTML(replay,s.residents,0),/duel-start-title/);
+ const replay=JSON.parse(JSON.stringify(event));assert.match(duelStageHTML(replay,s.residents,firstEnemy),/duel-start-title/);
  const reply=duelReplyLines(0,duelChoices(0)[0]);
  assert.doesNotMatch(duelStageHTML({...event,detail:reply[0].text,lines:reply},[],0),/duel-start-title/);
+});
+
+test('post-battle mini cast reacts differently to Luna, Moku and landlord speeches',()=>{
+ const lines=duelEndingLines('clear');
+ const event={id:880,detail:lines[0].text,lines,duelHearts:5,duelPreviousHearts:5,duelResolvedRound:3};
+ const html=i=>duelStageHTML(event,[],i);
+ const first=html(0);
+ assert.match(first,/duel-post-battle/);
+ assert.match(first,/duel-finale-luna-idle|duel-luna/);
+ const lunaShy=lines.findIndex(line=>line.speaker==='hostess'&&line.emotion==='shy');
+ assert.ok(lunaShy>0);
+ assert.match(html(lunaShy),/duel-finale-shy/);
+ assert.match(html(lunaShy),/duel-crop-hostess-charm/,'Luna must update expression after the last battle attack');
+ const lunaHappy=lines.findIndex(line=>line.speaker==='hostess'&&line.emotion==='happy');
+ assert.match(html(lunaHappy),/duel-finale-cheer/);
+ const moku=lines.findIndex(line=>line.speaker==='cat'&&line.duelEnding==='clear');
+ assert.match(html(moku),/duel-finale-tease/);
+ const angry=lines.findIndex(line=>line.speaker==='manager'&&line.text.includes('赤くねぇ'));
+ assert.match(html(angry),/duel-finale-retort/);
+ assert.match(html(angry),/kime|protect\.png/);
+ const before={id:881,detail:DUEL_ROUNDS[0].lines[0].text,lines:DUEL_ROUNDS[0].lines.map(line=>({...line,duelRound:0})),duelHearts:0,duelResolvedRound:-1};
+ assert.doesNotMatch(duelStageHTML(before,[],0),/duel-post-battle|duel-finale-shy|duel-finale-tease/);
+ const styles=readFileSync(new URL('../styles.css',import.meta.url),'utf8');
+ for(const gesture of ['duel-finale-cheer','duel-finale-shy','duel-finale-retort','duel-finale-moku-tease','duel-finale-luna-idle'])assert.ok(styles.includes(gesture));
+});
+test('post-battle low and high outcomes keep character-specific motions before story CG',()=>{
+ for(const ending of ['yandere','domination']){
+  const event={id:882,detail:duelEndingLines(ending)[0].text,lines:duelEndingLines(ending),duelHearts:ending==='yandere'?11:0,duelResolvedRound:3};
+  assert.match(duelStageHTML(event,[],1),/duel-post-battle/);
+  const lines=event.lines;
+  const luna=lines.findIndex(line=>line.duelEnding===ending&&line.speaker==='hostess');
+  if(ending==='yandere')assert.match(duelStageHTML(event,[],luna),/duel-finale-shy/);
+  else assert.match(duelStageHTML(event,[],luna),/duel-cg/);
+ }
 });
