@@ -3,6 +3,20 @@ import vm from 'node:vm';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
+test('boot measurements stay behind the developer flag and the cache version matches',()=>{
+ const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+ const version=html.match(/name="app-version" content="([^"]+)"/)[1];
+ assert.match(html,/const diagnose=new URLSearchParams\(location\.search\)\.get\('bootdiag'\)==='1'/);
+ assert.match(html,/if\(!report\|\|\(!force&&!reportVisible\(\)\)\)return/);
+ assert.match(html,new RegExp(`styles\\.css\\?v=${version.replaceAll('.','\\.')}`));
+ assert.match(html,new RegExp(`src/app\\.js\\?v=${version.replaceAll('.','\\.')}`));
+ const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
+ assert.match(app,new RegExp(`BUILD_VERSION='${version}'`));
+ for(const file of ['src/app.js','src/act-two.js','src/act-two-duel-stage.js']){
+  for(const pin of readFileSync(new URL('../'+file,import.meta.url),'utf8').matchAll(/\?v=([^'"]+)/g))assert.equal(pin[1],version,file);
+ }
+});
+
 test('a restored fire waits at START without replaying or saving before the title',()=>{
   const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
   const source=app.slice(app.indexOf('function frame(now)'),app.indexOf('\nsyncStageCursor();',app.indexOf('function frame(now)')));

@@ -1,7 +1,7 @@
-import {resumeConversation,rememberConversation,clearConversation,continueDestination} from './conversation-progress.js?v=2026.10.23.2';
+import {resumeConversation,rememberConversation,clearConversation,continueDestination} from './conversation-progress.js?v=2026.10.24.3';
 import {refreshActTwoEpilogue} from './act-two-epilogue-script.js';
 import {actTwoEpilogueDirection,epilogueTransitionFor,actTwoEpilogueStageHTML,actTwoEpilogueCompleteHTML,prepareEpilogueAssets,startEpilogueTransition,playEpilogueSound} from './act-two-epilogue-stage.js';
-import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.23.2';
+import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.24.3';
 import {failedChoiceKeys} from './choice-history.js';
 import {secondActLife} from './act-two-life.js';
 import {developerObservationBeats,createDeveloperObservation} from './debug-observation.js';
@@ -11,7 +11,7 @@ import {isFirstStalkerReply,firstStalkerStageHTML,prepareFirstStalkerAssets,need
 import { LUNA_MINI_EMOTIONS, MOKU_MINI_EMOTIONS } from './mini-emotions.js';
 import {isFirstFireReply,firstFireCut,firstFireStageHTML} from './first-fire-stage.js';
 import {clearLegacyObservationMemo,observationView,observationClockLimit,tickObservation,inheritObservation,firstActSleepClockReady} from './act-one-observation.js';
-import {createVoicePlayer} from './voice-player.js?v=2026.10.23.2';
+import {createVoicePlayer} from './voice-player.js?v=2026.10.24.3';
 const characterVoice=createVoicePlayer({chapter:()=>state?.actOne?.chapter});
 document.addEventListener('pointerdown',()=>characterVoice.unlock(),{capture:true});
 document.addEventListener('keydown',()=>characterVoice.unlock(),{capture:true});
@@ -23,8 +23,8 @@ import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVic
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.23.2';
-import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, resumeActTwoRewind, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.23.2';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.24.3';
+import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, resumeActTwoRewind, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.24.3';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { startBadEndingEntry } from './bad-ending-entry.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -115,8 +115,7 @@ const renderer = new WorldRenderer($('world'));
 if(previewResident==='hostess'){const emotion=new URLSearchParams(location.search).get('miniEmotion');if(LUNA_MINI_EMOTIONS.includes(emotion))renderer.miniPreview={type:'hostess',emotion};}
 if(observationPreview){const emotion=new URLSearchParams(location.search).get('miniEmotion');if(MOKU_MINI_EMOTIONS.includes(emotion))renderer.miniPreview={type:'cat',emotion};}
 if(managerPreview){renderer.view='exterior';renderer.focus=false;const pose=new URLSearchParams(location.search).get('pose');if(pose==='idle'||Object.hasOwn(CHARACTER_ART.manager.poses,pose))renderer.managerPreviewPose=pose;}
-let artVersion=0;
-const onArtReady=()=>{artVersion++;worldRenderGate.state=null;};
+const onArtReady=()=>{worldRenderGate.state=null;};
 // START needs no world artwork. Fetch it after the first gesture (or in previews).
 let artStarted=false;
 function startWorldArt(){
@@ -373,15 +372,15 @@ function playStalkerImpactCue(line,key){
   lastStalkerImpactCue=key;
   if(!normalBgm.enabled||normalBgm.volume===0)return;
   try{
-    const AudioContextType=window.AudioContext||window.webkitAudioContext;
-    if(!AudioContextType)return;
-    const ctx=new AudioContextType(),osc=ctx.createOscillator(),gain=ctx.createGain(),filter=ctx.createBiquadFilter(),start=ctx.currentTime;
+    const ctx=characterVoice.audioContext?.();
+    if(!ctx)return;
+    const osc=ctx.createOscillator(),gain=ctx.createGain(),filter=ctx.createBiquadFilter(),start=ctx.currentTime;
     osc.type=creak?'sawtooth':'triangle';osc.frequency.setValueAtTime(creak?180:130,start);osc.frequency.exponentialRampToValueAtTime(creak?90:38,start+.28);
     filter.type='lowpass';filter.frequency.value=460;
     gain.gain.setValueAtTime(Math.min(impact ? .18 : .045,normalBgm.volume*(impact ? .3 : .09)),start);
     gain.gain.exponentialRampToValueAtTime(.0001,start+.36);
     osc.connect(filter);filter.connect(gain);gain.connect(ctx.destination);osc.start(start);osc.stop(start+.38);
-    osc.onended=()=>{osc.disconnect();filter.disconnect();gain.disconnect();ctx.close().catch(()=>{});};
+    osc.onended=()=>{try{osc.disconnect();filter.disconnect();gain.disconnect();}catch{}};
   }catch{}
 }
 function showEvent(id,index=null,page=null,afterMorningBlackout=false,afterEpilogueTransition=false,afterBadSceneCut=false) {
@@ -412,7 +411,7 @@ function showEvent(id,index=null,page=null,afterMorningBlackout=false,afterEpilo
   const morningDirection=actTwoMorningDirection(e,cursor);
   const crossingMorning=morningDirection&&eventView?.id===e.id&&eventView.index<morningDirection.morning&&cursor>=morningDirection.morning;
   if(crossingMorning&&!afterMorningBlackout){
-    const birds=normalBgm.enabled&&cursor===morningDirection.morning?prepareMorningBirds(normalBgm.volume):null;
+    const birds=normalBgm.enabled&&cursor===morningDirection.morning?prepareMorningBirds(normalBgm.volume,characterVoice.audioContext()):null;
     openModal('<section class="act-screen act-two-morning-blackout" aria-label="夜が明けるまで暗転"><h2 id="modal-title" class="visually-hidden">翌朝へ</h2></section>');
     const stopBlackout=startMorningBlackout(modal.querySelector('.act-two-morning-blackout'),()=>{
       stopFireEnding=null;
@@ -452,7 +451,7 @@ function showEvent(id,index=null,page=null,afterMorningBlackout=false,afterEpilo
   const waitingForDay=e.duel&&lines[cursor].duelDayStart;
   if(!waitingForDay&&!rewindChoiceReady)characterVoice.play(lines[cursor],e.id+':'+cursor+':'+pageIndex);
   characterVoice.prepare(cursor+1<lines.length?lines[cursor+1]:null);
-  if(epilogueDirection&&pageIndex===0)stopEpilogueSound=playEpilogueSound(epilogueDirection.line.epilogueSfx,normalBgm.enabled?normalBgm.volume:0);
+  if(epilogueDirection&&pageIndex===0)stopEpilogueSound=playEpilogueSound(epilogueDirection.line.epilogueSfx,normalBgm.enabled?normalBgm.volume:0,characterVoice.audioContext());
   cleanupDuelPlayback=mountDuelPlayback(e.duel?{...lines[cursor],duelStartTitle:(cursor===0&&pageIndex===0)||showDebugDuelSplash}:null,{onDayReveal:playCurrentVoice,onAttack:()=>{
     modal.querySelector('.duel-ultimate-waiting')?.classList.remove('duel-ultimate-waiting');
     playDuelCue(lines[cursor],e.id+':'+cursor,normalBgm.enabled,normalBgm.volume,characterVoice);
@@ -647,7 +646,7 @@ function beginRewind(afterFire=false){
   const rollbackHour=storyCheckpointTarget(state).hour;
   openModal(rewindTransitionHTML(failure,state.actOne.attempt,afterFire,secondAct?2:1));
   const sound=$('sound-button').getAttribute('aria-pressed')==='true';
-  const stopTransition=startRewindTransition(modal.querySelector('.rewind-screen'),failure,()=>resetActState(secondAct?rewindActTwo(state):rewindBeforeFire(state),true),sound,state.actOne.attempt,rollbackHour,afterFire,normalBgm.clockAudio);
+  const stopTransition=startRewindTransition(modal.querySelector('.rewind-screen'),failure,()=>resetActState(secondAct?rewindActTwo(state):rewindBeforeFire(state),true),sound,state.actOne.attempt,rollbackHour,afterFire,normalBgm.clockAudio,sound?characterVoice.audioContext():null);
   stopFireEnding=()=>stopTransition();
 }
 let rewindWhiteoutPending=false;
@@ -675,7 +674,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.23.2';
+const BUILD_VERSION='2026.10.24.3';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){

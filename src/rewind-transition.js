@@ -36,15 +36,19 @@ export function rewindTransitionHTML(failure,attempt=1,afterFire=false,chapter=1
   return `<section class="act-screen rewind-screen" data-rewind-phase="${afterFire?'dark':'fire'}" data-chapter="${chapter}" ${afterFire?'data-after-fire':''}>${afterFire?'':fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${chapter===2&&failure==='duel-yandere'?'':chapter===2&&attempt===1?'':afterFire?'……もう一度、やり直せるなら。':attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="${restored}" alt="${chapter===2?'元に戻ったけもの荘':'元に戻った101号室'}"><div class="rewind-white-fade" aria-hidden="true"></div></section>`;
 }
 
-export function startRewindTransition(root,failure,finish,sound,attempt=1,targetTime=17,afterFire=false,clockAudio=null){
+export function startRewindTransition(root,failure,finish,sound,attempt=1,targetTime=17,afterFire=false,clockAudio=null,sharedAudio=null){
   const stopFire=afterFire?()=>{}:startFireEnding(root.querySelector('.fire-cinematic'),failure,()=>{});
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   let t=0,last=performance.now(),frameId,phase='',finished=false,clockComplete=false,fadeStarted=false,fadeStart=0;
-  let heartbeatAudio=null,playedHeartbeats=0;
+  let heartbeatAudio=null,ownsHeartbeat=false,playedHeartbeats=0;
   function beatHeart(){
-    if(!sound||typeof AudioContext==='undefined')return;
+    if(!sound)return;
     try{
-      heartbeatAudio ||= new AudioContext();
+      if(sharedAudio)heartbeatAudio=sharedAudio;
+      else if(!heartbeatAudio){
+        if(typeof AudioContext==='undefined')return;
+        heartbeatAudio=new AudioContext();ownsHeartbeat=true;
+      }
       const start=heartbeatAudio.currentTime,osc=heartbeatAudio.createOscillator(),gain=heartbeatAudio.createGain();
       osc.type='sine';osc.frequency.setValueAtTime(64,start);osc.frequency.exponentialRampToValueAtTime(38,start+.25);
       gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.68,start+.035);gain.gain.exponentialRampToValueAtTime(.0001,start+.3);
@@ -95,6 +99,6 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
   }
   function complete(){if(finished)return;cleanup();finish();}
   function beginFade(){if(fadeStarted||finished)return;fadeStarted=true;fadeStart=t;root.classList.add('rewind-fading');root.dataset.rewindPhase='return';root.dispatchEvent(new CustomEvent('rewind-fade',{bubbles:true}));}
-  function cleanup(){finished=true;cancelAnimationFrame(frameId);stopFire();if(heartbeatAudio)heartbeatAudio.close().catch(()=>{});}
+  function cleanup(){finished=true;cancelAnimationFrame(frameId);stopFire();if(ownsHeartbeat&&heartbeatAudio)heartbeatAudio.close().catch(()=>{});}
   frameId=requestAnimationFrame(tick);return cleanup;
 }

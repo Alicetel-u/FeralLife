@@ -32,6 +32,7 @@ test('real fire and clock callbacks reach a playable checkpoint for every live f
     requestAnimationFrame:fn=>{frames.set(++id,fn);return id;},cancelAnimationFrame:key=>frames.delete(key),
     createFirePainter:()=>()=>{},modal:{querySelector:()=>current},
     $:()=>({getAttribute:()=>audioMode==='off'?'false':'true'}),
+    characterVoice:{audioContext:()=>null},
     normalBgm:{clockAudio:{ended:audioMode==='ended',paused:audioMode==='blocked',error:audioMode==='error'?{}:null}},
     openModal(html){context.stopFireEnding?.();if(current)current.isConnected=false;current=root();screens.push(html);},
     rewindBeforeFire,rewindWhiteoutPending:false,restored:true,talk:{},createTalk:()=>({}),

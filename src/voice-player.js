@@ -8,6 +8,16 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
   const mobile=typeof navigator!=='undefined'&&/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   const AudioContextType=(globalThis.AudioContext||globalThis.webkitAudioContext);
   let context=null,source=null,gain=null,limiter=null,mobileAudio=null,unlocked=false;
+  // One context for speech and short cues. Opening and closing another one
+  // can suspend this graph on iPhone.
+  const ensureContext=()=>{
+    if(!AudioContextType)return null;
+    try{
+      context ||= new AudioContextType();
+      if(context.state==='suspended')context.resume().catch(()=>{});
+      return context;
+    }catch{return null;}
+  };
   const speakerBoost=()=>(({manager:1.6,hostess:1.8}[voiceSpeaker(current?.line||{})]||1)*(current?.line?.duelAttack?1.35:1)*(Number.isFinite(current?.line?.voiceGain)?Math.max(0,Math.min(1,current.line.voiceGain)):1)*(current?.clipGain??1));
   const playbackGain=()=>(mobile?4:1)*prefs.volume*speakerBoost();
   const applyVolume=()=>{if(gain){gain.gain.value=playbackGain();if(audio)audio.volume=1;}else if(audio)audio.volume=Math.min(1,prefs.volume*speakerBoost());};
@@ -23,7 +33,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     if(!AudioContextType)return;
     if(source&&element===mobileAudio){gain.gain.value=playbackGain();element.volume=1;if(context.state==='suspended')context.resume().catch(()=>{});return;}
     try{
-      context ||= new AudioContextType();
+      if(!ensureContext())throw new Error('audio-context');
       const node=context.createMediaElementSource(element);
       const boost=context.createGain();
       // Dynamics compression limits sharp peaks rather than allowing harsh clipping.
@@ -101,12 +111,12 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
       if(blocked&&current){const {line,identity}=current;current=null;play(line,identity);}},
     setEnabled(value){prefs.enabled=Boolean(value);save();if(!prefs.enabled){stop();playbackOutcome='missing';clearPrepared();}else if(current){const {line,identity}=current;current=null;play(line,identity);}},
     setVolume(value){prefs.volume=Math.max(0,Math.min(1,Number(value)||0));applyVolume();save();},
+    audioContext:ensureContext,
     playStrike(line,volume){
-      if(!AudioContextType||!line?.duelAttack||!(volume>0))return;
+      if(!line?.duelAttack||!(volume>0))return;
       try{
-        context ||= new AudioContextType();
-        if(context.state==='suspended')context.resume().catch(()=>{});
-        const osc=context.createOscillator(),gainNode=context.createGain(),t=context.currentTime;
+        const live=ensureContext();if(!live)return;
+        const osc=live.createOscillator(),gainNode=live.createGain(),t=live.currentTime;
         osc.type='sawtooth';osc.frequency.setValueAtTime(line.duelRank===4?620:330,t);osc.frequency.exponentialRampToValueAtTime(65,t+.22);
         gainNode.gain.setValueAtTime(volume*.07,t);gainNode.gain.exponentialRampToValueAtTime(.0001,t+.26);
         osc.connect(gainNode);gainNode.connect(context.destination);osc.start(t);osc.stop(t+.27);

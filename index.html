@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="theme-color" content="#131118">
-  <meta name="app-version" content="2026.10.24.2">
+  <meta name="app-version" content="2026.10.24.3">
   <meta name="build-updated" content="local">
   <title>けもの荘 第一幕「アパートを火事（モク）から守れ！」</title>
   <style>
@@ -32,9 +32,11 @@ body:not(.world-art-started) .scene{background-image:none!important}
   <script>
 (()=>{
   const steps=[];let report,panel,copy,ticker,watcher,completedAt;
+  const diagnose=new URLSearchParams(location.search).get('bootdiag')==='1';
   let percent=5,label='ゲームプログラムを読み込んでいます',lastProgress=performance.now();
-  function render(){
-    if(!report)return;
+  const reportVisible=()=>diagnose||(panel&&!panel.hidden);
+  function render(force=false){
+    if(!report||(!force&&!reportVisible()))return;
     let navigation=null,resources=[];
     try{
       const nav=performance.getEntriesByType('navigation')[0];
@@ -50,7 +52,7 @@ body:not(.world-art-started) .scene{background-image:none!important}
     if(number)number.textContent=String(percent);
     if(fill)fill.style.width=percent+'%';
     if(caption)caption.textContent=label;
-    render();
+    if(reportVisible())render();
   }
   function mount(){
     panel=document.getElementById('boot-diagnostics');report=document.getElementById('boot-report');copy=document.getElementById('boot-copy');
@@ -62,7 +64,7 @@ body:not(.world-art-started) .scene{background-image:none!important}
     };
     document.getElementById('boot-reload').onclick=()=>location.reload();
     paint();ticker=setInterval(()=>{
-      render();
+      if(reportVisible())render();
       const stall=document.getElementById('boot-stall');
       if(stall)stall.textContent=performance.now()-lastProgress>10000?'読み込みに時間がかかっています。':'';
     },1000);
@@ -92,11 +94,11 @@ body:not(.world-art-started) .scene{background-image:none!important}
       }catch(error){
         clearTimeout(timeout);mark('loader-error: '+(error?.name||'Error'));
         label='読み込みを完了できませんでした。再読み込みしてください';paint();
-        if(panel)panel.open=true;
+        if(panel){panel.hidden=false;panel.open=true;render(true);}
       }
     },
-    getReport(){render();return report?.textContent||'計測結果を取得できませんでした。';},
-    destroy(){completedAt=performance.now();mark('start-ready');clearInterval(ticker);render();if(panel)panel.hidden=true;}
+    getReport(){render(true);return report?.textContent||'計測結果を取得できませんでした。';},
+    destroy(){completedAt=performance.now();mark('start-ready');clearInterval(ticker);if(reportVisible())render();if(panel)panel.hidden=true;}
   };
   mark('html-bootstrap');
   // Mount as soon as the static HTML arrives, independently of CSS or modules.
@@ -107,10 +109,10 @@ body:not(.world-art-started) .scene{background-image:none!important}
 })();
   </script>
   <!-- WEB_BOOT_ENTRY -->
-  <link rel="stylesheet" href="styles.css?v=2026.10.24.2">
+  <link rel="stylesheet" href="styles.css?v=2026.10.24.3">
 </head>
 <body class="game-ink">
-  <details id="boot-diagnostics" hidden><summary>読み込み状況・計測結果をコピー（ver 2026.10.24.2）</summary><button id="boot-copy" type="button">計測結果をコピー</button><button id="boot-reload" type="button" onclick="location.reload()">再読み込み</button><pre id="boot-report">起動スクリプトの実行を待っています。この表示のままなら、そのままスクリーンショットを送ってください。</pre></details>
+  <details id="boot-diagnostics" hidden><summary>読み込み状況・計測結果をコピー（ver 2026.10.24.3）</summary><button id="boot-copy" type="button">計測結果をコピー</button><button id="boot-reload" type="button" onclick="location.reload()">再読み込み</button><pre id="boot-report">起動スクリプトの実行を待っています。この表示のままなら、そのままスクリーンショットを送ってください。</pre></details>
   <div id="boot-screen" aria-label="ゲームの読み込み">
     <div class="boot-card">
       <span class="boot-kicker">WELCOME TO THE APARTMENT</span>
@@ -152,6 +154,6 @@ body:not(.world-art-started) .scene{background-image:none!important}
     <button type="button" id="entry-start" class="entry-start">▶ START</button>
   </div>
   <div id="update-banner" hidden role="status" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:99999;background:#101826;color:white;border:1px solid #e6a6cb;border-radius:12px;padding:14px 20px;box-shadow:0 8px 30px #000a;font:14px sans-serif;text-align:center">けもの荘が更新されました。 <button id="update-reload" type="button" style="margin:7px;padding:8px 14px;border:0;border-radius:6px;background:#e6a6cb;color:#111;font-weight:bold">最新版を読み込む</button></div>
-  <script type="module" src="src/app.js?v=2026.10.24.2"></script>
+  <script type="module" src="src/app.js?v=2026.10.24.3"></script>
 </body>
 </html>

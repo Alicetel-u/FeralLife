@@ -5,6 +5,8 @@ import {extractVoiceScript,planVoices} from '../tools/voice-script.mjs';
 import {voiceLineKey,voicePerformance} from '../src/voice-policy.js';
 import {createVoicePlayer} from '../src/voice-player.js';
 import {playDuelCue} from '../src/act-two-duel-stage.js';
+import {prepareMorningBirds} from '../src/act-two-bad-stage.js';
+import {playEpilogueSound} from '../src/act-two-epilogue-stage.js';
 
 test('backgrounding pauses and resumes the current voice without stale play failures ending it',async()=>{
  const line={speaker:'cat',text:'一時停止ニャ。'},sounds=[];let rejectFirst,plays=0;
@@ -92,6 +94,32 @@ test('battle strike reuses one audio context and does not close the voice output
   assert.equal(strikes,1);
   playDuelCue({duelAttack:true,duelRank:2},'strike-c',true,.5,voice);
   assert.equal(strikes,2);
+ }finally{if(previous===undefined)delete globalThis.AudioContext;else globalThis.AudioContext=previous;}
+});
+
+test('scene cues share the voice context and leave it open',()=>{
+ const previous=globalThis.AudioContext;
+ let contexts=0,closed=0;
+ globalThis.AudioContext=class{
+  constructor(){contexts++;}
+  state='running';currentTime=0;destination={};sampleRate=8000;
+  resume(){return Promise.resolve();}
+  close(){closed++;return Promise.resolve();}
+  createOscillator(){return {frequency:{setValueAtTime(){},exponentialRampToValueAtTime(){}},connect(){},start(){},stop(){},disconnect(){},set onended(fn){}};}
+  createGain(){return {gain:{setValueAtTime(){},exponentialRampToValueAtTime(){},setTargetAtTime(){}},connect(){},disconnect(){},stop(){}};}
+  createBiquadFilter(){return {type:'',frequency:{value:0},Q:{value:0},connect(){},disconnect(){}};}
+  createBuffer(){return {getChannelData:()=>new Float32Array(8)};}
+  createBufferSource(){return {connect(){},start(){},stop(){},disconnect(){},set onended(fn){}};}
+ };
+ try{
+  const player=createVoicePlayer({storage:null,manifest:{},makeAudio:()=>({play(){return Promise.resolve();},pause(){},load(){},removeAttribute(){}})});
+  const shared=player.audioContext();
+  player.playStrike({duelAttack:true,duelRank:1},.5);
+  assert.equal(player.audioContext(),shared);
+  prepareMorningBirds(.5,shared).play()();
+  playEpilogueSound('lock',.5,shared)();
+  assert.equal(contexts,1);
+  assert.equal(closed,0);
  }finally{if(previous===undefined)delete globalThis.AudioContext;else globalThis.AudioContext=previous;}
 });
 

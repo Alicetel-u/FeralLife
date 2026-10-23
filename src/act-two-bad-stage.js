@@ -23,21 +23,26 @@ export function actTwoMorningDirection(event,index=0){
 }
 
 // Short sparrow calls, no network asset or voice generation. Follows sound settings.
-export function prepareMorningBirds(volume){
- let ctx,timer;
- const stop=()=>{clearTimeout(timer);if(ctx&&ctx.state!=='closed')ctx.close().catch(()=>{});};
+export function prepareMorningBirds(volume,sharedContext=null){
+ let ctx,timer,owned=false;const nodes=[];
+ const stop=()=>{clearTimeout(timer);for(const node of nodes){try{node.stop?.();node.disconnect?.();}catch{}}nodes.length=0;if(owned&&ctx&&ctx.state!=='closed')ctx.close().catch(()=>{});};
  try{
-  const Audio=globalThis.AudioContext||globalThis.webkitAudioContext;
-  if(Audio){ctx=new Audio();ctx.resume().catch(()=>{});}
+  if(sharedContext)ctx=sharedContext;
+  else{
+   const Audio=globalThis.AudioContext||globalThis.webkitAudioContext;
+   if(Audio){ctx=new Audio();owned=true;ctx.resume().catch(()=>{});}
+  }
  }catch{}
  return {stop,play(){
   if(!ctx||ctx.state==='closed')return stop;
   try{
    for(const offset of [.05,.23,.76,.94]){
     const osc=ctx.createOscillator(),gain=ctx.createGain(),t=ctx.currentTime+offset;
+    nodes.push(osc,gain);
     osc.frequency.setValueAtTime(2600,t);osc.frequency.exponentialRampToValueAtTime(3900,t+.045);osc.frequency.exponentialRampToValueAtTime(2800,t+.11);
     gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(Math.max(.0001,volume*.055),t+.015);gain.gain.exponentialRampToValueAtTime(.0001,t+.12);
     osc.connect(gain);gain.connect(ctx.destination);osc.start(t);osc.stop(t+.13);
+    osc.onended=()=>{try{osc.disconnect();gain.disconnect();}catch{}};
    }
    timer=setTimeout(stop,1400);
   }catch{stop();}

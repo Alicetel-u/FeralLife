@@ -67,14 +67,19 @@ export function startEpilogueTransition(host,kind,replace,done=()=>{},{ready=()=
  return ()=>{if(cancelled)return;cancelled=true;clear();};
 }
 
-// Brief local Foley only; every context and source is disposed on scene changes.
-export function playEpilogueSound(kind,volume=0){
+// Brief local Foley. A private context is closed with the cue; a shared voice context stays open.
+export function playEpilogueSound(kind,volume=0,sharedContext=null){
  if(!kind||volume<=0)return ()=>{};
- let context,timer;const nodes=[];
- const stop=()=>{clearTimeout(timer);for(const node of nodes){try{node.stop?.();node.disconnect?.();}catch{}}if(context&&context.state!=='closed')context.close().catch(()=>{});};
+ let context,timer,owned=false;const nodes=[];
+ const stop=()=>{clearTimeout(timer);for(const node of nodes){try{node.stop?.();node.disconnect?.();}catch{}}if(owned&&context&&context.state!=='closed')context.close().catch(()=>{});};
  try{
-  const Audio=globalThis.AudioContext||globalThis.webkitAudioContext;if(!Audio)return stop;
-  context=new Audio();context.resume().catch(()=>{});const now=context.currentTime;
+  if(sharedContext)context=sharedContext;
+  else{
+   const Audio=globalThis.AudioContext||globalThis.webkitAudioContext;if(!Audio)return stop;
+   context=new Audio();owned=true;context.resume().catch(()=>{});
+  }
+  if(!context)return stop;
+  const now=context.currentTime;
   const gain=context.createGain();nodes.push(gain);gain.connect(context.destination);
   if(kind==='ring'||kind==='lock'||kind==='unlock'){
    const osc=context.createOscillator();nodes.push(osc);osc.type=kind==='ring'?'sine':'triangle';
