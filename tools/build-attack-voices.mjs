@@ -28,9 +28,11 @@ for(const entry of Object.values(manifest)){
  if(fastFile===entry.file)throw new Error('Unexpected voice file: '+entry.file);
  entry.fastFile=fastFile;processed++;
  const source=resolve(root,entry.file),output=resolve(root,fastFile);
- const sourceStat=await stat(source);
+ // Git checkout does not preserve meaningful source/output mtimes. Files are
+ // content-addressed by voice hash; a committed non-empty fast clip is reusable.
+ await stat(source);
  let fresh=false;
- try{const outputStat=await stat(output);fresh=outputStat.size>0&&outputStat.mtimeMs>=sourceStat.mtimeMs;}catch{fresh=false;}
+ try{const outputStat=await stat(output);fresh=outputStat.size>0;}catch{fresh=false;}
  if(fresh)continue;
  const args=['-hide_banner','-loglevel','error','-y','-i',source,
   '-af',`atempo=${pace.tempo},apad=pad_dur=0.16`,'-codec:a','libmp3lame','-q:a','3',output];
