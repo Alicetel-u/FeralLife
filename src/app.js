@@ -303,7 +303,7 @@ function showEpilogueCut(kind,replace){
 function clearFireEnding(){stopFireEnding?.();stopFireEnding=null;}
 function openModal(html) { if(!epilogueSwapping)stopEpilogueTransition();stopEpilogueSound();html=storyScreenHTML(html);characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); cleanupDuelPlayback();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); replaceConversationContent($('modal-content'),html); modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); syncNormalBgm(); }
 function closeModal() {
-  if(badEntryActive)return;
+  if(typeof badEntryActive!=='undefined'&&badEntryActive)return;
   if(modal.classList.contains('conversation-modal')&&eventView){clearConversation(state,eventView.id);save();}
   stopEpilogueTransition();stopEpilogueSound();
   const duelEvent=state.actOne?.duel&&state.events.find(e=>e.id===eventView?.id);
@@ -375,15 +375,16 @@ function showEvent(id,index=null,page=null,afterMorningBlackout=false,afterEpilo
   const savedPosition=index===null?resumeConversation(state):null;
   const lines=eventConversation(e),cursor=Math.max(0,Math.min(index ?? (savedPosition?.event.id===e.id?savedPosition.cursor:e.duel&&state.actOne?.duel?.eventId===e.id?state.actOne.duel.cursor:e.choicePresented?lines.length-1:0),lines.length-1));
   page??=savedPosition?.event.id===e.id?savedPosition.page:index===null&&e.duel&&state.actOne?.duel?.eventId===e.id?state.actOne.duel.page||0:0;
+  const epilogueDirection=actTwoEpilogueDirection(e,cursor);
+  const epilogueCut=afterEpilogueTransition?null:epilogueTransitionFor(e,eventView?.id===e.id?eventView.index:null,cursor,page);
+  if(epilogueCut){showEpilogueCut(epilogueCut,()=>showEvent(id,cursor,page,afterMorningBlackout,true));return;}
   // First tragedy: leave Moku's room before the fire; never overlay flames or extra text.
   if(!afterBadSceneCut&&isFirstFireReply(e,state.actOne)&&eventView?.id===e.id
     &&firstFireCut(lines,eventView.index)==='trust'&&firstFireCut(lines,cursor)==='departure'
     &&cursor>eventView.index){
    showFirstFireCorridorCut(id,cursor,page);return;
   }
-  const epilogueDirection=actTwoEpilogueDirection(e,cursor);
-  const epilogueCut=afterEpilogueTransition?null:epilogueTransitionFor(e,eventView?.id===e.id?eventView.index:null,cursor,page);
-  if(epilogueCut){showEpilogueCut(epilogueCut,()=>showEvent(id,cursor,page,afterMorningBlackout,true));return;}
+
   if(!afterMorningBlackout&&needsStalkerPreface(e,eventView,cursor)){
     openModal(stalkerPrefaceHTML());
     stopFireEnding=startStalkerPreface(modal.querySelector('.first-stalker-preface'),()=>showEvent(id,cursor,page,true));
