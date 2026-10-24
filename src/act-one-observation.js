@@ -310,7 +310,7 @@ export function finishObservationLine(state){
  if(c.index>=beat.lines.length){
   if(!o.done.includes(beat.id))o.done.push(beat.id);
   if(!o.seen.includes(beat.id))o.seen.push(beat.id);
-  o.current=null;o.gap=secondObservation(state)||observationPhase(state)===0?.45:.85;
+  o.current=null;o.gap=secondObservation(state)?.08:observationPhase(state)===0?.45:.85;
  }
  return true;
 }
@@ -336,4 +336,4 @@ export function inheritObservation(previous,next){
  after.seen=[...new Set([...after.seen,...before.seen])];
 }
 
-export function observationLineSeconds(line){return Math.min(3.7,Math.max(2.0,1+Array.from(line?.text||'').length*.058));}
+export function observationLineSeconds(line){if(line?.voicePerformance?.startsWith('observation-'))return Math.min(3.4,Math.max(1.15,.65+Array.from(line.text).length*.055));return Math.min(3.7,Math.max(2.0,1+Array.from(line?.text||'').length*.058));}

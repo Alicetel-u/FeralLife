@@ -27,16 +27,16 @@ test('phone was held from the start, and bedtime keeps the tired cat asleep',()=
  assert.deepEqual([0,1,2].map(i=>observationComedy(stateFor('blanket',i),cat).pose),['sleep','sleep','sleep']);
 });
 
-test('romance advice stays a shared conversation and photo punchline loses Moku from the picture',()=>{
+test('escape scene uses a shopping bag and a large retort reaction',()=>{
  const s=stateFor('luna-tea',0),luna={type:'hostess'};
- const phone=observationComedy(s,luna);assert.equal(phone.pose,'chat');assert.ok(phone.props.some(p=>p.kind==='phone'));
- s.actOne.observation.current.index=1;assert.equal(observationComedy(s,cat).reaction,'hungry');
+ const phone=observationComedy(s,luna);assert.equal(phone.pose,'chat');assert.ok(phone.props.some(p=>p.kind==='bag'));
+ s.actOne.observation.current.index=1;assert.equal(observationComedy(s,cat).reaction,null);
  s.actOne.observation.current.index=5;assert.equal(observationComedy(s,cat).pose,'chat');
  s.actOne.chapter=2;s.hour=64;s.actOne.observation.current=null;s.actOne.observation.done=['luna-tea'];
- assert.equal(observationComedy(s,cat).pose,'chat','no old fake-sleep animation leaks into the new joke');
+ assert.equal(observationComedy(s,cat),null,'the old conversation does not linger after its ending');
  s.actOne.observation.current={id:'luna-tidy',index:4,elapsed:2};
- assert.ok(observationComedy(s,luna).props.some(p=>p.kind==='photo'&&p.missingCat));
- assert.equal(observationComedy(s,cat).dx,-24);
+ assert.equal(observationComedy(s,luna).pose,'chat');
+ assert.equal(observationComedy(s,cat).dx,0);
 });
 
 test('choreography is deterministic, reload-safe, bounded, and does not mutate saves',()=>{

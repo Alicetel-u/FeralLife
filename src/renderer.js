@@ -1,3 +1,4 @@
+import {lunaEscapePosition} from './act-two-observation.js';
 import { MINI_EMOTION_ART, MiniReactionState, miniDailyEmotion, miniEmotionFrameName, drawMiniEmotion } from './mini-emotions.js';
 import {managerTarget,managerFrame,advanceManager} from './manager-life.js';
 import { speakerColors } from './speaker-colors.js';
@@ -228,6 +229,11 @@ export class WorldRenderer {
     }
     if (!this.focus) for (const y of [313,643]) { rect(ctx,8,y,1184,16,'#17111d');rect(ctx,8,y+1,1184,2,'#b32a43');ctx.fillStyle='#e0cbbd';ctx.font='10px "Yu Gothic UI",sans-serif';ctx.fillText('共用廊下',16,y+12);ctx.textAlign='right';ctx.fillText('階段・屋外へ →',1180,y+12);ctx.textAlign='left'; }
     for (const r of state.residents) this.drawInteriorResident(state,r,t);
+    const escapeManager=lunaEscapePosition(state,'manager');
+    if(escapeManager){const b=roomBounds(102,this.focusRoom),base=exteriorRoomBounds(102);if(b){
+      const x=b.x+(escapeManager.x-base.x)/base.w*b.w,y=b.y+b.h+16;
+      drawSprite(ctx,'manager',x,y,t,'idle',(this.focus?300:144)/44,-1,{pose:this.managerTarget?.pose||'idle',...this.miniReaction('manager',t)});
+    }}
     this.drawSpeech(state);
   }
   exteriorCamera(selectedPos) {
@@ -249,7 +255,7 @@ export class WorldRenderer {
     rect(ctx,0,0,1000,562.5,`rgba(16,27,49,${darkness})`);
     if(darkness>.3)for(let i=0;i<36;i++)rect(ctx,noise(i,2,1)*1000,noise(i,3,2)*115,1,1,'#e9dcc277');
     const caretaker=this.managerPosition||{x:650,y:513,zone:'street'},caretakerPose=this.managerPreviewPose||managerFrame(this.managerTarget||managerTarget(state,this.bubbles),t,this.managerMoving,this.managerPosition?.walkDistance??0);
-    const people=state.residents.map(r=>({r,p:exteriorFeet(sampleJourney(r,state.hour,ACTIONS[r.action].place))}));
+    const people=state.residents.map(r=>({r,p:exteriorFeet(lunaEscapePosition(state,r.type,{reduced:this.reducedMotion})||sampleJourney(r,state.hour,ACTIONS[r.action].place))}));
     people.push({r:null,p:exteriorFeet(caretaker)});
     people.sort((a,b)=>a.p.y-b.p.y);
     for(const {r,p} of people) {
@@ -285,7 +291,7 @@ export class WorldRenderer {
   }
   interiorResidentPosition(state,r,t=this.animTime||0) {
     const comedy=observationComedy(state,r,{reduced:this.reducedMotion});
-    let base=sampleJourney(r,state.hour,ACTIONS[r.action].place);
+    let base=lunaEscapePosition(state,r.type,{reduced:this.reducedMotion})||sampleJourney(r,state.hour,ACTIONS[r.action].place);
     // Align settled sleep (including old saved routes) with the painted mattress.
     // A character merely pretending to sleep during tea stays in her current seat.
     if(r.action==='sleep'&&!base.moving&&base.zone==='room'&&ROOM_LAYOUTS[r.type]){
@@ -394,13 +400,18 @@ export class WorldRenderer {
   speechAnchor(state, type) {
     const resident = state.residents.find(person => person.type === type);
     if (!resident) {
+      const escape=type==='manager'&&lunaEscapePosition(state,type);
+      if(escape&&this.view==='interior'){
+        const b=roomBounds(102,this.focusRoom),base=exteriorRoomBounds(102);
+        if(b)return {x:b.x+(escape.x-base.x)/base.w*b.w,y:b.y+b.h+16-(this.focus?300:144)*.86,tail:true,source:'廊下の大家'};
+      }
       if(type!=='manager'||this.view!=='exterior'||!this.managerPosition)return null;
       const selected=state.residents.find(r=>r.room===state.selected),p=selected?sampleJourney(selected,state.hour,ACTIONS[selected.action].place):null;
       return {...this.projectExterior(this.managerPosition.x,exteriorFeet(this.managerPosition).y-80*.86,p),tail:true,source:''};
     }
     const selected = state.residents.find(person => person.room === state.selected);
     const selectedPos = selected ? sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
-    const p = this.view==='interior'?this.interiorResidentPosition(state,resident):sampleJourney(resident, state.hour, ACTIONS[resident.action].place);
+    const p = this.view==='interior'?this.interiorResidentPosition(state,resident):lunaEscapePosition(state,resident.type,{reduced:this.reducedMotion})||sampleJourney(resident, state.hour, ACTIONS[resident.action].place);
     const S = WORLD_WIDTH / 1200;
     const absent = p.zone === 'away' || p.zone === 'street' || p.zone === 'stairs';
     if (this.view === 'exterior') {

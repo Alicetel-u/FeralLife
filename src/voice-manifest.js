@@ -8143,5 +8143,294 @@ export const VOICE_MANIFEST = {
     "performance": "luna-normal",
     "deliveryProfile": "duel-luna",
     "model": "eleven_v3"
+  },
+  "[\"manager\",\"モク、ちょっと手伝ってくれ。\",\"observation-manager\",false]": {
+    "file": "assets/voices/106912ef76091560bbd762d548bab572fa7ab25d52bb5d2e7ac60bd0311b606d.mp3",
+    "hash": "106912ef76091560bbd762d548bab572fa7ab25d52bb5d2e7ac60bd0311b606d",
+    "source": "act2/observation/luna-unpack:0",
+    "speaker": "manager",
+    "text": "モク、ちょっと手伝ってくれ。",
+    "performance": "observation-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"今、忙しいニャ。\",\"observation-cat\",false]": {
+    "file": "assets/voices/12f5d6e702ed9332be0f07183f96e7719f5e405cfd392f4df72e4b81389ff207.mp3",
+    "hash": "12f5d6e702ed9332be0f07183f96e7719f5e405cfd392f4df72e4b81389ff207",
+    "source": "act2/observation/luna-unpack:1",
+    "speaker": "cat",
+    "text": "今、忙しいニャ。",
+    "performance": "observation-cat",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"何してるんだ？\",\"observation-manager\",false]": {
+    "file": "assets/voices/fa07ccb50b9d173e5fc7c1656a9e2cdff7a76072b68165e00d3e12ded4fd7f22.mp3",
+    "hash": "fa07ccb50b9d173e5fc7c1656a9e2cdff7a76072b68165e00d3e12ded4fd7f22",
+    "source": "act2/observation/luna-unpack:2",
+    "speaker": "manager",
+    "text": "何してるんだ？",
+    "performance": "observation-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……ルナに用があるニャ。\",\"observation-cat\",false]": {
+    "file": "assets/voices/2fcc719e9dc4f2c20897c9786b3eb7d113d2ac6aa9b9d1f43c5343c8a16fbd34.mp3",
+    "hash": "2fcc719e9dc4f2c20897c9786b3eb7d113d2ac6aa9b9d1f43c5343c8a16fbd34",
+    "source": "act2/observation/luna-unpack:3",
+    "speaker": "cat",
+    "text": "……ルナに用があるニャ。",
+    "performance": "observation-cat",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"ルナ、いるニャ？\",\"observation-cat\",false]": {
+    "file": "assets/voices/e9a1e61e9eb649d1b098e7d2c3287732d4690135d8bc2780db46a47c9d65b0ee.mp3",
+    "hash": "e9a1e61e9eb649d1b098e7d2c3287732d4690135d8bc2780db46a47c9d65b0ee",
+    "source": "act2/observation/luna-unpack:4",
+    "speaker": "cat",
+    "text": "ルナ、いるニャ？",
+    "performance": "observation-cat",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"いるよ。\",\"observation-hostess\",false]": {
+    "file": "assets/voices/2582c079cdae598d4badf9e3a7a37fbd2d389c5e83c5ec8b45b536f4fcca7a56.mp3",
+    "hash": "2582c079cdae598d4badf9e3a7a37fbd2d389c5e83c5ec8b45b536f4fcca7a56",
+    "source": "act2/observation/luna-unpack:5",
+    "speaker": "hostess",
+    "text": "いるよ。",
+    "performance": "observation-hostess",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"助けてニャ。ちょっと、かくまってほしいニャ。\",\"observation-cat\",false]": {
+    "file": "assets/voices/1f9bccbe3d96ecf19bf1dbcdfb980ef71a9933762ee60c828db0d92769993df3.mp3",
+    "hash": "1f9bccbe3d96ecf19bf1dbcdfb980ef71a9933762ee60c828db0d92769993df3",
+    "source": "act2/observation/luna-neighbor:0",
+    "speaker": "cat",
+    "text": "助けてニャ。ちょっと、かくまってほしいニャ。",
+    "performance": "observation-cat",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"えっ、誰かに追われてるの？\",\"observation-hostess\",false]": {
+    "file": "assets/voices/87cf299cec0df9f11562d298768f226cc06f7dda7dc8830556e634792eca7392.mp3",
+    "hash": "87cf299cec0df9f11562d298768f226cc06f7dda7dc8830556e634792eca7392",
+    "source": "act2/observation/luna-neighbor:1",
+    "speaker": "hostess",
+    "text": "えっ、誰かに追われてるの？",
+    "performance": "observation-hostess",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家ニャ。\",\"observation-cat\",false]": {
+    "file": "assets/voices/9dba37486146ee14425240360eceb0b4e23353afa4e486b20f50f5e3f18aa84d.mp3",
+    "hash": "9dba37486146ee14425240360eceb0b4e23353afa4e486b20f50f5e3f18aa84d",
+    "source": "act2/observation/luna-neighbor:2",
+    "speaker": "cat",
+    "text": "大家ニャ。",
+    "performance": "observation-cat",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……何したの？\",\"observation-hostess\",false]": {
+    "file": "assets/voices/371c682ea578f5c595afe4dd75c9aa114ce61a9debe46449b8a1b24ab064b487.mp3",
+    "hash": "371c682ea578f5c595afe4dd75c9aa114ce61a9debe46449b8a1b24ab064b487",
+    "source": "act2/observation/luna-neighbor:3",
+    "speaker": "hostess",
+    "text": "……何したの？",
+    "performance": "observation-hostess",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"何もしてないニャ。だから手伝えって言われたニャ。\",\"observation-cat\",false]": {
+    "file": "assets/voices/2acfe0e6697b2ee39391c0eae7bb3e7407668a9243c52792daf708782f6ac47f.mp3",
+    "hash": "2acfe0e6697b2ee39391c0eae7bb3e7407668a9243c52792daf708782f6ac47f",
+    "source": "act2/observation/luna-neighbor:4",
+    "speaker": "cat",
+    "text": "何もしてないニャ。だから手伝えって言われたニャ。",
+    "performance": "observation-cat",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"じゃあ、手伝ってあげなよ。\",\"observation-hostess\",false]": {
+    "file": "assets/voices/ae5efa43d021efb4bd793f76be4f4e177baa5b880d03158081a350760b5e7260.mp3",
+    "hash": "ae5efa43d021efb4bd793f76be4f4e177baa5b880d03158081a350760b5e7260",
+    "source": "act2/observation/luna-neighbor:5",
+    "speaker": "hostess",
+    "text": "じゃあ、手伝ってあげなよ。",
+    "performance": "observation-hostess",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……ここにも大家がいたニャ。\",\"observation-cat\",false]": {
+    "file": "assets/voices/3799edf783a95048653541f0659ea1401ab9ba6165bad61a48723e6567def1bd.mp3",
+    "hash": "3799edf783a95048653541f0659ea1401ab9ba6165bad61a48723e6567def1bd",
+    "source": "act2/observation/luna-neighbor:6",
+    "speaker": "cat",
+    "text": "……ここにも大家がいたニャ。",
+    "performance": "observation-cat",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"大家さん、いつもあんなに怒ってるの？\",\"observation-hostess\",false]": {
+    "file": "assets/voices/9994cd8d3701ee6b739dd2ce2991a05010f0db8ee6b152ce4d0b057aa4ed494c.mp3",
+    "hash": "9994cd8d3701ee6b739dd2ce2991a05010f0db8ee6b152ce4d0b057aa4ed494c",
+    "source": "act2/observation/luna-tidy:0",
+    "speaker": "hostess",
+    "text": "大家さん、いつもあんなに怒ってるの？",
+    "performance": "observation-hostess",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"モクが何もしないと、だいたい怒るニャ。\",\"observation-cat\",false]": {
+    "file": "assets/voices/b69b9a8c3cf05562f59ac01212c861a7fe121c5d7b6bacc85c459ad344d8823e.mp3",
+    "hash": "b69b9a8c3cf05562f59ac01212c861a7fe121c5d7b6bacc85c459ad344d8823e",
+    "source": "act2/observation/luna-tidy:1",
+    "speaker": "cat",
+    "text": "モクが何もしないと、だいたい怒るニャ。",
+    "performance": "observation-cat",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"何かしたら？\",\"observation-hostess\",false]": {
+    "file": "assets/voices/941b1fad5b9aa55d2014b8292c0e8a219fda56fbe9f389ea18660d668d940a96.mp3",
+    "hash": "941b1fad5b9aa55d2014b8292c0e8a219fda56fbe9f389ea18660d668d940a96",
+    "source": "act2/observation/luna-tidy:2",
+    "speaker": "hostess",
+    "text": "何かしたら？",
+    "performance": "observation-hostess",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"もっと怒るニャ。\",\"observation-cat\",false]": {
+    "file": "assets/voices/08a92a2bda951a4b9e2242b38722d87d9b92c46357496f63f676f8f04a86a3ba.mp3",
+    "hash": "08a92a2bda951a4b9e2242b38722d87d9b92c46357496f63f676f8f04a86a3ba",
+    "source": "act2/observation/luna-tidy:3",
+    "speaker": "cat",
+    "text": "もっと怒るニャ。",
+    "performance": "observation-cat",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"それ、何をしたのか聞いてもいい？\",\"observation-hostess\",false]": {
+    "file": "assets/voices/56ae1121d2fb31283b8f8d23d3b4b51b1f3b7406a59675983f55256d5deba012.mp3",
+    "hash": "56ae1121d2fb31283b8f8d23d3b4b51b1f3b7406a59675983f55256d5deba012",
+    "source": "act2/observation/luna-tidy:4",
+    "speaker": "hostess",
+    "text": "それ、何をしたのか聞いてもいい？",
+    "performance": "observation-hostess",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"……手伝ってくるニャ。\",\"observation-cat\",false]": {
+    "file": "assets/voices/234a791fa8b39ad8117318f32748da0fd79b6b8a3de9897c684aba8373e0d19e.mp3",
+    "hash": "234a791fa8b39ad8117318f32748da0fd79b6b8a3de9897c684aba8373e0d19e",
+    "source": "act2/observation/luna-tidy:5",
+    "speaker": "cat",
+    "text": "……手伝ってくるニャ。",
+    "performance": "observation-cat",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"そこは話してくれないんだ。\",\"observation-hostess\",false]": {
+    "file": "assets/voices/c2cfb5d99110299440048c63fa3c6d3c3a15a7df8c963cebe71104eda498c36d.mp3",
+    "hash": "c2cfb5d99110299440048c63fa3c6d3c3a15a7df8c963cebe71104eda498c36d",
+    "source": "act2/observation/luna-tidy:6",
+    "speaker": "hostess",
+    "text": "そこは話してくれないんだ。",
+    "performance": "observation-hostess",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"じゃ、あたし買い物に行ってくるね。\",\"observation-hostess\",false]": {
+    "file": "assets/voices/cd0f7b8b94c97733e85c581e088d0cf2d959bc8de27f565652aa246fe42895b3.mp3",
+    "hash": "cd0f7b8b94c97733e85c581e088d0cf2d959bc8de27f565652aa246fe42895b3",
+    "source": "act2/observation/luna-tea:0",
+    "speaker": "hostess",
+    "text": "じゃ、あたし買い物に行ってくるね。",
+    "performance": "observation-hostess",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"大家がいないか、見てほしいニャ。\",\"observation-cat\",false]": {
+    "file": "assets/voices/550dfa5fa54a28208c8b43693b6ba1772b099abf14e2bb35e230b2f8dc88aace.mp3",
+    "hash": "550dfa5fa54a28208c8b43693b6ba1772b099abf14e2bb35e230b2f8dc88aace",
+    "source": "act2/observation/luna-tea:1",
+    "speaker": "cat",
+    "text": "大家がいないか、見てほしいニャ。",
+    "performance": "observation-cat",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"モク、いるだろ。\",\"observation-manager\",false]": {
+    "file": "assets/voices/0e4cf2ead5358bf6844c82d77f059b5c0d98fbe81b37bdfe769ca93ee704aefb.mp3",
+    "hash": "0e4cf2ead5358bf6844c82d77f059b5c0d98fbe81b37bdfe769ca93ee704aefb",
+    "source": "act2/observation/luna-tea:2",
+    "speaker": "manager",
+    "text": "モク、いるだろ。",
+    "performance": "observation-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"……いるよ。\",\"observation-hostess\",false]": {
+    "file": "assets/voices/a24b110dc0394cd78a04457953fee0918e66fdc220382c9b5e6e7f8adb2b2643.mp3",
+    "hash": "a24b110dc0394cd78a04457953fee0918e66fdc220382c9b5e6e7f8adb2b2643",
+    "source": "act2/observation/luna-tea:3",
+    "speaker": "hostess",
+    "text": "……いるよ。",
+    "performance": "observation-hostess",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"返事が早いニャ！\",\"observation-cat\",false]": {
+    "file": "assets/voices/7ecd4bf8f7a978a2ede64765f20b84ac54cafb0f6954588637107f15bfa482e2.mp3",
+    "hash": "7ecd4bf8f7a978a2ede64765f20b84ac54cafb0f6954588637107f15bfa482e2",
+    "source": "act2/observation/luna-tea:4",
+    "speaker": "cat",
+    "text": "返事が早いニャ！",
+    "performance": "observation-cat",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"手伝いが終わったら帰っていいって言っただろ。\",\"observation-manager\",false]": {
+    "file": "assets/voices/796743c9bc5ad7b0f92fed8cd8fa284459cdef549adcb1ccf2bdca3f060619f9.mp3",
+    "hash": "796743c9bc5ad7b0f92fed8cd8fa284459cdef549adcb1ccf2bdca3f060619f9",
+    "source": "act2/observation/luna-before-outing:0",
+    "speaker": "manager",
+    "text": "手伝いが終わったら帰っていいって言っただろ。",
+    "performance": "observation-manager",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"帰っていいところだけ、先にやったニャ。\",\"observation-cat\",false]": {
+    "file": "assets/voices/ee6f687e18accfd4badca10d961edc8360da9a2a883f052ee0761c94aa9a1dc3.mp3",
+    "hash": "ee6f687e18accfd4badca10d961edc8360da9a2a883f052ee0761c94aa9a1dc3",
+    "source": "act2/observation/luna-before-outing:1",
+    "speaker": "cat",
+    "text": "帰っていいところだけ、先にやったニャ。",
+    "performance": "observation-cat",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"順番を守れ。\",\"observation-manager\",false]": {
+    "file": "assets/voices/8e298509192f6af0bb64a01b21562908376320f71c0e99739951258c0f42e318.mp3",
+    "hash": "8e298509192f6af0bb64a01b21562908376320f71c0e99739951258c0f42e318",
+    "source": "act2/observation/luna-before-outing:2",
+    "speaker": "manager",
+    "text": "順番を守れ。",
+    "performance": "observation-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"じゃあ、頑張ってね。\",\"observation-hostess\",false]": {
+    "file": "assets/voices/ed3bbdcb4d3e8d8cb2ba4dc91c5847cf6668493e89e3615f72eed7dc259c7a96.mp3",
+    "hash": "ed3bbdcb4d3e8d8cb2ba4dc91c5847cf6668493e89e3615f72eed7dc259c7a96",
+    "source": "act2/observation/luna-before-outing:3",
+    "speaker": "hostess",
+    "text": "じゃあ、頑張ってね。",
+    "performance": "observation-hostess",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"買い物、ゆっくりしてくるといいニャ。\",\"observation-cat\",false]": {
+    "file": "assets/voices/475a55303841df2d46eaaf009c7cc71c8dc420e4e68ce3337c3fde72dccdeeb3.mp3",
+    "hash": "475a55303841df2d46eaaf009c7cc71c8dc420e4e68ce3337c3fde72dccdeeb3",
+    "source": "act2/observation/luna-before-outing:4",
+    "speaker": "cat",
+    "text": "買い物、ゆっくりしてくるといいニャ。",
+    "performance": "observation-cat",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"帰ってくる前には終わる仕事だよ。\",\"observation-manager\",false]": {
+    "file": "assets/voices/2be8c3c9d7ed3b59da7ef19fe0f539bde0d24014e88d4dfd359a52dc7c0150e9.mp3",
+    "hash": "2be8c3c9d7ed3b59da7ef19fe0f539bde0d24014e88d4dfd359a52dc7c0150e9",
+    "source": "act2/observation/luna-before-outing:5",
+    "speaker": "manager",
+    "text": "帰ってくる前には終わる仕事だよ。",
+    "performance": "observation-manager",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"買い忘れたもの、あったかな。\",\"luna-normal\",false]": {
+    "file": "assets/voices/622d55ef504e27aa17ff00711f5346a62825c890fe8f05e5aa3a31e156255037.mp3",
+    "hash": "622d55ef504e27aa17ff00711f5346a62825c890fe8f05e5aa3a31e156255037",
+    "source": "act2/ambient/complete",
+    "speaker": "hostess",
+    "text": "買い忘れたもの、あったかな。",
+    "performance": "luna-normal",
+    "deliveryProfile": "duel-luna",
+    "model": "eleven_v3"
   }
 };

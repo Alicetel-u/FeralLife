@@ -172,7 +172,7 @@ export const LUNA_MINI_DIRECTIONS = {
   'flirt-lean':['ちょっと、二人きりで相談したいことがあるんだけど……♡','……駄目。二人だけの秘密にしたいの。','……大家さん、ほんとにいい人♡','ふふ。じゃあ、少しだけ休もうかな。','いいよ。愚痴でも聞く？ 私も今日はちょっと疲れた。']
 };
 LUNA_MINI_DIRECTIONS.charm=['モクちゃん、頼りになるね♡','そこは頼りになるね。','ふふ。じゃあ、少しだけ休もうかな。','お礼に、今夜ご飯おごるね。','えへへ♡ やっぱり大家さんって、頼りになるね。'];
-LUNA_MINI_DIRECTIONS.wicked=['じゃあ、お水。肝臓に優しいほうで。','モクちゃん、それ毎日言ってない？','手ぶらだけど、口はよく動くんだね。'];
+LUNA_MINI_DIRECTIONS.wicked=['そこは話してくれないんだ。','じゃあ、お水。肝臓に優しいほうで。','モクちゃん、それ毎日言ってない？','手ぶらだけど、口はよく動くんだね。'];
 const lunaMiniLookup=new Map(Object.entries(LUNA_MINI_DIRECTIONS).flatMap(([emotion,texts])=>texts.map(text=>[text,emotion])));
 
 export const MOKU_MINI_DIRECTIONS = {

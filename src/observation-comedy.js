@@ -12,7 +12,7 @@ export function observationComedy(state,resident,{reduced=false}={}){
  if(!c&&o.gap>0&&o.done?.length)c={id:o.done.at(-1),index:99,elapsed:3};
  if(!c&&resident.type==='cat'&&resident.lifeBeat===17&&o.done?.includes('seat'))c={id:'seat',index:4,elapsed:3};
  if(!c&&resident.type==='cat'&&resident.lifeBeat===55&&o.done?.includes('wake-up'))c={id:'wake-up',index:1,elapsed:3};
- if(!c&&act.chapter===2&&state.hour<65&&o.done?.includes('luna-tea'))c={id:'luna-tea',index:5,elapsed:3};
+
  if(!c||!OBSERVATION_GAGS.includes(c.id))return null;
  const i=c.index||0,e=Math.max(0,c.elapsed||0),p=reduced?1:gagEase(e/.65),late=reduced?1:gagEase((e-.45)/.65);
  const d={id:c.id,action:'idle',pose:'stand',dx:0,dy:0,rotate:0,direction:1,props:[],reaction:null};
@@ -56,23 +56,16 @@ export function observationComedy(state,resident,{reduced=false}={}){
   if(!cat)return null;d.pose=i===0?'drink':i===1?'stand':'sit';d.action=i===0?'drink':'idle';
   prop('can',35,0);if(i===1)d.reaction='discover';if(i>=2)d.reaction='proud';break;
  case 'luna-unpack':
-  if(!cat&&!luna)return null;d.pose=cat&&i>=5?'sit':'chat';d.action='idle';
-  if(luna&&i>=4||cat&&i>=5)prop('glass',24,-39);if(cat&&i===3)d.reaction='question';if(cat&&i>=5)d.reaction='oops';break;
  case 'luna-neighbor':
-  if(!cat&&!luna)return null;d.pose=cat&&i>=5?'sit':'chat';
-  d.reaction=cat?(i===1?'question':i>=5?'proud':null):i===2?'question':null;break;
  case 'luna-tidy':
-  if(!cat&&!luna)return null;d.pose='chat';
-  if(cat){d.dx=i>=3?gagMix(0,-24,p):0;d.direction=-1;d.reaction=i>=5?'proud':null;}
-  else {prop('phone',24,-60);if(i>=4)prop('photo',48,-89,{missingCat:true});d.reaction=i===4?'question':null;}break;
  case 'luna-tea':
-  if(!cat&&!luna)return null;d.pose='chat';
-  if(luna){prop('phone',22,-53);d.reaction=i===2||i===4?'question':null;}
-  else d.reaction=i===1||i===3?'hungry':i>=5?'proud':null;break;
  case 'luna-before-outing':
-  if(!cat&&!luna)return null;d.pose=cat&&i===1?'stand':'chat';
-  if(luna){prop('phone',22,-53);prop('keys',-22,-42);}
-  else d.reaction=i===1?'proud':i>=5?'call':null;break;
+  if(!cat&&!luna)return null;d.pose='chat';
+  if(cat){
+   d.reaction=c.id==='luna-neighbor'&&i===6?'oops':c.id==='luna-tea'&&i===4?'call':null;
+   if(d.reaction){d.dy=reduced?0:-12*Math.sin(p*Math.PI);d.rotate=reduced?0:-.09*Math.sin(p*Math.PI);}
+  }else if(c.id==='luna-tea'||c.id==='luna-before-outing')prop('bag',-23,-22);
+  break;
 
  }
  if(c.id.startsWith('luna-'))d.conversation=true;

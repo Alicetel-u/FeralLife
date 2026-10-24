@@ -37,11 +37,11 @@ test('Luna unpacks, receives a visitor, goes to work and returns before the mini
  assert.ok(validateSave(JSON.parse(JSON.stringify(s))));
 });
 test('authored neighbor chat follows saved dialogue and never creates a second ambient conversation',()=>{
- const s=state(),talk=createTalk();s.actOne.observation.done.push('luna-unpack');advanceActTwo(s,2.25);tickObservation(s,0);
- stepTalk(talk,s,100,false);assert.equal(talk.bubbles[0].speaker,'hostess');assert.equal(talk.chapterChat,null);
+ const s=state(),talk=createTalk();s.actOne.observation.done.push('luna-unpack');advanceActTwo(s,8.1);tickObservation(s,0);
+ stepTalk(talk,s,100,false);assert.equal(talk.bubbles[0].speaker,'cat');assert.equal(talk.chapterChat,null);
  assert.ok(lunaNearby(s));
  tickObservation(s,.25);tickObservation(s,.25);finishObservationLine(s);
- stepTalk(talk,s,200,false);assert.equal(talk.bubbles[0].speaker,'cat');
+ stepTalk(talk,s,200,false);assert.equal(talk.bubbles[0].speaker,'hostess');
  assert.equal(talk.bubbles[0].text,observationView(s).line.text);
 });
 

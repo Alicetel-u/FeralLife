@@ -12,16 +12,17 @@ const POSITIONS={idle:'table',clean:'center',eat:'fridge',sleep:'bed',smoke:'win
 export function secondActLife(state,delta=0){
  if(state.actOne?.chapter!==2||state.actOne.status!=='playing')return;
  const luna=state.residents.find(r=>r.type==='hostess'),cat=state.residents.find(r=>r.type==='cat');if(!luna)return;
- const beat=LUNA_DAY.findLast(([at])=>at<=state.hour)||LUNA_DAY[0];
+ const escaped=ACT_TWO_OBSERVATION_BEATS.every(b=>state.actOne.observation?.done?.includes(b.id));
+ const beat=escaped&&state.hour<65.25?LUNA_DAY.find(([at])=>at===65.25):LUNA_DAY.findLast(([at])=>at<=state.hour)||LUNA_DAY[0];
  // Old saves may still have a cleaning/snack pose or a short visit at this beat.
- if(state.hour<65.25&&!state.actOne.completed.includes('bag')&&(luna.action==='clean'||luna.action==='eat'||cat?.journey?.returnAt<65.25))delete luna.actTwoBeat;
+ if(state.hour<65.25&&!state.actOne.completed.includes('bag')&&(luna.action==='clean'||luna.action==='eat'||!escaped&&cat?.journey?.returnAt<65.25))delete luna.actTwoBeat;
  for(const r of [luna,cat].filter(Boolean))r.storyUntil=106;
  if(luna.actTwoBeat!==beat[0]){
-  const start=sampleJourney(luna,state.hour,POSITIONS[luna.action]||'table');
+  const start=escaped&&state.hour<65.25?{x:513,y:419,zone:'room',room:102}:sampleJourney(luna,state.hour,POSITIONS[luna.action]||'table');
   luna.previous=luna.action;luna.action=beat[1];luna.actionAge=0;luna.targetRoom=null;luna.actTwoBeat=beat[0];
   luna.journey=beat[2]==='entrance'?createEntranceMove(luna,Math.min(state.hour,65.25),start):beat[1]==='outing'?createOuting(luna,state.hour,start):createRoomMove(luna,state.hour,start,beat[2]);
   if(cat){
-   const from=sampleJourney(cat,state.hour,POSITIONS[cat.action]||'table');
+   const from=escaped&&state.hour<65.25?{x:510,y:440,zone:'hall',room:102}:sampleJourney(cat,state.hour,POSITIONS[cat.action]||'table');
    cat.previous=cat.action;cat.action=beat[3]?'chat':state.hour%24<8?'sleep':'tv';cat.actionAge=0;cat.targetRoom=beat[3]?luna.room:null;
    cat.journey=beat[3]?(from.zone==='room'&&from.room===luna.room?createRoomMove({...cat,room:luna.room},state.hour,from,'center'):createVisit(cat,state.hour,from,luna.room)):createRoomMove(cat,state.hour,from,cat.action==='sleep'?'bed':'tv');
    if(beat[3]){cat.journey.reason='ルナと立ち話';cat.journey.returnAt=state.hour<65.25?Math.max(65.25,cat.journey.arriveAt+1):cat.journey.arriveAt+1;cat.journey.endsAt=cat.journey.returnAt+(cat.journey.arriveAt-cat.journey.startedAt);}
@@ -50,7 +51,7 @@ export function lunaMutters(state){
  if(p.zone==='away')return [];
  if(p.moving)return [p.phase==='returning'?'ただいま。帰ったら少し休もう。':'忘れ物、ないよね。'];
  if(luna.action==='sleep')return ['……あと少しだけ……。'];
- if(state.hour<62)return ['仕事で使う荷物、そろそろ届くかな。','荷ほどきって、思ったより時間かかるね。'];
+ if(state.hour<62)return ['買い忘れたもの、あったかな。','荷ほどきって、思ったより時間かかるね。'];
  if(state.hour<67)return ['あの人、もう来ないといいな。','玄関に誰もいないと、ほっとする。'];
  if(state.hour<81)return ['そろそろ帰る時間かな。','大家さんにも、ちゃんと相談しよう。'];
  if(luna.action==='eat')return ['ちゃんと食べてから、片づけの続きをしよう。'];

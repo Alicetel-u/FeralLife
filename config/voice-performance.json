@@ -430,6 +430,45 @@
         "similarity_boost": 0.75,
         "speed": 1.07
       }
+    },
+    "observation-cat": {
+      "direction": "明るく声を張って、歯切れよくテンポのよい日常コメディ。囁かず、語尾まで明瞭に。怒鳴らず、ツッコミに強弱をつける。",
+      "tags": [
+        "[animated]",
+        "[conversational]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.1
+      }
+    },
+    "observation-hostess": {
+      "direction": "明るく声を張って、歯切れよくテンポのよい日常コメディ。囁かず、語尾まで明瞭に。怒鳴らず、ツッコミに強弱をつける。",
+      "tags": [
+        "[animated]",
+        "[conversational]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.1
+      }
+    },
+    "observation-manager": {
+      "direction": "明るく声を張って、歯切れよくテンポのよい日常コメディ。囁かず、語尾まで明瞭に。怒鳴らず、ツッコミに強弱をつける。",
+      "tags": [
+        "[animated]",
+        "[conversational]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.1
+      }
     }
   }
 }
