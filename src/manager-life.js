@@ -1,4 +1,4 @@
-import {lunaEscapePosition} from './act-two-observation.js';
+import {newAllyPosition} from './act-two-observation.js';
 import {ACTIONS} from './simulation.js';
 import {sampleJourney} from './movement.js';
 // Presentation-only caretaker. Never a tenant, a needs simulation or a save mutation.
@@ -14,7 +14,7 @@ export function managerReaction(line){
  return 'idle';
 }
 export function managerTarget(state,bubbles=[]){
- const escape=lunaEscapePosition(state,'manager');if(escape)return {...escape,pose:managerReaction(bubbles[0])};
+ const escape=newAllyPosition(state,'manager');if(escape)return escape;
  if(state.actOne?.chapter!==2&&state.actOne?.started&&!state.actOne?.completed?.includes('ash')&&!state.actOne?.pending){
   const speaking=bubbles[0];const p=state.residents.find(r=>r.type==='cat');
   const meeting=p?.lifeBeat===19.3;

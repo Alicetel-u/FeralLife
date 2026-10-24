@@ -1,4 +1,4 @@
-import {ACT_TWO_OBSERVATION_BEATS} from './act-two-observation.js';
+import {ACT_TWO_OBSERVATION_BEATS,migrateNewAllyObservation} from './act-two-observation.js';
 import {sampleJourney} from './movement.js';
 // Solo room speech; landlord replies only during shared outdoor/hall encounters.
 export const OBSERVATION_BEATS=[
@@ -268,8 +268,9 @@ export function observationState(state){
  const a=state.actOne;if(!a||a.chapter===2&&!secondObservation(state))return null;
  if(!a.observation||a.observation.version!==2){
   const phase=observationPhase(state);
-  a.observation={version:2,seen:[],done:observationBeats(state).filter(b=>b.phase<phase||b.at<state.hour).map(b=>b.id),current:null,gap:0};
+  a.observation={version:2,seen:[],done:secondObservation(state)?[]:observationBeats(state).filter(b=>b.phase<phase||b.at<state.hour).map(b=>b.id),current:null,gap:0};
  }
+ migrateNewAllyObservation(state);
  const o=a.observation;
  if(o.current)delete o.current.inspecting;
  if(!Array.isArray(o.seen))o.seen=[];if(!Array.isArray(o.done))o.done=[];delete o.notes;
@@ -336,4 +337,4 @@ export function inheritObservation(previous,next){
  after.seen=[...new Set([...after.seen,...before.seen])];
 }
 
-export function observationLineSeconds(line){if(line?.voicePerformance?.startsWith('observation-'))return Math.min(3.4,Math.max(1.15,.65+Array.from(line.text).length*.055));return Math.min(3.7,Math.max(2.0,1+Array.from(line?.text||'').length*.058));}
+export function observationLineSeconds(line){if(line?.voicePerformance?.startsWith('new-ally-'))return Math.max(line.motionSeconds||0,Math.min(4,Math.max(1.1,.55+Array.from(line.text).length*.052))); return Math.min(3.7,Math.max(2.0,1+Array.from(line?.text||'').length*.058));}

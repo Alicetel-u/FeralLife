@@ -119,8 +119,8 @@ NaoとTsuyuriで、同じ既存3台詞（通常・誘惑・シリアス）を含
 
 変更した第一幕の11セリフにボイスを追加。`--scope=act1 --speaker=cat|manager --only-missing` はマニフェストにない台詞だけを、その場面の通常の演技設定で補完する。既存のボイスをまとめて再生成しない。夜更かしの時計は通常の時計位置を維持し、別の大時計や字幕内の二重時刻は表示しない。
 
-## ルナ編・観察パート1の逃げ込み会話（2026-10-24）
+## 第2幕・観察パート1「新入りの味方」（2026-10-24）
 
-承認済みの31台詞を同じキャラクターの声で新規収録。観察専用の `observation-cat` / `observation-hostess` / `observation-manager` を使い、animated / conversational / lighthearted、speed=1.1で明瞭で張りのあるコメディの掛け合いにする。既存の他場面の演技は維持。大家の読み補正を生成入力に適用し、表示本文は変えない。
+ユーザー台本の32台詞を既存の話者IDで新規生成。旧台本の観察ボイス・専用演技プロファイル・未参照ファイルを削除した。`new-ally-*` の10演技で、モクの抗議・呼びかけ・得意・驚き、大家のツッコミと平常、ルナの驚き・明るい返答・からかい・笑いを分ける。stability=0、speed=1.10〜1.13。囁き指定は使用しない。
 
-`--scope=act2-trouble1 --only-missing --source-prefix=act2/observation/luna-` で31本を生成。仕事へ戻る矛盾を除いた環境台詞「買い忘れたもの、あったかな。」も1本補完した。音声抽出と再生は同じ専用演技キーを使用する。
+対象の抽出は `--scope=act2-trouble1 --source-prefix=act2/observation/luna-new-ally --only-missing`。生成後に `node tools/master-new-ally-voices.mjs` で32本だけの先頭・末尾の無音を短縮し、目標-18 LUFS / true peak -5 dBTPへ整える。内側の間は保持。生成原音と配信用 `.new-ally.mp3` を保存し、配信用をマニフェストへ登録する。既存の他場面の音声設定は変更しない。

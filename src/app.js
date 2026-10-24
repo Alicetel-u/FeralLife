@@ -1,3 +1,4 @@
+import {newAllyPosition,newAllyFrame} from './act-two-observation.js';
 import {overnightMontageFrame} from './overnight-montage.js';
 import {resumeConversation,rememberConversation,clearConversation,continueDestination} from './conversation-progress.js?v=2026.10.24.3';
 import {refreshActTwoEpilogue} from './act-two-epilogue-script.js';
@@ -154,8 +155,8 @@ let autoFollow = !managerPreview, cameraKey = '';
 function updateCamera() {
   if(autoFollow&&state.actOne){const lead=state.residents.find(r=>r.type===(state.actOne.chapter===2?'hostess':'cat'));if(lead)state.selected=lead.room;}
   const r = state.residents.find(r => r.room === state.selected);
-  const p = r ? sampleJourney(r,state.hour,ACTIONS[r.action].place) : null;
-  if (autoFollow) { renderer.view = p && p.zone !== 'room' ? 'exterior' : 'interior'; renderer.focus = true; }
+  const p = r ? newAllyPosition(state,r.type)||sampleJourney(r,state.hour,ACTIONS[r.action].place) : null;
+  if (autoFollow) { renderer.view = newAllyFrame(state)?.view||(p && p.zone !== 'room' ? 'exterior' : 'interior'); renderer.focus = true; }
   renderer.focusRoom = renderer.focus ? (p?.zone === 'room' ? p.room : state.selected) : null;
   document.body.classList.toggle('camera-focused',renderer.focus);
   const key = `${renderer.view}-${renderer.focus}-${renderer.focusRoom}-${state.selected}-${state.residents.length}`;
@@ -709,7 +710,7 @@ function showDebugObservationSelect(chapter,page=0){
   const beats=developerObservationBeats(chapter),pages=Math.ceil(beats.length/4);
   if(!pages)return;
   const current=Math.max(0,Math.min(pages-1,page));
-  debugMenuPage(chapter==='1'?'第一幕｜観察モード':'第二幕｜観察モード','選んだ掛け合いの最初から再生します。',beats.slice(current*4,current*4+4).map(b=>[chapter+':'+b.id,b.title,'data-debug-observation']),'data-debug-observation-back');
+  debugMenuPage(chapter==='1'?'第一幕｜観察モード':'第二幕｜観察モード',chapter==='2'?'観察パートの冒頭から再生します。':'選んだ掛け合いの最初から再生します。',beats.slice(current*4,current*4+4).map(b=>[chapter+':'+b.id,b.title,'data-debug-observation']),'data-debug-observation-back');
   modal.querySelector('.persona-debug-actions').insertAdjacentHTML('afterend',`<nav class="persona-debug-pagination" aria-label="観察モードのページ切り替え"><button type="button" class="persona-debug-page-button" data-debug-observation-page="${chapter}:${current-1}" ${current===0?'disabled':''}>◀　前へ</button><span class="persona-debug-page-counter">PAGE <strong>${current+1} / ${pages}</strong></span><button type="button" class="persona-debug-page-button persona-debug-page-next" data-debug-observation-page="${chapter}:${current+1}" ${current===pages-1?'disabled':''}>次へ　▶</button></nav>`);
   modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes');
 }

@@ -27,18 +27,6 @@ test('phone was held from the start, and bedtime keeps the tired cat asleep',()=
  assert.deepEqual([0,1,2].map(i=>observationComedy(stateFor('blanket',i),cat).pose),['sleep','sleep','sleep']);
 });
 
-test('escape scene uses a shopping bag and a large retort reaction',()=>{
- const s=stateFor('luna-tea',0),luna={type:'hostess'};
- const phone=observationComedy(s,luna);assert.equal(phone.pose,'chat');assert.ok(phone.props.some(p=>p.kind==='bag'));
- s.actOne.observation.current.index=1;assert.equal(observationComedy(s,cat).reaction,null);
- s.actOne.observation.current.index=5;assert.equal(observationComedy(s,cat).pose,'chat');
- s.actOne.chapter=2;s.hour=64;s.actOne.observation.current=null;s.actOne.observation.done=['luna-tea'];
- assert.equal(observationComedy(s,cat),null,'the old conversation does not linger after its ending');
- s.actOne.observation.current={id:'luna-tidy',index:4,elapsed:2};
- assert.equal(observationComedy(s,luna).pose,'chat');
- assert.equal(observationComedy(s,cat).dx,0);
-});
-
 test('choreography is deterministic, reload-safe, bounded, and does not mutate saves',()=>{
  const allowed=new Set(['stand','clean','chat','sit','sleep','drink','eat']);
  for(const id of OBSERVATION_GAGS)for(const type of ['cat','hostess','manager'])for(const index of [0,1,2,3,4,5,99])for(const elapsed of [0,.25,.7,2,60]){

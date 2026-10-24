@@ -334,7 +334,7 @@ test('a mastered shout can reduce its own amplification without changing other v
 test('Luna observation voice extraction preserves all authored performances without ambient duplicates',async()=>{
  const {ACT_TWO_OBSERVATION_BEATS}=await import('../src/act-two-observation.js');
  const rows=extractVoiceScript('act2-trouble1').filter(r=>r.source.startsWith('act2/observation/'));
- assert.equal(rows.length,31);
+ assert.equal(rows.length,32);
  assert.deepEqual(rows.map(r=>r.line.text),ACT_TWO_OBSERVATION_BEATS.flatMap(b=>b.lines.map(l=>l.text)));
  assert.ok(rows.every(r=>r.source.startsWith('act2/observation/luna-')));
 });

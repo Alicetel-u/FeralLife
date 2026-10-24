@@ -3,7 +3,7 @@
 const gagClamp=n=>Math.max(0,Math.min(1,n));
 const gagEase=n=>{n=gagClamp(n);return n*n*(3-2*n);};
 const gagMix=(a,b,p)=>a+(b-a)*gagEase(p);
-export const OBSERVATION_GAGS=['seat','ash-sign','phone-search','tv-late','before-dinner','blanket','wake-up','last-morning','luna-unpack','luna-tidy','luna-neighbor','luna-tea','luna-before-outing'];
+export const OBSERVATION_GAGS=['seat','ash-sign','phone-search','tv-late','before-dinner','blanket','wake-up','last-morning'];
 export function observationComedy(state,resident,{reduced=false}={}){
  const act=state.actOne,o=act?.observation;
  if(!act?.started||act.status!=='playing'||act.pending||act.rewindIntroPending||act.prologuePending||!o)return null;
@@ -55,20 +55,8 @@ export function observationComedy(state,resident,{reduced=false}={}){
  case 'last-morning':
   if(!cat)return null;d.pose=i===0?'drink':i===1?'stand':'sit';d.action=i===0?'drink':'idle';
   prop('can',35,0);if(i===1)d.reaction='discover';if(i>=2)d.reaction='proud';break;
- case 'luna-unpack':
- case 'luna-neighbor':
- case 'luna-tidy':
- case 'luna-tea':
- case 'luna-before-outing':
-  if(!cat&&!luna)return null;d.pose='chat';
-  if(cat){
-   d.reaction=c.id==='luna-neighbor'&&i===6?'oops':c.id==='luna-tea'&&i===4?'call':null;
-   if(d.reaction){d.dy=reduced?0:-12*Math.sin(p*Math.PI);d.rotate=reduced?0:-.09*Math.sin(p*Math.PI);}
-  }else if(c.id==='luna-tea'||c.id==='luna-before-outing')prop('bag',-23,-22);
-  break;
 
  }
- if(c.id.startsWith('luna-'))d.conversation=true;
  return d;
 }
 

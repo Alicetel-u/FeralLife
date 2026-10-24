@@ -8,7 +8,7 @@ import {validateSave} from '../src/simulation.js';
 
 for(const chapter of ['1','2'])test(`every chapter ${chapter} observation destination starts its real first line and can continue`,()=>{
  const beats=developerObservationBeats(chapter);
- assert.equal(beats.length,chapter==='1'?11:5);
+ assert.equal(beats.length,chapter==='1'?11:1);
  for(const beat of beats){
   const s=createDeveloperObservation(chapter,beat.id);
   assert.ok(s,beat.id);assert.ok(validActOne(s)&&validateSave(s),beat.id);
@@ -16,7 +16,7 @@ for(const chapter of ['1','2'])test(`every chapter ${chapter} observation destin
   assert.equal(s.actOne.pending,null);assert.ok(s.events.every(e=>e.read));
   assert.equal(s.selected,chapter==='1'?101:102);
   if(chapter==='1')assert.deepEqual(s.actOne.completed,beat.phase===0?[]:beat.phase===1?['ash']:['ash','dinner']);
-  for(let i=0;i<100&&observationView(s)?.beat?.id===beat.id;i++){
+  for(let i=0;i<450&&observationView(s)?.beat?.id===beat.id;i++){
    tickObservation(s,.25);
    const dt=Math.min(.025,Math.max(0,observationClockLimit(s)-s.hour));
    (chapter==='1'?advanceActOne:advanceActTwo)(s,dt);

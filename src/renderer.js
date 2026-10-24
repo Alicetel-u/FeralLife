@@ -1,4 +1,4 @@
-import {lunaEscapePosition} from './act-two-observation.js';
+import {newAllyPosition} from './act-two-observation.js';
 import { MINI_EMOTION_ART, MiniReactionState, miniDailyEmotion, miniEmotionFrameName, drawMiniEmotion } from './mini-emotions.js';
 import {managerTarget,managerFrame,advanceManager} from './manager-life.js';
 import { speakerColors } from './speaker-colors.js';
@@ -96,7 +96,7 @@ export function drawSprite(ctx, type, x, y, tick = 0, action = 'idle', scale = 1
     }
   }
   if (art?.image) {
-    const poseName = type==='manager'&&!moving&&opts.emotionActive&&art.poses?.[emotion]?emotion:opts.pose;
+    const poseName = type==='manager'&&!moving&&!opts.poseLocked&&opts.emotionActive&&art.poses?.[emotion]?emotion:opts.pose;
     const pose = poseName && poseName !== 'base' ? art.poses?.[poseName] : null;
     const image = pose?.image || art.image, origin = pose?.image ? pose.origin : art.origin;
     // 基本立ち絵と同じ比率で全ポーズを描く。
@@ -194,14 +194,15 @@ export class WorldRenderer {
     this.reducedMotion=globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches??false;
     this.managerTarget=managerTarget(state,bubbles);
     const target=this.managerTarget;
-    this.managerPosition=advanceManager(this.managerPosition,target,paused?0:dt);
+    const directedManager=newAllyPosition(state,'manager',{reduced:this.reducedMotion});
+    this.managerPosition=directedManager||advanceManager(this.managerPosition,target,paused?0:dt);
     this.managerMoving=this.managerPosition.moving;
     ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
     ctx.setTransform(this.canvas.width/1200,0,0,this.canvas.height/675,0,0);ctx.imageSmoothingEnabled = false;
     const h = dateAt(state.hour).hour + state.hour % 1;
     const darkness = h >= 20 || h < 5 ? .57 : h >= 18 ? (h - 18) * .25 : h < 7 ? (7 - h) * .19 : 0;
     const selected = state.residents.find(r => r.room === state.selected);
-    const selectedPos = selected ? sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
+    const selectedPos = selected ? newAllyPosition(state,selected.type,{reduced:this.reducedMotion})||sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
     this.followCharacterX = null;
     this.focusRoom = this.focus ? (selectedPos?.zone === 'room' ? selectedPos.room : state.selected) : null;
     if (this.view === 'exterior') { this.drawExterior(state,selectedPos,t,darkness); this.drawSpeech(state); return; }
@@ -214,7 +215,7 @@ export class WorldRenderer {
       ctx.save(); ctx.beginPath(); ctx.rect(b.x,b.y,b.w,b.h); ctx.clip();
       ctx.translate(b.x,b.y); ctx.scale(b.w/base.w,b.h/base.h); ctx.translate(-base.x,-base.y);
       this.drawRoom(room,r,t,darkness); ctx.restore();
-      const current = r ? sampleJourney(r,state.hour,ACTIONS[r.action].place) : null;
+      const current = r ? newAllyPosition(state,r.type,{reduced:this.reducedMotion})||sampleJourney(r,state.hour,ACTIONS[r.action].place) : null;
       const status = !r ? '空室' : current.zone === 'away' ? '外出中' : current.zone !== 'room' ? '移動中' : ACTIONS[r.action].label;
       rect(ctx,b.x,b.y-23,b.w,23,'#17111d');
       rect(ctx,b.x,b.y-23,4,23,r?'#e43250':'#665368');
@@ -229,10 +230,10 @@ export class WorldRenderer {
     }
     if (!this.focus) for (const y of [313,643]) { rect(ctx,8,y,1184,16,'#17111d');rect(ctx,8,y+1,1184,2,'#b32a43');ctx.fillStyle='#e0cbbd';ctx.font='10px "Yu Gothic UI",sans-serif';ctx.fillText('共用廊下',16,y+12);ctx.textAlign='right';ctx.fillText('階段・屋外へ →',1180,y+12);ctx.textAlign='left'; }
     for (const r of state.residents) this.drawInteriorResident(state,r,t);
-    const escapeManager=lunaEscapePosition(state,'manager');
-    if(escapeManager){const b=roomBounds(102,this.focusRoom),base=exteriorRoomBounds(102);if(b){
+    const escapeManager=newAllyPosition(state,'manager',{reduced:this.reducedMotion});
+    if(escapeManager?.zone==='hall'){const b=roomBounds(102,this.focusRoom),base=exteriorRoomBounds(102);if(b){
       const x=b.x+(escapeManager.x-base.x)/base.w*b.w,y=b.y+b.h+16;
-      drawSprite(ctx,'manager',x,y,t,'idle',(this.focus?300:144)/44,-1,{pose:this.managerTarget?.pose||'idle',...this.miniReaction('manager',t)});
+      drawSprite(ctx,'manager',x,y+(escapeManager.dy||0),t,'idle',(this.focus?300:144)/44,escapeManager.direction,{pose:escapeManager.pose,...this.miniReaction('manager',t),poseLocked:true});
     }}
     this.drawSpeech(state);
   }
@@ -254,15 +255,15 @@ export class WorldRenderer {
     if(SCENE_ART.image)ctx.drawImage(SCENE_ART.image,0,0,1000,562.5);else rect(ctx,0,0,1000,562.5,'#494d42');
     rect(ctx,0,0,1000,562.5,`rgba(16,27,49,${darkness})`);
     if(darkness>.3)for(let i=0;i<36;i++)rect(ctx,noise(i,2,1)*1000,noise(i,3,2)*115,1,1,'#e9dcc277');
-    const caretaker=this.managerPosition||{x:650,y:513,zone:'street'},caretakerPose=this.managerPreviewPose||managerFrame(this.managerTarget||managerTarget(state,this.bubbles),t,this.managerMoving,this.managerPosition?.walkDistance??0);
-    const people=state.residents.map(r=>({r,p:exteriorFeet(lunaEscapePosition(state,r.type,{reduced:this.reducedMotion})||sampleJourney(r,state.hour,ACTIONS[r.action].place))}));
+    const caretaker=this.managerPosition||{x:650,y:513,zone:'street'},caretakerPose=this.managerPreviewPose||(newAllyPosition(state,'manager')&&!this.managerMoving?caretaker.pose:managerFrame(this.managerTarget||managerTarget(state,this.bubbles),t,this.managerMoving,this.managerPosition?.walkDistance??0));
+    const people=state.residents.map(r=>({r,p:exteriorFeet(newAllyPosition(state,r.type,{reduced:this.reducedMotion})||sampleJourney(r,state.hour,ACTIONS[r.action].place))}));
     people.push({r:null,p:exteriorFeet(caretaker)});
     people.sort((a,b)=>a.p.y-b.p.y);
     for(const {r,p} of people) {
       if(!r){
         if(CHARACTER_ART.manager?.image){
           rect(ctx,p.x-13,p.y+1,26,3,'#17211b66');
-          drawSprite(ctx,'manager',p.x,p.y,t,'idle',80/44,this.managerMoving?p.direction:(this.managerTarget?.direction||1),{pose:caretakerPose,...this.miniReaction('manager',t)});
+          drawSprite(ctx,'manager',p.x,p.y+(p.dy||0),t,'idle',80/44,this.managerMoving?p.direction:(this.managerTarget?.direction||1),{pose:caretakerPose,rotate:p.rotate||0,...this.miniReaction('manager',t),poseLocked:!!newAllyPosition(state,'manager')});
           ctx.save();ctx.beginPath();ctx.rect(p.x-70,p.y-115,140,120);ctx.clip();
           drawExteriorForeground(ctx,SCENE_ART.image,p,darkness);ctx.restore();
         }
@@ -272,8 +273,9 @@ export class WorldRenderer {
       const baseHeight=CHARACTER_ART[r.type]?.image?44:26;
       const scale=80/baseHeight;
       rect(ctx,p.x-13,p.y+1,26,3,'#17211b66');
-      const action=p.moving?'outing':r.action, pose=resolvePose(r.type,action,p.moving,t,state.hour), motion=spriteMotion(action,p.moving,r.needs,t,pose);
-      const fy=p.y+(p.moving?Math.sin(t*11)*1.1:0);
+      const action=p.moving?'outing':p.action||r.action, pose=!p.moving&&p.pose||resolvePose(r.type,action,p.moving,t,state.hour), motion=spriteMotion(action,p.moving,r.needs,t,pose);
+      motion.rotate=(motion.rotate||0)+(p.rotate||0);
+      const fy=p.y+(p.dy||0)+(p.moving?Math.sin(t*11)*1.1:0);
       ctx.save();ctx.translate(p.x+motion.dx,fy);if(motion.rotate)ctx.rotate(motion.rotate);ctx.scale(1,motion.sy);
       drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint,...this.miniReaction(r.type,t,r)});ctx.restore();
       drawCharacterEffects(ctx,{type:r.type,x:p.x,y:fy,u:80/128,dir:p.direction,t,action,pose,moving:p.moving,needs:r.needs,trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip:CHARACTER_ART[r.type]?.smokeTip?.[pose]});
@@ -291,7 +293,9 @@ export class WorldRenderer {
   }
   interiorResidentPosition(state,r,t=this.animTime||0) {
     const comedy=observationComedy(state,r,{reduced:this.reducedMotion});
-    let base=lunaEscapePosition(state,r.type,{reduced:this.reducedMotion})||sampleJourney(r,state.hour,ACTIONS[r.action].place);
+    const directed=newAllyPosition(state,r.type,{reduced:this.reducedMotion});
+    if(directed)return directed;
+    let base=sampleJourney(r,state.hour,ACTIONS[r.action].place);
     // Align settled sleep (including old saved routes) with the painted mattress.
     // A character merely pretending to sleep during tea stays in her current seat.
     if(r.action==='sleep'&&!base.moving&&base.zone==='room'&&ROOM_LAYOUTS[r.type]){
@@ -310,13 +314,14 @@ export class WorldRenderer {
     if(this.focus && p.zone==='room' && r.room===state.selected)this.followCharacterX=x;
     const height=this.focus?300:144,baseHeight=CHARACTER_ART[r.type]?.image?44:26,scale=height/baseHeight;
     const comedy=p.zone==='room'?observationComedy(state,r,{reduced:this.reducedMotion}):null;
-    const u=height/128, action=p.moving?'outing':comedy?.action||r.action;
+    const u=height/128, action=p.moving?'outing':p.action||comedy?.action||r.action;
     const sleeping=action==='sleep'&&!p.moving&&p.zone==='room';
-    const preferred=!p.moving&&comedy?.pose;
+    const preferred=!p.moving&&(p.pose||comedy?.pose);
     const pose=preferred&&CHARACTER_ART[r.type]?.poses?.[preferred]?.image?preferred:resolvePose(r.type,action,p.moving,t,state.hour);
     const motion=spriteMotion(action,p.moving,r.needs,t,pose);
     if(comedy&&!p.moving)motion.rotate=(motion.rotate||0)+comedy.rotate;
-    const fy=y+(p.moving?Math.sin(t*11)*2:0);
+    motion.rotate=(motion.rotate||0)+(p.rotate||0);
+    const fy=y+(p.dy||0)*u+(p.moving?Math.sin(t*11)*2:0);
     ctx.save();ctx.beginPath();ctx.rect(b.x,b.y,b.w,b.h+27);ctx.clip();
     rect(ctx,x-height*(pose==='sleep'?.26:.18),y+3,height*(pose==='sleep'?.52:.36),5,'#23302255');
     if(sleeping&&pose!=='sleep'){
@@ -324,11 +329,11 @@ export class WorldRenderer {
       ctx.save();ctx.translate(x-12,y-2);ctx.rotate(-Math.PI/2);ctx.scale(motion.sy,1);drawSprite(ctx,r.type,0,0,t,'sleep',scale*.72);ctx.restore();
     } else {
       ctx.save();ctx.translate(x+motion.dx*u,fy);if(motion.rotate)ctx.rotate(motion.rotate);ctx.scale(1,motion.sy);
-      drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint,...this.miniReaction(r.type,t,r),poseLocked:!!comedy&&!comedy.conversation});ctx.restore();
+      drawSprite(ctx,r.type,0,0,t,action,scale,p.direction,{pose,tint:motion.tint,...this.miniReaction(r.type,t,r),poseLocked:p.lockPose||!!comedy&&!comedy.conversation});ctx.restore();
     }
     const tip=CHARACTER_ART[r.type]?.image?CHARACTER_ART[r.type].smokeTip?.[pose]:[72,-50];
     drawCharacterEffects(ctx,{type:r.type,x,y:fy,u,dir:p.direction,t,action,pose,moving:p.moving,needs:r.needs,trash:p.zone==='room'?r.trash:0,seed:r.room%7,speaking:this.speaking?.has(r.type),tip});
-    drawObservationComedy(ctx,comedy,x,fy,u,{reduced:this.reducedMotion});
+    drawObservationComedy(ctx,comedy||(p.props?.length?{props:p.props}:null),x,fy,u,{reduced:this.reducedMotion});
     if(['stream','sell','gamble','shop','collect'].includes(r.action)&&!p.moving&&!this.speaking?.has(r.type)){ctx.fillStyle='#efe3c3';ctx.font=`${this.focus?32:20}px monospace`;ctx.fillText(ACTIONS[r.action].icon,x+height*.15,y-height);}
     ctx.restore();
   }
@@ -400,18 +405,18 @@ export class WorldRenderer {
   speechAnchor(state, type) {
     const resident = state.residents.find(person => person.type === type);
     if (!resident) {
-      const escape=type==='manager'&&lunaEscapePosition(state,type);
+      const escape=type==='manager'&&newAllyPosition(state,type);
       if(escape&&this.view==='interior'){
         const b=roomBounds(102,this.focusRoom),base=exteriorRoomBounds(102);
         if(b)return {x:b.x+(escape.x-base.x)/base.w*b.w,y:b.y+b.h+16-(this.focus?300:144)*.86,tail:true,source:'廊下の大家'};
       }
       if(type!=='manager'||this.view!=='exterior'||!this.managerPosition)return null;
-      const selected=state.residents.find(r=>r.room===state.selected),p=selected?sampleJourney(selected,state.hour,ACTIONS[selected.action].place):null;
+      const selected=state.residents.find(r=>r.room===state.selected),p=selected?newAllyPosition(state,selected.type,{reduced:this.reducedMotion})||sampleJourney(selected,state.hour,ACTIONS[selected.action].place):null;
       return {...this.projectExterior(this.managerPosition.x,exteriorFeet(this.managerPosition).y-80*.86,p),tail:true,source:''};
     }
     const selected = state.residents.find(person => person.room === state.selected);
-    const selectedPos = selected ? sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
-    const p = this.view==='interior'?this.interiorResidentPosition(state,resident):lunaEscapePosition(state,resident.type,{reduced:this.reducedMotion})||sampleJourney(resident, state.hour, ACTIONS[resident.action].place);
+    const selectedPos = selected ? newAllyPosition(state,selected.type,{reduced:this.reducedMotion})||sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
+    const p = this.view==='interior'?this.interiorResidentPosition(state,resident):newAllyPosition(state,resident.type,{reduced:this.reducedMotion})||sampleJourney(resident, state.hour, ACTIONS[resident.action].place);
     const S = WORLD_WIDTH / 1200;
     const absent = p.zone === 'away' || p.zone === 'street' || p.zone === 'stairs';
     if (this.view === 'exterior') {

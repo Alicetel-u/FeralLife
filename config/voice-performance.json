@@ -431,43 +431,124 @@
         "speed": 1.07
       }
     },
-    "observation-cat": {
-      "direction": "明るく声を張って、歯切れよくテンポのよい日常コメディ。囁かず、語尾まで明瞭に。怒鳴らず、ツッコミに強弱をつける。",
+    "new-ally-retort": {
+      "direction": "青年の大きく歯切れのよいコミカルなツッコミ。怖がらせず、言葉の頭を立てる。",
       "tags": [
         "[animated]",
-        "[conversational]",
-        "[lighthearted]"
+        "[exasperated]"
       ],
       "settings": {
-        "stability": 0.5,
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.13
+      }
+    },
+    "new-ally-protest": {
+      "direction": "モクの元気な駄々と抗議。軽快に声を張り、ニャまで明瞭に。",
+      "tags": [
+        "[animated]",
+        "[indignant]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.13
+      }
+    },
+    "new-ally-call": {
+      "direction": "廊下を駆けてルナを呼ぶ大声。助けを求めるコミカルな勢い。",
+      "tags": [
+        "[shouting]",
+        "[urgent]"
+      ],
+      "settings": {
+        "stability": 0,
         "similarity_boost": 0.75,
         "speed": 1.1
       }
     },
-    "observation-hostess": {
-      "direction": "明るく声を張って、歯切れよくテンポのよい日常コメディ。囁かず、語尾まで明瞭に。怒鳴らず、ツッコミに強弱をつける。",
+    "new-ally-surprise": {
+      "direction": "ルナのはっきりした驚き。短く弾む反応。",
       "tags": [
-        "[animated]",
-        "[conversational]",
-        "[lighthearted]"
+        "[surprised]",
+        "[animated]"
       ],
       "settings": {
-        "stability": 0.5,
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.12
+      }
+    },
+    "new-ally-bright": {
+      "direction": "ルナの明るくよく通る声。日常会話の自然な抑揚。囁かない。",
+      "tags": [
+        "[cheerfully]",
+        "[animated]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.12
+      }
+    },
+    "new-ally-tease": {
+      "direction": "ルナの笑顔のからかい。明るく張って、語尾だけ軽く上げる。",
+      "tags": [
+        "[playfully]",
+        "[confident]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.12
+      }
+    },
+    "new-ally-proud": {
+      "direction": "モクの得意げな勢い。抗議とは違う嬉しさを大きく見せる。",
+      "tags": [
+        "[excited]",
+        "[animated]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.13
+      }
+    },
+    "new-ally-shock": {
+      "direction": "モクの短い驚きと、はっきり聞こえる呆れたツッコミ。息声にしない。",
+      "tags": [
+        "[surprised]",
+        "[disbelieving]"
+      ],
+      "settings": {
+        "stability": 0,
         "similarity_boost": 0.75,
         "speed": 1.1
       }
     },
-    "observation-manager": {
-      "direction": "明るく声を張って、歯切れよくテンポのよい日常コメディ。囁かず、語尾まで明瞭に。怒鳴らず、ツッコミに強弱をつける。",
+    "new-ally-plain": {
+      "direction": "大家の肩の力が抜けた軽快な返答。聞き取りやすく、ぼそぼそしない。",
       "tags": [
-        "[animated]",
         "[conversational]",
-        "[lighthearted]"
+        "[animated]"
       ],
       "settings": {
-        "stability": 0.5,
+        "stability": 0,
         "similarity_boost": 0.75,
-        "speed": 1.1
+        "speed": 1.12
+      }
+    },
+    "new-ally-laugh": {
+      "direction": "ルナの明るい笑い声から自然に台詞へ。",
+      "tags": [
+        "[laughing]",
+        "[cheerfully]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.12
       }
     }
   }
