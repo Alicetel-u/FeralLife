@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="theme-color" content="#131118">
-  <meta name="app-version" content="2026.10.24.3">
+  <meta name="app-version" content="2026.10.24.4">
   <meta name="build-updated" content="local">
   <title>けもの荘 第一幕「アパートを火事（モク）から守れ！」</title>
   <style>
-#boot-diagnostics{position:fixed;z-index:400001;left:8px;bottom:max(8px,env(safe-area-inset-bottom));width:min(94vw,520px);max-height:45vh;overflow:auto;background:#111;color:white;padding:10px;border:1px solid white;font:12px/1.5 monospace;text-align:left;transform:none}
-#boot-diagnostics summary{cursor:pointer}#boot-diagnostics button{color:white;background:#292929;border:1px solid white;padding:10px;margin:8px 8px 0 0;min-height:44px}#boot-report{white-space:pre-wrap;user-select:text;-webkit-user-select:text}#boot-stall{max-width:90%;font-size:12px;line-height:1.6}
+#boot-retry{min-height:44px;margin-top:16px;padding:10px 20px;background:#fff8eb;color:#17111d;border:2px solid #17111d;font:inherit;font-weight:800;cursor:pointer}
+#boot-retry[hidden]{display:none}
 #boot-screen{position:fixed;inset:0;z-index:300000;display:grid;place-items:center;overflow:hidden;isolation:isolate;background:#100e14;color:#fff8eb;font-family:system-ui,sans-serif}
 #boot-screen::before{content:"";position:absolute;inset:-25%;z-index:-2;background:#d51d3f;clip-path:polygon(0 0,79% 0,40% 100%,0 100%);transform:rotate(-9deg)}
 #boot-screen::after{content:"";position:absolute;inset:0;z-index:-1;opacity:.14;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:8px 8px}
@@ -31,95 +31,55 @@ body:not(.world-art-started) .scene{background-image:none!important}
 </style>
   <script>
 (()=>{
-  const steps=[];let report,panel,copy,ticker,watcher,completedAt;
-  const diagnose=new URLSearchParams(location.search).get('bootdiag')==='1';
-  let percent=5,label='ゲームプログラムを読み込んでいます',lastProgress=performance.now();
-  const reportVisible=()=>diagnose||(panel&&!panel.hidden);
-  function render(force=false){
-    if(!report||(!force&&!reportVisible()))return;
-    let navigation=null,resources=[];
-    try{
-      const nav=performance.getEntriesByType('navigation')[0];
-      if(nav)navigation={firstByteMs:Math.round(nav.responseStart),htmlEndMs:Math.round(nav.responseEnd),domInteractiveMs:Math.round(nav.domInteractive)};
-      resources=performance.getEntriesByType('resource').filter(r=>/styles\.css|game-bundle\.js/.test(r.name)).map(r=>({file:new URL(r.name).pathname.split('/').pop(),startMs:Math.round(r.startTime),endMs:Math.round(r.responseEnd),transferBytes:r.transferSize,decodedBytes:r.decodedBodySize}));
-    }catch{}
-    report.textContent=JSON.stringify({build:document.querySelector('meta[name="app-version"]')?.content,path:location.pathname,elapsedMs:Math.round(completedAt||performance.now()),stage:steps.at(-1)?.stage,percent,navigation,steps,resources},null,2);
-  }
-  function mark(stage){steps.push({stage,ms:Math.round(performance.now())});render();}
+  let percent=5,label='ゲームプログラムを読み込んでいます',failed=false;
   function paint(){
     document.getElementById('boot-progress')?.setAttribute('aria-valuenow',String(percent));
     const number=document.getElementById('boot-percent'),fill=document.getElementById('boot-fill'),caption=document.getElementById('boot-label');
     if(number)number.textContent=String(percent);
     if(fill)fill.style.width=percent+'%';
     if(caption)caption.textContent=label;
-    if(reportVisible())render();
-  }
-  function mount(){
-    panel=document.getElementById('boot-diagnostics');report=document.getElementById('boot-report');copy=document.getElementById('boot-copy');
-    if(!panel||!report||!copy)return;
-    watcher?.disconnect();
-    copy.onclick=async()=>{
-      try{await navigator.clipboard.writeText(report.textContent);copy.textContent='コピーしました';}
-      catch{const range=document.createRange();range.selectNodeContents(report);const selection=getSelection();selection.removeAllRanges();selection.addRange(range);copy.textContent='選択された結果をコピーしてください';}
-    };
-    document.getElementById('boot-reload').onclick=()=>location.reload();
-    paint();ticker=setInterval(()=>{
-      if(reportVisible())render();
-      const stall=document.getElementById('boot-stall');
-      if(stall)stall.textContent=performance.now()-lastProgress>10000?'読み込みに時間がかかっています。':'';
-    },1000);
+    const retry=document.getElementById('boot-retry');if(retry&&failed)retry.hidden=false;
   }
   window.kemonoBoot={
-    update(value,text){percent=Math.max(percent,Math.min(100,value));if(text)label=text;lastProgress=performance.now();paint();},
-    modulesReady(){mark('app-initialized');this.update(95,'起動しています');},
+    update(value,text){percent=Math.max(percent,Math.min(100,value));if(text)label=text;paint();},
+    modulesReady(){this.update(95,'起動しています');},
+    fail(text){failed=true;label=text||'読み込みを完了できませんでした。再読み込みしてください';paint();const retry=document.getElementById('boot-retry');if(retry)retry.hidden=false;},
     async loadBundle(url,total){
       const controller=new AbortController();
-      let timeout=setTimeout(()=>controller.abort(),45000);
+      const timeout=setTimeout(()=>controller.abort(),45000);
       try{
-        mark('loader-start');mark('network-start');
         const response=await fetch(url,{cache:'default',signal:controller.signal});
-        mark('response-headers');
         if(!response.ok)throw new Error('HTTP '+response.status);
-        const parts=[];let received=0;mark('body-start');
+        const parts=[];let received=0;
         if(response.body?.getReader){
           const reader=response.body.getReader();
-          while(true){const {done,value}=await reader.read();if(done)break;if(!received)mark('first-body-chunk');parts.push(value);received+=value.byteLength;this.update(5+Math.min(85,Math.floor(received/total*85)));}
+          while(true){const {done,value}=await reader.read();if(done)break;parts.push(value);received+=value.byteLength;this.update(5+Math.min(85,Math.floor(received/total*85)));}
         }else{parts.push(await response.arrayBuffer());this.update(90);}
-        clearTimeout(timeout);mark('body-end');this.update(90,'ゲームプログラムを準備しています');
-        // The request starts in the head; app execution requires the body DOM.
+        clearTimeout(timeout);this.update(90,'ゲームプログラムを準備しています');
         if(document.readyState==='loading')await new Promise(resolve=>document.addEventListener('DOMContentLoaded',resolve,{once:true}));
         await new Promise(resolve=>setTimeout(resolve,0));
-        const blobUrl=URL.createObjectURL(new Blob(parts,{type:'text/javascript'}));mark('module-evaluation-start');
-        try{await import(blobUrl);mark('module-evaluation-end');}finally{URL.revokeObjectURL(blobUrl);}
+        const blobUrl=URL.createObjectURL(new Blob(parts,{type:'text/javascript'}));
+        try{await import(blobUrl);}finally{URL.revokeObjectURL(blobUrl);}
       }catch(error){
-        clearTimeout(timeout);mark('loader-error: '+(error?.name||'Error'));
-        label='読み込みを完了できませんでした。再読み込みしてください';paint();
-        if(panel){panel.hidden=false;panel.open=true;render(true);}
+        clearTimeout(timeout);console.error('Game startup failed',error);this.fail();
       }
     },
-    getReport(){render(true);return report?.textContent||'計測結果を取得できませんでした。';},
-    destroy(){completedAt=performance.now();mark('start-ready');clearInterval(ticker);if(reportVisible())render();if(panel)panel.hidden=true;}
+    destroy(){}
   };
-  mark('html-bootstrap');
-  // Mount as soon as the static HTML arrives, independently of CSS or modules.
-  watcher=new MutationObserver(mount);watcher.observe(document.documentElement,{childList:true,subtree:true});
-  document.addEventListener('load',event=>{if(event.target?.tagName==='LINK'&&event.target.rel==='stylesheet')mark('stylesheet-ready');},true);
-  document.addEventListener('error',event=>{if(event.target?.tagName==='LINK')mark('stylesheet-error');},true);
   document.addEventListener('readystatechange',paint);
 })();
   </script>
   <!-- WEB_BOOT_ENTRY -->
-  <link rel="stylesheet" href="styles.css?v=2026.10.24.3">
+  <link rel="stylesheet" href="styles.css?v=2026.10.24.4">
 </head>
 <body class="game-ink">
-  <details id="boot-diagnostics" hidden><summary>読み込み状況・計測結果をコピー（ver 2026.10.24.3）</summary><button id="boot-copy" type="button">計測結果をコピー</button><button id="boot-reload" type="button" onclick="location.reload()">再読み込み</button><pre id="boot-report">起動スクリプトの実行を待っています。この表示のままなら、そのままスクリーンショットを送ってください。</pre></details>
   <div id="boot-screen" aria-label="ゲームの読み込み">
     <div class="boot-card">
       <span class="boot-kicker">WELCOME TO THE APARTMENT</span>
       <div class="boot-title">けもの荘</div><span class="boot-word" aria-hidden="true">NOW LOADING!</span>
       <div class="boot-readout"><span id="boot-label" role="status" aria-live="polite">ゲームプログラムを読み込んでいます</span><span class="boot-number"><span id="boot-percent">5</span><small>%</small></span></div>
       <div class="boot-track" id="boot-progress" role="progressbar" aria-label="起動準備" aria-valuemin="0" aria-valuemax="100" aria-valuenow="5"><div class="boot-fill" id="boot-fill"></div></div>
-      <p id="boot-stall" role="status"></p>
+      <button id="boot-retry" type="button" hidden onclick="location.reload()">再読み込み</button>
       <div class="boot-foot"><span>このアパート、問題しかない。</span><span class="boot-pulse" aria-hidden="true">◆ STAND BY</span></div>
     </div>
   </div>
@@ -154,6 +114,6 @@ body:not(.world-art-started) .scene{background-image:none!important}
     <button type="button" id="entry-start" class="entry-start">▶ START</button>
   </div>
   <div id="update-banner" hidden role="status" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:99999;background:#101826;color:white;border:1px solid #e6a6cb;border-radius:12px;padding:14px 20px;box-shadow:0 8px 30px #000a;font:14px sans-serif;text-align:center">けもの荘が更新されました。 <button id="update-reload" type="button" style="margin:7px;padding:8px 14px;border:0;border-radius:6px;background:#e6a6cb;color:#111;font-weight:bold">最新版を読み込む</button></div>
-  <script type="module" src="src/app.js?v=2026.10.24.3"></script>
+  <script type="module" src="src/app.js?v=2026.10.24.4"></script>
 </body>
 </html>

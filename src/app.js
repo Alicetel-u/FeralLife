@@ -1,9 +1,9 @@
 import {newAllyPosition,newAllyFrame} from './act-two-observation.js';
 import {overnightMontageFrame} from './overnight-montage.js';
-import {resumeConversation,rememberConversation,clearConversation,continueDestination} from './conversation-progress.js?v=2026.10.24.3';
+import {resumeConversation,rememberConversation,clearConversation,continueDestination} from './conversation-progress.js?v=2026.10.24.4';
 import {refreshActTwoEpilogue} from './act-two-epilogue-script.js';
 import {actTwoEpilogueDirection,epilogueTransitionFor,actTwoEpilogueStageHTML,actTwoEpilogueCompleteHTML,prepareEpilogueAssets,startEpilogueTransition,playEpilogueSound} from './act-two-epilogue-stage.js';
-import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.24.3';
+import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.24.4';
 import {failedChoiceKeys} from './choice-history.js';
 import {secondActLife} from './act-two-life.js';
 import {developerObservationBeats,createDeveloperObservation} from './debug-observation.js';
@@ -13,7 +13,7 @@ import {isFirstStalkerReply,firstStalkerStageHTML,prepareFirstStalkerAssets,need
 import { LUNA_MINI_EMOTIONS, MOKU_MINI_EMOTIONS } from './mini-emotions.js';
 import {isFirstFireReply,firstFireCut,firstFireStageHTML} from './first-fire-stage.js';
 import {clearLegacyObservationMemo,observationView,observationClockLimit,tickObservation,inheritObservation,firstActSleepClockReady} from './act-one-observation.js';
-import {createVoicePlayer} from './voice-player.js?v=2026.10.24.3';
+import {createVoicePlayer} from './voice-player.js?v=2026.10.24.4';
 const characterVoice=createVoicePlayer({chapter:()=>state?.actOne?.chapter});
 document.addEventListener('pointerdown',()=>characterVoice.unlock(),{capture:true});
 document.addEventListener('keydown',()=>characterVoice.unlock(),{capture:true});
@@ -25,8 +25,8 @@ import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVic
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.24.3';
-import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, resumeActTwoRewind, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.24.3';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.24.4';
+import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, resumeActTwoRewind, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.24.4';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { startBadEndingEntry } from './bad-ending-entry.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -676,7 +676,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.24.3';
+const BUILD_VERSION='2026.10.24.4';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -1188,8 +1188,8 @@ if(!previewType){
   try{await prepareTitleArt();}
   catch{
     paintBootProgress(95,'画像を読み込めませんでした。再読み込みしてください');
-    const diagnostics=$('boot-diagnostics');
-    if(diagnostics){diagnostics.hidden=false;diagnostics.open=true;}
+    window.kemonoBoot?.fail?.('画像を読み込めませんでした。再読み込みしてください');
+    const retry=$('boot-retry');if(retry)retry.hidden=false;
     return;
   }
 }
@@ -1210,7 +1210,6 @@ if(entryGate && !previewType){
   entryGate.querySelector('#entry-start').addEventListener('click',()=>{
     // Open the title and unlock its soundtrack in the same trusted click.
     entryGate.remove();
-    if(new URLSearchParams(location.search).get('bootdiag')!=='1')document.getElementById('boot-diagnostics')?.remove();
     startWorldArt();
     if(state.actOne)showGameTitle();
     normalBgm.unlock().catch(()=>{});

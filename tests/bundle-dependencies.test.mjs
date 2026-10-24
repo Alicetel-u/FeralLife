@@ -20,3 +20,13 @@ test('bundled choice history resolves at the point where the trouble choices ope
  assert.match(html,/data-choice="trash"/);
  assert.doesNotMatch(html,/data-choice-exhausted/);
 });
+
+
+test('the shared web and standalone bundle initializes its dependencies, not just its syntax',()=>{
+ const source=GAME_MODULES.filter(name=>name!=='app').map(name=>readFileSync(new URL(`../src/${name}.js`,import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,'').replace(/^export /gm,'')).join('\n\n');
+ const context=vm.createContext({});
+ assert.doesNotThrow(()=>vm.runInContext(source,context,{filename:'game-bundle.js'}));
+ const sample=vm.runInContext("({end:NEW_ALLY_END.cat,home:homeSpot(101,'table'),state:createActOne(42)})",context);
+ assert.equal(sample.end.x,sample.home.x);assert.equal(sample.end.y,sample.home.y);
+ assert.equal(sample.state.residents[0].room,101);
+});

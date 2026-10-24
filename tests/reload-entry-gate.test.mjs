@@ -3,11 +3,10 @@ import vm from 'node:vm';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-test('boot measurements stay behind the developer flag and the cache version matches',()=>{
+test('boot has no measurement screen and the cache version matches',()=>{
  const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
  const version=html.match(/name="app-version" content="([^"]+)"/)[1];
- assert.match(html,/const diagnose=new URLSearchParams\(location\.search\)\.get\('bootdiag'\)==='1'/);
- assert.match(html,/if\(!report\|\|\(!force&&!reportVisible\(\)\)\)return/);
+ assert.doesNotMatch(html,/boot-diagnostics|boot-report|bootdiag|getEntriesByType|計測結果/);
  assert.match(html,new RegExp(`styles\\.css\\?v=${version.replaceAll('.','\\.')}`));
  assert.match(html,new RegExp(`src/app\\.js\\?v=${version.replaceAll('.','\\.')}`));
  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
@@ -40,8 +39,8 @@ function titleBootHarness(){
   let start,shown=0,unlocks=0;
   const gate={hidden:true,remove(){this.removed=true;},querySelector:()=>({addEventListener:(type,handler)=>{start=handler;}})};
   const screen={classList:{add(){}},remove(){this.removed=true;}};
-  const diagnostics={hidden:true,open:false,remove(){}};
-  const elements={'entry-gate':gate,'boot-screen':screen,'boot-diagnostics':diagnostics};
+  const retry={hidden:true};
+  const elements={'entry-gate':gate,'boot-screen':screen,'boot-retry':retry};
   const context={Image:class{constructor(){images.push(this);}decode(){return new Promise((resolve,reject)=>decodes.push({resolve,reject}));}},
     EVENT_EXPRESSIONS:{hostess:{happy:'luna.png'},sister:{happy:'nemu.png'},cat:{tired:'moku.png'}},
     previewType:null,paintBootProgress:(percent,label)=>progress.push({percent,label}),$:id=>elements[id],
@@ -50,7 +49,7 @@ function titleBootHarness(){
     window:{kemonoBoot:{destroy(){}}},location:{search:''},URLSearchParams,
     state:{actOne:{}},startWorldArt(){},showGameTitle:()=>shown++,normalBgm:{unlock:()=>{unlocks++;return Promise.resolve();}}};
   vm.createContext(context);vm.runInContext(setup+boot,context);
-  return {context,decodes,images,progress,gate,screen,diagnostics,start:()=>start,shown:()=>shown,unlocks:()=>unlocks};
+  return {context,decodes,images,progress,gate,screen,retry,start:()=>start,shown:()=>shown,unlocks:()=>unlocks};
 }
 
 test('START stays hidden until every title image is decoded, then opens the title in the audio-unlock click',async()=>{
@@ -69,11 +68,11 @@ test('START stays hidden until every title image is decoded, then opens the titl
   h.start()();assert.equal(h.shown(),1);assert.equal(h.unlocks(),1);
 });
 
-test('a failed title image keeps the loading screen and exposes reload instead of an incomplete title',async()=>{
+test('a failed title image offers retry without restoring the deleted diagnostics screen',async()=>{
   const h=titleBootHarness(),pending=h.context.finishBoot();
   h.decodes[0].reject(new Error('image download failed'));await pending;
   assert.equal(h.gate.hidden,true);assert.equal(h.screen.removed,undefined);
-  assert.equal(h.diagnostics.hidden,false);assert.equal(h.diagnostics.open,true);
+  assert.equal(h.retry.hidden,false);
   assert.match(h.progress.at(-1).label,/再読み込み/);assert.equal(h.shown(),0);
 });
 
@@ -86,4 +85,15 @@ test('title uses the same decoded image elements on first display and return vis
   vm.createContext(context);vm.runInContext(source+'\nshowGameTitle();showGameTitle();',context);
   assert.deepEqual(replaced,[...images,...images]);
   assert.equal(images[0].className,'title-city');assert.equal(images[3].className,'title-moku');
+});
+
+
+test('a load failure before the body exists still offers retry when the loading screen mounts',()=>{
+ const html=readFileSync(new URL('../index.html',import.meta.url),'utf8'),script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
+ const elements={},listeners={};
+ const context={window:{},document:{getElementById:id=>elements[id],addEventListener:(name,fn)=>listeners[name]=fn}};
+ vm.createContext(context);vm.runInContext(script,context);
+ context.window.kemonoBoot.fail('読み込みを完了できませんでした。再読み込みしてください');
+ elements['boot-label']={};elements['boot-retry']={hidden:true};listeners.readystatechange();
+ assert.equal(elements['boot-retry'].hidden,false);assert.match(elements['boot-label'].textContent,/再読み込み/);
 });
