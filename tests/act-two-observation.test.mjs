@@ -59,7 +59,7 @@ test('the room shot contains only Luna on clear floor and hallway voices have no
  const s=createDeveloperObservation('2',LUNA_NEW_ALLY_ID),room=exteriorRoomBounds(102);
  const renderer=Object.create(WorldRenderer.prototype),calls=[];
  Object.assign(renderer,{view:'interior',focus:true,focusRoom:102,reducedMotion:false,ctx:new Proxy({}, {get:(_,key)=>(...args)=>calls.push([key,...args])})});
- for(let index=0;index<7;index++){
+ for(let index=0;index<3;index++){
   direct(s,index,1);assert.equal(newAllyFrame(s).view,'interior');
   const luna=newAllyPosition(s,'hostess');assert.equal(luna.zone,'room');
   assert.ok(luna.y-room.y>=105,'feet stay below the painted tabletop and legs');
@@ -72,8 +72,8 @@ test('the room shot contains only Luna on clear floor and hallway voices have no
   calls.length=0;renderer.drawInteriorResident(s,s.residents.find(r=>r.type==='cat'),1);
   assert.equal(calls.length,0,'the hall resident is not painted over the room image');
  }
- direct(s,7,0);assert.equal(newAllyFrame(s).view,'interior');
- assert.equal(newAllyPosition(s,'hostess',{reduced:true}).cameraView,'exterior');
+ direct(s,3,0);assert.equal(newAllyFrame(s).view,'exterior');
+ direct(s,4,0);assert.equal(newAllyPosition(s,'hostess',{reduced:true}).cameraView,'exterior');
  direct(s,7,.7);assert.equal(newAllyFrame(s).view,'exterior');assert.equal(newAllyPosition(s,'hostess').zone,'hall');
 });
 
@@ -128,5 +128,18 @@ test('the real renderer uses the authored landlord route once, without a second 
   assert.deepEqual(renderer.managerPosition,newAllyPosition(s,'manager',{reduced:renderer.reducedMotion}));
   const before=JSON.stringify(renderer.managerPosition);renderer.draw(s,timestamp+=100,true,[]);
   assert.equal(JSON.stringify(renderer.managerPosition),before,'pausing never continues a second route');
+ }
+});
+
+
+test('Moku calls from the exterior shot and steps clear before Luna exits; the three silhouettes stay apart',()=>{
+ const s=createDeveloperObservation('2',LUNA_NEW_ALLY_ID);
+ direct(s,2,1);assert.equal(newAllyFrame(s).view,'interior');
+ direct(s,3,0);assert.equal(newAllyFrame(s).view,'exterior');
+ direct(s,3,.8);assert.equal(newAllyPosition(s,'cat').x,450);assert.equal(newAllyPosition(s,'hostess').zone,'room');
+ for(let index=4;index<24;index++)for(const elapsed of [0,.2,.5,.8,2]){
+  direct(s,index,elapsed);const [cat,luna,manager]=['cat','hostess','manager'].map(t=>newAllyPosition(s,t));
+  if(luna.zone==='hall'){assert.ok(luna.x-cat.x>=70);assert.ok(manager.x-luna.x>=75);}
+  assert.deepEqual(luna.cameraTarget,{x:525,y:440,zone:'hall'});
  }
 });

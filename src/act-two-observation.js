@@ -47,13 +47,12 @@ export const NEW_ALLY_END={cat:newAllyHome,hostess:newAllyPoint(615,513,'street'
 const NEW_ALLY_ROUTES={
  cat:[
   {line:0,path:[newAllyPoint(420,440)],duration:0},
-  {line:3,path:[newAllyPoint(420,440),newAllyPoint(513,440)],duration:.7},
-  {line:7,path:[newAllyPoint(513,440),newAllyPoint(490,438,'hall',102)],duration:.7},
-  {line:24,path:[newAllyPoint(490,438),newAllyPoint(331,440,'hall',101),newAllyHome],duration:1.3}
+  {line:3,path:[newAllyPoint(420,440),newAllyPoint(513,440),newAllyPoint(450,438,'hall',102)],duration:.7},
+  {line:24,path:[newAllyPoint(450,438),newAllyPoint(331,440,'hall',101),newAllyHome],duration:1.3}
  ],
  hostess:[
   {line:0,path:[newAllyPoint(472,440,'room',102,-1)],duration:0},
-  {line:7,path:[newAllyPoint(472,440,'room',102,-1),newAllyPoint(513,440,'room',102,1),newAllyPoint(525,440,'hall',102)],duration:.7},
+  {line:4,path:[newAllyPoint(472,440,'room',102,-1),newAllyPoint(513,440,'room',102,1),newAllyPoint(525,440,'hall',102)],duration:.7},
   {line:31,path:[newAllyPoint(525,440),newAllyPoint(777,440,'hall',103),newAllyPoint(815,513,'street',null),NEW_ALLY_END.hostess],duration:3.65,delay:.45}
  ],
  manager:[
@@ -96,10 +95,12 @@ function allyCast(index,elapsed,reduced){
   if(type==='hostess'&&index===24){dy=-4*pulse;rotate=.025*pulse;}
   placed[type]={...p,dy,rotate,pose,action,props,lockPose,chat:true};
  }
- // Lines 0–6 stay in Luna's room. The exterior cut waits until she has left the doorway,
- // unless reduced motion snaps the exit and should not hold the close-up.
- const view=index<7||(!reduced&&placed.hostess.zone==='room')?'interior':'exterior';
- for(const type of ['cat','hostess','manager'])placed[type].cameraView=view;
+ // Cut to the hall at Moku's call; Luna answers as she comes through the doorway.
+ const view=index<3?'interior':'exterior';
+ for(const type of ['cat','hostess','manager']){
+  placed[type].cameraView=view;
+  if(index>=3&&index<31)placed[type].cameraTarget={x:525,y:440,zone:'hall'};
+ }
  allySlot={index,elapsed,reduced,view,...placed};
  return allySlot;
 }

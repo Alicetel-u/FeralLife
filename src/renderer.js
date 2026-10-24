@@ -247,7 +247,7 @@ export class WorldRenderer {
   }
   exteriorCamera(selectedPos) {
     const zoom = this.focus ? 1.65 : 1, width = 1000 / zoom, height = 562.5 / zoom;
-    const target = selectedPos?.zone === 'away' ? null : selectedPos;
+    const target = selectedPos?.zone === 'away' ? null : selectedPos?.cameraTarget||selectedPos;
     const cx = this.focus ? Math.max(width / 2, Math.min(1000 - width / 2, target?.x ?? 740)) : 500;
     const cy = this.focus ? Math.max(height / 2, Math.min(562.5 - height / 2, (target?.y ?? 420) - 60)) : 281.25;
     return { zoom, ox: cx - width / 2, oy: cy - height / 2 };
