@@ -55,21 +55,25 @@ test('every line boundary retains the previous position, and normal and debug bl
  }
 });
 
-test('the opening argument stays on screen, and Luna is not hidden by the exterior cut',()=>{
+test('the room shot contains only Luna on clear floor and hallway voices have no tail',()=>{
  const s=createDeveloperObservation('2',LUNA_NEW_ALLY_ID),room=exteriorRoomBounds(102);
- const inside=type=>{const p=newAllyPosition(s,type);assert.equal(p.zone,'hall');assert.ok(p.x>=room.x+10&&p.x<=room.x+room.w-10,`${type} x ${p.x}`);};
- direct(s,0,.2);assert.equal(newAllyFrame(s).view,'interior');inside('cat');inside('manager');
- assert.equal(newAllyPosition(s,'manager').direction,-1);
- const renderer=Object.create(WorldRenderer.prototype);
- Object.assign(renderer,{view:'interior',focus:true,focusRoom:102,reducedMotion:false});
- const anchor=renderer.speechAnchor(s,'manager');
- assert.ok(anchor.x>80&&anchor.x<1920,`manager speech ${anchor.x}`);
- for(let elapsed=0;elapsed<0.7;elapsed+=.05){
-  direct(s,7,elapsed);
-  if(newAllyFrame(s).view==='interior'){inside('cat');inside('manager');assert.equal(newAllyPosition(s,'hostess').zone,'room');}
+ const renderer=Object.create(WorldRenderer.prototype),calls=[];
+ Object.assign(renderer,{view:'interior',focus:true,focusRoom:102,reducedMotion:false,ctx:new Proxy({}, {get:(_,key)=>(...args)=>calls.push([key,...args])})});
+ for(let index=0;index<7;index++){
+  direct(s,index,1);assert.equal(newAllyFrame(s).view,'interior');
+  const luna=newAllyPosition(s,'hostess');assert.equal(luna.zone,'room');
+  assert.ok(luna.y-room.y>=105,'feet stay below the painted tabletop and legs');
+  assert.ok(luna.y<room.y+room.h,'feet remain inside the room floor');
+  for(const type of ['cat','manager']){
+   const anchor=renderer.speechAnchor(s,type);assert.equal(anchor.tail,false);assert.equal(anchor.source,'廊下から');
+   assert.ok(anchor.x>0&&anchor.x<1920);assert.ok(anchor.y>0&&anchor.y<1080);
+  }
+  assert.equal(renderer.speechAnchor(s,'hostess').tail,true);
+  calls.length=0;renderer.drawInteriorResident(s,s.residents.find(r=>r.type==='cat'),1);
+  assert.equal(calls.length,0,'the hall resident is not painted over the room image');
  }
- direct(s,7,0);assert.equal(newAllyFrame(s).view,'interior');assert.equal(newAllyPosition(s,'hostess').zone,'room');
- assert.equal(newAllyPosition(s,'manager',{reduced:true}).cameraView,'exterior');
+ direct(s,7,0);assert.equal(newAllyFrame(s).view,'interior');
+ assert.equal(newAllyPosition(s,'hostess',{reduced:true}).cameraView,'exterior');
  direct(s,7,.7);assert.equal(newAllyFrame(s).view,'exterior');assert.equal(newAllyPosition(s,'hostess').zone,'hall');
 });
 

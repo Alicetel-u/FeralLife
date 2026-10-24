@@ -1,4 +1,4 @@
-import {newAllyPosition} from './act-two-observation.js';
+import {newAllyPosition,newAllyFrame} from './act-two-observation.js';
 import { MINI_EMOTION_ART, MiniReactionState, miniDailyEmotion, miniEmotionFrameName, drawMiniEmotion } from './mini-emotions.js';
 import {managerTarget,managerFrame,advanceManager} from './manager-life.js';
 import { speakerColors } from './speaker-colors.js';
@@ -243,12 +243,6 @@ export class WorldRenderer {
     }
     if (!this.focus) for (const y of [313,643]) { rect(ctx,8,y,1184,16,'#17111d');rect(ctx,8,y+1,1184,2,'#b32a43');ctx.fillStyle='#e0cbbd';ctx.font='10px "Yu Gothic UI",sans-serif';ctx.fillText('共用廊下',16,y+12);ctx.textAlign='right';ctx.fillText('階段・屋外へ →',1180,y+12);ctx.textAlign='left'; }
     for (const r of state.residents) this.drawInteriorResident(state,r,t);
-    const escapeManager=newAllyPosition(state,'manager',{reduced:this.reducedMotion});
-    if(escapeManager?.zone==='hall'){const b=roomBounds(102,this.focusRoom),base=exteriorRoomBounds(102);if(b){
-      const x=b.x+(escapeManager.x-base.x)/base.w*b.w,y=b.y+b.h+16,height=this.focus?300:144,u=height/128;
-      const pose=escapeManager.moving?managerFrame(escapeManager,t,true,escapeManager.walkDistance):escapeManager.pose;
-      drawSprite(ctx,'manager',x,y+(escapeManager.dy||0)*u,t,escapeManager.moving?'outing':'idle',height/44,escapeManager.direction,{pose,rotate:escapeManager.rotate||0,...this.miniReaction('manager',t),poseLocked:true});
-    }}
     this.drawSpeech(state);
   }
   exteriorCamera(selectedPos) {
@@ -323,6 +317,8 @@ export class WorldRenderer {
   drawInteriorResident(state,r,t) {
     const p=this.interiorResidentPosition(state,r,t);
     if(p.zone==='away'||p.zone==='street'||p.zone==='stairs')return;
+    // A corridor must never be projected onto a room's painted floor.
+    if(newAllyFrame(state)&&p.zone!=='room')return;
     const base=exteriorRoomBounds(p.room||r.room), b=roomBounds(p.room||r.room,this.focusRoom);if(!b)return;
     const ctx=this.ctx,x=b.x+(p.x-base.x)/base.w*b.w,y=p.zone==='hall'?b.y+b.h+16:b.y+(p.y-base.y)/base.h*b.h;
     if(this.focus && p.zone==='room' && r.room===state.selected)this.followCharacterX=x;
@@ -417,13 +413,12 @@ export class WorldRenderer {
   }
   // 外観スプライトの身長は80。吹き出しは内装と同じく、その86%上（頭）へ付ける。
   speechAnchor(state, type) {
+    const directed=newAllyPosition(state,type,{reduced:this.reducedMotion});
+    if(directed&&this.view==='interior'&&directed.zone!=='room'){
+      return {x:WORLD_WIDTH*.60,y:WORLD_HEIGHT*.32,tail:false,source:directed.zone==='hall'?'廊下から':'外から'};
+    }
     const resident = state.residents.find(person => person.type === type);
     if (!resident) {
-      const escape=type==='manager'&&newAllyPosition(state,type,{reduced:this.reducedMotion});
-      if(escape&&this.view==='interior'){
-        const b=roomBounds(102,this.focusRoom),base=exteriorRoomBounds(102);
-        if(b)return {x:b.x+(escape.x-base.x)/base.w*b.w,y:b.y+b.h+16-(this.focus?300:144)*.86,tail:true,source:'廊下の大家'};
-      }
       if(type!=='manager'||this.view!=='exterior'||!this.managerPosition)return null;
       const selected=state.residents.find(r=>r.room===state.selected),p=selected?newAllyPosition(state,selected.type,{reduced:this.reducedMotion})||sampleJourney(selected,state.hour,ACTIONS[selected.action].place):null;
       return {...this.projectExterior(this.managerPosition.x,exteriorFeet(this.managerPosition).y-80*.86,p),tail:true,source:''};

@@ -40,26 +40,25 @@ export const ACT_TWO_OBSERVATION_BEATS=[{id:LUNA_NEW_ALLY_ID,phase:0,at:65.1,tit
 
 const newAllyPoint=(x,y,zone='hall',room=102,direction=1)=>({x,y,zone,room,direction});
 const newAllyHome={...homeSpot(101,'table'),direction:1};
-export const NEW_ALLY_END={cat:newAllyHome,hostess:newAllyPoint(615,513,'street',null,1),manager:newAllyPoint(745,513,'street',null,-1)};
+export const NEW_ALLY_END={cat:newAllyHome,hostess:newAllyPoint(615,513,'street',null,1),manager:newAllyPoint(695,513,'street',null,-1)};
 // Each move is keyed once. Subsequent lines retain its endpoint, rather than replaying it.
-// Focused room 102 shows only its own facade (exterior x 400–573).
-// Both speakers stay inside that span; the landlord steps aside after Luna is outside.
+// The room shot contains only Luna. Hall residents are off-camera voices until the exit.
+// Keep all feet on the floor in front of the painted furniture, then use the real 102 doorway.
 const NEW_ALLY_ROUTES={
  cat:[
-  {line:0,path:[newAllyPoint(412,440)],duration:0},
-  {line:3,path:[newAllyPoint(412,440),newAllyPoint(468,440)],duration:.7},
-  {line:7,path:[newAllyPoint(468,440),newAllyPoint(460,438,'hall',102)],duration:.7},
-  {line:24,path:[newAllyPoint(460,438),newAllyPoint(331,440,'hall',101),newAllyHome],duration:1.3}
+  {line:0,path:[newAllyPoint(420,440)],duration:0},
+  {line:3,path:[newAllyPoint(420,440),newAllyPoint(513,440)],duration:.7},
+  {line:7,path:[newAllyPoint(513,440),newAllyPoint(490,438,'hall',102)],duration:.7},
+  {line:24,path:[newAllyPoint(490,438),newAllyPoint(331,440,'hall',101),newAllyHome],duration:1.3}
  ],
  hostess:[
-  {line:0,path:[newAllyPoint(483,427,'room',102,-1)],duration:0},
-  {line:7,path:[newAllyPoint(483,427,'room',102,-1),newAllyPoint(556,440,'hall',102)],duration:.7},
-  {line:31,path:[newAllyPoint(556,440),newAllyPoint(777,440,'hall',103),newAllyPoint(815,513,'street',null),NEW_ALLY_END.hostess],duration:3.65,delay:.45}
+  {line:0,path:[newAllyPoint(472,440,'room',102,-1)],duration:0},
+  {line:7,path:[newAllyPoint(472,440,'room',102,-1),newAllyPoint(513,440,'room',102,1),newAllyPoint(525,440,'hall',102)],duration:.7},
+  {line:31,path:[newAllyPoint(525,440),newAllyPoint(777,440,'hall',103),newAllyPoint(815,513,'street',null),NEW_ALLY_END.hostess],duration:3.65,delay:.45}
  ],
  manager:[
-  {line:0,path:[newAllyPoint(540,440,'hall',102,-1)],duration:0},
-  {line:7,path:[newAllyPoint(540,440,'hall',102,-1),newAllyPoint(662,440,'hall',102,-1)],duration:.4,delay:.56},
-  {line:31,path:[newAllyPoint(662,440),newAllyPoint(777,440,'hall',103),newAllyPoint(815,513,'street',null),NEW_ALLY_END.manager],duration:3.1}
+  {line:0,path:[newAllyPoint(605,440,'hall',102,-1)],duration:0},
+  {line:31,path:[newAllyPoint(605,440),newAllyPoint(777,440,'hall',103),newAllyPoint(815,513,'street',null),NEW_ALLY_END.manager],duration:3.1}
  ]
 };
 function sampleNewAllyRoute(cue,index,elapsed,reduced){
