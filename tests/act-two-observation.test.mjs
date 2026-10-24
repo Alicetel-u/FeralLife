@@ -8,6 +8,7 @@ import {createTalk,stepTalk} from '../src/dialogue.js';
 import {createDeveloperObservation,developerObservationBeats} from '../src/debug-observation.js';
 import {WorldRenderer} from '../src/renderer.js';
 import {exteriorFeet} from '../src/exterior-occlusion.js';
+import {exteriorRoomBounds} from '../src/movement.js';
 import {managerTarget,managerFrame} from '../src/manager-life.js';
 const start=()=>{const s=beginActTwo(createActOne(32));Object.assign(s.actOne,{started:true,prologuePending:false,titlePending:false});observationView(s);return s;};
 const step=(s,speed)=>{tickObservation(s,.1);advanceActTwo(s,Math.min(speed/100,Math.max(0,observationClockLimit(s)-s.hour)));tickObservation(s,0);};
@@ -52,6 +53,24 @@ test('every line boundary retains the previous position, and normal and debug bl
    assert.deepEqual(newAllyPosition(normal,type),newAllyPosition(debug,type));
   }
  }
+});
+
+test('the opening argument stays on screen, and Luna is not hidden by the exterior cut',()=>{
+ const s=createDeveloperObservation('2',LUNA_NEW_ALLY_ID),room=exteriorRoomBounds(102);
+ const inside=type=>{const p=newAllyPosition(s,type);assert.equal(p.zone,'hall');assert.ok(p.x>=room.x+10&&p.x<=room.x+room.w-10,`${type} x ${p.x}`);};
+ direct(s,0,.2);assert.equal(newAllyFrame(s).view,'interior');inside('cat');inside('manager');
+ assert.equal(newAllyPosition(s,'manager').direction,-1);
+ const renderer=Object.create(WorldRenderer.prototype);
+ Object.assign(renderer,{view:'interior',focus:true,focusRoom:102,reducedMotion:false});
+ const anchor=renderer.speechAnchor(s,'manager');
+ assert.ok(anchor.x>80&&anchor.x<1920,`manager speech ${anchor.x}`);
+ for(let elapsed=0;elapsed<0.7;elapsed+=.05){
+  direct(s,7,elapsed);
+  if(newAllyFrame(s).view==='interior'){inside('cat');inside('manager');assert.equal(newAllyPosition(s,'hostess').zone,'room');}
+ }
+ direct(s,7,0);assert.equal(newAllyFrame(s).view,'interior');assert.equal(newAllyPosition(s,'hostess').zone,'room');
+ assert.equal(newAllyPosition(s,'manager',{reduced:true}).cameraView,'exterior');
+ direct(s,7,.7);assert.equal(newAllyFrame(s).view,'exterior');assert.equal(newAllyPosition(s,'hostess').zone,'hall');
 });
 
 test('the trio face each other in the hall, Moku hides behind Luna and returns alone, then the others take the stairs',()=>{

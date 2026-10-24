@@ -13,8 +13,8 @@ export function managerReaction(line){
  if(/消せよ|なんだよ|誰のせい|なんで俺|じゃねぇか|するな|すんな|だろ、それ|問題にするな|寝てん/.test(text))return 'retort';
  return 'idle';
 }
-export function managerTarget(state,bubbles=[]){
- const escape=newAllyPosition(state,'manager');if(escape)return escape;
+export function managerTarget(state,bubbles=[],reduced=false){
+ const escape=newAllyPosition(state,'manager',{reduced});if(escape)return escape;
  if(state.actOne?.chapter!==2&&state.actOne?.started&&!state.actOne?.completed?.includes('ash')&&!state.actOne?.pending){
   const speaking=bubbles[0];const p=state.residents.find(r=>r.type==='cat');
   const meeting=p?.lifeBeat===19.3;

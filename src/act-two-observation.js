@@ -42,12 +42,14 @@ const newAllyPoint=(x,y,zone='hall',room=102,direction=1)=>({x,y,zone,room,direc
 const newAllyHome={...homeSpot(101,'table'),direction:1};
 export const NEW_ALLY_END={cat:newAllyHome,hostess:newAllyPoint(615,513,'street',null,1),manager:newAllyPoint(745,513,'street',null,-1)};
 // Each move is keyed once. Subsequent lines retain its endpoint, rather than replaying it.
+// Focused room 102 shows only its own facade (exterior x 400–573).
+// Both speakers stay inside that span; the landlord steps aside after Luna is outside.
 const NEW_ALLY_ROUTES={
  cat:[
   {line:0,path:[newAllyPoint(412,440)],duration:0},
   {line:3,path:[newAllyPoint(412,440),newAllyPoint(468,440)],duration:.7},
-  {line:7,path:[newAllyPoint(468,440),newAllyPoint(460,440,'hall',102)],duration:.7},
-  {line:24,path:[newAllyPoint(460,440),newAllyPoint(331,440,'hall',101),newAllyHome],duration:1.3}
+  {line:7,path:[newAllyPoint(468,440),newAllyPoint(460,438,'hall',102)],duration:.7},
+  {line:24,path:[newAllyPoint(460,438),newAllyPoint(331,440,'hall',101),newAllyHome],duration:1.3}
  ],
  hostess:[
   {line:0,path:[newAllyPoint(483,427,'room',102,-1)],duration:0},
@@ -55,13 +57,15 @@ const NEW_ALLY_ROUTES={
   {line:31,path:[newAllyPoint(556,440),newAllyPoint(777,440,'hall',103),newAllyPoint(815,513,'street',null),NEW_ALLY_END.hostess],duration:3.65,delay:.45}
  ],
  manager:[
-  {line:0,path:[newAllyPoint(662,440,'hall',102,-1)],duration:0},
+  {line:0,path:[newAllyPoint(540,440,'hall',102,-1)],duration:0},
+  {line:7,path:[newAllyPoint(540,440,'hall',102,-1),newAllyPoint(662,440,'hall',102,-1)],duration:.4,delay:.56},
   {line:31,path:[newAllyPoint(662,440),newAllyPoint(777,440,'hall',103),newAllyPoint(815,513,'street',null),NEW_ALLY_END.manager],duration:3.1}
  ]
 };
 function sampleNewAllyRoute(cue,index,elapsed,reduced){
  const path=cue.path,lengths=path.slice(1).map((to,i)=>Math.hypot(to.x-path[i].x,to.y-path[i].y)),total=lengths.reduce((a,b)=>a+b,0);
  const progress=reduced||index>cue.line||!cue.duration?1:Math.max(0,Math.min(1,(elapsed-(cue.delay||0))/cue.duration));
+ if(!(progress>0))return {...path[0],moving:false,walkDistance:0};
  const travelled=total*progress;let remaining=travelled;
  for(let i=0;i<lengths.length;i++){
   if(remaining<lengths[i]){const a=path[i],b=path[i+1],p=remaining/lengths[i];
@@ -71,28 +75,49 @@ function sampleNewAllyRoute(cue,index,elapsed,reduced){
  }
  return {...path.at(-1),moving:false,walkDistance:total};
 }
-export function newAllyFrame(state){
+const RETORT_LINES=new Set([0,2,6,9,12,21,23]);
+const CAT_HOP_LINES=new Set([1,3,5,8,14,22]);
+const CAT_FLINCH_LINES=new Set([16,18,20]);
+let allySlot=null;
+function allyCast(index,elapsed,reduced){
+ if(allySlot&&allySlot.index===index&&allySlot.elapsed===elapsed&&allySlot.reduced===reduced)return allySlot;
+ const placed={};
+ for(const type of ['cat','hostess','manager']){
+  const cue=NEW_ALLY_ROUTES[type].findLast(c=>c.line<=index),p=sampleNewAllyRoute(cue,index,elapsed,reduced);
+  const pulse=reduced?0:Math.sin(Math.min(1,elapsed/.45)*Math.PI);
+  let pose='chat',action='chat',dy=0,rotate=0,props=[],lockPose=false;
+  if(type==='manager')pose=index>=28?'clean':index===25||index===27?'think':RETORT_LINES.has(index)?'retort':'talk';
+  if(type==='manager'&&RETORT_LINES.has(index)){dy=-3*pulse;rotate=-.035*pulse;}
+  if(type==='cat'){
+   if(index>=24){pose='sit';action='idle';}
+   if(CAT_HOP_LINES.has(index)){dy=-7*pulse;rotate=-.055*pulse;}
+   if(CAT_FLINCH_LINES.has(index)){rotate=.09*pulse;dy=-4*pulse;}
+  }
+  if(type==='hostess'&&index<3){pose='clean';lockPose=true;props=[{kind:'bag',x:20,y:0}];}
+  if(type==='hostess'&&index===24){dy=-4*pulse;rotate=.025*pulse;}
+  placed[type]={...p,dy,rotate,pose,action,props,lockPose,chat:true};
+ }
+ // Lines 0–6 stay in Luna's room. The exterior cut waits until she has left the doorway,
+ // unless reduced motion snaps the exit and should not hold the close-up.
+ const view=index<7||(!reduced&&placed.hostess.zone==='room')?'interior':'exterior';
+ for(const type of ['cat','hostess','manager'])placed[type].cameraView=view;
+ allySlot={index,elapsed,reduced,view,...placed};
+ return allySlot;
+}
+function readAllyCursor(state){
  const a=state.actOne,o=a?.observation;
  if(a?.chapter!==2||!a.started||a.status!=='playing'||a.prologuePending||a.rewindIntroPending||a.pending||a.completed?.includes('bag'))return null;
- if(o?.current?.id===LUNA_NEW_ALLY_ID)return {index:o.current.index,elapsed:Math.max(0,o.current.elapsed||0),view:o.current.index<7?'interior':'exterior'};
- if(o?.done?.includes(LUNA_NEW_ALLY_ID))return {index:32,elapsed:0,view:'exterior'};
+ if(o?.current?.id===LUNA_NEW_ALLY_ID)return {index:o.current.index,elapsed:Math.max(0,o.current.elapsed||0)};
+ if(o?.done?.includes(LUNA_NEW_ALLY_ID))return {index:32,elapsed:0};
  return null;
 }
+export function newAllyFrame(state){
+ const cursor=readAllyCursor(state);if(!cursor)return null;
+ return {...cursor,view:allyCast(cursor.index,cursor.elapsed,false).view};
+}
 export function newAllyPosition(state,type,{reduced=false}={}){
- const frame=newAllyFrame(state),cues=NEW_ALLY_ROUTES[type];if(!frame||!cues)return null;
- const cue=cues.findLast(c=>c.line<=frame.index),p=sampleNewAllyRoute(cue,frame.index,frame.elapsed,reduced);
- const pulse=reduced?0:Math.sin(Math.min(1,frame.elapsed/.45)*Math.PI);
- let pose='chat',action='chat',dy=0,rotate=0,props=[],lockPose=false;
- if(type==='manager')pose=frame.index>=31?'clean':frame.index>=28?'clean':frame.index===25||frame.index===27?'think':[0,2,6,9,12,21,23].includes(frame.index)?'retort':'talk';
- if(type==='manager'&&[0,2,6,9,12,21,23].includes(frame.index)){dy=-3*pulse;rotate=-.035*pulse;}
- if(type==='cat'){
-  if(frame.index>=24){pose='sit';action='idle';}
-  if([1,3,5,8,14,22].includes(frame.index)){dy=-7*pulse;rotate=-.055*pulse;}
-  if([16,18,20].includes(frame.index)){rotate=.09*pulse;dy=-4*pulse;}
- }
- if(type==='hostess'&&frame.index<3){pose='clean';lockPose=true;props=[{kind:'bag',x:20,y:0}];}
- if(type==='hostess'&&frame.index===24){dy=-4*pulse;rotate=.025*pulse;}
- return {...p,dy,rotate,pose,action,props,lockPose,chat:true,cameraView:frame.view};
+ const cursor=readAllyCursor(state);if(!cursor||!NEW_ALLY_ROUTES[type])return null;
+ return allyCast(cursor.index,cursor.elapsed,reduced)[type];
 }
 // Old observations are intentionally removed. Unfinished old saves start the new part.
 export function migrateNewAllyObservation(state){

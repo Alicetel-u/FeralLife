@@ -1,9 +1,9 @@
-import {newAllyPosition,newAllyFrame} from './act-two-observation.js';
+import {newAllyPosition} from './act-two-observation.js';
 import {overnightMontageFrame} from './overnight-montage.js';
-import {resumeConversation,rememberConversation,clearConversation,continueDestination} from './conversation-progress.js?v=2026.10.24.4';
+import {resumeConversation,rememberConversation,clearConversation,continueDestination} from './conversation-progress.js?v=2026.10.24.5';
 import {refreshActTwoEpilogue} from './act-two-epilogue-script.js';
 import {actTwoEpilogueDirection,epilogueTransitionFor,actTwoEpilogueStageHTML,actTwoEpilogueCompleteHTML,prepareEpilogueAssets,startEpilogueTransition,playEpilogueSound} from './act-two-epilogue-stage.js';
-import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.24.4';
+import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.24.5';
 import {failedChoiceKeys} from './choice-history.js';
 import {secondActLife} from './act-two-life.js';
 import {developerObservationBeats,createDeveloperObservation} from './debug-observation.js';
@@ -13,7 +13,7 @@ import {isFirstStalkerReply,firstStalkerStageHTML,prepareFirstStalkerAssets,need
 import { LUNA_MINI_EMOTIONS, MOKU_MINI_EMOTIONS } from './mini-emotions.js';
 import {isFirstFireReply,firstFireCut,firstFireStageHTML} from './first-fire-stage.js';
 import {clearLegacyObservationMemo,observationView,observationClockLimit,tickObservation,inheritObservation,firstActSleepClockReady} from './act-one-observation.js';
-import {createVoicePlayer} from './voice-player.js?v=2026.10.24.4';
+import {createVoicePlayer} from './voice-player.js?v=2026.10.24.5';
 const characterVoice=createVoicePlayer({chapter:()=>state?.actOne?.chapter});
 document.addEventListener('pointerdown',()=>characterVoice.unlock(),{capture:true});
 document.addEventListener('keydown',()=>characterVoice.unlock(),{capture:true});
@@ -25,8 +25,8 @@ import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVic
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.24.4';
-import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, resumeActTwoRewind, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.24.4';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.24.5';
+import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, resumeActTwoRewind, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.24.5';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { startBadEndingEntry } from './bad-ending-entry.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -34,7 +34,7 @@ import { debtEndingHTML, startDebtEnding } from './debt-ending.js';
 import { bedCue, createNormalBgm } from './bgm.js';
 import { createGame, advance, admit, addEvent, ROOMS, CHARACTERS, NEEDS, ACTIONS, dateAt, formatTime, atmosphere, validateSave } from './simulation.js';
 import { createTalk, stepTalk, claimAutomaticScene, rememberReadScenes, automaticChapterScene } from './dialogue.js';
-import { WorldRenderer, roomBounds, drawPortrait } from './renderer.js';
+import { WorldRenderer, roomBounds, drawPortrait, prefersReducedMotion } from './renderer.js';
 import { CHARACTER_ART, loadCharacterArt, loadRoomArt, EVENT_ART, EVENT_EXPRESSIONS, eventParticipants } from './character-art.js';
 import { sampleJourney, motionLabel } from './movement.js';
 import { MANAGEMENT_CASES } from './event-cases.js';
@@ -155,8 +155,9 @@ let autoFollow = !managerPreview, cameraKey = '';
 function updateCamera() {
   if(autoFollow&&state.actOne){const lead=state.residents.find(r=>r.type===(state.actOne.chapter===2?'hostess':'cat'));if(lead)state.selected=lead.room;}
   const r = state.residents.find(r => r.room === state.selected);
-  const p = r ? newAllyPosition(state,r.type)||sampleJourney(r,state.hour,ACTIONS[r.action].place) : null;
-  if (autoFollow) { renderer.view = newAllyFrame(state)?.view||(p && p.zone !== 'room' ? 'exterior' : 'interior'); renderer.focus = true; }
+  const directed = r ? newAllyPosition(state,r.type,{reduced:prefersReducedMotion()}) : null;
+  const p = directed || (r ? sampleJourney(r,state.hour,ACTIONS[r.action].place) : null);
+  if (autoFollow) { renderer.view = directed?.cameraView || (p && p.zone !== 'room' ? 'exterior' : 'interior'); renderer.focus = true; }
   renderer.focusRoom = renderer.focus ? (p?.zone === 'room' ? p.room : state.selected) : null;
   document.body.classList.toggle('camera-focused',renderer.focus);
   const key = `${renderer.view}-${renderer.focus}-${renderer.focusRoom}-${state.selected}-${state.residents.length}`;
@@ -676,7 +677,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.24.4';
+const BUILD_VERSION='2026.10.24.5';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -1098,6 +1099,9 @@ $('sound-button').onclick=async()=>{
 };
 paintSoundButton();
 const worldRenderGate = new WorldRenderGate();
+const portraitQuery=globalThis.matchMedia?.('(max-width:700px) and (orientation:portrait)');
+let portraitLayout=portraitQuery?.matches??false;
+portraitQuery?.addEventListener?.('change',event=>{portraitLayout=event.matches;});
 let lastResolutionCheck=-Infinity;
 let lateNightWarp = null;
 function removeNightMontage(){
@@ -1162,7 +1166,7 @@ function frame(now){
   const drawWorld=worldRenderGate.shouldDraw(state,now,observationStopped,cameraKey,bubbles);
   if(drawWorld)renderer.draw(state,now,observationStopped,bubbles);
   else renderer.last=now;
-  const portraitFollow=matchMedia('(max-width:700px) and (orientation:portrait)').matches && renderer.view==='interior' && renderer.focus && Number.isFinite(renderer.followCharacterX);
+  const portraitFollow=portraitLayout && renderer.view==='interior' && renderer.focus && Number.isFinite(renderer.followCharacterX);
   const scene=$('scene'), canvas=$('world');
   if(portraitFollow){
     const width=canvas.offsetWidth,viewport=scene.clientWidth,maxShift=Math.max(0,(width-viewport)/2);

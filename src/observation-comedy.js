@@ -76,8 +76,6 @@ export function drawObservationComedy(ctx,d,x,y,u,{reduced=false}={}){
    case 'stub':box(-3,-2,6,3,'#d6c4a1');box(2,-2,2,3,'#66554c');break;
    case 'cloth':box(-8,-3,16,6,'#a5d4d2');break;
    case 'dish':box(-12,-3,24,3,'#f1e8d6');box(-8,0,16,2,'#9ca5aa');break;
-   case 'glass':box(-6,-15,12,16,'#cee9e8');box(-4,-8,8,7,'#99cbd5');box(-6,-16,12,2,'#edf7ed');break;
-   case 'photo':box(-23,-17,46,34,'#fff2d5');box(-20,-14,40,25,'#b8d6d2');box(-10,-8,11,15,'#cc8494');box(-11,-11,13,8,'#49343a');if(!prop.missingCat){box(6,-8,10,15,'#292932');box(5,-13,4,6,'#292932');box(14,-13,4,6,'#292932');}break;
    case 'keys':ctx.strokeStyle='#e8cc75';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,-9,4,0,Math.PI*2);ctx.moveTo(0,-5);ctx.lineTo(0,5);ctx.lineTo(4,5);ctx.stroke();break;
   }
   ctx.restore();

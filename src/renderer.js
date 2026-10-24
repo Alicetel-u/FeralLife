@@ -10,6 +10,18 @@ import { drawCharacterEffects, spriteMotion } from './effects.js';
 import {observationComedy,drawObservationComedy} from './observation-comedy.js';
 import { drawExteriorForeground, exteriorFeet } from './exterior-occlusion.js';
 
+let reducedQuery=null,reducedMotion=false,reducedSource=null;
+export function prefersReducedMotion(){
+ const source=globalThis.matchMedia;
+ if(source!==reducedSource){
+  reducedSource=source;
+  reducedQuery=source?.('(prefers-reduced-motion: reduce)')??null;
+  reducedMotion=reducedQuery?.matches??false;
+  reducedQuery?.addEventListener?.('change',event=>{reducedMotion=event.matches;});
+ }
+ return reducedMotion;
+}
+
 export const WORLD_WIDTH = 1920;
 export const WORLD_HEIGHT = 1080;
 export function roomBounds(room, focusRoom = null) {
@@ -191,10 +203,11 @@ export class WorldRenderer {
     const t = this.animTime;
     this.miniReactions??=new MiniReactionState();
     this.miniReactions.update(bubbles,t);
-    this.reducedMotion=globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches??false;
-    this.managerTarget=managerTarget(state,bubbles);
+    this.reducedMotion=prefersReducedMotion();
+    this.managerTarget=managerTarget(state,bubbles,this.reducedMotion);
     const target=this.managerTarget;
     const directedManager=newAllyPosition(state,'manager',{reduced:this.reducedMotion});
+    this.directedManager=directedManager;
     this.managerPosition=directedManager||advanceManager(this.managerPosition,target,paused?0:dt);
     this.managerMoving=this.managerPosition.moving;
     ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
@@ -232,8 +245,9 @@ export class WorldRenderer {
     for (const r of state.residents) this.drawInteriorResident(state,r,t);
     const escapeManager=newAllyPosition(state,'manager',{reduced:this.reducedMotion});
     if(escapeManager?.zone==='hall'){const b=roomBounds(102,this.focusRoom),base=exteriorRoomBounds(102);if(b){
-      const x=b.x+(escapeManager.x-base.x)/base.w*b.w,y=b.y+b.h+16;
-      drawSprite(ctx,'manager',x,y+(escapeManager.dy||0),t,'idle',(this.focus?300:144)/44,escapeManager.direction,{pose:escapeManager.pose,...this.miniReaction('manager',t),poseLocked:true});
+      const x=b.x+(escapeManager.x-base.x)/base.w*b.w,y=b.y+b.h+16,height=this.focus?300:144,u=height/128;
+      const pose=escapeManager.moving?managerFrame(escapeManager,t,true,escapeManager.walkDistance):escapeManager.pose;
+      drawSprite(ctx,'manager',x,y+(escapeManager.dy||0)*u,t,escapeManager.moving?'outing':'idle',height/44,escapeManager.direction,{pose,rotate:escapeManager.rotate||0,...this.miniReaction('manager',t),poseLocked:true});
     }}
     this.drawSpeech(state);
   }
@@ -255,7 +269,7 @@ export class WorldRenderer {
     if(SCENE_ART.image)ctx.drawImage(SCENE_ART.image,0,0,1000,562.5);else rect(ctx,0,0,1000,562.5,'#494d42');
     rect(ctx,0,0,1000,562.5,`rgba(16,27,49,${darkness})`);
     if(darkness>.3)for(let i=0;i<36;i++)rect(ctx,noise(i,2,1)*1000,noise(i,3,2)*115,1,1,'#e9dcc277');
-    const caretaker=this.managerPosition||{x:650,y:513,zone:'street'},caretakerPose=this.managerPreviewPose||(newAllyPosition(state,'manager')&&!this.managerMoving?caretaker.pose:managerFrame(this.managerTarget||managerTarget(state,this.bubbles),t,this.managerMoving,this.managerPosition?.walkDistance??0));
+    const caretaker=this.managerPosition||{x:650,y:513,zone:'street'},caretakerPose=this.managerPreviewPose||(this.directedManager&&!this.managerMoving?caretaker.pose:managerFrame(this.managerTarget||managerTarget(state,this.bubbles),t,this.managerMoving,this.managerPosition?.walkDistance??0));
     const people=state.residents.map(r=>({r,p:exteriorFeet(newAllyPosition(state,r.type,{reduced:this.reducedMotion})||sampleJourney(r,state.hour,ACTIONS[r.action].place))}));
     people.push({r:null,p:exteriorFeet(caretaker)});
     people.sort((a,b)=>a.p.y-b.p.y);
@@ -263,7 +277,7 @@ export class WorldRenderer {
       if(!r){
         if(CHARACTER_ART.manager?.image){
           rect(ctx,p.x-13,p.y+1,26,3,'#17211b66');
-          drawSprite(ctx,'manager',p.x,p.y+(p.dy||0),t,'idle',80/44,this.managerMoving?p.direction:(this.managerTarget?.direction||1),{pose:caretakerPose,rotate:p.rotate||0,...this.miniReaction('manager',t),poseLocked:!!newAllyPosition(state,'manager')});
+          drawSprite(ctx,'manager',p.x,p.y+(p.dy||0),t,'idle',80/44,this.managerMoving?p.direction:(this.managerTarget?.direction||1),{pose:caretakerPose,rotate:p.rotate||0,...this.miniReaction('manager',t),poseLocked:!!this.directedManager});
           ctx.save();ctx.beginPath();ctx.rect(p.x-70,p.y-115,140,120);ctx.clip();
           drawExteriorForeground(ctx,SCENE_ART.image,p,darkness);ctx.restore();
         }
@@ -292,9 +306,9 @@ export class WorldRenderer {
     ctx.restore();
   }
   interiorResidentPosition(state,r,t=this.animTime||0) {
-    const comedy=observationComedy(state,r,{reduced:this.reducedMotion});
     const directed=newAllyPosition(state,r.type,{reduced:this.reducedMotion});
     if(directed)return directed;
+    const comedy=observationComedy(state,r,{reduced:this.reducedMotion});
     let base=sampleJourney(r,state.hour,ACTIONS[r.action].place);
     // Align settled sleep (including old saved routes) with the painted mattress.
     // A character merely pretending to sleep during tea stays in her current seat.
@@ -405,7 +419,7 @@ export class WorldRenderer {
   speechAnchor(state, type) {
     const resident = state.residents.find(person => person.type === type);
     if (!resident) {
-      const escape=type==='manager'&&newAllyPosition(state,type);
+      const escape=type==='manager'&&newAllyPosition(state,type,{reduced:this.reducedMotion});
       if(escape&&this.view==='interior'){
         const b=roomBounds(102,this.focusRoom),base=exteriorRoomBounds(102);
         if(b)return {x:b.x+(escape.x-base.x)/base.w*b.w,y:b.y+b.h+16-(this.focus?300:144)*.86,tail:true,source:'廊下の大家'};
