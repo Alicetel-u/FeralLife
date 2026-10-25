@@ -126,3 +126,10 @@ test('imported catalog identities cannot inject a speaker attribute into removed
  payload.catalogEntries[JSON.stringify(['cat" onclick="bad()','台詞','normal',false])]={chapter:1,version:'v1'};
  assert.throws(()=>voiceReviewImport(state,payload),/形式/);assert.equal(state.catalogEntries,null);
 });
+
+
+test('a saved unplayed filter still includes newly added wording after a release',()=>{
+ const state=voiceReviewEmpty(),old=variant('未再生だった台詞'),added=variant('更新で追加された台詞');
+ voiceReviewSyncCatalog(state,[old]);state.filters.status='todo';voiceReviewSyncCatalog(state,[old,added]);
+ assert.deepEqual(voiceReviewFilter([old,added],state).map(r=>r.id),[old.id,added.id]);
+});
