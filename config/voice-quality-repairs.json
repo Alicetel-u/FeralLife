@@ -1,0 +1,208 @@
+{
+  "description": "2026-10-25: restore one truncated sentence, trim only excessive edge silence, and lower one attack peak. Internal acting pauses and intentional silence remain unchanged.",
+  "entries": [
+    {
+      "hash": "5066325f2866dd1975f5d2e064eff5f24bba5cdaec6ba8e7ecccb67553f0b2a7",
+      "text": "さっき……『俺の彼女』って言ってくれたよね♡",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/5066325f2866dd1975f5d2e064eff5f24bba5cdaec6ba8e7ecccb67553f0b2a7.mp3"
+    },
+    {
+      "hash": "e65de566d3ec8feeaa8ab7e358ebd632a165c926d4d5a3dce1a6a17fcc13707d",
+      "text": "大家さん！？",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/e65de566d3ec8feeaa8ab7e358ebd632a165c926d4d5a3dce1a6a17fcc13707d.mp3"
+    },
+    {
+      "hash": "ec077b05e77e32f10dac57db43011c119cc0a996c339e05e44bf3778b4e57f77",
+      "text": "頼む……目を開けてくれ……！",
+      "speaker": "manager",
+      "trimEdges": true,
+      "input": "assets/voices/ec077b05e77e32f10dac57db43011c119cc0a996c339e05e44bf3778b4e57f77.mp3"
+    },
+    {
+      "hash": "e50eb1e52094905381bf0665c3d089deee901cae9993b431843c7c12fed2ebc5",
+      "text": "あたしの未来、そんなふうに考えてくれるんだ。……大家さんの隣も、空けといてね♡",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/e50eb1e52094905381bf0665c3d089deee901cae9993b431843c7c12fed2ebc5.mp3"
+    },
+    {
+      "hash": "e7b66726d585e52e9e27c818a72499e8a370e46fdc17d45d5452f8cca32bb71e",
+      "text": "最初からやれよ！",
+      "speaker": "manager",
+      "trimEdges": true,
+      "input": "assets/voices/e7b66726d585e52e9e27c818a72499e8a370e46fdc17d45d5452f8cca32bb71e.mp3"
+    },
+    {
+      "hash": "65897f1ec4f597b893a5bbcb7483bad1df07f2ad7059023cadab2710382b512f",
+      "text": "変な大家ニャ。アパートは生き物じゃないニャ。",
+      "speaker": "cat",
+      "trimEdges": true,
+      "input": "assets/voices/65897f1ec4f597b893a5bbcb7483bad1df07f2ad7059023cadab2710382b512f.mp3"
+    },
+    {
+      "hash": "1677f500437761c4e8fe489ee585a446b00e19460a9b2d5ec0b116b6c00ed816",
+      "text": "あの人、もう来ないといいな。",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/1677f500437761c4e8fe489ee585a446b00e19460a9b2d5ec0b116b6c00ed816.mp3"
+    },
+    {
+      "hash": "ff0836e79edc07b48321badf7818241ddaff1b8888ad340daf59274d8b219ed5",
+      "text": "大家さんにも、ちゃんと相談しよう。",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/ff0836e79edc07b48321badf7818241ddaff1b8888ad340daf59274d8b219ed5.mp3"
+    },
+    {
+      "hash": "8f020a73376c68e41097fb5e40b751466dddc992cbb928d4d8d60fee8eedb565",
+      "text": "……もう、お店は辞めたから。",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/8f020a73376c68e41097fb5e40b751466dddc992cbb928d4d8d60fee8eedb565.mp3"
+    },
+    {
+      "hash": "3b45be666ce71f9e839665f44b23374f747a201d4366e67c3b8eb0848ce30f84",
+      "text": "……夢……だったのか……？",
+      "speaker": "manager",
+      "trimEdges": true,
+      "input": "assets/voices/3b45be666ce71f9e839665f44b23374f747a201d4366e67c3b8eb0848ce30f84.mp3"
+    },
+    {
+      "hash": "576dd180de95a09e85dae9ecb552a64edf4c93cdffe5ebb8b2eeb78d222845c8",
+      "text": "……生きてる……。",
+      "speaker": "manager",
+      "trimEdges": true,
+      "input": "assets/voices/576dd180de95a09e85dae9ecb552a64edf4c93cdffe5ebb8b2eeb78d222845c8.mp3"
+    },
+    {
+      "hash": "dd2dcfa7da9cb881daee1e742e7658d1852f5f179e6e7c0b8feccad3079aca65",
+      "text": "大家さん？ 何かあった？",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/dd2dcfa7da9cb881daee1e742e7658d1852f5f179e6e7c0b8feccad3079aca65.mp3"
+    },
+    {
+      "hash": "254d976eabda560b280766051c4c9d6e543c29a54646b840211bee2a5bb74308",
+      "text": "……ずるいなぁ。",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/254d976eabda560b280766051c4c9d6e543c29a54646b840211bee2a5bb74308.mp3"
+    },
+    {
+      "hash": "8d63565482771caa5e0e54d932939b4bf3d6281115ec978f2d831f9e4f544698",
+      "text": "……えっ？",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/8d63565482771caa5e0e54d932939b4bf3d6281115ec978f2d831f9e4f544698.mp3"
+    },
+    {
+      "hash": "64316f2da6c810976e424353d2a5133cb3268c950b60973a8b80a4c9f6f9ee2f",
+      "text": "……大家さん？",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/64316f2da6c810976e424353d2a5133cb3268c950b60973a8b80a4c9f6f9ee2f.mp3"
+    },
+    {
+      "hash": "a1e4df631797e1cbb4d98204cf3e7ccc18d9d7104c1393722cf91dc7a4e70a43",
+      "text": "ふーん。言い訳はできるんだ？",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/a1e4df631797e1cbb4d98204cf3e7ccc18d9d7104c1393722cf91dc7a4e70a43.mp3"
+    },
+    {
+      "hash": "ff29cd05d7483e944b5918cd065444c599fd5e168bf464fcb6f47406b45b0983",
+      "text": "好みの話が、いつの間にか婚姻届に……。",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/ff29cd05d7483e944b5918cd065444c599fd5e168bf464fcb6f47406b45b0983.mp3"
+    },
+    {
+      "hash": "8c348ce7e57f49e488bba9f1ac45bef8d3f97431457b063377862d1a6c8c9e12",
+      "text": "……大家さん、すごい。あたしのために、あんなに必死になってくれるなんて……♡",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/8c348ce7e57f49e488bba9f1ac45bef8d3f97431457b063377862d1a6c8c9e12.mp3"
+    },
+    {
+      "hash": "8aa7d0c0abc7f8a583a2d1a634d0b780ed08efc679315c215a4ff42653b8dbaa",
+      "text": "ねえ大家さん。これからも、ずーっと守ってくれるよね？♡",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/8aa7d0c0abc7f8a583a2d1a634d0b780ed08efc679315c215a4ff42653b8dbaa.mp3"
+    },
+    {
+      "hash": "532e548e354d1fd6efbcb1de80f78f2c8661de5ef252af99753be0239af0bc6f",
+      "text": "……しつこい……。",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/532e548e354d1fd6efbcb1de80f78f2c8661de5ef252af99753be0239af0bc6f.film.mp3"
+    },
+    {
+      "hash": "ca9b7bfa1fa173ab762c3e1d41011d7950b9a2c8e541fb03612b16d593816a9d",
+      "text": "ふんっ！ 二人ともグルだったのかニャ！ もう信用しないニャ！",
+      "speaker": "cat",
+      "trimEdges": true,
+      "input": "assets/voices/ca9b7bfa1fa173ab762c3e1d41011d7950b9a2c8e541fb03612b16d593816a9d.new-ally.mp3"
+    },
+    {
+      "hash": "39b3376265a36e78d518c158a893a885a6783611f7237e4da139c5febfea0186",
+      "text": "あははっ。モクちゃん、面白いね。",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/39b3376265a36e78d518c158a893a885a6783611f7237e4da139c5febfea0186.new-ally.mp3"
+    },
+    {
+      "hash": "a5a94918c62c344b5dc3aba1c38e274403e2f0f29be97ea6dbf5f91987aeb674",
+      "text": "ううん！ なんでもない♡",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/a5a94918c62c344b5dc3aba1c38e274403e2f0f29be97ea6dbf5f91987aeb674.mp3"
+    },
+    {
+      "hash": "a06d496176d8b600387b9b61d09623bc5488914efa0ac923ac6761591f6fcf02",
+      "text": "えへへ……でも、大家さん、ちょっとカッコよかったよ♡",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/a06d496176d8b600387b9b61d09623bc5488914efa0ac923ac6761591f6fcf02.mp3"
+    },
+    {
+      "hash": "e2045bbf14ce181df06f662a7d0cb40caddc66d25999d4b6d8d1c20f15323208",
+      "text": "大家さん、今日は……助かった。",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/e2045bbf14ce181df06f662a7d0cb40caddc66d25999d4b6d8d1c20f15323208.mp3"
+    },
+    {
+      "hash": "a2233b3ad8c88af3de93b17cbe27f048cd4a7026c90eb2b0606c3b94ca40352e",
+      "text": "えー、お説教まで付いてるの？",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/a2233b3ad8c88af3de93b17cbe27f048cd4a7026c90eb2b0606c3b94ca40352e.mp3"
+    },
+    {
+      "hash": "9ddd6bcc7ae9c52f1c30f7ba7b1141debf3e200dd0207da7af7ffd816835599a",
+      "text": "……ありがと。大家さん。",
+      "speaker": "hostess",
+      "trimEdges": true,
+      "input": "assets/voices/9ddd6bcc7ae9c52f1c30f7ba7b1141debf3e200dd0207da7af7ffd816835599a.mp3"
+    },
+    {
+      "hash": "eeff1d457a58d6549dcb006571234cd2d623570077a3f9d033e157105f4ff640",
+      "text": "ゴミ袋でいいのかニャ？",
+      "speaker": "cat",
+      "restoreFrom": "assets/voices/bb9e5906bd870db15687f5f93db7a2930bf9d4b8a8eea44e9458a1df1a3e3c4b.mp3",
+      "input": "assets/voices/bb9e5906bd870db15687f5f93db7a2930bf9d4b8a8eea44e9458a1df1a3e3c4b.mp3"
+    },
+    {
+      "hash": "9404bba4aa5b25397e732dcdc52781c6474a1293c8d33b0b2cbf88cedd9d1c97",
+      "text": "モク流奥義・煙ノ肉球乱舞ニャ！！",
+      "speaker": "cat",
+      "reduceDB": 4,
+      "input": "assets/voices/9404bba4aa5b25397e732dcdc52781c6474a1293c8d33b0b2cbf88cedd9d1c97.mp3"
+    }
+  ]
+}

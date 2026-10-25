@@ -33,7 +33,7 @@ for(const entry of Object.values(manifest)){
  await stat(source);
  let fresh=false;
  try{const outputStat=await stat(output);fresh=outputStat.size>0;}catch{fresh=false;}
- if(fresh)continue;
+ if(fresh&&!(process.argv.includes('--refresh-quality')&&entry.audioQuality))continue;
  const args=['-hide_banner','-loglevel','error','-y','-i',source,
   '-af',`atempo=${pace.tempo},apad=pad_dur=0.16`,'-codec:a','libmp3lame','-q:a','3',output];
  const ffmpeg=spawnSync('ffmpeg',args,{encoding:'utf8'});

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node server.mjs",
     "start": "node server.mjs",
+    "prebuild": "node tools/build-voice-review.mjs",
     "build": "node build.mjs",
     "test": "node --test tests/*.test.mjs",
     "voice:setup": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/voice-setup.ps1",

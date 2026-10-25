@@ -1,3 +1,4 @@
+import {mountVoiceReview} from './voice-review.js';
 import {playFourKingsNotice} from './act-two-observation-two.js';
 import {actTwoObservationPosition} from './act-two-observation.js';
 import {overnightMontageFrame} from './overnight-montage.js';
@@ -327,7 +328,8 @@ function showEpilogueCut(kind,replace){
  syncNormalBgm();
 }
 function clearFireEnding(){stopFireEnding?.();stopFireEnding=null;}
-function openModal(html) { if(!epilogueSwapping)stopEpilogueTransition();stopEpilogueSound();html=storyScreenHTML(html);characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); cleanupDuelPlayback();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); replaceConversationContent($('modal-content'),html); modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); syncNormalBgm(); }
+let stopVoiceReview=()=>{};
+function openModal(html) { stopVoiceReview();stopVoiceReview=()=>{};modal.classList.remove('voice-review-mode'); if(!epilogueSwapping)stopEpilogueTransition();stopEpilogueSound();html=storyScreenHTML(html);characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); cleanupDuelPlayback();modal.classList.remove('choice-mode'); clearFireEnding();clearTimeout(eventAutoTimer); replaceConversationContent($('modal-content'),html); modal.classList.toggle('act-modal',html.includes('act-screen'));modal.classList.toggle('conversation-modal',html.includes('event-stage')); document.body.classList.toggle('conversation-active',html.includes('event-stage')); if (!modal.open) modal.showModal(); updateUI(); syncNormalBgm(); }
 function closeModal() {
   if(modal.classList.contains('conversation-modal')&&eventView){clearConversation(state,eventView.id);save();}
   stopEpilogueTransition();stopEpilogueSound();
@@ -341,7 +343,7 @@ function closeModal() {
     return;
   }
   characterVoice.stop(); stopOpeningPrologue(); cleanupChoiceUI(); cleanupDuelPlayback(); clearFireEnding();clearTimeout(eventAutoTimer);modal.close(); updateUI(); syncNormalBgm(); }
-modal.addEventListener('close', () => { if(modal.open)return;stopEpilogueTransition();stopEpilogueSound();characterVoice.stop();stopOpeningPrologue();cleanupChoiceUI(); cleanupDuelPlayback();clearFireEnding();clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); syncNormalBgm(); });
+modal.addEventListener('close', () => { if(modal.open)return;stopVoiceReview();stopVoiceReview=()=>{};modal.classList.remove('voice-review-mode');stopEpilogueTransition();stopEpilogueSound();characterVoice.stop();stopOpeningPrologue();cleanupChoiceUI(); cleanupDuelPlayback();clearFireEnding();clearTimeout(eventAutoTimer);document.body.classList.remove('conversation-active'); modal.classList.remove('event-ui-hidden');lastTime = performance.now(); updateUI(); openNextStageEvent(); syncNormalBgm(); });
 function syncStageCursor() {
   rememberReadScenes(state);
   seenStageId = state.events.reduce((max, event) => Math.max(max, event.id), 0);
@@ -703,7 +705,11 @@ function debugMenuPage(title,subtitle,buttons,back){
   </section>`);
 }
 function showDeveloperMenu(){
-  debugMenuPage('開発者メニュー','テストしたい項目を選択',[['scenes','シーンセレクト（第一幕・第二幕）','data-debug-tool'],['observation','観察モード（第一幕・第二幕）','data-debug-tool']], 'data-debug-back');
+  debugMenuPage('開発者メニュー','テストしたい項目を選択',[['scenes','シーンセレクト（第一幕・第二幕）','data-debug-tool'],['observation','観察モード（第一幕・第二幕）','data-debug-tool'],['voices','音声チェック・指摘の出力','data-debug-tool']], 'data-debug-back');
+}
+function showVoiceReview(){
+ openModal('<div class="voice-review-host"></div>');modal.classList.add('voice-review-mode');
+ stopVoiceReview=mountVoiceReview($('modal-content'),{onBack:showDeveloperMenu});syncNormalBgm();
 }
 function showDebugObservationChapters(){
   debugMenuPage('観察モード','確認する幕を選択。通常セーブには影響しません。',[['1','第一幕 — モクの日常','data-debug-observation-chapter'],['2','第二幕 — ルナ編','data-debug-observation-chapter']],'data-debug-tools-back');
@@ -900,6 +906,7 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-debug-back')){showGameTitle();return;}
   if(button.hasAttribute('data-debug-tools-back')){showDeveloperMenu();return;}
   if(button.hasAttribute('data-debug-chapters-back')){showDebugChapterSelect();return;}
+  if(button.dataset.debugTool==='voices'){showVoiceReview();return;}
   if(button.dataset.debugTool==='scenes'){showDebugChapterSelect();return;}
   if(button.dataset.debugTool==='observation'){showDebugObservationChapters();return;}
   if(button.hasAttribute('data-debug-observation-back')){showDebugObservationChapters();return;}
@@ -1046,6 +1053,7 @@ const normalBgm=createNormalBgm();
 normalBgm.preload('title');
 function paintSoundButton(){$('sound-button').setAttribute('aria-pressed',String(normalBgm.enabled));$('sound-button').innerHTML=normalBgm.label();}
 function syncNormalBgm(){
+ if(modal.open&&modal.classList.contains('voice-review-mode')&&modal.querySelector('.vr-panel'))return normalBgm.setScene(true,'title');
   const epilogueStage=modal.open?modal.querySelector('.act-two-epilogue'):null;
   const epilogueQuiet=modal.open&&(epilogueStage?.dataset.silent==='true'||!!modal.querySelector('.epilogue-transition,.epilogue-complete'));
   const morningStage=modal.open?modal.querySelector('.act-two-morning-stage'):null;

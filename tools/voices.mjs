@@ -1,3 +1,5 @@
+import {spawnSync} from 'node:child_process';
+import {assertSpokenDuration} from './voice-quality.mjs';
 import {readFile,writeFile,mkdir,open,rename,stat,unlink} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {resolve,dirname,join} from 'node:path';
@@ -50,7 +52,8 @@ const pronunciationIssues=(await json('config/voice-pronunciation-issues.json'))
 const pronunciationOnly=args.includes('--pronunciation-only');
 if(pronunciationOnly&&(sampleMoku||scope!=='intro'))throw Error('Pronunciation repair requires intro scope without sample mode');
 const selectedScript=pronunciationOnly?script.filter(row=>pronunciationIssues.some(issue=>row.line.text.includes(issue.term))):sampleMoku?script.filter(row=>row.speaker==='cat').slice(0,2):script;
-const rows=planVoices(speaker?selectedScript.filter(row=>row.speaker===speaker):selectedScript,ids,config,pronunciationIssues,repairs);
+const exactText=args.find(a=>a.startsWith('--text='))?.slice('--text='.length);
+const rows=planVoices(speaker?selectedScript.filter(row=>row.speaker===speaker):selectedScript,ids,config,pronunciationIssues,repairs).filter(row=>!exactText||row.text===exactText);
 const pronunciationReview=pronunciationIssues.map(issue=>({...issue,sources:rows.filter(row=>row.text.includes(issue.term)).map(row=>row.source)})).filter(issue=>issue.sources.length);
 await mkdir(join(root,'.local'),{recursive:true});
 const planId=digest(rows.map(r=>({source:r.source,hash:r.hash})));
@@ -76,11 +79,17 @@ console.log(JSON.stringify({scope,planId,model:config.model,lines:rows.length,un
 if(!args.includes('--verify')&&!args.includes('--generate'))process.exit(0);
 const allowedGeneration=repairOnly||fillMissing||scope==='act2-trouble1'||scope==='act2-duel'||scope==='intro'||(scope==='act1'&&(['cat','manager'].includes(speaker)||firstTragedy)&&!sampleMoku&&!pronunciationOnly);
 if(args.includes('--generate')&&(!allowedGeneration||!args.includes('--approve='+planId)))throw Error('Generation requires an allowed scope and authorization of the current plan hash');
+function validateRecording(row){
+ const probe=spawnSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',join(root,row.file)],{encoding:'utf8',windowsHide:true});
+ if(probe.status!==0)throw Error('Voice cannot be decoded; recorded attempt retained for inspection');
+ assertSpokenDuration(row.text,Number(probe.stdout));
+}
+// Cached generation outputs need the same check: never republish a corrupt old file.
+if(args.includes('--generate'))for(const row of rows)if(await exists(row.file))validateRecording(row);
 let key;
 try{key=(await json('.local/elevenlabs.json')).apiKey;}catch{throw Error('Local API key missing. Run npm run voice:setup (do not paste key into chat).');}
 if(typeof key!=='string'||!key.trim())throw Error('Empty API key');
 // Verify ignore protection and absence from the Git index, without printing the key.
-const {spawnSync}=await import('node:child_process');
 const ignored=spawnSync('git',['check-ignore','--quiet','.local/elevenlabs.json'],{cwd:root});
 const tracked=spawnSync('git',['ls-files','--error-unmatch','.local/elevenlabs.json'],{cwd:root,stdio:'ignore'});
 if(ignored.error||tracked.error)throw Error('Unable to check Git protection: child process permission denied');
@@ -131,6 +140,7 @@ try{
     await atomic(row.file,audio);
     journal[row.hash]={...journal[row.hash],status:'complete',requestId:response.headers.get('request-id'),chargedCharacters:response.headers.get('character-cost')};
     await atomic('.local/voice-journal.json',JSON.stringify(journal,null,2));
+    validateRecording(row);
     // Publish each completed clip so a later failure never loses usable work.
     await publish();
     if(++completed%25===0)console.log(JSON.stringify({completed,total:pending.length}));
