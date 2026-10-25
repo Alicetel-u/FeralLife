@@ -36,7 +36,7 @@ test('the complete morning plays at authored times before the original noon batt
 
 test('the shared room and exits retain floor placement, distinguish speakers and leave Luna alone',()=>{
  const s=start(),r=Object.create(WorldRenderer.prototype);Object.assign(r,{view:'interior',focus:true,focusRoom:102});
- for(const type of ['cat','hostess','manager']){const p=fourKingsPosition(s,type);assert.equal(p.room,102);assert.equal(p.zone,'room');assert.ok(p.y>=436);assert.equal(p.height,200);assert.equal(r.speechAnchor(s,type).tail,true);}
+ for(const type of ['cat','hostess','manager']){const p=fourKingsPosition(s,type);assert.equal(p.room,102);assert.equal(p.zone,'room');assert.ok(p.y>=436);assert.equal(p.height,300);assert.equal(r.speechAnchor(s,type).tail,true);}
  const anchors=['cat','hostess','manager'].map(t=>r.speechAnchor(s,t).x);assert.ok(anchors[0]<anchors[1]&&anchors[1]<anchors[2]);
  s.hour=80.5;s.actOne.observation.done=[FOUR_KINGS_IDS[0]];
  for(const [index,elapsed] of [[4,1],[10,2.5]]){
@@ -94,4 +94,18 @@ test('voiced replies advance on their own completion while the silent reaction s
  s.actOne.observation.current={id:FOUR_KINGS_IDS[0],index:15,elapsed:0};
  tickObservation(s,.25);tickObservation(s,.15);
  assert.equal(observationView(s).lineIndex,16);
+});
+
+test('room conversations use the shared size and stable floor positions before either exit',()=>{
+ const s=start();
+ for(const stage of [0,1])for(const index of (stage===0?[0,9,18]:[0,1,2,3])){
+  s.actOne.observation.current={id:FOUR_KINGS_IDS[stage],index,elapsed:1};
+  const cast=['cat','hostess','manager'].map(type=>fourKingsPosition(s,type));
+  for(const p of cast){assert.equal(p.height,300);assert.equal(p.y,440);assert.equal(p.zone,'room');assert.equal(p.roomGroup,true);assert.equal(p.moving,false);}
+  assert.ok(cast[1].x-cast[0].x>=28);assert.ok(cast[2].x-cast[1].x>=28);
+  assert.equal(cast[2].x,500,'the landlord stays in the shot while talking');
+ }
+ s.actOne.observation.current={id:FOUR_KINGS_IDS[2],index:0,elapsed:1};
+ assert.equal(fourKingsPosition(s,'hostess').height,300);
+ assert.equal(fourKingsPosition(s,'hostess').roomGroup,false);
 });

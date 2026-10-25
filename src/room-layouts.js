@@ -1,3 +1,5 @@
+// Drawing units before the camera transform. Room shots and building shots use different projections.
+export const OBSERVATION_CHARACTER_SIZE={interior:300,overview:144,exterior:80};
 // Furniture coordinates use the existing 173 x 113 room plane, never image pixels.
 export const ROOM_SPOTS = {
   table:[82,104],bed:[34,81],window:[65,94],fridge:[137,98],tv:[105,104],center:[55,105],hall:[113,108]

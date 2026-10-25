@@ -1,3 +1,4 @@
+import {OBSERVATION_CHARACTER_SIZE} from './room-layouts.js';
 import {homeSpot} from './movement.js';
 export const FOUR_KINGS_START=80;
 export const FOUR_KINGS_IDS=['luna-four-kings-notice','luna-four-kings-support','luna-four-kings-message','luna-four-kings-reply'];
@@ -50,7 +51,7 @@ export const ACT_TWO_SECOND_OBSERVATION_BEATS=[
  ]}
 ];
 const kingsPoint=(x,y=440,zone='room',room=102,direction=1)=>({x,y,zone,room,direction});
-const KINGS_ROOM={cat:kingsPoint(450),hostess:kingsPoint(472),manager:kingsPoint(494,440,'room',102,-1)};
+const KINGS_ROOM={cat:kingsPoint(444),hostess:kingsPoint(472),manager:kingsPoint(500,440,'room',102,-1)};
 const KINGS_HALL={cat:kingsPoint(450,438,'hall'),hostess:kingsPoint(525,440,'hall'),manager:kingsPoint(605,440,'hall',102,-1)};
 const kingsHome={...homeSpot(101),direction:1};
 export const FOUR_KINGS_END={cat:kingsPoint(540,440,'hall'),hostess:kingsPoint(640,513,'street',null,1),manager:kingsPoint(695,513,'street',null,-1)};
@@ -88,15 +89,15 @@ export function fourKingsFrame(state){
 export function fourKingsPosition(state,type,{reduced=false}={}){
  const f=fourKingsFrame(state);if(!f||!KINGS_ROOM[type])return null;
  const {stage,index,elapsed}=f;
- let p={...KINGS_ROOM[type],moving:false,walkDistance:0},height=200,pose='chat',action='chat',props=[],visible=true,lockPose=false;
+ let p={...KINGS_ROOM[type],moving:false,walkDistance:0},height=OBSERVATION_CHARACTER_SIZE.interior,pose='chat',action='chat',props=[],visible=true,lockPose=false;
  if(stage===0){
   if(type==='hostess')props=[{kind:'phone',x:22,y:-53}];
   if(type==='manager')pose=[9,12,14,18].includes(index)?'retort':'talk';
  }
  if(stage===1){
   if(type==='manager'){
-   if(index<4)p=kingsMove([KINGS_ROOM.manager,kingsPoint(510)],index===0?elapsed:2,.65,{reduced});
-   else {p=kingsMove([kingsPoint(510),KINGS_HALL.manager,kingsPoint(777,440,'hall',103),kingsPoint(815,513,'street',null),kingsPoint(1040,513,'street',null)],index===4?elapsed:4,2.8,{reduced});visible=p.x<1030;}
+   if(index<4)p={...KINGS_ROOM.manager,moving:false,walkDistance:0};
+   else {p=kingsMove([KINGS_ROOM.manager,KINGS_HALL.manager,kingsPoint(777,440,'hall',103),kingsPoint(815,513,'street',null),kingsPoint(1040,513,'street',null)],index===4?elapsed:4,2.8,{reduced});visible=p.x<1030;}
    pose='talk';
   }else if(index>=4){
    p=type==='cat'?kingsMove([KINGS_ROOM.cat,kingsPoint(513,440,'hall'),KINGS_HALL.cat],index===4?elapsed:2,.45,{reduced}):kingsMove([KINGS_ROOM.hostess,kingsPoint(513),KINGS_HALL.hostess],index===4?elapsed:2,.5,{delay:.45,reduced});
@@ -107,7 +108,6 @@ export function fourKingsPosition(state,type,{reduced=false}={}){
   }
  }
  if(stage>=2){
-  height=300;
   if(type==='cat'){p={...kingsHome};visible=false;}
   if(type==='manager'){p={...FOUR_KINGS_END.manager};visible=stage===3;}
   if(type==='hostess'){
@@ -129,7 +129,7 @@ export function fourKingsPosition(state,type,{reduced=false}={}){
  let cameraView='interior';
  if(stage===1&&index>=4){const l=index===10?kingsMove([KINGS_HALL.hostess,kingsPoint(513,440,'hall'),kingsPoint(472)],elapsed,.6,{delay:.85,reduced}):kingsMove([KINGS_ROOM.hostess,kingsPoint(513),KINGS_HALL.hostess],index===4?elapsed:2,.5,{delay:.45,reduced});cameraView=l.zone==='room'?'interior':'exterior';}
  if(stage===3&&index>=3){const l=kingsMove([kingsPoint(472),kingsPoint(513,440,'hall'),kingsPoint(777,440,'hall',103),kingsPoint(815,513,'street',null),FOUR_KINGS_END.hostess],index===3?elapsed:5,2.4,{delay:.15,reduced});cameraView=l.zone==='room'?'interior':'exterior';}
- return {...p,height,pose,action,props,lockPose,seat:type==='hostess'&&stage===2&&index<3,visible,dy,rotate:0,chat:true,cameraView,...(stage===1&&cameraView==='exterior'?{cameraTarget:{x:525,y:440,zone:'hall'}}:{})};
+ return {...p,height,roomGroup:stage===0||stage===1&&index<4,pose,action,props,lockPose,seat:type==='hostess'&&stage===2&&index<3,visible,dy,rotate:0,chat:true,cameraView,...(stage===1&&cameraView==='exterior'?{cameraTarget:{x:525,y:440,zone:'hall'}}:{})};
 }
 const kingsCueHistory=new WeakMap();
 export function playFourKingsNotice(line,key,context,volume){

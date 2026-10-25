@@ -1171,6 +1171,7 @@ function frame(now){
   const drawWorld=worldRenderGate.shouldDraw(state,now,observationStopped,cameraKey,bubbles);
   if(drawWorld)renderer.draw(state,now,observationStopped,bubbles);
   else renderer.last=now;
+  $('scene').classList.toggle('room-group-shot',renderer.view==='interior'&&!!actTwoObservationPosition(state,'hostess')?.roomGroup);
   const portraitFollow=portraitLayout && renderer.view==='interior' && renderer.focus && Number.isFinite(renderer.followCharacterX);
   const scene=$('scene'), canvas=$('world');
   if(portraitFollow){

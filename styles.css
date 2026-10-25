@@ -2165,3 +2165,11 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .bad-entry-cut,.bad-entry-caption{transition-duration:.01ms!important}
  .bad-entry-grain,.bad-entry-light{animation:none!important}
 }
+
+/* Frame a room conversation without shrinking the characters relative to furniture. */
+@media(max-width:700px) and (orientation:portrait){
+ .game-ink.camera-focused .scene.room-group-shot #world,
+ .game-ink.camera-focused .scene.room-group-shot .room-access{
+  width:max(100vw,min(94dvh,200vw));height:max(56.25vw,min(52.875dvh,112.5vw));
+ }
+}

@@ -2,7 +2,7 @@ import {actTwoObservationPosition,actTwoObservationFrame} from './act-two-observ
 import { MINI_EMOTION_ART, MiniReactionState, miniDailyEmotion, miniEmotionFrameName, drawMiniEmotion } from './mini-emotions.js';
 import {managerTarget,managerFrame,advanceManager} from './manager-life.js';
 import { speakerColors } from './speaker-colors.js';
-import { ROOM_LAYOUTS } from './room-layouts.js';
+import { ROOM_LAYOUTS, OBSERVATION_CHARACTER_SIZE } from './room-layouts.js';
 import { ROOMS, CHARACTERS, ACTIONS, dateAt } from './simulation.js';
 import { CHARACTER_ART, ROOM_ART, SCENE_ART } from './character-art.js';
 import { exteriorRoomBounds, sampleJourney, sampleCompanion, motionLabel } from './movement.js';
@@ -273,7 +273,7 @@ export class WorldRenderer {
         if(p.visible===false||p.zone==='away'||p.zone==='room')continue;
         if(CHARACTER_ART.manager?.image){
           rect(ctx,p.x-13,p.y+1,26,3,'#17211b66');
-          drawSprite(ctx,'manager',p.x,p.y+(p.dy||0),t,'idle',80/44,this.managerMoving?p.direction:(this.managerTarget?.direction||1),{pose:caretakerPose,rotate:p.rotate||0,...this.miniReaction('manager',t),poseLocked:!!this.directedManager});
+          drawSprite(ctx,'manager',p.x,p.y+(p.dy||0),t,'idle',OBSERVATION_CHARACTER_SIZE.exterior/44,this.managerMoving?p.direction:(this.managerTarget?.direction||1),{pose:caretakerPose,rotate:p.rotate||0,...this.miniReaction('manager',t),poseLocked:!!this.directedManager});
           ctx.save();ctx.beginPath();ctx.rect(p.x-70,p.y-115,140,120);ctx.clip();
           drawExteriorForeground(ctx,SCENE_ART.image,p,darkness);ctx.restore();
         }
@@ -281,7 +281,7 @@ export class WorldRenderer {
       }
       if(p.zone==='room'||p.zone==='away'||p.x<-45||p.x>1045)continue;
       const baseHeight=CHARACTER_ART[r.type]?.image?44:26;
-      const scale=80/baseHeight;
+      const scale=OBSERVATION_CHARACTER_SIZE.exterior/baseHeight;
       rect(ctx,p.x-13,p.y+1,26,3,'#17211b66');
       const action=p.moving?'outing':p.action||r.action, pose=!p.moving&&p.pose||resolvePose(r.type,action,p.moving,t,state.hour), motion=spriteMotion(action,p.moving,r.needs,t,pose);
       motion.rotate=(motion.rotate||0)+(p.rotate||0);
@@ -296,7 +296,7 @@ export class WorldRenderer {
       const companion = sampleCompanion(r, state.hour);
       if (companion) {
         rect(ctx,companion.x-15,companion.y+1,30,3,'#17211b66');
-        drawSprite(ctx,'patron',companion.x,companion.y+Math.sin(t*11+1)*1.1,t,'outing',80/44,companion.direction,{...this.miniReaction('patron',t),emotion:this.miniReactions?.emotion('patron',t)||'happy'});
+        drawSprite(ctx,'patron',companion.x,companion.y+Math.sin(t*11+1)*1.1,t,'outing',OBSERVATION_CHARACTER_SIZE.exterior/44,companion.direction,{...this.miniReaction('patron',t),emotion:this.miniReactions?.emotion('patron',t)||'happy'});
       }
     }
     ctx.restore();
@@ -324,7 +324,7 @@ export class WorldRenderer {
     const base=exteriorRoomBounds(p.room||r.room), b=roomBounds(p.room||r.room,this.focusRoom);if(!b)return;
     const ctx=this.ctx,x=b.x+(p.x-base.x)/base.w*b.w,y=p.zone==='hall'?b.y+b.h+16:b.y+(p.y-base.y)/base.h*b.h;
     if(this.focus && p.zone==='room' && r.room===state.selected)this.followCharacterX=x;
-    const height=this.focus?(p.height||300):144,baseHeight=CHARACTER_ART[r.type]?.image?44:26,scale=height/baseHeight;
+    const height=this.focus?(p.height||OBSERVATION_CHARACTER_SIZE.interior):OBSERVATION_CHARACTER_SIZE.overview,baseHeight=CHARACTER_ART[r.type]?.image?44:26,scale=height/baseHeight;
     const comedy=p.zone==='room'?observationComedy(state,r,{reduced:this.reducedMotion}):null;
     const u=height/128, action=p.moving?'outing':p.action||comedy?.action||r.action;
     const sleeping=action==='sleep'&&!p.moving&&p.zone==='room';
@@ -359,7 +359,7 @@ export class WorldRenderer {
     const p=actTwoObservationPosition(state,'manager',{reduced:this.reducedMotion});
     if(!p||p.visible===false||p.zone!=='room')return;
     const b=roomBounds(p.room,this.focusRoom),base=exteriorRoomBounds(p.room);if(!b)return;
-    const height=this.focus?(p.height||300):144,u=height/128;
+    const height=this.focus?(p.height||OBSERVATION_CHARACTER_SIZE.interior):OBSERVATION_CHARACTER_SIZE.overview,u=height/128;
     const x=b.x+(p.x-base.x)/base.w*b.w,y=b.y+(p.y-base.y)/base.h*b.h;
     const pose=p.moving?managerFrame(p,t,true,p.walkDistance):p.pose;
     const ctx=this.ctx;ctx.save();ctx.beginPath();ctx.rect(b.x,b.y,b.w,b.h+27);ctx.clip();
@@ -438,13 +438,13 @@ export class WorldRenderer {
     }
     if(directed?.zone==='room'&&type==='manager'&&this.view==='interior'){
       const b=roomBounds(directed.room,this.focusRoom),base=exteriorRoomBounds(directed.room),S=WORLD_WIDTH/1200;
-      if(b)return {x:(b.x+(directed.x-base.x)/base.w*b.w)*S,y:(b.y+(directed.y-base.y)/base.h*b.h-(this.focus?(directed.height||300):144)*.86)*S,tail:true,source:''};
+      if(b)return {x:(b.x+(directed.x-base.x)/base.w*b.w)*S,y:(b.y+(directed.y-base.y)/base.h*b.h-(this.focus?(directed.height||OBSERVATION_CHARACTER_SIZE.interior):OBSERVATION_CHARACTER_SIZE.overview)*.86)*S,tail:true,source:''};
     }
     const resident = state.residents.find(person => person.type === type);
     if (!resident) {
       if(type!=='manager'||this.view!=='exterior'||!this.managerPosition)return null;
       const selected=state.residents.find(r=>r.room===state.selected),p=selected?actTwoObservationPosition(state,selected.type,{reduced:this.reducedMotion})||sampleJourney(selected,state.hour,ACTIONS[selected.action].place):null;
-      return {...this.projectExterior(this.managerPosition.x,exteriorFeet(this.managerPosition).y-80*.86,p),tail:true,source:''};
+      return {...this.projectExterior(this.managerPosition.x,exteriorFeet(this.managerPosition).y-OBSERVATION_CHARACTER_SIZE.exterior*.86,p),tail:true,source:''};
     }
     const selected = state.residents.find(person => person.room === state.selected);
     const selectedPos = selected ? actTwoObservationPosition(state,selected.type,{reduced:this.reducedMotion})||sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
@@ -461,10 +461,10 @@ export class WorldRenderer {
       }
       if (p.zone === 'away' || p.x < -45 || p.x > 1045) {
         const side = p.x < 500 ? -1 : 1;
-        const at = this.projectExterior(side < 0 ? 0 : 1000, p.y - 80 * 0.86, selectedPos);
+        const at = this.projectExterior(side < 0 ? 0 : 1000, p.y - OBSERVATION_CHARACTER_SIZE.exterior * 0.86, selectedPos);
         return { x: side < 0 ? 72 : WORLD_WIDTH - 72, y: at.y, tail: true, source: '外出中の声' };
       }
-      return { ...this.projectExterior(p.x, exteriorFeet(p).y - 80 * ((CHARACTER_ART[type]?.displayHeight||44)/44) * 0.86, selectedPos), tail: true, source: '' };
+      return { ...this.projectExterior(p.x, exteriorFeet(p).y - OBSERVATION_CHARACTER_SIZE.exterior * ((CHARACTER_ART[type]?.displayHeight||44)/44) * 0.86, selectedPos), tail: true, source: '' };
     }
     if (!absent) {
       const b = roomBounds(p.room || resident.room, this.focusRoom);
@@ -472,7 +472,7 @@ export class WorldRenderer {
       const base = exteriorRoomBounds(p.room || resident.room);
       const x = b.x + (p.x - base.x) / base.w * b.w;
       const feet = p.zone === 'hall' ? b.y + b.h + 16 : b.y + (p.y - base.y) / base.h * b.h;
-      const height = (this.focus ? (p.height||300) : 144) * ((CHARACTER_ART[type]?.displayHeight||44)/44);
+      const height = (this.focus ? (p.height||OBSERVATION_CHARACTER_SIZE.interior) : OBSERVATION_CHARACTER_SIZE.overview) * ((CHARACTER_ART[type]?.displayHeight||44)/44);
       return { x: x * S, y: (feet - height * 0.86) * S, tail: true, source: '' };
     }
     const source = p.zone === 'stairs' ? '階段の声' : p.zone === 'street' ? '道の声' : '外出中の声';
