@@ -24,6 +24,6 @@ for(const attempt of [1,2])test(`Moku appears only on her real entrance, attempt
  const event=state.events.find(e=>e.id===state.actOne.pending.eventId),lines=eventConversation(event);
  const entrance=lines.findIndex(l=>l.speaker==='cat'||/モクが(?:現れる|男の前に歩み出た)/.test(l.text));
  for(let i=0;i<entrance;i++)assert.ok(!eventStageHTML(event,[],i).includes('data-character="cat"'));
- for(let i=entrance;i<lines.length;i++)assert.ok(eventStageHTML(event,[],i).includes('data-character="cat"'),lines[i].text);
+ for(let i=entrance;i<lines.length;i++)assert.equal(eventStageHTML(event,[],i).includes('data-character="cat"'),!['manager','hostess'].includes(lines[i].speaker),lines[i].text);
  if(attempt===1)assert.ok(lines.slice(entrance).some(l=>l.text.startsWith('男「')),'checks the man speaking after Moku enters');
 });

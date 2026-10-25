@@ -8,6 +8,13 @@ import { CHARACTERS } from './simulation.js';
 export const eventEscape = value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const eventSpeakerName = speaker=>speaker==='manager'?'あなた · 管理人':speaker==='narrator'?'けもの荘の記録':speaker==='mystery'?'謎の声':CHARACTERS[speaker]?.name||'住人';
 
+// Spoken dialogue owns its portrait; participants never substitute for a speaker.
+// Narration retains authored scene composition, and the landlord stays off camera.
+export function eventPortraitVisible(type,line,{hideCharacters=false}={}) {
+  if(hideCharacters||!type||type==='manager'||line?.speaker==='manager')return false;
+  return !CHARACTERS[line?.speaker]||type===line.speaker;
+}
+
 // Vector ornaments keep their shape at any display size, without platform emoji.
 export function eventIcon(name) {
   const paths={
@@ -122,7 +129,7 @@ export function eventStageHTML(event,residents,index=0,page=0,{hideCharacters=fa
   const participants=cast.filter(type=>!(lunaOnly&&type!=='hostess')&&!(Number.isInteger(event.revealCharacterAt)&&index<event.revealCharacterAt&&type==='cat')),left=participants[0]||null;
   const right=line.speaker==='manager'&&participants[1]?participants[1]:line.speaker!=='narrator'&&line.speaker!=='mystery'&&line.speaker!==left?line.speaker:participants[1]||'manager';
   const character=(type,side)=> {
-    if(hideCharacters||!type||type==='manager')return '';
+    if(!eventPortraitVisible(type,line,{hideCharacters}))return '';
     const previous=lines.slice(0,cursor+1).reverse().find(item=>item.speaker===type);
     const resolvedEmotion=eventEmotion(previous,event);
     const reaction=type==='hostess'&&event.actScene==='act2-rewind'

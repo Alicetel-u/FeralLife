@@ -17,7 +17,7 @@ for(const id of ['guarantee','return'])test(`${id}: morning cast, exits and endi
   if(/そのとき、モクが部屋に入って|そこへモクが顔を出した|数日後。|数か月後。/.test(text))present=true;
   if(/モクは悲鳴を上げ、部屋から逃げ出した|モクは勢いよく扉を閉めた|それから数週間。/.test(text))present=false;
   assert.equal(html.includes('data-character="hostess"'),false,text);
-  assert.equal(html.includes('data-character="cat"'),present,text);
+  assert.equal(html.includes('data-character="cat"'),present&&lines[i].speaker!=='manager',text);
   if(i===d.morning)assert.equal(d.silent,true);
  }
  assert.equal(JSON.stringify(event),before,'dialogue, saved indices and voice keys are untouched');

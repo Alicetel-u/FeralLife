@@ -83,14 +83,15 @@ test('second-act rewind keeps tense Luna portraits and the apartment exterior',(
  const lines=eventConversation(event);
  for(let i=0;i<lines.length;i++){
   const html=eventStageHTML(event,[],i);
-  assert.match(html,/data-character="hostess"/);
+  if(lines[i].speaker==='manager')assert.doesNotMatch(html,/<figure/);else assert.match(html,new RegExp('data-character="'+(lines[i].speaker==='cat'?'cat':'hostess')+'"'));
   assert.ok(!html.includes('fullbody-art'));
   assert.ok(!/data-emotion="(?:happy|shy)" data-character="hostess"/.test(html));
  }
  assert.match(eventStageHTML(event,[],0),/data-emotion="sad" data-character="hostess"/);
  for(const [text,emotion] of [['……大家さん？ 大丈夫？','sad'],['……生きてる……。','surprised'],['男「さっきから無視してんじゃねえよ！」','angry'],['男が大家に詰め寄る。','sad']]){
   const index=lines.findIndex(line=>line.text===text);assert.ok(index>=0);
-  assert.ok(eventStageHTML(event,[],index).includes(`data-emotion="${emotion}" data-character="hostess"`));
+  const html=eventStageHTML(event,[],index);
+  if(lines[index].speaker==='manager')assert.doesNotMatch(html,/<figure/);else assert.ok(html.includes(`data-emotion="${emotion}" data-character="hostess"`));
  }
  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
  assert.ok(app.includes("['bag','act2-rewind'].includes(e.actScene)&&state.actOne?.chapter===2?'data-act-two-stalker-exterior'"));

@@ -32,12 +32,10 @@ test('directed story reactions override ambiguous text; explicit emotion wins',(
   assert.equal(eventEmotion({text:'まさか'}),'surprised');
   assert.equal(eventEmotion({text:'眠い'}),'tired');
 });
-test('listener holds their last reaction through manager lines and narration',()=>{
+test('manager dialogue clears listener portraits without losing their later expressions',()=>{
   const event={detail:'相談',cast:['cat','sister'],lines:[{speaker:'cat',text:'待って',emotion:'angry'},{speaker:'sister',text:'兄',emotion:'sad'},{speaker:'manager',text:'どうした'}]};
   const html=eventStageHTML(event,[],3);
-  assert.match(html,/left[^>]+data-emotion="angry"/);
-  assert.match(html,/right[^>]+data-emotion="sad"/);
-  assert.match(html,/cat-angry.png/);
-  assert.match(html,/sister-sad.png/);
-  assert.doesNotMatch(html,/data-character="manager"/);
+  assert.doesNotMatch(html,/<figure|data-character=/);
+  assert.match(eventStageHTML(event,[],1),/data-emotion="angry" data-character="cat"/);
+  assert.match(eventStageHTML(event,[],2),/data-emotion="sad" data-character="sister"/);
 });

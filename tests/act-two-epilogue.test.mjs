@@ -31,8 +31,8 @@ test('each scene keeps the dialogue UI, its actual cast, its own artwork and sil
  for(let i=0;i<event.lines.length;i++)for(let page=0;page<messagePages(event.lines[i].text).length;page++){
   const direction=actTwoEpilogueDirection(event,i),html=actTwoEpilogueStageHTML(event,state.residents,i,page);
   assert.match(html,/stage-bubble/);assert.match(html,/speaker-name/);assert.match(html,/mobile-dialogue-tap/);
-  assert.equal(html.includes('data-character="cat"'),direction.shot==='company');
-  assert.equal(html.includes('data-character="hostess"'),['company','vanity','close'].includes(direction.shot));
+  assert.equal(html.includes('data-character="cat"'),direction.shot==='company'&&['cat','narrator'].includes(event.lines[i].speaker));
+  assert.equal(html.includes('data-character="hostess"'),['company','vanity','close'].includes(direction.shot)&&['hostess','narrator'].includes(event.lines[i].speaker));
   if(direction.scene==='memory'||direction.scene==='secret')assert.equal(direction.silent,true);
   if(direction.shot==='blank')assert.ok(html.includes(EPILOGUE_ART.blank));
   if(direction.shot==='burn')assert.match(html,/epilogue-fire/);
