@@ -35,7 +35,7 @@ export const ACT_TWO_SECOND_OBSERVATION_BEATS=[
  kingsLine('hostess','ふふっ。モクちゃん、戦ってくれるの？','tease'),
  kingsLine('cat','もちろんニャ！ ……大家が。','moku-proud'),
  kingsLine('hostess','あははっ！ モクちゃんは？','laugh'),
- kingsLine('cat','モクは後方支援ニャ。','moku-proud','happy',{motionSeconds:2.5})
+ kingsLine('cat','モクは後方支援ニャ。','moku-proud','happy',{motionSeconds:1.5})
  ]},
  {id:FOUR_KINGS_IDS[2],phase:1,at:81.5,debugEntry:false,title:'ルナと四天王｜ルナの決意',lines:[
  kingsLine('hostess','……はぁ。どうしよっかなぁ。','thinking','tired'),
@@ -46,7 +46,7 @@ export const ACT_TWO_SECOND_OBSERVATION_BEATS=[
  kingsLine('hostess','……え？','surprise','surprised',{observationSfx:'phone'}),
  kingsLine('hostess','……今日来るの！？','surprise','surprised'),
  kingsLine('hostess','……ちょっと待って。これ、あたし一人じゃ無理かも……。','surprise','surprised'),
- kingsLine('hostess','……あっ。そうだ♡','bright','happy',{motionSeconds:4.2})
+ kingsLine('hostess','……あっ。そうだ♡','bright','happy',{motionSeconds:2.6})
  ]}
 ];
 const kingsPoint=(x,y=440,zone='room',room=102,direction=1)=>({x,y,zone,room,direction});
@@ -101,8 +101,8 @@ export function fourKingsPosition(state,type,{reduced=false}={}){
   }else if(index>=4){
    p=type==='cat'?kingsMove([KINGS_ROOM.cat,kingsPoint(513,440,'hall'),KINGS_HALL.cat],index===4?elapsed:2,.45,{reduced}):kingsMove([KINGS_ROOM.hostess,kingsPoint(513),KINGS_HALL.hostess],index===4?elapsed:2,.5,{delay:.45,reduced});
    if(index===10){
-    if(type==='cat')p=kingsMove([KINGS_HALL.cat,kingsPoint(331,440,'hall',101),kingsHome],elapsed,1.3,{delay:.55,reduced});
-    else p=kingsMove([KINGS_HALL.hostess,kingsPoint(513,440,'hall'),kingsPoint(472)],elapsed,.7,{delay:1.6,reduced});
+    if(type==='cat')p=kingsMove([KINGS_HALL.cat,kingsPoint(331,440,'hall',101),kingsHome],elapsed,1.1,{delay:.2,reduced});
+    else p=kingsMove([KINGS_HALL.hostess,kingsPoint(513,440,'hall'),kingsPoint(472)],elapsed,.6,{delay:.85,reduced});
    }
   }
  }
@@ -115,7 +115,7 @@ export function fourKingsPosition(state,type,{reduced=false}={}){
    props=[{kind:'phone',x:22,y:-48}];
    if(stage===2&&index===3){const q=Math.max(0,Math.min(1,(state.hour-81.5)/2));p.x=472+22*Math.sin(q*Math.PI);props=[{kind:'cloth',x:20,y:-25}];lockPose=true;action='clean';}
    if(stage===3){pose='chat';if(index>=3){
-    p=kingsMove([kingsPoint(472),kingsPoint(513,440,'hall'),kingsPoint(777,440,'hall',103),kingsPoint(815,513,'street',null),FOUR_KINGS_END.hostess],index===3?elapsed:5,3.6,{delay:.4,reduced});props=[];
+    p=kingsMove([kingsPoint(472),kingsPoint(513,440,'hall'),kingsPoint(777,440,'hall',103),kingsPoint(815,513,'street',null),FOUR_KINGS_END.hostess],index===3?elapsed:5,2.4,{delay:.15,reduced});props=[];
    }}
   }
   if(type==='cat'&&stage===3){const q=Math.max(0,Math.min(1,(state.hour-83.5)/.4));p=kingsMove([kingsHome,kingsPoint(331,440,'hall',101),FOUR_KINGS_END.cat],q,1,{reduced});visible=q>0;}
@@ -127,8 +127,8 @@ export function fourKingsPosition(state,type,{reduced=false}={}){
  const dy=f.active&&type==='manager'&&stage===0&&[9,12,14,18].includes(index)?-5*pulse:0;
  // Camera follows Luna, so all callers receive the same scene view below.
  let cameraView='interior';
- if(stage===1&&index>=4){const l=index===10?kingsMove([KINGS_HALL.hostess,kingsPoint(513,440,'hall'),kingsPoint(472)],elapsed,.7,{delay:1.6,reduced}):kingsMove([KINGS_ROOM.hostess,kingsPoint(513),KINGS_HALL.hostess],index===4?elapsed:2,.5,{delay:.45,reduced});cameraView=l.zone==='room'?'interior':'exterior';}
- if(stage===3&&index>=3){const l=kingsMove([kingsPoint(472),kingsPoint(513,440,'hall'),kingsPoint(777,440,'hall',103),kingsPoint(815,513,'street',null),FOUR_KINGS_END.hostess],index===3?elapsed:5,3.6,{delay:.4,reduced});cameraView=l.zone==='room'?'interior':'exterior';}
+ if(stage===1&&index>=4){const l=index===10?kingsMove([KINGS_HALL.hostess,kingsPoint(513,440,'hall'),kingsPoint(472)],elapsed,.6,{delay:.85,reduced}):kingsMove([KINGS_ROOM.hostess,kingsPoint(513),KINGS_HALL.hostess],index===4?elapsed:2,.5,{delay:.45,reduced});cameraView=l.zone==='room'?'interior':'exterior';}
+ if(stage===3&&index>=3){const l=kingsMove([kingsPoint(472),kingsPoint(513,440,'hall'),kingsPoint(777,440,'hall',103),kingsPoint(815,513,'street',null),FOUR_KINGS_END.hostess],index===3?elapsed:5,2.4,{delay:.15,reduced});cameraView=l.zone==='room'?'interior':'exterior';}
  return {...p,height,pose,action,props,lockPose,seat:type==='hostess'&&stage===2&&index<3,visible,dy,rotate:0,chat:true,cameraView,...(stage===1&&cameraView==='exterior'?{cameraTarget:{x:525,y:440,zone:'hall'}}:{})};
 }
 const kingsCueHistory=new WeakMap();

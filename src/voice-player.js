@@ -92,7 +92,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     }catch{playbackOutcome='error';active=false;}
   };
   return {
-    play,prepare,stop:()=>{if(!audio&&!prepared&&!current&&!active&&!blocked)return;stop();clearPrepared();current=null;},get busy(){return prefs.enabled&&active;},get outcome(){return playbackOutcome;},get enabled(){return prefs.enabled;},get volume(){return prefs.volume;},
+    play,prepare,completed:line=>prefs.enabled&&current?.line===line&&playbackOutcome==='ended',stop:()=>{if(!audio&&!prepared&&!current&&!active&&!blocked)return;stop();clearPrepared();current=null;},get busy(){return prefs.enabled&&active;},get outcome(){return playbackOutcome;},get enabled(){return prefs.enabled;},get volume(){return prefs.volume;},
     setSuspended(value){
       const next=Boolean(value);if(next===suspended)return;suspended=next;
       if(suspended){playAttempt++;clearTimeout(watchdog);audio?.pause();clearPrepared();}

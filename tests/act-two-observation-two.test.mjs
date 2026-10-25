@@ -81,3 +81,17 @@ test('the seated phone scene keeps its seat and pose instead of being overridden
  const s=start();s.hour=81.5;s.actOne.observation.done=FOUR_KINGS_IDS.slice(0,2);
  for(let index=0;index<3;index++){s.actOne.observation.current={id:FOUR_KINGS_IDS[2],index,elapsed:1};const p=fourKingsPosition(s,'hostess');assert.equal(p.pose,'sit');assert.equal(p.lockPose,true);assert.equal(p.seat,true);assert.ok(p.props.some(p=>p.kind==='phone'));}
 });
+
+test('voiced replies advance on their own completion while the silent reaction stays brief',()=>{
+ const s=start();tickObservation(s,0);
+ tickObservation(s,.25,{voiceBusy:true});
+ assert.equal(observationView(s).lineIndex,0);
+ tickObservation(s,0,{voiceEnded:true});
+ assert.equal(observationView(s).lineIndex,1);
+ // A stale completion must not be supplied for the next line by the player.
+ tickObservation(s,.25,{voiceBusy:true});
+ assert.equal(observationView(s).lineIndex,1);
+ s.actOne.observation.current={id:FOUR_KINGS_IDS[0],index:15,elapsed:0};
+ tickObservation(s,.25);tickObservation(s,.15);
+ assert.equal(observationView(s).lineIndex,16);
+});

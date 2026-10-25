@@ -308,7 +308,7 @@ export function observationClockLimit(state){
 export function finishObservationLine(state){
  const o=observationState(state),c=o?.current;if(!c)return false;
  const beat=observationBeats(state).find(b=>b.id===c.id);
- if(c.elapsed<0.5)return false;
+ if(c.elapsed<(c.id.startsWith('luna-four-kings-')?.25:.5))return false;
  c.index++;c.elapsed=0;
  if(c.index>=beat.lines.length){
   if(!o.done.includes(beat.id))o.done.push(beat.id);
@@ -317,13 +317,14 @@ export function finishObservationLine(state){
  }
  return true;
 }
-export function tickObservation(state,seconds,{stopped=false,voiceBusy=false}={}){
+export function tickObservation(state,seconds,{stopped=false,voiceBusy=false,voiceEnded=false}={}){
  if(!observationActive(state)||stopped)return;
  const o=observationState(state),dt=Math.max(0,Math.min(seconds,0.25));
  if(o.gap>0){o.gap=Math.max(0,o.gap-dt);return;}
  if(!o.current){const beat=obsBeats(state).find(b=>!o.done.includes(b.id));if(beat&&state.hour>=beat.at-1e-7&&observationInPlace(state,beat))o.current={id:beat.id,index:0,elapsed:0};return;}
  const c=o.current,beat=observationBeats(state).find(b=>b.id===c.id);c.elapsed+=dt;
- if(!voiceBusy&&c.elapsed>=(secondObservation(state)||observationPhase(state)===0?observationLineSeconds(beat.lines[c.index]):Math.max(2.7,Array.from(beat.lines[c.index].text).length*.075)))finishObservationLine(state);
+ const line=beat.lines[c.index],finishedVoice=voiceEnded&&c.id.startsWith('luna-four-kings-');
+   if(!voiceBusy&&c.elapsed>=(finishedVoice?Math.max(.25,line.motionSeconds||0):(secondObservation(state)||observationPhase(state)===0?observationLineSeconds(beat.lines[c.index]):Math.max(2.7,Array.from(beat.lines[c.index].text).length*.075))))finishObservationLine(state);
 }
 export function skipObservation(state){
  if(!canSkipObservation(state))return false;
@@ -339,4 +340,4 @@ export function inheritObservation(previous,next){
  after.seen=[...new Set([...after.seen,...before.seen])];
 }
 
-export function observationLineSeconds(line){if((line?.voicePerformance?.startsWith('new-ally-')||line?.voicePerformance?.startsWith('four-kings-')))return Math.max(line.motionSeconds||0,Math.min(4,Math.max(1.1,.55+Array.from(line.text).length*.052))); return Math.min(3.7,Math.max(2.0,1+Array.from(line?.text||'').length*.058));}
+export function observationLineSeconds(line){if(line?.voicePerformance?.startsWith('four-kings-')&&line.silent)return .4; if((line?.voicePerformance?.startsWith('new-ally-')||line?.voicePerformance?.startsWith('four-kings-')))return Math.max(line.motionSeconds||0,Math.min(4,Math.max(1.1,.55+Array.from(line.text).length*.052))); return Math.min(3.7,Math.max(2.0,1+Array.from(line?.text||'').length*.058));}

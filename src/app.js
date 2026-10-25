@@ -1126,7 +1126,7 @@ function frame(now){
   const stopped=document.documentElement.classList.contains('game-booting')||paused||modal.open||!!state.ending||!!document.querySelector('#entry-gate:not([hidden])');
   const observationStopped=stopped||document.body.classList.contains('controls-expanded');
   if(observationStopped&&lateNightWarp)removeNightMontage();
-  tickObservation(state,seconds,{stopped:observationStopped,voiceBusy:characterVoice.busy});
+  tickObservation(state,seconds,{stopped:observationStopped,voiceBusy:characterVoice.busy,voiceEnded:characterVoice.completed(observationView(state)?.line)});
   if(!observationStopped&&!talk.chapterChat){
     const firstNight=state.actOne?.chapter!==2&&state.actOne?.completed?.includes('ash')&&!state.actOne?.completed?.includes('dinner')&&!state.actOne?.pending&&state.hour>=24.1&&state.hour<36.65;
     if(!lateNightWarp&&firstNight&&observationView(state)?.beat==null&&state.actOne?.observation?.done?.includes('tv-late')&&!state.actOne?.observation?.done?.includes('before-dinner')){
@@ -1153,18 +1153,20 @@ function frame(now){
       const walkingOutside=directedWalk?.moving?directedWalk.zone!=='room':moku?.journey?.path.some(p=>p.zone!=='room')&&sampleJourney(moku,state.hour).moving;
       // Keep exterior walking readable without slowing indoor gags or voiced beats.
       const awakeMorning=state.actOne.chapter!==2&&state.actOne.completed.includes('dinner')&&state.hour>=55;
-      const clockSpeed=walkingOutside?Math.min(speed,3):emptyClock&&speed===6&&!awakeMorning?(state.actOne?.chapter===2?(state.actOne.completed.includes('bag')?3:60):12):speed;
+      const clockSpeed=walkingOutside?Math.min(speed,3):emptyClock&&speed===6&&!awakeMorning?(state.actOne?.chapter===2?(state.actOne.completed.includes('bag')?12:60):12):speed;
       const clockLimit=observationClockLimit(state);
       const dt=Math.min(seconds*clockSpeed/10,Math.max(0,clockLimit-state.hour));
       if(state.actOne.chapter===2)advanceActTwo(state,dt);else advanceActOne(state,dt);
     }else advance(state,seconds*speed/10);
   }
-  tickObservation(state,0,{stopped:observationStopped,voiceBusy:characterVoice.busy});
+  tickObservation(state,0,{stopped:observationStopped,voiceBusy:characterVoice.busy,voiceEnded:characterVoice.completed(observationView(state)?.line)});
   queueFreshStageEvents();
   stepTalk(talk, state, now, observationStopped);
   updateCamera();
   if(!modal.open){const spoken=talk.bubbles[0];if(spoken)characterVoice.play(spoken,'bubble:'+JSON.stringify([spoken.speaker,spoken.text,talk.mutterShownAt,talk.eventId,talk.index]));else characterVoice.stop();}
   if(!observationStopped){const v=observationView(state);if(v?.line?.observationSfx)playFourKingsNotice(v.line,JSON.stringify([state.actOne.seed,state.actOne.attempt,v.identity]),characterVoice.audioContext(),normalBgm.enabled?normalBgm.volume:0);}
+  const nextObservation=observationView(state);
+  if(nextObservation?.beat)characterVoice.prepare(nextObservation.beat.lines.slice(nextObservation.lineIndex+1).find(line=>!line.silent));
   const bubbles=document.body.classList.contains('conversation-active')?[]:talk.bubbles;
   const drawWorld=worldRenderGate.shouldDraw(state,now,observationStopped,cameraKey,bubbles);
   if(drawWorld)renderer.draw(state,now,observationStopped,bubbles);
