@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {VOICE_MANIFEST} from '../src/voice-manifest.js';
-import {VOICE_REVIEW_KEY,voiceReviewEmpty,voiceReviewStatus,voiceReviewMark,voiceReviewLoad,voiceReviewImport,voiceReviewBackup,voiceReviewExport,voiceReviewFilter} from '../src/voice-review-store.js';
+import {VOICE_REVIEW_KEY,voiceReviewEmpty,voiceReviewSyncCatalog,voiceReviewRows,voiceReviewHasRepair,voiceReviewStatus,voiceReviewMark,voiceReviewLoad,voiceReviewImport,voiceReviewBackup,voiceReviewExport,voiceReviewFilter} from '../src/voice-review-store.js';
 import {VOICE_REVIEW_CATALOG} from '../src/voice-review-catalog.js';
 import {extractCompleteVoiceScript} from '../tools/voice-script.mjs';
 const row=VOICE_REVIEW_CATALOG.find(r=>r.chapter===2&&r.line.speaker==='hostess');
@@ -32,7 +32,7 @@ test('replaced audio asks for rechecking while previous notes remain exportable;
  assert.equal(voiceReviewStatus(changed,state.records[row.id]),'changed');
  assert.match(voiceReviewExport(state,[changed]),/更新前の音声/);assert.match(voiceReviewExport(state,[changed]),/語尾が切れる/);
  voiceReviewMark(state,changed,{status:'ok',issues:[],note:''});
- assert.equal(voiceReviewStatus(changed,state.records[row.id]),'ok');assert.equal(state.records[row.id].history[0].note,'語尾が切れる');
+ assert.equal(voiceReviewStatus(changed,state.records[row.id]),'fixed');assert.equal(state.records[row.id].history[0].note,'語尾が切れる');
  const storage=memory();storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));assert.equal(voiceReviewLoad(storage).state.records[row.id].history[0].note,'語尾が切れる');
 });
 
@@ -63,4 +63,66 @@ test('recording versions are tied to played audio contents, not the release or s
   const clip=VOICE_MANIFEST[row.id];const data=await readFile(new URL('../'+(clip.fastFile||clip.file),import.meta.url));
   assert.equal(row.version,createHash('sha256').update(data).digest('hex').slice(0,20),row.source);
  }));
+});
+
+
+const variant=(text,version='v1')=>({...row,id:JSON.stringify([row.line.speaker,text,'normal',false]),line:{...row.line,text},version,repaired:false});
+test('catalog migration preserves old checks and a first catalog snapshot does not mark everything new',()=>{
+ const state=voiceReviewEmpty(),a=variant('確認済みの台詞'),b=variant('まだ聞いていない台詞');
+ voiceReviewMark(state,a,{status:'ok'});voiceReviewSyncCatalog(state,[a,b]);
+ assert.deepEqual(voiceReviewRows([a,b],state).map(r=>voiceReviewStatus(r,state.records[r.id])),['ok','todo']);
+ const storage=memory();storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));assert.deepEqual(voiceReviewLoad(storage).state,state);
+});
+
+test('added and removed wording is tracked even without decisions, while changed audio asks for rechecking',()=>{
+ const state=voiceReviewEmpty(),old=variant('変更前の台詞'),unchanged=variant('そのままの台詞'),audio=variant('録音だけ直す台詞');
+ voiceReviewSyncCatalog(state,[old,unchanged,audio]);voiceReviewMark(state,unchanged,{status:'ok'});voiceReviewMark(state,audio,{status:'ng',issues:['quiet'],note:'小さい'});
+ const added=variant('変更後の新しい台詞'),changed={...audio,version:'v2'},catalog=[unchanged,changed,added];
+ voiceReviewSyncCatalog(state,catalog);
+ const rows=voiceReviewRows(catalog,state),status=id=>{const r=rows.find(r=>r.id===id);return voiceReviewStatus(r,state.records[id]);};
+ assert.equal(status(old.id),'removed');assert.equal(status(added.id),'new');assert.equal(status(changed.id),'changed');assert.equal(status(unchanged.id),'ok');
+ assert.ok(!voiceReviewFilter(catalog,state).some(r=>r.id===old.id));
+ state.filters.status='removed';assert.deepEqual(voiceReviewFilter(catalog,state).map(r=>r.id),[old.id]);
+ state.filters.status='new';assert.deepEqual(voiceReviewFilter(catalog,state).map(r=>r.id),[added.id]);
+ const storage=memory();storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));const reload=voiceReviewLoad(storage).state;voiceReviewSyncCatalog(reload,catalog);
+ assert.equal(voiceReviewStatus(voiceReviewRows(catalog,reload).find(r=>r.id===added.id),null),'new');assert.equal(reload.records[audio.id].note,'小さい');
+});
+
+test('repair history and accepted repairs can be filtered without resetting ordinary OK decisions',()=>{
+ const state=voiceReviewEmpty(),ordinary=variant('最初から問題なし'),fixed=variant('修正する台詞'),known={...variant('既に修正した録音'),repaired:true};
+ voiceReviewMark(state,ordinary,{status:'ok'});voiceReviewMark(state,fixed,{status:'ng',issues:['clipping'],note:'最後にブツッ'});
+ const update={...fixed,version:'v2'};voiceReviewSyncCatalog(state,[ordinary,update,known]);
+ voiceReviewMark(state,update,{status:'ok',issues:[],note:''});
+ assert.equal(voiceReviewStatus(update,state.records[update.id]),'fixed');assert.equal(voiceReviewStatus(ordinary,state.records[ordinary.id]),'ok');
+ state.filters.status='repaired';assert.deepEqual(new Set(voiceReviewFilter([ordinary,update,known],state).map(r=>r.id)),new Set([fixed.id,known.id]));
+ state.filters.status='fixed';assert.deepEqual(voiceReviewFilter([ordinary,update,known],state).map(r=>r.id),[fixed.id]);
+ state.filters.status='ok';assert.equal(voiceReviewFilter([ordinary,update,known],state).length,2);
+});
+
+test('sorting prioritizes additions and changed recordings or recent decisions and survives backup',()=>{
+ const state=voiceReviewEmpty(),a=variant('問題なし'),b=variant('指摘あり'),c=variant('新規');voiceReviewSyncCatalog(state,[a,b]);
+ voiceReviewMark(state,a,{status:'ok'});voiceReviewMark(state,b,{status:'ng',issues:['flat']});state.records[a.id].updatedAt='2026-10-01T00:00:00Z';state.records[b.id].updatedAt='2026-10-02T00:00:00Z';voiceReviewSyncCatalog(state,[a,b,c]);
+ state.filters.sort='status';assert.deepEqual(voiceReviewFilter([a,b,c],state).map(r=>r.id),[c.id,b.id,a.id]);
+ state.filters.sort='updated';assert.deepEqual(voiceReviewFilter([a,b,c],state).map(r=>r.id),[b.id,a.id,c.id]);
+ const storage=memory();storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));assert.equal(voiceReviewLoad(storage).state.filters.sort,'updated');
+});
+
+test('deleted flagged wording remains in exports as history and is never requested for regeneration',()=>{
+ const state=voiceReviewEmpty(),old=variant('削除する台詞');voiceReviewMark(state,old,{status:'ng',issues:['reading'],note:'以前の指摘'});voiceReviewSyncCatalog(state,[old]);voiceReviewSyncCatalog(state,[]);
+ const text=voiceReviewExport(state,[]);assert.match(text,/現行の修正依頼 0件/);assert.match(text,/再生成不要/);assert.match(text,/以前の指摘/);
+});
+
+
+test('old inner-voice speaker spelling migrates without losing a saved note',()=>{
+ const state=voiceReviewEmpty(),r=variant('心の声');r.id=JSON.stringify(['manager',r.line.text,'inner',false]);r.line.speaker='manager';
+ voiceReviewMark(state,r,{status:'ng',issues:['quiet'],note:'心の声が小さい'});state.records[r.id].speaker='大家（心の声）';
+ const storage=memory();storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));const restored=voiceReviewLoad(storage);
+ assert.equal(restored.warning,'');assert.equal(restored.state.records[r.id].speaker,'manager');assert.equal(restored.state.records[r.id].note,'心の声が小さい');
+ assert.ok(VOICE_REVIEW_CATALOG.every(r=>['manager','cat','hostess'].includes(r.line.speaker)));
+});
+
+test('imported catalog identities cannot inject a speaker attribute into removed-line history',()=>{
+ const state=voiceReviewEmpty(),payload=JSON.parse(voiceReviewBackup(state));payload.catalogEntries={};
+ payload.catalogEntries[JSON.stringify(['cat" onclick="bad()','台詞','normal',false])]={chapter:1,version:'v1'};
+ assert.throws(()=>voiceReviewImport(state,payload),/形式/);assert.equal(state.catalogEntries,null);
 });
