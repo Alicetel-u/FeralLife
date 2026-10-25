@@ -54,7 +54,7 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     }
   };
   let prepared=null;
-  const clipFor=line=>{if(!line)return;const scoped=chapter()===2?{...line,voiceChapter:2}:line;return manifest[voiceLineKey(scoped)]||manifest[voiceLineKey(line)];};
+  const clipFor=line=>{if(!line||line.silent)return;const scoped=chapter()===2?{...line,voiceChapter:2}:line;return manifest[voiceLineKey(scoped)]||manifest[voiceLineKey(line)];};
   const clipPath=clip=>clip.fastFile||clip.file;
   const clearPrepared=()=>{if(prepared){const old=prepared.audio;prepared=null;old.pause();old.removeAttribute?.('src');old.load?.();}};
   const prepare=line=>{

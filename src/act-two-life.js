@@ -1,59 +1,39 @@
-import {createRoomMove,createVisit,createOuting,createEntranceMove,sampleJourney,homeSpot} from './movement.js';
+import {prepareFourKingsMorning,fourKingsFrame,fourKingsPosition} from './act-two-observation-two.js';
+import {sampleJourney,homeSpot} from './movement.js';
 import {LUNA_NEW_ALLY_ID,NEW_ALLY_END} from './act-two-observation.js';
 
-const LUNA_DAY=[
- [66,'idle','entrance'],
- [67,'outing','hall'],[80,'idle','table'],[81.25,'clean','table'],
- [83,'idle','table','relief'],[87,'sleep','bed'],[95,'eat','fridge'],
- [97,'clean','center'],[103,'idle','window']
-];
 const POSITIONS={idle:'table',clean:'center',eat:'fridge',sleep:'bed',smoke:'window',tv:'tv',drink:'table'};
+function holdStoryResident(r,state,p,beat){
+ const end={x:p.x,y:p.y,zone:p.zone,room:p.room??null};
+ r.storyUntil=106;r.targetRoom=null;
+ if(r.actTwoBeat===beat&&r.action===(p.action||'idle')&&r.journey?.path?.at(-1)?.x===p.x&&r.journey?.path?.at(-1)?.y===p.y)return;
+ r.previous=r.action;r.action=p.action||'idle';r.actionAge=0;r.actTwoBeat=beat;
+ r.journey={kind:'room',startedAt:state.hour,arriveAt:state.hour,returnAt:state.hour,endsAt:state.hour,reason:'',path:[{...end},{...end}],back:[],actionAfter:r.action,returned:false};
+}
 export function secondActLife(state,delta=0){
- if(state.actOne?.chapter!==2||state.actOne.status!=='playing')return;
+ const a=state.actOne;if(a?.chapter!==2||a.status!=='playing')return;
  const luna=state.residents.find(r=>r.type==='hostess'),cat=state.residents.find(r=>r.type==='cat');if(!luna)return;
- if(!state.actOne.completed.includes('bag')&&state.hour<=66){
-  const outside=state.hour>=65.25||state.actOne.observation?.done?.includes(LUNA_NEW_ALLY_ID),at=outside?65.25:57;
-  for(const r of [luna,cat].filter(Boolean)){
-   const end=r===luna&&outside?NEW_ALLY_END.hostess:homeSpot(r.room,'table');
-   const old=r.journey?.path?.at(-1);
-   if(r.actTwoBeat!==at||r.targetRoom||r.action!=='idle'||old?.x!==end.x||old?.y!==end.y){
-    r.previous=r.action;r.action='idle';r.actionAge=0;r.targetRoom=null;r.actTwoBeat=at;
-    r.journey={kind:'room',startedAt:Math.min(state.hour,at),arriveAt:Math.min(state.hour,at),returnAt:Math.min(state.hour,at),endsAt:Math.min(state.hour,at),reason:'',path:[{...end},{...end}],back:[],actionAfter:'idle',returned:false};
-   }r.storyUntil=106;
-  }
+ if(!a.completed.includes('bag')){
+  const outside=state.hour>=65.25||a.observation?.done?.includes(LUNA_NEW_ALLY_ID);
+  for(const r of [luna,cat].filter(Boolean))holdStoryResident(r,state,r===luna&&outside?NEW_ALLY_END.hostess:homeSpot(r.room,'table'),outside?65.25:57);
   return;
  }
- const beat=LUNA_DAY.findLast(([at])=>at<=state.hour)||LUNA_DAY[0];
- for(const r of [luna,cat].filter(Boolean))r.storyUntil=106;
- if(luna.actTwoBeat!==beat[0]){
-  const start=sampleJourney(luna,state.hour,POSITIONS[luna.action]||'table');
-  luna.previous=luna.action;luna.action=beat[1];luna.actionAge=0;luna.targetRoom=null;luna.actTwoBeat=beat[0];
-  luna.journey=beat[2]==='entrance'?createEntranceMove(luna,Math.min(state.hour,65.25),start):beat[1]==='outing'?createOuting(luna,state.hour,start):createRoomMove(luna,state.hour,start,beat[2]);
-  if(cat){
-   const from=sampleJourney(cat,state.hour,POSITIONS[cat.action]||'table');
-   cat.previous=cat.action;cat.action=beat[3]?'chat':state.hour%24<8?'sleep':'tv';cat.actionAge=0;cat.targetRoom=beat[3]?luna.room:null;
-   cat.journey=beat[3]?(from.zone==='room'&&from.room===luna.room?createRoomMove({...cat,room:luna.room},state.hour,from,'center'):createVisit(cat,state.hour,from,luna.room)):createRoomMove(cat,state.hour,from,cat.action==='sleep'?'bed':'tv');
-   if(beat[3]){cat.journey.reason='ルナと立ち話';cat.journey.returnAt=state.hour<65.25?Math.max(65.25,cat.journey.arriveAt+1):cat.journey.arriveAt+1;cat.journey.endsAt=cat.journey.returnAt+(cat.journey.arriveAt-cat.journey.startedAt);}
-  }
+ prepareFourKingsMorning(state);
+ const f=fourKingsFrame(state);if(!f)return;
+ for(const r of [luna,cat].filter(Boolean)){
+  const p=fourKingsPosition(state,r.type);
+  holdStoryResident(r,state,p,[80,80.5,81.5,83.5][f.stage]);
+  if(p.action==='clean')r.trash=Math.max(0,r.trash-delta*2);
  }
- if(luna.action==='sleep')luna.needs.sleep=Math.max(0,luna.needs.sleep-delta*18);
- if(luna.action==='eat')luna.needs.hunger=Math.max(0,luna.needs.hunger-delta*30);
- if(luna.action==='clean')luna.trash=Math.max(0,luna.trash-delta*2);
 }
 export function lunaNearby(state){
  const luna=state.residents.find(r=>r.type==='hostess'),cat=state.residents.find(r=>r.type==='cat');if(!luna||!cat)return false;
- const a=sampleJourney(luna,state.hour,POSITIONS[luna.action]||'table'),b=sampleJourney(cat,state.hour,POSITIONS[cat.action]||'table');
+ const a=sampleJourney(luna,state.hour),b=sampleJourney(cat,state.hour);
  return !a.moving&&!b.moving&&a.zone==='room'&&b.zone==='room'&&a.room===b.room&&Math.hypot(a.x-b.x,a.y-b.y)<90;
 }
-export function secondActChat(state){
- if(!lunaNearby(state))return null;
- const luna=state.residents.find(r=>r.type==='hostess');
- const beat=LUNA_DAY.find(([at])=>at===luna.actTwoBeat),kind=beat?.[3];
- const lines=kind==='relief'?[['hostess','やっと、ひと息つけるね。'],['cat','休憩なら、いつでもつきあうニャ。'],['hostess','そこは頼りになるね。']]:null;
- return lines?{key:'act2-chat-'+kind,lines}:null;
-}
+export function secondActChat(){return null;}
 export function lunaMutters(state){
- const luna=state.residents.find(r=>r.type==='hostess');if(!luna)return [];
+ const luna=state.residents.find(r=>r.type==='hostess');if(!luna||state.actOne?.completed.includes('bag'))return [];
  const p=sampleJourney(luna,state.hour,POSITIONS[luna.action]||'table');
  if(p.zone==='away')return [];
  if(p.moving)return [p.phase==='returning'?'ただいま。帰ったら少し休もう。':'忘れ物、ないよね。'];

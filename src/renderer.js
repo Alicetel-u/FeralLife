@@ -1,4 +1,4 @@
-import {newAllyPosition,newAllyFrame} from './act-two-observation.js';
+import {actTwoObservationPosition,actTwoObservationFrame} from './act-two-observation.js';
 import { MINI_EMOTION_ART, MiniReactionState, miniDailyEmotion, miniEmotionFrameName, drawMiniEmotion } from './mini-emotions.js';
 import {managerTarget,managerFrame,advanceManager} from './manager-life.js';
 import { speakerColors } from './speaker-colors.js';
@@ -206,7 +206,7 @@ export class WorldRenderer {
     this.reducedMotion=prefersReducedMotion();
     this.managerTarget=managerTarget(state,bubbles,this.reducedMotion);
     const target=this.managerTarget;
-    const directedManager=newAllyPosition(state,'manager',{reduced:this.reducedMotion});
+    const directedManager=actTwoObservationPosition(state,'manager',{reduced:this.reducedMotion});
     this.directedManager=directedManager;
     this.managerPosition=directedManager||advanceManager(this.managerPosition,target,paused?0:dt);
     this.managerMoving=this.managerPosition.moving;
@@ -215,7 +215,7 @@ export class WorldRenderer {
     const h = dateAt(state.hour).hour + state.hour % 1;
     const darkness = h >= 20 || h < 5 ? .57 : h >= 18 ? (h - 18) * .25 : h < 7 ? (7 - h) * .19 : 0;
     const selected = state.residents.find(r => r.room === state.selected);
-    const selectedPos = selected ? newAllyPosition(state,selected.type,{reduced:this.reducedMotion})||sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
+    const selectedPos = selected ? actTwoObservationPosition(state,selected.type,{reduced:this.reducedMotion})||sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
     this.followCharacterX = null;
     this.focusRoom = this.focus ? (selectedPos?.zone === 'room' ? selectedPos.room : state.selected) : null;
     if (this.view === 'exterior') { this.drawExterior(state,selectedPos,t,darkness); this.drawSpeech(state); return; }
@@ -228,7 +228,7 @@ export class WorldRenderer {
       ctx.save(); ctx.beginPath(); ctx.rect(b.x,b.y,b.w,b.h); ctx.clip();
       ctx.translate(b.x,b.y); ctx.scale(b.w/base.w,b.h/base.h); ctx.translate(-base.x,-base.y);
       this.drawRoom(room,r,t,darkness); ctx.restore();
-      const current = r ? newAllyPosition(state,r.type,{reduced:this.reducedMotion})||sampleJourney(r,state.hour,ACTIONS[r.action].place) : null;
+      const current = r ? actTwoObservationPosition(state,r.type,{reduced:this.reducedMotion})||sampleJourney(r,state.hour,ACTIONS[r.action].place) : null;
       const status = !r ? '空室' : current.zone === 'away' ? '外出中' : current.zone !== 'room' ? '移動中' : ACTIONS[r.action].label;
       rect(ctx,b.x,b.y-23,b.w,23,'#17111d');
       rect(ctx,b.x,b.y-23,4,23,r?'#e43250':'#665368');
@@ -243,6 +243,7 @@ export class WorldRenderer {
     }
     if (!this.focus) for (const y of [313,643]) { rect(ctx,8,y,1184,16,'#17111d');rect(ctx,8,y+1,1184,2,'#b32a43');ctx.fillStyle='#e0cbbd';ctx.font='10px "Yu Gothic UI",sans-serif';ctx.fillText('共用廊下',16,y+12);ctx.textAlign='right';ctx.fillText('階段・屋外へ →',1180,y+12);ctx.textAlign='left'; }
     for (const r of state.residents) this.drawInteriorResident(state,r,t);
+    this.drawInteriorManager(state,t);
     this.drawSpeech(state);
   }
   exteriorCamera(selectedPos) {
@@ -264,11 +265,12 @@ export class WorldRenderer {
     rect(ctx,0,0,1000,562.5,`rgba(16,27,49,${darkness})`);
     if(darkness>.3)for(let i=0;i<36;i++)rect(ctx,noise(i,2,1)*1000,noise(i,3,2)*115,1,1,'#e9dcc277');
     const caretaker=this.managerPosition||{x:650,y:513,zone:'street'},caretakerPose=this.managerPreviewPose||(this.directedManager&&!this.managerMoving?caretaker.pose:managerFrame(this.managerTarget||managerTarget(state,this.bubbles),t,this.managerMoving,this.managerPosition?.walkDistance??0));
-    const people=state.residents.map(r=>({r,p:exteriorFeet(newAllyPosition(state,r.type,{reduced:this.reducedMotion})||sampleJourney(r,state.hour,ACTIONS[r.action].place))}));
+    const people=state.residents.map(r=>({r,p:exteriorFeet(actTwoObservationPosition(state,r.type,{reduced:this.reducedMotion})||sampleJourney(r,state.hour,ACTIONS[r.action].place))}));
     people.push({r:null,p:exteriorFeet(caretaker)});
     people.sort((a,b)=>a.p.y-b.p.y);
     for(const {r,p} of people) {
       if(!r){
+        if(p.visible===false||p.zone==='away'||p.zone==='room')continue;
         if(CHARACTER_ART.manager?.image){
           rect(ctx,p.x-13,p.y+1,26,3,'#17211b66');
           drawSprite(ctx,'manager',p.x,p.y+(p.dy||0),t,'idle',80/44,this.managerMoving?p.direction:(this.managerTarget?.direction||1),{pose:caretakerPose,rotate:p.rotate||0,...this.miniReaction('manager',t),poseLocked:!!this.directedManager});
@@ -300,7 +302,7 @@ export class WorldRenderer {
     ctx.restore();
   }
   interiorResidentPosition(state,r,t=this.animTime||0) {
-    const directed=newAllyPosition(state,r.type,{reduced:this.reducedMotion});
+    const directed=actTwoObservationPosition(state,r.type,{reduced:this.reducedMotion});
     if(directed)return directed;
     const comedy=observationComedy(state,r,{reduced:this.reducedMotion});
     let base=sampleJourney(r,state.hour,ACTIONS[r.action].place);
@@ -316,13 +318,13 @@ export class WorldRenderer {
   }
   drawInteriorResident(state,r,t) {
     const p=this.interiorResidentPosition(state,r,t);
-    if(p.zone==='away'||p.zone==='street'||p.zone==='stairs')return;
+    if(p.visible===false||p.zone==='away'||p.zone==='street'||p.zone==='stairs')return;
     // A corridor must never be projected onto a room's painted floor.
-    if(newAllyFrame(state)&&p.zone!=='room')return;
+    if(actTwoObservationFrame(state)&&p.zone!=='room')return;
     const base=exteriorRoomBounds(p.room||r.room), b=roomBounds(p.room||r.room,this.focusRoom);if(!b)return;
     const ctx=this.ctx,x=b.x+(p.x-base.x)/base.w*b.w,y=p.zone==='hall'?b.y+b.h+16:b.y+(p.y-base.y)/base.h*b.h;
     if(this.focus && p.zone==='room' && r.room===state.selected)this.followCharacterX=x;
-    const height=this.focus?300:144,baseHeight=CHARACTER_ART[r.type]?.image?44:26,scale=height/baseHeight;
+    const height=this.focus?(p.height||300):144,baseHeight=CHARACTER_ART[r.type]?.image?44:26,scale=height/baseHeight;
     const comedy=p.zone==='room'?observationComedy(state,r,{reduced:this.reducedMotion}):null;
     const u=height/128, action=p.moving?'outing':p.action||comedy?.action||r.action;
     const sleeping=action==='sleep'&&!p.moving&&p.zone==='room';
@@ -334,6 +336,12 @@ export class WorldRenderer {
     const fy=y+(p.dy||0)*u+(p.moving?Math.sin(t*11)*2:0);
     ctx.save();ctx.beginPath();ctx.rect(b.x,b.y,b.w,b.h+27);ctx.clip();
     rect(ctx,x-height*(pose==='sleep'?.26:.18),y+3,height*(pose==='sleep'?.52:.36),5,'#23302255');
+    if(p.seat){
+      // Seat the crossed-leg pose on a stool rather than suspending it in mid-air.
+      const sx=x-5*u;ctx.fillStyle='#805739';ctx.fillRect(sx-20*u,y-39*u,5*u,39*u);ctx.fillRect(sx+15*u,y-39*u,5*u,39*u);
+      ctx.fillStyle='#ad7952';ctx.fillRect(sx-23*u,y-42*u,46*u,8*u);
+      ctx.fillStyle='#dfbca8';ctx.beginPath();ctx.ellipse(sx,y-42*u,25*u,6*u,0,0,Math.PI*2);ctx.fill();
+    }
     if(sleeping&&pose!=='sleep'){
       // 寝姿の差分がないキャラは、従来どおり立ち絵を倒して表現
       ctx.save();ctx.translate(x-12,y-2);ctx.rotate(-Math.PI/2);ctx.scale(motion.sy,1);drawSprite(ctx,r.type,0,0,t,'sleep',scale*.72);ctx.restore();
@@ -346,6 +354,17 @@ export class WorldRenderer {
     drawObservationComedy(ctx,comedy||(p.props?.length?{props:p.props}:null),x,fy,u,{reduced:this.reducedMotion});
     if(['stream','sell','gamble','shop','collect'].includes(r.action)&&!p.moving&&!this.speaking?.has(r.type)){ctx.fillStyle='#efe3c3';ctx.font=`${this.focus?32:20}px monospace`;ctx.fillText(ACTIONS[r.action].icon,x+height*.15,y-height);}
     ctx.restore();
+  }
+  drawInteriorManager(state,t){
+    const p=actTwoObservationPosition(state,'manager',{reduced:this.reducedMotion});
+    if(!p||p.visible===false||p.zone!=='room')return;
+    const b=roomBounds(p.room,this.focusRoom),base=exteriorRoomBounds(p.room);if(!b)return;
+    const height=this.focus?(p.height||300):144,u=height/128;
+    const x=b.x+(p.x-base.x)/base.w*b.w,y=b.y+(p.y-base.y)/base.h*b.h;
+    const pose=p.moving?managerFrame(p,t,true,p.walkDistance):p.pose;
+    const ctx=this.ctx;ctx.save();ctx.beginPath();ctx.rect(b.x,b.y,b.w,b.h+27);ctx.clip();
+    rect(ctx,x-height*.18,y+3,height*.36,5,'#23302255');
+    drawSprite(ctx,'manager',x,y+(p.dy||0)*u,t,p.moving?'outing':'idle',height/44,p.direction,{pose,rotate:p.rotate||0,...this.miniReaction('manager',t),poseLocked:true});ctx.restore();
   }
   drawRoom(room,r,t,darkness) {
     const ctx = this.ctx, b = exteriorRoomBounds(room), {x,y,w,h} = b;
@@ -413,19 +432,23 @@ export class WorldRenderer {
   }
   // 外観スプライトの身長は80。吹き出しは内装と同じく、その86%上（頭）へ付ける。
   speechAnchor(state, type) {
-    const directed=newAllyPosition(state,type,{reduced:this.reducedMotion});
+    const directed=actTwoObservationPosition(state,type,{reduced:this.reducedMotion});
     if(directed&&this.view==='interior'&&directed.zone!=='room'){
       return {x:WORLD_WIDTH*.60,y:WORLD_HEIGHT*.32,tail:false,source:directed.zone==='hall'?'廊下から':'外から'};
+    }
+    if(directed?.zone==='room'&&type==='manager'&&this.view==='interior'){
+      const b=roomBounds(directed.room,this.focusRoom),base=exteriorRoomBounds(directed.room),S=WORLD_WIDTH/1200;
+      if(b)return {x:(b.x+(directed.x-base.x)/base.w*b.w)*S,y:(b.y+(directed.y-base.y)/base.h*b.h-(this.focus?(directed.height||300):144)*.86)*S,tail:true,source:''};
     }
     const resident = state.residents.find(person => person.type === type);
     if (!resident) {
       if(type!=='manager'||this.view!=='exterior'||!this.managerPosition)return null;
-      const selected=state.residents.find(r=>r.room===state.selected),p=selected?newAllyPosition(state,selected.type,{reduced:this.reducedMotion})||sampleJourney(selected,state.hour,ACTIONS[selected.action].place):null;
+      const selected=state.residents.find(r=>r.room===state.selected),p=selected?actTwoObservationPosition(state,selected.type,{reduced:this.reducedMotion})||sampleJourney(selected,state.hour,ACTIONS[selected.action].place):null;
       return {...this.projectExterior(this.managerPosition.x,exteriorFeet(this.managerPosition).y-80*.86,p),tail:true,source:''};
     }
     const selected = state.residents.find(person => person.room === state.selected);
-    const selectedPos = selected ? newAllyPosition(state,selected.type,{reduced:this.reducedMotion})||sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
-    const p = this.view==='interior'?this.interiorResidentPosition(state,resident):newAllyPosition(state,resident.type,{reduced:this.reducedMotion})||sampleJourney(resident, state.hour, ACTIONS[resident.action].place);
+    const selectedPos = selected ? actTwoObservationPosition(state,selected.type,{reduced:this.reducedMotion})||sampleJourney(selected, state.hour, ACTIONS[selected.action].place) : null;
+    const p = this.view==='interior'?this.interiorResidentPosition(state,resident):actTwoObservationPosition(state,resident.type,{reduced:this.reducedMotion})||sampleJourney(resident, state.hour, ACTIONS[resident.action].place);
     const S = WORLD_WIDTH / 1200;
     const absent = p.zone === 'away' || p.zone === 'street' || p.zone === 'stairs';
     if (this.view === 'exterior') {
@@ -449,7 +472,7 @@ export class WorldRenderer {
       const base = exteriorRoomBounds(p.room || resident.room);
       const x = b.x + (p.x - base.x) / base.w * b.w;
       const feet = p.zone === 'hall' ? b.y + b.h + 16 : b.y + (p.y - base.y) / base.h * b.h;
-      const height = (this.focus ? 300 : 144) * ((CHARACTER_ART[type]?.displayHeight||44)/44);
+      const height = (this.focus ? (p.height||300) : 144) * ((CHARACTER_ART[type]?.displayHeight||44)/44);
       return { x: x * S, y: (feet - height * 0.86) * S, tail: true, source: '' };
     }
     const source = p.zone === 'stairs' ? '階段の声' : p.zone === 'street' ? '道の声' : '外出中の声';

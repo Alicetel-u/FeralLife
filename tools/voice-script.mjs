@@ -31,6 +31,7 @@ export function extractVoiceScript(scope='intro') {
   if(!['intro','act1','act2','act2-trouble1','act2-duel','all'].includes(scope))throw Error('Unknown scope');
   const result=[];
   const add=(source,lines)=>lines.forEach((line,index)=>{
+    if(line.silent)return;
     if(scope==='act2-trouble1')line={...line,voiceChapter:2};
     const speaker=voiceSpeaker(line);
     if(['cat','manager','hostess'].includes(speaker))result.push({source:source+':'+index,line,speaker,performance:voicePerformance(line),lineKey:voiceLineKey(line)});

@@ -434,8 +434,9 @@
     "new-ally-retort": {
       "direction": "青年の大きく歯切れのよいコミカルなツッコミ。怖がらせず、言葉の頭を立てる。",
       "tags": [
-        "[animated]",
-        "[exasperated]"
+        "[excited]",
+        "[shouting]",
+        "[playful]"
       ],
       "settings": {
         "stability": 0,
@@ -530,8 +531,9 @@
     "new-ally-plain": {
       "direction": "大家の肩の力が抜けた軽快な返答。聞き取りやすく、ぼそぼそしない。",
       "tags": [
-        "[conversational]",
-        "[animated]"
+        "[upbeat]",
+        "[animated]",
+        "[confident]"
       ],
       "settings": {
         "stability": 0,
@@ -549,6 +551,165 @@
         "stability": 0,
         "similarity_boost": 0.75,
         "speed": 1.12
+      }
+    },
+    "four-kings-manager-retort": {
+      "direction": "大家の勢いある喜劇のツッコミ。語頭を強く、息声にせず、抑揚を大きく。",
+      "tags": [
+        "[excited]",
+        "[shouting]",
+        "[playful]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.12
+      }
+    },
+    "four-kings-manager-alert": {
+      "direction": "大家のはっきりした問いかけ。身を乗り出す声で、ぼそぼそせず明瞭に。",
+      "tags": [
+        "[animated]",
+        "[concerned]",
+        "[projecting]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.1
+      }
+    },
+    "four-kings-manager-surprise": {
+      "direction": "大家の短く弾む驚き。",
+      "tags": [
+        "[surprised]",
+        "[excited]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.12
+      }
+    },
+    "four-kings-manager-warm": {
+      "direction": "大家の頼もしく明るい返答。優しくても声を落としすぎない。",
+      "tags": [
+        "[warmly]",
+        "[confident]",
+        "[animated]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.08
+      }
+    },
+    "four-kings-bright": {
+      "direction": "ルナの明るく通る声。自然に弾む抑揚。",
+      "tags": [
+        "[cheerfully]",
+        "[animated]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.1
+      }
+    },
+    "four-kings-tease": {
+      "direction": "ルナの笑いを含むごまかしと軽いからかい。",
+      "tags": [
+        "[playfully]",
+        "[animated]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.1
+      }
+    },
+    "four-kings-surprise": {
+      "direction": "ルナの明瞭な驚き。語尾まで聞き取りやすく。",
+      "tags": [
+        "[surprised]",
+        "[animated]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.1
+      }
+    },
+    "four-kings-confess": {
+      "direction": "ルナの言いにくそうな告白。声は明瞭に、内緒話の囁きにしない。",
+      "tags": [
+        "[hesitant]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.06
+      }
+    },
+    "four-kings-moku": {
+      "direction": "モクの軽口。語尾のニャをはっきり、軽快な掛け合い。",
+      "tags": [
+        "[playful]",
+        "[animated]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.1
+      }
+    },
+    "four-kings-moku-proud": {
+      "direction": "モクの得意げな大きい身振りが伝わる声。",
+      "tags": [
+        "[excited]",
+        "[playful]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.12
+      }
+    },
+    "four-kings-laugh": {
+      "direction": "ルナの明るい笑いから自然に言葉へ。",
+      "tags": [
+        "[laughing]",
+        "[cheerfully]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.1
+      }
+    },
+    "four-kings-thinking": {
+      "direction": "ルナが考える声。独り言でも聞き取れる声量。",
+      "tags": [
+        "[thoughtful]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.04
+      }
+    },
+    "four-kings-determined": {
+      "direction": "ルナの決意。自分を励ますように、明瞭に言い切る。",
+      "tags": [
+        "[determined]",
+        "[confident]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.08
       }
     }
   }

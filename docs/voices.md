@@ -124,3 +124,10 @@ NaoとTsuyuriで、同じ既存3台詞（通常・誘惑・シリアス）を含
 ユーザー台本の32台詞を既存の話者IDで新規生成。旧台本の観察ボイス・専用演技プロファイル・未参照ファイルを削除した。`new-ally-*` の10演技で、モクの抗議・呼びかけ・得意・驚き、大家のツッコミと平常、ルナの驚き・明るい返答・からかい・笑いを分ける。stability=0、speed=1.10〜1.13。囁き指定は使用しない。
 
 対象の抽出は `--scope=act2-trouble1 --source-prefix=act2/observation/luna-new-ally --only-missing`。生成後に `node tools/master-new-ally-voices.mjs` で32本だけの先頭・末尾の無音を短縮し、目標-18 LUFS / true peak -5 dBTPへ整える。内側の間は保持。生成原音と配信用 `.new-ally.mp3` を保存し、配信用をマニフェストへ登録する。既存の他場面の音声設定は変更しない。
+
+
+## 第2幕・観察パート2と大家の演技調整（2026-10-25）
+
+完成稿の36発話を新規生成し、無言の「……。」は音声なしで扱う。パート1の大家12発話も録り直した。大家のツッコミは excited / shouting / playful、通常の返答は upbeat / animated / confident、気遣いは warmly / confident / animated とし、声量だけでなく抑揚と語頭を変える。声IDは維持する。
+
+`tools/master-four-kings-voices.mjs` はこの48本だけを対象に前後の無音を短縮し、大家は目標-17 LUFS、他の話者は-18 LUFS、true peak -5 dBTPで整える。配信用 `.four-kings.mp3` をマニフェストに登録する。第1・第2トラブル本文の既存ボイスは変更しない。

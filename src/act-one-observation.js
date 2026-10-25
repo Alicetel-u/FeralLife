@@ -1,3 +1,4 @@
+import {prepareFourKingsMorning} from './act-two-observation-two.js';
 import {ACT_TWO_OBSERVATION_BEATS,migrateNewAllyObservation} from './act-two-observation.js';
 import {sampleJourney} from './movement.js';
 // Solo room speech; landlord replies only during shared outdoor/hall encounters.
@@ -255,10 +256,10 @@ export const OBSERVATION_BEATS=[
     ]
   }
 ];
-const secondObservation=state=>state.actOne?.chapter===2&&!state.actOne.completed?.includes('bag')&&state.residents.some(r=>r.type==='hostess');
+const secondObservation=state=>state.actOne?.chapter===2&&!state.actOne.completed?.includes('duel')&&state.residents.some(r=>r.type==='hostess');
 const observationBeats=state=>secondObservation(state)?ACT_TWO_OBSERVATION_BEATS:OBSERVATION_BEATS;
 const obsPhaseNames=['モクの最初の晩','夜更かしの代償','ぐっすり眠った翌朝'];
-export function observationPhase(state){if(secondObservation(state))return 0;return state.actOne?.completed?.includes('dinner')?2:state.actOne?.completed?.includes('ash')?1:0;}
+export function observationPhase(state){if(secondObservation(state))return state.actOne.completed.includes('bag')?1:0;return state.actOne?.completed?.includes('dinner')?2:state.actOne?.completed?.includes('ash')?1:0;}
 export function clearLegacyObservationMemo(state){
  const a=state.actOne;if(!a)return;
  if(a.observation){delete a.observation.notes;if(a.observation.current)delete a.observation.current.inspecting;}
@@ -266,6 +267,7 @@ export function clearLegacyObservationMemo(state){
 }
 export function observationState(state){
  const a=state.actOne;if(!a||a.chapter===2&&!secondObservation(state))return null;
+ prepareFourKingsMorning(state);
  if(!a.observation||a.observation.version!==2){
   const phase=observationPhase(state);
   a.observation={version:2,seen:[],done:secondObservation(state)?[]:observationBeats(state).filter(b=>b.phase<phase||b.at<state.hour).map(b=>b.id),current:null,gap:0};
@@ -330,11 +332,11 @@ export function skipObservation(state){
 export function observationView(state){
  const o=observationState(state);if(!o)return null;
  const beats=obsBeats(state),beat=observationBeats(state).find(b=>b.id===o.current?.id);
- return {phaseTitle:secondObservation(state)?'ルナの引っ越し初日':obsPhaseNames[observationPhase(state)],lineIndex:o.current?.index??0,total:beats.length,done:beats.filter(b=>o.done.includes(b.id)).length,beat,line:beat?.lines[o.current.index],identity:beat?beat.id+':'+o.current.index:null};
+ return {phaseTitle:secondObservation(state)?(observationPhase(state)===1?'ルナと四天王':'ルナの引っ越し初日'):obsPhaseNames[observationPhase(state)],lineIndex:o.current?.index??0,total:beats.length,done:beats.filter(b=>o.done.includes(b.id)).length,beat,line:beat?.lines[o.current.index],identity:beat?beat.id+':'+o.current.index:null};
 }
 export function inheritObservation(previous,next){
  const before=observationState(previous),after=observationState(next);if(!before||!after)return;
  after.seen=[...new Set([...after.seen,...before.seen])];
 }
 
-export function observationLineSeconds(line){if(line?.voicePerformance?.startsWith('new-ally-'))return Math.max(line.motionSeconds||0,Math.min(4,Math.max(1.1,.55+Array.from(line.text).length*.052))); return Math.min(3.7,Math.max(2.0,1+Array.from(line?.text||'').length*.058));}
+export function observationLineSeconds(line){if((line?.voicePerformance?.startsWith('new-ally-')||line?.voicePerformance?.startsWith('four-kings-')))return Math.max(line.motionSeconds||0,Math.min(4,Math.max(1.1,.55+Array.from(line.text).length*.052))); return Math.min(3.7,Math.max(2.0,1+Array.from(line?.text||'').length*.058));}

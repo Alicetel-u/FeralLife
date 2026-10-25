@@ -1,3 +1,4 @@
+import {prepareFourKingsMorning} from './act-two-observation-two.js';
 import {ACT_TWO_EPILOGUE_LINES} from './act-two-epilogue-script.js';
 import {failedChoiceKeys} from './choice-history.js';
 import {DUEL_INTRO,duelChoices,duelEncounterLines,duelReplyLines,duelEndingLines,duelOutcome} from './act-two-duel.js?v=2026.10.24.5';
@@ -411,6 +412,7 @@ export function answerActTwo(s,eventId,choiceId){
  const replyLines=firstStalkerTragedy?FIRST_STALKER_TRAGEDY_LINES:choice.lines;
  const r=addEvent(s,'life','返事：'+(firstStalkerTragedy?'もう大丈夫だろ。今日はゆっくり休め。':choice.label),replyLines[0].text,[102]);r.actScene='reply';r.cast=['hostess','cat'];r.stageOnly=true;r.lines=replyLines;
  if(choice.bad){a.status='bad';a.failure=choice.bad;if(!a.memory.includes(choice.bad))a.memory.push(choice.bad);s.ending={name:firstStalkerTragedy?'BAD END — 夕暮れの待ち伏せ':choice.endingName?('BAD END — '+choice.endingName):(p.scene==='bag'?'夜逃げ':'差し押さえ')+' — '+event.title,text:choice.regret};}
+ if(p.scene==='bag'&&choice.id==='loan'){prepareFourKingsMorning(s);secondActLife(s);}
  return r;
 }
 export function rewindActTwo(s){

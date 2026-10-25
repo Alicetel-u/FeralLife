@@ -1,4 +1,5 @@
-import {newAllyPosition} from './act-two-observation.js';
+import {playFourKingsNotice} from './act-two-observation-two.js';
+import {actTwoObservationPosition} from './act-two-observation.js';
 import {overnightMontageFrame} from './overnight-montage.js';
 import {resumeConversation,rememberConversation,clearConversation,continueDestination} from './conversation-progress.js?v=2026.10.24.5';
 import {refreshActTwoEpilogue} from './act-two-epilogue-script.js';
@@ -155,7 +156,7 @@ let autoFollow = !managerPreview, cameraKey = '';
 function updateCamera() {
   if(autoFollow&&state.actOne){const lead=state.residents.find(r=>r.type===(state.actOne.chapter===2?'hostess':'cat'));if(lead)state.selected=lead.room;}
   const r = state.residents.find(r => r.room === state.selected);
-  const directed = r ? newAllyPosition(state,r.type,{reduced:prefersReducedMotion()}) : null;
+  const directed = r ? actTwoObservationPosition(state,r.type,{reduced:prefersReducedMotion()}) : null;
   const p = directed || (r ? sampleJourney(r,state.hour,ACTIONS[r.action].place) : null);
   if (autoFollow) { renderer.view = directed?.cameraView || (p && p.zone !== 'room' ? 'exterior' : 'interior'); renderer.focus = true; }
   renderer.focusRoom = renderer.focus ? (p?.zone === 'room' ? p.room : state.selected) : null;
@@ -705,7 +706,7 @@ function showDeveloperMenu(){
   debugMenuPage('開発者メニュー','テストしたい項目を選択',[['scenes','シーンセレクト（第一幕・第二幕）','data-debug-tool'],['observation','観察モード（第一幕・第二幕）','data-debug-tool']], 'data-debug-back');
 }
 function showDebugObservationChapters(){
-  debugMenuPage('観察モード','確認する幕を選択。通常セーブには影響しません。',[['1','第一幕 — モクの日常','data-debug-observation-chapter'],['2','第二幕 — ルナの引っ越し初日','data-debug-observation-chapter']],'data-debug-tools-back');
+  debugMenuPage('観察モード','確認する幕を選択。通常セーブには影響しません。',[['1','第一幕 — モクの日常','data-debug-observation-chapter'],['2','第二幕 — ルナ編','data-debug-observation-chapter']],'data-debug-tools-back');
 }
 function showDebugObservationSelect(chapter,page=0){
   const beats=developerObservationBeats(chapter),pages=Math.ceil(beats.length/4);
@@ -1148,10 +1149,11 @@ function frame(now){
       const observing=observationView(state);
       const emptyClock=observing&&!observing.beat&&!talk.bubbles.length&&!characterVoice.busy;
       const moku=state.residents.find(r=>r.type==='cat');
-      const walkingOutside=moku?.journey?.path.some(p=>p.zone!=='room')&&sampleJourney(moku,state.hour).moving;
+      const directedWalk=moku&&actTwoObservationPosition(state,'cat');
+      const walkingOutside=directedWalk?.moving?directedWalk.zone!=='room':moku?.journey?.path.some(p=>p.zone!=='room')&&sampleJourney(moku,state.hour).moving;
       // Keep exterior walking readable without slowing indoor gags or voiced beats.
       const awakeMorning=state.actOne.chapter!==2&&state.actOne.completed.includes('dinner')&&state.hour>=55;
-      const clockSpeed=walkingOutside?Math.min(speed,3):emptyClock&&speed===6&&!awakeMorning?(state.actOne?.chapter===2?60:12):speed;
+      const clockSpeed=walkingOutside?Math.min(speed,3):emptyClock&&speed===6&&!awakeMorning?(state.actOne?.chapter===2?(state.actOne.completed.includes('bag')?3:60):12):speed;
       const clockLimit=observationClockLimit(state);
       const dt=Math.min(seconds*clockSpeed/10,Math.max(0,clockLimit-state.hour));
       if(state.actOne.chapter===2)advanceActTwo(state,dt);else advanceActOne(state,dt);
@@ -1162,6 +1164,7 @@ function frame(now){
   stepTalk(talk, state, now, observationStopped);
   updateCamera();
   if(!modal.open){const spoken=talk.bubbles[0];if(spoken)characterVoice.play(spoken,'bubble:'+JSON.stringify([spoken.speaker,spoken.text,talk.mutterShownAt,talk.eventId,talk.index]));else characterVoice.stop();}
+  if(!observationStopped){const v=observationView(state);if(v?.line?.observationSfx)playFourKingsNotice(v.line,JSON.stringify([state.actOne.seed,state.actOne.attempt,v.identity]),characterVoice.audioContext(),normalBgm.enabled?normalBgm.volume:0);}
   const bubbles=document.body.classList.contains('conversation-active')?[]:talk.bubbles;
   const drawWorld=worldRenderGate.shouldDraw(state,now,observationStopped,cameraKey,bubbles);
   if(drawWorld)renderer.draw(state,now,observationStopped,bubbles);

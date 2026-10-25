@@ -1,3 +1,4 @@
+import {ACT_TWO_SECOND_OBSERVATION_BEATS,fourKingsFrame,fourKingsPosition} from './act-two-observation-two.js';
 import {homeSpot} from './movement.js';
 
 export const LUNA_NEW_ALLY_ID='luna-new-ally';
@@ -36,7 +37,7 @@ export const ACT_TWO_OBSERVATION_BEATS=[{id:LUNA_NEW_ALLY_ID,phase:0,at:65.1,tit
  newAllyLine('hostess','あ、大家さん。ちょっと外の空気吸ってきてもいい？','bright'),
  newAllyLine('manager','別に許可なんかいらねぇよ。','plain'),
  newAllyLine('hostess','えへへ。そっか♡','bright','happy',{motionSeconds:4.15})
-]}];
+]},...ACT_TWO_SECOND_OBSERVATION_BEATS];
 
 const newAllyPoint=(x,y,zone='hall',room=102,direction=1)=>({x,y,zone,room,direction});
 const newAllyHome={...homeSpot(101,'table'),direction:1};
@@ -127,3 +128,7 @@ export function migrateNewAllyObservation(state){
   o.current=null;o.gap=0;o.done=(o.done||[]).filter(id=>!old(id));o.seen=(o.seen||[]).filter(id=>!old(id));
  }
 }
+
+
+export function actTwoObservationFrame(state){return newAllyFrame(state)||fourKingsFrame(state);}
+export function actTwoObservationPosition(state,type,options){return newAllyPosition(state,type,options)||fourKingsPosition(state,type,options);}

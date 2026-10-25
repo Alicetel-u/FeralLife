@@ -7705,15 +7705,15 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"だからダメだって言ってんだろ！\",\"new-ally-retort\",false]": {
-    "file": "assets/voices/ef8b86206aa55916d326f217240e6c67f607857d4cc1e0b645ec4077ccd7c936.new-ally.mp3",
-    "hash": "ef8b86206aa55916d326f217240e6c67f607857d4cc1e0b645ec4077ccd7c936",
+    "file": "assets/voices/4f4e654e49687959b5ade4993a4a2c080195968a4883c28ec5fda10e314525b2.four-kings.mp3",
+    "hash": "4f4e654e49687959b5ade4993a4a2c080195968a4883c28ec5fda10e314525b2",
     "source": "act2/observation/luna-new-ally:0",
     "speaker": "manager",
     "text": "だからダメだって言ってんだろ！",
     "performance": "new-ally-retort",
     "model": "eleven_v3",
     "audioMastering": {
-      "integratedLUFS": -18,
+      "integratedLUFS": -17,
       "truePeakDBTP": -5,
       "edgeSilenceTrimmed": true
     }
@@ -7733,15 +7733,15 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"manager\",\"誰が悪徳大家だ！\",\"new-ally-retort\",false]": {
-    "file": "assets/voices/d667ca5070e9ec117d31eaeafb9095cd29b70750428725d5ebad937c5917f395.new-ally.mp3",
-    "hash": "d667ca5070e9ec117d31eaeafb9095cd29b70750428725d5ebad937c5917f395",
+    "file": "assets/voices/b67f1952c5699c7236c0aa9975ed6529ed886c1319bfd5c7047bbc3b44ed7daf.four-kings.mp3",
+    "hash": "b67f1952c5699c7236c0aa9975ed6529ed886c1319bfd5c7047bbc3b44ed7daf",
     "source": "act2/observation/luna-new-ally:2",
     "speaker": "manager",
     "text": "誰が悪徳大家だ！",
     "performance": "new-ally-retort",
     "model": "eleven_v3",
     "audioMastering": {
-      "integratedLUFS": -18,
+      "integratedLUFS": -17,
       "truePeakDBTP": -5,
       "edgeSilenceTrimmed": true
     }
@@ -7789,15 +7789,15 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"manager\",\"人聞きの悪いこと言うな！\",\"new-ally-retort\",false]": {
-    "file": "assets/voices/5949d8f956909ee9041950cf47f7b4e37285f8481a876359e58ff647c411dc2e.new-ally.mp3",
-    "hash": "5949d8f956909ee9041950cf47f7b4e37285f8481a876359e58ff647c411dc2e",
+    "file": "assets/voices/98ab4e11ee47c8bcc0ffd7761a9cc3de5d6d06d61110735c8724d66e6ac371bb.four-kings.mp3",
+    "hash": "98ab4e11ee47c8bcc0ffd7761a9cc3de5d6d06d61110735c8724d66e6ac371bb",
     "source": "act2/observation/luna-new-ally:6",
     "speaker": "manager",
     "text": "人聞きの悪いこと言うな！",
     "performance": "new-ally-retort",
     "model": "eleven_v3",
     "audioMastering": {
-      "integratedLUFS": -18,
+      "integratedLUFS": -17,
       "truePeakDBTP": -5,
       "edgeSilenceTrimmed": true
     }
@@ -7831,15 +7831,15 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"manager\",\"ちょっとじゃねぇだろ！ 俺の部屋の冷蔵庫を勝手に使おうとしやがって！\",\"new-ally-retort\",false]": {
-    "file": "assets/voices/196c6c296c4f2aaf4d30b656fe969c77d963618e17d73d248832639685de79c3.new-ally.mp3",
-    "hash": "196c6c296c4f2aaf4d30b656fe969c77d963618e17d73d248832639685de79c3",
+    "file": "assets/voices/06113e67ffa23fa9ddec128516505ebf7e4c1155f476a3dbfb3d3c2578c9eccc.four-kings.mp3",
+    "hash": "06113e67ffa23fa9ddec128516505ebf7e4c1155f476a3dbfb3d3c2578c9eccc",
     "source": "act2/observation/luna-new-ally:9",
     "speaker": "manager",
     "text": "ちょっとじゃねぇだろ！ 俺の部屋の冷蔵庫を勝手に使おうとしやがって！",
     "performance": "new-ally-retort",
     "model": "eleven_v3",
     "audioMastering": {
-      "integratedLUFS": -18,
+      "integratedLUFS": -17,
       "truePeakDBTP": -5,
       "edgeSilenceTrimmed": true
     }
@@ -7873,15 +7873,15 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"manager\",\"だからって俺の冷蔵庫にまで入れるな！\",\"new-ally-retort\",false]": {
-    "file": "assets/voices/fd3eeea1e1291c16d1f6069f59c7daf2e3adee9d31769cb0797a5e1e20f4bcd5.new-ally.mp3",
-    "hash": "fd3eeea1e1291c16d1f6069f59c7daf2e3adee9d31769cb0797a5e1e20f4bcd5",
+    "file": "assets/voices/512d349608db05dcd564684de82bbfd088172423a6d920f57ca8ff3a1a6da345.four-kings.mp3",
+    "hash": "512d349608db05dcd564684de82bbfd088172423a6d920f57ca8ff3a1a6da345",
     "source": "act2/observation/luna-new-ally:12",
     "speaker": "manager",
     "text": "だからって俺の冷蔵庫にまで入れるな！",
     "performance": "new-ally-retort",
     "model": "eleven_v3",
     "audioMastering": {
-      "integratedLUFS": -18,
+      "integratedLUFS": -17,
       "truePeakDBTP": -5,
       "edgeSilenceTrimmed": true
     }
@@ -7971,15 +7971,15 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"manager\",\"なんだよ。\",\"new-ally-plain\",false]": {
-    "file": "assets/voices/1f8393aa8b68bcedb1043c23da5b3c67a2c304a87be867e668a025c5652d97d4.new-ally.mp3",
-    "hash": "1f8393aa8b68bcedb1043c23da5b3c67a2c304a87be867e668a025c5652d97d4",
+    "file": "assets/voices/11521cf1775652abe8c35cca9afaf87a323cfc8cd0054571518880af5597225d.four-kings.mp3",
+    "hash": "11521cf1775652abe8c35cca9afaf87a323cfc8cd0054571518880af5597225d",
     "source": "act2/observation/luna-new-ally:19",
     "speaker": "manager",
     "text": "なんだよ。",
     "performance": "new-ally-plain",
     "model": "eleven_v3",
     "audioMastering": {
-      "integratedLUFS": -18,
+      "integratedLUFS": -17,
       "truePeakDBTP": -5,
       "edgeSilenceTrimmed": true
     }
@@ -7999,15 +7999,15 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"manager\",\"お前が味方に呼んだんだろ！\",\"new-ally-retort\",false]": {
-    "file": "assets/voices/b0e6412ccd2984c8ce8e7848e690c6ae07dc8ce2916637e0a71922ab8e9e4100.new-ally.mp3",
-    "hash": "b0e6412ccd2984c8ce8e7848e690c6ae07dc8ce2916637e0a71922ab8e9e4100",
+    "file": "assets/voices/9b24cf276138913be6f0ff82d78c96abd3584b99c491953c977661cb56732046.four-kings.mp3",
+    "hash": "9b24cf276138913be6f0ff82d78c96abd3584b99c491953c977661cb56732046",
     "source": "act2/observation/luna-new-ally:21",
     "speaker": "manager",
     "text": "お前が味方に呼んだんだろ！",
     "performance": "new-ally-retort",
     "model": "eleven_v3",
     "audioMastering": {
-      "integratedLUFS": -18,
+      "integratedLUFS": -17,
       "truePeakDBTP": -5,
       "edgeSilenceTrimmed": true
     }
@@ -8027,15 +8027,15 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"manager\",\"今日初めて会ったばっかりだろ！\",\"new-ally-retort\",false]": {
-    "file": "assets/voices/ef091be01cf458dde3df5b67c692195de1fbe88c52289b669c9a092a8ab0b7b1.new-ally.mp3",
-    "hash": "ef091be01cf458dde3df5b67c692195de1fbe88c52289b669c9a092a8ab0b7b1",
+    "file": "assets/voices/d51d43ec0b2ffe333b88dc136b64db19fa7150112d69a85b25741849ab2b4992.four-kings.mp3",
+    "hash": "d51d43ec0b2ffe333b88dc136b64db19fa7150112d69a85b25741849ab2b4992",
     "source": "act2/observation/luna-new-ally:23",
     "speaker": "manager",
     "text": "今日初めて会ったばっかりだろ！",
     "performance": "new-ally-retort",
     "model": "eleven_v3",
     "audioMastering": {
-      "integratedLUFS": -18,
+      "integratedLUFS": -17,
       "truePeakDBTP": -5,
       "edgeSilenceTrimmed": true
     }
@@ -8055,15 +8055,15 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"manager\",\"面白がってられるのは今のうちだぞ……。\",\"new-ally-plain\",false]": {
-    "file": "assets/voices/3cf20340cf348ca8a791c65e811cb57edd8e31d0e178c1a4c0926a9c2a9cbde3.new-ally.mp3",
-    "hash": "3cf20340cf348ca8a791c65e811cb57edd8e31d0e178c1a4c0926a9c2a9cbde3",
+    "file": "assets/voices/b87d792e21b55a4f45a36bf9b5316f16753bd9aca222ddbba1416e748ce3b72a.four-kings.mp3",
+    "hash": "b87d792e21b55a4f45a36bf9b5316f16753bd9aca222ddbba1416e748ce3b72a",
     "source": "act2/observation/luna-new-ally:25",
     "speaker": "manager",
     "text": "面白がってられるのは今のうちだぞ……。",
     "performance": "new-ally-plain",
     "model": "eleven_v3",
     "audioMastering": {
-      "integratedLUFS": -18,
+      "integratedLUFS": -17,
       "truePeakDBTP": -5,
       "edgeSilenceTrimmed": true
     }
@@ -8083,29 +8083,29 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"manager\",\"毎日あんな調子じゃ、こっちは身が持たねぇよ。\",\"new-ally-plain\",false]": {
-    "file": "assets/voices/2b7370b749e1bf53ddc321f14103a20ae8c5bb624e8a4c3d9445c5acb522d42f.new-ally.mp3",
-    "hash": "2b7370b749e1bf53ddc321f14103a20ae8c5bb624e8a4c3d9445c5acb522d42f",
+    "file": "assets/voices/e480affa18289205fa5dff2af2f7bd6b642acc245ea8e642b3b34acf6860239c.four-kings.mp3",
+    "hash": "e480affa18289205fa5dff2af2f7bd6b642acc245ea8e642b3b34acf6860239c",
     "source": "act2/observation/luna-new-ally:27",
     "speaker": "manager",
     "text": "毎日あんな調子じゃ、こっちは身が持たねぇよ。",
     "performance": "new-ally-plain",
     "model": "eleven_v3",
     "audioMastering": {
-      "integratedLUFS": -18,
+      "integratedLUFS": -17,
       "truePeakDBTP": -5,
       "edgeSilenceTrimmed": true
     }
   },
   "[\"manager\",\"さて、外でも掃除するか。\",\"new-ally-plain\",false]": {
-    "file": "assets/voices/c37069582da676acfe740c77c809854a58bcc07e35418e6fec178249d950c232.new-ally.mp3",
-    "hash": "c37069582da676acfe740c77c809854a58bcc07e35418e6fec178249d950c232",
+    "file": "assets/voices/c149163cb60c070a0e3cfc2d2cb34a5fabd7451484bc63214a8c8d0348fe20ce.four-kings.mp3",
+    "hash": "c149163cb60c070a0e3cfc2d2cb34a5fabd7451484bc63214a8c8d0348fe20ce",
     "source": "act2/observation/luna-new-ally:28",
     "speaker": "manager",
     "text": "さて、外でも掃除するか。",
     "performance": "new-ally-plain",
     "model": "eleven_v3",
     "audioMastering": {
-      "integratedLUFS": -18,
+      "integratedLUFS": -17,
       "truePeakDBTP": -5,
       "edgeSilenceTrimmed": true
     }
@@ -8125,15 +8125,15 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"manager\",\"別に許可なんかいらねぇよ。\",\"new-ally-plain\",false]": {
-    "file": "assets/voices/38d669f64b7026af52a22355e02099abd626d21aee56d323cd8d685331d2e77d.new-ally.mp3",
-    "hash": "38d669f64b7026af52a22355e02099abd626d21aee56d323cd8d685331d2e77d",
+    "file": "assets/voices/25ae016c546f7e3eef889fa6c38638bc2978157615e2ba3a38e38e67ec565dfb.four-kings.mp3",
+    "hash": "25ae016c546f7e3eef889fa6c38638bc2978157615e2ba3a38e38e67ec565dfb",
     "source": "act2/observation/luna-new-ally:30",
     "speaker": "manager",
     "text": "別に許可なんかいらねぇよ。",
     "performance": "new-ally-plain",
     "model": "eleven_v3",
     "audioMastering": {
-      "integratedLUFS": -18,
+      "integratedLUFS": -17,
       "truePeakDBTP": -5,
       "edgeSilenceTrimmed": true
     }
@@ -8145,6 +8145,510 @@ export const VOICE_MANIFEST = {
     "speaker": "hostess",
     "text": "えへへ。そっか♡",
     "performance": "new-ally-bright",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"あ、ちょっとごめんね。\",\"four-kings-bright\",false]": {
+    "file": "assets/voices/93bd004349646ec76741d3d2a845cfc42a2480813883e3e092922309b3e8d417.four-kings.mp3",
+    "hash": "93bd004349646ec76741d3d2a845cfc42a2480813883e3e092922309b3e8d417",
+    "source": "act2/observation/luna-four-kings-notice:0",
+    "speaker": "hostess",
+    "text": "あ、ちょっとごめんね。",
+    "performance": "four-kings-bright",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"……げっ。\",\"four-kings-surprise\",false]": {
+    "file": "assets/voices/e4169b592a8dc47d973c3c0ed5be73afec31136998462b868cba064de1cdfcdc.four-kings.mp3",
+    "hash": "e4169b592a8dc47d973c3c0ed5be73afec31136998462b868cba064de1cdfcdc",
+    "source": "act2/observation/luna-four-kings-notice:1",
+    "speaker": "hostess",
+    "text": "……げっ。",
+    "performance": "four-kings-surprise",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"manager\",\"どうした？\",\"four-kings-manager-alert\",false]": {
+    "file": "assets/voices/3bc940ae2575f2d93a2360fc8fb83579ec60d0e9ab9b103ccd306328d80d9d80.four-kings.mp3",
+    "hash": "3bc940ae2575f2d93a2360fc8fb83579ec60d0e9ab9b103ccd306328d80d9d80",
+    "source": "act2/observation/luna-four-kings-notice:2",
+    "speaker": "manager",
+    "text": "どうした？",
+    "performance": "four-kings-manager-alert",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -17,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"ううん、何でもない♡\",\"four-kings-tease\",false]": {
+    "file": "assets/voices/3fa656bab5b4cd0187cef54016617b5c9b0530ef2c8ca661ec29c11a06788005.four-kings.mp3",
+    "hash": "3fa656bab5b4cd0187cef54016617b5c9b0530ef2c8ca661ec29c11a06788005",
+    "source": "act2/observation/luna-four-kings-notice:3",
+    "speaker": "hostess",
+    "text": "ううん、何でもない♡",
+    "performance": "four-kings-tease",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"cat\",\"何でもない顔じゃないニャ。\",\"four-kings-moku\",false]": {
+    "file": "assets/voices/86ad52c32cbaae63d387b4e5bc7aba4042279439881dceac5d70126955fce18b.four-kings.mp3",
+    "hash": "86ad52c32cbaae63d387b4e5bc7aba4042279439881dceac5d70126955fce18b",
+    "source": "act2/observation/luna-four-kings-notice:4",
+    "speaker": "cat",
+    "text": "何でもない顔じゃないニャ。",
+    "performance": "four-kings-moku",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"manager\",\"また昨日の男か？\",\"four-kings-manager-alert\",false]": {
+    "file": "assets/voices/954a6ea99bddccfcee09b112ced6bb0367198f97bf2fceb63b144b384f51d0f6.four-kings.mp3",
+    "hash": "954a6ea99bddccfcee09b112ced6bb0367198f97bf2fceb63b144b384f51d0f6",
+    "source": "act2/observation/luna-four-kings-notice:5",
+    "speaker": "manager",
+    "text": "また昨日の男か？",
+    "performance": "four-kings-manager-alert",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -17,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"ううん。別の人。\",\"four-kings-bright\",false]": {
+    "file": "assets/voices/04683403e5d3bf8c57c4b0738aea3e2aab5bc6ed173092d5c345d36caafd74cc.four-kings.mp3",
+    "hash": "04683403e5d3bf8c57c4b0738aea3e2aab5bc6ed173092d5c345d36caafd74cc",
+    "source": "act2/observation/luna-four-kings-notice:6",
+    "speaker": "hostess",
+    "text": "ううん。別の人。",
+    "performance": "four-kings-bright",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"manager\",\"……別の？\",\"four-kings-manager-surprise\",false]": {
+    "file": "assets/voices/83426719e11ce042c649642ca1f7eb5903c0c4fdeed460e5ec841178129dc1aa.four-kings.mp3",
+    "hash": "83426719e11ce042c649642ca1f7eb5903c0c4fdeed460e5ec841178129dc1aa",
+    "source": "act2/observation/luna-four-kings-notice:7",
+    "speaker": "manager",
+    "text": "……別の？",
+    "performance": "four-kings-manager-surprise",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -17,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"実はね、ほかにも何人か、ちょっと誤解させちゃった人がいて……。\",\"four-kings-confess\",false]": {
+    "file": "assets/voices/aaab4462750fc5016988f9c29e1d242cefb884371428ed7504ec3c6ea6c4b49f.four-kings.mp3",
+    "hash": "aaab4462750fc5016988f9c29e1d242cefb884371428ed7504ec3c6ea6c4b49f",
+    "source": "act2/observation/luna-four-kings-notice:8",
+    "speaker": "hostess",
+    "text": "実はね、ほかにも何人か、ちょっと誤解させちゃった人がいて……。",
+    "performance": "four-kings-confess",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"manager\",\"お前……いったい何人に勘違いさせてんだよ！？\",\"four-kings-manager-retort\",false]": {
+    "file": "assets/voices/86579d3fe80078b27898e1e9cb12fffb3667287329f33192ed8e78c33562115c.four-kings.mp3",
+    "hash": "86579d3fe80078b27898e1e9cb12fffb3667287329f33192ed8e78c33562115c",
+    "source": "act2/observation/luna-four-kings-notice:9",
+    "speaker": "manager",
+    "text": "お前……いったい何人に勘違いさせてんだよ！？",
+    "performance": "four-kings-manager-retort",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -17,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"えへへ……ちょっとだけ♡\",\"four-kings-tease\",false]": {
+    "file": "assets/voices/e7515fb71476b1f2036e62c1e443478ff0c0295feadbabf3326a6b8c6d806852.four-kings.mp3",
+    "hash": "e7515fb71476b1f2036e62c1e443478ff0c0295feadbabf3326a6b8c6d806852",
+    "source": "act2/observation/luna-four-kings-notice:10",
+    "speaker": "hostess",
+    "text": "えへへ……ちょっとだけ♡",
+    "performance": "four-kings-tease",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"cat\",\"昨日の男は、ただの前座だったニャ。\",\"four-kings-moku\",false]": {
+    "file": "assets/voices/e8160b92a22b95f5400b9db986cee2a4b4d8279f1b523b6a8a403904a1f1d486.four-kings.mp3",
+    "hash": "e8160b92a22b95f5400b9db986cee2a4b4d8279f1b523b6a8a403904a1f1d486",
+    "source": "act2/observation/luna-four-kings-notice:11",
+    "speaker": "cat",
+    "text": "昨日の男は、ただの前座だったニャ。",
+    "performance": "four-kings-moku",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"manager\",\"前座ってなんだよ！\",\"four-kings-manager-retort\",false]": {
+    "file": "assets/voices/c3f27aa1a40e042b130a750a907f59c5610c51518599010c60c9ae70b7b668e0.four-kings.mp3",
+    "hash": "c3f27aa1a40e042b130a750a907f59c5610c51518599010c60c9ae70b7b668e0",
+    "source": "act2/observation/luna-four-kings-notice:12",
+    "speaker": "manager",
+    "text": "前座ってなんだよ！",
+    "performance": "four-kings-manager-retort",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -17,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"cat\",\"このあと四天王が出てくるニャ！\",\"four-kings-moku-proud\",false]": {
+    "file": "assets/voices/1ebf3587d4453d21f9258eae908a7078a7fa287fcc36077c34812d5445e95bac.four-kings.mp3",
+    "hash": "1ebf3587d4453d21f9258eae908a7078a7fa287fcc36077c34812d5445e95bac",
+    "source": "act2/observation/luna-four-kings-notice:13",
+    "speaker": "cat",
+    "text": "このあと四天王が出てくるニャ！",
+    "performance": "four-kings-moku-proud",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"manager\",\"なんで急に戦いが始まるんだよ！！\",\"four-kings-manager-retort\",false]": {
+    "file": "assets/voices/bc664d0b63f32b8ed2eea2babca4f376d180b95986c8553ab585b9858c0a93ab.four-kings.mp3",
+    "hash": "bc664d0b63f32b8ed2eea2babca4f376d180b95986c8553ab585b9858c0a93ab",
+    "source": "act2/observation/luna-four-kings-notice:14",
+    "speaker": "manager",
+    "text": "なんで急に戦いが始まるんだよ！！",
+    "performance": "four-kings-manager-retort",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -17,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"manager\",\"……おい。なんで黙ってんだ？\",\"four-kings-manager-alert\",false]": {
+    "file": "assets/voices/5f18f8c1bec84936396aea78189fdb27610314d4256138628061eb516ef937c4.four-kings.mp3",
+    "hash": "5f18f8c1bec84936396aea78189fdb27610314d4256138628061eb516ef937c4",
+    "source": "act2/observation/luna-four-kings-notice:16",
+    "speaker": "manager",
+    "text": "……おい。なんで黙ってんだ？",
+    "performance": "four-kings-manager-alert",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -17,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"……あはは♡\",\"four-kings-tease\",false]": {
+    "file": "assets/voices/24a8f9b0446422cebd1336fffdbd6ee6c7836febf1422e4086b3c5a26fe47c29.four-kings.mp3",
+    "hash": "24a8f9b0446422cebd1336fffdbd6ee6c7836febf1422e4086b3c5a26fe47c29",
+    "source": "act2/observation/luna-four-kings-notice:17",
+    "speaker": "hostess",
+    "text": "……あはは♡",
+    "performance": "four-kings-tease",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"manager\",\"笑ってごまかすな！！\",\"four-kings-manager-retort\",false]": {
+    "file": "assets/voices/3d42efd40d8099386ec4a7c1a25c410c313229c9103498969fb35a8d3cf1a974.four-kings.mp3",
+    "hash": "3d42efd40d8099386ec4a7c1a25c410c313229c9103498969fb35a8d3cf1a974",
+    "source": "act2/observation/luna-four-kings-notice:18",
+    "speaker": "manager",
+    "text": "笑ってごまかすな！！",
+    "performance": "four-kings-manager-retort",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -17,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"manager\",\"ったく……。昨日みたいな騒ぎはもう勘弁してくれよ。\",\"four-kings-manager-alert\",false]": {
+    "file": "assets/voices/42529c10cd86c61a42bd72095aaf3da7589f7bf85bdeeecd2b843fa91a9573bd.four-kings.mp3",
+    "hash": "42529c10cd86c61a42bd72095aaf3da7589f7bf85bdeeecd2b843fa91a9573bd",
+    "source": "act2/observation/luna-four-kings-support:0",
+    "speaker": "manager",
+    "text": "ったく……。昨日みたいな騒ぎはもう勘弁してくれよ。",
+    "performance": "four-kings-manager-alert",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -17,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"……うん。ごめんね、大家さん。\",\"four-kings-confess\",false]": {
+    "file": "assets/voices/248ea919046f68125f3a9574ebd6df15fce26135f4ebd5edea29e26ada2d52b6.four-kings.mp3",
+    "hash": "248ea919046f68125f3a9574ebd6df15fce26135f4ebd5edea29e26ada2d52b6",
+    "source": "act2/observation/luna-four-kings-support:1",
+    "speaker": "hostess",
+    "text": "……うん。ごめんね、大家さん。",
+    "performance": "four-kings-confess",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"manager\",\"謝ることじゃねぇけど、困ったら早めに言えよ。\",\"four-kings-manager-warm\",false]": {
+    "file": "assets/voices/c9c825a80ad303786187c35cacab3fbedfc481615999c8f53bd30ffc04be78b7.four-kings.mp3",
+    "hash": "c9c825a80ad303786187c35cacab3fbedfc481615999c8f53bd30ffc04be78b7",
+    "source": "act2/observation/luna-four-kings-support:2",
+    "speaker": "manager",
+    "text": "謝ることじゃねぇけど、困ったら早めに言えよ。",
+    "performance": "four-kings-manager-warm",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -17,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"……ありがと♡\",\"four-kings-bright\",false]": {
+    "file": "assets/voices/39e195b669d1095f6a44cd57f9434ee1cf18c6c73e4776744c2fa3db5732513a.four-kings.mp3",
+    "hash": "39e195b669d1095f6a44cd57f9434ee1cf18c6c73e4776744c2fa3db5732513a",
+    "source": "act2/observation/luna-four-kings-support:3",
+    "speaker": "hostess",
+    "text": "……ありがと♡",
+    "performance": "four-kings-bright",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"cat\",\"ルナ。\",\"four-kings-moku\",false]": {
+    "file": "assets/voices/97a3544443d659656f0285f4f8eb1fa2160a225b1d4f93e5daffea31c9b266bf.four-kings.mp3",
+    "hash": "97a3544443d659656f0285f4f8eb1fa2160a225b1d4f93e5daffea31c9b266bf",
+    "source": "act2/observation/luna-four-kings-support:4",
+    "speaker": "cat",
+    "text": "ルナ。",
+    "performance": "four-kings-moku",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"ん？ なあに？\",\"four-kings-bright\",false]": {
+    "file": "assets/voices/86f9be56f3919fb0bfc950c2c440a35f7daafa68fb0dd19e5519361f6ae36562.four-kings.mp3",
+    "hash": "86f9be56f3919fb0bfc950c2c440a35f7daafa68fb0dd19e5519361f6ae36562",
+    "source": "act2/observation/luna-four-kings-support:5",
+    "speaker": "hostess",
+    "text": "ん？ なあに？",
+    "performance": "four-kings-bright",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"cat\",\"本当に四天王が来たら、モクを呼ぶニャ。\",\"four-kings-moku-proud\",false]": {
+    "file": "assets/voices/2845e2b895983ef0c5a049332ded0645d9b3974def94d93150119fa92533ee9c.four-kings.mp3",
+    "hash": "2845e2b895983ef0c5a049332ded0645d9b3974def94d93150119fa92533ee9c",
+    "source": "act2/observation/luna-four-kings-support:6",
+    "speaker": "cat",
+    "text": "本当に四天王が来たら、モクを呼ぶニャ。",
+    "performance": "four-kings-moku-proud",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"ふふっ。モクちゃん、戦ってくれるの？\",\"four-kings-tease\",false]": {
+    "file": "assets/voices/a284900759f04edc38f16ad6df3defa979a9577b7e3dc28882f3a8e6ea2329f6.four-kings.mp3",
+    "hash": "a284900759f04edc38f16ad6df3defa979a9577b7e3dc28882f3a8e6ea2329f6",
+    "source": "act2/observation/luna-four-kings-support:7",
+    "speaker": "hostess",
+    "text": "ふふっ。モクちゃん、戦ってくれるの？",
+    "performance": "four-kings-tease",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"cat\",\"もちろんニャ！ ……大家が。\",\"four-kings-moku-proud\",false]": {
+    "file": "assets/voices/c17bd8909fb2ba82e0a41ffce050f780bae09a29055eac7df5478b8be0625161.four-kings.mp3",
+    "hash": "c17bd8909fb2ba82e0a41ffce050f780bae09a29055eac7df5478b8be0625161",
+    "source": "act2/observation/luna-four-kings-support:8",
+    "speaker": "cat",
+    "text": "もちろんニャ！ ……大家が。",
+    "performance": "four-kings-moku-proud",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"あははっ！ モクちゃんは？\",\"four-kings-laugh\",false]": {
+    "file": "assets/voices/c5c41218761fdb6bf8aaa43ee9ef29f1f2f838fd3aa45ba0bf04529624658eb4.four-kings.mp3",
+    "hash": "c5c41218761fdb6bf8aaa43ee9ef29f1f2f838fd3aa45ba0bf04529624658eb4",
+    "source": "act2/observation/luna-four-kings-support:9",
+    "speaker": "hostess",
+    "text": "あははっ！ モクちゃんは？",
+    "performance": "four-kings-laugh",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"cat\",\"モクは後方支援ニャ。\",\"four-kings-moku-proud\",false]": {
+    "file": "assets/voices/cabdf971cdcc563b536e131d28df4db2df487988f4d06df68ebb115569da6c85.four-kings.mp3",
+    "hash": "cabdf971cdcc563b536e131d28df4db2df487988f4d06df68ebb115569da6c85",
+    "source": "act2/observation/luna-four-kings-support:10",
+    "speaker": "cat",
+    "text": "モクは後方支援ニャ。",
+    "performance": "four-kings-moku-proud",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"……はぁ。どうしよっかなぁ。\",\"four-kings-thinking\",false]": {
+    "file": "assets/voices/44f98fa51d30b73ce2992edf1ef4cdd56ee05c24670f5e1b9134102e06e160f9.four-kings.mp3",
+    "hash": "44f98fa51d30b73ce2992edf1ef4cdd56ee05c24670f5e1b9134102e06e160f9",
+    "source": "act2/observation/luna-four-kings-message:0",
+    "speaker": "hostess",
+    "text": "……はぁ。どうしよっかなぁ。",
+    "performance": "four-kings-thinking",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"……また変に期待させちゃダメだよね。\",\"four-kings-determined\",false]": {
+    "file": "assets/voices/0427b31d25703e4be83c92912a4fb03ddf8a7023e30d43af7d7e31b59f74d7cd.four-kings.mp3",
+    "hash": "0427b31d25703e4be83c92912a4fb03ddf8a7023e30d43af7d7e31b59f74d7cd",
+    "source": "act2/observation/luna-four-kings-message:1",
+    "speaker": "hostess",
+    "text": "……また変に期待させちゃダメだよね。",
+    "performance": "four-kings-determined",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"……よしっ。今度こそ、ちゃんと話そう。\",\"four-kings-determined\",false]": {
+    "file": "assets/voices/866bbacc22d10dedc765ce91895df6ca4fce3f51a76f45b58f5a9761b4607a3a.four-kings.mp3",
+    "hash": "866bbacc22d10dedc765ce91895df6ca4fce3f51a76f45b58f5a9761b4607a3a",
+    "source": "act2/observation/luna-four-kings-message:2",
+    "speaker": "hostess",
+    "text": "……よしっ。今度こそ、ちゃんと話そう。",
+    "performance": "four-kings-determined",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"……え？\",\"four-kings-surprise\",false]": {
+    "file": "assets/voices/28aed9dec9fb47d187d3ec5bc3a0d3502a425a144827db39a674ca20f0db2346.four-kings.mp3",
+    "hash": "28aed9dec9fb47d187d3ec5bc3a0d3502a425a144827db39a674ca20f0db2346",
+    "source": "act2/observation/luna-four-kings-reply:0",
+    "speaker": "hostess",
+    "text": "……え？",
+    "performance": "four-kings-surprise",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"……今日来るの！？\",\"four-kings-surprise\",false]": {
+    "file": "assets/voices/898af83e2e60a1da586ed39d5e37af6e0818b9abf96602a238b8daaed1ff0e89.four-kings.mp3",
+    "hash": "898af83e2e60a1da586ed39d5e37af6e0818b9abf96602a238b8daaed1ff0e89",
+    "source": "act2/observation/luna-four-kings-reply:1",
+    "speaker": "hostess",
+    "text": "……今日来るの！？",
+    "performance": "four-kings-surprise",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"……ちょっと待って。これ、あたし一人じゃ無理かも……。\",\"four-kings-surprise\",false]": {
+    "file": "assets/voices/462a839c63ab2c3e85118f017d965ded718ca4c9e6dfcd5dff6ff4ef632c4754.four-kings.mp3",
+    "hash": "462a839c63ab2c3e85118f017d965ded718ca4c9e6dfcd5dff6ff4ef632c4754",
+    "source": "act2/observation/luna-four-kings-reply:2",
+    "speaker": "hostess",
+    "text": "……ちょっと待って。これ、あたし一人じゃ無理かも……。",
+    "performance": "four-kings-surprise",
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true
+    }
+  },
+  "[\"hostess\",\"……あっ。そうだ♡\",\"four-kings-bright\",false]": {
+    "file": "assets/voices/7d790a56152a70fa16b29c190f8118d5a278945b922dbafb178c054a178c1144.four-kings.mp3",
+    "hash": "7d790a56152a70fa16b29c190f8118d5a278945b922dbafb178c054a178c1144",
+    "source": "act2/observation/luna-four-kings-reply:3",
+    "speaker": "hostess",
+    "text": "……あっ。そうだ♡",
+    "performance": "four-kings-bright",
     "model": "eleven_v3",
     "audioMastering": {
       "integratedLUFS": -18,

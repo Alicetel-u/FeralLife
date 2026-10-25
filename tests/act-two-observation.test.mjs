@@ -16,7 +16,7 @@ const direct=(s,index,elapsed=0)=>{s.actOne.observation.current={id:LUNA_NEW_ALL
 
 test('only the approved New Ally script and one debug entrance remain',()=>{
  const [beat]=ACT_TWO_OBSERVATION_BEATS;
- assert.equal(ACT_TWO_OBSERVATION_BEATS.length,1);assert.equal(developerObservationBeats('2').length,1);
+ assert.equal(ACT_TWO_OBSERVATION_BEATS.filter(b=>b.phase===0).length,1);assert.equal(developerObservationBeats('2').length,2);
  assert.equal(beat.lines.length,32);assert.equal(beat.lines[0].text,'だからダメだって言ってんだろ！');
  assert.equal(beat.lines[11].text,'モクの冷蔵庫、ビールでいっぱいになったニャ。');
  assert.equal(beat.lines[17].text,'せっかくだし、今日は休肝日にしよっか♡');
@@ -37,7 +37,7 @@ for(const speed of [1,6,20])test(`normal and debug entry play the complete part 
   const lines=s.events.find(e=>e.id===s.actOne.pending.eventId).lines;
   assert.equal(lines.filter(l=>l.text==='男「あっ！ ルナちゃん！」').length,1);
   assert.ok(lines.findIndex(l=>l.speaker==='cat')>lines.findIndex(l=>l.text==='男は大家を押しのけようとする。'));
-  answerActTwo(s,s.actOne.pending.eventId,'loan');assert.equal(observationView(s),null);
+  answerActTwo(s,s.actOne.pending.eventId,'loan');assert.equal(s.hour,80);assert.equal(observationView(s).phaseTitle,'ルナと四天王');
  }
 });
 

@@ -20,10 +20,11 @@ test('before the new scene the residents stay in their own rooms; direct trouble
  assert.ok(validateSave(loaded));
 });
 
-test('the next observation retains its existing life schedule after the first trouble',()=>{
- const s=state(),luna=s.residents.find(r=>r.type==='hostess');
- advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'loan');advanceActTwo(s,6);assert.equal(luna.action,'outing');
- advanceActTwo(s,12.9);assert.equal(sampleJourney(luna,s.hour).room,102);advanceActTwo(s,100);assert.equal(s.actOne.pending.scene,'duel');assert.ok(validateSave(s));
+test('the first success hands off to the next morning at home, with no old work outing',()=>{
+ const s=state();advanceActTwo(s,100);answerActTwo(s,s.actOne.pending.eventId,'loan');
+ assert.equal(s.hour,80);secondActLife(s);
+ for(const type of ['hostess','cat']){const r=s.residents.find(r=>r.type===type);assert.equal(sampleJourney(r,s.hour).room,102);assert.notEqual(r.action,'outing');}
+ advanceActTwo(s,100);assert.equal(s.actOne.pending.scene,'duel');assert.equal(s.hour,84);assert.ok(validateSave(s));
 });
 
 test('stepping or skipping time yields identical second-act blocking and old saves receive direction',()=>{
