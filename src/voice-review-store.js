@@ -4,9 +4,11 @@ export const VOICE_REVIEW_SPEAKERS={manager:'大家',cat:'モク',hostess:'ル�
 export function voiceReviewEmpty(){return {schema:1,records:{},cursorId:null,filters:{chapter:'all',scene:'all',speaker:'all',status:'all',search:'',sort:'scene'},catalogEntries:null};}
 export function voiceReviewHasRepair(row,record){return !!(row.repaired||row.catalogChanged||record?.repaired||record?.history?.some(h=>h.status==='ng')||!!record&&record.version!==row.version);}
 export function voiceReviewNeedsRecheck(row,record){
- if(row.removed)return false;
- const status=voiceReviewStatus(row,record);
- return status==='changed'||(voiceReviewHasRepair(row,record)&&['todo','heard','new'].includes(status));
+ if(row.removed||!record||record.status==='ok')return false;
+ // Historic mastering is not a request to recheck. Require an actual reported
+ // issue followed by replacement audio; keep it pending until a new decision.
+ if(record.status==='ng')return record.version!==row.version;
+ return record.status==='todo'&&record.history?.some(h=>h.status==='ng'&&h.version!==row.version)||false;
 }
 export function voiceReviewOpenPending(state){state.filters={...state.filters,status:'pending',sort:'status'};}
 export function voiceReviewStatus(row,record){

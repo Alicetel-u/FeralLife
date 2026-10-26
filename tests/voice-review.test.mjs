@@ -149,7 +149,7 @@ test('opening review hides accepted audio without losing decisions and updated O
 
 test('repair recheck excludes accepted and re-reported current audio, and keeps old notes on updates',()=>{
  const state=voiceReviewEmpty(),a={...variant('修正した音声'),repaired:true,repairComment:'語尾を調整。'},b=variant('元のまま');
- state.filters.status='recheck';assert.deepEqual(voiceReviewFilter([a,b],state).map(r=>r.id),[a.id]);
+ state.filters.status='recheck';assert.deepEqual(voiceReviewFilter([a,b],state).map(r=>r.id),[]);
  voiceReviewMark(state,a,{status:'ng',issues:['timing'],note:'旧版の語尾'});
  assert.equal(voiceReviewFilter([a,b],state).length,0);
  const newer={...a,version:'v2'};assert.equal(voiceReviewFilter([newer,b],state).length,1);
@@ -162,4 +162,17 @@ test('the five reported repairs include their concrete correction comments in th
  const rows=VOICE_REVIEW_CATALOG.filter(r=>VOICE_MANIFEST[r.id].repairComment);
  assert.equal(rows.length,5);
  for(const r of rows){assert.equal(r.repairComment,VOICE_MANIFEST[r.id].repairComment);assert.ok(r.repaired);assert.match(r.repairComment,/再生成/);}
+});
+
+test('repair recheck requires an actual flagged replacement, not historic mastering or OK audio',()=>{
+ const state=voiceReviewEmpty(),mastered={...variant('過去の音量調整'),repaired:true},heard={...variant('聞いただけの調整音声'),repaired:true},ok=variant('問題なしのまま'),fixed={...variant('修正確認済み'),repaired:true},reported=variant('指摘して直した音声');
+ voiceReviewMark(state,heard,{listenedVersion:heard.version});
+ voiceReviewMark(state,ok,{status:'ok'});voiceReviewMark(state,fixed,{status:'ok'});
+ voiceReviewMark(state,reported,{status:'ng',issues:['timing'],note:'語尾切れ'});
+ const changed={...reported,version:'v2'},okChanged={...ok,version:'v2'};
+ const catalog=[mastered,heard,okChanged,fixed,changed];voiceReviewSyncCatalog(state,catalog);state.filters.status='recheck';
+ assert.deepEqual(voiceReviewFilter(catalog,state).map(r=>r.id),[reported.id]);
+ voiceReviewMark(state,changed,{status:'ok',issues:[],note:''});assert.equal(voiceReviewFilter(catalog,state).length,0);
+ const storage=memory();storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));const restored=voiceReviewLoad(storage).state;
+ assert.equal(voiceReviewFilter(catalog,restored).length,0);assert.equal(restored.records[ok.id].status,'ok');
 });

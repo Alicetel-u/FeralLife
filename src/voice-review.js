@@ -75,7 +75,7 @@ export function mountVoiceReview(root,{onBack,storage,catalog=VOICE_REVIEW_CATAL
  const onChange=async event=>{const name=event.target.dataset.vrFilter;if(name){state.filters.search=root.querySelector('[data-vr-search]')?.value||'';state.filters[name]=event.target.value;if(name==='chapter')state.filters.scene='all';save();render();}if(event.target.matches('[data-vr-file]')){const file=event.target.files?.[0];if(file){if(file.size>5000000){toast('ファイルが大きすぎます。');return;}applyImport(await file.text());}}};
  const onInput=event=>{if(event.target.matches('[data-vr-note]')&&current()){const note=event.target.value;voiceReviewMark(state,current(),{note,status:note||state.records[current().id]?.issues?.length?'ng':'todo'});save();toast(warning||'メモを自動保存しました。');}else if(event.target.matches('[data-vr-search]')){state.filters.search=event.target.value;save();}};
  const onVisibility=()=>{if(document.hidden){auto=false;stop();save();if(screen==='review')render();}};
- const onStorage=event=>{if(event.key===VOICE_REVIEW_KEY&&event.newValue)try{voiceReviewImport(state,JSON.parse(event.newValue));if(screen==='review')render();}catch{}};
+ const onStorage=event=>{if(event.key===VOICE_REVIEW_KEY&&event.newValue)try{voiceReviewImport(state,JSON.parse(event.newValue));if(screen==='review'){rebuildQueue();render();}}catch{}};
  const onKey=event=>{if(event.key==='Escape'){event.preventDefault();event.stopPropagation();auto=false;stop();screen==='review'?onBack?.():(screen='review',render());}};
  const timer=setInterval(()=>{
   if(!playing||handled||disposed)return;
