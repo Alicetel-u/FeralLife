@@ -1,0 +1,42 @@
+name: Repair three reviewed voice clips
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/repair-three-voices.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: three-reviewed-voices
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Repair exactly three voice clips
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+        run: python3 tools/repair-three-review-voices.py
+      - name: Verify game build and voice tests
+        run: |
+          npm run build
+          node --test tests/voice.test.mjs
+      - name: Commit only revised audio and manifest
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/voice-manifest.js assets/voices/voice-review-20261026-{1,2,3}.mp3
+          git diff --cached --quiet && exit 0
+          git commit -m "Repair three reviewed character voice clips"
+          git push
