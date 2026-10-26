@@ -2,7 +2,7 @@ import {VOICE_REVIEW_CATALOG} from './voice-review-catalog.js';
 import {VOICE_REVIEW_KEY,VOICE_REVIEW_ISSUES,VOICE_REVIEW_SPEAKERS,voiceReviewSyncCatalog,voiceReviewOpenPending,voiceReviewNeedsInitial,voiceReviewNeedsRecheck,voiceReviewRows,voiceReviewHasRepair,voiceReviewLoad,voiceReviewStatus,voiceReviewMark,voiceReviewImport,voiceReviewBackup,voiceReviewFilter,voiceReviewExport} from './voice-review-store.js';
 import {createVoicePlayer} from './voice-player.js';
 import {VOICE_REVIEW_PUBLISHED} from './voice-review-published.js';
-import {voiceReviewApplyPublished,voiceReviewHandoff} from './voice-review-release.js';
+import {voiceReviewApplyPublished,voiceReviewHandoff,voiceReviewParseReport,voiceReviewUnpublished} from './voice-review-release.js';
 let voiceReviewChapter=1;
 const voiceReviewPlayer=createVoicePlayer({chapter:()=>voiceReviewChapter,storage:{getItem(){try{return localStorage.getItem('kemono-voice-review-audio');}catch{return null;}},setItem(key,value){try{localStorage.setItem('kemono-voice-review-audio',value);}catch{}}}});
 const voiceReviewEscape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -11,7 +11,7 @@ export function mountVoiceReview(root,{onBack,storage,catalog=VOICE_REVIEW_CATAL
  const loaded=voiceReviewLoad(storage),state=loaded.state;voiceReviewApplyPublished(state,published,catalog);voiceReviewOpenPending(state);voiceReviewSyncCatalog(state,catalog);
  let warning=loaded.warning,screen='review',queue=voiceReviewFilter(catalog,state),index=Math.max(0,queue.findIndex(r=>r.id===state.cursorId)),page=0,auto=false,playing=false,nonce=0,handled=false,disposed=false,advanceTimer=null;
  const current=()=>queue[index];
- const report=()=>voiceReviewExport(state,catalog)+voiceReviewHandoff(state);
+ const report=()=>voiceReviewExport({...state,records:voiceReviewUnpublished(state,published)},catalog).replace('音声の修正指摘はまだありません。','新しい修正指摘はありません。').split('\n').filter(line=>!/^識別キー：|^確認した音声版：|^出現箇所：/.test(line)).join('\n')+voiceReviewHandoff(state,catalog,published);
  const decision=row=>row&&state.records[row.id]?.version===row.version?state.records[row.id]:null;
  const save=()=>{try{if(!storage)throw Error('storage');const old=storage.getItem(VOICE_REVIEW_KEY);if(old)voiceReviewImport(state,{...JSON.parse(old),application:'kemono-voice-review'});voiceReviewApplyPublished(state,published,catalog);storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));warning='';}catch{warning='端末に保存できません。出力からバックアップを保存してください。';}};
  const stop=()=>{clearTimeout(advanceTimer);advanceTimer=null;player.stop();playing=false;handled=false;};
@@ -31,10 +31,10 @@ export function mountVoiceReview(root,{onBack,storage,catalog=VOICE_REVIEW_CATAL
   }
   if(screen==='export'){
    const ids=new Set(catalog.map(r=>r.id)),ng=Object.values(state.records).filter(r=>r.status==='ng'&&ids.has(r.id)).length,archived=Object.values(state.records).filter(r=>r.status==='ng'&&!ids.has(r.id)).length;
-   root.innerHTML=frame('指摘を渡す',`<p class="vr-help">現行の要修正 ${ng}件／削除履歴 ${archived}件。問題なしの判定も含めてコピーし、ChatGPT / Codexに渡してください。</p><textarea class="vr-output" data-vr-output readonly aria-label="修正依頼の全文">${voiceReviewEscape(report())}</textarea><div class="vr-export-actions"><button class="vr-primary" data-vr="copy">修正依頼をコピー</button><button data-vr="share">共有する</button><button data-vr="backup">バックアップ保存</button><button data-vr="import">バックアップ復元</button></div><p class="vr-help">渡した判定は音声修正と一緒に本番へ反映され、別のPC・スマホにも引き継がれます。未提出の判定はこの端末に保存されます。</p>`);return;
+   root.innerHTML=frame('指摘を渡す',`<p class="vr-help">現行の要修正 ${ng}件／削除履歴 ${archived}件。ファイルで共有・保存して、このチャットに添付できます。公開済みを除いた新しい判定だけを渡します。</p><textarea class="vr-output" data-vr-output readonly aria-label="修正依頼の全文">${voiceReviewEscape(report())}</textarea><div class="vr-export-actions"><button class="vr-primary" data-vr="share">ファイルで共有</button><button data-vr="report-file">ファイル保存</button><button data-vr="copy">短くコピー</button><button data-vr="import">記録の保存・復元</button></div><p class="vr-help">渡した判定は音声修正と一緒に本番へ反映され、別のPC・スマホにも引き継がれます。未提出の判定はこの端末に保存されます。</p>`);return;
   }
   if(screen==='import'){
-   root.innerHTML=frame('バックアップを復元',`<p class="vr-help">保存したJSONファイルを選ぶか、JSONを貼り付けてください。現在の記録と統合し、新しい指摘を残します。</p><button class="vr-secondary" data-vr="choose-file">JSONファイルを選ぶ</button><input type="file" accept=".json,application/json" data-vr-file hidden><textarea class="vr-output" data-vr-import placeholder="バックアップJSONを貼り付け" aria-label="バックアップJSON"></textarea>`,`<div class="vr-bottom"><button data-vr="export">戻る</button><button class="vr-primary" data-vr="restore">記録を統合する</button></div>`);return;
+   root.innerHTML=frame('バックアップを復元',`<p class="vr-help">保存した出力テキストかバックアップJSONを選べます。現在の記録と統合し、新しい判定を残します。</p><div class="vr-export-actions"><button class="vr-secondary" data-vr="choose-file">記録ファイルを選ぶ</button><button data-vr="backup">全記録をバックアップ</button></div><input type="file" accept=".json,.txt,application/json,text/plain" data-vr-file hidden><textarea class="vr-output" data-vr-import placeholder="出力テキスト・バックアップJSONを貼り付け" aria-label="バックアップJSON"></textarea>`,`<div class="vr-bottom"><button data-vr="export">戻る</button><button class="vr-primary" data-vr="restore">記録を統合する</button></div>`);return;
   }
   if(screen==='note'){
    root.innerHTML=frame('この台詞のメモ',`<p class="vr-note-context">${voiceReviewEscape(row?.line.text)}</p><textarea class="vr-output" data-vr-note maxlength="2000" placeholder="例：入居者の「にゅうきょしゃ」が聞き取れない" aria-label="音声の修正メモ">${voiceReviewEscape(editable?.note||'')}</textarea>`,`<div class="vr-bottom"><button data-vr="review">確認へ戻る</button><button class="vr-primary" data-vr="save-note">メモを保存</button></div>`);return;
@@ -49,7 +49,18 @@ export function mountVoiceReview(root,{onBack,storage,catalog=VOICE_REVIEW_CATAL
  function rebuildQueue(id=current()?.id||state.cursorId){voiceReviewSyncCatalog(state,catalog);stop();auto=false;queue=voiceReviewFilter(catalog,state);index=Math.max(0,queue.findIndex(r=>r.id===id));page=0;remember();}
  function toast(text){const el=root.querySelector('[data-vr-status]');if(el){el.textContent=text;el.classList.toggle('vr-warning',!!warning);}}
  async function copy(){const text=report();try{if(!navigator.clipboard?.writeText)throw Error('clipboard');await navigator.clipboard.writeText(text);toast('コピーしました。ChatGPT / Codexに貼り付けてください。');}catch{const area=root.querySelector('[data-vr-output]');area?.focus();area?.select();try{if(document.execCommand('copy')){toast('コピーしました。');return;}}catch{}toast('本文を長押しし「すべて選択」→「コピー」してください。');}}
- function applyImport(text){try{if(text.length>5000000)throw Error('ファイルが大きすぎます。');const count=voiceReviewImport(state,JSON.parse(text));save();screen='export';render();toast(`${count}件を統合しました。`);}catch(error){toast(error.message||'読み込めませんでした。');}}
+ function reportFile(){return new File([report()],'けもの荘-音声チェック.txt',{type:'text/plain;charset=utf-8'});}
+ function downloadReport(file=reportFile()){
+  const url=URL.createObjectURL(file),a=document.createElement('a');a.href=url;a.download=file.name;root.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);
+  toast('保存したテキストファイルを、このチャットに添付してください。');
+ }
+ async function shareReport(){
+  const file=reportFile();
+  try{if(navigator.canShare?.({files:[file]})&&navigator.share){await navigator.share({files:[file],title:'けもの荘 音声チェック'});return;}}
+  catch(error){if(error.name==='AbortError')return;}
+  downloadReport(file);
+ }
+ function applyImport(text){try{if(text.length>5000000)throw Error('ファイルが大きすぎます。');const count=voiceReviewImport(state,voiceReviewParseReport(text,catalog));save();screen='export';render();toast(`${count}件を統合しました。`);}catch(error){toast(error.message||'読み込めませんでした。');}}
  const onClick=async event=>{
   const button=event.target.closest('button');if(!button||!root.contains(button))return;event.stopPropagation();
   const issue=button.dataset.vrIssue,row=current();
@@ -60,12 +71,13 @@ export function mountVoiceReview(root,{onBack,storage,catalog=VOICE_REVIEW_CATAL
    case 'prev':navigate(-1);return;
    case 'next':navigate(1,auto);return;
    case 'auto':auto=!auto;if(auto&&!playing)play();else render();return;
-   case 'ok':if(row&&!row.removed){const nextId=queue[index+1]?.id,wasAuto=auto;voiceReviewMark(state,row,{status:'ok',issues:[],note:'',listenedVersion:row.version});save();rebuildQueue(nextId||row.id);render();if(!queue.length)toast('この対象の確認が終わりました。');else if(wasAuto&&nextId){auto=true;play();}}return;
+   case 'ok':if(row&&!row.removed){const nextId=queue[index+1]?.id,wasAuto=auto;voiceReviewMark(state,row,{status:'ok',issues:[],note:'',listenedVersion:row.version});save();rebuildQueue(nextId||row.id);render();if(!queue.length)toast('この対象の確認が終わりました。');else{auto=wasAuto;play();}}return;
    case 'recheck':if(state.filters.status==='recheck')voiceReviewOpenPending(state);else state.filters={chapter:'all',scene:'all',speaker:'all',status:'recheck',search:'',sort:'scene'};rebuildQueue();screen='review';render();return;
    case 'text-prev':page--;render();return;
    case 'text-next':page++;render();return;
    case 'copy':await copy();return;
-   case 'share':try{if(!navigator.share)throw Error('share');await navigator.share({title:'けもの荘 音声修正依頼',text:report()});}catch(error){if(error.name!=='AbortError')await copy();}return;
+   case 'share':await shareReport();return;
+   case 'report-file':downloadReport();return;
    case 'backup':{save();const url=URL.createObjectURL(new Blob([voiceReviewBackup(state)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='けもの荘-音声チェック-'+new Date().toISOString().slice(0,10)+'.json';root.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);toast('バックアップを書き出しました。');return;}
    case 'choose-file':root.querySelector('[data-vr-file]')?.click();return;
    case 'restore':applyImport(root.querySelector('[data-vr-import]')?.value||'');return;

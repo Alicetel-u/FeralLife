@@ -6,6 +6,7 @@ import {VOICE_MANIFEST} from '../src/voice-manifest.js';
 import {VOICE_REVIEW_KEY,voiceReviewEmpty,voiceReviewSyncCatalog,voiceReviewRows,voiceReviewHasRepair,voiceReviewStatus,voiceReviewMark,voiceReviewLoad,voiceReviewImport,voiceReviewBackup,voiceReviewExport,voiceReviewFilter} from '../src/voice-review-store.js';
 import {VOICE_REVIEW_CATALOG} from '../src/voice-review-catalog.js';
 import {extractCompleteVoiceScript} from '../tools/voice-script.mjs';
+import {voiceLineKey} from '../src/voice-policy.js';
 const row=VOICE_REVIEW_CATALOG.find(r=>r.chapter===2&&r.line.speaker==='hostess');
 const memory=()=>{const data=new Map();return {getItem:k=>data.get(k)||null,setItem:(k,v)=>data.set(k,v)};};
 
@@ -61,7 +62,7 @@ test('the handoff includes the exact lookup key, scene, line, problem and memo',
 test('recording versions are tied to played audio contents, not the release or source filename',async()=>{
  for(let i=0;i<VOICE_REVIEW_CATALOG.length;i+=8)await Promise.all(VOICE_REVIEW_CATALOG.slice(i,i+8).map(async row=>{
   const clip=VOICE_MANIFEST[row.id];const data=await readFile(new URL('../'+(clip.fastFile||clip.file),import.meta.url));
-  assert.equal(row.version,createHash('sha256').update(data).digest('hex').slice(0,20),row.source);
+  assert.equal(row.version,createHash('sha256').update(data).update(clip.reviewRevision||'').digest('hex').slice(0,20),row.source);
  }));
 });
 
@@ -159,7 +160,7 @@ test('repair recheck excludes accepted and re-reported current audio, and keeps 
 });
 
 test('the five reported repairs include their concrete correction comments in the catalog',()=>{
- const rows=VOICE_REVIEW_CATALOG.filter(r=>VOICE_MANIFEST[r.id].repairComment);
+ const rows=VOICE_REVIEW_CATALOG.filter(r=>VOICE_MANIFEST[r.id].repairComment&&!VOICE_MANIFEST[r.id].reviewRevision);
  assert.equal(rows.length,5);
  for(const r of rows){assert.equal(r.repairComment,VOICE_MANIFEST[r.id].repairComment);assert.ok(r.repaired);assert.match(r.repairComment,/再生成/);}
 });
@@ -198,7 +199,7 @@ test('initial checking and repaired checking are disjoint across reopen and save
 test('published repairs appear without old local reports and stay out of initial checking',async()=>{
  const {voiceReviewOpenPending}=await import('../src/voice-review-store.js');
  const state=voiceReviewEmpty(),repairs=VOICE_REVIEW_CATALOG.filter(r=>r.repairReview);
- assert.equal(repairs.length,5);state.filters.status='recheck';
+ assert.equal(repairs.length,7);state.filters.status='recheck';
  assert.deepEqual(voiceReviewFilter(VOICE_REVIEW_CATALOG,state).map(r=>r.id),repairs.map(r=>r.id));
  for(const r of repairs){assert.ok(r.repairComment);assert.equal(voiceReviewStatus(r,null),'changed');}
  voiceReviewOpenPending(state);const initial=new Set(voiceReviewFilter(VOICE_REVIEW_CATALOG,state).map(r=>r.id));
@@ -232,4 +233,11 @@ test('new recording decisions do not inherit old issues or notes, and retain the
  assert.equal(restored.records[old.id].note,'');assert.equal(restored.records[old.id].history[0].note,'以前の語尾切れ');
  const third=voiceReviewMark(restored,{...updated,version:'v3'},{note:'今回の新しい指摘',status:'ng'});
  assert.deepEqual(third.issues,[]);assert.equal(third.note,'今回の新しい指摘');assert.equal(third.history.length,2);
+});
+
+test('every debug line resolves the exact recording including prologue inner monologues',()=>{
+ assert.equal(new Set(VOICE_REVIEW_CATALOG.map(r=>r.reviewId)).size,VOICE_REVIEW_CATALOG.length);
+ for(const r of VOICE_REVIEW_CATALOG){assert.match(r.reviewId,/^[a-f0-9]{16}$/);assert.equal(voiceLineKey(r.line),r.id,r.source);}
+ const inner=VOICE_REVIEW_CATALOG.filter(r=>r.source.startsWith('prologue:'));
+ assert.equal(inner.length,2);for(const r of inner){assert.equal(r.line.innerVoice,true);assert.equal(r.repairReview,true);}
 });

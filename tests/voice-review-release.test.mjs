@@ -61,3 +61,27 @@ test('real review UI hides OK immediately, opens repaired audio separately, expo
   assert.match(root.innerHTML,/未確認の音声はありません/);await click('recheck');assert.match(root.innerHTML,/修正後の確認待ちはありません/);
  }finally{dispose?.();globalThis.document=priorDocument;}
 });
+
+test('compact files preserve OK/NG and private notes, skip published decisions and support unknown historical keys',()=>{
+ const accepted={...row('既に公開した判定'),reviewId:'aabbccdd00112233'},newer={...row('今回の指摘'),reviewId:'aabbccdd00112244'},removed=row('以前の台詞'),state=voiceReviewEmpty();
+ mark(state,accepted,'ok','2026-10-27T01:00:00Z');mark(state,newer,'ng','2026-10-27T02:00:00Z','読みがおかしい');mark(state,removed,'ok','2026-10-27T03:00:00Z');
+ const published=voiceReviewPublishReport(empty(),{application:'kemono-voice-review',schema:1,records:{[accepted.id]:state.records[accepted.id]}},[accepted,newer]);
+ const handoff=voiceReviewHandoff(state,[accepted,newer],published),parsed=voiceReviewParseReport(handoff,[accepted,newer]);
+ assert.equal(Object.keys(parsed.records).length,2);assert.equal(parsed.records[newer.id].note,'読みがおかしい');assert.equal(parsed.records[removed.id].status,'ok');assert.ok(!handoff.includes(accepted.id));assert.ok(!handoff.includes(newer.id));
+ assert.throws(()=>voiceReviewParseReport(handoff,[]),/最新カタログ/);
+});
+
+test('OK advances and plays immediately without continuous mode, and report shares as a text attachment',async()=>{
+ const first=row('一番目'),second={...row('二番目'),reviewId:'0011223344556677'},storage=memory(),listeners=new Map(),played=[];
+ const root={innerHTML:'',addEventListener:(n,f)=>listeners.set(n,f),removeEventListener:n=>listeners.delete(n),contains:()=>true,querySelector:()=>null};
+ const oldDocument=globalThis.document,oldNavigator=Object.getOwnPropertyDescriptor(globalThis,'navigator');let shared,dispose;
+ globalThis.document={addEventListener(){},removeEventListener(){}};Object.defineProperty(globalThis,'navigator',{configurable:true,value:{canShare:()=>true,share:async args=>{shared=args;}}});
+ const click=async action=>listeners.get('click')({target:{closest:()=>({dataset:{vr:action}})},stopPropagation(){}});
+ try{
+  dispose=mountVoiceReview(root,{storage,catalog:[first,second],published:empty(),player:{stop(){},unlock(){},play(line){played.push(line.text);}}});
+  await click('ok');assert.deepEqual(played,['二番目']);assert.match(root.innerHTML,/連続 OFF/);
+  await click('ok');assert.deepEqual(played,['二番目']);assert.match(root.innerHTML,/未確認の音声はありません/);
+  await click('export');await click('share');assert.equal(shared.files.length,1);assert.match(shared.files[0].name,/\.txt$/);
+  const parsed=voiceReviewParseReport(await shared.files[0].text(),[first,second]);assert.equal(parsed.records[first.id].status,'ok');assert.equal(parsed.records[second.id].status,'ok');
+ }finally{dispose?.();globalThis.document=oldDocument;if(oldNavigator)Object.defineProperty(globalThis,'navigator',oldNavigator);else delete globalThis.navigator;}
+});

@@ -1,4 +1,4 @@
-import {voiceReviewImport,voiceReviewEmpty,voiceReviewBackup} from './voice-review-store.js';
+import {voiceReviewImport,voiceReviewEmpty} from './voice-review-store.js';
 
 export function voiceReviewValidatePublished(payload){
  if(payload?.schema!==1||!payload.decisions||typeof payload.decisions!=='object'||Array.isArray(payload.decisions))throw Error('公開用の音声判定形式が不正です。');
@@ -45,13 +45,31 @@ export function voiceReviewPublishReport(existing,payload,catalog){
  return voiceReviewValidatePublished(next);
 }
 
-export function voiceReviewHandoff(state){
- const payload=JSON.parse(voiceReviewBackup(state));
- delete payload.catalogEntries;delete payload.cursorId;delete payload.filters;
+export function voiceReviewUnpublished(state,published={decisions:{}}){
+ return Object.fromEntries(Object.entries(state.records).filter(([id,r])=>{
+  const shared=published.decisions[id];
+  return ['ok','ng'].includes(r.status)&&!(shared?.status===r.status&&shared.version===r.version&&Date.parse(shared.updatedAt)>=Date.parse(r.updatedAt));
+ }));
+}
+
+export function voiceReviewHandoff(state,catalog=[],published={decisions:{}}){
+ const rows=new Map(catalog.map(row=>[row.id,row]));
+ const records=Object.entries(voiceReviewUnpublished(state,published)).map(([id,r])=>[rows.get(id)?.reviewId||id,r.version,r.status,r.updatedAt,...(r.issues.length||r.note?[r.issues,r.note]:[])]);
+ const payload={application:'kemono-voice-review',schema:2,records};
  return '\n\n--- KEMONO_VOICE_REVIEW_REPORT ---\n'+JSON.stringify(payload)+'\n--- END_KEMONO_VOICE_REVIEW_REPORT ---';
 }
 
-export function voiceReviewParseReport(text){
+export function voiceReviewParseReport(text,catalog=[]){
  const match=text.match(/--- KEMONO_VOICE_REVIEW_REPORT ---\s*([\s\S]*?)\s*--- END_KEMONO_VOICE_REVIEW_REPORT ---/);
- return JSON.parse(match?match[1]:text);
+ const payload=JSON.parse(match?match[1]:text);
+ if(payload.application!=='kemono-voice-review'||payload.schema!==2)return payload;
+ if(!Array.isArray(payload.records))throw Error('短縮した判定の形式が不正です。');
+ const rows=new Map(catalog.map(row=>[row.reviewId,row])),state=voiceReviewEmpty(),records={};
+ for(const entry of payload.records){
+  if(!Array.isArray(entry)||entry.length<4||entry.length>6)throw Error('短縮した判定の形式が不正です。');
+  const [ref,version,status,updatedAt,issues=[],note='']=entry,row=rows.get(ref),id=row?.id||ref;
+  let key;try{key=JSON.parse(id);}catch{throw Error('音声IDが見つかりません。最新カタログで読み込んでください。');}
+  records[id]={id,version,status,updatedAt,issues,note,chapter:row?.chapter||1,speaker:key[0],text:key[1],scene:row?.sceneLabel||'旧台詞',source:row?.source||''};
+ }
+ const restored={application:'kemono-voice-review',schema:1,records};voiceReviewImport(state,restored);return restored;
 }

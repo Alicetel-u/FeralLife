@@ -2,6 +2,7 @@
 export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"モクですニャ。よろしくニャ。\",\"moku\",false]",
+    "reviewId": "e2019f7642df2b72",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -18,6 +19,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"うわっくっせぇ！！煙だらけじゃねーか！\",\"retort\",false]",
+    "reviewId": "df354aade68c6890",
     "repaired": true,
     "repairReview": true,
     "repairComment": "語尾切れ対策で再生成。速度と区切りを調整し、末尾に余白を追加。",
@@ -35,6 +37,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大丈夫ニャ。換気扇は昨日から回してるニャ。\",\"moku-happy\",false]",
+    "reviewId": "d769a9dede528ca6",
     "repaired": false,
     "chapter": 1,
     "scene": "1:opening",
@@ -50,6 +53,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"換気扇より先にタバコ止めろよ！\",\"retort\",false]",
+    "reviewId": "a0176923bfca7bfe",
     "repaired": false,
     "chapter": 1,
     "scene": "1:opening",
@@ -65,6 +69,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"まぁよろしく。……ずいぶん自由に暮らしてるな。\",\"normal\",false]",
+    "reviewId": "3e9c2e1f4d404a0a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:opening",
@@ -80,6 +85,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"他に誰もいないからニャ。静かで最高ニャ。\",\"moku\",false]",
+    "reviewId": "1c43f8ee4506af91",
     "repaired": false,
     "chapter": 1,
     "scene": "1:opening",
@@ -95,6 +101,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"部屋、少しは片づけたらどうだ？\",\"normal\",false]",
+    "reviewId": "ae95ce6f315e77dd",
     "repaired": false,
     "chapter": 1,
     "scene": "1:opening",
@@ -110,6 +117,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"明日からやるニャ。今日は準備の日ニャ。\",\"moku\",false]",
+    "reviewId": "1d1d1df823cf31d9",
     "repaired": false,
     "chapter": 1,
     "scene": "1:opening",
@@ -125,6 +133,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……何の準備だ？\",\"normal\",false]",
+    "reviewId": "ef59c399817e610a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:opening",
@@ -140,6 +149,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"明日から頑張るために、今日は休む準備ニャ。\",\"moku\",false]",
+    "reviewId": "d96640a69d1a46f2",
     "repaired": false,
     "chapter": 1,
     "scene": "1:opening",
@@ -155,6 +165,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……まぁ、家賃さえ払ってくれりゃいいか。\",\"normal\",false]",
+    "reviewId": "32c248fd8febd78a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:opening",
@@ -170,6 +181,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"お、新しい大家かニャ？\",\"moku\",false]",
+    "reviewId": "487e18d4751b3cd5",
     "repaired": false,
     "chapter": 1,
     "scene": "1:opening",
@@ -185,6 +197,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"よろしく頼むニャ。家賃は来月から払うニャ。\",\"moku\",false]",
+    "reviewId": "5fcd0b7e74da0397",
     "repaired": false,
     "chapter": 1,
     "scene": "1:opening",
@@ -200,7 +213,10 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"古びた鍵と、一通の手紙。\\n……今日から、ここを俺が預かるのか。\",\"inner\",false]",
+    "reviewId": "dea92e61fd947f7e",
     "repaired": false,
+    "repairReview": true,
+    "repairComment": "音声チェックで心の声を通常音声として検索していた不具合を修正。既存の心の声を正しく再生。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -210,14 +226,17 @@ export const VOICE_REVIEW_CATALOG = [
       "shot": "keys",
       "image": "assets/prologue/keys.png",
       "speaker": "manager",
-      "text": "古びた鍵と、一通の手紙。\n……今日から、ここを俺が預かるのか。"
+      "text": "古びた鍵と、一通の手紙。\n……今日から、ここを俺が預かるのか。",
+      "innerVoice": true
     },
-    "version": "bab6b3e460fca8af6519"
+    "version": "0a51db0af16748710c47"
   },
   {
     "id": "[\"manager\",\"……何があったんだよ、このアパート。\\nまずは、たった一人の住人に会ってみるか。\",\"inner\",false]",
+    "reviewId": "96cca414e1e4a62b",
     "repaired": true,
-    "repairComment": "音声を再生成し、音量を調整。",
+    "repairReview": true,
+    "repairComment": "音声チェックで心の声を通常音声として検索していた不具合を修正。既存の心の声を正しく再生。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -227,12 +246,14 @@ export const VOICE_REVIEW_CATALOG = [
       "shot": "door",
       "image": "assets/prologue/door.png",
       "speaker": "manager",
-      "text": "……何があったんだよ、このアパート。\nまずは、たった一人の住人に会ってみるか。"
+      "text": "……何があったんだよ、このアパート。\nまずは、たった一人の住人に会ってみるか。",
+      "innerVoice": true
     },
-    "version": "4b28122c3ac5e6d4df6a"
+    "version": "9c51a545080658c7845e"
   },
   {
     "id": "[\"cat\",\"ふぅ……これで安心ニャ。\",\"moku\",false]",
+    "reviewId": "e1043d187c75fd02",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -249,6 +270,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、やっぱり頼りになるニャ。\",\"moku\",false]",
+    "reviewId": "2f72602e6a19e564",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -266,6 +288,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"もう一本……灰皿が山盛りニャ。\",\"moku-surprised\",false]",
+    "reviewId": "4c72ccc3d3893bf3",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -282,6 +305,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"押せば入るかニャ。……あ、崩れたニャ。\",\"moku-surprised\",false]",
+    "reviewId": "4dfa5e0feb835804",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -298,6 +322,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家ー！ ちょっと知恵を貸すニャ！\",\"moku-surprised\",false]",
+    "reviewId": "3c86c3574612c453",
     "repaired": true,
     "repairReview": true,
     "repairComment": "語尾切れ対策で再生成。呼びかけの間と速度を調整し、末尾に余白を追加。",
@@ -316,6 +341,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……腹減ったニャ。\",\"moku\",false]",
+    "reviewId": "659b550b74e29d98",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -332,6 +358,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"そういえば、昨日から何も食べてない気がするニャ……。\",\"moku\",false]",
+    "reviewId": "77b41fbcd95c41b7",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -348,6 +375,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……なんか作るかニャ。\",\"moku\",false]",
+    "reviewId": "1ba3418d00df3d8e",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -364,6 +392,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。\",\"moku\",false]",
+    "reviewId": "37788e67ef1205c9",
     "repaired": true,
     "repairReview": true,
     "repairComment": "末尾の異音対策で再生成。音量を整え、語尾の後に余白を追加。",
@@ -382,6 +411,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"テレビもおしまいニャ。おやすみニャ……。\",\"moku\",false]",
+    "reviewId": "23d48156a1672fea",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -398,6 +428,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お、起きたのか。\",\"normal\",false]",
+    "reviewId": "eecaa42a8a90b0f9",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -414,6 +445,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"寝すぎて疲れたから、気分転換ニャ。\",\"moku\",false]",
+    "reviewId": "64b3b13fb467776d",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -430,6 +462,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"休憩のあとに休憩するなよ。\",\"normal\",false]",
+    "reviewId": "ef7b6291595f1226",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -446,6 +479,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"歩いてるニャ。今はかなり活動的ニャ。\",\"moku\",false]",
+    "reviewId": "2ec6e522a41321a2",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -462,6 +496,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……まあ、部屋にこもってるよりいいか。\",\"normal\",false]",
+    "reviewId": "6d6695d686901daa",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -478,6 +513,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ふぅ〜……外で吸うのもうまいニャ。缶を二本も動かしたあとの一本は格別ニャ。\",\"moku-happy\",false]",
+    "reviewId": "827fccabbff993f2",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -494,6 +530,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、いい知らせニャ。\",\"moku-happy\",false]",
+    "reviewId": "3e356556e8e7a3ce",
     "repaired": true,
     "repairReview": true,
     "repairComment": "末尾の異音対策で再生成。笑い声の指定を外し、明瞭な会話に調整。",
@@ -512,6 +549,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お、部屋を片づけたのか？\",\"normal\",false]",
+    "reviewId": "dec276da96db64b3",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -528,6 +566,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ちゃんと床が見えたニャ！\",\"moku-happy\",false]",
+    "reviewId": "b5f11d9790191033",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -544,6 +583,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"おお！ どのくらい？\",\"normal\",false]",
+    "reviewId": "4bdba404b152d377",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -560,6 +600,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"足の裏くらいニャ。\",\"moku\",false]",
+    "reviewId": "8b9b1aec8664d8bf",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -576,6 +617,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"立ってた場所だけじゃねぇか！\",\"normal\",false]",
+    "reviewId": "fc55f6bea062e4d5",
     "repaired": true,
     "repairReview": true,
     "repairComment": "コミカルな呆れの演技で再生成。言葉の区切りと速度を調整。",
@@ -594,6 +636,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"明日はもう片足ぶん頑張るニャ。\",\"moku-happy\",false]",
+    "reviewId": "bd64657ccda0fba5",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -610,6 +653,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"せめて両足ぶんは今日やれ！\",\"normal\",false]",
+    "reviewId": "3291b688c0d7d005",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -626,6 +670,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……スマホどこやったかニャ？\",\"moku\",false]",
+    "reviewId": "c86273855c7c9f24",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -642,6 +687,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……ないニャ。\",\"moku\",false]",
+    "reviewId": "50cb1b4159080c82",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -658,6 +704,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……持ってたニャ。\",\"moku\",false]",
+    "reviewId": "c04a531802157331",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -674,6 +721,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"新しい大家も来たし、今日は片づけるニャ。\",\"moku\",false]",
+    "reviewId": "45594b48e25f4b6a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -690,6 +738,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"この缶をどかして……お、床ニャ。\",\"moku-surprised\",false]",
+    "reviewId": "894d2cf8a871d8ab",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -706,6 +755,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"久しぶりニャ。元気にしてたかニャ。\",\"moku-happy\",false]",
+    "reviewId": "9fc26aa37d55c1ec",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -722,6 +772,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……もう一本どかせば、座れるニャ。\",\"moku\",false]",
+    "reviewId": "cb22d087e62bcd7c",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -738,6 +789,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"よし、座れたニャ。片づけ終了ニャ！\",\"moku-happy\",false]",
+    "reviewId": "ca40ed70eb14b6d4",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -754,6 +806,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"そういえば、昨日の動画の続き見てなかったニャ。\",\"moku\",false]",
+    "reviewId": "02ff4691d7a2dc93",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -770,6 +823,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ちょっとだけ見るかニャ。\",\"moku\",false]",
+    "reviewId": "175cde1863d403b5",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -786,6 +840,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……ふぁ。おはようニャ。よく寝たニャ。\",\"moku-happy\",false]",
+    "reviewId": "e42162947011d56c",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -802,6 +857,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"朝の空気を吸ってくるニャ。……ついでにタバコもニャ。\",\"moku\",false]",
+    "reviewId": "9937d579bb01ab60",
     "repaired": false,
     "chapter": 1,
     "scene": "1:observation",
@@ -818,6 +874,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"吸い殻の火は消したニャ。大家にまた怒鳴られるのはごめんニャ。\",\"moku\",false]",
+    "reviewId": "69d18ab18a74bac3",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -832,6 +889,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"朝まで動画を見てしまったニャ。目を閉じたら、そのまま寝そうニャ。\",\"moku\",false]",
+    "reviewId": "72ddf44f2a9c42db",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -846,6 +904,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"お腹が鳴ったニャ。何か食べたいけど、立つのが面倒ニャ。\",\"moku\",false]",
+    "reviewId": "cedaae82da27f37f",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -860,6 +919,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"冷蔵庫に何か残ってたはずニャ。まず中を見てみるニャ。\",\"moku\",false]",
+    "reviewId": "40747be403720d3a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -874,6 +934,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"食べ終わったら、容器だけでも片づけるニャ。\",\"moku\",false]",
+    "reviewId": "cecf66330053e9dd",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -888,6 +949,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"火を使わずに済むご飯、楽でいいニャ。洗い物も少ないニャ。\",\"moku\",false]",
+    "reviewId": "e514706a0a057717",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -902,6 +964,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……すぅ……すぅ……。\",\"moku\",false]",
+    "reviewId": "cf45cc5eb750fb7a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -916,6 +979,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"よく寝たニャ。朝の空気は気持ちいいニャ。\",\"moku\",false]",
+    "reviewId": "442301410bff153a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -930,6 +994,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"今日は静かニャ。こういう朝なら、悪くないニャ。\",\"moku\",false]",
+    "reviewId": "2a40b600c00513f2",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -944,6 +1009,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"腹が減ったニャ……。でも、まぶたも重いニャ。\",\"moku\",false]",
+    "reviewId": "0ea79634321cc0a0",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -958,6 +1024,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家さ〜ん。ちょっといいかニャ？\",\"moku\",false]",
+    "reviewId": "c09afdc86541cf34",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -973,6 +1040,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"なんだよ、今度は。\",\"normal\",false]",
+    "reviewId": "7d78e7c5c045d4d6",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -988,6 +1056,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"灰皿いっぱいになったニャ。\",\"moku\",false]",
+    "reviewId": "2b5c8f2715857a49",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1003,6 +1072,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"捨てろよ。\",\"normal\",false]",
+    "reviewId": "5f31428deb5c9052",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1018,6 +1088,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"それが……さっき吸ったやつ、まだ熱いニャ。\",\"moku-surprised\",false]",
+    "reviewId": "d657ad2f09da1c19",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1033,6 +1104,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"だったらちゃんと火を消せよ！\",\"retort\",false]",
+    "reviewId": "66d7147ef7d294c5",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1048,6 +1120,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"めんどくさいから、大家が決めてニャ。\",\"moku\",false]",
+    "reviewId": "f138d682607461f3",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1063,6 +1136,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"なんで俺が決めるんだよ……。\",\"weary\",false]",
+    "reviewId": "6412b249be1ebaac",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1078,6 +1152,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ベランダからポイしとけ！\",\"normal\",false]",
+    "reviewId": "d7dee2ea0153c698",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1093,6 +1168,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"おっ、証拠隠滅ニャ！\",\"moku-happy\",false]",
+    "reviewId": "3c71059ea807ec5a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1108,6 +1184,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"これで灰皿スッキリニャ！\",\"moku-happy\",false]",
+    "reviewId": "dba759d00e82194a",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -1124,6 +1201,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家。なんか下が明るいニャ。\",\"moku\",false]",
+    "reviewId": "301e9e768d1512ba",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1139,6 +1217,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……は！？ おいおいおい！ 下、燃えてんじゃねぇか！！\",\"normal\",false]",
+    "reviewId": "f573e867a2b1d0ef",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1154,6 +1233,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ニャ！？ ゴミ置き場がキャンプファイヤーになってるニャ！\",\"moku-surprised\",false]",
+    "reviewId": "408e65316e45c761",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1169,6 +1249,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"キャンプじゃねぇよ！！ お前、まだ火ついてたのか！？\",\"normal\",false]",
+    "reviewId": "372e546728e6ba7c",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1184,6 +1265,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……だから、まだ熱いって言ったニャ。\",\"moku\",false]",
+    "reviewId": "297f73b6d3348ca9",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1199,6 +1281,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……待てよ。外に捨てろって言ったの、俺じゃねぇか。\",\"inner\",false]",
+    "reviewId": "62e556b6ea890aa7",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1215,6 +1298,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……くそっ。とにかく逃げるぞ、モク！\",\"normal\",false]",
+    "reviewId": "12032ee5cdee0daa",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1230,6 +1314,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"待つニャ！ 洗濯物、まだ干してあるニャ！\",\"moku-surprised\",false]",
+    "reviewId": "5a7240dcd1b08e4f",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1245,6 +1330,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"いいから来い！ 今は命が先だ！！\",\"normal\",false]",
+    "reviewId": "a6036536bd738205",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1260,6 +1346,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"何やってんだ、俺……。こんなことになるって、少し考えりゃ分かっただろ……。\",\"inner\",false]",
+    "reviewId": "787cecc090b2c6ba",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1276,6 +1363,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家。けもの荘、なくなっちゃうニャ……？\",\"moku\",false]",
+    "reviewId": "0207d2ed5adc1434",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1291,6 +1379,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……。\",\"normal\",false]",
+    "reviewId": "070cfaa2394b0692",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1306,6 +1395,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！\",\"normal\",false]",
+    "reviewId": "a0659451c400b6a7",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1321,6 +1411,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"えっ！？ 冷凍チャーハンと一緒でいいニャ？\",\"moku-surprised\",false]",
+    "reviewId": "89abfc27a9044e8f",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1336,6 +1427,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"チャーハンより先に冷やせ！ 緊急事態だ！\",\"normal\",false]",
+    "reviewId": "3f021d7a3d6dcb45",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1351,6 +1443,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"了解ニャ！ ……でも冷凍庫パンパンだニャ。\",\"moku\",false]",
+    "reviewId": "1688d498fcadeb26",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1366,6 +1459,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"じゃあ中のもん出せばいいだろ！\",\"normal\",false]",
+    "reviewId": "975332cdcd8a8cfe",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1381,6 +1475,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……あっ。\",\"moku-surprised\",false]",
+    "reviewId": "95044408a4ef259f",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1396,6 +1491,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……何やってんだ？\",\"normal\",false]",
+    "reviewId": "d7c22f78fea6d975",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1411,6 +1507,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"チャーハンは無事ニャ。\",\"moku\",false]",
+    "reviewId": "166c5087389d58ed",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1426,6 +1523,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"チャーハンの心配してる場合かよ！ 火！ 火がついてんぞ！！\",\"normal\",false]",
+    "reviewId": "652a7d9f6b3ed11d",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1441,6 +1539,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ニャ！？ 紙くずが燃えてるニャ！\",\"moku-surprised\",false]",
+    "reviewId": "5464877b90f2c513",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1456,6 +1555,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"とにかく水！ 早く持ってこい！\",\"normal\",false]",
+    "reviewId": "eed094380e6e4f22",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1471,6 +1571,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"それなら最初から水でよかったんじゃないかニャ……？\",\"moku\",false]",
+    "reviewId": "1f073e8076a7df11",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1486,6 +1587,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……あ。\",\"normal\",false]",
+    "reviewId": "929eebd1e69f1bcd",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1501,6 +1603,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……確かに。なんで冷凍庫なんて言ったんだ、俺。\",\"inner\",false]",
+    "reviewId": "d5392f0ed2ff4551",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1517,6 +1620,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"くそっ、もう間に合わねぇ！ モク、逃げるぞ！\",\"normal\",false]",
+    "reviewId": "2715474624f8c811",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1532,6 +1636,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"待つニャ！ 冷凍庫のチャーハン、出しっぱなしニャ！\",\"moku-surprised\",false]",
+    "reviewId": "94f2d809cfe64e82",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1547,6 +1652,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"もうチャーハンは諦めろ！ 命の方が大事だろ！！\",\"normal\",false]",
+    "reviewId": "394fe794a039d0ca",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1562,6 +1668,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……モクは言われたとおりにしただけだ。俺がちゃんと考えてりゃ、こんなことには……。\",\"inner\",false]",
+    "reviewId": "c36cf017b9bc3f05",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1578,6 +1685,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家。\",\"moku\",false]",
+    "reviewId": "630dd91d4129b0c0",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1593,6 +1701,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……なんだ？\",\"normal\",false]",
+    "reviewId": "1bda8982aabda616",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1608,6 +1717,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……チャーハン、もう食べられないかニャ。\",\"moku\",false]",
+    "reviewId": "b930797ca41401bc",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1623,6 +1733,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……帰る場所もなくなりそうなんだぞ。\",\"normal\",false]",
+    "reviewId": "ac76d1ed4b4aa668",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1638,6 +1749,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"もうゴミと一緒に捨てちまえ！\",\"normal\",false]",
+    "reviewId": "d499cad924e2ddeb",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1653,6 +1765,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"まだ熱いけど……まぁいいかニャ。\",\"moku\",false]",
+    "reviewId": "3fe280b19f0ce5ae",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1668,6 +1781,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"よし！ 部屋が片づいたニャ！\",\"moku-happy\",false]",
+    "reviewId": "e11e3905fbe5e109",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1683,6 +1797,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……あれ？ ゴミって自分で燃えるんだっけニャ？\",\"moku-surprised\",false]",
+    "reviewId": "ba53a68c428f472e",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1698,6 +1813,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……は？ 何言ってんだ、お前。\",\"normal\",false]",
+    "reviewId": "cf71294e3b6a474d",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1713,6 +1829,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"なんか、ゴミ袋から煙が出てるニャ。\",\"moku\",false]",
+    "reviewId": "6cd9ff1047d4dbad",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1728,6 +1845,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"煙……？\",\"normal\",false]",
+    "reviewId": "e24540eebc376694",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1743,6 +1861,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……って、おい！！ 燃えてんじゃねぇか！！\",\"normal\",false]",
+    "reviewId": "119f17fd367bb3a9",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1758,6 +1877,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ニャ！？ ほんとだニャ！\",\"moku-surprised\",false]",
+    "reviewId": "463d5a9ce76a3aec",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1773,6 +1893,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"くそっ、もう無理だ！ モク、逃げるぞ！！\",\"normal\",false]",
+    "reviewId": "3c85d378d5010a9d",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1788,6 +1909,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"えっ、でもテレビつけっぱなしニャ！\",\"moku-surprised\",false]",
+    "reviewId": "1d694120acf16745",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1803,6 +1925,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"テレビなんかどうでもいい！！ 命が先だろ！！\",\"normal\",false]",
+    "reviewId": "a4a4db9e629a417c",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1818,6 +1941,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"なんだよ！ 今度は！！\",\"normal\",false]",
+    "reviewId": "596a94caff483d14",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1833,6 +1957,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……明日から、ちゃんと片づけるニャ。\",\"moku\",false]",
+    "reviewId": "8fae38baaa5d2a32",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1848,6 +1973,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"だから今日やれって言ってんだろぉぉ！！\",\"normal\",false]",
+    "reviewId": "7801979a0dbc698d",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1863,6 +1989,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"灰皿ごと水に沈めろ！\",\"normal\",false]",
+    "reviewId": "e7d4d036c7b1a100",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1878,6 +2005,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"灰皿を溺れさせるニャ！？\",\"moku-surprised\",false]",
+    "reviewId": "37a875489fa0c0e8",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -1894,6 +2022,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"火を消すんだよ！\",\"normal\",false]",
+    "reviewId": "639fea1753173a5e",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1909,6 +2038,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……最初からそう言えニャ！\",\"moku\",false]",
+    "reviewId": "631a24539d18485d",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1924,6 +2054,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ふぅ……これで安心ニャ。\",\"moku-happy\",false]",
+    "reviewId": "8da24356d8301644",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1939,6 +2070,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"最初からやれよ！\",\"normal\",false]",
+    "reviewId": "6bf2f52dfd63cdf5",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 1,
@@ -1955,6 +2087,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"いやぁ、大家に聞いて正解だったニャ。\",\"moku-happy\",false]",
+    "reviewId": "3342402b01bdc21e",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1970,6 +2103,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"こんなことで毎回呼ぶなよ……。\",\"normal\",false]",
+    "reviewId": "0385086df5bb2214",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -1985,6 +2119,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"でも、勝手にやって失敗したら怒るんだろニャ？\",\"moku\",false]",
+    "reviewId": "8452c1329cdf0ff9",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2000,6 +2135,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……それはそうだけどよ。\",\"normal\",false]",
+    "reviewId": "ca1aedf8b9255a6c",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2015,6 +2151,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"じゃあ、これからも困ったら大家に相談するニャ。\",\"moku-happy\",false]",
+    "reviewId": "374a67ba38f234e4",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2030,6 +2167,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"なんかうまいこと使われてる気がする……。\",\"normal\",false]",
+    "reviewId": "c8ce18df46c9e24e",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2045,6 +2183,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"明日からちゃんとするニャ。\",\"moku\",false]",
+    "reviewId": "36730a2ebcea5992",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2060,6 +2199,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"今日やれ！！\",\"normal\",false]",
+    "reviewId": "232fef9eea9197ed",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2075,6 +2215,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"とりあえず、ゴミ袋にまとめて捨てとけ。\",\"normal\",false]",
+    "reviewId": "7552935246db8947",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -2091,6 +2232,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ゴミ袋でいいのかニャ？\",\"moku\",false]",
+    "reviewId": "15cc1d50fc82a9ef",
     "repaired": true,
     "repairComment": "録音を復元。",
     "chapter": 1,
@@ -2107,6 +2249,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ああ。いつまでも灰皿いっぱいにしておくわけにもいかねえだろ。\",\"normal\",false]",
+    "reviewId": "62d8df819e6d98f0",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -2123,6 +2266,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"わかったニャ。大家がそう言うならそうするニャ。\",\"moku\",false]",
+    "reviewId": "e6dca8988c255ed2",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -2139,6 +2283,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……なんだよ、妙に素直だな。\",\"normal\",false]",
+    "reviewId": "12ca08bf6051eba6",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -2155,6 +2300,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"だって大家だろ？ 信用してるニャ。\",\"moku-happy\",false]",
+    "reviewId": "eabf5fab4c3a82e6",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -2171,6 +2317,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"そういうときだけ都合よく信用するなよ。\",\"normal\",false]",
+    "reviewId": "b0fb38d367d35609",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -2187,6 +2334,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"にゃはは。じゃ、ありがとニャ！\",\"moku-happy\",false]",
+    "reviewId": "f0c5f5cbe4825537",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -2203,6 +2351,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……なんだ、あの煙？\",\"tragedy-shock\",false]",
+    "reviewId": "63a48bf6d01436c4",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2219,6 +2368,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"おい、嘘だろ！？ モク！！\",\"tragedy-panic\",false]",
+    "reviewId": "174a8ab128b7cfff",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2235,6 +2385,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"火事だ！！ 早く逃げろ！！\",\"tragedy-panic\",false]",
+    "reviewId": "9c8863e1902bde73",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2251,6 +2402,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ゲホッ……大家……！\",\"tragedy-choking\",false]",
+    "reviewId": "782b1ebd51c3d3c7",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2267,6 +2419,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"モク！？ まだ中にいるのか！？\",\"tragedy-panic\",false]",
+    "reviewId": "d03284f8bdb22c2f",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2283,6 +2436,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"煙が……前が見えないニャ……！\",\"tragedy-fear\",false]",
+    "reviewId": "f7336c1087bdd1c0",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -2300,6 +2454,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"待ってろ！！ 今そっちに——！\",\"tragedy-panic\",false]",
+    "reviewId": "6206fc9b8d8220aa",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -2317,6 +2472,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家……助け……\",\"tragedy-fading\",false]",
+    "reviewId": "95579ba618dc4939",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2333,6 +2489,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"モク！！\",\"tragedy-panic\",false]",
+    "reviewId": "d3d47d6dc0144ce2",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2349,6 +2506,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"おい……返事しろよ……！\",\"tragedy-grief\",false]",
+    "reviewId": "5a697c4a2a5afddc",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -2366,6 +2524,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"モク……頼む、返事をしてくれ。\",\"tragedy-grief\",false]",
+    "reviewId": "14ce6e1592a8b974",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2382,6 +2541,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"家賃、入ってるニャ。数えたから、たぶん足りるニャ。\",\"moku\",false]",
+    "reviewId": "b11f4ef711d33262",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2398,6 +2558,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……ちゃんと足りたニャ？ よかったニャ。食費を少し調整したニャ。\",\"moku-happy\",false]",
+    "reviewId": "90d182022f878a74",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2414,6 +2575,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"偉いって言われると、次も払わなきゃって思うニャ。いや、最初から払うけどニャ。\",\"moku\",false]",
+    "reviewId": "fdeb71170adb77a9",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ash",
@@ -2430,6 +2592,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家さ〜ん……腹減ったニャ……。\",\"moku\",false]",
+    "reviewId": "0d76f40acd7833f4",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2445,6 +2608,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"うわっ、なんだその顔！ ゾンビかよ！\",\"normal\",false]",
+    "reviewId": "4f7e254530a71ba8",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2460,6 +2624,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"昨日、ちょっと夜更かししたニャ……。\",\"moku\",false]",
+    "reviewId": "9c6741f631118058",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2475,6 +2640,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ちょっと？ 何時まで起きてたんだよ。\",\"normal\",false]",
+    "reviewId": "06b58a6da33e5314",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2490,6 +2656,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"朝の……8時くらいニャ。\",\"moku\",false]",
+    "reviewId": "718315a3a968a298",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2505,6 +2672,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"それもう夜更かしじゃねぇだろ！ 朝まで何やってたんだ！？\",\"normal\",false]",
+    "reviewId": "1239abe16b629249",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2520,6 +2688,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"動画見てたニャ……。あと一本だけって思ってたら、朝になってたニャ。\",\"moku\",false]",
+    "reviewId": "214ffb267dd3c2ac",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2535,6 +2704,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"何本見たんだよ……。\",\"normal\",false]",
+    "reviewId": "145142db8fb883b2",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2550,6 +2720,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……覚えてないニャ。\",\"moku\",false]",
+    "reviewId": "5df2d95858efbcec",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2565,6 +2736,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"そこまで見たらもう修行だろ！！\",\"normal\",false]",
+    "reviewId": "c9d0c2ec09c430d7",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2580,6 +2752,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"とりあえず……飯作るニャ……。\",\"moku\",false]",
+    "reviewId": "a17e9c8b0054eba4",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2595,6 +2768,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"おい待て。その状態で火使う気か！？\",\"normal\",false]",
+    "reviewId": "6646511f56255ea9",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2610,6 +2784,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大丈夫ニャ……。料理くらい、目つぶっててもできるニャ……。\",\"moku\",false]",
+    "reviewId": "3aead4a9bef9658c",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2625,6 +2800,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"目つぶるな！！ 寝るだろ！！\",\"normal\",false]",
+    "reviewId": "23a80a98f7c48399",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2640,6 +2816,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……じゃあ片目だけにするニャ。\",\"moku\",false]",
+    "reviewId": "8fa8b8bb4999e430",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2655,6 +2832,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"そういう問題じゃねぇ！！\",\"normal\",false]",
+    "reviewId": "c31ee31f5dfc8546",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2670,6 +2848,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家、さっきから声でかいニャ。頭に響くニャ……。\",\"moku\",false]",
+    "reviewId": "95e3923f69371c39",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2685,6 +2864,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"誰のせいだよ！！\",\"retort\",false]",
+    "reviewId": "3d9d4719f87f21ac",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2700,6 +2880,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……もう考えるのも面倒ニャ。大家、どうすればいいニャ……？\",\"moku\",false]",
+    "reviewId": "2e57e8f39e09585e",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2715,6 +2896,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"はぁ……結局、俺が決めるのかよ……。\",\"weary\",false]",
+    "reviewId": "d8389c2cab0076f4",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2730,6 +2912,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"先にタバコでも吸って落ち着け！\",\"normal\",false]",
+    "reviewId": "9eb8758e3d614636",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2745,6 +2928,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"おっ、大家もたまにはいいこと言うニャ。\",\"moku-happy\",false]",
+    "reviewId": "add6ffb9c5ea4e26",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2760,6 +2944,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ただしコンロには触るなよ！ まずその眠気をどうにかしろ！\",\"normal\",false]",
+    "reviewId": "0d781e3cfd9c13a5",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2775,6 +2960,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"わかってるニャ……。ちょっと一服するだけニャ……。\",\"moku\",false]",
+    "reviewId": "2ea1be7cddfd25c1",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2790,6 +2976,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"はぁ〜……落ち着くニャ……。\",\"moku\",false]",
+    "reviewId": "147a2c3864aee548",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2805,6 +2992,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……おい、目が閉じかけてるぞ。\",\"normal\",false]",
+    "reviewId": "7e10481ee257eee4",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2820,6 +3008,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"閉じてないニャ……ちょっと休憩してるだけニャ……。\",\"moku\",false]",
+    "reviewId": "cb86bd14969766e9",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2835,6 +3024,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"だからタバコ持ったまま寝るなって……。\",\"normal\",false]",
+    "reviewId": "14c52f2058b98202",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2850,6 +3040,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"すぅ……すぅ……。\",\"moku\",false]",
+    "reviewId": "4254cc0e0f200e24",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2865,6 +3056,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"寝てんじゃねぇか！！\",\"normal\",false]",
+    "reviewId": "4c1caaae80073197",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2880,6 +3072,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……っ！！ 危ねぇ！！\",\"normal\",false]",
+    "reviewId": "e134ada7cd40d8f8",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2895,6 +3088,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"あっっっっちぃぃぃぃ！！！！\",\"normal\",false]",
+    "reviewId": "8594e7e71d0f5c47",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2910,6 +3104,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"何してんだこのバカ猫！！ 火事になるだろうがぁぁ！！\",\"normal\",false]",
+    "reviewId": "e3ed0bdb89848730",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2925,6 +3120,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……んにゃ……大家……うるさいニャ……。\",\"moku\",false]",
+    "reviewId": "622e895a42c2e5f3",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2940,6 +3136,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"誰のせいで騒いでると思ってんだよ！！\",\"normal\",false]",
+    "reviewId": "b8a7f6c4395c362d",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2955,6 +3152,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……あと五分……寝かせてニャ……。\",\"moku\",false]",
+    "reviewId": "e48533d34d3b52b8",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2970,6 +3168,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"五分で足りるか！！ 今日はもう寝てろ！！ 料理は禁止だ！！\",\"normal\",false]",
+    "reviewId": "2678f581360785bd",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -2985,6 +3184,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……ありがとニャ……。\",\"moku\",false]",
+    "reviewId": "4539694eba62cbef",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3000,6 +3200,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ったく。手のかかる猫だな。\",\"normal\",false]",
+    "reviewId": "20ed3a332a7d6da4",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3015,6 +3216,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……腹減ってんのは俺もなんだけどな。\",\"normal\",false]",
+    "reviewId": "6bb6463cf9d65609",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3030,6 +3232,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"腹減ってんなら俺をパシれ！\",\"normal\",false]",
+    "reviewId": "bf936740af999bed",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3045,6 +3248,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……ニャ？ 大家が買い物行ってくれるニャ？\",\"moku-surprised\",false]",
+    "reviewId": "ad39e3b5b8d29cf8",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3060,6 +3264,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前にコンロ使わせるよりマシだろ。何食いたい？\",\"normal\",false]",
+    "reviewId": "223cecf0d439e9f9",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3075,6 +3280,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"唐揚げ弁当。大盛り。あとプリンも頼むニャ。\",\"moku-happy\",false]",
+    "reviewId": "394df356709be25a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3090,6 +3296,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"遠慮って言葉、知ってるか？\",\"normal\",false]",
+    "reviewId": "3d8cbff5275e1980",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3105,6 +3312,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"知ってるけど、今は使わないニャ。\",\"moku\",false]",
+    "reviewId": "3d93417156eb1873",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3120,6 +3328,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ったく。絶対に火使うなよ！ 弁当買ってくるから！\",\"normal\",false]",
+    "reviewId": "f48c9a05579a8e57",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3135,6 +3344,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"わかったニャ〜。行ってらっしゃいニャ〜。\",\"moku-happy\",false]",
+    "reviewId": "5d1d210a52ebf414",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3150,6 +3360,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……さて、飯作るかニャ。\",\"moku\",false]",
+    "reviewId": "36ff171f2d6da4d1",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3165,6 +3376,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家が帰ってくるまでに、ちょっと何か食べるニャ。\",\"moku\",false]",
+    "reviewId": "644ba2af196e8259",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3180,6 +3392,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"おっ、ちょうどいいニャ。\",\"moku-happy\",false]",
+    "reviewId": "68f0464604821602",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3195,6 +3408,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……焼けるまで、ちょっと座るニャ。\",\"moku\",false]",
+    "reviewId": "c871ab5620227e11",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3210,6 +3424,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ん？ なんだ、あの煙……。\",\"normal\",false]",
+    "reviewId": "863080c66687db5e",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3225,6 +3440,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……って、おい！！ 俺のアパートじゃねぇか！！\",\"normal\",false]",
+    "reviewId": "e2eb9f91dd9f884d",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3240,6 +3456,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"モク！！ 起きろ！！ 火事だぞ！！\",\"normal\",false]",
+    "reviewId": "87ec011c0211fa84",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3255,6 +3472,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……ニャ？ もう弁当買ってきたニャ？\",\"moku\",false]",
+    "reviewId": "870774a0db22a348",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3270,6 +3488,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"買い物すら行けてねぇよ！！ お前、火使ったな！？\",\"normal\",false]",
+    "reviewId": "8ffb0bd638da971a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3285,6 +3504,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……ちょっとソーセージを……。\",\"moku\",false]",
+    "reviewId": "e1d4161eed2d6823",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3300,6 +3520,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"あれだけ使うなって言っただろうが！！\",\"normal\",false]",
+    "reviewId": "726b2982324e4ae4",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3315,6 +3536,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家、唐揚げ弁当は……？\",\"moku\",false]",
+    "reviewId": "32efd23e8131242e",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3330,6 +3552,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"アパート燃やしといて弁当の心配かよ！！\",\"normal\",false]",
+    "reviewId": "077c5186bc0c2b0f",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3345,6 +3568,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"俺が見張ってるから好きに作れ！\",\"normal\",false]",
+    "reviewId": "5a3175612332e4fc",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3360,6 +3584,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"おっ、今日は監督付きニャ。安心ニャ〜。\",\"moku-happy\",false]",
+    "reviewId": "95765301a20d3163",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3375,6 +3600,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ただし、寝そうになったら即中止だからな！\",\"normal\",false]",
+    "reviewId": "f9d1baf48f30ff5a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3390,6 +3616,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"わかってるニャ。そこまで子供じゃないニャ。\",\"moku\",false]",
+    "reviewId": "f3956caee5f58837",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3405,6 +3632,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"今日はチャーハンにするニャ……。\",\"moku\",false]",
+    "reviewId": "f4dd487740a14485",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3420,6 +3648,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前、冷凍チャーハン持ってただろ。あれでいいじゃねぇか。\",\"normal\",false]",
+    "reviewId": "fe9ff2af809e2a3c",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3435,6 +3664,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"あれは非常食ニャ。今は通常時ニャ。\",\"moku\",false]",
+    "reviewId": "a1556814d8672a0f",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3450,6 +3680,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"非常事態みてぇな顔してんだろうが！\",\"normal\",false]",
+    "reviewId": "e0c820773a32da5c",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3465,6 +3696,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家、ちょっと頼みがあるニャ。\",\"moku\",false]",
+    "reviewId": "42d4228abc7cb09f",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3480,6 +3712,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"今度はなんだよ。\",\"normal\",false]",
+    "reviewId": "d8644308856d6eb3",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3495,6 +3728,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"冷蔵庫の麦茶、取ってほしいニャ。喉カラカラだニャ……。\",\"moku\",false]",
+    "reviewId": "aa7d29d7f2766e1e",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3510,6 +3744,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"自分で取れよ……。ったく。\",\"normal\",false]",
+    "reviewId": "eca7628aad7b30c0",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3525,6 +3760,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……ふぁぁ……。\",\"moku\",false]",
+    "reviewId": "0bcf7bb568057159",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3540,6 +3776,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"おい、麦茶……って、寝てんじゃねぇか！！\",\"normal\",false]",
+    "reviewId": "e2a1b22fbf40c33d",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3555,6 +3792,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"うわっ！？ おい！！ 火！ 火が出てんぞ！！\",\"normal\",false]",
+    "reviewId": "ad362202ade6ac8a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3570,6 +3808,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……ニャ？ チャーハン、もうできたニャ……？\",\"moku-surprised\",false]",
+    "reviewId": "b5144566a4c9e746",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3585,6 +3824,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"できてねぇよ！！ 部屋が燃えてんだよ！！\",\"normal\",false]",
+    "reviewId": "b78fc9d7897da750",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3600,6 +3840,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"くそっ……！ 見張ってるって言ったのに、何やってんだ俺！！\",\"inner\",false]",
+    "reviewId": "7214db3a7b319e4a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3616,6 +3857,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"モク！！ もういい、逃げるぞ！！\",\"normal\",false]",
+    "reviewId": "b0c0456e9197def5",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3631,6 +3873,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ニャ！？ ご飯はどうするニャ！？\",\"moku-surprised\",false]",
+    "reviewId": "b1db2038c04e030e",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3646,6 +3889,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"こんな時に飯の心配すんな！！\",\"normal\",false]",
+    "reviewId": "400de16f97fdbd08",
     "repaired": false,
     "chapter": 1,
     "scene": "1:dinner",
@@ -3661,6 +3905,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"新しい大家？ モクですニャ。よろしくニャ。\",\"moku\",false]",
+    "reviewId": "188786588f9097b6",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3676,6 +3921,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"…………は？\",\"normal\",false]",
+    "reviewId": "8c800912f53098e1",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3691,6 +3937,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……ニャ？\",\"moku-surprised\",false]",
+    "reviewId": "23cc50408f9efa3a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3706,6 +3953,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お、お前……生きてるのか！？\",\"normal\",false]",
+    "reviewId": "2d333cfaa52e1aa7",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3721,6 +3969,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"えっ！？ 勝手に殺さないでニャ！？\",\"moku-surprised\",false]",
+    "reviewId": "a732a3380eeebb39",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3736,6 +3985,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"いや、だって……ここ、燃えて……！\",\"normal\",false]",
+    "reviewId": "ce723a6409bcab5d",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3751,6 +4001,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……夢？\",\"inner\",false]",
+    "reviewId": "0324ef37216e8ccc",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3767,6 +4018,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"いや、違う。あの熱さも、煙の臭いも……。\",\"inner\",false]",
+    "reviewId": "4e09008009e223d5",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3783,6 +4035,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"全部、覚えてる。\",\"inner\",false]",
+    "reviewId": "04ab50037fcece59",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3799,6 +4052,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……お前、さっき灰皿どうした？\",\"normal\",false]",
+    "reviewId": "328c003a523cb0ed",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3814,6 +4068,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"灰皿？ そこにあるニャ。\",\"moku-surprised\",false]",
+    "reviewId": "7f1de3976bece41c",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3829,6 +4084,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"いや、そうじゃなくて……！\",\"normal\",false]",
+    "reviewId": "fb7c946865e32622",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3844,6 +4100,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……時間が、戻ってる？\",\"inner\",false]",
+    "reviewId": "a071298dc55cfbc0",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3860,6 +4117,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"あのとき俺が、まともな指示を出していれば……。\",\"inner\",false]",
+    "reviewId": "40a73702f574c1a9",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3876,6 +4134,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"今度こそ……。\",\"inner\",false]",
+    "reviewId": "a99c80bde48d66fd",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3892,6 +4151,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家？\",\"moku-surprised\",false]",
+    "reviewId": "09f2951d30d6ba89",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3907,6 +4167,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……いや、なんでもない。\",\"normal\",false]",
+    "reviewId": "5c90c34f26a88e3d",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3922,6 +4183,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"とりあえず……生きててよかった。\",\"normal\",false]",
+    "reviewId": "75eb749755494e05",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3937,6 +4199,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ニャ？ なんか知らんけど、ありがとニャ。\",\"moku\",false]",
+    "reviewId": "0910497aff665955",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3952,6 +4215,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……もう二度と、あんな光景は見たくねぇ。\",\"inner\",false]",
+    "reviewId": "d68e0ce4c275e9ff",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3968,6 +4232,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……なあ、モク。\",\"normal\",false]",
+    "reviewId": "01db038f0afc9347",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3983,6 +4248,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……モク！？\",\"normal\",false]",
+    "reviewId": "11810013b4a9a8b2",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -3998,6 +4264,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前……無事なのか！？\",\"normal\",false]",
+    "reviewId": "0dc6469ad3d35856",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4013,6 +4280,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"無事も何も、ずっとここにいるニャ。\",\"moku\",false]",
+    "reviewId": "5c3f536514a1b38a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4028,6 +4296,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"いや、だって……さっきまで火事で……！\",\"normal\",false]",
+    "reviewId": "86ed5999961c47cb",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4043,6 +4312,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"火事？ 何の話ニャ？\",\"moku-surprised\",false]",
+    "reviewId": "0fd927656546b16a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4058,6 +4328,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家？ 顔色悪いニャ。\",\"moku\",false]",
+    "reviewId": "edc6e1878169b1e8",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4073,6 +4344,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……戻ってる？ 時間が……？\",\"inner\",false]",
+    "reviewId": "74ae50523e7bcf75",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4089,6 +4361,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"なんでだ……？ あんなに熱かったのに。煙も、炎も……全部覚えてる。\",\"inner\",false]",
+    "reviewId": "ef9dfa08af2eea9d",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4105,6 +4378,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"だったら……今度こそ、間違えられねぇ。\",\"inner\",false]",
+    "reviewId": "3f670529f34e1d16",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4121,6 +4395,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ああ、知ってるよ。嫌ってほどな。\",\"normal\",false]",
+    "reviewId": "0e369265e0dcdd9c",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4136,6 +4411,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ニャ？ 初めて会ったはずニャ。\",\"moku-surprised\",false]",
+    "reviewId": "07469a6dd5c3b145",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4151,6 +4427,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"こっちは何回も会ってんだよ……。\",\"normal\",false]",
+    "reviewId": "96f2ff262173fc87",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4166,6 +4443,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家、変な人ニャ。\",\"moku\",false]",
+    "reviewId": "0f1cc1942f42354a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4181,6 +4459,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……また戻った。今度こそ大丈夫だと思ったのに。\",\"inner\",false]",
+    "reviewId": "5d2526ac4a2dcde2",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4197,6 +4476,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家？ 何かあったニャ？\",\"moku-surprised\",false]",
+    "reviewId": "1a79f8cb94079624",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4212,6 +4492,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"いや。今度こそ、このアパートを燃やさせねぇ。\",\"normal\",false]",
+    "reviewId": "e902debfe313a67e",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4227,6 +4508,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ニャ！？ 急にどうしたニャ？\",\"moku-surprised\",false]",
+    "reviewId": "a00db0240d24f327",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4242,6 +4524,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"同じ失敗はもうしねぇ。次こそは……！\",\"inner\",false]",
+    "reviewId": "f2ae847e7240d9cb",
     "repaired": false,
     "chapter": 1,
     "scene": "1:rewind",
@@ -4258,6 +4541,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……生き残った。\",\"normal\",false]",
+    "reviewId": "6d08ec3a54fe22fc",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4273,6 +4557,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ニャ？ 誰がニャ？\",\"moku-surprised\",false]",
+    "reviewId": "c565ee60608ca830",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4288,6 +4573,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"このアパートだよ！\",\"normal\",false]",
+    "reviewId": "371b7ab2ed8d2bfb",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4303,6 +4589,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"変な大家ニャ。アパートは生き物じゃないニャ。\",\"moku\",false]",
+    "reviewId": "dea2e2598446316a",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 1,
@@ -4319,6 +4606,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"そういう意味じゃねぇよ……。\",\"normal\",false]",
+    "reviewId": "b97cbefd1cc14e29",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4334,6 +4622,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……朝9時だぞ。\",\"normal\",false]",
+    "reviewId": "d7499a67336c8e92",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4349,6 +4638,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"知ってるニャ。時計くらい読めるニャ。\",\"moku\",false]",
+    "reviewId": "66546bdb0325f17e",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4364,6 +4654,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"じゃあなんで酒飲んでんだよ！\",\"normal\",false]",
+    "reviewId": "feef0b2823686c71",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4379,6 +4670,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ちゃんと寝たから、今日はもう働いた気分ニャ。\",\"moku-happy\",false]",
+    "reviewId": "9a368f825bc07a61",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4394,6 +4686,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、最近ずっとピリピリしてるニャ。\",\"moku\",false]",
+    "reviewId": "cb5c7ee74038bbed",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4409,6 +4702,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"誰のせいだと思ってんだ……。\",\"weary\",false]",
+    "reviewId": "caa8a0905188b675",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4424,6 +4718,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"更年期かニャ？\",\"moku\",false]",
+    "reviewId": "d9d1506b57f04b40",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -4440,6 +4735,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ぶっ飛ばすぞ！！\",\"normal\",false]",
+    "reviewId": "28386cd3b22380bb",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4455,6 +4751,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……まぁ、いいか。\",\"inner\",false]",
+    "reviewId": "1cae4d65ca9b7208",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4471,6 +4768,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"こいつがこうしてバカなこと言ってられるなら。\",\"inner\",false]",
+    "reviewId": "85c5f0bf6c93a488",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4487,6 +4785,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、なんか笑ってるニャ。\",\"moku-surprised\",false]",
+    "reviewId": "4f820bf75c34c6fa",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4502,6 +4801,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"笑ってねぇよ。\",\"normal\",false]",
+    "reviewId": "dd75e18b90e02300",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -4518,6 +4818,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"気持ち悪いニャ。\",\"moku\",false]",
+    "reviewId": "6adc5f69689d868a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4533,6 +4834,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"せっかくいい気分だったのに台無しだよ！\",\"normal\",false]",
+    "reviewId": "7efc2ac4a70d3143",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4548,6 +4850,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ん？ 郵便？\",\"normal\",false]",
+    "reviewId": "e48855c3bd448802",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4563,6 +4866,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、呼んでるニャ。\",\"moku\",false]",
+    "reviewId": "00261c21e20f47ef",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4578,6 +4882,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"わかったよ。ちょっと行ってくる。\",\"normal\",false]",
+    "reviewId": "db7a8779fa62650d",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4593,6 +4898,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"どうもー。\",\"normal\",false]",
+    "reviewId": "fda9678b974fb4a8",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4608,6 +4914,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……入居申込書？\",\"normal\",false]",
+    "reviewId": "afd4de4905dffd2f",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -4624,6 +4931,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"こんなボロアパートに？\",\"normal\",false]",
+    "reviewId": "f9839f5d2c9c44f0",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4639,6 +4947,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"なんだったニャ？\",\"moku\",false]",
+    "reviewId": "ee3e42cbc53ab41a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4654,6 +4963,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"入居希望者だってさ。\",\"normal\",false]",
+    "reviewId": "1cf27e1a13f7bbe3",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4669,6 +4979,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……正気かニャ？\",\"moku-surprised\",false]",
+    "reviewId": "eae3edd97364b0e2",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4684,6 +4995,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前も住んでんだろ！！\",\"normal\",false]",
+    "reviewId": "c1125c357eb12519",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4699,6 +5011,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"モクはもう手遅れニャ。\",\"moku\",false]",
+    "reviewId": "06c039df7997bbe3",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4714,6 +5027,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"自覚あったのかよ！\",\"normal\",false]",
+    "reviewId": "af6110b8c0562b67",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4729,6 +5043,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……入居希望者か。\",\"normal\",false]",
+    "reviewId": "1634b49a7674275e",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4744,6 +5059,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"新しい住人が来るニャ？\",\"moku-surprised\",false]",
+    "reviewId": "6cddfbdb0a1fed27",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4759,6 +5075,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ああ。どうやら、ここに住みたい奴がいるらしい。\",\"normal\",false]",
+    "reviewId": "fdf809e60f61a82f",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4774,6 +5091,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"静かな人がいいニャ。\",\"moku\",false]",
+    "reviewId": "cfbc9f16a8678780",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4789,6 +5107,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前が一番うるせぇよ。\",\"normal\",false]",
+    "reviewId": "7ec4346b3f20c9c6",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4804,6 +5123,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"タバコ吸っても怒らない人がいいニャ。\",\"moku\",false]",
+    "reviewId": "442e37fc18293bc7",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4819,6 +5139,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"もっと無理だろ！\",\"normal\",false]",
+    "reviewId": "f5071a96dc7e33d0",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4834,6 +5155,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……頼むから、まともな奴であってくれ。\",\"inner\",false]",
+    "reviewId": "d854a4944d5b25b1",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4850,6 +5172,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家。歓迎会するニャ？\",\"moku-happy\",false]",
+    "reviewId": "90dc124b983ca8a5",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4865,6 +5188,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お、珍しくまともなこと言うじゃねぇか。\",\"normal\",false]",
+    "reviewId": "751e5a32a008851a",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4880,6 +5204,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"酒代は大家持ちで。\",\"moku-happy\",false]",
+    "reviewId": "2a2e23a1d38cd1a4",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4895,6 +5220,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"やっぱりお前は黙ってろ！！\",\"normal\",false]",
+    "reviewId": "efa907fd3ea474ca",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4910,6 +5236,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……っ！？\",\"normal\",false]",
+    "reviewId": "9b93f6009b444892",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4925,6 +5252,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……誰だ？ 今の声……。\",\"normal\",false]",
+    "reviewId": "24918e446f2f07ef",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4941,6 +5269,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、何ぼーっとしてるニャ？\",\"moku-surprised\",false]",
+    "reviewId": "2ecfef5674075752",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
@@ -4957,6 +5286,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……いや、なんでもねぇ。\",\"normal\",false]",
+    "reviewId": "b2901b9675c09ba2",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4972,6 +5302,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"じゃあ酒買ってきてニャ。\",\"moku-happy\",false]",
+    "reviewId": "28f2b059602757e9",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -4987,6 +5318,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前はそればっかりか！！\",\"normal\",false]",
+    "reviewId": "8c7c490722f24d59",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ending",
@@ -5002,6 +5334,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"少し歩くニャ。座りっぱなしで足が固まったニャ。\",\"moku\",false]",
+    "reviewId": "4e35e88d61361427",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ambient",
@@ -5016,6 +5349,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"テレビの続きが気になるニャ。あと一本だけ見たら動くニャ。\",\"moku\",false]",
+    "reviewId": "fa3765be89e6ad73",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ambient",
@@ -5030,6 +5364,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"新しい大家、声が大きいニャ。静かすぎるよりはいいかニャ。\",\"moku\",false]",
+    "reviewId": "0c0072ed0975f4e9",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ambient",
@@ -5044,6 +5379,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"廊下は涼しいニャ。部屋の空気も入れ替えるかニャ。\",\"moku\",false]",
+    "reviewId": "53d4d94c1204cfc4",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ambient",
@@ -5058,6 +5394,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"次の動画を見たら終わりニャ。……また次が出てきたニャ。\",\"moku\",false]",
+    "reviewId": "9e5a57b35fd73904",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ambient",
@@ -5072,6 +5409,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"時計、見なきゃよかったニャ。もうこんな時間ニャ。\",\"moku\",false]",
+    "reviewId": "629b5855d6628ff7",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ambient",
@@ -5086,6 +5424,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"灰皿がいっぱいニャ。まだ熱いし、大家に聞くニャ。\",\"moku\",false]",
+    "reviewId": "d71c8c55f1d482e0",
     "repaired": false,
     "chapter": 1,
     "scene": "1:ambient",
@@ -5100,6 +5439,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……しつこい……。\",\"luna-film-tense\",false]",
+    "reviewId": "324afd8fc080c3d7",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -5122,6 +5462,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……あたし、そんなに悪いことしたかな……。\",\"luna-film-tense\",false]",
+    "reviewId": "e41a17248e965113",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5143,6 +5484,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……はぁ、はぁ……っ。\",\"luna-film-tense\",false]",
+    "reviewId": "c4e0e2789ecad3c6",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5164,6 +5506,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……ここまで来れば……。\",\"luna-film-tense\",false]",
+    "reviewId": "41350e28386e137a",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5185,6 +5528,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……入居者、募集……？\",\"luna-film-tense\",false]",
+    "reviewId": "227476f241613372",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5206,6 +5550,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……ここなら……。\",\"luna-film-tense\",false]",
+    "reviewId": "36bd23331e8e6cc2",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5227,6 +5572,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"こんにちはー！ 今日からお世話になります、金城ルナです♡\",\"luna-happy\",false]",
+    "reviewId": "37761727f51cb935",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5243,6 +5589,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ああ、入居予定の人か。俺が大家だ。よろしく。\",\"act2-manager\",false]",
+    "reviewId": "3f549bf258e97da3",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5259,6 +5606,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"よろしくお願いします！ いや～、本当に助かりました！\",\"luna-happy\",false]",
+    "reviewId": "fd0e441d226b8582",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5275,6 +5623,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"そんなに急いで引っ越したかったのか？\",\"act2-manager\",false]",
+    "reviewId": "54b27a92c276280b",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5291,6 +5640,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"えっ？\",\"luna-surprised\",false]",
+    "reviewId": "d2d1422de923d4cb",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5307,6 +5657,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……あはは！ ちょっと前の家が合わなくて！\",\"luna-flirt\",false]",
+    "reviewId": "a8245a88ca83c2af",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5323,6 +5674,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ふーん。まあ、うちは安さだけが取り柄だからな。\",\"act2-manager\",false]",
+    "reviewId": "381e69b66b50c727",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5339,6 +5691,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"安さ以外にも取り柄はあるニャ。\",\"act2-moku\",false]",
+    "reviewId": "b37ddfbc5f112716",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5355,6 +5708,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"例えば？\",\"act2-manager\",false]",
+    "reviewId": "ed26704b024ae3e5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5371,6 +5725,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"家賃を待ってくれるニャ。\",\"act2-moku-happy\",false]",
+    "reviewId": "1f899c40feb1908e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5387,6 +5742,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"待たねぇよ！！\",\"act2-manager\",false]",
+    "reviewId": "837fc2d14a5c7ebb",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5403,6 +5759,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"あははっ！ 面白い人たちですね！\",\"luna-happy\",false]",
+    "reviewId": "55131ca4bb366b09",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5419,6 +5776,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……っ。\",\"luna-surprised\",false]",
+    "reviewId": "b77902e98b96e7a2",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5435,6 +5793,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"どうした？\",\"act2-manager\",false]",
+    "reviewId": "a09bed775525a49a",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5451,6 +5810,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ううん、なんでもないです！ それより、102号室ってこっちですか？\",\"luna-happy\",false]",
+    "reviewId": "752b226cdd306b85",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5467,6 +5827,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ああ、101号室の隣だ。\",\"act2-manager\",false]",
+    "reviewId": "5b586adc59dca813",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5483,6 +5844,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"隣人のモクですニャ。よろしくニャ。\",\"act2-moku\",false]",
+    "reviewId": "2e256db5da823ac4",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5499,6 +5861,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"モクちゃんね！ よろしく♡\",\"luna-happy\",false]",
+    "reviewId": "f906538a7ae768bf",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5515,6 +5878,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ちゃん……悪くないニャ。\",\"act2-moku-happy\",false]",
+    "reviewId": "77589e875f14f19f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5531,6 +5895,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"調子に乗るな。\",\"act2-manager\",false]",
+    "reviewId": "75e4c2546fbc1958",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5547,6 +5912,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……ここから、やり直さなきゃ。\",\"luna-serious\",false]",
+    "reviewId": "39688f5bda05c808",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5563,6 +5929,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ん？ 何か言ったか？\",\"act2-manager\",false]",
+    "reviewId": "098ad68e860942a5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:opening",
@@ -5579,6 +5946,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ううん！ なんでもない♡\",\"luna-happy\",false]",
+    "reviewId": "a2e0cb6955c6cfff",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -5596,6 +5964,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……はぁ。どうしよっかなぁ。\",\"four-kings-thinking\",false]",
+    "reviewId": "c983ebb53e3ab626",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5614,6 +5983,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……また変に期待させちゃダメだよね。\",\"four-kings-determined\",false]",
+    "reviewId": "7e3a2fc898adbd2f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5632,6 +6002,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……よしっ。今度こそ、ちゃんと話そう。\",\"four-kings-determined\",false]",
+    "reviewId": "259fa77507c0616e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5650,6 +6021,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"あ、ちょっとごめんね。\",\"four-kings-bright\",false]",
+    "reviewId": "445b8d62b359da4c",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5670,6 +6042,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……げっ。\",\"four-kings-surprise\",false]",
+    "reviewId": "3cf45a292bdcb7aa",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5689,6 +6062,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"どうした？\",\"four-kings-manager-alert\",false]",
+    "reviewId": "106f95a432b73f53",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5707,6 +6081,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ううん、何でもない♡\",\"four-kings-tease\",false]",
+    "reviewId": "65ced0208ecd6d44",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5726,6 +6101,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"何でもない顔じゃないニャ。\",\"four-kings-moku\",false]",
+    "reviewId": "c65d7799242b0d89",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5745,6 +6121,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"また昨日の男か？\",\"four-kings-manager-alert\",false]",
+    "reviewId": "1eb9df25405d4cae",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5763,6 +6140,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ううん。別の人。\",\"four-kings-bright\",false]",
+    "reviewId": "97dc3396cc62f0eb",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5782,6 +6160,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……別の？\",\"four-kings-manager-surprise\",false]",
+    "reviewId": "0619f7054013a7ac",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5800,6 +6179,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"実はね、ほかにも何人か、ちょっと誤解させちゃった人がいて……。\",\"four-kings-confess\",false]",
+    "reviewId": "2530ac5bd8da4f3e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5819,6 +6199,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前……いったい何人に勘違いさせてんだよ！？\",\"four-kings-manager-retort\",false]",
+    "reviewId": "18ba2c4895a2cac5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5837,6 +6218,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"えへへ……ちょっとだけ♡\",\"four-kings-tease\",false]",
+    "reviewId": "a34e5d071f25311c",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5856,6 +6238,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"昨日の男は、ただの前座だったニャ。\",\"four-kings-moku\",false]",
+    "reviewId": "87675cf8351ac519",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5875,6 +6258,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"前座ってなんだよ！\",\"four-kings-manager-retort\",false]",
+    "reviewId": "035e2afdc5d6fc34",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5893,6 +6277,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"このあと四天王が出てくるニャ！\",\"four-kings-moku-proud\",false]",
+    "reviewId": "930c1687e1108e3a",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5912,6 +6297,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"なんで急に戦いが始まるんだよ！！\",\"four-kings-manager-retort\",false]",
+    "reviewId": "03f1c6409e04ec8b",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5930,6 +6316,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……おい。なんで黙ってんだ？\",\"four-kings-manager-alert\",false]",
+    "reviewId": "a7b7299569349b01",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5948,6 +6335,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……あはは♡\",\"four-kings-tease\",false]",
+    "reviewId": "74b1315e510ed8c0",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5967,6 +6355,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"笑ってごまかすな！！\",\"four-kings-manager-retort\",false]",
+    "reviewId": "91b1f56a2ca0fa73",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -5985,6 +6374,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……え？\",\"four-kings-surprise\",false]",
+    "reviewId": "24313fb3d52283cb",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6005,6 +6395,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……今日来るの！？\",\"four-kings-surprise\",false]",
+    "reviewId": "97bd58dd4821e744",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6024,6 +6415,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……ちょっと待って。これ、あたし一人じゃ無理かも……。\",\"four-kings-surprise\",false]",
+    "reviewId": "1f67f153e8c254fa",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6043,6 +6435,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……あっ。そうだ♡\",\"four-kings-bright\",false]",
+    "reviewId": "9739ce006d5d3197",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6063,6 +6456,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ったく……。昨日みたいな騒ぎはもう勘弁してくれよ。\",\"four-kings-manager-alert\",false]",
+    "reviewId": "5b43eae6edc5bd56",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6081,6 +6475,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……うん。ごめんね、大家さん。\",\"four-kings-confess\",false]",
+    "reviewId": "ab977144f2f00762",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6100,6 +6495,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"謝ることじゃねぇけど、困ったら早めに言えよ。\",\"four-kings-manager-warm\",false]",
+    "reviewId": "612d48f42f85919e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6118,6 +6514,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……ありがと♡\",\"four-kings-bright\",false]",
+    "reviewId": "1469902f4d121914",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6137,6 +6534,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ルナ。\",\"four-kings-moku\",false]",
+    "reviewId": "c620ff6eecc81b79",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6157,6 +6555,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ん？ なあに？\",\"four-kings-bright\",false]",
+    "reviewId": "23a0051f9895b40b",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6176,6 +6575,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"本当に四天王が来たら、モクを呼ぶニャ。\",\"four-kings-moku-proud\",false]",
+    "reviewId": "08a2ebf974654e36",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6195,6 +6595,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ふふっ。モクちゃん、戦ってくれるの？\",\"four-kings-tease\",false]",
+    "reviewId": "8fb26e3462a1417a",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6214,6 +6615,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"もちろんニャ！ ……大家が。\",\"four-kings-moku-proud\",false]",
+    "reviewId": "3ba39102a4f2c1c1",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6233,6 +6635,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"あははっ！ モクちゃんは？\",\"four-kings-laugh\",false]",
+    "reviewId": "c049330f6608f078",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6252,6 +6655,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"モクは後方支援ニャ。\",\"four-kings-moku-proud\",false]",
+    "reviewId": "3126134b494467c1",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation2",
@@ -6272,6 +6676,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"だからダメだって言ってんだろ！\",\"new-ally-retort\",false]",
+    "reviewId": "eb3659d134bf8771",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6290,6 +6695,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家のケチ！ 鬼！ 悪徳大家ニャ！\",\"new-ally-protest\",false]",
+    "reviewId": "002785ef20e8d494",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6309,6 +6715,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"誰が悪徳大家だ！\",\"new-ally-retort\",false]",
+    "reviewId": "bc9ecc0728f72fe2",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6327,6 +6734,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ルナ！ 助けてくれニャー！\",\"new-ally-call\",false]",
+    "reviewId": "1248fdd51ae4f5e7",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6347,6 +6755,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"えっ！？ どうしたの？\",\"new-ally-surprise\",false]",
+    "reviewId": "653859c54dfab207",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6366,6 +6775,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家がモクをいじめるニャ！\",\"new-ally-protest\",false]",
+    "reviewId": "cf1bb6b03e95196f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6385,6 +6795,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"人聞きの悪いこと言うな！\",\"new-ally-retort\",false]",
+    "reviewId": "c2f5481888efda04",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6403,6 +6814,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"まあまあ、二人とも落ち着いて。何があったの？\",\"new-ally-bright\",false]",
+    "reviewId": "560702cac81da5d2",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6423,6 +6835,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"モクはちょっとお願いしただけニャ！\",\"new-ally-protest\",false]",
+    "reviewId": "25498cb54ae38b74",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6442,6 +6855,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ちょっとじゃねぇだろ！ 俺の部屋の冷蔵庫を勝手に使おうとしやがって！\",\"new-ally-retort\",false]",
+    "reviewId": "ace99d189cd811e0",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6460,6 +6874,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"冷蔵庫？\",\"new-ally-surprise\",false]",
+    "reviewId": "516e517b9e45b5f1",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6479,6 +6894,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"モクの冷蔵庫、ビールでいっぱいになったニャ。\",\"new-ally-proud\",false]",
+    "reviewId": "985d5297ecece8fd",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6498,6 +6914,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"だからって俺の冷蔵庫にまで入れるな！\",\"new-ally-retort\",false]",
+    "reviewId": "68294091de76b3a6",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6516,6 +6933,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ふふっ。モクちゃん、お酒好きなんだね♡\",\"new-ally-tease\",false]",
+    "reviewId": "2499d2150ede84d6",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6535,6 +6953,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ルナは分かってくれるニャ！\",\"new-ally-proud\",false]",
+    "reviewId": "9dad6850f6a6a9e4",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6554,6 +6973,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"でも、そんなに飲んだら体に悪いよ？\",\"new-ally-bright\",false]",
+    "reviewId": "f5b2db9652ae96f7",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6573,6 +6993,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……ニャ？\",\"new-ally-shock\",false]",
+    "reviewId": "158ba872fa22df0c",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6592,6 +7013,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"せっかくだし、今日は休肝日にしよっか♡\",\"new-ally-tease\",false]",
+    "reviewId": "e6f1473c44f33d7d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6611,6 +7033,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家。\",\"new-ally-shock\",false]",
+    "reviewId": "cd3c3dcecb9602a5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6630,6 +7053,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"なんだよ。\",\"new-ally-plain\",false]",
+    "reviewId": "9c129df7e8f71657",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6648,6 +7072,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"この女、大家より厳しいニャ。\",\"new-ally-shock\",false]",
+    "reviewId": "803a036b5d9120f9",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6667,6 +7092,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前が味方に呼んだんだろ！\",\"new-ally-retort\",false]",
+    "reviewId": "057071eb16551935",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6685,6 +7111,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ふんっ！ 二人ともグルだったのかニャ！ もう信用しないニャ！\",\"new-ally-protest\",false]",
+    "reviewId": "fd46413db8464175",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -6705,6 +7132,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"今日初めて会ったばっかりだろ！\",\"new-ally-retort\",false]",
+    "reviewId": "9ff7a357ad7b8ca5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6723,6 +7151,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"あははっ。モクちゃん、面白いね。\",\"new-ally-laugh\",false]",
+    "reviewId": "6b3372c49f7597d0",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -6744,6 +7173,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"面白がってられるのは今のうちだぞ……。\",\"new-ally-plain\",false]",
+    "reviewId": "fd7b063f597f8da0",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6762,6 +7192,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ふふっ。でも、なんだか楽しそうなアパートだね♡\",\"new-ally-bright\",false]",
+    "reviewId": "9884622a22ac3b14",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6781,6 +7212,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"毎日あんな調子じゃ、こっちは身が持たねぇよ。\",\"new-ally-plain\",false]",
+    "reviewId": "4a77fb91d998d2fc",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6799,6 +7231,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"さて、外でも掃除するか。\",\"new-ally-plain\",false]",
+    "reviewId": "bcaf7c54147d7d47",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6817,6 +7250,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"あ、大家さん。ちょっと外の空気吸ってきてもいい？\",\"new-ally-bright\",false]",
+    "reviewId": "e0614205a9aae53e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6836,6 +7270,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"別に許可なんかいらねぇよ。\",\"new-ally-plain\",false]",
+    "reviewId": "96565ace7b5fb672",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6854,6 +7289,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"えへへ。そっか♡\",\"new-ally-bright\",false]",
+    "reviewId": "692a0c8f3a5ff6ae",
     "repaired": false,
     "chapter": 2,
     "scene": "2:observation1",
@@ -6874,6 +7310,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……っ！\",\"luna-surprised\",false]",
+    "reviewId": "ca27eb1f967b1443",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -6890,6 +7327,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……なんで……ここが……。\",\"luna-surprised\",false]",
+    "reviewId": "342be982b21407c6",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -6906,6 +7344,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……もう、お店は辞めたから。\",\"luna-serious\",false]",
+    "reviewId": "717e1d28481fe89b",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -6923,6 +7362,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……そんな関係じゃない！\",\"luna-firm\",false]",
+    "reviewId": "2c9d6564742a1d06",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -6939,6 +7379,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……お願い。もう帰って。\",\"luna-serious\",false]",
+    "reviewId": "42b9b732c5a9994d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -6955,6 +7396,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"おい、あんた。何やってるんだ？\",\"act2-manager\",false]",
+    "reviewId": "bc28dc1d5fd875ed",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -6971,6 +7413,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ここの大家だ。\",\"act2-manager\",false]",
+    "reviewId": "913f5b42891b5051",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -6987,6 +7430,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……大家さん。それだけだよ。\",\"luna-serious\",false]",
+    "reviewId": "5371ec4f28a3f7d5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7003,6 +7447,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ルナは帰ってくれって言ってるだろ。今日はもう帰れ。\",\"act2-manager-firm\",false]",
+    "reviewId": "ceef3a4ec3cda288",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7019,6 +7464,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……ルナが帰れって言ってるニャ。\",\"act2-moku-firm\",false]",
+    "reviewId": "a8bc1f4eca15fa1f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7035,6 +7481,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……お前、そんな怖い顔できたのか。\",\"act2-manager\",false]",
+    "reviewId": "408579496bd385fa",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7051,6 +7498,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"モクはいつも優しいニャ。\",\"act2-moku\",false]",
+    "reviewId": "cb6f81d1eac72cdc",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7067,6 +7515,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"自分で言うなよ……。\",\"act2-manager\",false]",
+    "reviewId": "a19a3d1bee8be41f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7083,6 +7532,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……モクちゃん、ありがとう……。\",\"luna-serious\",false]",
+    "reviewId": "231607516f59b20d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7099,6 +7549,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"当然ニャ！\",\"act2-moku-happy\",false]",
+    "reviewId": "8a823fc82308a9d7",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7115,6 +7566,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……本当に、もう来ないかな……。\",\"luna-serious\",false]",
+    "reviewId": "7af62a4d035bf2d5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7131,6 +7583,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……今度は、どうする……？\",\"act2-manager\",false]",
+    "reviewId": "9141330540c5b827",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7147,6 +7600,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"もう大丈夫だろ。今日はゆっくり休め。\",\"act2-manager\",false]",
+    "reviewId": "408035ac543201cd",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7163,6 +7617,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……うん。ありがとう、大家さん。\",\"luna-serious\",false]",
+    "reviewId": "9f444381d6a207cc",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7179,6 +7634,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"また来たらモクが追い払うニャ！\",\"act2-moku-happy\",false]",
+    "reviewId": "a171986e6a17fd76",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7195,6 +7651,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ははっ。頼りにしてるぞ。\",\"act2-manager\",false]",
+    "reviewId": "c69f522a1636a8c2",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7211,6 +7668,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……じゃあ、おやすみなさい。\",\"luna-serious\",false]",
+    "reviewId": "0244b745a011a87f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7227,6 +7685,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ん？ ルナ？\",\"act2-manager\",false]",
+    "reviewId": "59fefef9feee8a0d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7243,6 +7702,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……おい、開けっぱなしだぞ。\",\"act2-manager\",false]",
+    "reviewId": "9cad68c1546f9fad",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7259,6 +7719,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……なんだ、これ……。\",\"act2-manager\",false]",
+    "reviewId": "928286a079a55e35",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7275,6 +7736,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"…………ルナ？\",\"tragedy-shock\",false]",
+    "reviewId": "99bc9ac87cedd057",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7292,6 +7754,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……おい……。\",\"act2-manager\",false]",
+    "reviewId": "1ef6dedd8137d781",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7308,6 +7771,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ルナ！！ しっかりしろ！！\",\"tragedy-panic\",false]",
+    "reviewId": "2787f9cecbc60f25",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7325,6 +7789,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"頼む……目を開けてくれ……！\",\"tragedy-grief\",false]",
+    "reviewId": "0cb72e63583e9bca",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -7343,6 +7808,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……くそっ！ 救急車……！\",\"tragedy-panic\",false]",
+    "reviewId": "140b959b2fc040a3",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7360,6 +7826,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……関係あるさ。\",\"act2-manager\",false]",
+    "reviewId": "5c9aa5edeb3b51a8",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7376,6 +7843,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"俺がルナの彼氏だ。文句あるか！\",\"act2-manager\",false]",
+    "reviewId": "3443d501be55cb48",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7392,6 +7860,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……えっ！？\",\"luna-surprised\",false]",
+    "reviewId": "c7379afa7c6f4429",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7408,6 +7877,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"嘘じゃねぇよ。\",\"act2-manager\",false]",
+    "reviewId": "a1b1630f4296e798",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7424,6 +7894,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……大家さん……。\",\"luna-surprised\",false]",
+    "reviewId": "aca1082338fa7d55",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7440,6 +7911,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"知らねぇよ。ルナは最初から、お前と付き合ってねぇだろ。\",\"act2-manager\",false]",
+    "reviewId": "3809db970aa3e0d9",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7456,6 +7928,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"だから何だよ。\",\"act2-manager\",false]",
+    "reviewId": "d3cf247be4059d67",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7472,6 +7945,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"好きだからって、嫌がる相手を追い回していい理由にはならねぇだろ。\",\"act2-manager-firm\",false]",
+    "reviewId": "83d7a13ddfd9aa98",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7488,6 +7962,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"もうルナに近づくな。分かったな？\",\"act2-manager-firm\",false]",
+    "reviewId": "de073ad08b5657a3",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7504,6 +7979,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……ずるいなぁ。\",\"luna-flirt\",false]",
+    "reviewId": "e0073e95c59285fa",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -7521,6 +7997,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"大家さん、今日は本当にありがとう♡\",\"luna-flirt\",false]",
+    "reviewId": "b04ab0a1a92e9dd1",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7537,6 +8014,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ああ。まあ、無事でよかったよ。\",\"act2-manager\",false]",
+    "reviewId": "bfcca3190377561e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7553,6 +8031,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ねえ……大家さん。\",\"luna-flirt\",false]",
+    "reviewId": "066eb1010701fcb7",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7569,6 +8048,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ん？\",\"act2-manager\",false]",
+    "reviewId": "5d88b04eeb0d251e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7585,6 +8065,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ちょっと、二人きりで相談したいことがあるんだけど……♡\",\"luna-flirt\",false]",
+    "reviewId": "b304bd7c1010cb79",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7601,6 +8082,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ここじゃ駄目なのか？\",\"act2-manager\",false]",
+    "reviewId": "51b49d1d9c693c1b",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7617,6 +8099,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……駄目。二人だけの秘密にしたいの。\",\"luna-flirt\",false]",
+    "reviewId": "438593e1b8ee88cc",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7633,6 +8116,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家ー！ 朝ニャ！\",\"act2-moku\",false]",
+    "reviewId": "61b4517075722a71",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7649,6 +8133,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ん？ ああ、おはよう。\",\"act2-manager\",false]",
+    "reviewId": "62855a85299ebdef",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7665,6 +8150,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家、なんで何も着てないニャ？\",\"act2-moku-surprised\",false]",
+    "reviewId": "644edce25cf837c2",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7681,6 +8167,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ち、違うんだーーー！！\",\"act2-retort\",false]",
+    "reviewId": "81d4ff6fa274e882",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7697,6 +8184,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"…………。\",\"act2-moku-surprised\",false]",
+    "reviewId": "370a111bbb2a4754",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7713,6 +8201,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……今度は何だよ？\",\"act2-manager\",false]",
+    "reviewId": "a35fb1afd6c46208",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7729,6 +8218,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……バ、バケモノニャーーー！！\",\"act2-moku-surprised\",false]",
+    "reviewId": "cf74877b31c517bc",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7745,6 +8235,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"何がバケモノだーーー！！\",\"act2-retort\",false]",
+    "reviewId": "660e487ba88088bc",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7761,6 +8252,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ったく……。\",\"act2-manager\",false]",
+    "reviewId": "e22ab06322cb41bc",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7777,6 +8269,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……そういや、ルナはどこ行ったんだ？\",\"act2-manager\",false]",
+    "reviewId": "0893bf68bc3db682",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7793,6 +8286,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、102号室の募集はどうするニャ？\",\"act2-moku\",false]",
+    "reviewId": "95945d8a856e8070",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7809,6 +8303,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……募集しない。\",\"act2-manager-serious\",false]",
+    "reviewId": "8bc32dcba2fb957b",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7825,6 +8320,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……は？\",\"act2-moku-surprised\",false]",
+    "reviewId": "64287c52b5a965e5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7841,6 +8337,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ルナが帰ってくるかもしれないだろ。\",\"act2-manager-serious\",false]",
+    "reviewId": "fe9f6cc0899d16a9",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7857,6 +8354,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……いつ帰ってくるニャ？\",\"act2-moku\",false]",
+    "reviewId": "6162911daa83c310",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7873,6 +8371,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……分からねぇ。\",\"act2-manager-serious\",false]",
+    "reviewId": "0dc4f9ded70e4d67",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7889,6 +8388,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"じゃあ、いつまで空けておくニャ？\",\"act2-moku\",false]",
+    "reviewId": "3250ab43657aa398",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7905,6 +8405,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……帰ってくるまでだ。\",\"act2-manager-serious\",false]",
+    "reviewId": "1ee8d15b33192de6",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7921,6 +8422,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家！ また入居希望が来てたニャ！\",\"act2-moku-firm\",false]",
+    "reviewId": "0cb0b7bb5f63fe30",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7937,6 +8439,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……断ってくれ。\",\"act2-manager\",false]",
+    "reviewId": "131fc135975f3fc9",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7953,6 +8456,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"またニャ！？ これで何人目ニャ！\",\"act2-moku-firm\",false]",
+    "reviewId": "f5409dbc0d87c0c1",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7969,6 +8473,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ルナが戻った時に、部屋がなかったら困るだろ。\",\"act2-manager-serious\",false]",
+    "reviewId": "90e60ab321e8aff0",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -7985,6 +8490,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"空いてる部屋はほかにもあるニャ！！\",\"act2-moku-firm\",false]",
+    "reviewId": "2a21b606d0a87360",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8001,6 +8507,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ルナが知らないやつと同じアパートに住みたくないかもしれないだろ。\",\"act2-manager-serious\",false]",
+    "reviewId": "daafed230c763d2e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8017,6 +8524,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家、もうおかしくなってるニャ。\",\"act2-moku-sad\",false]",
+    "reviewId": "4f6232e62f01e3be",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8033,6 +8541,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家。ルナが帰ってきても、もう部屋はないニャ。\",\"act2-moku-sad\",false]",
+    "reviewId": "8a530ecfe464d53f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8049,6 +8558,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"…………。\",\"act2-manager\",false]",
+    "reviewId": "d539db5731562c2a",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8065,6 +8575,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"モク、お前がルナの彼氏のフリをしろ！\",\"act2-manager\",false]",
+    "reviewId": "cdee48fc96278ad9",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8081,6 +8592,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"馬鹿じゃないのかニャ？ モクは女ニャ。大家がやれニャ。\",\"act2-moku\",false]",
+    "reviewId": "01a3784ab53c9fce",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8097,6 +8609,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"あっ……そうだった。\",\"act2-manager\",false]",
+    "reviewId": "fc6e7a09c22540e4",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8113,6 +8626,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"忘れるなニャ！！\",\"act2-moku-firm\",false]",
+    "reviewId": "781a50a25f4619a1",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8129,6 +8643,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"あー……実は俺がルナの彼氏だ！\",\"act2-manager\",false]",
+    "reviewId": "99733f9f5ff2e675",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8145,6 +8660,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"えっ！？\",\"luna-surprised\",false]",
+    "reviewId": "303739a2a66bf758",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8161,6 +8677,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……言う必要ないでしょ。\",\"luna-normal\",false]",
+    "reviewId": "c4929d2c66efd4e6",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8177,6 +8694,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"そうなの♡ この人があたしの彼氏。\",\"luna-flirt\",false]",
+    "reviewId": "fb813e2a651891de",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8193,6 +8711,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……お、おう！\",\"act2-manager\",false]",
+    "reviewId": "354052a18a712784",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8209,6 +8728,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、顔が赤いニャ。\",\"act2-moku\",false]",
+    "reviewId": "c2634c3034c8b57e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8225,6 +8745,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"うるせぇ！ 今は黙ってろ！\",\"act2-retort\",false]",
+    "reviewId": "129e4edcef219430",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8241,6 +8762,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"だから、待ってなんて頼んでない！\",\"luna-firm\",false]",
+    "reviewId": "5ff9a392651905a3",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8257,6 +8779,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"違うだろ。ルナは最初から嫌がってるじゃねぇか。\",\"act2-manager\",false]",
+    "reviewId": "86ea833ad0cafa00",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8273,6 +8796,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……おい。\",\"act2-moku\",false]",
+    "reviewId": "3d1daf0afea65715",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8289,6 +8813,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……ルナが嫌がってるニャ。\",\"act2-moku-firm\",false]",
+    "reviewId": "2688fc836c956ad7",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8305,6 +8830,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……聞こえなかったのかニャ？\",\"act2-moku-firm\",false]",
+    "reviewId": "4bb0763b1d637dad",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8321,6 +8847,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"帰れって言ってんだニャ！！\",\"act2-moku-firm\",false]",
+    "reviewId": "da0478524e6a62d0",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8337,6 +8864,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"俺の彼女に二度と近づくな。\",\"act2-manager-firm\",false]",
+    "reviewId": "01f871a5118c5494",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8353,6 +8881,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"次はこんなもんじゃ済まないニャ。\",\"act2-moku-firm\",false]",
+    "reviewId": "67767ba584865f2c",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8369,6 +8898,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ふぅ。行ったか。\",\"act2-manager\",false]",
+    "reviewId": "37bc75c8d38000ac",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8385,6 +8915,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……ねえ、大家さん♡\",\"luna-happy\",false]",
+    "reviewId": "e0128579919e6cbe",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8401,6 +8932,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"さっき……『俺の彼女』って言ってくれたよね♡\",\"luna-flirt\",false]",
+    "reviewId": "45f61e73aa2c1d5e",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -8418,6 +8950,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"あ、あれは！ あいつを追い払うためにだな……！\",\"act2-manager\",false]",
+    "reviewId": "46cf36f62c2a8259",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8434,6 +8967,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ふふっ♡ 分かってるよ。\",\"luna-happy\",false]",
+    "reviewId": "8130c17eebfeef63",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8450,6 +8984,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……でも、ちょっと嬉しかったな♡\",\"luna-flirt\",false]",
+    "reviewId": "de12ca36d00421b9",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8466,6 +9001,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……そ、そうか。\",\"act2-manager\",false]",
+    "reviewId": "7e29995b4071f02c",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8482,6 +9018,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、顔が真っ赤ニャ。\",\"act2-moku\",false]",
+    "reviewId": "28edea63a7b6b7d6",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8498,6 +9035,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"うるせぇ！！\",\"act2-retort\",false]",
+    "reviewId": "d16d9b3a8a8368c4",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8514,6 +9052,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……前も、あいつは帰っていった。\",\"inner\",false]",
+    "reviewId": "cf21ed1ecc2bf49f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8531,6 +9070,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……でも、あの夜……。\",\"inner\",false]",
+    "reviewId": "2cca1ac5cd1f08f7",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8548,6 +9088,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ルナ。今日は1人で過ごすな、俺も部屋に泊まる。\",\"act2-manager\",false]",
+    "reviewId": "f3042c05c3643ed5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8564,6 +9105,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……えっ？\",\"luna-surprised\",false]",
+    "reviewId": "4a62913c54b8a881",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -8581,6 +9123,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家、さっき彼氏のフリって言ってなかったかニャ？\",\"act2-moku\",false]",
+    "reviewId": "244bcd34a0ea87a1",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8597,6 +9140,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……は？\",\"act2-manager\",false]",
+    "reviewId": "f9d807e83f766b5d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8613,6 +9157,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"もう本物の彼氏になるつもりかニャ？\",\"act2-moku\",false]",
+    "reviewId": "ca6df5017980781d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8629,6 +9174,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ちげぇよ！！ あいつがまた来るかもしれねぇだろ！\",\"act2-retort\",false]",
+    "reviewId": "2ab846884c987390",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8645,6 +9191,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ふふっ♡ あたしは嬉しいけど？\",\"luna-happy\",false]",
+    "reviewId": "4a592510887d37fc",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8661,6 +9208,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ルナまで茶化すな！！\",\"act2-manager\",false]",
+    "reviewId": "3d0c9e0e446652fd",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8677,6 +9225,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……じゃあモクも泊まるニャ。\",\"act2-moku\",false]",
+    "reviewId": "68478baab2e2b14e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8693,6 +9242,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……お前も？\",\"act2-manager\",false]",
+    "reviewId": "4d893d3fb0417658",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8709,6 +9259,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家が変なことしないように見張るニャ！\",\"act2-moku\",false]",
+    "reviewId": "1ff9abb555d7c370",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8725,6 +9276,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"見張る相手が違うだろ！！\",\"act2-retort\",false]",
+    "reviewId": "becede971fd7f6a7",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8741,6 +9293,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"あははっ♡ 二人ともありがとう。\",\"luna-happy\",false]",
+    "reviewId": "ee7544b7136a6171",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8757,6 +9310,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ふぁぁ……見張りは完璧だったニャ。\",\"act2-moku\",false]",
+    "reviewId": "cb40bce647b7a009",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8773,6 +9327,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前、真っ先に寝てただろ！！\",\"act2-retort\",false]",
+    "reviewId": "c03a8092aa27e27e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8789,6 +9344,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"あははっ♡\",\"luna-happy\",false]",
+    "reviewId": "2a8774ab5ea98a70",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8805,6 +9361,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……よかった。今度は守れたんだ。\",\"inner\",false]",
+    "reviewId": "79c7b5671f689bdc",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8822,6 +9379,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ルナ、俺の後ろに隠れてろ！\",\"act2-manager\",false]",
+    "reviewId": "417dc1e0ce6f3bf7",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8838,6 +9396,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……大家さん？\",\"luna-surprised\",false]",
+    "reviewId": "6d3c16ccfe11bf1d",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -8855,6 +9414,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"女の子一人を寄ってたかって追い回すんじゃねぇ！\",\"act2-manager\",false]",
+    "reviewId": "f29afe5b9c5ef234",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8871,6 +9431,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"確かに一人ニャ。\",\"act2-moku\",false]",
+    "reviewId": "52a21934b8a9341f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8887,6 +9448,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"そこは黙ってろ！！\",\"act2-retort\",false]",
+    "reviewId": "1eda5a1286fcb9c3",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8903,6 +9465,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"当たり前だ。俺はここの大家だからな！\",\"act2-manager\",false]",
+    "reviewId": "968f0a4a51b7261d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8919,6 +9482,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"いつもは家賃のことで泣いてるニャ。\",\"act2-moku\",false]",
+    "reviewId": "3ee35527489aaace",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8935,6 +9499,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"今いいところなんだよ！！\",\"act2-retort\",false]",
+    "reviewId": "b69d6d61398ac04a",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8951,6 +9516,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……ふふっ。大家さんって、こういう人なんだ♡\",\"luna-flirt\",false]",
+    "reviewId": "1d25ca98576c665f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8967,6 +9533,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……大家さん、怖かったぁ……。\",\"luna-serious\",false]",
+    "reviewId": "577d0681a2b3b9fc",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8983,6 +9550,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ああ、もう大丈夫だ。俺が追い払ったからな。\",\"act2-manager\",false]",
+    "reviewId": "a9123c2ddaedb607",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -8999,6 +9567,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"また来るって言ってたニャ。\",\"act2-moku\",false]",
+    "reviewId": "07a22678c7c6a71f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9015,6 +9584,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"余計なこと言うな！！\",\"act2-manager\",false]",
+    "reviewId": "fa1149c55a36dc16",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9031,6 +9601,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……本当にありがとう。あたし、誰かに守ってもらったの、久しぶりで……。\",\"luna-flirt\",false]",
+    "reviewId": "0cd78dd166f743cc",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9047,6 +9618,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……お、おう。\",\"act2-manager\",false]",
+    "reviewId": "b1947c6eac606e88",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9063,6 +9635,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ねえ、大家さん。ちょっとだけ、お礼させて？♡\",\"luna-flirt\",false]",
+    "reviewId": "895425e7ed79808f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9079,6 +9652,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"礼？ いや、別にいいって。\",\"act2-manager\",false]",
+    "reviewId": "8d798f4d1ce41482",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9095,6 +9669,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"だめ♡ 二人きりで、ちゃんとお礼したいの。\",\"luna-flirt\",false]",
+    "reviewId": "f8634320dd05b3fb",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9111,6 +9686,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家、顔がニヤけてるニャ。\",\"act2-moku\",false]",
+    "reviewId": "407d9cdee7f9c264",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9127,6 +9703,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ニヤけてねぇよ！\",\"act2-retort\",false]",
+    "reviewId": "1f7a1d88134c0588",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9143,6 +9720,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ふふっ。行こ、大家さん♡\",\"luna-flirt\",false]",
+    "reviewId": "bd01e591fc44a02c",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9159,6 +9737,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……うわぁ……ニャ。\",\"act2-moku\",false]",
+    "reviewId": "8d674366a1046370",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9175,6 +9754,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ん……？ もう朝か……。\",\"act2-manager\",false]",
+    "reviewId": "37671495c7e7c38b",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9191,6 +9771,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ルナ？\",\"act2-manager\",false]",
+    "reviewId": "9908ea657f48aaf3",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9207,6 +9788,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家、なんで服着てないニャ？\",\"act2-moku-surprised\",false]",
+    "reviewId": "c8ac9405a9b07b24",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9223,6 +9805,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……え？\",\"act2-manager\",false]",
+    "reviewId": "76b087d5c4328402",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9239,6 +9822,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"うわああああああ！！\",\"act2-retort\",false]",
+    "reviewId": "4c360b8aa640325f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9255,6 +9839,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ヘンタイニャ！！\",\"act2-moku-firm\",false]",
+    "reviewId": "028fe0b5c4256ee5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9271,6 +9856,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"違うんだーーー！！\",\"act2-retort\",false]",
+    "reviewId": "ab5e10c14b956c0f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9287,6 +9873,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……嘘だろ……。\",\"act2-manager-serious\",false]",
+    "reviewId": "9ef4abcdcb00b3b7",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9303,6 +9890,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、今日も仕事しないのかニャ？\",\"act2-moku\",false]",
+    "reviewId": "af1cd7f31a2ea311",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9319,6 +9907,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"家賃の集金はどうするニャ？\",\"act2-moku\",false]",
+    "reviewId": "16a6275564eabcb4",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9335,6 +9924,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ルナ……。\",\"act2-manager\",false]",
+    "reviewId": "1668ec4b43d2fec4",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9351,6 +9941,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……重症ニャ。\",\"act2-moku\",false]",
+    "reviewId": "d7955e52c0ed3b6d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9367,6 +9958,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、女ひとりでアパート失ったニャ。\",\"act2-moku\",false]",
+    "reviewId": "53490bc621e26024",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9383,6 +9975,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……うるせぇ……。\",\"act2-retort\",false]",
+    "reviewId": "e86553c6ec37a494",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9399,6 +9992,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"恋は盲目ニャ。\",\"act2-moku\",false]",
+    "reviewId": "a244e3244ef7ffb3",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9415,6 +10009,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前がまともなこと言うなよ……。\",\"act2-manager\",false]",
+    "reviewId": "760daf81bb1688fe",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bag",
@@ -9431,6 +10026,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"大家さ〜ん♡ ちょっとお願いがあるんだけど\",\"luna-happy\",false]",
+    "reviewId": "e268ab17ad8bb24a",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9447,6 +10043,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……嫌な予感しかしねぇ。\",\"act2-manager\",false]",
+    "reviewId": "6d81c329b4464e9b",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9463,6 +10060,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"今日だけ、あたしの彼氏になってくれない？\",\"luna-flirt\",false]",
+    "reviewId": "a3c2dc9eb0b564ff",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9479,6 +10077,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"はぁ！？ 昨日も似たようなことやっただろ！！\",\"act2-manager\",false]",
+    "reviewId": "d3054dd3d10bd981",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9495,6 +10094,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"昨日は昨日。今日は今日♡\",\"luna-happy\",false]",
+    "reviewId": "73823abe54b01c3f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9511,6 +10111,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、彼氏のアルバイト始めたニャ？\",\"act2-moku\",false]",
+    "reviewId": "a0b4126ac3f1c407",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9527,6 +10128,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"できれば結婚してほしいんだけど。少しだけでいいから♡\",\"luna-happy\",false]",
+    "reviewId": "17de474d7744b253",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9543,6 +10145,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"結婚にお試し期間をつけるな！！\",\"act2-manager\",false]",
+    "reviewId": "0c278066bbb45630",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9559,6 +10162,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"前に、いろんな人にちょっと期待させちゃって……今日ここに来るって。\",\"luna-serious\",false]",
+    "reviewId": "3eb829817193edd5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9575,6 +10179,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ちょっと、で何人来るんだ。\",\"act2-manager\",false]",
+    "reviewId": "37b9e4c911ac1a3b",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9591,6 +10196,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、玄関に整理券がいるニャ。\",\"act2-moku\",false]",
+    "reviewId": "d04aec6c5cf159a6",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9607,6 +10213,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"彼氏でも夫でもねぇ。大家として話は聞く。お前も、自分で説明しろよ。\",\"act2-manager\",false]",
+    "reviewId": "a0e9c6e24aca4621",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9623,6 +10230,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"はぁい♡ 頼りにしてるね、大家さん。\",\"luna-happy\",false]",
+    "reviewId": "c7160b76d4d23bb8",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9639,6 +10247,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"モクは廊下で見守るニャ。手に負えなかったら呼ぶニャ。\",\"act2-moku\",false]",
+    "reviewId": "2e4b47baf0df3573",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9655,6 +10264,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……はぁ〜。やっと帰ってくれたぁ……。\",\"luna-normal\",false]",
+    "reviewId": "5896d7c52a042c78",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9672,6 +10282,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前なぁ……二度とこんな騒ぎ起こすなよ？\",\"act2-manager\",false]",
+    "reviewId": "7a7a6ab9b605d9bf",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9689,6 +10300,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"えへへ……でも、大家さん、ちょっとカッコよかったよ♡\",\"luna-flirt\",false]",
+    "reviewId": "1807d90490c88176",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -9707,6 +10319,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"褒めても説教はなくならねぇぞ。\",\"act2-manager\",false]",
+    "reviewId": "dac65497730a531d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9724,6 +10337,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、顔がちょっと赤いニャ。\",\"act2-moku\",false]",
+    "reviewId": "a52d3e78ed07c466",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9741,6 +10355,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"赤くねぇ！！\",\"act2-manager\",false]",
+    "reviewId": "bebb8cbea063ee6c",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9758,6 +10373,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ふふっ♡\",\"luna-happy\",false]",
+    "reviewId": "402dd834df20cdfc",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9775,6 +10391,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"大家さん、今日は……助かった。\",\"luna-serious\",false]",
+    "reviewId": "189390ef37445399",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -9793,6 +10410,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"じゃあまず、さっきの四人に訂正の連絡だ。変な期待を持たせたところは、お前も謝れ。\",\"act2-manager\",false]",
+    "reviewId": "d95f475a26a11463",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9810,6 +10428,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"えー、お説教まで付いてるの？\",\"luna-happy\",false]",
+    "reviewId": "90dd143470d82d1e",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -9828,6 +10447,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"彼氏代行は終了。ここからは大家の通常業務だ。\",\"act2-manager\",false]",
+    "reviewId": "a2c42e582ab9d817",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9845,6 +10465,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"延長料金は家賃に上乗せニャ。\",\"act2-moku\",false]",
+    "reviewId": "49981d5585cf23aa",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9862,6 +10483,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前が請求するな。\",\"act2-manager\",false]",
+    "reviewId": "9206853ec653d690",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9879,6 +10501,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……分かった。曖昧にして逃げるの、やめる。忘れ物も自分で取りに行く。\",\"luna-normal\",false]",
+    "reviewId": "154aa9480cac5ac1",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9896,6 +10519,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"一人で不安なら相談しろ。ただし、結婚は相談料に含まれてねぇからな。\",\"act2-manager\",false]",
+    "reviewId": "86186d7f2406dbdb",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9913,6 +10537,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ふふ。じゃあ、お礼はお茶で♡\",\"luna-happy\",false]",
+    "reviewId": "216f134b2e74b7a8",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9930,6 +10555,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"モクにはツナ缶ニャ。\",\"act2-moku\",false]",
+    "reviewId": "26c5bae5cd3161d5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9947,6 +10573,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前、結局それか！\",\"act2-manager\",false]",
+    "reviewId": "71897b52cbfd763f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9964,6 +10591,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……ありがと。大家さん。\",\"luna-normal\",false]",
+    "reviewId": "f6617d13ec64fce6",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -9982,6 +10610,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ああ。次は呼び鈴、一人ずつで頼む。\",\"act2-manager\",false]",
+    "reviewId": "e06b12af94ebde1b",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -9999,6 +10628,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"予約制の迷惑男ニャ。\",\"act2-moku\",false]",
+    "reviewId": "69d7a1ec655562c9",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -10016,6 +10646,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"予約も受け付けねぇよ！！\",\"act2-manager\",false]",
+    "reviewId": "c5b7418c096d314a",
     "repaired": false,
     "chapter": 2,
     "scene": "2:duel-intro",
@@ -10033,6 +10664,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"花束、モク宛てってことにできない？\",\"duel-manager\",false]",
+    "reviewId": "76ddbfc9c6a5c157",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10051,6 +10683,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"勝手にモクの縁談をまとめるなニャ。\",\"duel-moku\",false]",
+    "reviewId": "db46b2efb7780000",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10069,6 +10702,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"その縁談、お断りニャ！！\",\"duel-moku-attack\",false]",
+    "reviewId": "a36c8744611c1d9d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10088,6 +10722,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"あたしの代わりにモクちゃんを差し出すの……？ 大家さん、そこは頑張ってよ。\",\"duel-luna\",false]",
+    "reviewId": "950fdf4aaa402141",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10106,6 +10741,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"仲人料じゃなくて迷惑料を払うニャ。\",\"duel-moku\",false]",
+    "reviewId": "7897be49a494a971",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10123,6 +10759,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"悪かった！ お前を巻き込むんじゃなかった！\",\"duel-manager\",false]",
+    "reviewId": "d19d320600aac950",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10140,6 +10777,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"こいつの明日は、俺が守る！\",\"duel-manager-attack\",false]",
+    "reviewId": "bc245411316ba84d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10159,6 +10797,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"明日も守ってくれるんだ……♡ じゃあ、朝いちばんに会いに行ってもいい？\",\"duel-luna\",false]",
+    "reviewId": "ec575f22d570c700",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10177,6 +10816,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、一日だけの彼氏が明日の予約まで取ってるニャ。\",\"duel-moku\",false]",
+    "reviewId": "b7df794197c63dfb",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10194,6 +10834,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"警備の話だ！！ 予約は取ってねぇ！\",\"duel-manager\",false]",
+    "reviewId": "90b164f03f5e2f38",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10211,6 +10852,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"そんなに金あるなら、うちの修繕費も出してくれない？\",\"duel-manager\",false]",
+    "reviewId": "8bd56b6f5f292961",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10229,6 +10871,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"便乗して貢がせる相手を増やすなニャ。\",\"duel-moku\",false]",
+    "reviewId": "91b9d8f44226fabf",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10247,6 +10890,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"抱き枕だけ連れて帰るニャ！！\",\"duel-moku-attack\",false]",
+    "reviewId": "3c97811f24c2505b",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10266,6 +10910,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ちょっと。あたしを助ける話だったよね？\",\"duel-luna\",false]",
+    "reviewId": "b398ddf1192693cd",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10284,6 +10929,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"修繕費なら、大家の抱き枕を売って稼ぐニャ。\",\"duel-moku\",false]",
+    "reviewId": "7ec62ba3e80bbc08",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10301,6 +10947,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"誰が買うんだよ！！\",\"duel-manager\",false]",
+    "reviewId": "68901aec0c3dff75",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10318,6 +10965,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"金額でこいつの笑顔は買わせねぇ！\",\"duel-manager-attack\",false]",
+    "reviewId": "c6e0b90368760e30",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10337,6 +10985,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"じゃあ、この笑顔は大家さんにあげる♡ ……お金じゃ買えないんだもんね？\",\"duel-luna\",false]",
+    "reviewId": "7df81ec86c560094",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10355,6 +11004,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"無料の笑顔がいちばん高くつきそうニャ。\",\"duel-moku\",false]",
+    "reviewId": "19c9486d70f6ecbe",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10372,6 +11022,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"勝手に見積もるな。俺は買ってねぇ。\",\"duel-manager\",false]",
+    "reviewId": "54a5c1308c8d07c4",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10389,6 +11040,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"こいつの未来に、勝手な値札をつけるな！\",\"duel-manager-attack\",false]",
+    "reviewId": "fb5d90dc6e0aa6a0",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10408,6 +11060,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"あたしの未来、そんなふうに考えてくれるんだ。……大家さんの隣も、空けといてね♡\",\"duel-luna\",false]",
+    "reviewId": "8ef14158da27c8d6",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -10427,6 +11080,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、ずいぶん先まで面倒見るニャ。\",\"duel-moku\",false]",
+    "reviewId": "52d621745c1cb7e4",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10444,6 +11098,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"勧誘を断っただけだ！ 話を広げるな！\",\"duel-manager\",false]",
+    "reviewId": "74fa9ac45170a3d8",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10461,6 +11116,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"モク先生の無料お昼寝講座に変更で……\",\"duel-manager\",false]",
+    "reviewId": "ae5971084aa23a86",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10479,6 +11135,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"講座は休講ニャ。いまから実技だけやるニャ。\",\"duel-moku\",false]",
+    "reviewId": "b054c37d94225c6b",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10497,6 +11154,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"迷惑営業、おやすみニャ！！\",\"duel-moku-attack\",false]",
+    "reviewId": "1095ba000fbff80e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10516,6 +11174,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"大家さん、断るところまでモクちゃんに丸投げ……。無料だからって頼りすぎじゃない？\",\"duel-luna\",false]",
+    "reviewId": "ed58bfd15f712275",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10534,6 +11193,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"無料なのは昼寝だけニャ。起こした分は有料ニャ。\",\"duel-moku\",false]",
+    "reviewId": "2a22a539e16f9036",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10551,6 +11211,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"さっきまで普通に起きてただろ！\",\"duel-manager\",false]",
+    "reviewId": "b9eafd84384348d4",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10568,6 +11229,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"モク！ 悪い、ちょっと助けてくれ！\",\"duel-manager\",false]",
+    "reviewId": "6be99b2802dd7000",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10586,6 +11248,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"煙幕代はツナ缶三つニャ。目、閉じとくニャ！\",\"duel-moku\",false]",
+    "reviewId": "bf18dc80f7409676",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10604,6 +11267,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"モク流奥義・煙ノ肉球乱舞ニャ！！\",\"duel-moku-attack\",false]",
+    "reviewId": "3e505d4a9dcd62ec",
     "repaired": true,
     "repairComment": "音量のピークを抑制。",
     "chapter": 2,
@@ -10625,6 +11289,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……大家さん。あたしをかばったまま、モクちゃんのほう見ないでよ。\",\"duel-luna\",false]",
+    "reviewId": "f2271f58c275c0ae",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10643,6 +11308,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"煙に巻いてお見送りニャ。大家、ツナ缶は三つニャ。\",\"duel-moku\",false]",
+    "reviewId": "186f70d4b5972e35",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10660,6 +11326,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"分かったから、俺の顔に煙を吐くな！！\",\"duel-manager\",false]",
+    "reviewId": "ba5e5d67ef99dd24",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10677,6 +11344,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"大家流超絶漢気奥義！\",\"duel-manager-attack\",false]",
+    "reviewId": "54d17de96b97db36",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10696,6 +11364,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……あたしのために、そこまでしてくれるんだ。今の大家さん、ずっと見てたい……♡\",\"duel-luna\",false]",
+    "reviewId": "65807fa61e2f4459",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10714,6 +11383,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"奥義のあともその構えニャ？ 肩、つるニャ。\",\"duel-moku\",false]",
+    "reviewId": "5810e1a4db258f18",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10731,6 +11401,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……もうつってる。腕が下ろせねぇ。\",\"duel-manager\",false]",
+    "reviewId": "e25d0ee1674842cd",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10748,6 +11419,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"好みの話が、いつの間にか婚姻届に……。\",\"duel-luna\",false]",
+    "reviewId": "89529a8d1bb10011",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -10766,6 +11438,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"モクも大家におはようって言ったニャ。危なかったニャ。\",\"duel-moku\",false]",
+    "reviewId": "f5b257623e80e4d5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10783,6 +11456,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"好みと約束は別だ。本人の返事を聞け！\",\"duel-manager-attack\",false]",
+    "reviewId": "0a98c7a2bb933388",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10802,6 +11476,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"贈り物と交際は別会計だ！\",\"duel-manager-attack\",false]",
+    "reviewId": "f9b9efbec2e4be99",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10821,6 +11496,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"本人が断ってる。勧誘もここで終了だ！\",\"duel-manager-attack\",false]",
+    "reviewId": "4090273b9b3577c7",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10840,6 +11516,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"忘れ物だけ返せ。今の暮らしは本人が決める！\",\"duel-manager-attack\",false]",
+    "reviewId": "84893ee6e85be64e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10859,6 +11536,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"好みを聞かれただけなのにね。……うん、婚約してないって、ちゃんと言えた。\",\"duel-luna\",false]",
+    "reviewId": "ced0c6d7e513a6f6",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10877,6 +11555,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"贈り物を受け取ったら、断っちゃいけない気がしてた。……そこは別でいいんだね。\",\"duel-luna\",false]",
+    "reviewId": "dfec1491687b45ca",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10895,6 +11574,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"もう。断ったときも、それくらい素直に帰ってよね。\",\"duel-luna\",false]",
+    "reviewId": "2aca2d96e1b56270",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10913,6 +11593,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"うん。忘れ物は受け取る。でも働きには戻らない。……あたしが、そう決めた。\",\"duel-luna\",false]",
+    "reviewId": "aa09127ef4016560",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10931,6 +11612,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"花束、置いてってくれてもよかったニャ。\",\"duel-moku\",false]",
+    "reviewId": "5d6649415eec2300",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10948,6 +11630,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"モクもツナ缶で釣られないようにするニャ。\",\"duel-moku\",false]",
+    "reviewId": "d60de37350e53f10",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10965,6 +11648,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"モクも掃除当番を断ったら終了でいいニャ？\",\"duel-moku\",false]",
+    "reviewId": "9a168226197fb202",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10982,6 +11666,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ついでにモクの暮らしも、昼寝中心に決めたいニャ。\",\"duel-moku\",false]",
+    "reviewId": "e6cd579b1b926576",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -10999,6 +11684,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前が受け取ると、また話がこじれるだろ。\",\"duel-manager\",false]",
+    "reviewId": "96b69f0a398178d6",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -11016,6 +11702,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前、三つも積まれたらついていくだろ。\",\"duel-manager\",false]",
+    "reviewId": "89e08cae63184176",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -11033,6 +11720,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"それは勧誘じゃなくて当番だ。ほうきを持て。\",\"duel-manager\",false]",
+    "reviewId": "3a64fd1466d1f118",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -11050,6 +11738,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前は最初からそう暮らしてるだろ。\",\"duel-manager\",false]",
+    "reviewId": "dd97a4ce65bdc69f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -11067,6 +11756,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"そんなに買ってたの……？\",\"duel-luna\",false]",
+    "reviewId": "49c06471f78caa99",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -11084,6 +11774,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"夢の話はしたけど、会員にはならないってば。\",\"duel-luna\",false]",
+    "reviewId": "6376d5b590e58378",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -11101,6 +11792,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"あれはお店で忘れ物を受け取る話！ 働きに戻るとは言ってない！\",\"duel-luna\",false]",
+    "reviewId": "0e60d9159a64208a",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -11118,6 +11810,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……全員、帰った！\",\"duel-manager\",false]",
+    "reviewId": "df3c09d38efb4fdd",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -11136,6 +11829,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"待て。その抱き枕、誰が売った。\",\"duel-manager\",false]",
+    "reviewId": "34d6724fd1b05dc6",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -11153,6 +11847,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"寝るだけならモクが無料で教えるニャ。\",\"duel-moku\",false]",
+    "reviewId": "579e7ec844c61c49",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -11170,6 +11865,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"忘れ物ひとつで、本人まで回収しに来るなニャ。\",\"duel-moku\",false]",
+    "reviewId": "a8d87277861fac67",
     "repaired": true,
     "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 2,
@@ -11188,6 +11884,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"玄関前の渋滞解消ニャ。\",\"duel-moku\",false]",
+    "reviewId": "fef06cc2bdde6054",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -11206,6 +11903,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……通販って便利だよね♡\",\"duel-luna\",false]",
+    "reviewId": "6735c8fd4abaaa66",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -11223,6 +11921,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"本人より先に枕が入居しそうニャ。\",\"duel-moku\",false]",
+    "reviewId": "eb1ab7dc7a647773",
     "repaired": false,
     "chapter": 2,
     "scene": "2:battle",
@@ -11240,6 +11939,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……っ！？\",\"tragedy-shock\",false]",
+    "reviewId": "7260c4896296cf34",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11257,6 +11957,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……待て……ここ……さっきの……？\",\"act2-manager\",false]",
+    "reviewId": "6bb4dfea8e086bf0",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11273,6 +11974,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……大家さん？ 大丈夫？\",\"luna-surprised\",false]",
+    "reviewId": "f560e4bd3bc69c1c",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11289,6 +11991,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ルナ……？\",\"act2-manager\",false]",
+    "reviewId": "63b87112959d152a",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11305,6 +12008,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……生きてる……。\",\"act2-manager-serious\",false]",
+    "reviewId": "78950073988f2c55",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -11322,6 +12026,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"えっ？ 何言ってるの？\",\"luna-surprised\",false]",
+    "reviewId": "2e5fca6b3efeccb2",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11338,6 +12043,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……俺は……確か……。\",\"act2-manager\",false]",
+    "reviewId": "63c262b8592021f4",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11354,6 +12060,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……っ！\",\"tragedy-shock\",false]",
+    "reviewId": "df0e4f81e3550b36",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11371,6 +12078,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"大家さん！？\",\"luna-surprised\",false]",
+    "reviewId": "9a34a15dec007b59",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -11388,6 +12096,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……夢……だったのか……？\",\"inner\",false]",
+    "reviewId": "ae0b1a3b6dd82e88",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -11406,6 +12115,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……いや……違う。この男も……この時間も……全部、同じだ……。\",\"inner\",false]",
+    "reviewId": "4523f7f3b8ea3b0d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11423,6 +12133,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……こいつが……ルナを……？\",\"inner\",false]",
+    "reviewId": "60aaf7a6e536f01d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11440,6 +12151,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……いや、決めつけるな。俺だって、何が起きたのか分かってねぇ……。\",\"inner\",false]",
+    "reviewId": "c2f643de1ac9ff42",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11457,6 +12169,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……そうだ。このあとモクが、あいつを追い返した……。\",\"inner\",false]",
+    "reviewId": "adf7dbf4ea619bd9",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11474,6 +12187,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……俺は、あれでもう大丈夫だと思った……。\",\"inner\",false]",
+    "reviewId": "78faf1cefab7d39a",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11491,6 +12205,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……また同じことが起きるかもしれない……。\",\"inner\",false]",
+    "reviewId": "b4d29213f463e5f8",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11508,6 +12223,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……絶対に、あんな目には遭わせねぇ。\",\"act2-manager-firm\",false]",
+    "reviewId": "c0b04af78da3143d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11524,6 +12240,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……また戻った。今度こそルナを守る。\",\"act2-manager-firm\",false]",
+    "reviewId": "3b878d053f602063",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11540,6 +12257,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"大家さん？ 何かあった？\",\"luna-surprised\",false]",
+    "reviewId": "bc211d4884f02d53",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -11557,6 +12275,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"ああ。取り返しのつかない未来を見た。\",\"act2-manager\",false]",
+    "reviewId": "4b0cbe3b0b9a547a",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11573,6 +12292,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、寝不足ニャ？\",\"act2-moku\",false]",
+    "reviewId": "c3f2f4a6f0633fbc",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11589,6 +12309,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前らのせいでな！！\",\"act2-manager\",false]",
+    "reviewId": "14e1b22d2c55deec",
     "repaired": false,
     "chapter": 2,
     "scene": "2:rewind",
@@ -11605,6 +12326,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……大家さん。さっきの、ちょっとひどかったよね？\",\"luna-quiet\",false]",
+    "reviewId": "be44f41bcef89f20",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11622,6 +12344,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"あたしに全部押し付けて、自分じゃ何も決められなくて。\",\"luna-quiet\",false]",
+    "reviewId": "7c92551b7324310e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11639,6 +12362,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"いや、それは……。\",\"act2-manager\",false]",
+    "reviewId": "0bffe14b20a016cf",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11656,6 +12380,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ふーん。言い訳はできるんだ？\",\"luna-quiet\",false]",
+    "reviewId": "04930df6545b84b4",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -11674,6 +12399,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……大家、急に小さくなったニャ。\",\"act2-moku\",false]",
+    "reviewId": "fc07522d5d38777f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11691,6 +12417,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"じゃあ大家さん。これからは、あたしの言うこと聞いてね？\",\"luna-quiet\",false]",
+    "reviewId": "c3c7573a72efa6c9",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11708,6 +12435,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"大家さん。そこ、立ってないで。\",\"luna-quiet\",false]",
+    "reviewId": "3a64604aa2a311af",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11725,6 +12453,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"へ？\",\"act2-manager\",false]",
+    "reviewId": "c45796117b85dfb0",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11742,6 +12471,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"モクちゃんのツナ缶買って、廊下を磨いて、帳簿はあたしに渡して。返事は？\",\"luna-happy\",false]",
+    "reviewId": "6664a81448ce43ed",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11759,6 +12489,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……はい。\",\"act2-manager\",false]",
+    "reviewId": "cef79b809582727f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11776,6 +12507,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家が管理される側になったニャ。\",\"act2-moku\",false]",
+    "reviewId": "ef6b55d6ae4617cb",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11793,6 +12525,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"自分で何も決められないんでしょ？ じゃあ、鍵もお金もあたしが持つね♡\",\"luna-happy\",false]",
+    "reviewId": "cebd8bfa1eef74b7",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11810,6 +12543,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"言い訳は聞いてないよ。終わったら報告。褒めるかどうかは、あたしが決めるから。\",\"luna-happy\",false]",
+    "reviewId": "79cd2fae5ad48e72",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11827,6 +12561,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、家賃の交渉だけは……ニャ？\",\"act2-moku\",false]",
+    "reviewId": "81c96706f72d9d14",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11844,6 +12579,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……まずルナに、お伺いを……。\",\"act2-manager\",false]",
+    "reviewId": "e74105b9e15c3bcb",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11861,6 +12597,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……大家さん、すごい。あたしのために、あんなに必死になってくれるなんて……♡\",\"luna-flirt\",false]",
+    "reviewId": "9458f47cbabaa09e",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -11879,6 +12616,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"いや、別にお前のためだけってわけじゃ……。\",\"act2-manager\",false]",
+    "reviewId": "c995e09e47c11b7d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11896,6 +12634,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ふふっ♡ もう、隠さなくてもいいのに♡\",\"luna-happy\",false]",
+    "reviewId": "993078b95d37e224",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11913,6 +12652,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……なんか、話が噛み合ってないニャ。\",\"act2-moku\",false]",
+    "reviewId": "86fcdd8c5cc6b71a",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11930,6 +12670,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ねえ大家さん。これからも、ずーっと守ってくれるよね？♡\",\"luna-flirt\",false]",
+    "reviewId": "9b135bd12b33a929",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -11948,6 +12689,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……おい、なんでそうなる。\",\"act2-manager\",false]",
+    "reviewId": "af8853b4a30ef179",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11965,6 +12707,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"大家さ〜ん♡ 昨日のこと思い出したら、また好きになっちゃった♡\",\"luna-happy\",false]",
+    "reviewId": "c0bf0559b7c7563f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -11985,6 +12728,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……いや、俺は大家として当然のことをしただけだぞ？\",\"act2-manager\",false]",
+    "reviewId": "e7c363b19b235231",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -12004,6 +12748,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"大家さんのために、お弁当作ったの♡ 朝・昼・晩の三食分♡\",\"luna-flirt\",false]",
+    "reviewId": "bc8c68fc92ed1161",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -12024,6 +12769,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ありがたいけど、なんで全部ハート形なんだよ。\",\"act2-manager\",false]",
+    "reviewId": "5c671647b1556723",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -12043,6 +12789,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"大家さんの予定、全部あたしのスマホに入れといたよ♡\",\"luna-normal\",false]",
+    "reviewId": "88ecb57964ea82ad",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -12063,6 +12810,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……なんで俺より俺の予定に詳しいんだよ！？\",\"act2-manager\",false]",
+    "reviewId": "736770351b93b4c3",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -12082,6 +12830,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"今日の内見のお客さん？ 大家さんが疲れちゃうから、全部断っといた♡\",\"luna-normal\",false]",
+    "reviewId": "4e7fc8f9780a71ff",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -12102,6 +12851,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"おい！！ それ俺の仕事だぞ！？ 勝手に断るな！！\",\"act2-manager\",false]",
+    "reviewId": "90db270d457bd12b",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -12121,6 +12871,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"もう誰にも邪魔されないように、大家さんのお部屋、外から鍵かけちゃった♡\",\"luna-flirt\",false]",
+    "reviewId": "10c66c43306dce10",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -12141,6 +12892,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……おい、ルナ。冗談だろ……？ 開けろ！！\",\"act2-manager\",false]",
+    "reviewId": "6ea305a082e289fa",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -12160,6 +12912,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……ねえ、大家さん。これからは、あたし以外の声に返事しちゃダメだよ♡\",\"luna-flirt\",false]",
+    "reviewId": "0eb2089be4ac6c5c",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -12179,6 +12932,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……頼む、ルナ。俺をここから出してくれ……。\",\"act2-manager\",false]",
+    "reviewId": "ba3a8c410f1c9f8f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -12198,6 +12952,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ふふっ♡ 大丈夫。あたしはずーっと、そばにいるからね♡\",\"luna-flirt\",false]",
+    "reviewId": "921fd46eb07cb5fd",
     "repaired": false,
     "chapter": 2,
     "scene": "2:bad",
@@ -12217,6 +12972,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……やっと、いつもの大家の仕事に戻れるな。\",\"act2-manager\",false]",
+    "reviewId": "abe1719bdd198be1",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12235,6 +12991,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"大家さ〜ん♡\",\"luna-happy\",false]",
+    "reviewId": "d247dc6f5034adee",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12253,6 +13010,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……その呼び方で近づいてくると、嫌な予感しかしねぇ。\",\"act2-manager\",false]",
+    "reviewId": "31af9d97d399abfb",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12271,6 +13029,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ひどーい！ せっかくお礼を言いに来たのに。\",\"luna-surprised\",false]",
+    "reviewId": "416d95fdb14cbdb0",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12289,6 +13048,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お礼？\",\"act2-manager\",false]",
+    "reviewId": "a4304218fd24e040",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12307,6 +13067,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"うん。昨日は……ありがとね。大家さんのおかげで、ちゃんとみんなに断れたよ。\",\"luna-flirt\",false]",
+    "reviewId": "c53cdb8312cd6ee2",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12325,6 +13086,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……まあ、分かってくれたならいい。\",\"act2-manager\",false]",
+    "reviewId": "ba7ef05658a5274e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12343,6 +13105,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"えへへ♡ やっぱり大家さんって、頼りになるね。\",\"luna-happy\",false]",
+    "reviewId": "0d12631ba7bd43b1",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12361,6 +13124,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"だからって、もう彼氏役はやらねぇぞ。\",\"act2-manager\",false]",
+    "reviewId": "2d06efe2e16383a5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12379,6 +13143,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"え〜？ 一日くらいいいじゃん♡\",\"luna-flirt\",false]",
+    "reviewId": "2322d98e466d0bff",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12397,6 +13162,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"昨日ので懲りろ！！\",\"act2-manager\",false]",
+    "reviewId": "7291c5f44304632f",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12415,6 +13181,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、モクの彼氏役もお願いするニャ。\",\"act2-moku\",false]",
+    "reviewId": "fe2f5877d50829cb",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12433,6 +13200,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"なんでお前まで参加するんだよ！！\",\"act2-manager\",false]",
+    "reviewId": "d10a3ffc3f17b08b",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12451,6 +13219,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"毎日ツナ缶を買って、掃除して、家賃も払ってくれる彼氏がいいニャ。\",\"act2-moku\",false]",
+    "reviewId": "9291d99eaaea0873",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12469,6 +13238,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"それ彼氏じゃなくて便利な財布だろ！！\",\"act2-manager\",false]",
+    "reviewId": "22203940fdee9e01",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12487,6 +13257,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"ふふっ♡ モクちゃん、理想高いね。\",\"luna-happy\",false]",
+    "reviewId": "68c200acaf06bbb1",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12505,6 +13276,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家は不合格ニャ。\",\"act2-moku\",false]",
+    "reviewId": "9ad10a8c6a0a8053",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12523,6 +13295,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"こっちから願い下げだ！！\",\"act2-manager\",false]",
+    "reviewId": "e6e150fc54b71ed8",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12541,6 +13314,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……まあ、こんなもんか。\",\"inner\",false]",
+    "reviewId": "e881bfccf5c07316",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12560,6 +13334,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、なんか笑ってるニャ。\",\"act2-moku-happy\",false]",
+    "reviewId": "aff805d95c0ccab2",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12578,6 +13353,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"あ、照れてる♡\",\"luna-flirt\",false]",
+    "reviewId": "39b95651a0c82575",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12596,6 +13372,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"お前ら、いい加減にしろ！！\",\"act2-manager\",false]",
+    "reviewId": "5823ed3b76d1600d",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12614,6 +13391,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ったく。朝から疲れる連中だぜ。\",\"act2-manager\",false]",
+    "reviewId": "f777c1b918603d32",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12632,6 +13410,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……終わった、んだよな。\",\"inner\",false]",
+    "reviewId": "32c5cfba31c89798",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12651,6 +13430,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……モクの火事に、ルナの騒動……。\",\"inner\",false]",
+    "reviewId": "28e4f5fcfe916d72",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12670,6 +13450,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"何回やり直したんだ、俺は……。\",\"inner\",false]",
+    "reviewId": "75e3e071af981479",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12689,6 +13470,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……まあ、いいか。\",\"act2-manager\",false]",
+    "reviewId": "599d05295e13c5c3",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12707,6 +13489,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"今度こそ、普通に暮らせりゃ……。\",\"act2-manager\",false]",
+    "reviewId": "818d951db0d19c02",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12725,6 +13508,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……ん？\",\"act2-manager\",false]",
+    "reviewId": "46569f9f23bc4124",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12744,6 +13528,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……待て！！\",\"act2-manager\",false]",
+    "reviewId": "da4c1915ade22fe4",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12762,6 +13547,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……っ、はぁ……！\",\"act2-manager\",false]",
+    "reviewId": "7c6efff4eb2ef740",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12781,6 +13567,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……また、あの声か……。\",\"inner\",false]",
+    "reviewId": "eb158bdaf15982c0",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12800,6 +13587,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……証拠って、何のことだよ……。\",\"inner\",false]",
+    "reviewId": "2d2f7a8b2ab4d788",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12819,6 +13607,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"……気味悪ぃな……。\",\"act2-manager\",false]",
+    "reviewId": "996dd4d569f8c603",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12837,6 +13626,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……ふふっ♡\",\"luna-flirt\",false]",
+    "reviewId": "8c4b6326f1aca370",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12856,6 +13646,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……大家さん、ほんとにいい人♡\",\"luna-flirt\",false]",
+    "reviewId": "43bac1a92b2d4e1e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12874,6 +13665,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"あんなに必死になって……。\",\"luna-flirt\",false]",
+    "reviewId": "afac06f9634671a2",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12892,6 +13684,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……あたしのこと、守ってくれたんだもんね。\",\"luna-flirt\",false]",
+    "reviewId": "05b0c5518b4787ae",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12910,6 +13703,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……でも、大家さん。\",\"luna-normal\",false]",
+    "reviewId": "332205c3d26c1fbf",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12928,6 +13722,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"……あたし、嘘はついてないよ？\",\"luna-normal\",false]",
+    "reviewId": "e1d2edf1965640a5",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12947,6 +13742,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"全部は、ね♡\",\"luna-flirt\",false]",
+    "reviewId": "0903e97fc1496da4",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ending",
@@ -12965,6 +13761,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"買い忘れたもの、あったかな。\",\"luna-normal\",false]",
+    "reviewId": "98e5d5bc0dd06bad",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ambient",
@@ -12980,6 +13777,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"荷ほどきって、思ったより時間かかるね。\",\"luna-normal\",false]",
+    "reviewId": "f89eb12586fe09f2",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ambient",
@@ -12995,6 +13793,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"あの人、もう来ないといいな。\",\"luna-normal\",false]",
+    "reviewId": "a0ed4f5b02a892ca",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -13011,6 +13810,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"玄関に誰もいないと、ほっとする。\",\"luna-normal\",false]",
+    "reviewId": "ece277cd7d5fd72e",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ambient",
@@ -13026,6 +13826,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"そろそろ帰る時間かな。\",\"luna-normal\",false]",
+    "reviewId": "8d4b3f3ded6b6e27",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ambient",
@@ -13041,6 +13842,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"大家さんにも、ちゃんと相談しよう。\",\"luna-normal\",false]",
+    "reviewId": "38a65e4e080bbf4a",
     "repaired": true,
     "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
@@ -13057,6 +13859,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"困ったときは、ちゃんと相談しよう。\",\"luna-normal\",false]",
+    "reviewId": "dd4a7785126865e9",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ambient",
@@ -13072,6 +13875,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"部屋が落ち着くと、ちょっと安心するね。\",\"luna-normal\",false]",
+    "reviewId": "086e1893bf6d42ad",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ambient",
@@ -13087,6 +13891,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"これ、昨日洗ったばっかりなの！ お客さんに「喫煙所から来た？」って言われたんだけど。\",\"luna-firm\",false]",
+    "reviewId": "17e974591d32d5c0",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ambient",
@@ -13103,6 +13908,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ごめんニャ。でも窓は開けてたし、そこまで匂うとは……。\",\"act2-moku\",false]",
+    "reviewId": "8137f3151bbac67a",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ambient",
@@ -13119,6 +13925,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"その指一本の隙間で？ 換気したって言うなら、せめて煙を外に出してよ！\",\"luna-firm\",false]",
+    "reviewId": "a4dce72e7fce5115",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ambient",
@@ -13135,6 +13942,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"ルナの香水も廊下に残ってるニャ。私だけ臭い扱いは、ちょっと傷つくニャ。\",\"act2-moku-firm\",false]",
+    "reviewId": "ba2214e9e53e4134",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ambient",
@@ -13151,6 +13959,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"香水が嫌なら言ってよ。だからって、私の仕事着まで煙で洗わなくていいでしょ。\",\"luna-serious\",false]",
+    "reviewId": "4ac62ca4c5da31ea",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ambient",
@@ -13167,6 +13976,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"……それは、悪かったニャ。服、洗い直すニャ。\",\"act2-moku-sad\",false]",
+    "reviewId": "6f3d685e7db18800",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ambient",
@@ -13183,6 +13993,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"hostess\",\"待って。座布団、焦げてない？ 匂いより先にこっち！\",\"luna-surprised\",false]",
+    "reviewId": "ce0fc344fe6dbb40",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ambient",
@@ -13199,6 +14010,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"なるほど。わしに任せろ。だいたいこういうのは勢いで解決する。\",\"act2-manager\",false]",
+    "reviewId": "70d5d98aea0db6ce",
     "repaired": false,
     "chapter": 2,
     "scene": "2:ambient",

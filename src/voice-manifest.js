@@ -7,7 +7,10 @@ export const VOICE_MANIFEST = {
     "speaker": "manager",
     "text": "古びた鍵と、一通の手紙。\n……今日から、ここを俺が預かるのか。",
     "performance": "inner",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "reviewRevision": "inner-review-routing-v1",
+    "repairReview": true,
+    "repairComment": "音声チェックで心の声を通常音声として検索していた不具合を修正。既存の心の声を正しく再生。"
   },
   "[\"manager\",\"……何があったんだよ、この家。\\nまずは、たった一人の住人に会ってみるか。\",\"inner\",false]": {
     "file": "assets/voices/7f1baa7805f1a5352c8588b401a76226a26f0d22804517a53a30eee0a57497ee.mp3",
@@ -7666,7 +7669,10 @@ export const VOICE_MANIFEST = {
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -3
-    }
+    },
+    "reviewRevision": "inner-review-routing-v1",
+    "repairReview": true,
+    "repairComment": "音声チェックで心の声を通常音声として検索していた不具合を修正。既存の心の声を正しく再生。"
   },
   "[\"cat\",\"モクですニャ。よろしくニャ。\",\"moku\",false]": {
     "file": "assets/voices/f9a2d50f9381a0c856fb746a7090a81cb4cfd35339c594de044f55e6d0479418.repair.mp3",

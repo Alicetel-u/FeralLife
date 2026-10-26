@@ -1,4 +1,180 @@
 {
   "schema": 1,
-  "decisions": {}
+  "decisions": {
+    "[\"cat\",\"……なんか作るかニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "9bfa01474198bc648a8e",
+      "updatedAt": "2026-10-26T17:10:48.849Z"
+    },
+    "[\"cat\",\"……腹減ったニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "287eff51ce6faa01293d",
+      "updatedAt": "2026-10-26T17:10:39.310Z"
+    },
+    "[\"cat\",\"お、新しい大家かニャ？\",\"moku\",false]": {
+      "status": "ok",
+      "version": "793523afdd720317cc58",
+      "updatedAt": "2026-10-25T07:26:43.620Z"
+    },
+    "[\"cat\",\"そういえば、昨日から何も食べてない気がするニャ……。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "4d3fcd4d4982d4218916",
+      "updatedAt": "2026-10-26T17:10:45.578Z"
+    },
+    "[\"cat\",\"ちゃんと床が見えたニャ！\",\"moku-happy\",false]": {
+      "status": "ok",
+      "version": "0063579f52700f34f710",
+      "updatedAt": "2026-10-26T17:11:49.116Z"
+    },
+    "[\"cat\",\"テレビもおしまいニャ。おやすみニャ……。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "cbb5d0bd73b0d07bf702",
+      "updatedAt": "2026-10-26T17:11:00.983Z"
+    },
+    "[\"cat\",\"ふぅ〜……外で吸うのもうまいニャ。缶を二本も動かしたあとの一本は格別ニャ。\",\"moku-happy\",false]": {
+      "status": "ok",
+      "version": "00a52d1651efc221bdce",
+      "updatedAt": "2026-10-26T17:11:40.093Z"
+    },
+    "[\"cat\",\"ふぅ……これで安心ニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "4516c18811f25dfd0197",
+      "updatedAt": "2026-10-26T17:09:35.636Z"
+    },
+    "[\"cat\",\"もう一本……灰皿が山盛りニャ。\",\"moku-surprised\",false]": {
+      "status": "ng",
+      "version": "5cbc2827f3758868c2a9",
+      "updatedAt": "2026-10-26T17:10:10.419Z"
+    },
+    "[\"cat\",\"モクですニャ。よろしくニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "fd5200743d5501479d0e",
+      "updatedAt": "2026-10-25T06:59:31.728Z"
+    },
+    "[\"cat\",\"よろしく頼むニャ。家賃は来月から払うニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "38d8dfe3259015770d1a",
+      "updatedAt": "2026-10-25T07:26:48.984Z"
+    },
+    "[\"cat\",\"押せば入るかニャ。……あ、崩れたニャ。\",\"moku-surprised\",false]": {
+      "status": "ok",
+      "version": "ec3545de1715cd5ff3d3",
+      "updatedAt": "2026-10-26T17:10:21.075Z"
+    },
+    "[\"cat\",\"寝すぎて疲れたから、気分転換ニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "003d528870b824ce2169",
+      "updatedAt": "2026-10-26T17:11:10.323Z"
+    },
+    "[\"cat\",\"足の裏くらいニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "c17d65131e36fd1cdfa5",
+      "updatedAt": "2026-10-26T17:12:02.137Z"
+    },
+    "[\"cat\",\"他に誰もいないからニャ。静かで最高ニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "9524784af60cc83205c5",
+      "updatedAt": "2026-10-25T07:26:13.903Z"
+    },
+    "[\"cat\",\"大家、やっぱり頼りになるニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "9acef50d7ca4b290fa90",
+      "updatedAt": "2026-10-26T17:09:50.747Z"
+    },
+    "[\"cat\",\"大丈夫ニャ。換気扇は昨日から回してるニャ。\",\"moku-happy\",false]": {
+      "status": "ok",
+      "version": "b7556f8ba0720936d5f3",
+      "updatedAt": "2026-10-25T07:25:54.077Z"
+    },
+    "[\"cat\",\"歩いてるニャ。今はかなり活動的ニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "394ae27fed74b78092b3",
+      "updatedAt": "2026-10-26T17:11:21.183Z"
+    },
+    "[\"cat\",\"明日からやるニャ。今日は準備の日ニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "14fdfbe9a48d86df6282",
+      "updatedAt": "2026-10-25T07:26:25.883Z"
+    },
+    "[\"cat\",\"明日から頑張るために、今日は休む準備ニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "8fe7f3f64b53bf31dce3",
+      "updatedAt": "2026-10-25T07:26:33.927Z"
+    },
+    "[\"cat\",\"明日はもう片足ぶん頑張るニャ。\",\"moku-happy\",false]": {
+      "status": "ok",
+      "version": "4181a37cc33c3ea4f62f",
+      "updatedAt": "2026-10-26T17:12:07.204Z"
+    },
+    "[\"manager\",\"……まぁ、家賃さえ払ってくれりゃいいか。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "624b3431b8b41f7d0e02",
+      "updatedAt": "2026-10-25T07:26:38.071Z"
+    },
+    "[\"manager\",\"……まあ、部屋にこもってるよりいいか。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "c66b5cd02b3e6f4b8761",
+      "updatedAt": "2026-10-26T17:11:30.403Z"
+    },
+    "[\"manager\",\"……何があったんだよ、このアパート。\\nまずは、たった一人の住人に会ってみるか。\",\"inner\",false]": {
+      "status": "ng",
+      "version": "4b28122c3ac5e6d4df6a",
+      "updatedAt": "2026-10-26T17:14:13.879Z"
+    },
+    "[\"manager\",\"……何の準備だ？\",\"normal\",false]": {
+      "status": "ok",
+      "version": "6306eebd5b71231aea1a",
+      "updatedAt": "2026-10-25T07:26:29.131Z"
+    },
+    "[\"manager\",\"うわっくっせぇ！！煙だらけじゃねーか！\",\"retort\",false]": {
+      "status": "ng",
+      "version": "759df5da05e79dca08ab",
+      "updatedAt": "2026-10-25T07:08:18.588Z"
+    },
+    "[\"manager\",\"お、起きたのか。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "26bd87b6d3940d08c4d7",
+      "updatedAt": "2026-10-26T17:11:04.753Z"
+    },
+    "[\"manager\",\"お、部屋を片づけたのか？\",\"normal\",false]": {
+      "status": "ok",
+      "version": "5006b19d1e6212d4fecc",
+      "updatedAt": "2026-10-26T17:11:45.161Z"
+    },
+    "[\"manager\",\"おお！ どのくらい？\",\"normal\",false]": {
+      "status": "ok",
+      "version": "f9de57ab9529046e056d",
+      "updatedAt": "2026-10-26T17:11:54.952Z"
+    },
+    "[\"manager\",\"せめて両足ぶんは今日やれ！\",\"normal\",false]": {
+      "status": "ng",
+      "version": "36cbe5e3f96612473759",
+      "updatedAt": "2026-10-26T17:12:26.667Z"
+    },
+    "[\"manager\",\"まぁよろしく。……ずいぶん自由に暮らしてるな。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "6061d32aed6beab2c194",
+      "updatedAt": "2026-10-25T07:26:07.506Z"
+    },
+    "[\"manager\",\"換気扇より先にタバコ止めろよ！\",\"retort\",false]": {
+      "status": "ok",
+      "version": "393717122905b9471d8d",
+      "updatedAt": "2026-10-25T07:26:01.125Z"
+    },
+    "[\"manager\",\"休憩のあとに休憩するなよ。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "a9b3b278a9238beb26f5",
+      "updatedAt": "2026-10-26T17:11:14.244Z"
+    },
+    "[\"manager\",\"古びた鍵と、一通の手紙。\\n……今日から、ここを俺が預かるのか。\",\"inner\",false]": {
+      "status": "ng",
+      "version": "bab6b3e460fca8af6519",
+      "updatedAt": "2026-10-26T17:13:55.066Z"
+    },
+    "[\"manager\",\"部屋、少しは片づけたらどうだ？\",\"normal\",false]": {
+      "status": "ok",
+      "version": "f3346d6813a7513eaead",
+      "updatedAt": "2026-10-25T07:26:19.732Z"
+    }
+  }
 }
