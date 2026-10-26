@@ -58,7 +58,8 @@ export const VOICE_MANIFEST = {
       "truePeakDBTP": -3,
       "tailPaddingSeconds": 0.2
     },
-    "repairComment": "語尾切れ対策で再生成。速度と区切りを調整し、末尾に余白を追加。"
+    "repairComment": "語尾切れ対策で再生成。速度と区切りを調整し、末尾に余白を追加。",
+    "repairReview": true
   },
   "[\"cat\",\"大丈夫ニャ。換気扇は昨日から回してるニャ。\",\"moku-happy\",false]": {
     "file": "assets/voices/37fa0c69b1b2e6d13b153b7c9e5efeec0e2d10f5f30cf01303c8299f607e282a.mp3",
@@ -5784,7 +5785,8 @@ export const VOICE_MANIFEST = {
       "truePeakDBTP": -3,
       "tailPaddingSeconds": 0.2
     },
-    "repairComment": "末尾の異音対策で再生成。笑い声の指定を外し、明瞭な会話に調整。"
+    "repairComment": "末尾の異音対策で再生成。笑い声の指定を外し、明瞭な会話に調整。",
+    "repairReview": true
   },
   "[\"manager\",\"お、部屋を片づけたのか？\",\"normal\",false]": {
     "file": "assets/voices/e54b400800aca548adc3f144c1d7fd08e2b07401b89c5ec2c8b8a502e2d785a4.mp3",
@@ -5839,7 +5841,8 @@ export const VOICE_MANIFEST = {
       "truePeakDBTP": -3,
       "tailPaddingSeconds": 0.2
     },
-    "repairComment": "コミカルな呆れの演技で再生成。言葉の区切りと速度を調整。"
+    "repairComment": "コミカルな呆れの演技で再生成。言葉の区切りと速度を調整。",
+    "repairReview": true
   },
   "[\"cat\",\"明日はもう片足ぶん頑張るニャ。\",\"moku-happy\",false]": {
     "file": "assets/voices/a3420a4b81d7f084078e4d96cdb13dc58fc2e0ec9c82b5e72f5abec7126acbf1.mp3",
@@ -5894,7 +5897,8 @@ export const VOICE_MANIFEST = {
       "truePeakDBTP": -3,
       "tailPaddingSeconds": 0.2
     },
-    "repairComment": "語尾切れ対策で再生成。呼びかけの間と速度を調整し、末尾に余白を追加。"
+    "repairComment": "語尾切れ対策で再生成。呼びかけの間と速度を調整し、末尾に余白を追加。",
+    "repairReview": true
   },
   "[\"cat\",\"ふぅ……これで安心ニャ。\",\"moku\",false]": {
     "file": "assets/voices/0a359cf8c5cba2b2fa35b9f12d0b61011d2a18c9a3bf8712f3fb460e2254f39d.mp3",
@@ -7717,7 +7721,8 @@ export const VOICE_MANIFEST = {
       "truePeakDBTP": -3,
       "tailPaddingSeconds": 0.2
     },
-    "repairComment": "末尾の異音対策で再生成。音量を整え、語尾の後に余白を追加。"
+    "repairComment": "末尾の異音対策で再生成。音量を整え、語尾の後に余白を追加。",
+    "repairReview": true
   },
   "[\"cat\",\"テレビもおしまいニャ。おやすみニャ……。\",\"moku\",false]": {
     "file": "assets/voices/7499d9eeec6f1e3f44befd7ec5bca8e75c78e04cdfbe0bf1f6140a1f84cdc056.mp3",

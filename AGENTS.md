@@ -4,7 +4,7 @@
 - All current and future characters must use clear, projected, expressive speech. Normal conversation should sound lively; never default to mumbling, whispering, ASMR, or breathy low-volume delivery, including inner monologues, flirtation, and sad scenes.
 - Preserve scene-appropriate emotion and character identity through acting, without sacrificing intelligibility. Do not make tragic scenes cheerful.
 - Apply this rule to new voice profiles and per-line repair overrides. Existing recordings require explicit scoped regeneration; changing settings alone does not update their audio.
-- When replacing a recording, add a concise, factual `repairComment` to its voice manifest entry so the audio review tool explains the change. Do not claim listening approval before the user confirms it.
+- When replacing a reported recording, set `repairReview: true` and add a concise, factual `repairComment` to its voice manifest entry. This routes the repaired audio to rechecking even without the old local report; acceptance is tied to the current audio fingerprint. Do not mark historic mastering as a new repair or claim listening approval before the user confirms it.
 - The audio review tool must open on initial unreviewed audio only, excluding accepted, reported, waiting-for-repair and repaired-awaiting-recheck recordings. Keep repaired-awaiting-recheck audio in the separate one-click repair review with correction comments. Preserve saved decisions and keep both queues separate after reopening.
 
 ## Story canon (mandatory)

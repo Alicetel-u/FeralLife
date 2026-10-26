@@ -19,6 +19,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"うわっくっせぇ！！煙だらけじゃねーか！\",\"retort\",false]",
     "repaired": true,
+    "repairReview": true,
     "repairComment": "語尾切れ対策で再生成。速度と区切りを調整し、末尾に余白を追加。",
     "chapter": 1,
     "scene": "1:opening",
@@ -298,6 +299,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"大家ー！ ちょっと知恵を貸すニャ！\",\"moku-surprised\",false]",
     "repaired": true,
+    "repairReview": true,
     "repairComment": "語尾切れ対策で再生成。呼びかけの間と速度を調整し、末尾に余白を追加。",
     "chapter": 1,
     "scene": "1:observation",
@@ -363,6 +365,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。\",\"moku\",false]",
     "repaired": true,
+    "repairReview": true,
     "repairComment": "末尾の異音対策で再生成。音量を整え、語尾の後に余白を追加。",
     "chapter": 1,
     "scene": "1:observation",
@@ -492,6 +495,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"大家、いい知らせニャ。\",\"moku-happy\",false]",
     "repaired": true,
+    "repairReview": true,
     "repairComment": "末尾の異音対策で再生成。笑い声の指定を外し、明瞭な会話に調整。",
     "chapter": 1,
     "scene": "1:observation",
@@ -573,6 +577,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"立ってた場所だけじゃねぇか！\",\"normal\",false]",
     "repaired": true,
+    "repairReview": true,
     "repairComment": "コミカルな呆れの演技で再生成。言葉の区切りと速度を調整。",
     "chapter": 1,
     "scene": "1:observation",

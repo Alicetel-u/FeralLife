@@ -194,3 +194,29 @@ test('initial checking and repaired checking are disjoint across reopen and save
  voiceReviewMark(restored,fresh,{status:'ng',issues:['quiet']});assert.deepEqual(voiceReviewFilter(catalog,restored).map(r=>r.id),[heard.id]);
  voiceReviewMark(restored,heard,{status:'ok'});assert.equal(voiceReviewFilter(catalog,restored).length,0);
 });
+
+test('published repairs appear without old local reports and stay out of initial checking',async()=>{
+ const {voiceReviewOpenPending}=await import('../src/voice-review-store.js');
+ const state=voiceReviewEmpty(),repairs=VOICE_REVIEW_CATALOG.filter(r=>r.repairReview);
+ assert.equal(repairs.length,5);state.filters.status='recheck';
+ assert.deepEqual(voiceReviewFilter(VOICE_REVIEW_CATALOG,state).map(r=>r.id),repairs.map(r=>r.id));
+ for(const r of repairs){assert.ok(r.repairComment);assert.equal(voiceReviewStatus(r,null),'changed');}
+ voiceReviewOpenPending(state);const initial=new Set(voiceReviewFilter(VOICE_REVIEW_CATALOG,state).map(r=>r.id));
+ assert.ok(repairs.every(r=>!initial.has(r.id)));
+ const ordinary=VOICE_REVIEW_CATALOG.filter(r=>!r.repairReview);assert.equal(initial.size,ordinary.length);
+});
+
+test('explicit repair decisions are tied to current audio and survive reload',()=>{
+ const state=voiceReviewEmpty(),a=VOICE_REVIEW_CATALOG.find(r=>r.repairReview);
+ voiceReviewMark(state,{...a,version:'before-repair'},{status:'ok'});state.filters.status='recheck';
+ assert.equal(voiceReviewFilter([a],state).length,1);
+ voiceReviewMark(state,a,{listenedVersion:a.version,status:'todo'});assert.equal(voiceReviewFilter([a],state).length,1);
+ voiceReviewMark(state,a,{status:'ok',issues:[],note:''});assert.equal(voiceReviewFilter([a],state).length,0);
+ const storage=memory();storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));const restored=voiceReviewLoad(storage).state;
+ assert.equal(voiceReviewFilter([a],restored).length,0);
+ assert.equal(voiceReviewFilter([{...a,version:'next-real-repair'}],restored).length,1);
+ voiceReviewMark(restored,a,{status:'ng',issues:['timing'],note:'まだ語尾がおかしい'});
+ assert.equal(voiceReviewFilter([a],restored).length,0);
+ restored.filters.status='pending';assert.equal(voiceReviewFilter([a],restored).length,0);
+ assert.equal(restored.records[a.id].note,'まだ語尾がおかしい');
+});

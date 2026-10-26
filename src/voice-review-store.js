@@ -4,7 +4,14 @@ export const VOICE_REVIEW_SPEAKERS={manager:'大家',cat:'モク',hostess:'ル�
 export function voiceReviewEmpty(){return {schema:1,records:{},cursorId:null,filters:{chapter:'all',scene:'all',speaker:'all',status:'all',search:'',sort:'scene'},catalogEntries:null};}
 export function voiceReviewHasRepair(row,record){return !!(row.repaired||row.catalogChanged||record?.repaired||record?.history?.some(h=>h.status==='ng')||!!record&&record.version!==row.version);}
 export function voiceReviewNeedsRecheck(row,record){
- if(row.removed||!record||record.status==='ok')return false;
+ if(row.removed)return false;
+ // Explicitly published repairs are reviewable even on another device or
+ // without the old local report. Decisions apply only to the current audio.
+ if(row.repairReview){
+  if(!record||record.version!==row.version)return true;
+  return record.status==='todo';
+ }
+ if(!record||record.status==='ok')return false;
  // Historic mastering is not a request to recheck. Require an actual reported
  // issue followed by replacement audio; keep it pending until a new decision.
  if(record.status==='ng')return record.version!==row.version;
@@ -18,6 +25,7 @@ export function voiceReviewNeedsInitial(row,record){
 export function voiceReviewOpenPending(state){state.filters={chapter:'all',scene:'all',speaker:'all',status:'pending',search:'',sort:'scene'};}
 export function voiceReviewStatus(row,record){
  if(row.removed)return 'removed';
+ if(voiceReviewNeedsRecheck(row,record))return 'changed';
  if(!record)return row.isNew?'new':row.catalogChanged?'changed':'todo';
  if(record.version!==row.version)return 'changed';
  if(record.status==='ok'&&voiceReviewHasRepair(row,record))return 'fixed';
