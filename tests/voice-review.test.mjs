@@ -134,14 +134,14 @@ test('a saved unplayed filter still includes newly added wording after a release
  assert.deepEqual(voiceReviewFilter([old,added],state).map(r=>r.id),[old.id,added.id]);
 });
 
-test('opening review hides accepted audio without losing decisions and updated OK audio returns',async()=>{
+test('opening review hides accepted audio without losing decisions, including updated OK audio',async()=>{
  const {voiceReviewOpenPending}=await import('../src/voice-review-store.js');
  const state=voiceReviewEmpty(),a=variant('承認済み'),b=variant('修正後承認済み'),c=variant('要確認');b.repaired=true;
  voiceReviewMark(state,a,{status:'ok'});voiceReviewMark(state,b,{status:'ok'});
  state.filters.status='all';voiceReviewOpenPending(state);
- assert.equal(state.filters.sort,'status');assert.deepEqual(voiceReviewFilter([a,b,c],state).map(r=>r.id),[c.id]);
+ assert.equal(state.filters.sort,'scene');assert.deepEqual(voiceReviewFilter([a,b,c],state).map(r=>r.id),[c.id]);
  const newer={...a,version:'v2'};
- assert.ok(voiceReviewFilter([newer,b,c],state).some(r=>r.id===a.id));
+ assert.ok(!voiceReviewFilter([newer,b,c],state).some(r=>r.id===a.id));
  const storage=memory();storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));const restored=voiceReviewLoad(storage).state;voiceReviewOpenPending(restored);
  assert.equal(restored.records[a.id].status,'ok');assert.equal(voiceReviewFilter([a,b,c],restored).length,1);
  restored.filters.status='all';assert.equal(voiceReviewFilter([a,b,c],restored).length,3);
@@ -175,4 +175,22 @@ test('repair recheck requires an actual flagged replacement, not historic master
  voiceReviewMark(state,changed,{status:'ok',issues:[],note:''});assert.equal(voiceReviewFilter(catalog,state).length,0);
  const storage=memory();storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));const restored=voiceReviewLoad(storage).state;
  assert.equal(voiceReviewFilter(catalog,restored).length,0);assert.equal(restored.records[ok.id].status,'ok');
+});
+
+test('initial checking and repaired checking are disjoint across reopen and saved filters',async()=>{
+ const {voiceReviewOpenPending}=await import('../src/voice-review-store.js');
+ const state=voiceReviewEmpty(),fresh=variant('未確認'),heard=variant('再生済み未判定'),ok=variant('問題なし'),ng=variant('指摘済み修正待ち'),repair=variant('修正前'),fixed={...variant('修正後OK'),repaired:true};
+ voiceReviewMark(state,heard,{listenedVersion:heard.version});voiceReviewMark(state,ok,{status:'ok'});
+ voiceReviewMark(state,ng,{status:'ng',issues:['flat'],note:'演技'});voiceReviewMark(state,repair,{status:'ng',issues:['timing'],note:'語尾'});voiceReviewMark(state,fixed,{status:'ok'});
+ const changed={...repair,version:'v2'},catalog=[fresh,heard,ok,ng,changed,fixed];
+ voiceReviewSyncCatalog(state,catalog);state.filters={chapter:'2',scene:'missing',speaker:'cat',status:'ng',search:'保存済み検索',sort:'updated'};
+ voiceReviewOpenPending(state);
+ assert.deepEqual(voiceReviewFilter(catalog,state).map(r=>r.id),[fresh.id,heard.id]);
+ assert.equal(state.filters.scene,'all');assert.equal(state.filters.search,'');
+ state.filters.status='recheck';assert.deepEqual(voiceReviewFilter(catalog,state).map(r=>r.id),[repair.id]);
+ const storage=memory();storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));const restored=voiceReviewLoad(storage).state;voiceReviewOpenPending(restored);
+ assert.deepEqual(voiceReviewFilter(catalog,restored).map(r=>r.id),[fresh.id,heard.id]);
+ assert.equal(restored.records[ng.id].note,'演技');assert.equal(restored.records[repair.id].note,'語尾');
+ voiceReviewMark(restored,fresh,{status:'ng',issues:['quiet']});assert.deepEqual(voiceReviewFilter(catalog,restored).map(r=>r.id),[heard.id]);
+ voiceReviewMark(restored,heard,{status:'ok'});assert.equal(voiceReviewFilter(catalog,restored).length,0);
 });

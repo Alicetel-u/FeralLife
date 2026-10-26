@@ -2200,3 +2200,42 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .vr-state-fixed{background:#c8eedb;color:#205f40}.vr-state-new{background:#dce2ff;color:#4146a0}.vr-state-removed{background:#dce0e5;color:#5a6069}
 .vr-card-meta .vr-state{max-width:48%;white-space:normal;text-align:center;overflow-wrap:anywhere}
 @media(orientation:landscape) and (max-height:500px){.vr-filter-form label:last-child{grid-column:auto}}
+
+/* Voice review: graphic red, paper white and ink black. */
+.game-ink #modal.voice-review-mode{background:#d31332;background-image:linear-gradient(118deg,transparent 0 58%,#090909 58% 81%,transparent 81%),repeating-linear-gradient(135deg,transparent 0 24px,#b9102b 24px 26px);color:#fff}
+.voice-review-mode .vr-panel{background:#111;box-shadow:12px 0 0 #000,-12px 0 0 #000;font-weight:600;isolation:isolate}
+.voice-review-mode .vr-header{border-bottom:3px solid #fff;padding-bottom:6px}
+.voice-review-mode .vr-header h2{font-weight:950;font-size:26px;font-style:italic;letter-spacing:-1px;text-shadow:3px 2px 0 #d31332;transform:skew(-5deg)}
+.voice-review-mode .vr-panel button{border:2px solid #f6f4ef;border-radius:0;background:#171717;color:#fff;box-shadow:3px 3px 0 #000;font-weight:850;transition:background .12s,color .12s;position:relative}
+.voice-review-mode .vr-panel button:hover:not(:disabled){background:#fff;color:#111}
+.voice-review-mode .vr-panel button:active:not(:disabled){background:#d31332;color:#fff}
+.voice-review-mode .vr-panel button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.voice-review-mode .vr-panel button:disabled{opacity:.32;box-shadow:none}
+.voice-review-mode .vr-progress{color:#fff;letter-spacing:.02em}.voice-review-mode .vr-ng-text{color:#ff8d9d}.voice-review-mode .vr-change-text{color:#fff}
+.voice-review-mode .vr-panel progress{accent-color:#ef2546;background:#333;height:4px;border:0}
+.voice-review-mode .vr-context>span{font-weight:850;color:#fff;white-space:nowrap}
+.voice-review-mode .vr-context-actions{gap:6px}
+.voice-review-mode .vr-context-actions button{border-width:1px;box-shadow:2px 2px 0 #000}
+.voice-review-mode .vr-context-actions [data-vr=recheck]{background:#d31332;color:#fff;border-color:#ff7b91}
+.voice-review-mode .vr-context-actions [aria-pressed=true]{background:#fff;color:#a40b25;border-color:#fff}
+.voice-review-mode .vr-card{border:0;border-left:7px solid #e01836;border-radius:0;background:#fffdf5;background-image:radial-gradient(#15151518 .7px,transparent .7px);background-size:8px 8px;color:#111;box-shadow:4px 4px 0 #d31332;padding:14px;gap:8px}
+.voice-review-mode .vr-card-meta{font-weight:800;color:#333}
+.voice-review-mode .vr-card h3{background:#111;color:#fff;align-self:flex-start;padding:2px 14px 3px 9px;font-size:18px;font-weight:900;transform:skew(-5deg);border-left:4px solid #d31332}
+.voice-review-mode .vr-speaker-manager h3{border-color:#3f7794}.voice-review-mode .vr-speaker-cat h3{border-color:#54843a}.voice-review-mode .vr-speaker-hostess h3{border-color:#c84772}
+.voice-review-mode .vr-state{background:#111;color:#fff;border-radius:0;font-weight:800}
+.voice-review-mode .vr-state-changed,.voice-review-mode .vr-state-ng{background:#d31332;color:#fff}
+.voice-review-mode .vr-state-fixed,.voice-review-mode .vr-state-ok{background:#222;color:#fff}
+.voice-review-mode .vr-line{font-weight:850;letter-spacing:-.025em}
+.voice-review-mode .vr-repair-comment{border-top:2px solid #111;padding-top:5px;color:#4a1520;font-weight:650}
+.voice-review-mode .vr-repair-comment b{color:#b40727}.voice-review-mode .vr-changed-note{color:#82283a}
+.voice-review-mode .vr-text-pages{color:#222;font-weight:800}.voice-review-mode .vr-text-pages button{background:#fff;color:#111;border-color:#111;box-shadow:none}
+.voice-review-mode .vr-panel .vr-play,.voice-review-mode .vr-panel .vr-primary{background:#d31332;color:#fff;border-color:#fff;transform:skew(-3deg)}
+.voice-review-mode .vr-player [aria-pressed=true],.voice-review-mode .vr-issues [aria-pressed=true]{background:#d31332;color:#fff;border-color:#fff}
+.voice-review-mode .vr-issues button{border-top-color:#fff!important;border-top-width:2px}
+.voice-review-mode .vr-panel .vr-good{background:#fff;color:#111;border-color:#fff;font-style:italic;box-shadow:4px 3px 0 #d31332}
+.voice-review-mode .vr-panel .vr-note-button{border-color:#777;background:#222;color:#fff}
+.voice-review-mode .vr-save{color:#d7d7d7}.voice-review-mode .vr-filter-form label{color:#fff;font-weight:800}
+.voice-review-mode .vr-filter-form select,.voice-review-mode .vr-filter-form input,.voice-review-mode .vr-output{border:2px solid #eee;border-radius:0;background:#202020;color:#fff}
+@media(max-height:650px){.voice-review-mode .vr-header{padding-bottom:3px}.voice-review-mode .vr-header h2{font-size:22px}.voice-review-mode .vr-card{padding:10px;gap:5px}.voice-review-mode .vr-card h3{font-size:16px;padding-top:1px;padding-bottom:1px}.voice-review-mode .vr-repair-comment{font-size:10px;padding-top:3px}}
+@media(prefers-reduced-motion:reduce){.voice-review-mode .vr-panel button{transition:none}}
+@media(max-height:650px){.voice-review-mode .vr-panel{gap:4px}.voice-review-mode .vr-header{padding-bottom:2px;border-bottom-width:2px}.voice-review-mode .vr-header h2{font-size:20px}.voice-review-mode .vr-header button{min-height:30px;padding:4px 8px}.voice-review-mode .vr-card{gap:4px}.voice-review-mode .vr-card h3{font-size:15px;padding-top:0;padding-bottom:0}.voice-review-mode .vr-repair-comment{line-height:1.3}}

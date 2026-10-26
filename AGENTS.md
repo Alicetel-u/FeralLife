@@ -5,6 +5,7 @@
 - Preserve scene-appropriate emotion and character identity through acting, without sacrificing intelligibility. Do not make tragic scenes cheerful.
 - Apply this rule to new voice profiles and per-line repair overrides. Existing recordings require explicit scoped regeneration; changing settings alone does not update their audio.
 - When replacing a recording, add a concise, factual `repairComment` to its voice manifest entry so the audio review tool explains the change. Do not claim listening approval before the user confirms it.
+- The audio review tool must open on initial unreviewed audio only, excluding accepted, reported, waiting-for-repair and repaired-awaiting-recheck recordings. Keep repaired-awaiting-recheck audio in the separate one-click repair review with correction comments. Preserve saved decisions and keep both queues separate after reopening.
 
 ## Story canon (mandatory)
 - Before writing or modifying narrative, character dialogue, chapter events, memory/flashback sequences, or endings, read `docs/story/master-plot.md`.
