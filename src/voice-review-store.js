@@ -53,7 +53,8 @@ export function voiceReviewRows(catalog,state){
 }
 export function voiceReviewMark(state,row,patch){
  const before=state.records[row.id],history=before?.history||[];
- const record={...before,id:row.id,chapter:row.chapter,speaker:row.line.speaker,text:row.line.text,scene:row.sceneLabel,source:row.source,version:row.version,status:'todo',issues:[],note:'',...before,...patch,updatedAt:new Date().toISOString()};
+ const current=before?.version===row.version?before:{};
+ const record={id:row.id,chapter:row.chapter,speaker:row.line.speaker,text:row.line.text,scene:row.sceneLabel,source:row.source,version:row.version,status:'todo',issues:[],note:'',...current,...patch,updatedAt:new Date().toISOString()};
  // An explicit new decision applies to the current recording and retains the old decision.
  record.version=row.version;record.repaired=voiceReviewHasRepair(row,before);
  if(before&&before.version!==row.version)record.history=[...history,{version:before.version,status:before.status,issues:before.issues,note:before.note,updatedAt:before.updatedAt}].slice(-10);

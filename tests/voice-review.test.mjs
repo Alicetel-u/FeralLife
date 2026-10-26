@@ -220,3 +220,16 @@ test('explicit repair decisions are tied to current audio and survive reload',()
  restored.filters.status='pending';assert.equal(voiceReviewFilter([a],restored).length,0);
  assert.equal(restored.records[a.id].note,'まだ語尾がおかしい');
 });
+
+test('new recording decisions do not inherit old issues or notes, and retain the old report as history',()=>{
+ const state=voiceReviewEmpty(),old=variant('修正前に指摘した台詞');
+ voiceReviewMark(state,old,{status:'ng',issues:['timing'],note:'以前の語尾切れ',listenedVersion:old.version});
+ const updated={...old,version:'v2',repairReview:true};
+ const next=voiceReviewMark(state,updated,{status:'ng',issues:['flat']});
+ assert.deepEqual(next.issues,['flat']);assert.equal(next.note,'');assert.equal(next.listenedVersion,undefined);
+ assert.equal(next.history[0].note,'以前の語尾切れ');assert.deepEqual(next.history[0].issues,['timing']);
+ const storage=memory();storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));const restored=voiceReviewLoad(storage).state;
+ assert.equal(restored.records[old.id].note,'');assert.equal(restored.records[old.id].history[0].note,'以前の語尾切れ');
+ const third=voiceReviewMark(restored,{...updated,version:'v3'},{note:'今回の新しい指摘',status:'ng'});
+ assert.deepEqual(third.issues,[]);assert.equal(third.note,'今回の新しい指摘');assert.equal(third.history.length,2);
+});
