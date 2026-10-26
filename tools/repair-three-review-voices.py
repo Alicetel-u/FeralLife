@@ -17,6 +17,9 @@ TARGETS = [
     ("manager", "立ってた場所だけじゃねぇか！", "normal", False),
 ]
 keys = [json.dumps(list(t), ensure_ascii=False, separators=(",", ":")) for t in TARGETS]
+if all(manifest.get(k, {}).get("file") == f"assets/voices/voice-review-20261026-{i}.mp3" for i, k in enumerate(keys, 1)):
+    print("Already applied; skip paid ElevenLabs calls")
+    raise SystemExit(0)
 for key in keys:
     if key not in manifest:
         raise RuntimeError("Missing exact dialogue key: " + key)
