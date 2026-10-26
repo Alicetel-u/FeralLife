@@ -1,0 +1,53 @@
+name: ElevenLabs voice smoke test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate one Moku sample
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${ELEVENLABS_API_KEY}" ]]; then
+            echo "::error::Repository secret ELEVENLABS_API_KEY is missing."
+            exit 1
+          fi
+          python3 - <<'PY'
+          import json, os, urllib.request, urllib.error
+          voice_id = "0ptCJp0xgdabdcpVtCB5"
+          payload = {
+              "text": "[animated] テストだニャ！ ちゃんと聞こえてるかニャ？",
+              "model_id": "eleven_v3",
+              "voice_settings": {"stability": 0.5, "similarity_boost": 0.75, "speed": 0.95}
+          }
+          url = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}?output_format=mp3_44100_128"
+          request = urllib.request.Request(url, data=json.dumps(payload, ensure_ascii=False).encode("utf-8"), headers={
+              "xi-api-key": os.environ["ELEVENLABS_API_KEY"],
+              "Content-Type": "application/json",
+              "Accept": "audio/mpeg"
+          }, method="POST")
+          try:
+              with urllib.request.urlopen(request, timeout=90) as response:
+                  audio = response.read()
+                  if not response.headers.get("Content-Type", "").startswith("audio/") or len(audio) < 128:
+                      raise RuntimeError("Invalid audio response")
+          except urllib.error.HTTPError as err:
+              raise RuntimeError(f"ElevenLabs API HTTP {err.code}") from None
+          with open("moku-voice-test.mp3", "wb") as output:
+              output.write(audio)
+          print(f"MP3 generated: {len(audio)} bytes")
+          PY
+      - name: Upload voice for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: elevenlabs-moku-test
+          path: moku-voice-test.mp3
+          retention-days: 7
