@@ -2,6 +2,9 @@ import {extractCompleteVoiceScript} from './voice-script.mjs';
 import {VOICE_MANIFEST} from '../src/voice-manifest.js';
 import {readFile,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
+import {voiceReviewValidatePublished} from '../src/voice-review-release.js';
+const published=voiceReviewValidatePublished(JSON.parse(await readFile(new URL('../config/voice-review-published.json',import.meta.url),'utf8')));
+await writeFile(new URL('../src/voice-review-published.js',import.meta.url),'// Generated; contains decisions only, never private notes.\nexport const VOICE_REVIEW_PUBLISHED = '+JSON.stringify(published,null,2)+';\n');
 const catalog=[];
 for(const row of extractCompleteVoiceScript()){
  const chapter=row.source.startsWith('act2/')?2:1,s=row.source,l=row.line;
