@@ -1,4 +1,5 @@
 name: Repair three reviewed voice clips
+# Run on the latest commit; do not rerun stale workflow snapshots.
 
 on:
   workflow_dispatch:
