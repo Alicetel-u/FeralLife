@@ -18,7 +18,9 @@ for(const row of extractCompleteVoiceScript()){
  else if(s.startsWith('prologue')||s.startsWith('foyer')||s.includes('/opening')||s.includes('/film/')){scene='opening';label='プロローグ・オープニング';order=10;}
  const clip=VOICE_MANIFEST[row.lineKey];if(!clip)throw Error('Voice missing: '+row.source);
  const bytes=await readFile(new URL('../'+(clip.fastFile||clip.file),import.meta.url));
- catalog.push({id:row.lineKey,repaired:!!clip.audioQuality||/\.repair\.mp3$/.test(clip.file),chapter,scene:chapter+':'+scene,sceneLabel:label,order,source:s,line:{...l,speaker:row.speaker},version:createHash('sha256').update(bytes).digest('hex').slice(0,20)});
+ const repaired=!!clip.audioQuality||/\.repair\.mp3$/.test(clip.file);
+ const repairComment=clip.repairComment||(clip.audioQuality?[clip.audioQuality.restoredFrom?'録音を復元。':'',clip.audioQuality.edgeSilenceTrimmed?'前後の余分な無音を調整。':'',clip.audioQuality.peakReductionDB?'音量のピークを抑制。':''].join(''):repaired?'音声を再生成し、音量を調整。':'');
+ catalog.push({id:row.lineKey,repaired,...(repairComment?{repairComment}:{}),chapter,scene:chapter+':'+scene,sceneLabel:label,order,source:s,line:{...l,speaker:row.speaker},version:createHash('sha256').update(bytes).digest('hex').slice(0,20)});
 }
 catalog.sort((a,b)=>a.chapter-b.chapter||a.order-b.order||a.source.localeCompare(b.source,'ja',{numeric:true}));
 await writeFile(new URL('../src/voice-review-catalog.js',import.meta.url),'// Generated from the current playable script; rebuild with tools/build-voice-review.mjs.\nexport const VOICE_REVIEW_CATALOG = '+JSON.stringify(catalog,null,2)+';\n');

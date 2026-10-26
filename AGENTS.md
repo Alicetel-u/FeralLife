@@ -4,6 +4,7 @@
 - All current and future characters must use clear, projected, expressive speech. Normal conversation should sound lively; never default to mumbling, whispering, ASMR, or breathy low-volume delivery, including inner monologues, flirtation, and sad scenes.
 - Preserve scene-appropriate emotion and character identity through acting, without sacrificing intelligibility. Do not make tragic scenes cheerful.
 - Apply this rule to new voice profiles and per-line repair overrides. Existing recordings require explicit scoped regeneration; changing settings alone does not update their audio.
+- When replacing a recording, add a concise, factual `repairComment` to its voice manifest entry so the audio review tool explains the change. Do not claim listening approval before the user confirms it.
 
 ## Story canon (mandatory)
 - Before writing or modifying narrative, character dialogue, chapter events, memory/flashback sequences, or endings, read `docs/story/master-plot.md`.

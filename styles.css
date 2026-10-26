@@ -2183,6 +2183,8 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .vr-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex:none}.vr-header h2{font-size:22px;letter-spacing:0;margin:0;color:#fff}.vr-header button{font-size:13px;min-height:36px}
 .vr-progress{display:flex;gap:10px;justify-content:space-between;font-size:12px;flex:none}.vr-ng-text{color:#ffb1b9}.vr-change-text{color:#f3d18c}.vr-panel progress{width:100%;height:5px;accent-color:#7bd9ac;flex:none}
 .vr-context{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:12px;flex:none}.vr-context button{font-size:12px;min-height:32px;padding:5px 8px}
+.vr-context{flex-wrap:wrap}.vr-context-actions{display:flex;gap:5px;margin-left:auto}.vr-context-actions [aria-pressed=true]{background:#4c477f;border-color:#c0b4ff}
+.vr-repair-comment{display:block;flex:none;font-size:11px;line-height:1.4;color:#514676;overflow-wrap:anywhere}
 .vr-card{flex:1;min-height:0;background:#f8f5ed;color:#202536;border-left:5px solid #9da9ba;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
 .vr-speaker-manager{border-color:#4e92c0}.vr-speaker-cat{border-color:#63a66c}.vr-speaker-hostess{border-color:#d66c94}
 .vr-card-meta{display:flex;gap:8px;justify-content:space-between;align-items:start;font-size:11px;flex:none}.vr-card-meta>span{flex:1;overflow-wrap:anywhere}.vr-state{border-radius:5px;padding:3px 5px;white-space:nowrap;background:#e3e4eb;color:#4a5060;font-size:10px}.vr-state-ok{background:#d3efdc;color:#235c38}.vr-state-ng{background:#ffdadf;color:#902a3b}.vr-state-changed{background:#ffebbb;color:#735416}

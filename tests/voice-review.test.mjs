@@ -133,3 +133,33 @@ test('a saved unplayed filter still includes newly added wording after a release
  voiceReviewSyncCatalog(state,[old]);state.filters.status='todo';voiceReviewSyncCatalog(state,[old,added]);
  assert.deepEqual(voiceReviewFilter([old,added],state).map(r=>r.id),[old.id,added.id]);
 });
+
+test('opening review hides accepted audio without losing decisions and updated OK audio returns',async()=>{
+ const {voiceReviewOpenPending}=await import('../src/voice-review-store.js');
+ const state=voiceReviewEmpty(),a=variant('承認済み'),b=variant('修正後承認済み'),c=variant('要確認');b.repaired=true;
+ voiceReviewMark(state,a,{status:'ok'});voiceReviewMark(state,b,{status:'ok'});
+ state.filters.status='all';voiceReviewOpenPending(state);
+ assert.equal(state.filters.sort,'status');assert.deepEqual(voiceReviewFilter([a,b,c],state).map(r=>r.id),[c.id]);
+ const newer={...a,version:'v2'};
+ assert.ok(voiceReviewFilter([newer,b,c],state).some(r=>r.id===a.id));
+ const storage=memory();storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));const restored=voiceReviewLoad(storage).state;voiceReviewOpenPending(restored);
+ assert.equal(restored.records[a.id].status,'ok');assert.equal(voiceReviewFilter([a,b,c],restored).length,1);
+ restored.filters.status='all';assert.equal(voiceReviewFilter([a,b,c],restored).length,3);
+});
+
+test('repair recheck excludes accepted and re-reported current audio, and keeps old notes on updates',()=>{
+ const state=voiceReviewEmpty(),a={...variant('修正した音声'),repaired:true,repairComment:'語尾を調整。'},b=variant('元のまま');
+ state.filters.status='recheck';assert.deepEqual(voiceReviewFilter([a,b],state).map(r=>r.id),[a.id]);
+ voiceReviewMark(state,a,{status:'ng',issues:['timing'],note:'旧版の語尾'});
+ assert.equal(voiceReviewFilter([a,b],state).length,0);
+ const newer={...a,version:'v2'};assert.equal(voiceReviewFilter([newer,b],state).length,1);
+ voiceReviewMark(state,newer,{listenedVersion:'v2',status:'todo'});assert.equal(voiceReviewFilter([newer,b],state).length,1);
+ voiceReviewMark(state,newer,{status:'ok',issues:[],note:''});assert.equal(voiceReviewFilter([newer,b],state).length,0);
+ assert.equal(state.records[a.id].history[0].note,'旧版の語尾');
+});
+
+test('the five reported repairs include their concrete correction comments in the catalog',()=>{
+ const rows=VOICE_REVIEW_CATALOG.filter(r=>VOICE_MANIFEST[r.id].repairComment);
+ assert.equal(rows.length,5);
+ for(const r of rows){assert.equal(r.repairComment,VOICE_MANIFEST[r.id].repairComment);assert.ok(r.repaired);assert.match(r.repairComment,/再生成/);}
+});

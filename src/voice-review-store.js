@@ -3,6 +3,12 @@ export const VOICE_REVIEW_ISSUES={reading:'読み間違い',quiet:'声が小さ�
 export const VOICE_REVIEW_SPEAKERS={manager:'大家',cat:'モク',hostess:'ルナ'};
 export function voiceReviewEmpty(){return {schema:1,records:{},cursorId:null,filters:{chapter:'all',scene:'all',speaker:'all',status:'all',search:'',sort:'scene'},catalogEntries:null};}
 export function voiceReviewHasRepair(row,record){return !!(row.repaired||row.catalogChanged||record?.repaired||record?.history?.some(h=>h.status==='ng')||!!record&&record.version!==row.version);}
+export function voiceReviewNeedsRecheck(row,record){
+ if(row.removed)return false;
+ const status=voiceReviewStatus(row,record);
+ return status==='changed'||(voiceReviewHasRepair(row,record)&&['todo','heard','new'].includes(status));
+}
+export function voiceReviewOpenPending(state){state.filters={...state.filters,status:'pending',sort:'status'};}
 export function voiceReviewStatus(row,record){
  if(row.removed)return 'removed';
  if(!record)return row.isNew?'new':row.catalogChanged?'changed':'todo';
@@ -69,7 +75,7 @@ export function voiceReviewFilter(catalog,state){
  const f=state.filters;
  const rows=voiceReviewRows(catalog,state).filter(row=>{
   const status=voiceReviewStatus(row,state.records[row.id]);
-  const matches=f.status==='todo'?['todo','new'].includes(status):f.status==='repaired'?voiceReviewHasRepair(row,state.records[row.id]):f.status==='ok'?['ok','fixed'].includes(status):f.status==='all'||status===f.status;
+  const matches=f.status==='pending'?!['ok','fixed','removed'].includes(status):f.status==='recheck'?voiceReviewNeedsRecheck(row,state.records[row.id]):f.status==='todo'?['todo','new'].includes(status):f.status==='repaired'?voiceReviewHasRepair(row,state.records[row.id]):f.status==='ok'?['ok','fixed'].includes(status):f.status==='all'||status===f.status;
   return (!row.removed||f.status==='removed')&&(f.chapter==='all'||String(row.chapter)===f.chapter)&&(f.scene==='all'||row.scene===f.scene)&&(f.speaker==='all'||row.line.speaker===f.speaker)&&matches&&(!f.search||row.line.text.includes(f.search));
  });
  const priority={new:0,changed:1,ng:2,todo:3,heard:4,fixed:5,ok:6,removed:7};

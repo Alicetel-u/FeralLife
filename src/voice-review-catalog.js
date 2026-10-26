@@ -3,6 +3,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"モクですニャ。よろしくニャ。\",\"moku\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -18,6 +19,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"うわっくっせぇ！！煙だらけじゃねーか！\",\"retort\",false]",
     "repaired": true,
+    "repairComment": "語尾切れ対策で再生成。速度と区切りを調整し、末尾に余白を追加。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -214,6 +216,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"……何があったんだよ、このアパート。\\nまずは、たった一人の住人に会ってみるか。\",\"inner\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -246,6 +249,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"大家、やっぱり頼りになるニャ。\",\"moku\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -294,6 +298,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"大家ー！ ちょっと知恵を貸すニャ！\",\"moku-surprised\",false]",
     "repaired": true,
+    "repairComment": "語尾切れ対策で再生成。呼びかけの間と速度を調整し、末尾に余白を追加。",
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -358,6 +363,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。\",\"moku\",false]",
     "repaired": true,
+    "repairComment": "末尾の異音対策で再生成。音量を整え、語尾の後に余白を追加。",
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -486,6 +492,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"大家、いい知らせニャ。\",\"moku-happy\",false]",
     "repaired": true,
+    "repairComment": "末尾の異音対策で再生成。笑い声の指定を外し、明瞭な会話に調整。",
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -566,6 +573,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"立ってた場所だけじゃねぇか！\",\"normal\",false]",
     "repaired": true,
+    "repairComment": "コミカルな呆れの演技で再生成。言葉の区切りと速度を調整。",
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -1096,6 +1104,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"これで灰皿スッキリニャ！\",\"moku-happy\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -1865,6 +1874,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"灰皿を溺れさせるニャ！？\",\"moku-surprised\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -1925,6 +1935,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"最初からやれよ！\",\"normal\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2060,6 +2071,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"とりあえず、ゴミ袋にまとめて捨てとけ。\",\"normal\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2075,6 +2087,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"ゴミ袋でいいのかニャ？\",\"moku\",false]",
     "repaired": true,
+    "repairComment": "録音を復元。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2090,6 +2103,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"ああ。いつまでも灰皿いっぱいにしておくわけにもいかねえだろ。\",\"normal\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2105,6 +2119,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"わかったニャ。大家がそう言うならそうするニャ。\",\"moku\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2120,6 +2135,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"……なんだよ、妙に素直だな。\",\"normal\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2135,6 +2151,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"だって大家だろ？ 信用してるニャ。\",\"moku-happy\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2150,6 +2167,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"そういうときだけ都合よく信用するなよ。\",\"normal\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2165,6 +2183,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"にゃはは。じゃ、ありがとニャ！\",\"moku-happy\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2260,6 +2279,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"煙が……前が見えないニャ……！\",\"tragedy-fear\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2276,6 +2296,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"待ってろ！！ 今そっちに——！\",\"tragedy-panic\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2324,6 +2345,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"おい……返事しろよ……！\",\"tragedy-grief\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -4277,6 +4299,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"変な大家ニャ。アパートは生き物じゃないニャ。\",\"moku\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 1,
     "scene": "1:ending",
     "sceneLabel": "エンディング",
@@ -4397,6 +4420,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"更年期かニャ？\",\"moku\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ending",
     "sceneLabel": "エンディング",
@@ -4474,6 +4498,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"笑ってねぇよ。\",\"normal\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ending",
     "sceneLabel": "エンディング",
@@ -4579,6 +4604,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"……入居申込書？\",\"normal\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ending",
     "sceneLabel": "エンディング",
@@ -4911,6 +4937,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"大家、何ぼーっとしてるニャ？\",\"moku-surprised\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:ending",
     "sceneLabel": "エンディング",
@@ -5069,6 +5096,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"……しつこい……。\",\"luna-film-tense\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -5547,6 +5575,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"ううん！ なんでもない♡\",\"luna-happy\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -6652,6 +6681,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"ふんっ！ 二人ともグルだったのかニャ！ もう信用しないニャ！\",\"new-ally-protest\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:observation1",
     "sceneLabel": "観察1｜新入りの味方",
@@ -6689,6 +6719,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"あははっ。モクちゃん、面白いね。\",\"new-ally-laugh\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:observation1",
     "sceneLabel": "観察1｜新入りの味方",
@@ -6871,6 +6902,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"……もう、お店は辞めたから。\",\"luna-serious\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -7289,6 +7321,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"頼む……目を開けてくれ……！\",\"tragedy-grief\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -7467,6 +7500,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"……ずるいなぁ。\",\"luna-flirt\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -8363,6 +8397,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"さっき……『俺の彼女』って言ってくれたよね♡\",\"luna-flirt\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -8525,6 +8560,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"……えっ？\",\"luna-surprised\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -8798,6 +8834,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"……大家さん？\",\"luna-surprised\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -9648,6 +9685,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"えへへ……でも、大家さん、ちょっとカッコよかったよ♡\",\"luna-flirt\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:duel-intro",
     "sceneLabel": "トラブル2｜バトル前後の会話",
@@ -9733,6 +9771,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"大家さん、今日は……助かった。\",\"luna-serious\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:duel-intro",
     "sceneLabel": "トラブル2｜バトル前後の会話",
@@ -9767,6 +9806,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"えー、お説教まで付いてるの？\",\"luna-happy\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:duel-intro",
     "sceneLabel": "トラブル2｜バトル前後の会話",
@@ -9920,6 +9960,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"……ありがと。大家さん。\",\"luna-normal\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:duel-intro",
     "sceneLabel": "トラブル2｜バトル前後の会話",
@@ -10363,6 +10404,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"あたしの未来、そんなふうに考えてくれるんだ。……大家さんの隣も、空けといてね♡\",\"duel-luna\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10558,6 +10600,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"モク流奥義・煙ノ肉球乱舞ニャ！！\",\"duel-moku-attack\",false]",
     "repaired": true,
+    "repairComment": "音量のピークを抑制。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10701,6 +10744,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"好みの話が、いつの間にか婚姻届に……。\",\"duel-luna\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -11122,6 +11166,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"忘れ物ひとつで、本人まで回収しに来るなニャ。\",\"duel-moku\",false]",
     "repaired": true,
+    "repairComment": "音声を再生成し、音量を調整。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -11256,6 +11301,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"……生きてる……。\",\"act2-manager-serious\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:rewind",
     "sceneLabel": "巻き戻り後の会話",
@@ -11321,6 +11367,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"大家さん！？\",\"luna-surprised\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:rewind",
     "sceneLabel": "巻き戻り後の会話",
@@ -11337,6 +11384,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"……夢……だったのか……？\",\"inner\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:rewind",
     "sceneLabel": "巻き戻り後の会話",
@@ -11488,6 +11536,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"大家さん？ 何かあった？\",\"luna-surprised\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:rewind",
     "sceneLabel": "巻き戻り後の会話",
@@ -11603,6 +11652,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"ふーん。言い訳はできるんだ？\",\"luna-quiet\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:bad",
     "sceneLabel": "バトル後のBAD END",
@@ -11807,6 +11857,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"……大家さん、すごい。あたしのために、あんなに必死になってくれるなんて……♡\",\"luna-flirt\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:bad",
     "sceneLabel": "バトル後のBAD END",
@@ -11875,6 +11926,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"ねえ大家さん。これからも、ずーっと守ってくれるよね？♡\",\"luna-flirt\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:bad",
     "sceneLabel": "バトル後のBAD END",
@@ -12939,6 +12991,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"あの人、もう来ないといいな。\",\"luna-normal\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:ambient",
     "sceneLabel": "日常の独り言",
@@ -12984,6 +13037,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"大家さんにも、ちゃんと相談しよう。\",\"luna-normal\",false]",
     "repaired": true,
+    "repairComment": "前後の余分な無音を調整。",
     "chapter": 2,
     "scene": "2:ambient",
     "sceneLabel": "日常の独り言",
