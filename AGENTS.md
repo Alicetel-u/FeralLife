@@ -1,5 +1,10 @@
 # Development guidance for Codex
 
+## Voice delivery (mandatory)
+- All current and future characters must use clear, projected, expressive speech. Normal conversation should sound lively; never default to mumbling, whispering, ASMR, or breathy low-volume delivery, including inner monologues, flirtation, and sad scenes.
+- Preserve scene-appropriate emotion and character identity through acting, without sacrificing intelligibility. Do not make tragic scenes cheerful.
+- Apply this rule to new voice profiles and per-line repair overrides. Existing recordings require explicit scoped regeneration; changing settings alone does not update their audio.
+
 ## Story canon (mandatory)
 - Before writing or modifying narrative, character dialogue, chapter events, memory/flashback sequences, or endings, read `docs/story/master-plot.md`.
 - Treat that document as the **internal story bible**. Its **確定設定** are canon. Its **未確定** and **有力な構想** are not canon; do not silently turn them into facts.

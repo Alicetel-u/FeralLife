@@ -147,13 +147,13 @@ test('lively landlord keeps inner voice separate, uses audition settings and pre
   if(r.performance!=='inner')assert.equal(r.request.voice_settings.speed,1.05);
   else {
    assert.equal(r.request.voice_settings.speed,0.95);
-   assert.ok(r.request.text.startsWith('[softly] [whispers] [thoughtful] '));
+   assert.ok(r.request.text.startsWith('[thoughtful] [conversational] '));
   }
  }
  const {VOICE_MANIFEST}=await import('../src/voice-manifest.js');
  const repairs=JSON.parse(await readFile(new URL('../config/voice-repairs.json',import.meta.url))).lines;
  const unchanged=r=>!repairs.some(f=>f.speaker===r.speaker&&f.text===r.text);
- for(const r of plan.filter(r=>r.speaker==='cat'&&unchanged(r)&&!r.source.includes('attempt-1/ash/trash/reply')))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
+ for(const r of plan.filter(r=>r.speaker==='cat'&&r.performance!=='moku'&&unchanged(r)&&!r.source.includes('attempt-1/ash/trash/reply')))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
  for(const r of plan.filter(r=>r.speaker==='manager'&&r.performance!=='inner'&&unchanged(r)&&!r.source.includes('attempt-1/ash/trash/reply')))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
 });
 
@@ -337,4 +337,15 @@ test('Luna observation voice extraction preserves all authored performances with
  assert.equal(rows.length,68);
  assert.deepEqual(rows.map(r=>r.line.text),ACT_TWO_OBSERVATION_BEATS.flatMap(b=>b.lines.filter(l=>!l.silent).map(l=>l.text)));
  assert.ok(rows.every(r=>r.source.startsWith('act2/observation/luna-')));
+});
+
+test('all voice profiles and future repair overrides enforce clear delivery',async()=>{
+ const config=JSON.parse(await readFile(new URL('../config/voice-performance.json',import.meta.url)));
+ const ids=JSON.parse(await readFile(new URL('../config/voice-ids.json',import.meta.url)));
+ const rows=extractVoiceScript('intro');
+ for(const profile of Object.values(config.profiles))assert.doesNotMatch(profile.tags.join(' '),/\[(softly|whispers?|whispering|mumbling)\]/i);
+ const row=rows[0];
+ const future=structuredClone(config);future.profiles[row.performance].tags=['[whispers]'];
+ assert.throws(()=>planVoices([row],ids,future),/clear and projected/);
+ assert.throws(()=>planVoices([row],ids,config,[],[{speaker:row.speaker,text:row.line.text,tags:['[softly]']}]),/clear and projected/);
 });

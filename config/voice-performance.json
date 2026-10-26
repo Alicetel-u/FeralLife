@@ -17,11 +17,10 @@
       }
     },
     "inner": {
-      "direction": "ASMR寄りの静かな心の声。少し息を混ぜ、ゆっくり内省的に囁く。声を張らない",
+      "direction": "内省する心の声。言葉を明瞭に、声を前に出す。落ち着いた感情と自然な抑揚を保つ",
       "tags": [
-        "[softly]",
-        "[whispers]",
-        "[thoughtful]"
+        "[thoughtful]",
+        "[conversational]"
       ],
       "settings": {
         "stability": 0.5,
@@ -42,9 +41,10 @@
       }
     },
     "moku": {
-      "direction": "気だるくのんびり。説教しない。ニャを自然に",
+      "direction": "モクらしいのんびりした軽口。声は明るく張り、ニャまで明瞭に発音する",
       "tags": [
-        "[relaxed]"
+        "[animated]",
+        "[conversational]"
       ],
       "settings": {
         "stability": 0.5,
@@ -182,10 +182,10 @@
       }
     },
     "luna-flirt": {
-      "direction": "距離が近い、甘くからかう誘惑。囁きすぎない",
+      "direction": "甘くからかう誘惑。明るくよく通る声で、語尾まで明瞭に",
       "tags": [
         "[playful]",
-        "[softly]"
+        "[conversational]"
       ],
       "settings": {
         "stability": 0,
@@ -197,7 +197,7 @@
       "direction": "不安や悲しみを自然に。笑わず、感情を込める",
       "tags": [
         "[sad]",
-        "[softly]"
+        "[conversational]"
       ],
       "settings": {
         "stability": 0.5,
@@ -239,10 +239,10 @@
       }
     },
     "luna-quiet": {
-      "direction": "追跡から逃れた不安と疲労。小さな声で感情を残す",
+      "direction": "不安と疲労を感情で表現する。声は前に出し、言葉を明瞭に",
       "tags": [
-        "[softly]",
-        "[tired]"
+        "[tired]",
+        "[conversational]"
       ],
       "settings": {
         "stability": 0.5,
@@ -349,7 +349,7 @@
       "direction": "深刻な悲しみや不安。軽口にしない",
       "tags": [
         "[sad]",
-        "[softly]"
+        "[conversational]"
       ],
       "settings": {
         "stability": 0.5,

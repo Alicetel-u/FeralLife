@@ -251,6 +251,71 @@
         "[animated]",
         "[lighthearted]"
       ]
+    },
+    {
+      "speaker": "manager",
+      "text": "うわっくっせぇ！！煙だらけじゃねーか！",
+      "spokenText": "うわっ、くっせぇ！ 煙だらけじゃねーか！",
+      "tags": [
+        "[excited]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 1
+      }
+    },
+    {
+      "speaker": "cat",
+      "text": "大家ー！ ちょっと知恵を貸すニャ！",
+      "spokenText": "おおやー！ ちょっと、知恵を貸すニャ！",
+      "tags": [
+        "[surprised]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 0.95
+      }
+    },
+    {
+      "speaker": "cat",
+      "text": "火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。",
+      "spokenText": "火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。",
+      "tags": [
+        "[relaxed]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 0.96
+      }
+    },
+    {
+      "speaker": "cat",
+      "text": "大家、いい知らせニャ。",
+      "spokenText": "おおや、いい知らせニャ。",
+      "tags": [
+        "[conversational]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 0.98
+      }
+    },
+    {
+      "speaker": "manager",
+      "text": "立ってた場所だけじゃねぇか！",
+      "spokenText": "立ってた場所だけ、じゃねぇか！",
+      "tags": [
+        "[exasperated]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "speed": 1
+      }
     }
   ]
 }

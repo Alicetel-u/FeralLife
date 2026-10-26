@@ -46,13 +46,18 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"うわっくっせぇ！！煙だらけじゃねーか！\",\"retort\",false]": {
-    "file": "assets/voices/3b2440161b32c00eeff53f9f554394dc8153aaa30cfd9dbe0fc99dd1498135b8.mp3",
-    "hash": "3b2440161b32c00eeff53f9f554394dc8153aaa30cfd9dbe0fc99dd1498135b8",
+    "file": "assets/voices/23b65c33bf28a6a3792d21c5c8216852bafa5a4aa7b35d0125c2076e5f903661.repair.mp3",
+    "hash": "23b65c33bf28a6a3792d21c5c8216852bafa5a4aa7b35d0125c2076e5f903661",
     "source": "act1/opening:2",
     "speaker": "manager",
     "text": "うわっくっせぇ！！煙だらけじゃねーか！",
     "performance": "retort",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3,
+      "tailPaddingSeconds": 0.2
+    }
   },
   "[\"cat\",\"大丈夫ニャ。換気扇は昨日から回してるニャ。\",\"moku-happy\",false]": {
     "file": "assets/voices/37fa0c69b1b2e6d13b153b7c9e5efeec0e2d10f5f30cf01303c8299f607e282a.mp3",
@@ -5766,14 +5771,18 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "duel-moku"
   },
   "[\"cat\",\"大家、いい知らせニャ。\",\"moku-happy\",false]": {
-    "file": "assets/voices/f4c126ac1cf9e3c3d276d0e7cce31850338d12891afc8d03a39a683801f78879.mp3",
-    "hash": "f4c126ac1cf9e3c3d276d0e7cce31850338d12891afc8d03a39a683801f78879",
+    "file": "assets/voices/8cc0adc9716c33b6ffbdda845f2ade002d800c90612950b17102e1f8fefa3c37.repair.mp3",
+    "hash": "8cc0adc9716c33b6ffbdda845f2ade002d800c90612950b17102e1f8fefa3c37",
     "source": "act1/observation/outside:0",
     "speaker": "cat",
     "text": "大家、いい知らせニャ。",
     "performance": "moku-happy",
     "model": "eleven_v3",
-    "deliveryProfile": "duel-moku"
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3,
+      "tailPaddingSeconds": 0.2
+    }
   },
   "[\"manager\",\"お、部屋を片づけたのか？\",\"normal\",false]": {
     "file": "assets/voices/e54b400800aca548adc3f144c1d7fd08e2b07401b89c5ec2c8b8a502e2d785a4.mp3",
@@ -5816,14 +5825,18 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "duel-moku"
   },
   "[\"manager\",\"立ってた場所だけじゃねぇか！\",\"normal\",false]": {
-    "file": "assets/voices/6f5f96e935f76892d851d27443e8ed5a75e75690fa4fefbc31524adda4126aa4.mp3",
-    "hash": "6f5f96e935f76892d851d27443e8ed5a75e75690fa4fefbc31524adda4126aa4",
+    "file": "assets/voices/9c4299b25904480aa17290de1bf7d8f9aeb996483c410a3af3401c02d648e5d2.repair.mp3",
+    "hash": "9c4299b25904480aa17290de1bf7d8f9aeb996483c410a3af3401c02d648e5d2",
     "source": "act1/observation/outside:5",
     "speaker": "manager",
     "text": "立ってた場所だけじゃねぇか！",
     "performance": "normal",
     "model": "eleven_v3",
-    "deliveryProfile": "duel-manager"
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3,
+      "tailPaddingSeconds": 0.2
+    }
   },
   "[\"cat\",\"明日はもう片足ぶん頑張るニャ。\",\"moku-happy\",false]": {
     "file": "assets/voices/a3420a4b81d7f084078e4d96cdb13dc58fc2e0ec9c82b5e72f5abec7126acbf1.mp3",
@@ -5866,14 +5879,18 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "duel-moku"
   },
   "[\"cat\",\"大家ー！ ちょっと知恵を貸すニャ！\",\"moku-surprised\",false]": {
-    "file": "assets/voices/15e6ee70f7848011f0853eb019942987c6022b9e85eb064237a2f7f4e999fca7.mp3",
-    "hash": "15e6ee70f7848011f0853eb019942987c6022b9e85eb064237a2f7f4e999fca7",
+    "file": "assets/voices/eb597e26138c4048e9dae3d5fa9d42339954fdd7e591dd319c1122de0bfeca62.repair.mp3",
+    "hash": "eb597e26138c4048e9dae3d5fa9d42339954fdd7e591dd319c1122de0bfeca62",
     "source": "act1/observation/ash-sign:2",
     "speaker": "cat",
     "text": "大家ー！ ちょっと知恵を貸すニャ！",
     "performance": "moku-surprised",
     "model": "eleven_v3",
-    "deliveryProfile": "duel-moku"
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3,
+      "tailPaddingSeconds": 0.2
+    }
   },
   "[\"cat\",\"ふぅ……これで安心ニャ。\",\"moku\",false]": {
     "file": "assets/voices/0a359cf8c5cba2b2fa35b9f12d0b61011d2a18c9a3bf8712f3fb460e2254f39d.mp3",
@@ -7684,13 +7701,18 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/fac36812fcff6a0e73bbdae1e9c364e9af087d9279494d4d70685ad3e08a4e86.repair.pace.mp3"
   },
   "[\"cat\",\"火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。\",\"moku\",false]": {
-    "file": "assets/voices/c5b74779364e1014798eb1c163b79fe0c1fc43046b49ea559843926041e08a75.mp3",
-    "hash": "c5b74779364e1014798eb1c163b79fe0c1fc43046b49ea559843926041e08a75",
+    "file": "assets/voices/fb8188228e63198cfea59f127ddf1353b9c2ff0ecfa8c7f3a1827a06b4de9649.repair.mp3",
+    "hash": "fb8188228e63198cfea59f127ddf1353b9c2ff0ecfa8c7f3a1827a06b4de9649",
     "source": "act1/observation/blanket:0",
     "speaker": "cat",
     "text": "火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。",
     "performance": "moku",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -3,
+      "tailPaddingSeconds": 0.2
+    }
   },
   "[\"cat\",\"テレビもおしまいニャ。おやすみニャ……。\",\"moku\",false]": {
     "file": "assets/voices/7499d9eeec6f1e3f44befd7ec5bca8e75c78e04cdfbe0bf1f6140a1f84cdc056.mp3",

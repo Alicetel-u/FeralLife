@@ -17,7 +17,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"うわっくっせぇ！！煙だらけじゃねーか！\",\"retort\",false]",
-    "repaired": false,
+    "repaired": true,
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -28,7 +28,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "うわっくっせぇ！！煙だらけじゃねーか！"
     },
-    "version": "759df5da05e79dca08ab"
+    "version": "042427cf2282546ff8e5"
   },
   {
     "id": "[\"cat\",\"大丈夫ニャ。換気扇は昨日から回してるニャ。\",\"moku-happy\",false]",
@@ -293,7 +293,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家ー！ ちょっと知恵を貸すニャ！\",\"moku-surprised\",false]",
-    "repaired": false,
+    "repaired": true,
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -305,7 +305,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "surprised",
       "text": "大家ー！ ちょっと知恵を貸すニャ！"
     },
-    "version": "0796610ac6b72466eebc"
+    "version": "225ec887d6b11c5a3a09"
   },
   {
     "id": "[\"cat\",\"……腹減ったニャ。\",\"moku\",false]",
@@ -357,7 +357,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。\",\"moku\",false]",
-    "repaired": false,
+    "repaired": true,
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -369,7 +369,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "tired",
       "text": "火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。"
     },
-    "version": "943b8ce92f2f8f1eeb47"
+    "version": "1bf416c9efb904fac921"
   },
   {
     "id": "[\"cat\",\"テレビもおしまいニャ。おやすみニャ……。\",\"moku\",false]",
@@ -485,7 +485,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"cat\",\"大家、いい知らせニャ。\",\"moku-happy\",false]",
-    "repaired": false,
+    "repaired": true,
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -497,7 +497,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "happy",
       "text": "大家、いい知らせニャ。"
     },
-    "version": "d25ce38b95670f08efc8"
+    "version": "6648c175f9f78c9f9993"
   },
   {
     "id": "[\"manager\",\"お、部屋を片づけたのか？\",\"normal\",false]",
@@ -565,7 +565,7 @@ export const VOICE_REVIEW_CATALOG = [
   },
   {
     "id": "[\"manager\",\"立ってた場所だけじゃねぇか！\",\"normal\",false]",
-    "repaired": false,
+    "repaired": true,
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -577,7 +577,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "angry",
       "text": "立ってた場所だけじゃねぇか！"
     },
-    "version": "b0a4d704811f53ac7d8f"
+    "version": "51fc5dd898d0248c844d"
   },
   {
     "id": "[\"cat\",\"明日はもう片足ぶん頑張るニャ。\",\"moku-happy\",false]",

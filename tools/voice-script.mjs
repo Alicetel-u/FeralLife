@@ -182,6 +182,7 @@ export function planVoices(rows,ids,config,pronunciations=[],repairs=[]){
     const repair=repairs.find(r=>r.speaker===row.speaker&&r.text===row.line.text);
     const spokenText=repair?.spokenText??[...filmReadings,...duelReadings,...pronunciations].sort((a,b)=>b.term.length-a.term.length).reduce((text,rule)=>text.replaceAll(rule.term,rule.reading),row.line.text);
     const request={text:[...(repair?.tags||profile.tags),spokenText].join(' '),model_id:config.model,voice_settings:{...profile.settings,...repair?.settings}};
+    if(/\[(?:softly|whispers?|whispering|mumbling)\]/i.test(request.text))throw Error('Voice delivery must be clear and projected; whisper/mumble tags are disabled');
     const voiceId=ids[row.speaker]||null;
     const hash=digest({voiceId,request,performance:row.performance,format:config.outputFormat});
     return {...row,text:row.line.text,voiceId,request,hash,file:'assets/voices/'+hash+'.mp3',characters:Array.from(row.line.text).length,billableCharacters:Array.from(request.text).length,direction:profile.direction};
