@@ -159,9 +159,9 @@ test('repair recheck excludes accepted and re-reported current audio, and keeps 
  assert.equal(state.records[a.id].history[0].note,'旧版の語尾');
 });
 
-test('the five reported repairs include their concrete correction comments in the catalog',()=>{
+test('regenerated repairs include their concrete correction comments in the catalog',()=>{
  const rows=VOICE_REVIEW_CATALOG.filter(r=>VOICE_MANIFEST[r.id].repairComment&&!VOICE_MANIFEST[r.id].reviewRevision);
- assert.equal(rows.length,5);
+ assert.ok(rows.length>=5);
  for(const r of rows){assert.equal(r.repairComment,VOICE_MANIFEST[r.id].repairComment);assert.ok(r.repaired);assert.match(r.repairComment,/再生成/);}
 });
 
@@ -199,7 +199,7 @@ test('initial checking and repaired checking are disjoint across reopen and save
 test('published repairs appear without old local reports and stay out of initial checking',async()=>{
  const {voiceReviewOpenPending}=await import('../src/voice-review-store.js');
  const state=voiceReviewEmpty(),repairs=VOICE_REVIEW_CATALOG.filter(r=>r.repairReview);
- assert.equal(repairs.length,7);state.filters.status='recheck';
+ assert.deepEqual(new Set(repairs.map(r=>r.id)),new Set(VOICE_REVIEW_CATALOG.filter(r=>VOICE_MANIFEST[r.id].repairReview).map(r=>r.id)));state.filters.status='recheck';
  assert.deepEqual(voiceReviewFilter(VOICE_REVIEW_CATALOG,state).map(r=>r.id),repairs.map(r=>r.id));
  for(const r of repairs){assert.ok(r.repairComment);assert.equal(voiceReviewStatus(r,null),'changed');}
  voiceReviewOpenPending(state);const initial=new Set(voiceReviewFilter(VOICE_REVIEW_CATALOG,state).map(r=>r.id));

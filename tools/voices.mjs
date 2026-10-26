@@ -53,7 +53,22 @@ const pronunciationOnly=args.includes('--pronunciation-only');
 if(pronunciationOnly&&(sampleMoku||scope!=='intro'))throw Error('Pronunciation repair requires intro scope without sample mode');
 const selectedScript=pronunciationOnly?script.filter(row=>pronunciationIssues.some(issue=>row.line.text.includes(issue.term))):sampleMoku?script.filter(row=>row.speaker==='cat').slice(0,2):script;
 const exactText=args.find(a=>a.startsWith('--text='))?.slice('--text='.length);
-const rows=planVoices(speaker?selectedScript.filter(row=>row.speaker===speaker):selectedScript,ids,config,pronunciationIssues,repairs).filter(row=>!exactText||row.text===exactText);
+const reviewReport=args.find(a=>a.startsWith('--review-report='))?.slice('--review-report='.length);
+let reviewedKeys=null;
+if(reviewReport){
+ if(!repairOnly)throw Error('A review report requires --scope=repairs');
+ const {VOICE_REVIEW_CATALOG}=await import('../src/voice-review-catalog.js');
+ const {voiceReviewParseReport}=await import('../src/voice-review-release.js');
+ const payload=voiceReviewParseReport(await readFile(resolve(root,reviewReport),'utf8'),VOICE_REVIEW_CATALOG);
+ const current=new Map(VOICE_REVIEW_CATALOG.map(row=>[row.id,row]));
+ reviewedKeys=new Set(Object.entries(payload.records).filter(([,record])=>record.status==='ng').map(([key,record])=>{
+  if(!current.has(key)||current.get(key).version!==record.version)throw Error('Review targets obsolete or missing audio; reconcile before generating: '+key);
+  return key;
+ }));
+ if(!reviewedKeys.size)throw Error('No reported audio requires repair');
+}
+const rows=planVoices(speaker?selectedScript.filter(row=>row.speaker===speaker):selectedScript,ids,config,pronunciationIssues,repairs).filter(row=>(!exactText||row.text===exactText)&&(!reviewedKeys||reviewedKeys.has(row.lineKey)));
+if(reviewedKeys&&new Set(rows.map(row=>row.lineKey)).size!==reviewedKeys.size)throw Error('Every reported line needs an exact repair rule and must match the selected filters');
 const pronunciationReview=pronunciationIssues.map(issue=>({...issue,sources:rows.filter(row=>row.text.includes(issue.term)).map(row=>row.source)})).filter(issue=>issue.sources.length);
 await mkdir(join(root,'.local'),{recursive:true});
 const planId=digest(rows.map(r=>({source:r.source,hash:r.hash})));

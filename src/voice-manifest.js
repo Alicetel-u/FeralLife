@@ -49,20 +49,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"うわっくっせぇ！！煙だらけじゃねーか！\",\"retort\",false]": {
-    "file": "assets/voices/23b65c33bf28a6a3792d21c5c8216852bafa5a4aa7b35d0125c2076e5f903661.repair.mp3",
-    "hash": "23b65c33bf28a6a3792d21c5c8216852bafa5a4aa7b35d0125c2076e5f903661",
+    "file": "assets/voices/abe597dd823e0200c0639259e88d174238fc00480c5c6db5266b60b595260140.repair.mp3",
+    "hash": "abe597dd823e0200c0639259e88d174238fc00480c5c6db5266b60b595260140",
     "source": "act1/opening:2",
     "speaker": "manager",
     "text": "うわっくっせぇ！！煙だらけじゃねーか！",
     "performance": "retort",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "「煙」を「けむり」と明示して再生成。明瞭なツッコミを維持し、末尾に余白を追加。",
     "audioMastering": {
       "integratedLUFS": -18,
-      "truePeakDBTP": -3,
-      "tailPaddingSeconds": 0.2
-    },
-    "repairComment": "語尾切れ対策で再生成。速度と区切りを調整し、末尾に余白を追加。",
-    "repairReview": true
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"cat\",\"大丈夫ニャ。換気扇は昨日から回してるニャ。\",\"moku-happy\",false]": {
     "file": "assets/voices/37fa0c69b1b2e6d13b153b7c9e5efeec0e2d10f5f30cf01303c8299f607e282a.mp3",
@@ -1580,13 +1582,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！\",\"normal\",false]": {
-    "file": "assets/voices/24f305628118faf5d8ed6ead1b6c65b97f4fc5e477c5f5b1957e0cdf24339081.mp3",
-    "hash": "24f305628118faf5d8ed6ead1b6c65b97f4fc5e477c5f5b1957e0cdf24339081",
+    "file": "assets/voices/2a4dd68e9b5203d0c28c2847123c0f566d1859f7476ee58ae6b586ed70f9b8af.repair.mp3",
+    "hash": "2a4dd68e9b5203d0c28c2847123c0f566d1859f7476ee58ae6b586ed70f9b8af",
     "source": "act1/ash/freezer:0",
     "speaker": "manager",
     "text": "灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！",
     "performance": "normal",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "「灰皿」「冷凍庫」「冷やせ」の読みをかなで明示して再生成。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"チャーハンより先に冷やせ！ 緊急事態だ！\",\"normal\",false]": {
     "file": "assets/voices/30439d26d78bd09c1ce4d43e2192f1243f6a82bfb5c65fa788c19cd685b72f75.mp3",
@@ -1634,13 +1645,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……確かに。なんで冷凍庫なんて言ったんだ、俺。\",\"inner\",false]": {
-    "file": "assets/voices/3d72446613ae5db0a67dfc7e215923442388a5c5ca2d7c8a88d28f1a71c89b95.mp3",
-    "hash": "3d72446613ae5db0a67dfc7e215923442388a5c5ca2d7c8a88d28f1a71c89b95",
+    "file": "assets/voices/a6d3d942b09e4351463f6dcc02d93ac529e09712716158ddcd030918a78d3a4c.repair.mp3",
+    "hash": "a6d3d942b09e4351463f6dcc02d93ac529e09712716158ddcd030918a78d3a4c",
     "source": "act1/ash/freezer:15",
     "speaker": "manager",
     "text": "……確かに。なんで冷凍庫なんて言ったんだ、俺。",
     "performance": "inner",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "「冷凍庫」を「れいとうこ」と明示して再生成。心の声も聞き取りやすい会話の演技に調整。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"くそっ、もう間に合わねぇ！ モク、逃げるぞ！\",\"normal\",false]": {
     "file": "assets/voices/d1f6c5d6dce3443a8f1799f945f370c523e43eaec3790e4fabe973ba711a3167.mp3",
@@ -5776,20 +5796,22 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "duel-moku"
   },
   "[\"cat\",\"大家、いい知らせニャ。\",\"moku-happy\",false]": {
-    "file": "assets/voices/8cc0adc9716c33b6ffbdda845f2ade002d800c90612950b17102e1f8fefa3c37.repair.mp3",
-    "hash": "8cc0adc9716c33b6ffbdda845f2ade002d800c90612950b17102e1f8fefa3c37",
+    "file": "assets/voices/f23c55a609bdf1dc8c655391cf3f5a04f0ada489d1090fed2bc15f39975941ad.repair.mp3",
+    "hash": "f23c55a609bdf1dc8c655391cf3f5a04f0ada489d1090fed2bc15f39975941ad",
     "source": "act1/observation/outside:0",
     "speaker": "cat",
     "text": "大家、いい知らせニャ。",
     "performance": "moku-happy",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "後半の異音の指摘に合わせて再生成。読みをかなで明示し、前後の短いフェードと末尾余白を追加。",
     "audioMastering": {
       "integratedLUFS": -18,
-      "truePeakDBTP": -3,
-      "tailPaddingSeconds": 0.2
-    },
-    "repairComment": "末尾の異音対策で再生成。笑い声の指定を外し、明瞭な会話に調整。",
-    "repairReview": true
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"お、部屋を片づけたのか？\",\"normal\",false]": {
     "file": "assets/voices/e54b400800aca548adc3f144c1d7fd08e2b07401b89c5ec2c8b8a502e2d785a4.mp3",
@@ -5832,20 +5854,22 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "duel-moku"
   },
   "[\"manager\",\"立ってた場所だけじゃねぇか！\",\"normal\",false]": {
-    "file": "assets/voices/9c4299b25904480aa17290de1bf7d8f9aeb996483c410a3af3401c02d648e5d2.repair.mp3",
-    "hash": "9c4299b25904480aa17290de1bf7d8f9aeb996483c410a3af3401c02d648e5d2",
+    "file": "assets/voices/cc1bbb5df1170e8cc408e57e62e345889141f3b4f792bbb904e5eedbcb8b4ca8.repair.mp3",
+    "hash": "cc1bbb5df1170e8cc408e57e62e345889141f3b4f792bbb904e5eedbcb8b4ca8",
     "source": "act1/observation/outside:5",
     "speaker": "manager",
     "text": "立ってた場所だけじゃねぇか！",
     "performance": "normal",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "「立ってた場所」を「たってた、ばしょ」と明示して再生成。表示台詞は維持。",
     "audioMastering": {
       "integratedLUFS": -18,
-      "truePeakDBTP": -3,
-      "tailPaddingSeconds": 0.2
-    },
-    "repairComment": "コミカルな呆れの演技で再生成。言葉の区切りと速度を調整。",
-    "repairReview": true
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"cat\",\"明日はもう片足ぶん頑張るニャ。\",\"moku-happy\",false]": {
     "file": "assets/voices/a3420a4b81d7f084078e4d96cdb13dc58fc2e0ec9c82b5e72f5abec7126acbf1.mp3",
@@ -5924,24 +5948,40 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "duel-moku"
   },
   "[\"cat\",\"……スマホどこやったかニャ？\",\"moku\",false]": {
-    "file": "assets/voices/e8925142fe3720e7c3671d0b319248b400af8e767169591313ae8ad7823029ef.mp3",
-    "hash": "e8925142fe3720e7c3671d0b319248b400af8e767169591313ae8ad7823029ef",
+    "file": "assets/voices/25eae8fcc6b70b1294871c6517c5ef0ae6dce69d1729917c9c67ff76753ddc1b.repair.mp3",
+    "hash": "25eae8fcc6b70b1294871c6517c5ef0ae6dce69d1729917c9c67ff76753ddc1b",
     "source": "act1/observation/phone-search:0",
     "speaker": "cat",
     "text": "……スマホどこやったかニャ？",
     "performance": "moku",
     "model": "eleven_v3",
-    "deliveryProfile": "duel-moku"
+    "repairReview": true,
+    "repairComment": "音割れの指摘に合わせて再生成。ピークを抑え、録音の前後を短くフェードして末尾に余白を追加。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"cat\",\"……ないニャ。\",\"moku\",false]": {
-    "file": "assets/voices/d9f9eeca8cfefe943a40dc51a24a929c0361e03dfe01a03ba855ea32123972d1.mp3",
-    "hash": "d9f9eeca8cfefe943a40dc51a24a929c0361e03dfe01a03ba855ea32123972d1",
+    "file": "assets/voices/1920a5da40aee5a3765fb90660775aa792e704da66280ed3c94822e391e33be2.repair.mp3",
+    "hash": "1920a5da40aee5a3765fb90660775aa792e704da66280ed3c94822e391e33be2",
     "source": "act1/observation/phone-search:1",
     "speaker": "cat",
     "text": "……ないニャ。",
     "performance": "moku",
     "model": "eleven_v3",
-    "deliveryProfile": "duel-moku"
+    "repairReview": true,
+    "repairComment": "音割れの指摘に合わせて再生成。ピークを抑え、録音の前後を短くフェードして末尾に余白を追加。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"cat\",\"……持ってたニャ。\",\"moku\",false]": {
     "file": "assets/voices/fc1096302639e305404e9eb44e742f942b714eefb5b96fe75bfb8f70801ceddb.mp3",

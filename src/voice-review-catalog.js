@@ -22,7 +22,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "df354aade68c6890",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "語尾切れ対策で再生成。速度と区切りを調整し、末尾に余白を追加。",
+    "repairComment": "「煙」を「けむり」と明示して再生成。明瞭なツッコミを維持し、末尾に余白を追加。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -33,7 +33,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "うわっくっせぇ！！煙だらけじゃねーか！"
     },
-    "version": "042427cf2282546ff8e5"
+    "version": "f9b6c20725fd4de8e6f3"
   },
   {
     "id": "[\"cat\",\"大丈夫ニャ。換気扇は昨日から回してるニャ。\",\"moku-happy\",false]",
@@ -533,7 +533,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "3e356556e8e7a3ce",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "末尾の異音対策で再生成。笑い声の指定を外し、明瞭な会話に調整。",
+    "repairComment": "後半の異音の指摘に合わせて再生成。読みをかなで明示し、前後の短いフェードと末尾余白を追加。",
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -545,7 +545,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "happy",
       "text": "大家、いい知らせニャ。"
     },
-    "version": "6648c175f9f78c9f9993"
+    "version": "ca9e3467dace3c51b244"
   },
   {
     "id": "[\"manager\",\"お、部屋を片づけたのか？\",\"normal\",false]",
@@ -620,7 +620,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "fc55f6bea062e4d5",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "コミカルな呆れの演技で再生成。言葉の区切りと速度を調整。",
+    "repairComment": "「立ってた場所」を「たってた、ばしょ」と明示して再生成。表示台詞は維持。",
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -632,7 +632,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "angry",
       "text": "立ってた場所だけじゃねぇか！"
     },
-    "version": "51fc5dd898d0248c844d"
+    "version": "fd3bdd9e9c162b4b7c8e"
   },
   {
     "id": "[\"cat\",\"明日はもう片足ぶん頑張るニャ。\",\"moku-happy\",false]",
@@ -671,7 +671,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"……スマホどこやったかニャ？\",\"moku\",false]",
     "reviewId": "c86273855c7c9f24",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "音割れの指摘に合わせて再生成。ピークを抑え、録音の前後を短くフェードして末尾に余白を追加。",
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -683,12 +685,14 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "……スマホどこやったかニャ？"
     },
-    "version": "7c9d0520703c1bd90189"
+    "version": "4affcca08003e030d348"
   },
   {
     "id": "[\"cat\",\"……ないニャ。\",\"moku\",false]",
     "reviewId": "50cb1b4159080c82",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "音割れの指摘に合わせて再生成。ピークを抑え、録音の前後を短くフェードして末尾に余白を追加。",
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -700,7 +704,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "……ないニャ。"
     },
-    "version": "12a83a3a39bc61e92cad"
+    "version": "04469e1d2d0f519658f1"
   },
   {
     "id": "[\"cat\",\"……持ってたニャ。\",\"moku\",false]",
@@ -1396,7 +1400,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！\",\"normal\",false]",
     "reviewId": "a0659451c400b6a7",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "「灰皿」「冷凍庫」「冷やせ」の読みをかなで明示して再生成。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -1407,7 +1413,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！"
     },
-    "version": "704688e6eac162684c18"
+    "version": "123b34bc05d2c5685e57"
   },
   {
     "id": "[\"cat\",\"えっ！？ 冷凍チャーハンと一緒でいいニャ？\",\"moku-surprised\",false]",
@@ -1604,7 +1610,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"……確かに。なんで冷凍庫なんて言ったんだ、俺。\",\"inner\",false]",
     "reviewId": "d5392f0ed2ff4551",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "「冷凍庫」を「れいとうこ」と明示して再生成。心の声も聞き取りやすい会話の演技に調整。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -1616,7 +1624,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……確かに。なんで冷凍庫なんて言ったんだ、俺。",
       "innerVoice": true
     },
-    "version": "ef1fa699b902a9444a84"
+    "version": "718dccadf9192ea8f11f"
   },
   {
     "id": "[\"manager\",\"くそっ、もう間に合わねぇ！ モク、逃げるぞ！\",\"normal\",false]",
