@@ -2,13 +2,16 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { dirname, resolve, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {createVoiceReviewSyncHandler} from './tools/voice-review-github-server.mjs';
 
 const root = dirname(fileURLToPath(import.meta.url));
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.mp3': 'audio/mpeg', '.json': 'application/json; charset=utf-8' };
 const port = Number(process.env.PORT || 4173);
-createServer(async (req, res) => {
+const handleVoiceReviewSync=createVoiceReviewSyncHandler();
+export const localServer=createServer(async (req, res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+    if(pathname==='/api/voice-review-sync'){await handleVoiceReviewSync(req,res);return;}
     if (pathname.split('/').some(part => part.startsWith('.')) || !/^\/(?:$|index\.html$|play\.html$|styles\.css$|src\/[^/]+\.js$|assets\/)/.test(pathname)) { res.writeHead(403).end(); return; }
     const path = resolve(root, '.' + (pathname === '/' ? '/index.html' : pathname));
     if (!path.startsWith(root + sep)) { res.writeHead(403).end(); return; }

@@ -6,6 +6,7 @@
 - Apply this rule to new voice profiles and per-line repair overrides. Existing recordings require explicit scoped regeneration; changing settings alone does not update their audio.
 - When replacing a reported recording, set `repairReview: true` and add a concise, factual `repairComment` to its voice manifest entry. This routes the repaired audio to rechecking even without the old local report; acceptance is tied to the current audio fingerprint. Do not mark historic mastering as a new repair or claim listening approval before the user confirms it.
 - The audio review tool must open on initial unreviewed audio only, excluding accepted, reported, waiting-for-repair and repaired-awaiting-recheck recordings. Keep repaired-awaiting-recheck audio in the separate one-click repair review with correction comments. Preserve saved decisions and keep both queues separate after reopening.
+- Voice review GitHub sync must use the dedicated private `Alicetel-u/FeralLife-voice-review` repository. Merge per-line decisions instead of replacing a PC's state wholesale. Never put review data or authentication credentials into public game assets; browser-entered tokens must remain in memory only. See `docs/voice-review-sync.md`.
 
 ## Story canon (mandatory)
 - Before writing or modifying narrative, character dialogue, chapter events, memory/flashback sequences, or endings, read `docs/story/master-plot.md`.
