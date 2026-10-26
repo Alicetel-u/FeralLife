@@ -349,3 +349,16 @@ test('all voice profiles and future repair overrides enforce clear delivery',asy
  assert.throws(()=>planVoices([row],ids,future),/clear and projected/);
  assert.throws(()=>planVoices([row],ids,config,[],[{speaker:row.speaker,text:row.line.text,tags:['[softly]']}]),/clear and projected/);
 });
+
+test('voice timing follows actual media including trailing silence, finishes at full duration and resets between clips',()=>{
+ const a={speaker:'cat',text:'末尾まで確認ニャ。'},b={speaker:'manager',text:'次の録音。'},sounds=[];
+ const player=createVoicePlayer({storage:null,manifest:{[voiceLineKey(a)]:{file:'a.mp3'},[voiceLineKey(b)]:{file:'b.mp3',fastFile:'b.pace.mp3'}},makeAudio:()=>{const audio={duration:NaN,currentTime:0,play:()=>Promise.resolve(),pause(){},removeAttribute(){},load(){}};sounds.push(audio);return audio;}});
+ try{
+  assert.deepEqual(player.timing,{currentTime:0,duration:0});player.play(a,'a');assert.deepEqual(player.timing,{currentTime:0,duration:0});
+  sounds[0].duration=5.6;sounds[0].currentTime=4.9;assert.deepEqual(player.timing,{currentTime:4.9,duration:5.6});
+  sounds[0].onended();assert.deepEqual(player.timing,{currentTime:5.6,duration:5.6});assert.equal(player.outcome,'ended');
+  player.play(b,'b');assert.equal(sounds[1].src,'b.pace.mp3');assert.deepEqual(player.timing,{currentTime:0,duration:0});
+  sounds[1].duration=Infinity;assert.deepEqual(player.timing,{currentTime:0,duration:0});sounds[1].duration=3;sounds[1].currentTime=4;assert.equal(player.timing.currentTime,3);
+  player.stop();assert.deepEqual(player.timing,{currentTime:0,duration:0});
+ }finally{player.stop();}
+});

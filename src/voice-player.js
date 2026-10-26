@@ -92,6 +92,11 @@ export function createVoicePlayer({manifest=VOICE_MANIFEST,makeAudio=()=>new Aud
     }catch{playbackOutcome='error';active=false;}
   };
   return {
+    get timing(){
+      const duration=Number.isFinite(audio?.duration)&&audio.duration>0?audio.duration:0;
+      const position=Number.isFinite(audio?.currentTime)?Math.max(0,audio.currentTime):0;
+      return {currentTime:playbackOutcome==='ended'&&duration?duration:duration?Math.min(position,duration):0,duration};
+    },
     play,prepare,completed:line=>prefs.enabled&&current?.line===line&&playbackOutcome==='ended',stop:()=>{if(!audio&&!prepared&&!current&&!active&&!blocked)return;stop();clearPrepared();current=null;},get busy(){return prefs.enabled&&active;},get outcome(){return playbackOutcome;},get enabled(){return prefs.enabled;},get volume(){return prefs.volume;},
     setSuspended(value){
       const next=Boolean(value);if(next===suspended)return;suspended=next;

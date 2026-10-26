@@ -85,3 +85,19 @@ test('OK advances and plays immediately without continuous mode, and report shar
   const parsed=voiceReviewParseReport(await shared.files[0].text(),[first,second]);assert.equal(parsed.records[first.id].status,'ok');assert.equal(parsed.records[second.id].status,'ok');
  }finally{dispose?.();globalThis.document=oldDocument;if(oldNavigator)Object.defineProperty(globalThis,'navigator',oldNavigator);else delete globalThis.navigator;}
 });
+
+test('review timeline updates in place, shows the file end, and resets when changing recordings',async t=>{
+ let tick;const timer=Symbol('review-timer');t.mock.method(globalThis,'setInterval',callback=>{tick=callback;return timer;});t.mock.method(globalThis,'clearInterval',()=>{});
+ const first=row('バーの検証'),second=row('次の録音'),listeners=new Map(),bar={value:0,setAttribute(name,value){this[name]=value;}},time={textContent:''},label={textContent:''};
+ const root={innerHTML:'',addEventListener:(n,f)=>listeners.set(n,f),removeEventListener:n=>listeners.delete(n),contains:()=>true,querySelector:selector=>({'[data-vr-position]':bar,'[data-vr-playback-time]':time,'[data-vr-playback-state]':label}[selector]||null)};
+ const priorDocument=globalThis.document;globalThis.document={addEventListener(){},removeEventListener(){}};
+ const player={timing:{currentTime:0,duration:0},outcome:'idle',stop(){this.timing={currentTime:0,duration:0};this.outcome='idle';},unlock(){},play(){this.outcome='playing';}};
+ const click=async action=>listeners.get('click')({target:{closest:()=>({dataset:{vr:action}})},stopPropagation(){}});let dispose;
+ try{
+  dispose=mountVoiceReview(root,{storage:memory(),catalog:[first,second],published:empty(),player});assert.match(root.innerHTML,/data-vr-position/);
+  await click('play');tick();assert.equal(label.textContent,'読み込み中');assert.equal(time.textContent,'0.0 / — 秒');
+  player.timing={currentTime:2.5,duration:5};const rendered=root.innerHTML;tick();assert.equal(bar.value,.5);assert.equal(time.textContent,'2.5 / 5.0 秒');assert.equal(root.innerHTML,rendered,'progress does not rebuild the controls');
+  player.timing.currentTime=5;player.outcome='ended';tick();assert.equal(bar.value,1);assert.match(root.innerHTML,/再生終了/);assert.match(root.innerHTML,/5.0 \/ 5.0 秒/);
+  await click('next');tick();assert.equal(bar.value,0);assert.equal(label.textContent,'再生前');assert.equal(time.textContent,'0.0 / — 秒');
+ }finally{dispose?.();globalThis.document=priorDocument;}
+});
