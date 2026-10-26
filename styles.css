@@ -1852,6 +1852,17 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .persona-debug-button.tone-chapter2{--debug-tone:#f3bb32}
 .persona-debug-button.tone-navigation{--debug-tone:#69aaff}
 .persona-debug-button.tone-utility{--debug-tone:#b49df4}
+.persona-debug-button.tone-observation{--debug-tone:#4de4ae}
+.persona-debug-button.tone-voices{--debug-tone:#ff516d}
+.persona-debug-tools .persona-debug-actions{overflow:visible;max-height:none;padding:5px 10px 5px 5px}
+.persona-debug-tools .persona-debug-button{min-height:80px;border-left-width:10px;padding:12px 16px;background:linear-gradient(110deg,color-mix(in srgb,var(--debug-tone) 25%,#080d17),#101522);box-shadow:5px 5px 0 #030611,inset 0 0 25px color-mix(in srgb,var(--debug-tone) 8%,transparent)}
+.persona-debug-tools .persona-debug-label strong{display:block;font-size:clamp(16px,2vw,21px);line-height:1.3;color:#fff}
+.persona-debug-tools .persona-debug-label small{display:block;font:600 clamp(10px,1.2vw,12px)/1.5 system-ui;margin-top:4px;color:color-mix(in srgb,var(--debug-tone) 35%,#fff)}
+.persona-debug-tools .persona-debug-index{min-width:34px;text-align:center;box-shadow:3px 3px 0 #0006}
+.persona-debug-tools .persona-debug-button:hover,.persona-debug-tools .persona-debug-button:focus-visible{background:var(--debug-tone);outline-color:#fff}
+.persona-debug-tools .persona-debug-button:hover .persona-debug-label>*,.persona-debug-tools .persona-debug-button:focus-visible .persona-debug-label>*,.persona-debug-tools .persona-debug-button:hover .persona-debug-arrow,.persona-debug-tools .persona-debug-button:focus-visible .persona-debug-arrow{color:#09101c}
+@media(max-width:700px){.persona-debug-tools{justify-content:center;gap:12px;padding:42px max(17px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(17px,env(safe-area-inset-left))}.persona-debug-tools .persona-debug-button{min-height:76px;padding:10px;gap:9px}.persona-debug-tools .persona-debug-label small{font-size:10px}.persona-debug-tools header{margin-top:5px}}
+@media(orientation:landscape) and (max-height:500px){.persona-debug-tools{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);grid-template-rows:1fr auto auto;align-items:center;justify-items:start;gap:10px 22px;padding:45px 28px 18px}.persona-debug-tools header{grid-column:1;grid-row:1;margin:0}.persona-debug-tools h2{font-size:clamp(27px,4vw,40px)!important}.persona-debug-tools .persona-debug-kicker{font-size:8px;letter-spacing:.04em;padding:5px}.persona-debug-tools .persona-debug-actions{grid-column:2;grid-row:1/4;gap:10px}.persona-debug-tools .persona-debug-button{min-height:70px;padding:9px;gap:8px}.persona-debug-tools .persona-debug-label strong{font-size:16px}.persona-debug-tools .persona-debug-back{grid-column:1;grid-row:2;min-height:38px}.persona-debug-tools footer{grid-column:1;grid-row:3;font-size:9px;text-align:left}}
 /* Destination colors are consistent across both chapter scene selectors. */
 .persona-debug-button.tone-story{--debug-tone:#65aaff}
 .persona-debug-button.tone-start{--debug-tone:#ffc642}
@@ -2239,3 +2250,8 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @media(max-height:650px){.voice-review-mode .vr-header{padding-bottom:3px}.voice-review-mode .vr-header h2{font-size:22px}.voice-review-mode .vr-card{padding:10px;gap:5px}.voice-review-mode .vr-card h3{font-size:16px;padding-top:1px;padding-bottom:1px}.voice-review-mode .vr-repair-comment{font-size:10px;padding-top:3px}}
 @media(prefers-reduced-motion:reduce){.voice-review-mode .vr-panel button{transition:none}}
 @media(max-height:650px){.voice-review-mode .vr-panel{gap:4px}.voice-review-mode .vr-header{padding-bottom:2px;border-bottom-width:2px}.voice-review-mode .vr-header h2{font-size:20px}.voice-review-mode .vr-header button{min-height:30px;padding:4px 8px}.voice-review-mode .vr-card{gap:4px}.voice-review-mode .vr-card h3{font-size:15px;padding-top:0;padding-bottom:0}.voice-review-mode .vr-repair-comment{line-height:1.3}}
+/* Keep the three developer destinations together on compact screens. */
+.persona-debug-tools{overflow:clip}
+.persona-debug-tools footer{padding:0;margin:0;border:0;flex:none;max-width:100%;overflow-wrap:anywhere}
+@media(max-width:700px) and (min-height:501px) and (max-height:650px){.persona-debug-tools{gap:10px;padding-top:38px;padding-bottom:max(10px,env(safe-area-inset-bottom))}.persona-debug-tools .persona-debug-button{min-height:70px;padding-block:8px}.persona-debug-tools header p{font-size:11px}.persona-debug-tools footer{font-size:9px}}
+@media(orientation:landscape) and (max-height:500px){.game-ink .persona-debug-tools{grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr)}.persona-debug-tools footer{grid-column:1;grid-row:3;font-size:9px;text-align:left}}

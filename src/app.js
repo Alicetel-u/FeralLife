@@ -696,16 +696,16 @@ function debugMenuPage(title,subtitle,buttons,back){
     if(id.includes(':opening')||id.includes(':intro')||id.includes(':arrival'))return 'story';
     return 'navigation';
   };
-  openModal(`<section class="act-screen debug-menu persona-debug">
+  openModal(`<section class="act-screen debug-menu persona-debug${buttons.some(([, ,attr])=>attr==='data-debug-tool')?' persona-debug-tools':''}">
     <div class="persona-debug-stripe" aria-hidden="true">DEBUG / SCENE SELECT / DEBUG /</div>
     <header><span class="persona-debug-kicker">KEMONOSOU // DEVELOPER MODE</span><h2 id="modal-title">${title}</h2><p>${subtitle}</p></header>
-    <div class="persona-debug-actions">${buttons.map(([id,label,attr,kind],i)=>`<button type="button" class="persona-debug-button tone-${tone(id,kind)}" ${attr}="${escape(id)}"><span class="persona-debug-index">${String(i+1).padStart(2,'0')}</span><span class="persona-debug-label">${escape(label)}</span><span class="persona-debug-arrow" aria-hidden="true">↗</span></button>`).join('')}</div>
+    <div class="persona-debug-actions">${buttons.map(([id,label,attr,kind,description],i)=>`<button type="button" class="persona-debug-button tone-${tone(id,kind)}" ${attr}="${escape(id)}"><span class="persona-debug-index">${String(i+1).padStart(2,'0')}</span><span class="persona-debug-label">${description?`<strong>${escape(label)}</strong><small>${escape(description)}</small>`:escape(label)}</span><span class="persona-debug-arrow" aria-hidden="true">↗</span></button>`).join('')}</div>
     <button type="button" class="persona-debug-back" ${back}>← 戻る</button>
     <footer>VERSION ${BUILD_VERSION}　/　${BUILD_UPDATED}</footer>
   </section>`);
 }
 function showDeveloperMenu(){
-  debugMenuPage('開発者メニュー','テストしたい項目を選択',[['scenes','シーンセレクト（第一幕・第二幕）','data-debug-tool'],['observation','観察モード（第一幕・第二幕）','data-debug-tool'],['voices','音声チェック・指摘の出力','data-debug-tool']], 'data-debug-back');
+  debugMenuPage('開発者メニュー','テストしたい項目を選択',[['scenes','シーンセレクト','data-debug-tool','navigation','第一幕・第二幕の会話や選択肢へ移動'],['observation','観察モード','data-debug-tool','observation','第一幕・第二幕の日常の掛け合いを再生'],['voices','音声チェック','data-debug-tool','voices','未確認の試聴・修正後の確認・指摘の出力']], 'data-debug-back');
 }
 function showVoiceReview(){
  openModal('<div class="voice-review-host"></div>');modal.classList.add('voice-review-mode');
