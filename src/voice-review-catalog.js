@@ -289,7 +289,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"もう一本……灰皿が山盛りニャ。\",\"moku-surprised\",false]",
     "reviewId": "4c72ccc3d3893bf3",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "こもり・音割れの指摘に合わせ、明瞭な驚きの会話として再生成。ピークと録音の端を調整。",
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -301,7 +303,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "surprised",
       "text": "もう一本……灰皿が山盛りニャ。"
     },
-    "version": "5cbc2827f3758868c2a9"
+    "version": "01c1ee68181e7224a4ad"
   },
   {
     "id": "[\"cat\",\"押せば入るかニャ。……あ、崩れたニャ。\",\"moku-surprised\",false]",
@@ -654,7 +656,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"せめて両足ぶんは今日やれ！\",\"normal\",false]",
     "reviewId": "3291b688c0d7d005",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "「せめて」の区切りを調整し、自然な呆れのツッコミとして再生成。",
     "chapter": 1,
     "scene": "1:observation",
     "sceneLabel": "観察パート",
@@ -666,7 +670,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "angry",
       "text": "せめて両足ぶんは今日やれ！"
     },
-    "version": "36cbe5e3f96612473759"
+    "version": "8d2038076a69e1265004"
   },
   {
     "id": "[\"cat\",\"……スマホどこやったかニャ？\",\"moku\",false]",
@@ -1402,7 +1406,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "a0659451c400b6a7",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "「灰皿」「冷凍庫」「冷やせ」の読みをかなで明示して再生成。",
+    "repairComment": "全文をかなにする指定をやめ、「冷凍庫」の読みだけを指定して再生成。自然なつながりと勢いを付ける。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -1413,7 +1417,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！"
     },
-    "version": "123b34bc05d2c5685e57"
+    "version": "d6921c8c2df98b605bc9"
   },
   {
     "id": "[\"cat\",\"えっ！？ 冷凍チャーハンと一緒でいいニャ？\",\"moku-surprised\",false]",
@@ -1661,7 +1665,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"もうチャーハンは諦めろ！ 命の方が大事だろ！！\",\"normal\",false]",
     "reviewId": "394fe794a039d0ca",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "「諦めろ」「命の方」の読みを明示して再生成。勢いのある呼びかけを維持。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -1672,7 +1678,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "もうチャーハンは諦めろ！ 命の方が大事だろ！！"
     },
-    "version": "230d8f1aa54e77c550d3"
+    "version": "c45f1ae230d12374eeae"
   },
   {
     "id": "[\"manager\",\"……モクは言われたとおりにしただけだ。俺がちゃんと考えてりゃ、こんなことには……。\",\"inner\",false]",
@@ -1854,7 +1860,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"煙……？\",\"normal\",false]",
     "reviewId": "e24540eebc376694",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "「煙」を「けむり」と明示し、異変に気付く演技で再生成。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -1865,7 +1873,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "煙……？"
     },
-    "version": "e9686fcf2c3c8f2d063a"
+    "version": "24f7b3d53ad95d616014"
   },
   {
     "id": "[\"manager\",\"……って、おい！！ 燃えてんじゃねぇか！！\",\"normal\",false]",
@@ -1998,7 +2006,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"灰皿ごと水に沈めろ！\",\"normal\",false]",
     "reviewId": "e7d4d036c7b1a100",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "もっと強気という指摘に合わせ、はっきり決断して指示する演技で再生成。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2009,7 +2019,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "灰皿ごと水に沈めろ！"
     },
-    "version": "c29d12f68b918d9dcf3e"
+    "version": "2648f53b7fce7d3bd68b"
   },
   {
     "id": "[\"cat\",\"灰皿を溺れさせるニャ！？\",\"moku-surprised\",false]",
@@ -2428,7 +2438,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"モク！？ まだ中にいるのか！？\",\"tragedy-panic\",false]",
     "reviewId": "d03284f8bdb22c2f",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "末尾の異音の指摘に合わせて再生成。切迫した呼びかけを維持し、短いフェードと末尾余白を追加。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2440,7 +2452,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "モク！？ まだ中にいるのか！？",
       "voicePerformance": "tragedy-panic"
     },
-    "version": "201da6c50ba21303c302"
+    "version": "1ba13d22d8a18e7cf434"
   },
   {
     "id": "[\"cat\",\"煙が……前が見えないニャ……！\",\"tragedy-fear\",false]",
@@ -2516,7 +2528,8 @@ export const VOICE_REVIEW_CATALOG = [
     "id": "[\"manager\",\"おい……返事しろよ……！\",\"tragedy-grief\",false]",
     "reviewId": "5a697c4a2a5afddc",
     "repaired": true,
-    "repairComment": "音声を再生成し、音量を調整。",
+    "repairReview": true,
+    "repairComment": "威圧的という指摘に合わせ、焦って返答を懇願する演技で再生成。怒りや強気の演技は指定しない。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2528,7 +2541,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "おい……返事しろよ……！",
       "voicePerformance": "tragedy-grief"
     },
-    "version": "a9b1195eb6a1d75e0251"
+    "version": "1538aa87b2a97b4ea4f1"
   },
   {
     "id": "[\"manager\",\"モク……頼む、返事をしてくれ。\",\"tragedy-grief\",false]",

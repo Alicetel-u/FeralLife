@@ -1447,13 +1447,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"煙……？\",\"normal\",false]": {
-    "file": "assets/voices/ed2e0d8ab89d25fa533407b51edd0570cb20238cb61b0993517e87b6a394648a.mp3",
-    "hash": "ed2e0d8ab89d25fa533407b51edd0570cb20238cb61b0993517e87b6a394648a",
+    "file": "assets/voices/ea17fdcf8f5abbf2e8797b5831b547ed8c6d5041ef649a3257075875b9466ea5.repair.mp3",
+    "hash": "ea17fdcf8f5abbf2e8797b5831b547ed8c6d5041ef649a3257075875b9466ea5",
     "source": "act1/ash/trash:8",
     "speaker": "manager",
     "text": "煙……？",
     "performance": "normal",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "「煙」を「けむり」と明示し、異変に気付く演技で再生成。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"……って、おい！！ 燃えてんじゃねぇか！！\",\"normal\",false]": {
     "file": "assets/voices/f699b3ad00992d9ee1422a6da410619628ea13cc00a41dc0894b678539b3ded4.mp3",
@@ -1582,15 +1591,15 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！\",\"normal\",false]": {
-    "file": "assets/voices/2a4dd68e9b5203d0c28c2847123c0f566d1859f7476ee58ae6b586ed70f9b8af.repair.mp3",
-    "hash": "2a4dd68e9b5203d0c28c2847123c0f566d1859f7476ee58ae6b586ed70f9b8af",
+    "file": "assets/voices/f4acdbe05e7c96846c2c99ceac0b32234fe05b2cd953146080c6d558c232567c.repair.mp3",
+    "hash": "f4acdbe05e7c96846c2c99ceac0b32234fe05b2cd953146080c6d558c232567c",
     "source": "act1/ash/freezer:0",
     "speaker": "manager",
     "text": "灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！",
     "performance": "normal",
     "model": "eleven_v3",
     "repairReview": true,
-    "repairComment": "「灰皿」「冷凍庫」「冷やせ」の読みをかなで明示して再生成。",
+    "repairComment": "全文をかなにする指定をやめ、「冷凍庫」の読みだけを指定して再生成。自然なつながりと勢いを付ける。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -6,
@@ -1672,13 +1681,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"もうチャーハンは諦めろ！ 命の方が大事だろ！！\",\"normal\",false]": {
-    "file": "assets/voices/38173a5a09d076c1d56ff43a49e8f908dcd469031fb07e15be93ca13828cd513.mp3",
-    "hash": "38173a5a09d076c1d56ff43a49e8f908dcd469031fb07e15be93ca13828cd513",
+    "file": "assets/voices/cd3dd78439016918d2b16d0e817b403ba06e1c884c9a773f0907483feb7487a1.repair.mp3",
+    "hash": "cd3dd78439016918d2b16d0e817b403ba06e1c884c9a773f0907483feb7487a1",
     "source": "act1/ash/freezer:19",
     "speaker": "manager",
     "text": "もうチャーハンは諦めろ！ 命の方が大事だろ！！",
     "performance": "normal",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "「諦めろ」「命の方」の読みを明示して再生成。勢いのある呼びかけを維持。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"……モクは言われたとおりにしただけだ。俺がちゃんと考えてりゃ、こんなことには……。\",\"inner\",false]": {
     "file": "assets/voices/d829e8e2e066395f613cc26a28dc9eb805961ad87d2b9d0c114c26be398b4776.mp3",
@@ -1708,13 +1726,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"灰皿ごと水に沈めろ！\",\"normal\",false]": {
-    "file": "assets/voices/c74cd6a8db0df469a0f71122f571ca2ed7de398671faa0f79a3580017884b689.mp3",
-    "hash": "c74cd6a8db0df469a0f71122f571ca2ed7de398671faa0f79a3580017884b689",
+    "file": "assets/voices/5ba92dcfbdf915121fc98c3101450d138bac8159db90fe52030d9efe6e3355d0.repair.mp3",
+    "hash": "5ba92dcfbdf915121fc98c3101450d138bac8159db90fe52030d9efe6e3355d0",
     "source": "act1/ash/water:0",
     "speaker": "manager",
     "text": "灰皿ごと水に沈めろ！",
     "performance": "normal",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "もっと強気という指摘に合わせ、はっきり決断して指示する演技で再生成。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"火を消すんだよ！\",\"normal\",false]": {
     "file": "assets/voices/244aafc2a473397185a79a4da949a0244b823e2618b757c66a1ef4268bfdcd18.mp3",
@@ -2965,13 +2992,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"モク！？ まだ中にいるのか！？\",\"tragedy-panic\",false]": {
-    "file": "assets/voices/460d1822fb29aeaaf07e83f48c34d843b06a9f93831df2e2618a4c8cf88a78a2.mp3",
-    "hash": "460d1822fb29aeaaf07e83f48c34d843b06a9f93831df2e2618a4c8cf88a78a2",
+    "file": "assets/voices/38bcefb06bbf3fec9a0424ac9f3051ed8c9e00f8f1e23c660d0a695550693ec9.repair.mp3",
+    "hash": "38bcefb06bbf3fec9a0424ac9f3051ed8c9e00f8f1e23c660d0a695550693ec9",
     "source": "act1/runtime/attempt-1/ash/trash/reply:15",
     "speaker": "manager",
     "text": "モク！？ まだ中にいるのか！？",
     "performance": "tragedy-panic",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "末尾の異音の指摘に合わせて再生成。切迫した呼びかけを維持し、短いフェードと末尾余白を追加。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"cat\",\"煙が……前が見えないニャ……！\",\"tragedy-fear\",false]": {
     "file": "assets/voices/f6c86955c9423e8f5a5f6ef9bec09ee9cf10a8e7ce4266006a36e6697d4ee612.repair.mp3",
@@ -3019,16 +3055,21 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"おい……返事しろよ……！\",\"tragedy-grief\",false]": {
-    "file": "assets/voices/95d2e907763994bec0291d1400a94da73d3dbc7f19b959617ff4639e413a01c5.repair.mp3",
-    "hash": "95d2e907763994bec0291d1400a94da73d3dbc7f19b959617ff4639e413a01c5",
+    "file": "assets/voices/110a5c9657d9758e3131409ffd3e7630b1ab577c7a4a56542840412f314b5356.repair.mp3",
+    "hash": "110a5c9657d9758e3131409ffd3e7630b1ab577c7a4a56542840412f314b5356",
     "source": "act1/runtime/attempt-1/ash/trash/reply:22",
     "speaker": "manager",
     "text": "おい……返事しろよ……！",
     "performance": "tragedy-grief",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "威圧的という指摘に合わせ、焦って返答を懇願する演技で再生成。怒りや強気の演技は指定しない。",
     "audioMastering": {
       "integratedLUFS": -18,
-      "truePeakDBTP": -3
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
     }
   },
   "[\"manager\",\"モク……頼む、返事をしてくれ。\",\"tragedy-grief\",false]": {
@@ -5882,24 +5923,40 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "duel-moku"
   },
   "[\"manager\",\"せめて両足ぶんは今日やれ！\",\"normal\",false]": {
-    "file": "assets/voices/0d2408f98d7b50c4795d241f6c4e4b9fb379a31a3fbcd8cd09e8086c8de71693.mp3",
-    "hash": "0d2408f98d7b50c4795d241f6c4e4b9fb379a31a3fbcd8cd09e8086c8de71693",
+    "file": "assets/voices/9524ff5a91f0de6d3ae59bc3e5f4a289f2df0bbe2ba747b20bf170a250e8a1b8.repair.mp3",
+    "hash": "9524ff5a91f0de6d3ae59bc3e5f4a289f2df0bbe2ba747b20bf170a250e8a1b8",
     "source": "act1/observation/outside:7",
     "speaker": "manager",
     "text": "せめて両足ぶんは今日やれ！",
     "performance": "normal",
     "model": "eleven_v3",
-    "deliveryProfile": "duel-manager"
+    "repairReview": true,
+    "repairComment": "「せめて」の区切りを調整し、自然な呆れのツッコミとして再生成。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"cat\",\"もう一本……灰皿が山盛りニャ。\",\"moku-surprised\",false]": {
-    "file": "assets/voices/fb6d23c609957f3d7f1b7c22a51edafa4a6216459a9a6dfead8fb3ef44d90777.mp3",
-    "hash": "fb6d23c609957f3d7f1b7c22a51edafa4a6216459a9a6dfead8fb3ef44d90777",
+    "file": "assets/voices/69e23d97a68b4b3c9643b72b2930dc4b1880dec4894a1b9ce3cd2671e01aaff3.repair.mp3",
+    "hash": "69e23d97a68b4b3c9643b72b2930dc4b1880dec4894a1b9ce3cd2671e01aaff3",
     "source": "act1/observation/ash-sign:0",
     "speaker": "cat",
     "text": "もう一本……灰皿が山盛りニャ。",
     "performance": "moku-surprised",
     "model": "eleven_v3",
-    "deliveryProfile": "duel-moku"
+    "repairReview": true,
+    "repairComment": "こもり・音割れの指摘に合わせ、明瞭な驚きの会話として再生成。ピークと録音の端を調整。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"cat\",\"押せば入るかニャ。……あ、崩れたニャ。\",\"moku-surprised\",false]": {
     "file": "assets/voices/492e809166182553b1ca28b2cfef402fac3d73e749182f760cf14cc266b31499.mp3",

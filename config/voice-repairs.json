@@ -148,16 +148,17 @@
     {
       "speaker": "manager",
       "text": "おい……返事しろよ……！",
-      "spokenText": "おい……へんじ、しろよ……。",
+      "spokenText": "おい……返事しろよ……！",
       "tags": [
-        "[sad]",
-        "[pleading]",
-        "[shaky voice]"
+        "[panicked]",
+        "[pleading]"
       ],
       "settings": {
-        "stability": 0.5,
-        "speed": 0.9
-      }
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      },
+      "repairComment": "威圧的という指摘に合わせ、焦って返答を懇願する演技で再生成。怒りや強気の演技は指定しない。"
     },
     {
       "speaker": "cat",
@@ -356,17 +357,17 @@
     {
       "speaker": "manager",
       "text": "灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！",
-      "spokenText": "はいざらを、れいとうこにぶちこめ！ キンキンにひやせ！",
+      "spokenText": "灰皿を、れいとうこにぶち込め！ キンキンに冷やせ！",
       "tags": [
         "[excited]",
-        "[lighthearted]"
+        "[animated]"
       ],
       "settings": {
-        "stability": 0.5,
+        "stability": 0,
         "similarity_boost": 0.75,
-        "speed": 1
+        "speed": 1.03
       },
-      "repairComment": "「灰皿」「冷凍庫」「冷やせ」の読みをかなで明示して再生成。"
+      "repairComment": "全文をかなにする指定をやめ、「冷凍庫」の読みだけを指定して再生成。自然なつながりと勢いを付ける。"
     },
     {
       "speaker": "manager",
@@ -382,6 +383,96 @@
         "speed": 1
       },
       "repairComment": "「冷凍庫」を「れいとうこ」と明示して再生成。心の声も聞き取りやすい会話の演技に調整。"
+    },
+    {
+      "speaker": "cat",
+      "text": "もう一本……灰皿が山盛りニャ。",
+      "spokenText": "もう一本……灰皿が山盛りニャ。",
+      "tags": [
+        "[surprised]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      },
+      "repairComment": "こもり・音割れの指摘に合わせ、明瞭な驚きの会話として再生成。ピークと録音の端を調整。"
+    },
+    {
+      "speaker": "manager",
+      "text": "せめて両足ぶんは今日やれ！",
+      "spokenText": "せめて、両足ぶんは今日やれ！",
+      "tags": [
+        "[exasperated]",
+        "[lighthearted]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      },
+      "repairComment": "「せめて」の区切りを調整し、自然な呆れのツッコミとして再生成。"
+    },
+    {
+      "speaker": "manager",
+      "text": "もうチャーハンは諦めろ！ 命の方が大事だろ！！",
+      "spokenText": "もうチャーハンは、あきらめろ！ いのちのほうが大事だろ！！",
+      "tags": [
+        "[excited]",
+        "[animated]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      },
+      "repairComment": "「諦めろ」「命の方」の読みを明示して再生成。勢いのある呼びかけを維持。"
+    },
+    {
+      "speaker": "manager",
+      "text": "煙……？",
+      "spokenText": "けむり……？",
+      "tags": [
+        "[surprised]",
+        "[confused]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "「煙」を「けむり」と明示し、異変に気付く演技で再生成。"
+    },
+    {
+      "speaker": "manager",
+      "text": "灰皿ごと水に沈めろ！",
+      "spokenText": "灰皿ごと水に沈めろ！",
+      "tags": [
+        "[shouting]",
+        "[confident]"
+      ],
+      "settings": {
+        "stability": 0,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      },
+      "repairComment": "もっと強気という指摘に合わせ、はっきり決断して指示する演技で再生成。"
+    },
+    {
+      "speaker": "manager",
+      "text": "モク！？ まだ中にいるのか！？",
+      "spokenText": "モク！ まだ中にいるのか！？",
+      "tags": [
+        "[panicked]",
+        "[shouting]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      },
+      "repairComment": "末尾の異音の指摘に合わせて再生成。切迫した呼びかけを維持し、短いフェードと末尾余白を追加。"
     }
   ]
 }

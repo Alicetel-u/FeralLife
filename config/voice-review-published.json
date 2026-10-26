@@ -6,25 +6,35 @@
       "version": "bfdcebb8e8a4af91e263",
       "updatedAt": "2026-10-26T17:41:52.357Z"
     },
+    "[\"cat\",\"……あれ？ ゴミって自分で燃えるんだっけニャ？\",\"moku-surprised\",false]": {
+      "status": "ok",
+      "version": "d72ade5681e73095eb94",
+      "updatedAt": "2026-10-26T18:10:03.937Z"
+    },
     "[\"cat\",\"……すぅ……すぅ……。\",\"moku\",false]": {
       "status": "ok",
       "version": "c6be8d656eeb54569bb4",
       "updatedAt": "2026-10-26T17:37:43.485Z"
     },
     "[\"cat\",\"……スマホどこやったかニャ？\",\"moku\",false]": {
-      "status": "ng",
-      "version": "7c9d0520703c1bd90189",
-      "updatedAt": "2026-10-26T17:34:51.952Z"
+      "status": "ok",
+      "version": "4affcca08003e030d348",
+      "updatedAt": "2026-10-26T18:07:09.965Z"
     },
     "[\"cat\",\"……だから、まだ熱いって言ったニャ。\",\"moku\",false]": {
       "status": "ok",
       "version": "e7247a7cf630462fc019",
       "updatedAt": "2026-10-26T17:39:00.092Z"
     },
+    "[\"cat\",\"……チャーハン、もう食べられないかニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "6af4c1840fe112bad54c",
+      "updatedAt": "2026-10-26T18:09:41.866Z"
+    },
     "[\"cat\",\"……ないニャ。\",\"moku\",false]": {
-      "status": "ng",
-      "version": "12a83a3a39bc61e92cad",
-      "updatedAt": "2026-10-26T17:35:02.144Z"
+      "status": "ok",
+      "version": "04469e1d2d0f519658f1",
+      "updatedAt": "2026-10-26T18:07:13.108Z"
     },
     "[\"cat\",\"……なんか作るかニャ。\",\"moku\",false]": {
       "status": "ok",
@@ -41,10 +51,20 @@
       "version": "80991f86edd5cfa30388",
       "updatedAt": "2026-10-26T17:36:30.708Z"
     },
+    "[\"cat\",\"……最初からそう言えニャ！\",\"moku\",false]": {
+      "status": "ok",
+      "version": "7e715e2d08e65db2a970",
+      "updatedAt": "2026-10-26T18:12:15.880Z"
+    },
     "[\"cat\",\"……持ってたニャ。\",\"moku\",false]": {
       "status": "ok",
       "version": "c4cf2713ee20bcfbd018",
       "updatedAt": "2026-10-26T17:35:13.983Z"
+    },
+    "[\"cat\",\"……大家。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "4b9262f0f6cd6c27aa43",
+      "updatedAt": "2026-10-26T18:09:34.650Z"
     },
     "[\"cat\",\"……大家。けもの荘、なくなっちゃうニャ……？\",\"moku\",false]": {
       "status": "ok",
@@ -60,6 +80,21 @@
       "status": "ok",
       "version": "287eff51ce6faa01293d",
       "updatedAt": "2026-10-26T17:10:39.310Z"
+    },
+    "[\"cat\",\"……明日から、ちゃんと片づけるニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "35b6520b4137cbfafae0",
+      "updatedAt": "2026-10-26T18:11:01.899Z"
+    },
+    "[\"cat\",\"いやぁ、大家に聞いて正解だったニャ。\",\"moku-happy\",false]": {
+      "status": "ok",
+      "version": "1feae33541d6474a46b5",
+      "updatedAt": "2026-10-26T18:12:27.710Z"
+    },
+    "[\"cat\",\"えっ、でもテレビつけっぱなしニャ！\",\"moku-surprised\",false]": {
+      "status": "ok",
+      "version": "3a8e3ba1eef9d2b16d39",
+      "updatedAt": "2026-10-26T18:10:49.381Z"
     },
     "[\"cat\",\"えっ！？ 冷凍チャーハンと一緒でいいニャ？\",\"moku-surprised\",false]": {
       "status": "ok",
@@ -81,15 +116,30 @@
       "version": "5e9ee700d18575766955",
       "updatedAt": "2026-10-26T17:37:20.158Z"
     },
+    "[\"cat\",\"ゲホッ……大家……！\",\"tragedy-choking\",false]": {
+      "status": "ok",
+      "version": "0e75e391047b72107ef5",
+      "updatedAt": "2026-10-26T18:13:47.304Z"
+    },
     "[\"cat\",\"この缶をどかして……お、床ニャ。\",\"moku-surprised\",false]": {
       "status": "ok",
       "version": "acddc452ccaabec307af",
       "updatedAt": "2026-10-26T17:35:26.091Z"
     },
+    "[\"cat\",\"ゴミ袋でいいのかニャ？\",\"moku\",false]": {
+      "status": "ok",
+      "version": "ea061d5e3652cad1ebca",
+      "updatedAt": "2026-10-26T18:13:02.573Z"
+    },
     "[\"cat\",\"これで灰皿スッキリニャ！\",\"moku-happy\",false]": {
       "status": "ok",
       "version": "f361119fd335f4db0f04",
       "updatedAt": "2026-10-26T17:38:37.751Z"
+    },
+    "[\"cat\",\"じゃあ、これからも困ったら大家に相談するニャ。\",\"moku-happy\",false]": {
+      "status": "ok",
+      "version": "50012dee0f8428996a74",
+      "updatedAt": "2026-10-26T18:12:44.044Z"
     },
     "[\"cat\",\"そういえば、昨日から何も食べてない気がするニャ……。\",\"moku\",false]": {
       "status": "ok",
@@ -111,6 +161,11 @@
       "version": "b610b2bee30a80734c8e",
       "updatedAt": "2026-10-26T17:42:14.612Z"
     },
+    "[\"cat\",\"だって大家だろ？ 信用してるニャ。\",\"moku-happy\",false]": {
+      "status": "ok",
+      "version": "8b3a07cdc52a36ff480c",
+      "updatedAt": "2026-10-26T18:13:22.749Z"
+    },
     "[\"cat\",\"チャーハンは無事ニャ。\",\"moku\",false]": {
       "status": "ok",
       "version": "d05052ca0bee269ce009",
@@ -126,30 +181,60 @@
       "version": "606bc1974b1e0a22df23",
       "updatedAt": "2026-10-26T17:36:50.094Z"
     },
+    "[\"cat\",\"でも、勝手にやって失敗したら怒るんだろニャ？\",\"moku\",false]": {
+      "status": "ok",
+      "version": "996eac119cb16c92077f",
+      "updatedAt": "2026-10-26T18:12:35.910Z"
+    },
     "[\"cat\",\"テレビもおしまいニャ。おやすみニャ……。\",\"moku\",false]": {
       "status": "ok",
       "version": "cbb5d0bd73b0d07bf702",
       "updatedAt": "2026-10-26T17:11:00.983Z"
+    },
+    "[\"cat\",\"なんか、ゴミ袋から煙が出てるニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "3d1e4145f5d167078892",
+      "updatedAt": "2026-10-26T18:10:11.656Z"
     },
     "[\"cat\",\"ニャ！？ ゴミ置き場がキャンプファイヤーになってるニャ！\",\"moku-surprised\",false]": {
       "status": "ok",
       "version": "78e24048e20d73546796",
       "updatedAt": "2026-10-26T17:38:51.490Z"
     },
+    "[\"cat\",\"ニャ！？ ほんとだニャ！\",\"moku-surprised\",false]": {
+      "status": "ok",
+      "version": "61f581ec10bc95dad38b",
+      "updatedAt": "2026-10-26T18:10:40.863Z"
+    },
     "[\"cat\",\"ニャ！？ 紙くずが燃えてるニャ！\",\"moku-surprised\",false]": {
       "status": "ok",
       "version": "3ce9add15ea010e48280",
       "updatedAt": "2026-10-26T17:42:06.360Z"
+    },
+    "[\"cat\",\"にゃはは。じゃ、ありがとニャ！\",\"moku-happy\",false]": {
+      "status": "ok",
+      "version": "e1edb3155d984aeb1fbc",
+      "updatedAt": "2026-10-26T18:13:31.723Z"
     },
     "[\"cat\",\"ふぅ〜……外で吸うのもうまいニャ。缶を二本も動かしたあとの一本は格別ニャ。\",\"moku-happy\",false]": {
       "status": "ok",
       "version": "00a52d1651efc221bdce",
       "updatedAt": "2026-10-26T17:11:40.093Z"
     },
+    "[\"cat\",\"ふぅ……これで安心ニャ。\",\"moku-happy\",false]": {
+      "status": "ok",
+      "version": "3e300fcb927067c6816b",
+      "updatedAt": "2026-10-26T18:12:19.859Z"
+    },
     "[\"cat\",\"ふぅ……これで安心ニャ。\",\"moku\",false]": {
       "status": "ok",
       "version": "4516c18811f25dfd0197",
       "updatedAt": "2026-10-26T17:09:35.636Z"
+    },
+    "[\"cat\",\"まだ熱いけど……まぁいいかニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "260778c13d464a020cc7",
+      "updatedAt": "2026-10-26T18:09:53.934Z"
     },
     "[\"cat\",\"めんどくさいから、大家が決めてニャ。\",\"moku\",false]": {
       "status": "ok",
@@ -159,7 +244,7 @@
     "[\"cat\",\"もう一本……灰皿が山盛りニャ。\",\"moku-surprised\",false]": {
       "status": "ng",
       "version": "5cbc2827f3758868c2a9",
-      "updatedAt": "2026-10-26T17:10:10.419Z"
+      "updatedAt": "2026-10-26T18:08:18.276Z"
     },
     "[\"cat\",\"モクですニャ。よろしくニャ。\",\"moku\",false]": {
       "status": "ok",
@@ -176,10 +261,25 @@
       "version": "43fbee97a4eed8075fbb",
       "updatedAt": "2026-10-26T17:36:41.431Z"
     },
+    "[\"cat\",\"よし！ 部屋が片づいたニャ！\",\"moku-happy\",false]": {
+      "status": "ok",
+      "version": "2b91c90544a29589c42f",
+      "updatedAt": "2026-10-26T18:09:58.886Z"
+    },
     "[\"cat\",\"よろしく頼むニャ。家賃は来月から払うニャ。\",\"moku\",false]": {
       "status": "ok",
       "version": "38d8dfe3259015770d1a",
       "updatedAt": "2026-10-25T07:26:48.984Z"
+    },
+    "[\"cat\",\"わかったニャ。大家がそう言うならそうするニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "451eee0d3528f7d3e778",
+      "updatedAt": "2026-10-26T18:13:14.279Z"
+    },
+    "[\"cat\",\"煙が……前が見えないニャ……！\",\"tragedy-fear\",false]": {
+      "status": "ok",
+      "version": "75bb18b82486e8bcf81d",
+      "updatedAt": "2026-10-26T18:14:51.229Z"
     },
     "[\"cat\",\"押せば入るかニャ。……あ、崩れたニャ。\",\"moku-surprised\",false]": {
       "status": "ok",
@@ -200,6 +300,11 @@
       "status": "ok",
       "version": "df63d5f522f5f8a443b9",
       "updatedAt": "2026-10-26T17:38:07.942Z"
+    },
+    "[\"cat\",\"灰皿を溺れさせるニャ！？\",\"moku-surprised\",false]": {
+      "status": "ok",
+      "version": "5d20f7d05e899b6a55ce",
+      "updatedAt": "2026-10-26T18:12:03.723Z"
     },
     "[\"cat\",\"久しぶりニャ。元気にしてたかニャ。\",\"moku-happy\",false]": {
       "status": "ok",
@@ -246,15 +351,25 @@
       "version": "f9e6c7475774829379e3",
       "updatedAt": "2026-10-26T17:39:17.580Z"
     },
+    "[\"cat\",\"待つニャ！ 冷凍庫のチャーハン、出しっぱなしニャ！\",\"moku-surprised\",false]": {
+      "status": "ok",
+      "version": "304aa61b7b628623083b",
+      "updatedAt": "2026-10-26T18:09:06.053Z"
+    },
     "[\"cat\",\"大家、いい知らせニャ。\",\"moku-happy\",false]": {
-      "status": "ng",
-      "version": "6648c175f9f78c9f9993",
-      "updatedAt": "2026-10-26T17:44:32.524Z"
+      "status": "ok",
+      "version": "ca9e3467dace3c51b244",
+      "updatedAt": "2026-10-26T18:07:00.020Z"
     },
     "[\"cat\",\"大家、やっぱり頼りになるニャ。\",\"moku\",false]": {
       "status": "ok",
       "version": "9acef50d7ca4b290fa90",
       "updatedAt": "2026-10-26T17:09:50.747Z"
+    },
+    "[\"cat\",\"大家……助け……\",\"tragedy-fading\",false]": {
+      "status": "ok",
+      "version": "b06ddedd48cf158478fb",
+      "updatedAt": "2026-10-26T18:15:02.164Z"
     },
     "[\"cat\",\"大家ー！ ちょっと知恵を貸すニャ！\",\"moku-surprised\",false]": {
       "status": "ok",
@@ -290,6 +405,11 @@
       "status": "ok",
       "version": "394ae27fed74b78092b3",
       "updatedAt": "2026-10-26T17:11:21.183Z"
+    },
+    "[\"cat\",\"明日からちゃんとするニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "061a3c70a9bfe199d3ef",
+      "updatedAt": "2026-10-26T18:12:51.530Z"
     },
     "[\"cat\",\"明日からやるニャ。今日は準備の日ニャ。\",\"moku\",false]": {
       "status": "ok",
@@ -331,10 +451,40 @@
       "version": "cb4bf28a20b2e385bff6",
       "updatedAt": "2026-10-26T17:39:10.311Z"
     },
+    "[\"manager\",\"……それはそうだけどよ。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "b9b24a29aa0182ce24de",
+      "updatedAt": "2026-10-26T18:12:38.912Z"
+    },
+    "[\"manager\",\"……って、おい！！ 燃えてんじゃねぇか！！\",\"normal\",false]": {
+      "status": "ok",
+      "version": "948301d76b4b16239a15",
+      "updatedAt": "2026-10-26T18:10:37.079Z"
+    },
+    "[\"manager\",\"……なんだ、あの煙？\",\"tragedy-shock\",false]": {
+      "status": "ok",
+      "version": "a88bd066e36be01ff610",
+      "updatedAt": "2026-10-26T18:13:34.792Z"
+    },
+    "[\"manager\",\"……なんだ？\",\"normal\",false]": {
+      "status": "ok",
+      "version": "f9c7fda20f99cd4195c7",
+      "updatedAt": "2026-10-26T18:09:37.682Z"
+    },
+    "[\"manager\",\"……なんだよ、妙に素直だな。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "2772f8d48617b23a8407",
+      "updatedAt": "2026-10-26T18:13:17.763Z"
+    },
     "[\"manager\",\"……は！？ おいおいおい！ 下、燃えてんじゃねぇか！！\",\"normal\",false]": {
       "status": "ok",
       "version": "87198c204ca09e76cf70",
       "updatedAt": "2026-10-26T17:38:46.324Z"
+    },
+    "[\"manager\",\"……は？ 何言ってんだ、お前。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "a9711f17fdbeee0dfc11",
+      "updatedAt": "2026-10-26T18:10:07.338Z"
     },
     "[\"manager\",\"……まぁ、家賃さえ払ってくれりゃいいか。\",\"normal\",false]": {
       "status": "ok",
@@ -345,6 +495,11 @@
       "status": "ok",
       "version": "c66b5cd02b3e6f4b8761",
       "updatedAt": "2026-10-26T17:11:30.403Z"
+    },
+    "[\"manager\",\"……モクは言われたとおりにしただけだ。俺がちゃんと考えてりゃ、こんなことには……。\",\"inner\",false]": {
+      "status": "ok",
+      "version": "2172a91462746de47a35",
+      "updatedAt": "2026-10-26T18:09:31.465Z"
     },
     "[\"manager\",\"……何があったんだよ、このアパート。\\nまずは、たった一人の住人に会ってみるか。\",\"inner\",false]": {
       "status": "ok",
@@ -362,14 +517,24 @@
       "updatedAt": "2026-10-26T17:41:54.659Z"
     },
     "[\"manager\",\"……確かに。なんで冷凍庫なんて言ったんだ、俺。\",\"inner\",false]": {
-      "status": "ng",
-      "version": "ef1fa699b902a9444a84",
-      "updatedAt": "2026-10-26T17:42:51.562Z"
+      "status": "ok",
+      "version": "718dccadf9192ea8f11f",
+      "updatedAt": "2026-10-26T18:07:52.768Z"
+    },
+    "[\"manager\",\"……帰る場所もなくなりそうなんだぞ。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "1259b031b2e331664fe3",
+      "updatedAt": "2026-10-26T18:09:45.951Z"
     },
     "[\"manager\",\"……待てよ。外に捨てろって言ったの、俺じゃねぇか。\",\"inner\",false]": {
       "status": "ok",
       "version": "a808dc073de33d8ed5f0",
       "updatedAt": "2026-10-26T17:39:06.128Z"
+    },
+    "[\"manager\",\"ああ。いつまでも灰皿いっぱいにしておくわけにもいかねえだろ。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "62d8ddaa182d2a406052",
+      "updatedAt": "2026-10-26T18:13:09.272Z"
     },
     "[\"manager\",\"いいから来い！ 今は命が先だ！！\",\"normal\",false]": {
       "status": "ok",
@@ -377,9 +542,9 @@
       "updatedAt": "2026-10-26T17:39:21.601Z"
     },
     "[\"manager\",\"うわっくっせぇ！！煙だらけじゃねーか！\",\"retort\",false]": {
-      "status": "ng",
-      "version": "042427cf2282546ff8e5",
-      "updatedAt": "2026-10-26T17:43:17.130Z"
+      "status": "ok",
+      "version": "f9b6c20725fd4de8e6f3",
+      "updatedAt": "2026-10-26T18:06:53.317Z"
     },
     "[\"manager\",\"お、起きたのか。\",\"normal\",false]": {
       "status": "ok",
@@ -391,6 +556,16 @@
       "version": "5006b19d1e6212d4fecc",
       "updatedAt": "2026-10-26T17:11:45.161Z"
     },
+    "[\"manager\",\"おい、嘘だろ！？ モク！！\",\"tragedy-panic\",false]": {
+      "status": "ok",
+      "version": "4fd382fc9d82c13d3831",
+      "updatedAt": "2026-10-26T18:13:38.228Z"
+    },
+    "[\"manager\",\"おい……返事しろよ……！\",\"tragedy-grief\",false]": {
+      "status": "ng",
+      "version": "a9b1195eb6a1d75e0251",
+      "updatedAt": "2026-10-26T18:15:59.462Z"
+    },
     "[\"manager\",\"おお！ どのくらい？\",\"normal\",false]": {
       "status": "ok",
       "version": "f9de57ab9529046e056d",
@@ -401,6 +576,21 @@
       "version": "23acfbe8dd5acbad65c5",
       "updatedAt": "2026-10-26T17:38:56.042Z"
     },
+    "[\"manager\",\"くそっ、もう間に合わねぇ！ モク、逃げるぞ！\",\"normal\",false]": {
+      "status": "ok",
+      "version": "7a202838382592fc9538",
+      "updatedAt": "2026-10-26T18:09:00.861Z"
+    },
+    "[\"manager\",\"くそっ、もう無理だ！ モク、逃げるぞ！！\",\"normal\",false]": {
+      "status": "ok",
+      "version": "ccd7d05bc2d6816a95e1",
+      "updatedAt": "2026-10-26T18:10:45.080Z"
+    },
+    "[\"manager\",\"こんなことで毎回呼ぶなよ……。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "9069149354827d9eb5aa",
+      "updatedAt": "2026-10-26T18:12:31.578Z"
+    },
     "[\"manager\",\"じゃあ中のもん出せばいいだろ！\",\"normal\",false]": {
       "status": "ok",
       "version": "f5edebc7a55101a64aed",
@@ -409,7 +599,17 @@
     "[\"manager\",\"せめて両足ぶんは今日やれ！\",\"normal\",false]": {
       "status": "ng",
       "version": "36cbe5e3f96612473759",
-      "updatedAt": "2026-10-26T17:12:26.667Z"
+      "updatedAt": "2026-10-26T18:08:31.742Z"
+    },
+    "[\"manager\",\"そういうときだけ都合よく信用するなよ。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "2c40f43cc117908d5b4b",
+      "updatedAt": "2026-10-26T18:13:27.586Z"
+    },
+    "[\"manager\",\"だから今日やれって言ってんだろぉぉ！！\",\"normal\",false]": {
+      "status": "ok",
+      "version": "ca9da22ec8f120e35f9c",
+      "updatedAt": "2026-10-26T18:11:05.665Z"
     },
     "[\"manager\",\"だったらちゃんと火を消せよ！\",\"retort\",false]": {
       "status": "ok",
@@ -426,15 +626,35 @@
       "version": "955691a8d85ec2cbdb23",
       "updatedAt": "2026-10-26T17:41:40.588Z"
     },
+    "[\"manager\",\"テレビなんかどうでもいい！！ 命が先だろ！！\",\"normal\",false]": {
+      "status": "ok",
+      "version": "a520c0939bb236d3aea6",
+      "updatedAt": "2026-10-26T18:10:53.815Z"
+    },
     "[\"manager\",\"とにかく水！ 早く持ってこい！\",\"normal\",false]": {
       "status": "ok",
       "version": "aa46f9560a53a36c164c",
       "updatedAt": "2026-10-26T17:42:09.980Z"
     },
+    "[\"manager\",\"とりあえず、ゴミ袋にまとめて捨てとけ。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "686b43ead0721a6ed39c",
+      "updatedAt": "2026-10-26T18:12:59.167Z"
+    },
+    "[\"manager\",\"なんかうまいこと使われてる気がする……。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "8da298758c355d471a0e",
+      "updatedAt": "2026-10-26T18:12:48.295Z"
+    },
     "[\"manager\",\"なんだよ、今度は。\",\"normal\",false]": {
       "status": "ok",
       "version": "86b0048333f56d99a3cd",
       "updatedAt": "2026-10-26T17:38:05.055Z"
+    },
+    "[\"manager\",\"なんだよ！ 今度は！！\",\"normal\",false]": {
+      "status": "ok",
+      "version": "3538bed88582e2403971",
+      "updatedAt": "2026-10-26T18:10:57.049Z"
     },
     "[\"manager\",\"なんで俺が決めるんだよ……。\",\"weary\",false]": {
       "status": "ok",
@@ -451,15 +671,60 @@
       "version": "6061d32aed6beab2c194",
       "updatedAt": "2026-10-25T07:26:07.506Z"
     },
+    "[\"manager\",\"もうゴミと一緒に捨てちまえ！\",\"normal\",false]": {
+      "status": "ok",
+      "version": "6b7a8a4d461f95414c11",
+      "updatedAt": "2026-10-26T18:09:49.351Z"
+    },
+    "[\"manager\",\"もうチャーハンは諦めろ！ 命の方が大事だろ！！\",\"normal\",false]": {
+      "status": "ng",
+      "version": "230d8f1aa54e77c550d3",
+      "updatedAt": "2026-10-26T18:09:16.135Z"
+    },
+    "[\"manager\",\"モク！！\",\"tragedy-panic\",false]": {
+      "status": "ok",
+      "version": "dc7514926a756b6db922",
+      "updatedAt": "2026-10-26T18:15:04.014Z"
+    },
+    "[\"manager\",\"モク！？ まだ中にいるのか！？\",\"tragedy-panic\",false]": {
+      "status": "ng",
+      "version": "201da6c50ba21303c302",
+      "updatedAt": "2026-10-26T18:14:23.985Z"
+    },
+    "[\"manager\",\"モク……頼む、返事をしてくれ。\",\"tragedy-grief\",false]": {
+      "status": "ok",
+      "version": "0c1cca2e8685df48a44d",
+      "updatedAt": "2026-10-26T18:16:11.182Z"
+    },
+    "[\"manager\",\"煙……？\",\"normal\",false]": {
+      "status": "ng",
+      "version": "e9686fcf2c3c8f2d063a",
+      "updatedAt": "2026-10-26T18:10:28.161Z"
+    },
     "[\"manager\",\"何やってんだ、俺……。こんなことになるって、少し考えりゃ分かっただろ……。\",\"inner\",false]": {
       "status": "ok",
       "version": "ff24f86379363397438b",
       "updatedAt": "2026-10-26T17:39:27.332Z"
     },
+    "[\"manager\",\"火を消すんだよ！\",\"normal\",false]": {
+      "status": "ok",
+      "version": "580ea58fb10f7fd7b72a",
+      "updatedAt": "2026-10-26T18:12:06.710Z"
+    },
+    "[\"manager\",\"火事だ！！ 早く逃げろ！！\",\"tragedy-panic\",false]": {
+      "status": "ok",
+      "version": "c00d1f3e47b8533cdd36",
+      "updatedAt": "2026-10-26T18:13:41.563Z"
+    },
+    "[\"manager\",\"灰皿ごと水に沈めろ！\",\"normal\",false]": {
+      "status": "ng",
+      "version": "c29d12f68b918d9dcf3e",
+      "updatedAt": "2026-10-26T18:11:34.925Z"
+    },
     "[\"manager\",\"灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！\",\"normal\",false]": {
       "status": "ng",
-      "version": "704688e6eac162684c18",
-      "updatedAt": "2026-10-26T17:41:17.625Z"
+      "version": "123b34bc05d2c5685e57",
+      "updatedAt": "2026-10-26T18:07:42.802Z"
     },
     "[\"manager\",\"換気扇より先にタバコ止めろよ！\",\"retort\",false]": {
       "status": "ok",
@@ -476,10 +741,25 @@
       "version": "0a51db0af16748710c47",
       "updatedAt": "2026-10-26T17:43:42.166Z"
     },
+    "[\"manager\",\"今日やれ！！\",\"normal\",false]": {
+      "status": "ok",
+      "version": "3c75abc4aab55d44410e",
+      "updatedAt": "2026-10-26T18:12:53.951Z"
+    },
+    "[\"manager\",\"最初からやれよ！\",\"normal\",false]": {
+      "status": "ok",
+      "version": "19bf107f1a1c777f2302",
+      "updatedAt": "2026-10-26T18:12:22.778Z"
+    },
     "[\"manager\",\"捨てろよ。\",\"normal\",false]": {
       "status": "ok",
       "version": "771cfbcd5cb497d7d577",
       "updatedAt": "2026-10-26T17:38:10.524Z"
+    },
+    "[\"manager\",\"待ってろ！！ 今そっちに——！\",\"tragedy-panic\",false]": {
+      "status": "ok",
+      "version": "d822aea1a59788657242",
+      "updatedAt": "2026-10-26T18:14:55.294Z"
     },
     "[\"manager\",\"部屋、少しは片づけたらどうだ？\",\"normal\",false]": {
       "status": "ok",
@@ -487,9 +767,9 @@
       "updatedAt": "2026-10-25T07:26:19.732Z"
     },
     "[\"manager\",\"立ってた場所だけじゃねぇか！\",\"normal\",false]": {
-      "status": "ng",
-      "version": "51fc5dd898d0248c844d",
-      "updatedAt": "2026-10-26T17:45:16.542Z"
+      "status": "ok",
+      "version": "fd3bdd9e9c162b4b7c8e",
+      "updatedAt": "2026-10-26T18:07:05.640Z"
     }
   }
 }

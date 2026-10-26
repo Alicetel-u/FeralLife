@@ -60,3 +60,30 @@ test('smoke, freezer and standing-place corrections are applied only as spoken p
   assert.equal(row.hash,VOICE_MANIFEST[row.lineKey].hash);
  }
 });
+
+const nextTexts=[
+ 'もう一本……灰皿が山盛りニャ。','せめて両足ぶんは今日やれ！',
+ '灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！','もうチャーハンは諦めろ！ 命の方が大事だろ！！',
+ '煙……？','灰皿ごと水に沈めろ！','モク！？ まだ中にいるのか！？','おい……返事しろよ……！'
+];
+const nextReportedVersions=['5cbc2827f3758868c2a9','36cbe5e3f96612473759','123b34bc05d2c5685e57','230d8f1aa54e77c550d3','e9686fcf2c3c8f2d063a','c29d12f68b918d9dcf3e','201da6c50ba21303c302','a9b1195eb6a1d75e0251'];
+
+test('the next eight repairs return to rechecking without reopening the six accepted previous repairs',()=>{
+ const accepted=texts.filter(text=>!nextTexts.includes(text)),decisions={};
+ for(const text of accepted){const row=VOICE_REVIEW_CATALOG.find(r=>r.line.text===text);decisions[row.id]={status:'ok',version:row.version,updatedAt:'2026-10-26T18:16:11.182Z'};}
+ for(let i=0;i<nextTexts.length;i++){const row=VOICE_REVIEW_CATALOG.find(r=>r.line.text===nextTexts[i]);decisions[row.id]={status:'ng',version:nextReportedVersions[i],updatedAt:'2026-10-26T18:16:11.182Z'};assert.notEqual(row.version,nextReportedVersions[i]);assert.equal(row.repairReview,true);}
+ const state=voiceReviewEmpty();voiceReviewApplyPublished(state,{schema:1,decisions},VOICE_REVIEW_CATALOG);state.filters.status='recheck';
+ const recheck=new Set(voiceReviewFilter(VOICE_REVIEW_CATALOG,state).map(r=>r.id));
+ for(const text of nextTexts)assert.ok(recheck.has(VOICE_REVIEW_CATALOG.find(r=>r.line.text===text).id));
+ for(const text of accepted)assert.ok(!recheck.has(VOICE_REVIEW_CATALOG.find(r=>r.line.text===text).id));
+ voiceReviewOpenPending(state);const pending=new Set(voiceReviewFilter(VOICE_REVIEW_CATALOG,state).map(r=>r.id));
+ for(const text of [...nextTexts,...accepted])assert.ok(!pending.has(VOICE_REVIEW_CATALOG.find(r=>r.line.text===text).id));
+});
+
+test('freezer keeps natural mixed writing while the fire plea uses panic instead of commanding delivery',async()=>{
+ const repairs=JSON.parse(await readFile(new URL('../config/voice-repairs.json',import.meta.url),'utf8')).lines;
+ const freezer=repairs.find(r=>r.text===nextTexts[2]);assert.ok(freezer.spokenText.includes('灰皿'));assert.ok(freezer.spokenText.includes('れいとうこ'));assert.ok(freezer.spokenText.includes('ぶち込め'));
+ const plea=repairs.find(r=>r.text==='おい……返事しろよ……！');assert.ok(plea.tags.includes('[panicked]'));assert.ok(plea.tags.includes('[pleading]'));
+ assert.ok(!plea.tags.some(tag=>/angry|confident|lighthearted|playful|shouting/.test(tag)));assert.ok(plea.settings.speed>=1);
+ const forceful=repairs.find(r=>r.text==='灰皿ごと水に沈めろ！');assert.ok(forceful.tags.includes('[confident]'));assert.ok(forceful.tags.includes('[shouting]'));
+});
