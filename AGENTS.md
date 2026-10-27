@@ -49,3 +49,6 @@
 - The user requests production deployment after each completed change. After building and passing the existing tests, commit the intended task changes and push to `main` to trigger `.github/workflows/deploy-pages.yml`.
 - Verify the GitHub Pages workflow succeeds and report the production URL. If deployment fails, investigate and report the actual state.
 - Exclude unrelated local files, credentials, and preview-only output from commits.
+
+## Voice review reachability
+- Build review targets through tools/voice-reachability.mjs using real selectable choices and rewind handoffs. Do not treat every retained script array as current playback. Keep inactive voice identities for historical report import and preserve old save recordings, but exclude them from every active review queue and paid report-based regeneration.

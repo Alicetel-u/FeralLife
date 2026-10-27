@@ -1,4 +1,4 @@
-import {VOICE_REVIEW_CATALOG} from './voice-review-catalog.js';
+import {VOICE_REVIEW_CATALOG,VOICE_REVIEW_RETIRED} from './voice-review-catalog.js';
 import {VOICE_REVIEW_KEY,VOICE_REVIEW_ISSUES,VOICE_REVIEW_SPEAKERS,voiceReviewSyncCatalog,voiceReviewOpenPending,voiceReviewNeedsInitial,voiceReviewNeedsRecheck,voiceReviewRows,voiceReviewHasRepair,voiceReviewLoad,voiceReviewStatus,voiceReviewMark,voiceReviewImport,voiceReviewBackup,voiceReviewFilter,voiceReviewExport} from './voice-review-store.js';
 import {createVoicePlayer} from './voice-player.js';
 import {VOICE_REVIEW_PUBLISHED} from './voice-review-published.js';
@@ -75,7 +75,7 @@ export function mountVoiceReview(root,{onBack,storage,catalog=VOICE_REVIEW_CATAL
   catch(error){if(error.name==='AbortError')return;}
   downloadReport(file);
  }
- function applyImport(text){try{if(text.length>5000000)throw Error('ファイルが大きすぎます。');const count=voiceReviewImport(state,voiceReviewParseReport(text,catalog));save();screen='export';render();toast(`${count}件を統合しました。`);}catch(error){toast(error.message||'読み込めませんでした。');}}
+ function applyImport(text){try{if(text.length>5000000)throw Error('ファイルが大きすぎます。');const count=voiceReviewImport(state,voiceReviewParseReport(text,[...catalog,...VOICE_REVIEW_RETIRED]));save();screen='export';render();toast(`${count}件を統合しました。`);}catch(error){toast(error.message||'読み込めませんでした。');}}
  const onClick=async event=>{
   const button=event.target.closest('button');if(!button||!root.contains(button))return;event.stopPropagation();
   const issue=button.dataset.vrIssue,row=current();

@@ -1,4 +1,4 @@
-// Generated from the current playable script; rebuild with tools/build-voice-review.mjs.
+// Generated from reachable gameplay; rebuild with tools/build-voice-review.mjs.
 export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"モクですニャ。よろしくニャ。\",\"moku\",false]",
@@ -881,156 +881,6 @@ export const VOICE_REVIEW_CATALOG = [
     "version": "094a091a67c1c8fa02f9"
   },
   {
-    "id": "[\"cat\",\"吸い殻の火は消したニャ。大家にまた怒鳴られるのはごめんニャ。\",\"moku\",false]",
-    "reviewId": "69d18ab18a74bac3",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ambient/runtime/attempt-2/ash/water/23.000:0",
-    "line": {
-      "speaker": "cat",
-      "text": "吸い殻の火は消したニャ。大家にまた怒鳴られるのはごめんニャ。"
-    },
-    "version": "3a8742ce78d9b992a93c"
-  },
-  {
-    "id": "[\"cat\",\"朝まで動画を見てしまったニャ。目を閉じたら、そのまま寝そうニャ。\",\"moku\",false]",
-    "reviewId": "72ddf44f2a9c42db",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ambient/runtime/attempt-2/ash/water/32.025:0",
-    "line": {
-      "speaker": "cat",
-      "text": "朝まで動画を見てしまったニャ。目を閉じたら、そのまま寝そうニャ。"
-    },
-    "version": "31ac217fd91a872e1fc0"
-  },
-  {
-    "id": "[\"cat\",\"お腹が鳴ったニャ。何か食べたいけど、立つのが面倒ニャ。\",\"moku\",false]",
-    "reviewId": "cedaae82da27f37f",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ambient/runtime/attempt-2/ash/water/32.025:1",
-    "line": {
-      "speaker": "cat",
-      "text": "お腹が鳴ったニャ。何か食べたいけど、立つのが面倒ニャ。"
-    },
-    "version": "5e9ee700d18575766955"
-  },
-  {
-    "id": "[\"cat\",\"冷蔵庫に何か残ってたはずニャ。まず中を見てみるニャ。\",\"moku\",false]",
-    "reviewId": "40747be403720d3a",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ambient/runtime/attempt-2/ash/water/36.625:0",
-    "line": {
-      "speaker": "cat",
-      "text": "冷蔵庫に何か残ってたはずニャ。まず中を見てみるニャ。"
-    },
-    "version": "6bec90b0053fdb4e666c"
-  },
-  {
-    "id": "[\"cat\",\"食べ終わったら、容器だけでも片づけるニャ。\",\"moku\",false]",
-    "reviewId": "cecf66330053e9dd",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ambient/runtime/attempt-2/ash/water/36.625:1",
-    "line": {
-      "speaker": "cat",
-      "text": "食べ終わったら、容器だけでも片づけるニャ。"
-    },
-    "version": "2a143332d7db225331b6"
-  },
-  {
-    "id": "[\"cat\",\"火を使わずに済むご飯、楽でいいニャ。洗い物も少ないニャ。\",\"moku\",false]",
-    "reviewId": "e514706a0a057717",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ambient/runtime/attempt-2/ash/water/dinner/coronation/37.000:0",
-    "line": {
-      "speaker": "cat",
-      "text": "火を使わずに済むご飯、楽でいいニャ。洗い物も少ないニャ。"
-    },
-    "version": "92a447f5a6f94a9ae5fa"
-  },
-  {
-    "id": "[\"cat\",\"……すぅ……すぅ……。\",\"moku\",false]",
-    "reviewId": "cf45cc5eb750fb7a",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ambient/runtime/attempt-2/ash/water/dinner/coronation/38.150:0",
-    "line": {
-      "speaker": "cat",
-      "text": "……すぅ……すぅ……。"
-    },
-    "version": "c6be8d656eeb54569bb4"
-  },
-  {
-    "id": "[\"cat\",\"よく寝たニャ。朝の空気は気持ちいいニャ。\",\"moku\",false]",
-    "reviewId": "442301410bff153a",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ambient/runtime/attempt-2/ash/water/dinner/coronation/55.025:0",
-    "line": {
-      "speaker": "cat",
-      "text": "よく寝たニャ。朝の空気は気持ちいいニャ。"
-    },
-    "version": "cdca3e80ab7e9542913a"
-  },
-  {
-    "id": "[\"cat\",\"今日は静かニャ。こういう朝なら、悪くないニャ。\",\"moku\",false]",
-    "reviewId": "2a40b600c00513f2",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ambient/runtime/attempt-2/ash/water/dinner/coronation/55.025:1",
-    "line": {
-      "speaker": "cat",
-      "text": "今日は静かニャ。こういう朝なら、悪くないニャ。"
-    },
-    "version": "f3d9bea3178182fded70"
-  },
-  {
-    "id": "[\"cat\",\"腹が減ったニャ……。でも、まぶたも重いニャ。\",\"moku\",false]",
-    "reviewId": "0ea79634321cc0a0",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ambient/runtime/attempt-2/ash/water/pending:0",
-    "line": {
-      "speaker": "cat",
-      "text": "腹が減ったニャ……。でも、まぶたも重いニャ。"
-    },
-    "version": "c377b9306c43fa28855f"
-  },
-  {
     "id": "[\"cat\",\"大家さ〜ん。ちょっといいかニャ？\",\"moku\",false]",
     "reviewId": "c09afdc86541cf34",
     "repaired": false,
@@ -1402,200 +1252,6 @@ export const VOICE_REVIEW_CATALOG = [
     "version": "8672b42872949db048b6"
   },
   {
-    "id": "[\"manager\",\"灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！\",\"normal\",false]",
-    "reviewId": "a0659451c400b6a7",
-    "repaired": true,
-    "repairReview": true,
-    "repairComment": "全文をかなにする指定をやめ、「冷凍庫」の読みだけを指定して再生成。自然なつながりと勢いを付ける。",
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:0",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！"
-    },
-    "version": "d6921c8c2df98b605bc9"
-  },
-  {
-    "id": "[\"cat\",\"えっ！？ 冷凍チャーハンと一緒でいいニャ？\",\"moku-surprised\",false]",
-    "reviewId": "89abfc27a9044e8f",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:1",
-    "line": {
-      "speaker": "cat",
-      "emotion": "surprised",
-      "text": "えっ！？ 冷凍チャーハンと一緒でいいニャ？"
-    },
-    "version": "e02b0fb20669251cac2a"
-  },
-  {
-    "id": "[\"manager\",\"チャーハンより先に冷やせ！ 緊急事態だ！\",\"normal\",false]",
-    "reviewId": "3f021d7a3d6dcb45",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:2",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "チャーハンより先に冷やせ！ 緊急事態だ！"
-    },
-    "version": "955691a8d85ec2cbdb23"
-  },
-  {
-    "id": "[\"cat\",\"了解ニャ！ ……でも冷凍庫パンパンだニャ。\",\"moku\",false]",
-    "reviewId": "1688d498fcadeb26",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:3",
-    "line": {
-      "speaker": "cat",
-      "emotion": "tired",
-      "text": "了解ニャ！ ……でも冷凍庫パンパンだニャ。"
-    },
-    "version": "1d4571d4fb12b2d416a0"
-  },
-  {
-    "id": "[\"manager\",\"じゃあ中のもん出せばいいだろ！\",\"normal\",false]",
-    "reviewId": "975332cdcd8a8cfe",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:4",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "じゃあ中のもん出せばいいだろ！"
-    },
-    "version": "f5edebc7a55101a64aed"
-  },
-  {
-    "id": "[\"cat\",\"……あっ。\",\"moku-surprised\",false]",
-    "reviewId": "95044408a4ef259f",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:7",
-    "line": {
-      "speaker": "cat",
-      "emotion": "surprised",
-      "text": "……あっ。"
-    },
-    "version": "bfdcebb8e8a4af91e263"
-  },
-  {
-    "id": "[\"manager\",\"……何やってんだ？\",\"normal\",false]",
-    "reviewId": "d7c22f78fea6d975",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:8",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "……何やってんだ？"
-    },
-    "version": "d0daff06469ee3b0cb8e"
-  },
-  {
-    "id": "[\"cat\",\"チャーハンは無事ニャ。\",\"moku\",false]",
-    "reviewId": "166c5087389d58ed",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:9",
-    "line": {
-      "speaker": "cat",
-      "emotion": "tired",
-      "text": "チャーハンは無事ニャ。"
-    },
-    "version": "d05052ca0bee269ce009"
-  },
-  {
-    "id": "[\"manager\",\"チャーハンの心配してる場合かよ！ 火！ 火がついてんぞ！！\",\"normal\",false]",
-    "reviewId": "652a7d9f6b3ed11d",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:10",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "チャーハンの心配してる場合かよ！ 火！ 火がついてんぞ！！"
-    },
-    "version": "445e3229736f23a91e2b"
-  },
-  {
-    "id": "[\"cat\",\"ニャ！？ 紙くずが燃えてるニャ！\",\"moku-surprised\",false]",
-    "reviewId": "5464877b90f2c513",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:11",
-    "line": {
-      "speaker": "cat",
-      "emotion": "surprised",
-      "text": "ニャ！？ 紙くずが燃えてるニャ！"
-    },
-    "version": "3ce9add15ea010e48280"
-  },
-  {
-    "id": "[\"manager\",\"とにかく水！ 早く持ってこい！\",\"normal\",false]",
-    "reviewId": "eed094380e6e4f22",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:12",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "とにかく水！ 早く持ってこい！"
-    },
-    "version": "aa46f9560a53a36c164c"
-  },
-  {
-    "id": "[\"cat\",\"それなら最初から水でよかったんじゃないかニャ……？\",\"moku\",false]",
-    "reviewId": "1f073e8076a7df11",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:13",
-    "line": {
-      "speaker": "cat",
-      "emotion": "neutral",
-      "text": "それなら最初から水でよかったんじゃないかニャ……？"
-    },
-    "version": "b610b2bee30a80734c8e"
-  },
-  {
     "id": "[\"manager\",\"……あ。\",\"normal\",false]",
     "reviewId": "929eebd1e69f1bcd",
     "repaired": false,
@@ -1603,99 +1259,13 @@ export const VOICE_REVIEW_CATALOG = [
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
     "order": 30,
-    "source": "act1/ash/freezer:14",
+    "source": "act1/ash/runtime:11",
     "line": {
       "speaker": "manager",
       "emotion": "neutral",
       "text": "……あ。"
     },
     "version": "1fc91d757f8899f88eb3"
-  },
-  {
-    "id": "[\"manager\",\"……確かに。なんで冷凍庫なんて言ったんだ、俺。\",\"inner\",false]",
-    "reviewId": "d5392f0ed2ff4551",
-    "repaired": true,
-    "repairReview": true,
-    "repairComment": "「冷凍庫」を「れいとうこ」と明示して再生成。心の声も聞き取りやすい会話の演技に調整。",
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:15",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "……確かに。なんで冷凍庫なんて言ったんだ、俺。",
-      "innerVoice": true
-    },
-    "version": "718dccadf9192ea8f11f"
-  },
-  {
-    "id": "[\"manager\",\"くそっ、もう間に合わねぇ！ モク、逃げるぞ！\",\"normal\",false]",
-    "reviewId": "2715474624f8c811",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:17",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "くそっ、もう間に合わねぇ！ モク、逃げるぞ！"
-    },
-    "version": "7a202838382592fc9538"
-  },
-  {
-    "id": "[\"cat\",\"待つニャ！ 冷凍庫のチャーハン、出しっぱなしニャ！\",\"moku-surprised\",false]",
-    "reviewId": "94f2d809cfe64e82",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:18",
-    "line": {
-      "speaker": "cat",
-      "emotion": "surprised",
-      "text": "待つニャ！ 冷凍庫のチャーハン、出しっぱなしニャ！"
-    },
-    "version": "304aa61b7b628623083b"
-  },
-  {
-    "id": "[\"manager\",\"もうチャーハンは諦めろ！ 命の方が大事だろ！！\",\"normal\",false]",
-    "reviewId": "394fe794a039d0ca",
-    "repaired": true,
-    "repairReview": true,
-    "repairComment": "「諦めろ」「命の方」の読みを明示して再生成。勢いのある呼びかけを維持。",
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:19",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "もうチャーハンは諦めろ！ 命の方が大事だろ！！"
-    },
-    "version": "c45f1ae230d12374eeae"
-  },
-  {
-    "id": "[\"manager\",\"……モクは言われたとおりにしただけだ。俺がちゃんと考えてりゃ、こんなことには……。\",\"inner\",false]",
-    "reviewId": "c36cf017b9bc3f05",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:21",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "……モクは言われたとおりにしただけだ。俺がちゃんと考えてりゃ、こんなことには……。",
-      "innerVoice": true
-    },
-    "version": "2172a91462746de47a35"
   },
   {
     "id": "[\"cat\",\"……大家。\",\"moku\",false]",
@@ -1705,61 +1275,13 @@ export const VOICE_REVIEW_CATALOG = [
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
     "order": 30,
-    "source": "act1/ash/freezer:22",
+    "source": "act1/ash/runtime:16",
     "line": {
       "speaker": "cat",
       "emotion": "sad",
       "text": "……大家。"
     },
     "version": "4b9262f0f6cd6c27aa43"
-  },
-  {
-    "id": "[\"manager\",\"……なんだ？\",\"normal\",false]",
-    "reviewId": "1bda8982aabda616",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:23",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "……なんだ？"
-    },
-    "version": "f9c7fda20f99cd4195c7"
-  },
-  {
-    "id": "[\"cat\",\"……チャーハン、もう食べられないかニャ。\",\"moku\",false]",
-    "reviewId": "b930797ca41401bc",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:24",
-    "line": {
-      "speaker": "cat",
-      "emotion": "sad",
-      "text": "……チャーハン、もう食べられないかニャ。"
-    },
-    "version": "6af4c1840fe112bad54c"
-  },
-  {
-    "id": "[\"manager\",\"……帰る場所もなくなりそうなんだぞ。\",\"normal\",false]",
-    "reviewId": "ac76d1ed4b4aa668",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/ash/freezer:25",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "……帰る場所もなくなりそうなんだぞ。"
-    },
-    "version": "1259b031b2e331664fe3"
   },
   {
     "id": "[\"manager\",\"もうゴミと一緒に捨てちまえ！\",\"normal\",false]",
@@ -2559,57 +2081,6 @@ export const VOICE_REVIEW_CATALOG = [
       "voicePerformance": "tragedy-grief"
     },
     "version": "0c1cca2e8685df48a44d"
-  },
-  {
-    "id": "[\"cat\",\"家賃、入ってるニャ。数えたから、たぶん足りるニャ。\",\"moku\",false]",
-    "reviewId": "b11f4ef711d33262",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/runtime/attempt-2/ash/water/undefined:0",
-    "line": {
-      "speaker": "cat",
-      "name": "モク",
-      "text": "家賃、入ってるニャ。数えたから、たぶん足りるニャ。",
-      "emotion": "neutral"
-    },
-    "version": "efc81f9a0f8be7939205"
-  },
-  {
-    "id": "[\"cat\",\"……ちゃんと足りたニャ？ よかったニャ。食費を少し調整したニャ。\",\"moku-happy\",false]",
-    "reviewId": "90d182022f878a74",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/runtime/attempt-2/ash/water/undefined:1",
-    "line": {
-      "speaker": "cat",
-      "name": "モク",
-      "text": "……ちゃんと足りたニャ？ よかったニャ。食費を少し調整したニャ。",
-      "emotion": "happy"
-    },
-    "version": "055be0d85bca42d2b82e"
-  },
-  {
-    "id": "[\"cat\",\"偉いって言われると、次も払わなきゃって思うニャ。いや、最初から払うけどニャ。\",\"moku\",false]",
-    "reviewId": "fdeb71170adb77a9",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ash",
-    "sceneLabel": "トラブル1｜灰皿の火事",
-    "order": 30,
-    "source": "act1/runtime/attempt-2/ash/water/undefined:2",
-    "line": {
-      "speaker": "cat",
-      "name": "モク",
-      "text": "偉いって言われると、次も払わなきゃって思うニャ。いや、最初から払うけどニャ。",
-      "emotion": "shy"
-    },
-    "version": "c9c773840543d5bdc199"
   },
   {
     "id": "[\"cat\",\"大家さ〜ん……腹減ったニャ……。\",\"moku\",false]",
@@ -3925,333 +3396,6 @@ export const VOICE_REVIEW_CATALOG = [
     "version": "cc9a4e913e81527902fd"
   },
   {
-    "id": "[\"cat\",\"新しい大家？ モクですニャ。よろしくニャ。\",\"moku\",false]",
-    "reviewId": "188786588f9097b6",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:1",
-    "line": {
-      "speaker": "cat",
-      "emotion": "neutral",
-      "text": "新しい大家？ モクですニャ。よろしくニャ。"
-    },
-    "version": "38b1b770e4991aee5421"
-  },
-  {
-    "id": "[\"manager\",\"…………は？\",\"normal\",false]",
-    "reviewId": "8c800912f53098e1",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:2",
-    "line": {
-      "speaker": "manager",
-      "emotion": "surprised",
-      "text": "…………は？"
-    },
-    "version": "b89aef95592a986d8c3c"
-  },
-  {
-    "id": "[\"cat\",\"……ニャ？\",\"moku-surprised\",false]",
-    "reviewId": "23cc50408f9efa3a",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:3",
-    "line": {
-      "speaker": "cat",
-      "emotion": "surprised",
-      "text": "……ニャ？"
-    },
-    "version": "ec24ad120ecc400c1e58"
-  },
-  {
-    "id": "[\"manager\",\"お、お前……生きてるのか！？\",\"normal\",false]",
-    "reviewId": "2d333cfaa52e1aa7",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:4",
-    "line": {
-      "speaker": "manager",
-      "emotion": "surprised",
-      "text": "お、お前……生きてるのか！？"
-    },
-    "version": "dd9b303600ba0b31c9e3"
-  },
-  {
-    "id": "[\"cat\",\"えっ！？ 勝手に殺さないでニャ！？\",\"moku-surprised\",false]",
-    "reviewId": "a732a3380eeebb39",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:5",
-    "line": {
-      "speaker": "cat",
-      "emotion": "surprised",
-      "text": "えっ！？ 勝手に殺さないでニャ！？"
-    },
-    "version": "4d14eb4b7c44fef6b255"
-  },
-  {
-    "id": "[\"manager\",\"いや、だって……ここ、燃えて……！\",\"normal\",false]",
-    "reviewId": "ce723a6409bcab5d",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:6",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "いや、だって……ここ、燃えて……！"
-    },
-    "version": "49cf7f1db79481a995e3"
-  },
-  {
-    "id": "[\"manager\",\"……夢？\",\"inner\",false]",
-    "reviewId": "0324ef37216e8ccc",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:8",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "……夢？",
-      "innerVoice": true
-    },
-    "version": "f2bc9cec4c7da104331a"
-  },
-  {
-    "id": "[\"manager\",\"いや、違う。あの熱さも、煙の臭いも……。\",\"inner\",false]",
-    "reviewId": "4e09008009e223d5",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:9",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "いや、違う。あの熱さも、煙の臭いも……。",
-      "innerVoice": true
-    },
-    "version": "376de5eab3964a2193ee"
-  },
-  {
-    "id": "[\"manager\",\"全部、覚えてる。\",\"inner\",false]",
-    "reviewId": "04ab50037fcece59",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:10",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "全部、覚えてる。",
-      "innerVoice": true
-    },
-    "version": "e9b94e8b866e4e9f2b46"
-  },
-  {
-    "id": "[\"manager\",\"……お前、さっき灰皿どうした？\",\"normal\",false]",
-    "reviewId": "328c003a523cb0ed",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:11",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "……お前、さっき灰皿どうした？"
-    },
-    "version": "f948e207dc9e983b10cf"
-  },
-  {
-    "id": "[\"cat\",\"灰皿？ そこにあるニャ。\",\"moku-surprised\",false]",
-    "reviewId": "7f1de3976bece41c",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:12",
-    "line": {
-      "speaker": "cat",
-      "emotion": "surprised",
-      "text": "灰皿？ そこにあるニャ。"
-    },
-    "version": "3aa53a4508031a2a2763"
-  },
-  {
-    "id": "[\"manager\",\"いや、そうじゃなくて……！\",\"normal\",false]",
-    "reviewId": "fb7c946865e32622",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:13",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "いや、そうじゃなくて……！"
-    },
-    "version": "0f1669dddafc3ec7fa9a"
-  },
-  {
-    "id": "[\"manager\",\"……時間が、戻ってる？\",\"inner\",false]",
-    "reviewId": "a071298dc55cfbc0",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:16",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "……時間が、戻ってる？",
-      "innerVoice": true
-    },
-    "version": "415eead650992612643c"
-  },
-  {
-    "id": "[\"manager\",\"あのとき俺が、まともな指示を出していれば……。\",\"inner\",false]",
-    "reviewId": "40a73702f574c1a9",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:17",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "あのとき俺が、まともな指示を出していれば……。",
-      "innerVoice": true
-    },
-    "version": "35eea1289e4f01e41947"
-  },
-  {
-    "id": "[\"manager\",\"今度こそ……。\",\"inner\",false]",
-    "reviewId": "a99c80bde48d66fd",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:18",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "今度こそ……。",
-      "innerVoice": true
-    },
-    "version": "faa5f4a76834217b3192"
-  },
-  {
-    "id": "[\"cat\",\"大家？\",\"moku-surprised\",false]",
-    "reviewId": "09f2951d30d6ba89",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:19",
-    "line": {
-      "speaker": "cat",
-      "emotion": "surprised",
-      "text": "大家？"
-    },
-    "version": "a6c780d9e281f8c3710a"
-  },
-  {
-    "id": "[\"manager\",\"……いや、なんでもない。\",\"normal\",false]",
-    "reviewId": "5c90c34f26a88e3d",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:20",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "……いや、なんでもない。"
-    },
-    "version": "fc6d3890255e3c563b80"
-  },
-  {
-    "id": "[\"manager\",\"とりあえず……生きててよかった。\",\"normal\",false]",
-    "reviewId": "75eb749755494e05",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:21",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "とりあえず……生きててよかった。"
-    },
-    "version": "9e22e76ee8ec8d8d5805"
-  },
-  {
-    "id": "[\"cat\",\"ニャ？ なんか知らんけど、ありがとニャ。\",\"moku\",false]",
-    "reviewId": "0910497aff665955",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:22",
-    "line": {
-      "speaker": "cat",
-      "emotion": "shy",
-      "text": "ニャ？ なんか知らんけど、ありがとニャ。"
-    },
-    "version": "dd8d0a9d438348a2e6f6"
-  },
-  {
-    "id": "[\"manager\",\"……もう二度と、あんな光景は見たくねぇ。\",\"inner\",false]",
-    "reviewId": "d68e0ce4c275e9ff",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:24",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "……もう二度と、あんな光景は見たくねぇ。",
-      "innerVoice": true
-    },
-    "version": "4c5b9dfff9b87657767b"
-  },
-  {
     "id": "[\"manager\",\"……なあ、モク。\",\"normal\",false]",
     "reviewId": "01db038f0afc9347",
     "repaired": false,
@@ -4413,70 +3557,6 @@ export const VOICE_REVIEW_CATALOG = [
       "innerVoice": true
     },
     "version": "7efa8863d6d655cc181f"
-  },
-  {
-    "id": "[\"manager\",\"……ああ、知ってるよ。嫌ってほどな。\",\"normal\",false]",
-    "reviewId": "0e369265e0dcdd9c",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-2/ash/trash/restart/rewind:1",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "……ああ、知ってるよ。嫌ってほどな。"
-    },
-    "version": "d54c42f98024e9dafd73"
-  },
-  {
-    "id": "[\"cat\",\"ニャ？ 初めて会ったはずニャ。\",\"moku-surprised\",false]",
-    "reviewId": "07469a6dd5c3b145",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-2/ash/trash/restart/rewind:2",
-    "line": {
-      "speaker": "cat",
-      "emotion": "surprised",
-      "text": "ニャ？ 初めて会ったはずニャ。"
-    },
-    "version": "42bd8dc851eef2c76193"
-  },
-  {
-    "id": "[\"manager\",\"こっちは何回も会ってんだよ……。\",\"normal\",false]",
-    "reviewId": "96f2ff262173fc87",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-2/ash/trash/restart/rewind:3",
-    "line": {
-      "speaker": "manager",
-      "emotion": "neutral",
-      "text": "こっちは何回も会ってんだよ……。"
-    },
-    "version": "383a521b72199a94a21b"
-  },
-  {
-    "id": "[\"cat\",\"……大家、変な人ニャ。\",\"moku\",false]",
-    "reviewId": "0f1cc1942f42354a",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:rewind",
-    "sceneLabel": "巻き戻り後の会話",
-    "order": 70,
-    "source": "act1/runtime/attempt-2/ash/trash/restart/rewind:4",
-    "line": {
-      "speaker": "cat",
-      "emotion": "tired",
-      "text": "……大家、変な人ニャ。"
-    },
-    "version": "03ffe75000c084ae2c93"
   },
   {
     "id": "[\"manager\",\"……また戻った。今度こそ大丈夫だと思ったのに。\",\"inner\",false]",
@@ -5352,111 +4432,6 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "お前はそればっかりか！！"
     },
     "version": "d7be6666145f1228ec47"
-  },
-  {
-    "id": "[\"cat\",\"少し歩くニャ。座りっぱなしで足が固まったニャ。\",\"moku\",false]",
-    "reviewId": "4e35e88d61361427",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act1/ambient/17.000/0:0",
-    "line": {
-      "speaker": "cat",
-      "text": "少し歩くニャ。座りっぱなしで足が固まったニャ。"
-    },
-    "version": "45802c49260ff6fdd369"
-  },
-  {
-    "id": "[\"cat\",\"テレビの続きが気になるニャ。あと一本だけ見たら動くニャ。\",\"moku\",false]",
-    "reviewId": "fa3765be89e6ad73",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act1/ambient/17.050/0:0",
-    "line": {
-      "speaker": "cat",
-      "text": "テレビの続きが気になるニャ。あと一本だけ見たら動くニャ。"
-    },
-    "version": "24a2acb617d48f44015e"
-  },
-  {
-    "id": "[\"cat\",\"新しい大家、声が大きいニャ。静かすぎるよりはいいかニャ。\",\"moku\",false]",
-    "reviewId": "0c0072ed0975f4e9",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act1/ambient/17.050/1:0",
-    "line": {
-      "speaker": "cat",
-      "text": "新しい大家、声が大きいニャ。静かすぎるよりはいいかニャ。"
-    },
-    "version": "d156b816dcd6a27e315c"
-  },
-  {
-    "id": "[\"cat\",\"廊下は涼しいニャ。部屋の空気も入れ替えるかニャ。\",\"moku\",false]",
-    "reviewId": "53d4d94c1204cfc4",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act1/ambient/18.775/0:0",
-    "line": {
-      "speaker": "cat",
-      "text": "廊下は涼しいニャ。部屋の空気も入れ替えるかニャ。"
-    },
-    "version": "012045a65f80c8028b71"
-  },
-  {
-    "id": "[\"cat\",\"次の動画を見たら終わりニャ。……また次が出てきたニャ。\",\"moku\",false]",
-    "reviewId": "9e5a57b35fd73904",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act1/ambient/runtime/attempt-1/22.200:0",
-    "line": {
-      "speaker": "cat",
-      "text": "次の動画を見たら終わりニャ。……また次が出てきたニャ。"
-    },
-    "version": "28323d5ca710bad5c5bf"
-  },
-  {
-    "id": "[\"cat\",\"時計、見なきゃよかったニャ。もうこんな時間ニャ。\",\"moku\",false]",
-    "reviewId": "629b5855d6628ff7",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act1/ambient/runtime/attempt-1/22.200:1",
-    "line": {
-      "speaker": "cat",
-      "text": "時計、見なきゃよかったニャ。もうこんな時間ニャ。"
-    },
-    "version": "2db17a2f75063b02a14b"
-  },
-  {
-    "id": "[\"cat\",\"灰皿がいっぱいニャ。まだ熱いし、大家に聞くニャ。\",\"moku\",false]",
-    "reviewId": "d71c8c55f1d482e0",
-    "repaired": false,
-    "chapter": 1,
-    "scene": "1:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act1/ambient/runtime/attempt-1/pending:0",
-    "line": {
-      "speaker": "cat",
-      "text": "灰皿がいっぱいニャ。まだ熱いし、大家に聞くニャ。"
-    },
-    "version": "587276930d53f243d1e7"
   },
   {
     "id": "[\"hostess\",\"……しつこい……。\",\"luna-film-tense\",false]",
@@ -13779,271 +12754,568 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 2
     },
     "version": "b250b47b646460f499cf"
+  }
+];
+// Historical short IDs are retained for import only, never for playback or review.
+export const VOICE_REVIEW_RETIRED = [
+  {
+    "id": "[\"cat\",\"少し歩くニャ。座りっぱなしで足が固まったニャ。\",\"moku\",false]",
+    "reviewId": "4e35e88d61361427",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/17.000/0:0"
   },
   {
-    "id": "[\"hostess\",\"買い忘れたもの、あったかな。\",\"luna-normal\",false]",
-    "reviewId": "98e5d5bc0dd06bad",
-    "repaired": false,
-    "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/ambient/complete",
-    "line": {
-      "speaker": "hostess",
-      "text": "買い忘れたもの、あったかな。",
-      "voiceChapter": 2
-    },
-    "version": "65f8b55260639a3ef69f"
+    "id": "[\"cat\",\"テレビの続きが気になるニャ。あと一本だけ見たら動くニャ。\",\"moku\",false]",
+    "reviewId": "fa3765be89e6ad73",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/17.050/0:0"
   },
   {
-    "id": "[\"hostess\",\"荷ほどきって、思ったより時間かかるね。\",\"luna-normal\",false]",
-    "reviewId": "f89eb12586fe09f2",
-    "repaired": false,
-    "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/ambient/complete",
-    "line": {
-      "speaker": "hostess",
-      "text": "荷ほどきって、思ったより時間かかるね。",
-      "voiceChapter": 2
-    },
-    "version": "b0872b05012ab122fbaf"
+    "id": "[\"cat\",\"新しい大家、声が大きいニャ。静かすぎるよりはいいかニャ。\",\"moku\",false]",
+    "reviewId": "0c0072ed0975f4e9",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/17.050/1:0"
   },
   {
-    "id": "[\"hostess\",\"あの人、もう来ないといいな。\",\"luna-normal\",false]",
-    "reviewId": "a0ed4f5b02a892ca",
-    "repaired": true,
-    "repairComment": "前後の余分な無音を調整。",
-    "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/ambient/complete",
-    "line": {
-      "speaker": "hostess",
-      "text": "あの人、もう来ないといいな。",
-      "voiceChapter": 2
-    },
-    "version": "6f7abf639a8f4efcc232"
+    "id": "[\"cat\",\"廊下は涼しいニャ。部屋の空気も入れ替えるかニャ。\",\"moku\",false]",
+    "reviewId": "53d4d94c1204cfc4",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/18.775/0:0"
   },
   {
-    "id": "[\"hostess\",\"玄関に誰もいないと、ほっとする。\",\"luna-normal\",false]",
-    "reviewId": "ece277cd7d5fd72e",
-    "repaired": false,
-    "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/ambient/complete",
-    "line": {
-      "speaker": "hostess",
-      "text": "玄関に誰もいないと、ほっとする。",
-      "voiceChapter": 2
-    },
-    "version": "4375511b9b3fa5fdde37"
+    "id": "[\"manager\",\"灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！\",\"normal\",false]",
+    "reviewId": "a0659451c400b6a7",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:0"
   },
   {
-    "id": "[\"hostess\",\"そろそろ帰る時間かな。\",\"luna-normal\",false]",
-    "reviewId": "8d4b3f3ded6b6e27",
-    "repaired": false,
-    "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/ambient/complete",
-    "line": {
-      "speaker": "hostess",
-      "text": "そろそろ帰る時間かな。",
-      "voiceChapter": 2
-    },
-    "version": "d9a440ea69d1c608f88d"
+    "id": "[\"cat\",\"えっ！？ 冷凍チャーハンと一緒でいいニャ？\",\"moku-surprised\",false]",
+    "reviewId": "89abfc27a9044e8f",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:1"
   },
   {
-    "id": "[\"hostess\",\"大家さんにも、ちゃんと相談しよう。\",\"luna-normal\",false]",
-    "reviewId": "38a65e4e080bbf4a",
-    "repaired": true,
-    "repairComment": "前後の余分な無音を調整。",
-    "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/ambient/complete",
-    "line": {
-      "speaker": "hostess",
-      "text": "大家さんにも、ちゃんと相談しよう。",
-      "voiceChapter": 2
-    },
-    "version": "d1ce9d5f39452f2f930a"
+    "id": "[\"manager\",\"チャーハンより先に冷やせ！ 緊急事態だ！\",\"normal\",false]",
+    "reviewId": "3f021d7a3d6dcb45",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:2"
   },
   {
-    "id": "[\"hostess\",\"困ったときは、ちゃんと相談しよう。\",\"luna-normal\",false]",
-    "reviewId": "dd4a7785126865e9",
-    "repaired": false,
-    "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/ambient/complete",
-    "line": {
-      "speaker": "hostess",
-      "text": "困ったときは、ちゃんと相談しよう。",
-      "voiceChapter": 2
-    },
-    "version": "e7c41989ed9401ef0bb2"
+    "id": "[\"cat\",\"了解ニャ！ ……でも冷凍庫パンパンだニャ。\",\"moku\",false]",
+    "reviewId": "1688d498fcadeb26",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:3"
   },
   {
-    "id": "[\"hostess\",\"部屋が落ち着くと、ちょっと安心するね。\",\"luna-normal\",false]",
-    "reviewId": "086e1893bf6d42ad",
-    "repaired": false,
-    "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/ambient/complete",
-    "line": {
-      "speaker": "hostess",
-      "text": "部屋が落ち着くと、ちょっと安心するね。",
-      "voiceChapter": 2
-    },
-    "version": "219d781704adf539f2a0"
+    "id": "[\"manager\",\"じゃあ中のもん出せばいいだろ！\",\"normal\",false]",
+    "reviewId": "975332cdcd8a8cfe",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:4"
+  },
+  {
+    "id": "[\"cat\",\"……あっ。\",\"moku-surprised\",false]",
+    "reviewId": "95044408a4ef259f",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:7"
+  },
+  {
+    "id": "[\"manager\",\"……何やってんだ？\",\"normal\",false]",
+    "reviewId": "d7c22f78fea6d975",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:8"
+  },
+  {
+    "id": "[\"cat\",\"チャーハンは無事ニャ。\",\"moku\",false]",
+    "reviewId": "166c5087389d58ed",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:9"
+  },
+  {
+    "id": "[\"manager\",\"チャーハンの心配してる場合かよ！ 火！ 火がついてんぞ！！\",\"normal\",false]",
+    "reviewId": "652a7d9f6b3ed11d",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:10"
+  },
+  {
+    "id": "[\"cat\",\"ニャ！？ 紙くずが燃えてるニャ！\",\"moku-surprised\",false]",
+    "reviewId": "5464877b90f2c513",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:11"
+  },
+  {
+    "id": "[\"manager\",\"とにかく水！ 早く持ってこい！\",\"normal\",false]",
+    "reviewId": "eed094380e6e4f22",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:12"
+  },
+  {
+    "id": "[\"cat\",\"それなら最初から水でよかったんじゃないかニャ……？\",\"moku\",false]",
+    "reviewId": "1f073e8076a7df11",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:13"
+  },
+  {
+    "id": "[\"manager\",\"……確かに。なんで冷凍庫なんて言ったんだ、俺。\",\"inner\",false]",
+    "reviewId": "d5392f0ed2ff4551",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:15"
+  },
+  {
+    "id": "[\"manager\",\"くそっ、もう間に合わねぇ！ モク、逃げるぞ！\",\"normal\",false]",
+    "reviewId": "2715474624f8c811",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:17"
+  },
+  {
+    "id": "[\"cat\",\"待つニャ！ 冷凍庫のチャーハン、出しっぱなしニャ！\",\"moku-surprised\",false]",
+    "reviewId": "94f2d809cfe64e82",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:18"
+  },
+  {
+    "id": "[\"manager\",\"もうチャーハンは諦めろ！ 命の方が大事だろ！！\",\"normal\",false]",
+    "reviewId": "394fe794a039d0ca",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:19"
+  },
+  {
+    "id": "[\"manager\",\"……モクは言われたとおりにしただけだ。俺がちゃんと考えてりゃ、こんなことには……。\",\"inner\",false]",
+    "reviewId": "c36cf017b9bc3f05",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:21"
+  },
+  {
+    "id": "[\"manager\",\"……なんだ？\",\"normal\",false]",
+    "reviewId": "1bda8982aabda616",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:23"
+  },
+  {
+    "id": "[\"cat\",\"……チャーハン、もう食べられないかニャ。\",\"moku\",false]",
+    "reviewId": "b930797ca41401bc",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:24"
+  },
+  {
+    "id": "[\"manager\",\"……帰る場所もなくなりそうなんだぞ。\",\"normal\",false]",
+    "reviewId": "ac76d1ed4b4aa668",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ash/freezer:25"
+  },
+  {
+    "id": "[\"cat\",\"次の動画を見たら終わりニャ。……また次が出てきたニャ。\",\"moku\",false]",
+    "reviewId": "9e5a57b35fd73904",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/runtime/attempt-1/22.200:0"
+  },
+  {
+    "id": "[\"cat\",\"時計、見なきゃよかったニャ。もうこんな時間ニャ。\",\"moku\",false]",
+    "reviewId": "629b5855d6628ff7",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/runtime/attempt-1/22.200:1"
+  },
+  {
+    "id": "[\"cat\",\"灰皿がいっぱいニャ。まだ熱いし、大家に聞くニャ。\",\"moku\",false]",
+    "reviewId": "d71c8c55f1d482e0",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/runtime/attempt-1/pending:0"
+  },
+  {
+    "id": "[\"cat\",\"新しい大家？ モクですニャ。よろしくニャ。\",\"moku\",false]",
+    "reviewId": "188786588f9097b6",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:1"
+  },
+  {
+    "id": "[\"manager\",\"…………は？\",\"normal\",false]",
+    "reviewId": "8c800912f53098e1",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:2"
+  },
+  {
+    "id": "[\"cat\",\"……ニャ？\",\"moku-surprised\",false]",
+    "reviewId": "23cc50408f9efa3a",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:3"
+  },
+  {
+    "id": "[\"manager\",\"お、お前……生きてるのか！？\",\"normal\",false]",
+    "reviewId": "2d333cfaa52e1aa7",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:4"
+  },
+  {
+    "id": "[\"cat\",\"えっ！？ 勝手に殺さないでニャ！？\",\"moku-surprised\",false]",
+    "reviewId": "a732a3380eeebb39",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:5"
+  },
+  {
+    "id": "[\"manager\",\"いや、だって……ここ、燃えて……！\",\"normal\",false]",
+    "reviewId": "ce723a6409bcab5d",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:6"
+  },
+  {
+    "id": "[\"manager\",\"……夢？\",\"inner\",false]",
+    "reviewId": "0324ef37216e8ccc",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:8"
+  },
+  {
+    "id": "[\"manager\",\"いや、違う。あの熱さも、煙の臭いも……。\",\"inner\",false]",
+    "reviewId": "4e09008009e223d5",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:9"
+  },
+  {
+    "id": "[\"manager\",\"全部、覚えてる。\",\"inner\",false]",
+    "reviewId": "04ab50037fcece59",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:10"
+  },
+  {
+    "id": "[\"manager\",\"……お前、さっき灰皿どうした？\",\"normal\",false]",
+    "reviewId": "328c003a523cb0ed",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:11"
+  },
+  {
+    "id": "[\"cat\",\"灰皿？ そこにあるニャ。\",\"moku-surprised\",false]",
+    "reviewId": "7f1de3976bece41c",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:12"
+  },
+  {
+    "id": "[\"manager\",\"いや、そうじゃなくて……！\",\"normal\",false]",
+    "reviewId": "fb7c946865e32622",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:13"
+  },
+  {
+    "id": "[\"manager\",\"……時間が、戻ってる？\",\"inner\",false]",
+    "reviewId": "a071298dc55cfbc0",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:16"
+  },
+  {
+    "id": "[\"manager\",\"あのとき俺が、まともな指示を出していれば……。\",\"inner\",false]",
+    "reviewId": "40a73702f574c1a9",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:17"
+  },
+  {
+    "id": "[\"manager\",\"今度こそ……。\",\"inner\",false]",
+    "reviewId": "a99c80bde48d66fd",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:18"
+  },
+  {
+    "id": "[\"cat\",\"大家？\",\"moku-surprised\",false]",
+    "reviewId": "09f2951d30d6ba89",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:19"
+  },
+  {
+    "id": "[\"manager\",\"……いや、なんでもない。\",\"normal\",false]",
+    "reviewId": "5c90c34f26a88e3d",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:20"
+  },
+  {
+    "id": "[\"manager\",\"とりあえず……生きててよかった。\",\"normal\",false]",
+    "reviewId": "75eb749755494e05",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:21"
+  },
+  {
+    "id": "[\"cat\",\"ニャ？ なんか知らんけど、ありがとニャ。\",\"moku\",false]",
+    "reviewId": "0910497aff665955",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:22"
+  },
+  {
+    "id": "[\"manager\",\"……もう二度と、あんな光景は見たくねぇ。\",\"inner\",false]",
+    "reviewId": "d68e0ce4c275e9ff",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-1/ash/trash/restart/rewind:24"
+  },
+  {
+    "id": "[\"manager\",\"……ああ、知ってるよ。嫌ってほどな。\",\"normal\",false]",
+    "reviewId": "0e369265e0dcdd9c",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-2/ash/trash/restart/rewind:1"
+  },
+  {
+    "id": "[\"cat\",\"ニャ？ 初めて会ったはずニャ。\",\"moku-surprised\",false]",
+    "reviewId": "07469a6dd5c3b145",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-2/ash/trash/restart/rewind:2"
+  },
+  {
+    "id": "[\"manager\",\"こっちは何回も会ってんだよ……。\",\"normal\",false]",
+    "reviewId": "96f2ff262173fc87",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-2/ash/trash/restart/rewind:3"
+  },
+  {
+    "id": "[\"cat\",\"……大家、変な人ニャ。\",\"moku\",false]",
+    "reviewId": "0f1cc1942f42354a",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-2/ash/trash/restart/rewind:4"
+  },
+  {
+    "id": "[\"cat\",\"吸い殻の火は消したニャ。大家にまた怒鳴られるのはごめんニャ。\",\"moku\",false]",
+    "reviewId": "69d18ab18a74bac3",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/runtime/attempt-2/ash/water/23.000:0"
+  },
+  {
+    "id": "[\"cat\",\"朝まで動画を見てしまったニャ。目を閉じたら、そのまま寝そうニャ。\",\"moku\",false]",
+    "reviewId": "72ddf44f2a9c42db",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/runtime/attempt-2/ash/water/32.025:0"
+  },
+  {
+    "id": "[\"cat\",\"お腹が鳴ったニャ。何か食べたいけど、立つのが面倒ニャ。\",\"moku\",false]",
+    "reviewId": "cedaae82da27f37f",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/runtime/attempt-2/ash/water/32.025:1"
+  },
+  {
+    "id": "[\"cat\",\"冷蔵庫に何か残ってたはずニャ。まず中を見てみるニャ。\",\"moku\",false]",
+    "reviewId": "40747be403720d3a",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/runtime/attempt-2/ash/water/36.625:0"
+  },
+  {
+    "id": "[\"cat\",\"食べ終わったら、容器だけでも片づけるニャ。\",\"moku\",false]",
+    "reviewId": "cecf66330053e9dd",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/runtime/attempt-2/ash/water/36.625:1"
+  },
+  {
+    "id": "[\"cat\",\"腹が減ったニャ……。でも、まぶたも重いニャ。\",\"moku\",false]",
+    "reviewId": "0ea79634321cc0a0",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/runtime/attempt-2/ash/water/pending:0"
+  },
+  {
+    "id": "[\"cat\",\"家賃、入ってるニャ。数えたから、たぶん足りるニャ。\",\"moku\",false]",
+    "reviewId": "b11f4ef711d33262",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-2/ash/water/undefined:0"
+  },
+  {
+    "id": "[\"cat\",\"……ちゃんと足りたニャ？ よかったニャ。食費を少し調整したニャ。\",\"moku-happy\",false]",
+    "reviewId": "90d182022f878a74",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-2/ash/water/undefined:1"
+  },
+  {
+    "id": "[\"cat\",\"偉いって言われると、次も払わなきゃって思うニャ。いや、最初から払うけどニャ。\",\"moku\",false]",
+    "reviewId": "fdeb71170adb77a9",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/runtime/attempt-2/ash/water/undefined:2"
+  },
+  {
+    "id": "[\"cat\",\"火を使わずに済むご飯、楽でいいニャ。洗い物も少ないニャ。\",\"moku\",false]",
+    "reviewId": "e514706a0a057717",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/runtime/attempt-2/ash/water/dinner/coronation/37.000:0"
+  },
+  {
+    "id": "[\"cat\",\"……すぅ……すぅ……。\",\"moku\",false]",
+    "reviewId": "cf45cc5eb750fb7a",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/runtime/attempt-2/ash/water/dinner/coronation/38.150:0"
+  },
+  {
+    "id": "[\"cat\",\"よく寝たニャ。朝の空気は気持ちいいニャ。\",\"moku\",false]",
+    "reviewId": "442301410bff153a",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/runtime/attempt-2/ash/water/dinner/coronation/55.025:0"
+  },
+  {
+    "id": "[\"cat\",\"今日は静かニャ。こういう朝なら、悪くないニャ。\",\"moku\",false]",
+    "reviewId": "2a40b600c00513f2",
+    "chapter": 1,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act1/ambient/runtime/attempt-2/ash/water/dinner/coronation/55.025:1"
   },
   {
     "id": "[\"hostess\",\"これ、昨日洗ったばっかりなの！ お客さんに「喫煙所から来た？」って言われたんだけど。\",\"luna-firm\",false]",
     "reviewId": "17e974591d32d5c0",
-    "repaired": false,
     "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/runtime/attempt-1/undefined:0",
-    "line": {
-      "speaker": "hostess",
-      "text": "これ、昨日洗ったばっかりなの！ お客さんに「喫煙所から来た？」って言われたんだけど。",
-      "emotion": "angry",
-      "voiceChapter": 2
-    },
-    "version": "74af38e194a877a957c2"
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/runtime/attempt-1/undefined:0"
   },
   {
     "id": "[\"cat\",\"ごめんニャ。でも窓は開けてたし、そこまで匂うとは……。\",\"act2-moku\",false]",
     "reviewId": "8137f3151bbac67a",
-    "repaired": false,
     "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/runtime/attempt-1/undefined:1",
-    "line": {
-      "speaker": "cat",
-      "text": "ごめんニャ。でも窓は開けてたし、そこまで匂うとは……。",
-      "emotion": "tired",
-      "voiceChapter": 2
-    },
-    "version": "888411c8d6dae2d9a346"
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/runtime/attempt-1/undefined:1"
   },
   {
     "id": "[\"hostess\",\"その指一本の隙間で？ 換気したって言うなら、せめて煙を外に出してよ！\",\"luna-firm\",false]",
     "reviewId": "a4dce72e7fce5115",
-    "repaired": false,
     "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/runtime/attempt-1/undefined:2",
-    "line": {
-      "speaker": "hostess",
-      "text": "その指一本の隙間で？ 換気したって言うなら、せめて煙を外に出してよ！",
-      "emotion": "angry",
-      "voiceChapter": 2
-    },
-    "version": "bb887406ec586d00c7c4"
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/runtime/attempt-1/undefined:2"
   },
   {
     "id": "[\"cat\",\"ルナの香水も廊下に残ってるニャ。私だけ臭い扱いは、ちょっと傷つくニャ。\",\"act2-moku-firm\",false]",
     "reviewId": "ba2214e9e53e4134",
-    "repaired": false,
     "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/runtime/attempt-1/undefined:3",
-    "line": {
-      "speaker": "cat",
-      "text": "ルナの香水も廊下に残ってるニャ。私だけ臭い扱いは、ちょっと傷つくニャ。",
-      "emotion": "angry",
-      "voiceChapter": 2
-    },
-    "version": "dec3992cf879ee8042d7"
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/runtime/attempt-1/undefined:3"
   },
   {
     "id": "[\"hostess\",\"香水が嫌なら言ってよ。だからって、私の仕事着まで煙で洗わなくていいでしょ。\",\"luna-serious\",false]",
     "reviewId": "4ac62ca4c5da31ea",
-    "repaired": false,
     "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/runtime/attempt-1/undefined:4",
-    "line": {
-      "speaker": "hostess",
-      "text": "香水が嫌なら言ってよ。だからって、私の仕事着まで煙で洗わなくていいでしょ。",
-      "emotion": "sad",
-      "voiceChapter": 2
-    },
-    "version": "73a0919c5f72880b9ecf"
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/runtime/attempt-1/undefined:4"
   },
   {
     "id": "[\"cat\",\"……それは、悪かったニャ。服、洗い直すニャ。\",\"act2-moku-sad\",false]",
     "reviewId": "6f3d685e7db18800",
-    "repaired": false,
     "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/runtime/attempt-1/undefined:5",
-    "line": {
-      "speaker": "cat",
-      "text": "……それは、悪かったニャ。服、洗い直すニャ。",
-      "emotion": "sad",
-      "voiceChapter": 2
-    },
-    "version": "3b395505989412cfc03f"
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/runtime/attempt-1/undefined:5"
   },
   {
     "id": "[\"hostess\",\"待って。座布団、焦げてない？ 匂いより先にこっち！\",\"luna-surprised\",false]",
     "reviewId": "ce0fc344fe6dbb40",
-    "repaired": false,
     "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/runtime/attempt-1/undefined:6",
-    "line": {
-      "speaker": "hostess",
-      "text": "待って。座布団、焦げてない？ 匂いより先にこっち！",
-      "emotion": "surprised",
-      "voiceChapter": 2
-    },
-    "version": "ab29fcf74aa94711eb63"
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/runtime/attempt-1/undefined:6"
   },
   {
     "id": "[\"manager\",\"なるほど。わしに任せろ。だいたいこういうのは勢いで解決する。\",\"act2-manager\",false]",
     "reviewId": "70d5d98aea0db6ce",
-    "repaired": false,
     "chapter": 2,
-    "scene": "2:ambient",
-    "sceneLabel": "日常の独り言",
-    "order": 90,
-    "source": "act2/runtime/attempt-1/undefined:7",
-    "line": {
-      "speaker": "manager",
-      "text": "なるほど。わしに任せろ。だいたいこういうのは勢いで解決する。",
-      "emotion": "neutral",
-      "voiceChapter": 2
-    },
-    "version": "3e4b9629ee171548046e"
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/runtime/attempt-1/undefined:7"
+  },
+  {
+    "id": "[\"hostess\",\"買い忘れたもの、あったかな。\",\"luna-normal\",false]",
+    "reviewId": "98e5d5bc0dd06bad",
+    "chapter": 2,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/ambient/complete"
+  },
+  {
+    "id": "[\"hostess\",\"荷ほどきって、思ったより時間かかるね。\",\"luna-normal\",false]",
+    "reviewId": "f89eb12586fe09f2",
+    "chapter": 2,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/ambient/complete"
+  },
+  {
+    "id": "[\"hostess\",\"あの人、もう来ないといいな。\",\"luna-normal\",false]",
+    "reviewId": "a0ed4f5b02a892ca",
+    "chapter": 2,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/ambient/complete"
+  },
+  {
+    "id": "[\"hostess\",\"玄関に誰もいないと、ほっとする。\",\"luna-normal\",false]",
+    "reviewId": "ece277cd7d5fd72e",
+    "chapter": 2,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/ambient/complete"
+  },
+  {
+    "id": "[\"hostess\",\"そろそろ帰る時間かな。\",\"luna-normal\",false]",
+    "reviewId": "8d4b3f3ded6b6e27",
+    "chapter": 2,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/ambient/complete"
+  },
+  {
+    "id": "[\"hostess\",\"大家さんにも、ちゃんと相談しよう。\",\"luna-normal\",false]",
+    "reviewId": "38a65e4e080bbf4a",
+    "chapter": 2,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/ambient/complete"
+  },
+  {
+    "id": "[\"hostess\",\"困ったときは、ちゃんと相談しよう。\",\"luna-normal\",false]",
+    "reviewId": "dd4a7785126865e9",
+    "chapter": 2,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/ambient/complete"
+  },
+  {
+    "id": "[\"hostess\",\"部屋が落ち着くと、ちょっと安心するね。\",\"luna-normal\",false]",
+    "reviewId": "086e1893bf6d42ad",
+    "chapter": 2,
+    "sceneLabel": "旧台詞（確認対象外）",
+    "source": "act2/ambient/complete"
   }
 ];

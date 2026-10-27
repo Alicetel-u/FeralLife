@@ -6,12 +6,14 @@ import {VOICE_MANIFEST} from '../src/voice-manifest.js';
 import {VOICE_REVIEW_KEY,voiceReviewEmpty,voiceReviewSyncCatalog,voiceReviewRows,voiceReviewHasRepair,voiceReviewStatus,voiceReviewMark,voiceReviewLoad,voiceReviewImport,voiceReviewBackup,voiceReviewExport,voiceReviewFilter} from '../src/voice-review-store.js';
 import {VOICE_REVIEW_CATALOG} from '../src/voice-review-catalog.js';
 import {extractCompleteVoiceScript} from '../tools/voice-script.mjs';
+import {tracePlayableVoiceLines} from '../tools/voice-reachability.mjs';
 import {voiceLineKey} from '../src/voice-policy.js';
 const row=VOICE_REVIEW_CATALOG.find(r=>r.chapter===2&&r.line.speaker==='hostess');
 const memory=()=>{const data=new Map();return {getItem:k=>data.get(k)||null,setItem:(k,v)=>data.set(k,v)};};
 
 test('the voice review catalog contains only current playable lines and content fingerprints',()=>{
- const rows=extractCompleteVoiceScript();assert.equal(VOICE_REVIEW_CATALOG.length,rows.length);
+ const reachable=tracePlayableVoiceLines(VOICE_MANIFEST);
+ const rows=extractCompleteVoiceScript().filter(row=>reachable.lines.has(row.lineKey));assert.equal(VOICE_REVIEW_CATALOG.length,rows.length);
  assert.deepEqual(new Set(VOICE_REVIEW_CATALOG.map(r=>r.id)),new Set(rows.map(r=>r.lineKey)));
  for(const r of VOICE_REVIEW_CATALOG){assert.match(r.version,/^[a-f0-9]{20}$/);assert.ok([1,2].includes(r.chapter));assert.ok(r.sceneLabel);}
  assert.ok(VOICE_REVIEW_CATALOG.some(r=>r.scene==='2:observation2'));

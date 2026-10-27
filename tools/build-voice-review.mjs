@@ -3,11 +3,25 @@ import {VOICE_MANIFEST} from '../src/voice-manifest.js';
 import {readFile,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {voiceReviewValidatePublished} from '../src/voice-review-release.js';
+import {tracePlayableVoiceLines} from './voice-reachability.mjs';
 const published=voiceReviewValidatePublished(JSON.parse(await readFile(new URL('../config/voice-review-published.json',import.meta.url),'utf8')));
 await writeFile(new URL('../src/voice-review-published.js',import.meta.url),'// Generated; contains decisions only, never private notes.\nexport const VOICE_REVIEW_PUBLISHED = '+JSON.stringify(published,null,2)+';\n');
 const catalog=[];
+const reachable=tracePlayableVoiceLines(VOICE_MANIFEST);
+const previous=await import('../src/voice-review-catalog.js');
+const retired=new Map((previous.VOICE_REVIEW_RETIRED||[]).map(row=>[row.id,row]));
 for(const row of extractCompleteVoiceScript()){
- const chapter=row.source.startsWith('act2/')?2:1,s=row.source,l=row.line;
+ const witness=reachable.lines.get(row.lineKey);
+ const replaceSource=/\/freezer:|\/restart\/|\/ambient\/|\/ambient:|\/undefined:/.test(row.source);
+ const s=replaceSource&&witness?witness.source:row.source;
+ const chapter=s.startsWith('act2/')?2:1,l=row.line;
+ if(!reachable.lines.has(row.lineKey)){
+  // Keep short IDs importable for reports exported before this cleanup. This is
+  // an identity index only: no recording, player row or review target is created.
+  retired.set(row.lineKey,{id:row.lineKey,reviewId:createHash('sha256').update(row.lineKey).digest('hex').slice(0,16),chapter,sceneLabel:'旧台詞（確認対象外）',source:s});
+  continue;
+ }
+ retired.delete(row.lineKey);
  let scene='ambient',label='日常の独り言',order=90;
  if(s.includes('/observation/')){scene=chapter===2?(s.includes('four-kings')?'observation2':'observation1'):'observation';label=chapter===2?(scene==='observation2'?'観察2｜ルナと四天王':'観察1｜新入りの味方'):'観察パート';order=20;}
  else if(l.epilogueScene||s.includes('/epilogue')){scene='ending';label='エンディング';order=80;}
@@ -26,5 +40,5 @@ for(const row of extractCompleteVoiceScript()){
  catalog.push({id:row.lineKey,reviewId:createHash('sha256').update(row.lineKey).digest('hex').slice(0,16),repaired,...(clip.repairReview?{repairReview:true}:{}),...(repairComment?{repairComment}:{}),chapter,scene:chapter+':'+scene,sceneLabel:label,order,source:s,line:{...l,speaker:row.speaker,...(l.speaker==='大家（心の声）'?{innerVoice:true}:{})},version:createHash('sha256').update(bytes).update(clip.reviewRevision||'').digest('hex').slice(0,20)});
 }
 catalog.sort((a,b)=>a.chapter-b.chapter||a.order-b.order||a.source.localeCompare(b.source,'ja',{numeric:true}));
-await writeFile(new URL('../src/voice-review-catalog.js',import.meta.url),'// Generated from the current playable script; rebuild with tools/build-voice-review.mjs.\nexport const VOICE_REVIEW_CATALOG = '+JSON.stringify(catalog,null,2)+';\n');
-console.log('Voice review catalog: '+catalog.length+' recordings');
+await writeFile(new URL('../src/voice-review-catalog.js',import.meta.url),'// Generated from reachable gameplay; rebuild with tools/build-voice-review.mjs.\nexport const VOICE_REVIEW_CATALOG = '+JSON.stringify(catalog,null,2)+';\n// Historical short IDs are retained for import only, never for playback or review.\nexport const VOICE_REVIEW_RETIRED = '+JSON.stringify([...retired.values()],null,2)+';\n');
+console.log(`Voice review catalog: ${catalog.length} recordings; ${retired.size} retired identities; ${reachable.missing.length} reachable lines without recordings`);

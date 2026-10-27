@@ -57,11 +57,12 @@ const reviewReport=args.find(a=>a.startsWith('--review-report='))?.slice('--revi
 let reviewedKeys=null;
 if(reviewReport){
  if(!repairOnly)throw Error('A review report requires --scope=repairs');
- const {VOICE_REVIEW_CATALOG}=await import('../src/voice-review-catalog.js');
+ const {VOICE_REVIEW_CATALOG,VOICE_REVIEW_RETIRED}=await import('../src/voice-review-catalog.js');
+ const retiredKeys=new Set(VOICE_REVIEW_RETIRED.map(row=>row.id));
  const {voiceReviewParseReport}=await import('../src/voice-review-release.js');
- const payload=voiceReviewParseReport(await readFile(resolve(root,reviewReport),'utf8'),VOICE_REVIEW_CATALOG);
+ const payload=voiceReviewParseReport(await readFile(resolve(root,reviewReport),'utf8'),[...VOICE_REVIEW_CATALOG,...VOICE_REVIEW_RETIRED]);
  const current=new Map(VOICE_REVIEW_CATALOG.map(row=>[row.id,row]));
- reviewedKeys=new Set(Object.entries(payload.records).filter(([,record])=>record.status==='ng').map(([key,record])=>{
+ reviewedKeys=new Set(Object.entries(payload.records).filter(([key,record])=>record.status==='ng'&&!retiredKeys.has(key)).map(([key,record])=>{
   if(!current.has(key)||current.get(key).version!==record.version)throw Error('Review targets obsolete or missing audio; reconcile before generating: '+key);
   return key;
  }));
