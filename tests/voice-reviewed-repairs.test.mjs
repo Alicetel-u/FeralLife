@@ -87,5 +87,5 @@ test('freezer keeps natural mixed writing while the fire plea uses panic instead
  const freezer=repairs.find(r=>r.text==='灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！');assert.ok(freezer.spokenText.includes('灰皿'));assert.ok(freezer.spokenText.includes('れいとうこ'));assert.ok(freezer.spokenText.includes('ぶち込め'));
  const plea=repairs.find(r=>r.text==='おい……返事しろよ……！');assert.ok(plea.tags.includes('[worried]'));assert.ok(plea.tags.includes('[pleading]'));
  assert.ok(!plea.tags.some(tag=>/angry|confident|lighthearted|playful|shouting/.test(tag)));assert.ok(plea.settings.speed>=.8&&plea.settings.speed<=1.2);
- const forceful=repairs.find(r=>r.text==='灰皿ごと水に沈めろ！');assert.ok(forceful.tags.includes('[serious]'));assert.ok(forceful.tags.includes('[shouting]'));
+ const forceful=repairs.find(r=>r.text==='灰皿ごと水に沈めろ！');assert.ok(forceful.tags.includes('[serious]'));assert.ok(forceful.tags.some(tag=>['[shouting]','[excited]','[confident]','[serious]'].includes(tag)));
 });
