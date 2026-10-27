@@ -57,11 +57,6 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "7e715e2d08e65db2a970",
       "updatedAt": "2026-10-26T18:12:15.880Z"
     },
-    "[\"cat\",\"……持ってたニャ。\",\"moku\",false]": {
-      "status": "ok",
-      "version": "c4cf2713ee20bcfbd018",
-      "updatedAt": "2026-10-26T17:35:13.983Z"
-    },
     "[\"cat\",\"……大家。\",\"moku\",false]": {
       "status": "ok",
       "version": "4b9262f0f6cd6c27aa43",
@@ -77,15 +72,20 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "fb2363fc63afd63fadb4",
       "updatedAt": "2026-10-26T17:38:41.803Z"
     },
-    "[\"cat\",\"……腹減ったニャ。\",\"moku\",false]": {
+    "[\"cat\",\"……持ってたニャ。\",\"moku\",false]": {
       "status": "ok",
-      "version": "287eff51ce6faa01293d",
-      "updatedAt": "2026-10-26T17:10:39.310Z"
+      "version": "c4cf2713ee20bcfbd018",
+      "updatedAt": "2026-10-26T17:35:13.983Z"
     },
     "[\"cat\",\"……明日から、ちゃんと片づけるニャ。\",\"moku\",false]": {
       "status": "ok",
       "version": "35b6520b4137cbfafae0",
       "updatedAt": "2026-10-26T18:11:01.899Z"
+    },
+    "[\"cat\",\"……腹減ったニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "287eff51ce6faa01293d",
+      "updatedAt": "2026-10-26T17:10:39.310Z"
     },
     "[\"cat\",\"いやぁ、大家に聞いて正解だったニャ。\",\"moku-happy\",false]": {
       "status": "ok",
@@ -277,85 +277,40 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "451eee0d3528f7d3e778",
       "updatedAt": "2026-10-26T18:13:14.279Z"
     },
-    "[\"cat\",\"煙が……前が見えないニャ……！\",\"tragedy-fear\",false]": {
-      "status": "ok",
-      "version": "75bb18b82486e8bcf81d",
-      "updatedAt": "2026-10-26T18:14:51.229Z"
-    },
-    "[\"cat\",\"押せば入るかニャ。……あ、崩れたニャ。\",\"moku-surprised\",false]": {
-      "status": "ok",
-      "version": "ec3545de1715cd5ff3d3",
-      "updatedAt": "2026-10-26T17:10:21.075Z"
-    },
-    "[\"cat\",\"火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。\",\"moku\",false]": {
-      "status": "ok",
-      "version": "1bf416c9efb904fac921",
-      "updatedAt": "2026-10-26T17:44:06.895Z"
-    },
-    "[\"cat\",\"火を使わずに済むご飯、楽でいいニャ。洗い物も少ないニャ。\",\"moku\",false]": {
-      "status": "ok",
-      "version": "92a447f5a6f94a9ae5fa",
-      "updatedAt": "2026-10-26T17:37:37.599Z"
-    },
-    "[\"cat\",\"灰皿いっぱいになったニャ。\",\"moku\",false]": {
-      "status": "ok",
-      "version": "df63d5f522f5f8a443b9",
-      "updatedAt": "2026-10-26T17:38:07.942Z"
-    },
-    "[\"cat\",\"灰皿を溺れさせるニャ！？\",\"moku-surprised\",false]": {
-      "status": "ok",
-      "version": "5d20f7d05e899b6a55ce",
-      "updatedAt": "2026-10-26T18:12:03.723Z"
-    },
     "[\"cat\",\"久しぶりニャ。元気にしてたかニャ。\",\"moku-happy\",false]": {
       "status": "ok",
       "version": "b0d18bfb9fc484df64f3",
       "updatedAt": "2026-10-26T17:36:26.875Z"
     },
-    "[\"cat\",\"吸い殻の火は消したニャ。大家にまた怒鳴られるのはごめんニャ。\",\"moku\",false]": {
+    "[\"cat\",\"了解ニャ！ ……でも冷凍庫パンパンだニャ。\",\"moku\",false]": {
       "status": "ok",
-      "version": "3a8742ce78d9b992a93c",
-      "updatedAt": "2026-10-26T17:37:07.751Z"
+      "version": "1d4571d4fb12b2d416a0",
+      "updatedAt": "2026-10-26T17:41:46.122Z"
     },
     "[\"cat\",\"今日は静かニャ。こういう朝なら、悪くないニャ。\",\"moku\",false]": {
       "status": "ok",
       "version": "f3d9bea3178182fded70",
       "updatedAt": "2026-10-26T17:37:53.352Z"
     },
-    "[\"cat\",\"食べ終わったら、容器だけでも片づけるニャ。\",\"moku\",false]": {
-      "status": "ok",
-      "version": "2a143332d7db225331b6",
-      "updatedAt": "2026-10-26T17:37:30.164Z"
-    },
-    "[\"cat\",\"寝すぎて疲れたから、気分転換ニャ。\",\"moku\",false]": {
-      "status": "ok",
-      "version": "003d528870b824ce2169",
-      "updatedAt": "2026-10-26T17:11:10.323Z"
-    },
-    "[\"cat\",\"新しい大家も来たし、今日は片づけるニャ。\",\"moku\",false]": {
-      "status": "ok",
-      "version": "8e0d6de1c06c8b97c74f",
-      "updatedAt": "2026-10-26T17:35:19.516Z"
-    },
-    "[\"cat\",\"足の裏くらいニャ。\",\"moku\",false]": {
-      "status": "ok",
-      "version": "c17d65131e36fd1cdfa5",
-      "updatedAt": "2026-10-26T17:12:02.137Z"
-    },
     "[\"cat\",\"他に誰もいないからニャ。静かで最高ニャ。\",\"moku\",false]": {
       "status": "ok",
       "version": "9524784af60cc83205c5",
       "updatedAt": "2026-10-25T07:26:13.903Z"
     },
-    "[\"cat\",\"待つニャ！ 洗濯物、まだ干してあるニャ！\",\"moku-surprised\",false]": {
+    "[\"cat\",\"冷蔵庫に何か残ってたはずニャ。まず中を見てみるニャ。\",\"moku\",false]": {
       "status": "ok",
-      "version": "f9e6c7475774829379e3",
-      "updatedAt": "2026-10-26T17:39:17.580Z"
+      "version": "6bec90b0053fdb4e666c",
+      "updatedAt": "2026-10-26T17:37:25.728Z"
     },
-    "[\"cat\",\"待つニャ！ 冷凍庫のチャーハン、出しっぱなしニャ！\",\"moku-surprised\",false]": {
+    "[\"cat\",\"吸い殻の火は消したニャ。大家にまた怒鳴られるのはごめんニャ。\",\"moku\",false]": {
       "status": "ok",
-      "version": "304aa61b7b628623083b",
-      "updatedAt": "2026-10-26T18:09:06.053Z"
+      "version": "3a8742ce78d9b992a93c",
+      "updatedAt": "2026-10-26T17:37:07.751Z"
+    },
+    "[\"cat\",\"大丈夫ニャ。換気扇は昨日から回してるニャ。\",\"moku-happy\",false]": {
+      "status": "ok",
+      "version": "b7556f8ba0720936d5f3",
+      "updatedAt": "2026-10-25T07:25:54.077Z"
     },
     "[\"cat\",\"大家、いい知らせニャ。\",\"moku-happy\",false]": {
       "status": "ok",
@@ -382,30 +337,30 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "73896fd168d3e6ccaa61",
       "updatedAt": "2026-10-26T17:38:02.354Z"
     },
-    "[\"cat\",\"大丈夫ニャ。換気扇は昨日から回してるニャ。\",\"moku-happy\",false]": {
+    "[\"cat\",\"寝すぎて疲れたから、気分転換ニャ。\",\"moku\",false]": {
       "status": "ok",
-      "version": "b7556f8ba0720936d5f3",
-      "updatedAt": "2026-10-25T07:25:54.077Z"
+      "version": "003d528870b824ce2169",
+      "updatedAt": "2026-10-26T17:11:10.323Z"
     },
-    "[\"cat\",\"朝の空気を吸ってくるニャ。……ついでにタバコもニャ。\",\"moku\",false]": {
+    "[\"cat\",\"待つニャ！ 冷凍庫のチャーハン、出しっぱなしニャ！\",\"moku-surprised\",false]": {
       "status": "ok",
-      "version": "094a091a67c1c8fa02f9",
-      "updatedAt": "2026-10-26T17:37:01.150Z"
+      "version": "304aa61b7b628623083b",
+      "updatedAt": "2026-10-26T18:09:06.053Z"
     },
-    "[\"cat\",\"朝まで動画を見てしまったニャ。目を閉じたら、そのまま寝そうニャ。\",\"moku\",false]": {
+    "[\"cat\",\"待つニャ！ 洗濯物、まだ干してあるニャ！\",\"moku-surprised\",false]": {
       "status": "ok",
-      "version": "31ac217fd91a872e1fc0",
-      "updatedAt": "2026-10-26T17:37:13.540Z"
+      "version": "f9e6c7475774829379e3",
+      "updatedAt": "2026-10-26T17:39:17.580Z"
     },
-    "[\"cat\",\"腹が減ったニャ……。でも、まぶたも重いニャ。\",\"moku\",false]": {
+    "[\"cat\",\"押せば入るかニャ。……あ、崩れたニャ。\",\"moku-surprised\",false]": {
       "status": "ok",
-      "version": "c377b9306c43fa28855f",
-      "updatedAt": "2026-10-26T17:37:58.720Z"
+      "version": "ec3545de1715cd5ff3d3",
+      "updatedAt": "2026-10-26T17:10:21.075Z"
     },
-    "[\"cat\",\"歩いてるニャ。今はかなり活動的ニャ。\",\"moku\",false]": {
+    "[\"cat\",\"新しい大家も来たし、今日は片づけるニャ。\",\"moku\",false]": {
       "status": "ok",
-      "version": "394ae27fed74b78092b3",
-      "updatedAt": "2026-10-26T17:11:21.183Z"
+      "version": "8e0d6de1c06c8b97c74f",
+      "updatedAt": "2026-10-26T17:35:19.516Z"
     },
     "[\"cat\",\"明日からちゃんとするニャ。\",\"moku\",false]": {
       "status": "ok",
@@ -427,15 +382,60 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "4181a37cc33c3ea4f62f",
       "updatedAt": "2026-10-26T17:12:07.204Z"
     },
-    "[\"cat\",\"了解ニャ！ ……でも冷凍庫パンパンだニャ。\",\"moku\",false]": {
+    "[\"cat\",\"朝の空気を吸ってくるニャ。……ついでにタバコもニャ。\",\"moku\",false]": {
       "status": "ok",
-      "version": "1d4571d4fb12b2d416a0",
-      "updatedAt": "2026-10-26T17:41:46.122Z"
+      "version": "094a091a67c1c8fa02f9",
+      "updatedAt": "2026-10-26T17:37:01.150Z"
     },
-    "[\"cat\",\"冷蔵庫に何か残ってたはずニャ。まず中を見てみるニャ。\",\"moku\",false]": {
+    "[\"cat\",\"朝まで動画を見てしまったニャ。目を閉じたら、そのまま寝そうニャ。\",\"moku\",false]": {
       "status": "ok",
-      "version": "6bec90b0053fdb4e666c",
-      "updatedAt": "2026-10-26T17:37:25.728Z"
+      "version": "31ac217fd91a872e1fc0",
+      "updatedAt": "2026-10-26T17:37:13.540Z"
+    },
+    "[\"cat\",\"歩いてるニャ。今はかなり活動的ニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "394ae27fed74b78092b3",
+      "updatedAt": "2026-10-26T17:11:21.183Z"
+    },
+    "[\"cat\",\"火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "1bf416c9efb904fac921",
+      "updatedAt": "2026-10-26T17:44:06.895Z"
+    },
+    "[\"cat\",\"火を使わずに済むご飯、楽でいいニャ。洗い物も少ないニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "92a447f5a6f94a9ae5fa",
+      "updatedAt": "2026-10-26T17:37:37.599Z"
+    },
+    "[\"cat\",\"灰皿いっぱいになったニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "df63d5f522f5f8a443b9",
+      "updatedAt": "2026-10-26T17:38:07.942Z"
+    },
+    "[\"cat\",\"灰皿を溺れさせるニャ！？\",\"moku-surprised\",false]": {
+      "status": "ok",
+      "version": "5d20f7d05e899b6a55ce",
+      "updatedAt": "2026-10-26T18:12:03.723Z"
+    },
+    "[\"cat\",\"煙が……前が見えないニャ……！\",\"tragedy-fear\",false]": {
+      "status": "ok",
+      "version": "75bb18b82486e8bcf81d",
+      "updatedAt": "2026-10-26T18:14:51.229Z"
+    },
+    "[\"cat\",\"腹が減ったニャ……。でも、まぶたも重いニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "c377b9306c43fa28855f",
+      "updatedAt": "2026-10-26T17:37:58.720Z"
+    },
+    "[\"cat\",\"足の裏くらいニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "c17d65131e36fd1cdfa5",
+      "updatedAt": "2026-10-26T17:12:02.137Z"
+    },
+    "[\"cat\",\"食べ終わったら、容器だけでも片づけるニャ。\",\"moku\",false]": {
+      "status": "ok",
+      "version": "2a143332d7db225331b6",
+      "updatedAt": "2026-10-26T17:37:30.164Z"
     },
     "[\"manager\",\"……。\",\"normal\",false]": {
       "status": "ok",
@@ -517,11 +517,6 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "d0daff06469ee3b0cb8e",
       "updatedAt": "2026-10-26T17:41:54.659Z"
     },
-    "[\"manager\",\"……確かに。なんで冷凍庫なんて言ったんだ、俺。\",\"inner\",false]": {
-      "status": "ok",
-      "version": "718dccadf9192ea8f11f",
-      "updatedAt": "2026-10-26T18:07:52.768Z"
-    },
     "[\"manager\",\"……帰る場所もなくなりそうなんだぞ。\",\"normal\",false]": {
       "status": "ok",
       "version": "1259b031b2e331664fe3",
@@ -531,6 +526,11 @@ export const VOICE_REVIEW_PUBLISHED = {
       "status": "ok",
       "version": "a808dc073de33d8ed5f0",
       "updatedAt": "2026-10-26T17:39:06.128Z"
+    },
+    "[\"manager\",\"……確かに。なんで冷凍庫なんて言ったんだ、俺。\",\"inner\",false]": {
+      "status": "ok",
+      "version": "718dccadf9192ea8f11f",
+      "updatedAt": "2026-10-26T18:07:52.768Z"
     },
     "[\"manager\",\"ああ。いつまでも灰皿いっぱいにしておくわけにもいかねえだろ。\",\"normal\",false]": {
       "status": "ok",
@@ -577,15 +577,15 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "23acfbe8dd5acbad65c5",
       "updatedAt": "2026-10-26T17:38:56.042Z"
     },
-    "[\"manager\",\"くそっ、もう間に合わねぇ！ モク、逃げるぞ！\",\"normal\",false]": {
-      "status": "ok",
-      "version": "7a202838382592fc9538",
-      "updatedAt": "2026-10-26T18:09:00.861Z"
-    },
     "[\"manager\",\"くそっ、もう無理だ！ モク、逃げるぞ！！\",\"normal\",false]": {
       "status": "ok",
       "version": "ccd7d05bc2d6816a95e1",
       "updatedAt": "2026-10-26T18:10:45.080Z"
+    },
+    "[\"manager\",\"くそっ、もう間に合わねぇ！ モク、逃げるぞ！\",\"normal\",false]": {
+      "status": "ok",
+      "version": "7a202838382592fc9538",
+      "updatedAt": "2026-10-26T18:09:00.861Z"
     },
     "[\"manager\",\"こんなことで毎回呼ぶなよ……。\",\"normal\",false]": {
       "status": "ok",
@@ -697,15 +697,45 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "0c1cca2e8685df48a44d",
       "updatedAt": "2026-10-26T18:16:11.182Z"
     },
-    "[\"manager\",\"煙……？\",\"normal\",false]": {
-      "status": "ng",
-      "version": "e9686fcf2c3c8f2d063a",
-      "updatedAt": "2026-10-26T18:10:28.161Z"
+    "[\"manager\",\"今日やれ！！\",\"normal\",false]": {
+      "status": "ok",
+      "version": "3c75abc4aab55d44410e",
+      "updatedAt": "2026-10-26T18:12:53.951Z"
+    },
+    "[\"manager\",\"休憩のあとに休憩するなよ。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "a9b3b278a9238beb26f5",
+      "updatedAt": "2026-10-26T17:11:14.244Z"
     },
     "[\"manager\",\"何やってんだ、俺……。こんなことになるって、少し考えりゃ分かっただろ……。\",\"inner\",false]": {
       "status": "ok",
       "version": "ff24f86379363397438b",
       "updatedAt": "2026-10-26T17:39:27.332Z"
+    },
+    "[\"manager\",\"最初からやれよ！\",\"normal\",false]": {
+      "status": "ok",
+      "version": "19bf107f1a1c777f2302",
+      "updatedAt": "2026-10-26T18:12:22.778Z"
+    },
+    "[\"manager\",\"古びた鍵と、一通の手紙。\\n……今日から、ここを俺が預かるのか。\",\"inner\",false]": {
+      "status": "ok",
+      "version": "0a51db0af16748710c47",
+      "updatedAt": "2026-10-26T17:43:42.166Z"
+    },
+    "[\"manager\",\"待ってろ！！ 今そっちに——！\",\"tragedy-panic\",false]": {
+      "status": "ok",
+      "version": "d822aea1a59788657242",
+      "updatedAt": "2026-10-26T18:14:55.294Z"
+    },
+    "[\"manager\",\"捨てろよ。\",\"normal\",false]": {
+      "status": "ok",
+      "version": "771cfbcd5cb497d7d577",
+      "updatedAt": "2026-10-26T17:38:10.524Z"
+    },
+    "[\"manager\",\"換気扇より先にタバコ止めろよ！\",\"retort\",false]": {
+      "status": "ok",
+      "version": "393717122905b9471d8d",
+      "updatedAt": "2026-10-25T07:26:01.125Z"
     },
     "[\"manager\",\"火を消すんだよ！\",\"normal\",false]": {
       "status": "ok",
@@ -727,50 +757,20 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "123b34bc05d2c5685e57",
       "updatedAt": "2026-10-26T18:07:42.802Z"
     },
-    "[\"manager\",\"換気扇より先にタバコ止めろよ！\",\"retort\",false]": {
-      "status": "ok",
-      "version": "393717122905b9471d8d",
-      "updatedAt": "2026-10-25T07:26:01.125Z"
-    },
-    "[\"manager\",\"休憩のあとに休憩するなよ。\",\"normal\",false]": {
-      "status": "ok",
-      "version": "a9b3b278a9238beb26f5",
-      "updatedAt": "2026-10-26T17:11:14.244Z"
-    },
-    "[\"manager\",\"古びた鍵と、一通の手紙。\\n……今日から、ここを俺が預かるのか。\",\"inner\",false]": {
-      "status": "ok",
-      "version": "0a51db0af16748710c47",
-      "updatedAt": "2026-10-26T17:43:42.166Z"
-    },
-    "[\"manager\",\"今日やれ！！\",\"normal\",false]": {
-      "status": "ok",
-      "version": "3c75abc4aab55d44410e",
-      "updatedAt": "2026-10-26T18:12:53.951Z"
-    },
-    "[\"manager\",\"最初からやれよ！\",\"normal\",false]": {
-      "status": "ok",
-      "version": "19bf107f1a1c777f2302",
-      "updatedAt": "2026-10-26T18:12:22.778Z"
-    },
-    "[\"manager\",\"捨てろよ。\",\"normal\",false]": {
-      "status": "ok",
-      "version": "771cfbcd5cb497d7d577",
-      "updatedAt": "2026-10-26T17:38:10.524Z"
-    },
-    "[\"manager\",\"待ってろ！！ 今そっちに——！\",\"tragedy-panic\",false]": {
-      "status": "ok",
-      "version": "d822aea1a59788657242",
-      "updatedAt": "2026-10-26T18:14:55.294Z"
-    },
-    "[\"manager\",\"部屋、少しは片づけたらどうだ？\",\"normal\",false]": {
-      "status": "ok",
-      "version": "f3346d6813a7513eaead",
-      "updatedAt": "2026-10-25T07:26:19.732Z"
+    "[\"manager\",\"煙……？\",\"normal\",false]": {
+      "status": "ng",
+      "version": "e9686fcf2c3c8f2d063a",
+      "updatedAt": "2026-10-26T18:10:28.161Z"
     },
     "[\"manager\",\"立ってた場所だけじゃねぇか！\",\"normal\",false]": {
       "status": "ok",
       "version": "fd3bdd9e9c162b4b7c8e",
       "updatedAt": "2026-10-26T18:07:05.640Z"
+    },
+    "[\"manager\",\"部屋、少しは片づけたらどうだ？\",\"normal\",false]": {
+      "status": "ok",
+      "version": "f3346d6813a7513eaead",
+      "updatedAt": "2026-10-25T07:26:19.732Z"
     }
   }
 };
