@@ -1,0 +1,63 @@
+name: Restore reviewed voices from completed artifact
+on:
+  push:
+    paths:
+      - '.github/workflows/restore-reviewed-voices.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+  issues: read
+concurrency:
+  group: reviewed-voice-automation
+  cancel-in-progress: false
+jobs:
+  restore:
+    if: github.ref == 'refs/heads/main' && github.repository == 'Alicetel-u/FeralLife'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install audio verifier
+        run: |
+          command -v ffprobe || (sudo apt-get update && sudo apt-get install -y ffmpeg)
+      - name: Recover exact run 40450696535 files only
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+          VOICE_BRIDGE_PRIVATE_KEY: ${{ secrets.VOICE_BRIDGE_PRIVATE_KEY }}
+        run: |
+          mkdir -p .local/recovery-artifact
+          gh run download 40450696535 --repo Alicetel-u/FeralLife --name voice-repair-recovery-40450696535 --dir .local/recovery-artifact
+          node tools/recover-voice-run-40450696535.mjs
+          node tools/build-voice-review.mjs
+          node --input-type=module -e "import {VOICE_REVIEW_CATALOG as c} from './src/voice-review-catalog.js';const texts=['灰皿ごと水に沈めろ！','モク！？ まだ中にいるのか！？','おい……返事しろよ……！'];for(const t of texts){const row=c.find(r=>r.line.text===t);if(!row?.repairReview||!row.repairComment?.includes('再生成済み'))throw Error('Recheck not enabled for '+t)}"
+      - name: Build and run all tests
+        run: |
+          npm run build
+          npm test
+      - name: Mark completed only after all tests succeed
+        run: |
+          node --input-type=module -e "import{readFileSync,writeFileSync}from'node:fs';const p='config/voice-automation-runs.json';const s=JSON.parse(readFileSync(p));const r=s.runs['voice-20261027-ash-three-01'];if(r?.status!=='started'||String(r.workflowRun)!=='40450696535')throw Error('Receipt changed');r.status='completed';r.completedAt=new Date().toISOString();writeFileSync(p,JSON.stringify(s,null,2)+'\n')"
+      - name: Commit recovered recordings
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- config/voice-automation-runs.json config/voice-repairs.json config/voice-review-published.json src/voice-manifest.js src/voice-review-catalog.js src/voice-review-published.js
+          node --input-type=module -e "import {readFileSync} from 'node:fs';const p=JSON.parse(readFileSync('.local/recovery-artifact/.local/voice-plan.json'));for(const x of p.rows){process.stdout.write(x.hash+'\n')}" | while read hash; do git add -- "assets/voices/$hash.mp3" "assets/voices/$hash.repair.mp3"; done
+          git commit -m 'Restore three completed reviewed voices without paid regeneration'
+          git fetch origin main
+          git rebase origin/main
+          npm run build
+          npm test
+          git push origin HEAD:main
+      - name: Trigger Pages deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
