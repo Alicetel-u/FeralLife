@@ -171,6 +171,7 @@ export function extractVoiceScript(scope='intro') {
   }
   return result;
 }
+export const voiceRoomNumberReading=text=>text.replace(/([1-9][0-9]{2})号室/g,(_,number)=>[...number].map(d=>['まる','いち','に','さん','よん','ご','ろく','なな','はち','きゅう'][Number(d)]).join('')+'ごうしつ');
 export function planVoices(rows,ids,config,pronunciations=[],repairs=[]){
   ids=normalizeVoiceIds(ids);
   return rows.map(row=>{
@@ -180,7 +181,7 @@ export function planVoices(rows,ids,config,pronunciations=[],repairs=[]){
     const duelReadings=row.performance.startsWith('duel-')?[{term:'大家流',reading:'おおやりゅう'},{term:'漢気',reading:'おとこぎ'},{term:'煙ノ',reading:'けむりの'},{term:'肉球乱舞',reading:'にくきゅうらんぶ'}]:[];
     const filmReadings=row.performance==='luna-film-tense'?[{term:'入居者',reading:'にゅうきょしゃ'},{term:'募集',reading:'ぼしゅう'}]:[];
     const repair=repairs.find(r=>r.speaker===row.speaker&&r.text===row.line.text);
-    const spokenText=repair?.spokenText??[...filmReadings,...duelReadings,...pronunciations].sort((a,b)=>b.term.length-a.term.length).reduce((text,rule)=>text.replaceAll(rule.term,rule.reading),row.line.text);
+    const spokenText=voiceRoomNumberReading(repair?.spokenText??[...filmReadings,...duelReadings,...pronunciations].sort((a,b)=>b.term.length-a.term.length).reduce((text,rule)=>text.replaceAll(rule.term,rule.reading),row.line.text));
     const request={text:[...(repair?.tags||profile.tags),spokenText].join(' '),model_id:config.model,voice_settings:{...profile.settings,...repair?.settings}};
     if(/\[(?:softly|whispers?|whispering|mumbling)\]/i.test(request.text))throw Error('Voice delivery must be clear and projected; whisper/mumble tags are disabled');
     const voiceId=ids[row.speaker]||null;
