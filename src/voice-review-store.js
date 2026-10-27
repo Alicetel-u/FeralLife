@@ -60,7 +60,7 @@ export function voiceReviewMark(state,row,patch){
  if(before&&before.version!==row.version)record.history=[...history,{version:before.version,status:before.status,issues:before.issues,note:before.note,updatedAt:before.updatedAt}].slice(-10);
  state.records[row.id]=record;return record;
 }
-export function voiceReviewImport(state,payload){
+export function voiceReviewImport(state,payload,catalog=[]){
  if(!payload||payload.application!=='kemono-voice-review'||payload.schema!==1||!payload.records||typeof payload.records!=='object'||Array.isArray(payload.records))throw Error('けもの荘の音声チェック用バックアップではありません。');
  const incoming={};
  for(const [id,r] of Object.entries(payload.records)){
@@ -77,7 +77,15 @@ export function voiceReviewImport(state,payload){
  }
  if(payload.catalogEntries){state.catalogEntries ||= {};for(const [id,entry] of Object.entries(snapshots))if(!state.catalogEntries[id])state.catalogEntries[id]=entry;}
  let imported=0;
- for(const [id,r] of Object.entries(incoming))if(!state.records[id]||Date.parse(r.updatedAt)>Date.parse(state.records[id].updatedAt)){state.records[id]=r;imported++;}
+ const currentVersions=new Map(catalog.map(row=>[row.id,row.version]));
+ for(const [id,r] of Object.entries(incoming)){
+  const existing=state.records[id],version=currentVersions.get(id);
+  // A tab left open across a deployment must not overwrite a decision for the
+  // freshly deployed audio with a newer timestamp on the old recording.
+  if(existing&&version&&existing.version===version&&r.version!==version)continue;
+  if(existing&&version&&r.version===version&&existing.version!==version){state.records[id]=r;imported++;continue;}
+  if(!existing||Date.parse(r.updatedAt)>Date.parse(existing.updatedAt)){state.records[id]=r;imported++;}
+ }
  return imported;
 }
 export function voiceReviewLoad(storage){
