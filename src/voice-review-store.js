@@ -1,5 +1,5 @@
 export const VOICE_REVIEW_KEY='kemono-voice-review-v1';
-export const VOICE_REVIEW_ISSUES={reading:'読み間違い',quiet:'声が小さい',flat:'棒読み・演技',clipping:'音割れ',timing:'間・速さ',missing:'音が出ない'};
+export const VOICE_REVIEW_ISSUES={reading:'読み間違い',quiet:'声が小さい',flat:'棒読み・演技',clipping:'音割れ',timing:'間・速さ',missing:'異音'};
 export const VOICE_REVIEW_SPEAKERS={manager:'大家',cat:'モク',hostess:'ルナ'};
 export function voiceReviewEmpty(){return {schema:1,records:{},cursorId:null,filters:{chapter:'all',scene:'all',speaker:'all',status:'all',search:'',sort:'scene'},catalogEntries:null};}
 export function voiceReviewHasRepair(row,record){return !!(row.repaired||row.catalogChanged||record?.repaired||record?.history?.some(h=>h.status==='ng')||!!record&&record.version!==row.version);}
