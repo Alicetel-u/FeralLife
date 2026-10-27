@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
-  actions: read
+  actions: write
   issues: read
 concurrency:
   group: reviewed-voice-automation
@@ -27,7 +27,12 @@ jobs:
       - name: Install audio verifier
         run: |
           command -v ffprobe || (sudo apt-get update && sudo apt-get install -y ffmpeg)
+      - name: Detect already completed recovery
+        id: state
+        run: |
+          node --input-type=module -e "import {readFileSync,appendFileSync} from 'node:fs';const s=JSON.parse(readFileSync('config/voice-automation-runs.json'));const r=s.runs['voice-20261027-ash-three-01'];if(!r||!['started','completed'].includes(r.status))throw Error('Unknown receipt');appendFileSync(process.env.GITHUB_OUTPUT,'completed='+(r.status==='completed')+'\\n')"
       - name: Recover exact run 40450696535 files only
+        if: steps.state.outputs.completed != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           GITHUB_TOKEN: ${{ github.token }}
@@ -43,9 +48,11 @@ jobs:
           npm run build
           npm test
       - name: Mark completed only after all tests succeed
+        if: steps.state.outputs.completed != 'true'
         run: |
           node --input-type=module -e "import{readFileSync,writeFileSync}from'node:fs';const p='config/voice-automation-runs.json';const s=JSON.parse(readFileSync(p));const r=s.runs['voice-20261027-ash-three-01'];if(r?.status!=='started'||String(r.workflowRun)!=='40450696535')throw Error('Receipt changed');r.status='completed';r.completedAt=new Date().toISOString();writeFileSync(p,JSON.stringify(s,null,2)+'\n')"
       - name: Commit recovered recordings
+        if: steps.state.outputs.completed != 'true'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -57,6 +64,9 @@ jobs:
           npm run build
           npm test
           git push origin HEAD:main
+      - name: Verify restored manifest and receipt
+        run: |
+          node --input-type=module -e "import {readFileSync,statSync} from 'node:fs';import {VOICE_MANIFEST} from './src/voice-manifest.js';import {VOICE_REVIEW_CATALOG} from './src/voice-review-catalog.js';const ledger=JSON.parse(readFileSync('config/voice-automation-runs.json'));const entry=ledger.runs['voice-20261027-ash-three-01'];if(entry?.status!=='completed'||entry.recordings!==3)throw Error('Recovery not completed');for(const text of ['おい……返事しろよ……！','モク！？ まだ中にいるのか！？','灰皿ごと水に沈めろ！']){const r=VOICE_REVIEW_CATALOG.find(x=>x.line.text===text),m=r&&VOICE_MANIFEST[r.id];if(!r?.repairReview||!m?.repairReview||!m.file.endsWith('.repair.mp3')||statSync(m.file).size<8192)throw Error('Missing reviewed recording '+text)}"
       - name: Trigger Pages deployment
         env:
           GH_TOKEN: ${{ github.token }}
