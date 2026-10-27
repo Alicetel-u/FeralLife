@@ -27,6 +27,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install ffmpeg for pitch-preserving duel audio
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
       - name: Prepare pitch-preserving duel voice clips
         run: |
           node tools/build-attack-voices.mjs
