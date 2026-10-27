@@ -31,13 +31,13 @@ export function rewindBeat(t,attempt=1,afterFire=false,chapter=1,failure=''){
   }
   return {phase,text,kind,clockStart,finished:t>=clockStart+5.5};
 }
-export function rewindTransitionHTML(failure,attempt=1,afterFire=false,chapter=1){
+export function rewindTransitionHTML(failure,attempt=1,afterFire=false,chapter=1,clockOnly=false){
   const restored=chapter===2?'assets/apartments.png':'assets/rooms/cat/interior-illustrated-v1.png';
-  return `<section class="act-screen rewind-screen" data-rewind-phase="${afterFire?'dark':'fire'}" data-chapter="${chapter}" ${afterFire?'data-after-fire':''}>${afterFire?'':fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${chapter===2&&failure==='duel-yandere'?'':chapter===2&&attempt===1?'':afterFire?'……もう一度、やり直せるなら。':attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="${restored}" alt="${chapter===2?'元に戻ったけもの荘':'元に戻った101号室'}"><div class="rewind-white-fade" aria-hidden="true"></div></section>`;
+  return `<section class="act-screen rewind-screen" data-rewind-phase="${clockOnly?'clock':afterFire?'dark':'fire'}" data-chapter="${chapter}" ${afterFire?'data-after-fire':''}>${clockOnly||afterFire?'':fireEndingHTML(failure)}<div class="rewind-dark"></div><div class="rewind-clock" aria-hidden="true">${rewindClockSVG()}</div><p class="rewind-voice" aria-live="polite">${clockOnly?'':chapter===2&&failure==='duel-yandere'?'':chapter===2&&attempt===1?'':afterFire?'……もう一度、やり直せるなら。':attempt>1?'くそっ！！ またかよ！！':'嘘だろ……。'}</p><img class="rewind-restored-room" src="${restored}" alt="${chapter===2?'元に戻ったけもの荘':'元に戻った101号室'}"><div class="rewind-white-fade" aria-hidden="true"></div></section>`;
 }
 
-export function startRewindTransition(root,failure,finish,sound,attempt=1,targetTime=17,afterFire=false,clockAudio=null,sharedAudio=null){
-  const stopFire=afterFire?()=>{}:startFireEnding(root.querySelector('.fire-cinematic'),failure,()=>{});
+export function startRewindTransition(root,failure,finish,sound,attempt=1,targetTime=17,afterFire=false,clockAudio=null,sharedAudio=null,options={}){
+  const stopFire=options.clockOnly||afterFire?()=>{}:startFireEnding(root.querySelector('.fire-cinematic'),failure,()=>{});
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   let t=0,last=performance.now(),frameId,phase='',finished=false,clockComplete=false,fadeStarted=false,fadeStart=0;
   let heartbeatAudio=null,ownsHeartbeat=false,playedHeartbeats=0;
@@ -62,19 +62,20 @@ export function startRewindTransition(root,failure,finish,sound,attempt=1,target
     }catch{}
   }
   const chapter=Number(root.dataset.chapter)||1;
-  const clockStart=rewindBeat(0,attempt,afterFire,chapter,failure).clockStart;
+  const readBeat=seconds=>options.clockOnly?{phase:'clock',text:'',kind:'inner',clockStart:0}:rewindBeat(seconds,attempt,afterFire,chapter,failure);
+  const clockStart=readBeat(0).clockStart;
   function tick(now){
     if(finished)return;
     if(!root.isConnected){cleanup();return;}
     const dt=Math.min(.1,(now-last)/1000);last=now;if(!document.hidden)t+=dt;
-    if(afterFire&&attempt===1&&t<2.5){const beats=t>=1.3?2:t>=.2?1:0;while(playedHeartbeats<beats){beatHeart();playedHeartbeats++;}}
+    if(!options.clockOnly&&afterFire&&attempt===1&&t<2.5){const beats=t>=1.3?2:t>=.2?1:0;while(playedHeartbeats<beats){beatHeart();playedHeartbeats++;}}
     const clockElapsed=t-clockStart;
     const musicDone=clockAudio?.ended===true;
     const unavailable=!sound||!clockAudio||!!clockAudio.error||(clockAudio.paused&&clockElapsed>=10)
       ||clockElapsed>=Math.max(20,Number.isFinite(clockAudio?.duration)?clockAudio.duration+3:20);
     if(clockElapsed>=4&&(musicDone||(unavailable&&clockElapsed>=5.5)))clockComplete=true;
     const shownTime=Math.min(t,clockStart+3.99);
-    const beat=rewindBeat(shownTime,attempt,afterFire,chapter,failure),next=beat.phase;
+    const beat=readBeat(shownTime),next=beat.phase;
     const voice=root.querySelector('.rewind-voice');voice.textContent=beat.text;voice.dataset.voiceKind=beat.kind;voice.style.opacity=beat.text?'1':'0';
     if(phase!==next){
       phase=next;root.dataset.rewindPhase=phase;

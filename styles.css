@@ -2269,3 +2269,36 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @media(orientation:landscape) and (max-height:400px){.voice-review-mode .vr-panel{gap:3px;padding-top:6px;padding-bottom:6px}.voice-review-mode .vr-card{min-height:110px;padding:7px;gap:3px}.voice-review-mode .vr-player button,.voice-review-mode .vr-bottom button{min-height:32px;padding:4px 6px;font-size:11px}.voice-review-mode .vr-issues button{min-height:28px;padding:3px 2px;font-size:11px}.voice-review-mode .vr-panel .vr-note-button{min-height:25px}.voice-review-mode .vr-line{font-size:14px;line-height:1.25}.voice-review-mode .vr-text-pages button{min-height:22px;padding:2px 5px}.voice-review-mode .vr-repair-comment{font-size:9px}}
 @media(orientation:landscape) and (max-height:500px){.voice-review-mode .vr-panel{grid-template-rows:auto auto minmax(0,1fr) auto auto auto}.vr-panel .vr-header{grid-row:1}.vr-panel .vr-context{grid-row:2}.vr-panel .vr-player{grid-row:2}.vr-panel .vr-card{grid-row:3/5}.vr-panel .vr-issues{grid-row:3}.vr-panel .vr-note-button{grid-row:4}.vr-panel .vr-bottom{grid-row:5}.vr-panel .vr-save{grid-row:6}}
 @media(orientation:landscape) and (max-height:400px){.voice-review-mode .vr-player button{white-space:nowrap}.voice-review-mode .vr-player [data-vr=auto]{padding-inline:2px;font-size:10px}}
+
+/* Chapter III: full-frame event CGs, standard message window, no portrait layer. */
+.act3-film,.act3-title,.act3-complete{position:relative;width:100%;height:100%;min-height:0!important;overflow:hidden;background:#030304;color:#dedbd7;padding:0!important;isolation:isolate}
+.act3-rig,.act3-grain,.act3-flash,.act3-white,.act3-loading,.act3-title-black,.act3-title-smoke{position:absolute;inset:0;pointer-events:none}
+.act3-rig{overflow:hidden}.act3-image{width:100%;height:100%;object-fit:cover;object-position:50% 43%;will-change:transform}
+.act3-rig:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0009,transparent 45%,#0003);pointer-events:none}
+.act3-grain{opacity:.09;background:repeating-linear-gradient(0deg,#000 0 1px,transparent 1px 4px);mix-blend-mode:overlay}
+.act3-film[data-cut="news"] .act3-grain{opacity:.38;animation:act3-noise .13s steps(2) infinite}
+.act3-smoke,.act3-title-smoke{position:absolute;inset:-15%;background:radial-gradient(ellipse at 30% 70%,#aeb4bc2a,transparent 45%),radial-gradient(ellipse at 70% 40%,#b0a3a323,transparent 40%);animation:act3-smoke 13s ease-in-out infinite alternate;pointer-events:none}
+.act3-flash{background:#ffe9ba;z-index:3;opacity:0}.act3-white{background:white;z-index:6;opacity:0}
+.act3-dialogue{position:absolute;inset:0;z-index:5;pointer-events:none}.act3-dialogue .event-stage{position:absolute;inset:0;min-height:0;height:100%;background:none!important;pointer-events:none}
+.act3-dialogue .stage-bubble{position:absolute!important;top:auto!important;bottom:max(65px,calc(env(safe-area-inset-bottom) + 56px))!important;left:5%!important;right:5%!important;width:90%!important;max-width:none!important;margin:0!important;transform:none!important}
+.act3-controls{position:absolute;right:max(14px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:10;display:flex;gap:8px}
+.act3-controls button,.act3-complete button{padding:9px 15px;border:1px solid #8a81815c;border-radius:4px;background:#0a090ad9;color:#e6ded8;font-size:13px;cursor:pointer}
+.act3-loading{display:flex;align-items:center;justify-content:center;gap:12px;z-index:12;background:#050506;pointer-events:auto}.act3-loading[hidden]{display:none}
+.act3-film[data-cut="white"] .act3-controls{visibility:hidden}
+.act3-title{display:grid;place-items:center}.act3-title-copy{position:relative;width:100%;text-align:center;z-index:1}
+.act3-title p{opacity:0;font-family:"Yu Mincho",serif;font-size:clamp(20px,3.7vw,38px);letter-spacing:.5em;margin:0 0 28px;color:#b6aaa5;text-shadow:0 2px 8px #a2181b}
+.act3-title h2{opacity:0;margin:0;padding:0 4%;font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-weight:900;font-size:clamp(48px,12vw,150px);letter-spacing:.13em;line-height:1.35;color:#c0baba;background:repeating-linear-gradient(173deg,transparent 0 17px,#180b0b 18px 19px,transparent 20px 31px),linear-gradient(180deg,#f0eeee 2%,#969598 30%,#444448 49%,#b3a6a5 53%,#701a20 90%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 4px 1px #1e1012) drop-shadow(0 0 17px #8e101b5c)}
+.act3-title-black{background:#000;opacity:0;z-index:4}.act3-title-smoke{opacity:.65;filter:blur(18px)}
+.act3-complete{display:grid;place-items:center}.act3-complete nav{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
+.rewind-screen[data-chapter="3"] .rewind-restored-room{display:none}.rewind-screen[data-chapter="3"] .rewind-white-fade{background:#000}.rewind-screen[data-chapter="3"]:after{content:"";position:absolute;inset:0;background:white;z-index:20;pointer-events:none;animation:act3-clock-entry .9s linear forwards}
+@keyframes act3-clock-entry{to{opacity:0}}@keyframes act3-noise{to{transform:translateY(3px);opacity:.22}}@keyframes act3-smoke{to{transform:translate(8%,-4%) scale(1.12)}}
+@media(max-width:600px){.act3-dialogue .stage-bubble{left:4%!important;right:4%!important;width:92%!important;bottom:max(65px,calc(env(safe-area-inset-bottom) + 55px))!important}.act3-title h2{font-size:clamp(40px,12vw,75px);letter-spacing:.08em}.act3-title p{font-size:22px;margin-bottom:24px}.act3-controls button{padding:8px 12px}.act3-image{object-position:50% 40%}}
+@media(prefers-reduced-motion:reduce){.act3-smoke,.act3-title-smoke,.act3-film[data-cut="news"] .act3-grain{animation:none}.rewind-screen[data-chapter="3"]:after{animation-duration:.1s}}
+.game-ink dialog.act-modal:has(.act3-film,.act3-title,.act3-complete) #modal-content{height:100%;padding:0;overflow:hidden}
+.act3-film[data-paused="true"] .act3-smoke,.act3-film[data-paused="true"] .act3-grain{animation-play-state:paused}
+.game-ink dialog.act-modal:has(.act3-film,.act3-title,.act3-complete){position:fixed;inset:0;margin:0;width:100vw;height:100dvh;max-width:none;max-height:none;padding:0;border:0;border-radius:0;overflow:hidden;background:#030304}
+.act3-film::before,.act3-film::after,.act3-title::before,.act3-title::after,.act3-complete::before,.act3-complete::after{display:none!important}
+.game-ink .conversation-modal .act3-dialogue .stage-bubble{height:auto!important;min-height:136px!important;max-height:none!important;padding:44px 5% 25px!important}
+.game-ink .conversation-modal .act3-dialogue .stage-bubble p{max-height:none!important;overflow:visible!important;margin:0;font-size:clamp(16px,2vw,25px);line-height:1.55}
+@media(max-width:700px) and (orientation:portrait){.act3-rig{bottom:210px}.act3-image{object-fit:contain;object-position:center}.game-ink .conversation-modal .act3-dialogue .stage-bubble{padding:42px 18px 22px!important}.game-ink .conversation-modal .act3-dialogue .stage-bubble p{font-size:17px}}
+@media(max-height:450px){.game-ink .conversation-modal .act3-dialogue .stage-bubble{min-height:100px!important;padding:34px 24px 18px!important}.game-ink .conversation-modal .act3-dialogue .stage-bubble p{font-size:16px}}

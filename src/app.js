@@ -1,3 +1,4 @@
+import {actThreeHTML,startActThree,actThreeTitleHTML,startActThreeTitle,actThreeCompleteHTML} from './act-three-prologue.js';
 import {mountVoiceReview} from './voice-review.js';
 import {playFourKingsNotice} from './act-two-observation-two.js';
 import {actTwoObservationPosition} from './act-two-observation.js';
@@ -57,7 +58,8 @@ const escape = text => String(text ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;'
 const yen = n => '¥' + Math.round(n).toLocaleString('ja-JP');
 const managerPreview = new URLSearchParams(location.search).get('preview')==='manager';
 const observationPreview = new URLSearchParams(location.search).get('preview')==='observation';
-const STORAGE = ['act-two-opening','luna-motion'].includes(new URLSearchParams(location.search).get('preview'))?'feral-luna-film-preview-v1':managerPreview?'feral-manager-preview-v1':observationPreview?'feral-observation-preview-v1':'feral-act-one-v1';
+const actThreePreview=new URLSearchParams(location.search).get('preview')==='act-three';
+const STORAGE = actThreePreview?'feral-act-three-preview-v1':['act-two-opening','luna-motion'].includes(new URLSearchParams(location.search).get('preview'))?'feral-luna-film-preview-v1':managerPreview?'feral-manager-preview-v1':observationPreview?'feral-observation-preview-v1':'feral-act-one-v1';
 const previewType = new URLSearchParams(location.search).get('preview');
 const eventPreview = previewType === 'events';
 const actTwoPreview = previewType === 'act-two';
@@ -69,7 +71,7 @@ const firstStalkerPreview = previewType === 'first-stalker';
 const previewResident = ['hostess', 'fox', 'sister', 'peko', 'ann'].includes(previewType) ? previewType : null;
 let state, restored = false;
 let developerMode=false, debugTapCount=0, debugLastTap=0;
-try { const saved = previewResident || eventPreview || actTwoPreview || firstRewindPreview || firstFirePreview || firstStalkerPreview || observationPreview || managerPreview ? null : JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(saved) && validActOne(saved)) { state = saved; restored = true; } } catch {}
+try { const saved = actThreePreview || previewResident || eventPreview || actTwoPreview || firstRewindPreview || firstFirePreview || firstStalkerPreview || observationPreview || managerPreview ? null : JSON.parse(localStorage.getItem(STORAGE)); if (validateSave(saved) && validActOne(saved)) { state = saved; restored = true; } } catch {}
 state ||= previewResident || eventPreview ? createGame() : createActOne();
 retireActTwoContract(state);
 refreshDuelYandereEnding(state);
@@ -542,7 +544,7 @@ function showOpening(step = 0) {
 
 function showGameTitle(){
   debugTapCount=0;
-  const continuing=state.actOne.started||state.actOne.chapter===2;
+  const continuing=!!state.actThree||state.actOne.started||state.actOne.chapter===2;
   openModal(`<section class="act-screen game-title graphic-title title-refined"><button type="button" data-debug-hotspot aria-label=" " tabindex="-1" style="position:absolute;z-index:20;top:0;right:0;width:clamp(80px,12vw,150px);height:clamp(75px,12vh,130px);border:0;background:transparent;box-shadow:none;padding:0;opacity:0;cursor:default"></button><img class="title-city" src="assets/apartments.png" alt=""><div class="title-slash" aria-hidden="true"></div><div class="title-cast" aria-hidden="true"><div class="title-support title-luna"><img src="${EVENT_EXPRESSIONS.hostess.happy}" alt=""></div><div class="title-support title-nemu"><img src="${EVENT_EXPRESSIONS.sister.happy}" alt=""></div><img class="title-moku" src="${EVENT_EXPRESSIONS.cat.tired}" alt=""></div><div class="title-poster"><p class="title-label">住人観察 × 崩壊回避アドベンチャー</p><h2 id="modal-title" class="title-logo"><span>けもの<span class="title-logo-last">荘</span></span><small>～このアパート、問題しかない。～</small></h2><p class="title-hook">ロクでもない日常に、最悪の結末を。<br><strong>――させるかよ。</strong></p><nav class="title-actions" aria-label="ゲームタイトルメニュー">${continuing?'<button data-game-continue><span class="title-menu-mark" aria-hidden="true"></span><span>つづきから</span></button>':''}<button data-game-new><span class="title-menu-mark" aria-hidden="true"></span><span>はじめから</span></button><button data-title-help><span class="title-menu-mark" aria-hidden="true"></span><span>遊び方</span></button></nav><p class="title-record">${continuing?'前回の記録は自動保存されています。':'本日より、あなたが大家さん。'}</p></div></section>`);
   modal.querySelectorAll('.game-title img').forEach((placeholder,index)=>{
     const image=titleArtImages[index];
@@ -565,6 +567,7 @@ function showActTitle(){
   if(state.actOne.attempt>1)stopFireEnding=startFireEnding(modal.querySelector('.act-title-fire .fire-cinematic'),null,()=>{},{ambient:true});
 }
 function continueGame(){
+  if(state.actThree){showActThree();return;}
   // A retired chapter-title flag must not replace observation or a pending trouble.
   if(state.actOne?.rewindTitlePending){state.actOne.rewindTitlePending=false;save();}
   const destination=continueDestination(state);
@@ -643,7 +646,24 @@ function showActReward(){
   openModal(header('第二幕 PROLOGUE / 新しい住人','一枚の申込書が、けもの荘に届いた。',false)+`<div class="modal-body"><p class="modal-copy">けもの荘に届いた、一枚の入居申込書。</p><p class="modal-copy">果たして、新たな住人はどんな人物なのか。そして、モクとの共同生活はどうなってしまうのか——。</p><p class="modal-copy">第二幕の物語は、これから始まる。</p></div><div class="modal-footer"><button class="primary-button" data-act-replay>第一幕をもう一度遊ぶ →</button></div>`);
 }
 function showNextChapter(){
-  openModal(`<section class="act-screen act-clear act-intermission" data-chapter="2"><img class="ending-character" src="${EVENT_EXPRESSIONS.hostess.happy}" alt="金城ルナ"><div class="act-ending-copy"><p class="act-kicker">TO BE CONTINUED</p><h2 id="modal-title">第三幕、<br>準備中。</h2><button class="act-primary" data-act-replay>最初から遊ぶ →</button></div></section>`);
+  state.actThree={phase:'film',shot:0};save();showActThree();
+}
+function showActThree(){
+  const progress=state.actThree||{phase:'film',shot:0};
+  if(progress.phase==='complete'){openModal(actThreeCompleteHTML());return;}
+  if(progress.phase==='title'){showActThreeTitle();return;}
+  if(progress.phase==='clock'){showActThreeClock();return;}
+  eventView=null;openModal(actThreeHTML());
+  stopOpeningPrologue=startActThree(modal,()=>{state.actThree={phase:'clock',shot:0};save();showActThreeClock();},{settings:normalBgm,shared:()=>characterVoice.audioContext(),initialShot:progress.shot,onShot:shot=>{state.actThree={phase:'film',shot};save();}});
+}
+function showActThreeClock(){
+  openModal(rewindTransitionHTML('',1,true,3,true));
+  const sound=normalBgm.enabled;
+  stopFireEnding=startRewindTransition(modal.querySelector('.rewind-screen'),'',()=>{rewindWhiteoutPending=false;normalBgm.setSuppressed(false);state.actThree={phase:'title',shot:0};save();showActThreeTitle();},sound,1,17,true,normalBgm.clockAudio,sound?characterVoice.audioContext():null,{clockOnly:true});
+}
+function showActThreeTitle(){
+  normalBgm.setSuppressed(false);openModal(actThreeTitleHTML());
+  stopOpeningPrologue=startActThreeTitle(modal,()=>{state.actThree={phase:'complete',shot:0};save();openModal(actThreeCompleteHTML());},normalBgm,()=>characterVoice.audioContext());
 }
 function beginRewind(afterFire=false){
   const secondAct=state.actOne.chapter===2;
@@ -723,7 +743,7 @@ function showDebugObservationSelect(chapter,page=0){
   modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes');
 }
 function showDebugChapterSelect(){
-  debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter']], 'data-debug-tools-back');
+  debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter'],['3','第3幕 — 世界崩壊プロローグ','data-debug-act3']], 'data-debug-tools-back');
 }
 function showDebugSectionSelect(chapter){
   if(chapter!=='2'){showDebugSceneSelect(chapter);return;}
@@ -903,6 +923,8 @@ document.addEventListener('click',e=>{
   if(modal.open&&modal.querySelector('.epilogue-transition,.bad-entry-host'))return;
   const button=e.target.closest('button');if(!button)return;
   if(button.hasAttribute('data-debug-hotspot')){const now=performance.now();debugTapCount=now-debugLastTap>2500?1:debugTapCount+1;debugLastTap=now;if(debugTapCount>=3){debugTapCount=0;showDeveloperMenu();}return;}
+  if(button.hasAttribute('data-act3-replay')){state.actThree={phase:'film',shot:0};save();showActThree();return;}
+  if(button.hasAttribute('data-debug-act3')){developerMode=true;state.actThree={phase:'film',shot:0};showActThree();return;}
   if(button.hasAttribute('data-debug-back')){showGameTitle();return;}
   if(button.hasAttribute('data-debug-tools-back')){showDeveloperMenu();return;}
   if(button.hasAttribute('data-debug-chapters-back')){showDebugChapterSelect();return;}
@@ -922,7 +944,7 @@ document.addEventListener('click',e=>{
   if(button.hasAttribute('data-opening-continue'))showActTitle();
   if(button.hasAttribute('data-act-title'))showGameTitle();
   if(button.hasAttribute('data-title-help'))showTitleHelp();
-  if(button.hasAttribute('data-game-continue')&&(state.actOne.started||state.actOne.chapter===2))continueGame();
+  if(button.hasAttribute('data-game-continue')&&(state.actThree||state.actOne.started||state.actOne.chapter===2))continueGame();
   if(button.hasAttribute('data-game-new')){if(state.actOne.started||state.actOne.chapter===2)button.setAttribute('data-title-new','');else showOpening();}
   if(button.hasAttribute('data-title-new'))openModal(`<section class="restart-confirm" aria-describedby="restart-description"><div class="restart-stamp" aria-hidden="true">DAY<span>01</span></div><div class="restart-content"><p class="restart-kicker"><span aria-hidden="true">↺</span> NEW GAME / はじめから</p><h2 id="modal-title"><span>一日目から、</span><strong>やり直しますか？</strong></h2><p id="restart-description">今の進行と、タイムループで集めた<br class="restart-desktop-break">失敗の記憶をリセットします。</p><div class="restart-actions"><button class="restart-back" data-act-title><small aria-hidden="true">01 / BACK</small><span>タイトルに戻る</span><b aria-hidden="true">↩</b></button><button class="restart-start" data-restart><small aria-hidden="true">02 / NEW GAME</small><span>新しく始める</span><b aria-hidden="true">→</b></button></div></div><div class="restart-edge" aria-hidden="true">KEMONOSOU / RESTART?</div></section>`);
   if(button.hasAttribute('data-act2-start')&&state.actOne?.chapter===2){state.actOne.started=true;state.actOne.titlePending=false;save();const intro=state.events.find(e=>e.actScene==='act2-prologue');if(state.actOne.prologuePending&&intro)showEvent(intro.id);else{closeModal();openNextStageEvent();}}
@@ -1089,7 +1111,7 @@ function syncNormalBgm(){
   // Dedicated scene cues take precedence over character themes.
   const lunaVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="hostess"]');
   const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
-  return normalBgm.setScene(document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':actTwoTitle?'luna':actOneTitle?'moku':opening?'opening':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
+  return normalBgm.setScene(!!modal.querySelector('[data-act3-film],[data-act3-title],.act3-complete')||document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':actTwoTitle?'luna':actOneTitle?'moku':opening?'opening':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
 }
 modal.addEventListener('luna-film-phase',()=>{syncNormalBgm();});
 modal.addEventListener('rewind-phase',()=>{syncNormalBgm();});
@@ -1235,7 +1257,8 @@ if(entryGate && !previewType){
 }else{
   entryGate?.remove();
   startWorldArt();
-  if(actTwoOpeningPreview)showActTwoOpening();
+  if(actThreePreview){state.actThree||={phase:'film',shot:0};showActThree();}
+  else if(actTwoOpeningPreview)showActTwoOpening();
   else if(firstStalkerPreview||firstFirePreview){const reply=state.events.find(e=>e.actScene==='reply');showEvent(reply.id,Number(new URLSearchParams(location.search).get('line')||0));}
   else if(firstRewindPreview)showActEnding();
   else if(state.actOne&&!actTwoPreview&&!observationPreview&&!managerPreview)showGameTitle();
