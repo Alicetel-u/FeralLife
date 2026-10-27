@@ -49,6 +49,8 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add config/voice-automation-runs.json
           git commit -m 'Record voice repair intent before paid generation'
+          git fetch origin main
+          git rebase origin/main
           git push origin HEAD:main
       - name: Generate only reviewed recordings
         if: inputs.mode == 'repair' && steps.plan.outputs.noop != 'true'
