@@ -4170,15 +4170,15 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"hostess\",\"大家さん、今日は本当にありがとう♡\",\"luna-flirt\",false]": {
-    "file": "assets/voices/1ebd26cd74d1b598a90816f289f370cf78d1560da20490f3729839a92fb1a6ca.repair.mp3",
-    "hash": "1ebd26cd74d1b598a90816f289f370cf78d1560da20490f3729839a92fb1a6ca",
+    "file": "assets/voices/9ff68c8020482c0bdd543d50c0f0ebc1d0b4d4d7b4140ce1daecc2b1e62992d9.repair.mp3",
+    "hash": "9ff68c8020482c0bdd543d50c0f0ebc1d0b4d4d7b4140ce1daecc2b1e62992d9",
     "source": "act2/bag/runtime/2/guarantee:24",
     "speaker": "hostess",
     "text": "大家さん、今日は本当にありがとう♡",
     "performance": "luna-flirt",
     "model": "eleven_v3",
     "repairReview": true,
-    "repairComment": "再生成済み。異音補正",
+    "repairComment": "「大家さん」を「おおやさん」と明示して自然なお礼に。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -6,
@@ -5057,20 +5057,15 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"頼む……目を開けてくれ……！\",\"tragedy-grief\",false]": {
-    "file": "assets/voices/bb44a215b665d70fa4803d7ba2bf70f9486bf0c57f434eedfd356ac758121030.repair.mp3",
-    "hash": "bb44a215b665d70fa4803d7ba2bf70f9486bf0c57f434eedfd356ac758121030",
+    "file": "assets/voices/4466e0ca292284a8da2fa881644637f8edc9ce4baef0c222ed7611ac8e1a3e2d.repair.mp3",
+    "hash": "4466e0ca292284a8da2fa881644637f8edc9ce4baef0c222ed7611ac8e1a3e2d",
     "source": "act2/bag/runtime/1/guarantee:21",
     "speaker": "manager",
     "text": "頼む……目を開けてくれ……！",
     "performance": "tragedy-grief",
     "model": "eleven_v3",
-    "audioQuality": {
-      "edgeSilenceTrimmed": true,
-      "peakReductionDB": 0,
-      "durationSeconds": 5.135828
-    },
     "repairReview": true,
-    "repairComment": "再生成済み。読み補正",
+    "repairComment": "「頼む」を「たのむ」と明示し、切迫した懇願に。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -6,
@@ -6549,16 +6544,15 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "duel-moku"
   },
   "[\"hostess\",\"大家さ〜ん♡ ちょっとお願いがあるんだけど\",\"luna-happy\",false]": {
-    "file": "assets/voices/de7645b4a9148650a3c1288e24e313c50a1a5cfa9dfaf7d06b43192dc680a8ea.repair.mp3",
-    "hash": "de7645b4a9148650a3c1288e24e313c50a1a5cfa9dfaf7d06b43192dc680a8ea",
+    "file": "assets/voices/6f0d93cbe06e51dfe833c3f8bda427eaf18daa2c5742e6e001ae7abe96116be1.repair.mp3",
+    "hash": "6f0d93cbe06e51dfe833c3f8bda427eaf18daa2c5742e6e001ae7abe96116be1",
     "source": "act2/duel:0",
     "speaker": "hostess",
     "text": "大家さ〜ん♡ ちょっとお願いがあるんだけど",
     "performance": "luna-happy",
     "model": "eleven_v3",
-    "deliveryProfile": "duel-luna",
     "repairReview": true,
-    "repairComment": "再生成済み。読み補正",
+    "repairComment": "大家の読みと語の区切りを補正し、全体の発話を聞き取りやすく再構成。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -6,
@@ -6607,16 +6601,15 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "duel-manager"
   },
   "[\"hostess\",\"昨日は昨日。今日は今日♡\",\"luna-happy\",false]": {
-    "file": "assets/voices/5dcf10528849194b3d3e39d4d3ffd4618e2df284ed0bf862e8c2b5fb38fe880a.repair.mp3",
-    "hash": "5dcf10528849194b3d3e39d4d3ffd4618e2df284ed0bf862e8c2b5fb38fe880a",
+    "file": "assets/voices/437e9d48cc5c55865efa02179065688155d76a5d47c0a59b574777e5701d49ad.repair.mp3",
+    "hash": "437e9d48cc5c55865efa02179065688155d76a5d47c0a59b574777e5701d49ad",
     "source": "act2/duel:4",
     "speaker": "hostess",
     "text": "昨日は昨日。今日は今日♡",
     "performance": "luna-happy",
     "model": "eleven_v3",
-    "deliveryProfile": "duel-luna",
     "repairReview": true,
-    "repairComment": "再生成済み。読み補正",
+    "repairComment": "末尾の異音を避けるため装飾音を読ませず簡潔に発話させて再生成。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -6,
@@ -6696,16 +6689,15 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "duel-manager"
   },
   "[\"hostess\",\"はぁい♡ 頼りにしてるね、大家さん。\",\"luna-happy\",false]": {
-    "file": "assets/voices/9f79bb6c2e4792c5ab417ef7d335b80326ea7ebbb08dba3e06c9fdbbc3aa89b8.repair.mp3",
-    "hash": "9f79bb6c2e4792c5ab417ef7d335b80326ea7ebbb08dba3e06c9fdbbc3aa89b8",
+    "file": "assets/voices/6b35696cf8de86d19a8ca3629f1d7f3ecfec7255361419062a95c622653f6a34.repair.mp3",
+    "hash": "6b35696cf8de86d19a8ca3629f1d7f3ecfec7255361419062a95c622653f6a34",
     "source": "act2/duel:12",
     "speaker": "hostess",
     "text": "はぁい♡ 頼りにしてるね、大家さん。",
     "performance": "luna-happy",
     "model": "eleven_v3",
-    "deliveryProfile": "duel-luna",
     "repairReview": true,
-    "repairComment": "再生成済み。読み補正",
+    "repairComment": "大家の読みを明示し、自然に弾む甘いイントネーションへ。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -6,
@@ -6805,16 +6797,15 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "duel-manager"
   },
   "[\"hostess\",\"……はぁ〜。やっと帰ってくれたぁ……。\",\"luna-normal\",false]": {
-    "file": "assets/voices/c4760684416e2a8ab30ac38ec5beb6c0ea9856de93049de17da3381facc11cf1.repair.mp3",
-    "hash": "c4760684416e2a8ab30ac38ec5beb6c0ea9856de93049de17da3381facc11cf1",
+    "file": "assets/voices/04fc91a020ceb505eda930bcfb669ce3528521b21845e7c6c785937282a2c81f.repair.mp3",
+    "hash": "04fc91a020ceb505eda930bcfb669ce3528521b21845e7c6c785937282a2c81f",
     "source": "act2/runtime/attempt-1/bag/loan/duel/duel:8",
     "speaker": "hostess",
     "text": "……はぁ〜。やっと帰ってくれたぁ……。",
     "performance": "luna-normal",
     "model": "eleven_v3",
-    "deliveryProfile": "duel-luna",
     "repairReview": true,
-    "repairComment": "再生成済み。読み補正",
+    "repairComment": "息遣いと伸ばしを整理し、全文を明瞭に話すよう修正。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -6,
@@ -7124,16 +7115,15 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "duel-manager"
   },
   "[\"hostess\",\"大家さ〜ん♡ 昨日のこと思い出したら、また好きになっちゃった♡\",\"luna-happy\",false]": {
-    "file": "assets/voices/94099e9a4153533a58567eb7c2ffd3a70c43e0464030de6ad3551a03acbb71c2.repair.mp3",
-    "hash": "94099e9a4153533a58567eb7c2ffd3a70c43e0464030de6ad3551a03acbb71c2",
+    "file": "assets/voices/92729b52a38c3f4cbc2c61743dcf7f4a8e3ed5bac0013805e8c4d5c7a6605ab3.repair.mp3",
+    "hash": "92729b52a38c3f4cbc2c61743dcf7f4a8e3ed5bac0013805e8c4d5c7a6605ab3",
     "source": "act2/duel/yandere:9",
     "speaker": "hostess",
     "text": "大家さ〜ん♡ 昨日のこと思い出したら、また好きになっちゃった♡",
     "performance": "luna-happy",
     "model": "eleven_v3",
-    "deliveryProfile": "duel-luna",
     "repairReview": true,
-    "repairComment": "再生成済み。異音補正",
+    "repairComment": "「大家」を「おおや」と明示し、柔らかく明瞭な口調へ。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -6,
@@ -7153,16 +7143,15 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "duel-manager"
   },
   "[\"hostess\",\"大家さんのために、お弁当作ったの♡ 朝・昼・晩の三食分♡\",\"luna-flirt\",false]": {
-    "file": "assets/voices/bee674895b63749fe3fb82e2b1dd0aab198d44768e3ba00f3e746551a684d0b6.repair.mp3",
-    "hash": "bee674895b63749fe3fb82e2b1dd0aab198d44768e3ba00f3e746551a684d0b6",
+    "file": "assets/voices/6cee434589db8a9dcc1f7809fb30f36e41526e95370c35dbff78113857a522a5.repair.mp3",
+    "hash": "6cee434589db8a9dcc1f7809fb30f36e41526e95370c35dbff78113857a522a5",
     "source": "act2/duel/yandere:11",
     "speaker": "hostess",
     "text": "大家さんのために、お弁当作ったの♡ 朝・昼・晩の三食分♡",
     "performance": "luna-flirt",
     "model": "eleven_v3",
-    "deliveryProfile": "duel-luna",
     "repairReview": true,
-    "repairComment": "再生成済み。読み補正",
+    "repairComment": "「大家さん」の発音を「おおやさん」と明示。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -6,
@@ -9118,15 +9107,15 @@ export const VOICE_MANIFEST = {
     "observationTempo": 1.18
   },
   "[\"manager\",\"笑ってごまかすな！！\",\"four-kings-manager-retort\",false]": {
-    "file": "assets/voices/54308d5fc5fe8eeb1bb8fdf71a7d6fbc6cf2d9ad522b070c99187019ec47016d.repair.mp3",
-    "hash": "54308d5fc5fe8eeb1bb8fdf71a7d6fbc6cf2d9ad522b070c99187019ec47016d",
+    "file": "assets/voices/2e173e02cd67171ddcc91e45387ffa0b07f79061691e10cf68ed7596a3d40cb5.repair.mp3",
+    "hash": "2e173e02cd67171ddcc91e45387ffa0b07f79061691e10cf68ed7596a3d40cb5",
     "source": "act2/observation/luna-four-kings-notice:18",
     "speaker": "manager",
     "text": "笑ってごまかすな！！",
     "performance": "four-kings-manager-retort",
     "model": "eleven_v3",
     "repairReview": true,
-    "repairComment": "再生成済み。読み補正",
+    "repairComment": "怒りのツッコミとして「笑って」をはっきり立て、イントネーションを修正。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -6,

@@ -5378,7 +5378,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "91b1f56a2ca0fa73",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "再生成済み。読み補正",
+    "repairComment": "怒りのツッコミとして「笑って」をはっきり立て、イントネーションを修正。",
     "chapter": 2,
     "scene": "2:observation2",
     "sceneLabel": "観察2｜ルナと四天王",
@@ -5392,7 +5392,7 @@ export const VOICE_REVIEW_CATALOG = [
       "voicePerformance": "four-kings-manager-retort",
       "voiceChapter": 2
     },
-    "version": "88a91fe282aad4a467d4"
+    "version": "c0ad8f973978821ff12d"
   },
   {
     "id": "[\"hostess\",\"……え？\",\"four-kings-surprise\",false]",
@@ -6834,7 +6834,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "0cb72e63583e9bca",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "再生成済み。読み補正",
+    "repairComment": "「頼む」を「たのむ」と明示し、切迫した懇願に。",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -6847,7 +6847,7 @@ export const VOICE_REVIEW_CATALOG = [
       "voicePerformance": "tragedy-grief",
       "voiceChapter": 2
     },
-    "version": "9541b68c1d30eacd12d4"
+    "version": "2f1b1dff1935d02becbf"
   },
   {
     "id": "[\"manager\",\"……くそっ！ 救急車……！\",\"tragedy-panic\",false]",
@@ -7043,7 +7043,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "b04ab0a1a92e9dd1",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "再生成済み。異音補正",
+    "repairComment": "「大家さん」を「おおやさん」と明示して自然なお礼に。",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -7055,7 +7055,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "大家さん、今日は本当にありがとう♡",
       "voiceChapter": 2
     },
-    "version": "cb65836055df737bffe7"
+    "version": "e53549d2746fb7295047"
   },
   {
     "id": "[\"manager\",\"ああ。まあ、無事でよかったよ。\",\"act2-manager\",false]",
@@ -9098,7 +9098,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "e268ab17ad8bb24a",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "再生成済み。読み補正",
+    "repairComment": "大家の読みと語の区切りを補正し、全体の発話を聞き取りやすく再構成。",
     "chapter": 2,
     "scene": "2:duel-intro",
     "sceneLabel": "トラブル2｜バトル前後の会話",
@@ -9110,7 +9110,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "happy",
       "voiceChapter": 2
     },
-    "version": "38deb780a7bafe7d42a1"
+    "version": "d67c91a81109daa57e90"
   },
   {
     "id": "[\"manager\",\"……嫌な予感しかしねぇ。\",\"act2-manager\",false]",
@@ -9170,7 +9170,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "73823abe54b01c3f",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "再生成済み。読み補正",
+    "repairComment": "末尾の異音を避けるため装飾音を読ませず簡潔に発話させて再生成。",
     "chapter": 2,
     "scene": "2:duel-intro",
     "sceneLabel": "トラブル2｜バトル前後の会話",
@@ -9182,7 +9182,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "happy",
       "voiceChapter": 2
     },
-    "version": "5b3b19e2537eaa8ec996"
+    "version": "e66580ba8f5114fceeac"
   },
   {
     "id": "[\"cat\",\"大家、彼氏のアルバイト始めたニャ？\",\"act2-moku\",false]",
@@ -9308,7 +9308,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "c7160b76d4d23bb8",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "再生成済み。読み補正",
+    "repairComment": "大家の読みを明示し、自然に弾む甘いイントネーションへ。",
     "chapter": 2,
     "scene": "2:duel-intro",
     "sceneLabel": "トラブル2｜バトル前後の会話",
@@ -9320,7 +9320,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "happy",
       "voiceChapter": 2
     },
-    "version": "474e2321e7326feabd99"
+    "version": "73742447f6261757f526"
   },
   {
     "id": "[\"cat\",\"モクは廊下で見守るニャ。手に負えなかったら呼ぶニャ。\",\"act2-moku\",false]",
@@ -9344,7 +9344,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "5896d7c52a042c78",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "再生成済み。読み補正",
+    "repairComment": "息遣いと伸ばしを整理し、全文を明瞭に話すよう修正。",
     "chapter": 2,
     "scene": "2:duel-intro",
     "sceneLabel": "トラブル2｜バトル前後の会話",
@@ -9357,7 +9357,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelEnding": "clear",
       "voiceChapter": 2
     },
-    "version": "fc9e360f2660c9f36156"
+    "version": "a3333cf3ceeabf8fe9f6"
   },
   {
     "id": "[\"manager\",\"お前なぁ……二度とこんな騒ぎ起こすなよ？\",\"act2-manager\",false]",
@@ -11810,7 +11810,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "c0bf0559b7c7563f",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "再生成済み。異音補正",
+    "repairComment": "「大家」を「おおや」と明示し、柔らかく明瞭な口調へ。",
     "chapter": 2,
     "scene": "2:bad",
     "sceneLabel": "バトル後のBAD END",
@@ -11826,7 +11826,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelEnding": "yandere",
       "voiceChapter": 2
     },
-    "version": "4e32575c47bc740cc725"
+    "version": "8b0b8abd6c7fe026af7b"
   },
   {
     "id": "[\"manager\",\"……いや、俺は大家として当然のことをしただけだぞ？\",\"act2-manager\",false]",
@@ -11853,7 +11853,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "bc8c68fc92ed1161",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "再生成済み。読み補正",
+    "repairComment": "「大家さん」の発音を「おおやさん」と明示。",
     "chapter": 2,
     "scene": "2:bad",
     "sceneLabel": "バトル後のBAD END",
@@ -11869,7 +11869,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelEnding": "yandere",
       "voiceChapter": 2
     },
-    "version": "97cf57ed28fc964c11ef"
+    "version": "aefba1196b5886c38967"
   },
   {
     "id": "[\"manager\",\"……ありがたいけど、なんで全部ハート形なんだよ。\",\"act2-manager\",false]",

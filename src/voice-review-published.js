@@ -509,8 +509,8 @@ export const VOICE_REVIEW_PUBLISHED = {
     },
     "[\"hostess\",\"……はぁ〜。やっと帰ってくれたぁ……。\",\"luna-normal\",false]": {
       "status": "ng",
-      "version": "20347f972eb8c5a69918",
-      "updatedAt": "2026-10-27T05:36:21.035Z"
+      "version": "fc9e360f2660c9f36156",
+      "updatedAt": "2026-10-27T06:19:45.073Z"
     },
     "[\"hostess\",\"……はぁ、はぁ……っ。\",\"luna-film-tense\",false]": {
       "status": "ng",
@@ -554,8 +554,8 @@ export const VOICE_REVIEW_PUBLISHED = {
     },
     "[\"hostess\",\"はぁい♡ 頼りにしてるね、大家さん。\",\"luna-happy\",false]": {
       "status": "ng",
-      "version": "bbd2a3bf5983795153d7",
-      "updatedAt": "2026-10-27T05:36:08.828Z"
+      "version": "474e2321e7326feabd99",
+      "updatedAt": "2026-10-27T06:19:34.599Z"
     },
     "[\"hostess\",\"全部は、ね♡\",\"luna-flirt\",false]": {
       "status": "ng",
@@ -569,28 +569,28 @@ export const VOICE_REVIEW_PUBLISHED = {
     },
     "[\"hostess\",\"大家さ〜ん♡ ちょっとお願いがあるんだけど\",\"luna-happy\",false]": {
       "status": "ng",
-      "version": "1c650d71ffb36b960c2b",
-      "updatedAt": "2026-10-27T05:35:04.770Z"
+      "version": "38deb780a7bafe7d42a1",
+      "updatedAt": "2026-10-27T06:19:04.048Z"
     },
     "[\"hostess\",\"大家さ〜ん♡ 昨日のこと思い出したら、また好きになっちゃった♡\",\"luna-happy\",false]": {
       "status": "ng",
-      "version": "bcb30dd3176221dd1ffc",
-      "updatedAt": "2026-10-27T05:48:32.329Z"
+      "version": "4e32575c47bc740cc725",
+      "updatedAt": "2026-10-27T06:20:37.610Z"
     },
     "[\"hostess\",\"大家さん、今日は本当にありがとう♡\",\"luna-flirt\",false]": {
       "status": "ng",
-      "version": "ec6c82ce7a2f9effa6d9",
-      "updatedAt": "2026-10-27T05:27:15.448Z"
+      "version": "cb65836055df737bffe7",
+      "updatedAt": "2026-10-27T06:18:09.184Z"
     },
     "[\"hostess\",\"大家さんのために、お弁当作ったの♡ 朝・昼・晩の三食分♡\",\"luna-flirt\",false]": {
       "status": "ng",
-      "version": "9cc7d93a47589e90d645",
-      "updatedAt": "2026-10-27T05:48:43.907Z"
+      "version": "97cf57ed28fc964c11ef",
+      "updatedAt": "2026-10-27T06:20:44.386Z"
     },
     "[\"hostess\",\"昨日は昨日。今日は今日♡\",\"luna-happy\",false]": {
       "status": "ng",
-      "version": "6dc86ba055172d79e8ac",
-      "updatedAt": "2026-10-27T05:35:30.150Z"
+      "version": "5b3b19e2537eaa8ec996",
+      "updatedAt": "2026-10-27T06:19:21.456Z"
     },
     "[\"hostess\",\"贈り物を受け取ったら、断っちゃいけない気がしてた。……そこは別でいいんだね。\",\"duel-luna\",false]": {
       "status": "ng",
@@ -1029,8 +1029,8 @@ export const VOICE_REVIEW_PUBLISHED = {
     },
     "[\"manager\",\"笑ってごまかすな！！\",\"four-kings-manager-retort\",false]": {
       "status": "ng",
-      "version": "b8d418b5daebef7e0308",
-      "updatedAt": "2026-10-27T05:53:32.230Z"
+      "version": "88a91fe282aad4a467d4",
+      "updatedAt": "2026-10-27T06:17:49.415Z"
     },
     "[\"manager\",\"笑ってねぇよ。\",\"normal\",false]": {
       "status": "ng",
@@ -1064,8 +1064,8 @@ export const VOICE_REVIEW_PUBLISHED = {
     },
     "[\"manager\",\"頼む……目を開けてくれ……！\",\"tragedy-grief\",false]": {
       "status": "ng",
-      "version": "44562dd04e8b5757800e",
-      "updatedAt": "2026-10-27T05:24:52.981Z"
+      "version": "9541b68c1d30eacd12d4",
+      "updatedAt": "2026-10-27T06:17:57.946Z"
     }
   }
 };
