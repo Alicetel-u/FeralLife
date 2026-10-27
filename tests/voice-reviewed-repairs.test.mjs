@@ -85,7 +85,7 @@ test('active follow-up repairs remain separate without reopening accepted record
 test('freezer keeps natural mixed writing while the fire plea uses panic instead of commanding delivery',async()=>{
  const repairs=JSON.parse(await readFile(new URL('../config/voice-repairs.json',import.meta.url),'utf8')).lines;
  const freezer=repairs.find(r=>r.text==='灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！');assert.ok(freezer.spokenText.includes('灰皿'));assert.ok(freezer.spokenText.includes('れいとうこ'));assert.ok(freezer.spokenText.includes('ぶち込め'));
- const plea=repairs.find(r=>r.text==='おい……返事しろよ……！');assert.ok(plea.tags.includes('[panicked]'));assert.ok(plea.tags.includes('[pleading]'));
- assert.ok(!plea.tags.some(tag=>/angry|confident|lighthearted|playful|shouting/.test(tag)));assert.ok(plea.settings.speed>=1);
- const forceful=repairs.find(r=>r.text==='灰皿ごと水に沈めろ！');assert.ok(forceful.tags.includes('[confident]'));assert.ok(forceful.tags.includes('[shouting]'));
+ const plea=repairs.find(r=>r.text==='おい……返事しろよ……！');assert.ok(plea.tags.includes('[crying]'));assert.ok(plea.tags.includes('[pleading]'));
+ assert.ok(!plea.tags.some(tag=>/angry|confident|lighthearted|playful|shouting/.test(tag)));assert.ok(plea.settings.speed>=.8&&plea.settings.speed<=1.2);
+ const forceful=repairs.find(r=>r.text==='灰皿ごと水に沈めろ！');assert.ok(forceful.tags.includes('[serious]'));assert.ok(forceful.tags.includes('[shouting]'));
 });
