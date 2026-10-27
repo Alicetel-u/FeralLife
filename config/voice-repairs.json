@@ -150,15 +150,15 @@
       "text": "おい……返事しろよ……！",
       "spokenText": "おい……返事しろよ……！",
       "tags": [
-        "[panicked]",
+        "[worried]",
         "[pleading]"
       ],
       "settings": {
-        "stability": 0,
+        "stability": 0.5,
         "similarity_boost": 0.75,
-        "speed": 1.03
+        "speed": 0.96
       },
-      "repairComment": "威圧的という指摘に合わせ、焦って返答を懇願する演技で再生成。怒りや強気の演技は指定しない。"
+      "repairComment": "威圧や叱責を避け、安否を案じて震える声で返事を懇願する演技へ変更。"
     },
     {
       "speaker": "cat",
@@ -447,32 +447,32 @@
     {
       "speaker": "manager",
       "text": "灰皿ごと水に沈めろ！",
-      "spokenText": "灰皿ごと水に沈めろ！",
+      "spokenText": "はいざらごと水に沈めろ！",
       "tags": [
-        "[shouting]",
-        "[confident]"
-      ],
-      "settings": {
-        "stability": 0,
-        "similarity_boost": 0.75,
-        "speed": 1.03
-      },
-      "repairComment": "もっと強気という指摘に合わせ、はっきり決断して指示する演技で再生成。"
-    },
-    {
-      "speaker": "manager",
-      "text": "モク！？ まだ中にいるのか！？",
-      "spokenText": "モク！ まだ中にいるのか！？",
-      "tags": [
-        "[panicked]",
+        "[serious]",
         "[shouting]"
       ],
       "settings": {
         "stability": 0.5,
         "similarity_boost": 0.75,
-        "speed": 1.03
+        "speed": 0.97
       },
-      "repairComment": "末尾の異音の指摘に合わせて再生成。切迫した呼びかけを維持し、短いフェードと末尾余白を追加。"
+      "repairComment": "『灰皿』のみ『はいざら』と読み指定し、明瞭な指示口調で再生成。"
+    },
+    {
+      "speaker": "manager",
+      "text": "モク！？ まだ中にいるのか！？",
+      "spokenText": "モク！？ まだ中にいるのか！？",
+      "tags": [
+        "[panicked]",
+        "[worried]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 0.98
+      },
+      "repairComment": "後半の異音を避けるため音声を再生成し、切迫した確認の呼びかけを明瞭にする。"
     }
   ]
 }

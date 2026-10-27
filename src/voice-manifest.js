@@ -1726,15 +1726,15 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"灰皿ごと水に沈めろ！\",\"normal\",false]": {
-    "file": "assets/voices/5ba92dcfbdf915121fc98c3101450d138bac8159db90fe52030d9efe6e3355d0.repair.mp3",
-    "hash": "5ba92dcfbdf915121fc98c3101450d138bac8159db90fe52030d9efe6e3355d0",
+    "file": "assets/voices/f38d71a18033fd06b1a4649bbbf0b495fc1656cad3bb3fc9baa62df29112d3b2.repair.mp3",
+    "hash": "f38d71a18033fd06b1a4649bbbf0b495fc1656cad3bb3fc9baa62df29112d3b2",
     "source": "act1/ash/water:0",
     "speaker": "manager",
     "text": "灰皿ごと水に沈めろ！",
     "performance": "normal",
     "model": "eleven_v3",
     "repairReview": true,
-    "repairComment": "もっと強気という指摘に合わせ、はっきり決断して指示する演技で再生成。",
+    "repairComment": "再生成済み。『灰皿』のみ『はいざら』と読み指定し、明瞭な指示口調で再生成。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -6,
@@ -2992,15 +2992,15 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"モク！？ まだ中にいるのか！？\",\"tragedy-panic\",false]": {
-    "file": "assets/voices/38bcefb06bbf3fec9a0424ac9f3051ed8c9e00f8f1e23c660d0a695550693ec9.repair.mp3",
-    "hash": "38bcefb06bbf3fec9a0424ac9f3051ed8c9e00f8f1e23c660d0a695550693ec9",
+    "file": "assets/voices/1f882f4891039815c383be2bd8bb061dda356064fae791f1bf11e7ba0731ad63.repair.mp3",
+    "hash": "1f882f4891039815c383be2bd8bb061dda356064fae791f1bf11e7ba0731ad63",
     "source": "act1/runtime/attempt-1/ash/trash/reply:15",
     "speaker": "manager",
     "text": "モク！？ まだ中にいるのか！？",
     "performance": "tragedy-panic",
     "model": "eleven_v3",
     "repairReview": true,
-    "repairComment": "末尾の異音の指摘に合わせて再生成。切迫した呼びかけを維持し、短いフェードと末尾余白を追加。",
+    "repairComment": "再生成済み。後半の異音を避けるため音声を再生成し、切迫した確認の呼びかけを明瞭にする。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -6,
@@ -3055,15 +3055,15 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"おい……返事しろよ……！\",\"tragedy-grief\",false]": {
-    "file": "assets/voices/110a5c9657d9758e3131409ffd3e7630b1ab577c7a4a56542840412f314b5356.repair.mp3",
-    "hash": "110a5c9657d9758e3131409ffd3e7630b1ab577c7a4a56542840412f314b5356",
+    "file": "assets/voices/7d7463f4f0d762c522273851543f04a882cf7483400f19fd69e0813ed7e77cab.repair.mp3",
+    "hash": "7d7463f4f0d762c522273851543f04a882cf7483400f19fd69e0813ed7e77cab",
     "source": "act1/runtime/attempt-1/ash/trash/reply:22",
     "speaker": "manager",
     "text": "おい……返事しろよ……！",
     "performance": "tragedy-grief",
     "model": "eleven_v3",
     "repairReview": true,
-    "repairComment": "威圧的という指摘に合わせ、焦って返答を懇願する演技で再生成。怒りや強気の演技は指定しない。",
+    "repairComment": "再生成済み。威圧や叱責を避け、安否を案じて震える声で返事を懇願する演技へ変更。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -6,

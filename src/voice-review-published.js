@@ -243,9 +243,9 @@ export const VOICE_REVIEW_PUBLISHED = {
       "updatedAt": "2026-10-26T17:38:23.513Z"
     },
     "[\"cat\",\"もう一本……灰皿が山盛りニャ。\",\"moku-surprised\",false]": {
-      "status": "ng",
-      "version": "5cbc2827f3758868c2a9",
-      "updatedAt": "2026-10-26T18:08:18.276Z"
+      "status": "ok",
+      "version": "01c1ee68181e7224a4ad",
+      "updatedAt": "2026-10-27T03:47:34.836Z"
     },
     "[\"cat\",\"モクですニャ。よろしくニャ。\",\"moku\",false]": {
       "status": "ok",
@@ -564,8 +564,8 @@ export const VOICE_REVIEW_PUBLISHED = {
     },
     "[\"manager\",\"おい……返事しろよ……！\",\"tragedy-grief\",false]": {
       "status": "ng",
-      "version": "a9b1195eb6a1d75e0251",
-      "updatedAt": "2026-10-26T18:15:59.462Z"
+      "version": "1538aa87b2a97b4ea4f1",
+      "updatedAt": "2026-10-27T04:00:59.378Z"
     },
     "[\"manager\",\"おお！ どのくらい？\",\"normal\",false]": {
       "status": "ok",
@@ -598,9 +598,9 @@ export const VOICE_REVIEW_PUBLISHED = {
       "updatedAt": "2026-10-26T17:41:49.573Z"
     },
     "[\"manager\",\"せめて両足ぶんは今日やれ！\",\"normal\",false]": {
-      "status": "ng",
-      "version": "36cbe5e3f96612473759",
-      "updatedAt": "2026-10-26T18:08:31.742Z"
+      "status": "ok",
+      "version": "8d2038076a69e1265004",
+      "updatedAt": "2026-10-27T03:47:38.841Z"
     },
     "[\"manager\",\"そういうときだけ都合よく信用するなよ。\",\"normal\",false]": {
       "status": "ok",
@@ -689,8 +689,8 @@ export const VOICE_REVIEW_PUBLISHED = {
     },
     "[\"manager\",\"モク！？ まだ中にいるのか！？\",\"tragedy-panic\",false]": {
       "status": "ng",
-      "version": "201da6c50ba21303c302",
-      "updatedAt": "2026-10-26T18:14:23.985Z"
+      "version": "1ba13d22d8a18e7cf434",
+      "updatedAt": "2026-10-27T03:59:58.188Z"
     },
     "[\"manager\",\"モク……頼む、返事をしてくれ。\",\"tragedy-grief\",false]": {
       "status": "ok",
@@ -749,8 +749,8 @@ export const VOICE_REVIEW_PUBLISHED = {
     },
     "[\"manager\",\"灰皿ごと水に沈めろ！\",\"normal\",false]": {
       "status": "ng",
-      "version": "c29d12f68b918d9dcf3e",
-      "updatedAt": "2026-10-26T18:11:34.925Z"
+      "version": "2648f53b7fce7d3bd68b",
+      "updatedAt": "2026-10-27T03:47:59.338Z"
     },
     "[\"manager\",\"灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！\",\"normal\",false]": {
       "status": "ng",
@@ -758,9 +758,9 @@ export const VOICE_REVIEW_PUBLISHED = {
       "updatedAt": "2026-10-26T18:07:42.802Z"
     },
     "[\"manager\",\"煙……？\",\"normal\",false]": {
-      "status": "ng",
-      "version": "e9686fcf2c3c8f2d063a",
-      "updatedAt": "2026-10-26T18:10:28.161Z"
+      "status": "ok",
+      "version": "24f7b3d53ad95d616014",
+      "updatedAt": "2026-10-27T03:47:41.522Z"
     },
     "[\"manager\",\"立ってた場所だけじゃねぇか！\",\"normal\",false]": {
       "status": "ok",

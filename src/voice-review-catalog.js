@@ -1530,7 +1530,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "e7d4d036c7b1a100",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "もっと強気という指摘に合わせ、はっきり決断して指示する演技で再生成。",
+    "repairComment": "再生成済み。『灰皿』のみ『はいざら』と読み指定し、明瞭な指示口調で再生成。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -1541,7 +1541,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "灰皿ごと水に沈めろ！"
     },
-    "version": "2648f53b7fce7d3bd68b"
+    "version": "f66395e37e6bbcebb192"
   },
   {
     "id": "[\"cat\",\"灰皿を溺れさせるニャ！？\",\"moku-surprised\",false]",
@@ -1962,7 +1962,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "d03284f8bdb22c2f",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "末尾の異音の指摘に合わせて再生成。切迫した呼びかけを維持し、短いフェードと末尾余白を追加。",
+    "repairComment": "再生成済み。後半の異音を避けるため音声を再生成し、切迫した確認の呼びかけを明瞭にする。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -1974,7 +1974,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "モク！？ まだ中にいるのか！？",
       "voicePerformance": "tragedy-panic"
     },
-    "version": "1ba13d22d8a18e7cf434"
+    "version": "2048db3f1cce7c336771"
   },
   {
     "id": "[\"cat\",\"煙が……前が見えないニャ……！\",\"tragedy-fear\",false]",
@@ -2051,7 +2051,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "5a697c4a2a5afddc",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "威圧的という指摘に合わせ、焦って返答を懇願する演技で再生成。怒りや強気の演技は指定しない。",
+    "repairComment": "再生成済み。威圧や叱責を避け、安否を案じて震える声で返事を懇願する演技へ変更。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -2063,7 +2063,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "おい……返事しろよ……！",
       "voicePerformance": "tragedy-grief"
     },
-    "version": "1538aa87b2a97b4ea4f1"
+    "version": "4bc7b12ea853cf124622"
   },
   {
     "id": "[\"manager\",\"モク……頼む、返事をしてくれ。\",\"tragedy-grief\",false]",

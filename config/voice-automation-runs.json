@@ -13,10 +13,11 @@
     "voice-20261027-ash-three-01": {
       "requestDigest": "37eee26c43b3d2818459e7fa4104cde55217af7054fd7ec38ee21d4c566521a3",
       "planId": "4350c59314ec60ff3974752a7f0af3068a810fe466f89a91ede29f29bf96ec7f",
-      "status": "started",
+      "status": "completed",
       "recordings": 3,
       "startedAt": "2026-10-27T04:37:38.301Z",
-      "workflowRun": "40450696535"
+      "workflowRun": "40450696535",
+      "completedAt": "2026-10-27T04:51:25.839Z"
     }
   }
 }
