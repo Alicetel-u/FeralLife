@@ -1,0 +1,25 @@
+name: ChatGPT voice bridge
+on:
+  issues:
+    types: [opened]
+permissions:
+  contents: read
+  actions: write
+  issues: write
+jobs:
+  dispatch:
+    if: github.event.issue.user.login == github.repository_owner && startsWith(github.event.issue.title, '[Voice Bridge]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Decrypt request and dispatch existing bounded workflow
+        env:
+          VOICE_BRIDGE_PRIVATE_KEY: ${{ secrets.VOICE_BRIDGE_PRIVATE_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node tools/voice-bridge.mjs dispatch
