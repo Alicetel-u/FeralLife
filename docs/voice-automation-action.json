@@ -1,0 +1,49 @@
+{
+  "openapi": "3.1.0",
+  "info": {"title": "けもの荘 音声修正", "version": "1.0.0", "description": "Validate or run a bounded voice-review repair on the owner's GitHub Actions runner."},
+  "servers": [{"url": "https://api.github.com"}],
+  "security": [{"GitHubToken": []}],
+  "components": {"securitySchemes": {"GitHubToken": {"type": "http", "scheme": "bearer"}}},
+  "paths": {
+    "/repos/Alicetel-u/FeralLife/actions/workflows/voice-review-automation.yml/dispatches": {
+      "post": {
+        "operationId": "runVoiceReviewAutomation",
+        "summary": "Validate a voice request or repair and publish it",
+        "description": "Use only after following docs/voice-automation.md. validate makes no paid API calls. repair may spend ElevenLabs credits up to the request cap and publish accepted results. request_json contains requestId, maxCredits, report, corrections. Never include credentials.",
+        "x-openai-isConsequential": true,
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {
+          "type": "object", "required": ["ref", "inputs"], "additionalProperties": false,
+          "properties": {
+            "ref": {"type": "string", "enum": ["main"]},
+            "inputs": {"type": "object", "required": ["mode", "request_json"], "additionalProperties": false, "properties": {
+              "mode": {"type": "string", "enum": ["validate", "repair"]},
+              "request_json": {"type": "string", "maxLength": 60000, "description": "JSON string following docs/voice-automation.md; use the user's original report and explicit phonetic/acting corrections, not executable code."}
+            }}
+          }
+        }}}},
+        "responses": {"204": {"description": "Accepted; poll workflow runs. This alone does not mean generation or deployment succeeded."}}
+      }
+    },
+    "/repos/Alicetel-u/FeralLife/actions/workflows/voice-review-automation.yml/runs": {
+      "get": {
+        "operationId": "listVoiceReviewRuns", "summary": "Find recent voice workflow runs",
+        "parameters": [{"name": "per_page", "in": "query", "schema": {"type": "integer", "minimum": 1, "maximum": 10, "default": 5}}],
+        "responses": {"200": {"description": "Recent run IDs, statuses and URLs", "content": {"application/json": {"schema": {"type": "object", "properties": {"workflow_runs": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "status": {"type": "string"}, "conclusion": {"type": ["string", "null"]}, "html_url": {"type": "string"}, "created_at": {"type": "string"}}}}}}}}}}
+      }
+    },
+    "/repos/Alicetel-u/FeralLife/actions/runs/{run_id}": {
+      "get": {
+        "operationId": "getVoiceRunStatus", "summary": "Read a verified run's completion status",
+        "parameters": [{"name": "run_id", "in": "path", "required": true, "schema": {"type": "integer"}}],
+        "responses": {"200": {"description": "Workflow status", "content": {"application/json": {"schema": {"type": "object", "properties": {"id": {"type": "integer"}, "name": {"type": "string"}, "status": {"type": "string"}, "conclusion": {"type": ["string", "null"]}, "html_url": {"type": "string"}}}}}}}
+      }
+    },
+    "/repos/Alicetel-u/FeralLife/actions/workflows/deploy-pages.yml/runs": {
+      "get": {
+        "operationId": "listVoiceDeployments", "summary": "Verify Pages publication after a voice repair",
+        "parameters": [{"name": "per_page", "in": "query", "schema": {"type": "integer", "minimum": 1, "maximum": 10, "default": 5}}],
+        "responses": {"200": {"description": "Pages deployment runs", "content": {"application/json": {"schema": {"type": "object", "properties": {"workflow_runs": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "integer"}, "head_sha": {"type": "string"}, "status": {"type": "string"}, "conclusion": {"type": ["string", "null"]}, "html_url": {"type": "string"}}}}}}}}}}
+      }
+    }
+  }
+}

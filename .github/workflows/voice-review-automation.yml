@@ -1,0 +1,84 @@
+name: Voice review automation
+run-name: Voice review ${{ inputs.mode }} · ${{ github.run_number }}
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: validate checks the plan without paid generation; repair generates and publishes
+        type: choice
+        options: [validate, repair]
+        default: validate
+        required: true
+      request_json:
+        description: JSON produced by ChatGPT using docs/voice-automation.md
+        type: string
+        required: true
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: reviewed-voice-automation
+  cancel-in-progress: false
+jobs:
+  voice:
+    if: github.ref == 'refs/heads/main' && github.actor == github.repository_owner
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate request and credit cap
+        id: plan
+        run: node tools/voice-automation.mjs prepare
+      - name: Verify audio tooling
+        if: inputs.mode == 'repair' && steps.plan.outputs.noop != 'true'
+        run: |
+          command -v ffmpeg || (sudo apt-get update && sudo apt-get install -y ffmpeg)
+          ffprobe -version >/dev/null
+      - name: Persist duplicate-charge guard before generation
+        if: inputs.mode == 'repair' && steps.plan.outputs.noop != 'true'
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: |
+          node tools/voice-automation.mjs begin
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add config/voice-automation-runs.json
+          git commit -m 'Record voice repair intent before paid generation'
+          git push origin HEAD:main
+      - name: Generate only reviewed recordings
+        if: inputs.mode == 'repair' && steps.plan.outputs.noop != 'true'
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: node tools/voice-automation.mjs generate
+      - name: Build and test
+        if: inputs.mode == 'repair' && steps.plan.outputs.noop != 'true'
+        run: |
+          npm run build
+          npm test
+      - name: Commit verified audio and shared decisions
+        if: inputs.mode == 'repair' && steps.plan.outputs.noop != 'true'
+        run: |
+          node tools/voice-automation.mjs complete
+          git commit -m 'Publish reviewed voice repairs and decisions'
+          git push origin HEAD:main
+      - name: Deploy Pages explicitly after the bot push
+        if: inputs.mode == 'repair'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
+      - name: Preserve generated audio and journal on failure
+        if: failure() && inputs.mode == 'repair'
+        uses: actions/upload-artifact@v4
+        with:
+          name: voice-repair-recovery-${{ github.run_id }}
+          path: |
+            .local/voice-journal.json
+            .local/voice-plan.json
+            assets/voices/*.mp3
+          include-hidden-files: true
+          retention-days: 14

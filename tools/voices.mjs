@@ -102,8 +102,8 @@ function validateRecording(row){
 }
 // Cached generation outputs need the same check: never republish a corrupt old file.
 if(args.includes('--generate'))for(const row of rows)if(await exists(row.file))validateRecording(row);
-let key;
-try{key=(await json('.local/elevenlabs.json')).apiKey;}catch{throw Error('Local API key missing. Run npm run voice:setup (do not paste key into chat).');}
+let key=process.env.ELEVENLABS_API_KEY;
+if(!key)try{key=(await json('.local/elevenlabs.json')).apiKey;}catch{throw Error('API key missing. Set the repository secret or run npm run voice:setup (do not paste the key into chat).');}
 if(typeof key!=='string'||!key.trim())throw Error('Empty API key');
 // Verify ignore protection and absence from the Git index, without printing the key.
 const ignored=spawnSync('git',['check-ignore','--quiet','.local/elevenlabs.json'],{cwd:root});
