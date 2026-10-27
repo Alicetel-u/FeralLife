@@ -48,6 +48,20 @@ test('backups merge by newer decision and never delete notes for removed lines',
  const bad=JSON.parse(voiceReviewBackup(older));bad.records[row.id].issues=['invalid'];assert.throws(()=>voiceReviewImport(newer,bad));assert.equal(newer.records[row.id].note,'新しいメモ');
 });
 
+test('an older deployed tab cannot overwrite a current recording decision while preserving unrelated OKs',()=>{
+ const old=variant('修正対象の録音','v-old'),current={...old,version:'v-new'},other=variant('修正対象外の録音','unchanged');
+ const saved=voiceReviewEmpty();voiceReviewMark(saved,current,{status:'ok'});voiceReviewMark(saved,other,{status:'ok'});
+ saved.records[current.id].updatedAt='2026-10-27T01:00:00Z';
+ const stale=voiceReviewEmpty();voiceReviewMark(stale,old,{status:'ng',issues:['reading']});
+ stale.records[old.id].updatedAt='2026-10-27T02:00:00Z';
+ assert.equal(voiceReviewImport(saved,JSON.parse(voiceReviewBackup(stale)),[current,other]),0);
+ assert.equal(saved.records[current.id].version,'v-new');assert.equal(saved.records[current.id].status,'ok');
+ assert.equal(saved.records[other.id].status,'ok');
+ const migrated=voiceReviewEmpty();voiceReviewMark(migrated,old,{status:'ng'});
+ assert.equal(voiceReviewImport(migrated,JSON.parse(voiceReviewBackup(saved)),[current,other]),2);
+ assert.equal(migrated.records[current.id].version,'v-new');
+});
+
 test('the handoff includes the exact lookup key, scene, line, problem and memo',()=>{
  const state=voiceReviewEmpty();voiceReviewMark(state,row,{status:'ng',issues:['reading','flat'],note:'元気に話してほしい'});
  const out=voiceReviewExport(state,[row]);for(const value of [row.id,row.sceneLabel,row.line.text,'読み間違い','棒読み・演技','元気に話してほしい',row.version])assert.ok(out.includes(value));
