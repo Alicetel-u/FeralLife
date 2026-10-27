@@ -5,11 +5,17 @@ import {createHash} from 'node:crypto';
 import {VOICE_MANIFEST} from '../src/voice-manifest.js';
 import {VOICE_REVIEW_KEY,voiceReviewEmpty,voiceReviewSyncCatalog,voiceReviewRows,voiceReviewHasRepair,voiceReviewStatus,voiceReviewMark,voiceReviewLoad,voiceReviewImport,voiceReviewBackup,voiceReviewExport,voiceReviewFilter} from '../src/voice-review-store.js';
 import {VOICE_REVIEW_CATALOG} from '../src/voice-review-catalog.js';
-import {extractCompleteVoiceScript} from '../tools/voice-script.mjs';
+import {extractCompleteVoiceScript,voiceRoomNumberReading} from '../tools/voice-script.mjs';
 import {tracePlayableVoiceLines} from '../tools/voice-reachability.mjs';
 import {voiceLineKey} from '../src/voice-policy.js';
 const row=VOICE_REVIEW_CATALOG.find(r=>r.chapter===2&&r.line.speaker==='hostess');
 const memory=()=>{const data=new Map();return {getItem:k=>data.get(k)||null,setItem:(k,v)=>data.set(k,v)};};
+
+test('future generated room numbers speak digit by digit without altering displayed dialogue',()=>{
+ assert.equal(voiceRoomNumberReading('102号室の住人、201号室へ。'),'いちまるにごうしつの住人、にまるいちごうしつへ。');
+ assert.equal(voiceRoomNumberReading('101号室、203号室。'),'いちまるいちごうしつ、にまるさんごうしつ。');
+ assert.equal(voiceRoomNumberReading('102円と12号室'),'102円と12号室');
+});
 
 test('the voice review catalog contains only current playable lines and content fingerprints',()=>{
  const reachable=tracePlayableVoiceLines(VOICE_MANIFEST);
