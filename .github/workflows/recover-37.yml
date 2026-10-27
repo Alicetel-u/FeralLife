@@ -1,0 +1,70 @@
+name: Restore 37 reviewed voices from finished artifacts
+on:
+  push:
+    paths:
+      - '.github/workflows/recover-37.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+  issues: read
+concurrency:
+  group: reviewed-voice-automation
+  cancel-in-progress: false
+jobs:
+  restore:
+    if: github.ref == 'refs/heads/main' && github.repository == 'Alicetel-u/FeralLife'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check recovery ledger
+        id: status
+        run: |
+          node --input-type=module -e "import{readFileSync,appendFileSync}from'node:fs';const l=JSON.parse(readFileSync('config/voice-automation-runs.json')).runs;const a=l['voice-20261027-review-37-part1-01'],b=l['voice-20261027-review-37-part2-01'];if(!a||!b||a.status!==b.status||!['started','completed'].includes(a.status))throw Error('Unexpected recovery state');appendFileSync(process.env.GITHUB_OUTPUT,'complete='+(a.status==='completed')+'\n')"
+      - name: Retrieve already generated audio, without ElevenLabs
+        if: steps.status.outputs.complete != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 40459085372 --repo Alicetel-u/FeralLife --name voice-repair-recovery-40459085372 --dir .local/recovery-30
+          gh run download 40459094366 --repo Alicetel-u/FeralLife --name voice-repair-recovery-40459094366 --dir .local/recovery-7
+      - name: Verify and recover both immutable recorded batches
+        if: steps.status.outputs.complete != 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          VOICE_BRIDGE_PRIVATE_KEY: ${{ secrets.VOICE_BRIDGE_PRIVATE_KEY }}
+        run: |
+          node tools/recover-voice-37.mjs
+          node tools/build-voice-review.mjs
+      - name: Build and run all regression tests
+        run: |
+          npm run build
+          npm test
+      - name: Commit original paid audio only after green tests
+        if: steps.status.outputs.complete != 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- config/voice-automation-runs.json config/voice-repairs.json config/voice-review-published.json src/voice-manifest.js src/voice-review-catalog.js src/voice-review-published.js
+          for dir in .local/recovery-30 .local/recovery-7; do
+            node --input-type=module -e "import{readFileSync}from'node:fs';const p=JSON.parse(readFileSync(process.argv[1]));for(const row of p.rows)console.log(row.hash)" "$dir/.local/voice-plan.json" | while read hash; do
+              git add -- "assets/voices/$hash.mp3" "assets/voices/$hash.repair.mp3"
+            done
+          done
+          git commit -m 'Recover 37 reviewed voices without paid regeneration'
+          git fetch origin main
+          git rebase origin/main
+          npm run build
+          npm test
+          git push origin HEAD:main
+      - name: Deploy Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
