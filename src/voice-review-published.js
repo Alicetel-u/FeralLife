@@ -252,6 +252,16 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "fd5200743d5501479d0e",
       "updatedAt": "2026-10-25T06:59:31.728Z"
     },
+    "[\"cat\",\"モクの冷蔵庫、ビールでいっぱいになったニャ。\",\"new-ally-proud\",false]": {
+      "status": "ng",
+      "version": "5ff1d54be33aaccd2bf1",
+      "updatedAt": "2026-10-27T05:14:47.169Z"
+    },
+    "[\"cat\",\"もちろんニャ！ ……大家が。\",\"four-kings-moku-proud\",false]": {
+      "status": "ng",
+      "version": "dcaa27a480f1b57bcd81",
+      "updatedAt": "2026-10-27T05:13:46.064Z"
+    },
     "[\"cat\",\"よく寝たニャ。朝の空気は気持ちいいニャ。\",\"moku\",false]": {
       "status": "ok",
       "version": "cdca3e80ab7e9542913a",
@@ -341,6 +351,11 @@ export const VOICE_REVIEW_PUBLISHED = {
       "status": "ok",
       "version": "003d528870b824ce2169",
       "updatedAt": "2026-10-26T17:11:10.323Z"
+    },
+    "[\"cat\",\"当然ニャ！\",\"act2-moku-happy\",false]": {
+      "status": "ng",
+      "version": "a125759f907616f6c553",
+      "updatedAt": "2026-10-27T05:17:00.154Z"
     },
     "[\"cat\",\"待つニャ！ 冷凍庫のチャーハン、出しっぱなしニャ！\",\"moku-surprised\",false]": {
       "status": "ok",
@@ -437,6 +452,36 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "2a143332d7db225331b6",
       "updatedAt": "2026-10-26T17:37:30.164Z"
     },
+    "[\"hostess\",\"……あっ。そうだ♡\",\"four-kings-bright\",false]": {
+      "status": "ng",
+      "version": "5868af0353a16916f03b",
+      "updatedAt": "2026-10-27T05:12:51.645Z"
+    },
+    "[\"hostess\",\"……はぁ、はぁ……っ。\",\"luna-film-tense\",false]": {
+      "status": "ng",
+      "version": "0cadf6aba2a1eccd4542",
+      "updatedAt": "2026-10-27T05:06:24.409Z"
+    },
+    "[\"hostess\",\"……入居者、募集……？\",\"luna-film-tense\",false]": {
+      "status": "ng",
+      "version": "b9bdc0b33a84929a5b40",
+      "updatedAt": "2026-10-27T05:06:45.736Z"
+    },
+    "[\"hostess\",\"ううん、なんでもないです！ それより、102号室ってこっちですか？\",\"luna-happy\",false]": {
+      "status": "ng",
+      "version": "9f9c18e2c539cea4be63",
+      "updatedAt": "2026-10-27T05:09:41.086Z"
+    },
+    "[\"hostess\",\"えへへ……ちょっとだけ♡\",\"four-kings-tease\",false]": {
+      "status": "ng",
+      "version": "c4ea7ef6b51bac141508",
+      "updatedAt": "2026-10-27T05:11:16.162Z"
+    },
+    "[\"hostess\",\"冷蔵庫？\",\"new-ally-surprise\",false]": {
+      "status": "ng",
+      "version": "7b661909738b6ef1d8a7",
+      "updatedAt": "2026-10-27T05:14:42.905Z"
+    },
     "[\"manager\",\"……。\",\"normal\",false]": {
       "status": "ok",
       "version": "8672b42872949db048b6",
@@ -456,6 +501,11 @@ export const VOICE_REVIEW_PUBLISHED = {
       "status": "ok",
       "version": "b9b24a29aa0182ce24de",
       "updatedAt": "2026-10-26T18:12:38.912Z"
+    },
+    "[\"manager\",\"……って、おい！！ 俺のアパートじゃねぇか！！\",\"normal\",false]": {
+      "status": "ng",
+      "version": "70fd80b123ff8bf0d903",
+      "updatedAt": "2026-10-27T04:27:14.993Z"
     },
     "[\"manager\",\"……って、おい！！ 燃えてんじゃねぇか！！\",\"normal\",false]": {
       "status": "ok",
@@ -497,10 +547,20 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "c66b5cd02b3e6f4b8761",
       "updatedAt": "2026-10-26T17:11:30.403Z"
     },
+    "[\"manager\",\"……また戻った。今度こそ大丈夫だと思ったのに。\",\"inner\",false]": {
+      "status": "ng",
+      "version": "14930a5e5f6884e0498a",
+      "updatedAt": "2026-10-27T04:29:36.740Z"
+    },
     "[\"manager\",\"……モクは言われたとおりにしただけだ。俺がちゃんと考えてりゃ、こんなことには……。\",\"inner\",false]": {
       "status": "ok",
       "version": "2172a91462746de47a35",
       "updatedAt": "2026-10-26T18:09:31.465Z"
+    },
+    "[\"manager\",\"……今度は、どうする……？\",\"act2-manager\",false]": {
+      "status": "ng",
+      "version": "6f60bcd6040a575621d8",
+      "updatedAt": "2026-10-27T05:17:17.269Z"
     },
     "[\"manager\",\"……何があったんだよ、このアパート。\\nまずは、たった一人の住人に会ってみるか。\",\"inner\",false]": {
       "status": "ok",
@@ -517,6 +577,11 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "d0daff06469ee3b0cb8e",
       "updatedAt": "2026-10-26T17:41:54.659Z"
     },
+    "[\"manager\",\"……入居申込書？\",\"normal\",false]": {
+      "status": "ng",
+      "version": "1858685af79ec0b54222",
+      "updatedAt": "2026-10-27T04:32:20.317Z"
+    },
     "[\"manager\",\"……帰る場所もなくなりそうなんだぞ。\",\"normal\",false]": {
       "status": "ok",
       "version": "1259b031b2e331664fe3",
@@ -527,10 +592,20 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "a808dc073de33d8ed5f0",
       "updatedAt": "2026-10-26T17:39:06.128Z"
     },
+    "[\"manager\",\"……戻ってる？ 時間が……？\",\"inner\",false]": {
+      "status": "ng",
+      "version": "112d4906fc1c90767ac3",
+      "updatedAt": "2026-10-27T04:29:26.149Z"
+    },
     "[\"manager\",\"……確かに。なんで冷凍庫なんて言ったんだ、俺。\",\"inner\",false]": {
       "status": "ok",
       "version": "718dccadf9192ea8f11f",
       "updatedAt": "2026-10-26T18:07:52.768Z"
+    },
+    "[\"manager\",\"ああ、101号室の隣だ。\",\"act2-manager\",false]": {
+      "status": "ng",
+      "version": "8c41316a6d36dc93e6c0",
+      "updatedAt": "2026-10-27T05:09:57.255Z"
     },
     "[\"manager\",\"ああ。いつまでも灰皿いっぱいにしておくわけにもいかねえだろ。\",\"normal\",false]": {
       "status": "ok",
@@ -572,6 +647,11 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "f9de57ab9529046e056d",
       "updatedAt": "2026-10-26T17:11:54.952Z"
     },
+    "[\"manager\",\"お前が味方に呼んだんだろ！\",\"new-ally-retort\",false]": {
+      "status": "ng",
+      "version": "75b2cc9a298473baaa9d",
+      "updatedAt": "2026-10-27T05:15:17.514Z"
+    },
     "[\"manager\",\"キャンプじゃねぇよ！！ お前、まだ火ついてたのか！？\",\"normal\",false]": {
       "status": "ok",
       "version": "23acfbe8dd5acbad65c5",
@@ -586,6 +666,11 @@ export const VOICE_REVIEW_PUBLISHED = {
       "status": "ok",
       "version": "7a202838382592fc9538",
       "updatedAt": "2026-10-26T18:09:00.861Z"
+    },
+    "[\"manager\",\"このアパートだよ！\",\"normal\",false]": {
+      "status": "ng",
+      "version": "70743d22a53f9c9c3b6e",
+      "updatedAt": "2026-10-27T04:30:55.372Z"
     },
     "[\"manager\",\"こんなことで毎回呼ぶなよ……。\",\"normal\",false]": {
       "status": "ok",
@@ -612,6 +697,11 @@ export const VOICE_REVIEW_PUBLISHED = {
       "version": "ca9da22ec8f120e35f9c",
       "updatedAt": "2026-10-26T18:11:05.665Z"
     },
+    "[\"manager\",\"だったら……今度こそ、間違えられねぇ。\",\"inner\",false]": {
+      "status": "ng",
+      "version": "7efa8863d6d655cc181f",
+      "updatedAt": "2026-10-27T04:29:33.592Z"
+    },
     "[\"manager\",\"だったらちゃんと火を消せよ！\",\"retort\",false]": {
       "status": "ok",
       "version": "ece4ca6f2141404269c7",
@@ -626,6 +716,11 @@ export const VOICE_REVIEW_PUBLISHED = {
       "status": "ok",
       "version": "955691a8d85ec2cbdb23",
       "updatedAt": "2026-10-26T17:41:40.588Z"
+    },
+    "[\"manager\",\"ったく……。昨日みたいな騒ぎはもう勘弁してくれよ。\",\"four-kings-manager-alert\",false]": {
+      "status": "ng",
+      "version": "8735932b0d1196f18e4e",
+      "updatedAt": "2026-10-27T05:12:57.788Z"
     },
     "[\"manager\",\"テレビなんかどうでもいい！！ 命が先だろ！！\",\"normal\",false]": {
       "status": "ok",
@@ -656,6 +751,11 @@ export const VOICE_REVIEW_PUBLISHED = {
       "status": "ok",
       "version": "3538bed88582e2403971",
       "updatedAt": "2026-10-26T18:10:57.049Z"
+    },
+    "[\"manager\",\"なんでだ……？ あんなに熱かったのに。煙も、炎も……全部覚えてる。\",\"inner\",false]": {
+      "status": "ng",
+      "version": "b5ad9c2e406ffe58c37c",
+      "updatedAt": "2026-10-27T04:29:30.376Z"
     },
     "[\"manager\",\"なんで俺が決めるんだよ……。\",\"weary\",false]": {
       "status": "ok",
@@ -749,8 +849,8 @@ export const VOICE_REVIEW_PUBLISHED = {
     },
     "[\"manager\",\"灰皿ごと水に沈めろ！\",\"normal\",false]": {
       "status": "ng",
-      "version": "2648f53b7fce7d3bd68b",
-      "updatedAt": "2026-10-27T03:47:59.338Z"
+      "version": "f66395e37e6bbcebb192",
+      "updatedAt": "2026-10-27T05:04:40.473Z"
     },
     "[\"manager\",\"灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！\",\"normal\",false]": {
       "status": "ng",
@@ -766,6 +866,26 @@ export const VOICE_REVIEW_PUBLISHED = {
       "status": "ok",
       "version": "fd3bdd9e9c162b4b7c8e",
       "updatedAt": "2026-10-26T18:07:05.640Z"
+    },
+    "[\"manager\",\"笑ってごまかすな！！\",\"four-kings-manager-retort\",false]": {
+      "status": "ng",
+      "version": "aa3b7a1976880c50785e",
+      "updatedAt": "2026-10-27T05:11:36.040Z"
+    },
+    "[\"manager\",\"笑ってねぇよ。\",\"normal\",false]": {
+      "status": "ng",
+      "version": "dde4815b639b650e7e00",
+      "updatedAt": "2026-10-27T04:31:59.576Z"
+    },
+    "[\"manager\",\"誰が悪徳大家だ！\",\"new-ally-retort\",false]": {
+      "status": "ng",
+      "version": "f039237533af15f31758",
+      "updatedAt": "2026-10-27T05:14:09.399Z"
+    },
+    "[\"manager\",\"謝ることじゃねぇけど、困ったら早めに言えよ。\",\"four-kings-manager-warm\",false]": {
+      "status": "ng",
+      "version": "3efaa22c1e23c5ae815a",
+      "updatedAt": "2026-10-27T05:13:14.579Z"
     },
     "[\"manager\",\"部屋、少しは片づけたらどうだ？\",\"normal\",false]": {
       "status": "ok",

@@ -1530,7 +1530,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "e7d4d036c7b1a100",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "再生成済み。『灰皿』のみ『はいざら』と読み指定し、明瞭な指示口調で再生成。",
+    "repairComment": "再生成。灰皿を「はいざら」と明示し、叫びの音割れを抑える。",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -1541,7 +1541,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "灰皿ごと水に沈めろ！"
     },
-    "version": "f66395e37e6bbcebb192"
+    "version": "f93444c2b522b5207e34"
   },
   {
     "id": "[\"cat\",\"灰皿を溺れさせるニャ！？\",\"moku-surprised\",false]",
@@ -2933,7 +2933,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"……って、おい！！ 俺のアパートじゃねぇか！！\",\"normal\",false]",
     "reviewId": "e2eb9f91dd9f884d",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。ツッコミの勢いを残しつつ末尾の異音と音割れを修正。",
     "chapter": 1,
     "scene": "1:dinner",
     "sceneLabel": "トラブル2｜料理",
@@ -2944,7 +2946,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "……って、おい！！ 俺のアパートじゃねぇか！！"
     },
-    "version": "70fd80b123ff8bf0d903"
+    "version": "844e6e0e5c6ac9f4394a"
   },
   {
     "id": "[\"manager\",\"モク！！ 起きろ！！ 火事だぞ！！\",\"normal\",false]",
@@ -3510,7 +3512,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"……戻ってる？ 時間が……？\",\"inner\",false]",
     "reviewId": "74ae50523e7bcf75",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。戸惑いを保ちながら声を明瞭に前へ出す。",
     "chapter": 1,
     "scene": "1:rewind",
     "sceneLabel": "巻き戻り後の会話",
@@ -3522,12 +3526,14 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……戻ってる？ 時間が……？",
       "innerVoice": true
     },
-    "version": "112d4906fc1c90767ac3"
+    "version": "61525f1d09ffe292c4b1"
   },
   {
     "id": "[\"manager\",\"なんでだ……？ あんなに熱かったのに。煙も、炎も……全部覚えてる。\",\"inner\",false]",
     "reviewId": "ef9dfa08af2eea9d",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。悲劇の余韻を保ちつつ全体を聞き取りやすくする。",
     "chapter": 1,
     "scene": "1:rewind",
     "sceneLabel": "巻き戻り後の会話",
@@ -3539,12 +3545,14 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "なんでだ……？ あんなに熱かったのに。煙も、炎も……全部覚えてる。",
       "innerVoice": true
     },
-    "version": "b5ad9c2e406ffe58c37c"
+    "version": "0bd8ff9611036ab629f5"
   },
   {
     "id": "[\"manager\",\"だったら……今度こそ、間違えられねぇ。\",\"inner\",false]",
     "reviewId": "3f670529f34e1d16",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。静かな決意を声量を落とさず明瞭に表現。",
     "chapter": 1,
     "scene": "1:rewind",
     "sceneLabel": "巻き戻り後の会話",
@@ -3556,12 +3564,14 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "だったら……今度こそ、間違えられねぇ。",
       "innerVoice": true
     },
-    "version": "7efa8863d6d655cc181f"
+    "version": "b26769fb84cc7e9f2d72"
   },
   {
     "id": "[\"manager\",\"……また戻った。今度こそ大丈夫だと思ったのに。\",\"inner\",false]",
     "reviewId": "5d2526ac4a2dcde2",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。喪失感を保ちながら語尾まで聞き取りやすくする。",
     "chapter": 1,
     "scene": "1:rewind",
     "sceneLabel": "巻き戻り後の会話",
@@ -3573,7 +3583,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……また戻った。今度こそ大丈夫だと思ったのに。",
       "innerVoice": true
     },
-    "version": "14930a5e5f6884e0498a"
+    "version": "e4d575110cb9cda6d9a8"
   },
   {
     "id": "[\"cat\",\"大家？ 何かあったニャ？\",\"moku-surprised\",false]",
@@ -3675,7 +3685,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"このアパートだよ！\",\"normal\",false]",
     "reviewId": "371b7ab2ed8d2bfb",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。優しい言い方から勢いのある強めのツッコミへ。",
     "chapter": 1,
     "scene": "1:ending",
     "sceneLabel": "エンディング",
@@ -3686,7 +3698,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "このアパートだよ！"
     },
-    "version": "70743d22a53f9c9c3b6e"
+    "version": "f3c67eb7c5f6993c99fc"
   },
   {
     "id": "[\"cat\",\"変な大家ニャ。アパートは生き物じゃないニャ。\",\"moku\",false]",
@@ -3904,7 +3916,8 @@ export const VOICE_REVIEW_CATALOG = [
     "id": "[\"manager\",\"笑ってねぇよ。\",\"normal\",false]",
     "reviewId": "dd75e18b90e02300",
     "repaired": true,
-    "repairComment": "音声を再生成し、音量を調整。",
+    "repairReview": true,
+    "repairComment": "再生成。自然な反論として抑揚を強める。",
     "chapter": 1,
     "scene": "1:ending",
     "sceneLabel": "エンディング",
@@ -3915,7 +3928,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "笑ってねぇよ。"
     },
-    "version": "dde4815b639b650e7e00"
+    "version": "f76e576500910057e126"
   },
   {
     "id": "[\"cat\",\"気持ち悪いニャ。\",\"moku\",false]",
@@ -4017,7 +4030,8 @@ export const VOICE_REVIEW_CATALOG = [
     "id": "[\"manager\",\"……入居申込書？\",\"normal\",false]",
     "reviewId": "afd4de4905dffd2f",
     "repaired": true,
-    "repairComment": "音声を再生成し、音量を調整。",
+    "repairReview": true,
+    "repairComment": "再生成。入居申込書への驚きと疑問を自然な抑揚で表現。",
     "chapter": 1,
     "scene": "1:ending",
     "sceneLabel": "エンディング",
@@ -4028,7 +4042,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "……入居申込書？"
     },
-    "version": "1858685af79ec0b54222"
+    "version": "e91563ce82f510999c2f"
   },
   {
     "id": "[\"manager\",\"こんなボロアパートに？\",\"normal\",false]",
@@ -4481,7 +4495,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"……はぁ、はぁ……っ。\",\"luna-film-tense\",false]",
     "reviewId": "c4e0e2789ecad3c6",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。走った息遣いを自然にし、末尾の異音を修正。",
     "chapter": 2,
     "scene": "2:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -4498,7 +4514,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "tired",
       "text": "……はぁ、はぁ……っ。"
     },
-    "version": "0cadf6aba2a1eccd4542"
+    "version": "1655eb33f8ca4b2e166d"
   },
   {
     "id": "[\"hostess\",\"……ここまで来れば……。\",\"luna-film-tense\",false]",
@@ -4525,7 +4541,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"……入居者、募集……？\",\"luna-film-tense\",false]",
     "reviewId": "227476f241613372",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。入居者の読みを明示し、募集を見つけた疑問の抑揚へ。",
     "chapter": 2,
     "scene": "2:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -4542,7 +4560,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "tired",
       "text": "……入居者、募集……？"
     },
-    "version": "b9bdc0b33a84929a5b40"
+    "version": "bcbc6b65246e3b53cc1c"
   },
   {
     "id": "[\"hostess\",\"……ここなら……。\",\"luna-film-tense\",false]",
@@ -4807,7 +4825,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"ううん、なんでもないです！ それより、102号室ってこっちですか？\",\"luna-happy\",false]",
     "reviewId": "752b226cdd306b85",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。102号室を「いちまるにごうしつ」と発音。",
     "chapter": 2,
     "scene": "2:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -4819,12 +4839,14 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "ううん、なんでもないです！ それより、102号室ってこっちですか？",
       "voiceChapter": 2
     },
-    "version": "9f9c18e2c539cea4be63"
+    "version": "77a32b0007c860f29414"
   },
   {
     "id": "[\"manager\",\"ああ、101号室の隣だ。\",\"act2-manager\",false]",
     "reviewId": "5b586adc59dca813",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。101号室を「いちまるいちごうしつ」と発音。",
     "chapter": 2,
     "scene": "2:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -4836,7 +4858,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "ああ、101号室の隣だ。",
       "voiceChapter": 2
     },
-    "version": "8c41316a6d36dc93e6c0"
+    "version": "157623416975e6e9e7a0"
   },
   {
     "id": "[\"cat\",\"隣人のモクですニャ。よろしくニャ。\",\"act2-moku\",false]",
@@ -5215,7 +5237,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"えへへ……ちょっとだけ♡\",\"four-kings-tease\",false]",
     "reviewId": "a34e5d071f25311c",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。自然な照れ笑いにし、語尾の異音を修正。",
     "chapter": 2,
     "scene": "2:observation2",
     "sceneLabel": "観察2｜ルナと四天王",
@@ -5230,7 +5254,7 @@ export const VOICE_REVIEW_CATALOG = [
       "miniEmotion": "charm",
       "voiceChapter": 2
     },
-    "version": "c4ea7ef6b51bac141508"
+    "version": "b2b61645ab7a53f10a47"
   },
   {
     "id": "[\"cat\",\"昨日の男は、ただの前座だったニャ。\",\"four-kings-moku\",false]",
@@ -5352,7 +5376,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"笑ってごまかすな！！\",\"four-kings-manager-retort\",false]",
     "reviewId": "91b1f56a2ca0fa73",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。強いツッコミとして明確な抑揚を付ける。",
     "chapter": 2,
     "scene": "2:observation2",
     "sceneLabel": "観察2｜ルナと四天王",
@@ -5366,7 +5392,7 @@ export const VOICE_REVIEW_CATALOG = [
       "voicePerformance": "four-kings-manager-retort",
       "voiceChapter": 2
     },
-    "version": "aa3b7a1976880c50785e"
+    "version": "b8d418b5daebef7e0308"
   },
   {
     "id": "[\"hostess\",\"……え？\",\"four-kings-surprise\",false]",
@@ -5432,7 +5458,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"……あっ。そうだ♡\",\"four-kings-bright\",false]",
     "reviewId": "9739ce006d5d3197",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。ひらめきの自然な声にし、末尾の異音を修正。",
     "chapter": 2,
     "scene": "2:observation2",
     "sceneLabel": "観察2｜ルナと四天王",
@@ -5448,12 +5476,14 @@ export const VOICE_REVIEW_CATALOG = [
       "motionSeconds": 2.6,
       "voiceChapter": 2
     },
-    "version": "5868af0353a16916f03b"
+    "version": "61db34a674268a52fdb3"
   },
   {
     "id": "[\"manager\",\"ったく……。昨日みたいな騒ぎはもう勘弁してくれよ。\",\"four-kings-manager-alert\",false]",
     "reviewId": "5b43eae6edc5bd56",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。呆れた自然な話し方で読みを明瞭にする。",
     "chapter": 2,
     "scene": "2:observation2",
     "sceneLabel": "観察2｜ルナと四天王",
@@ -5467,7 +5497,7 @@ export const VOICE_REVIEW_CATALOG = [
       "voicePerformance": "four-kings-manager-alert",
       "voiceChapter": 2
     },
-    "version": "8735932b0d1196f18e4e"
+    "version": "401706135815e7bd4824"
   },
   {
     "id": "[\"hostess\",\"……うん。ごめんね、大家さん。\",\"four-kings-confess\",false]",
@@ -5492,7 +5522,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"謝ることじゃねぇけど、困ったら早めに言えよ。\",\"four-kings-manager-warm\",false]",
     "reviewId": "612d48f42f85919e",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。「謝る」を「あやまる」と明示して自然に読む。",
     "chapter": 2,
     "scene": "2:observation2",
     "sceneLabel": "観察2｜ルナと四天王",
@@ -5506,7 +5538,7 @@ export const VOICE_REVIEW_CATALOG = [
       "voicePerformance": "four-kings-manager-warm",
       "voiceChapter": 2
     },
-    "version": "3efaa22c1e23c5ae815a"
+    "version": "7b9197cf9cd9afbfdea0"
   },
   {
     "id": "[\"hostess\",\"……ありがと♡\",\"four-kings-bright\",false]",
@@ -5612,7 +5644,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"もちろんニャ！ ……大家が。\",\"four-kings-moku-proud\",false]",
     "reviewId": "3ba39102a4f2c1c1",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。モクの声量変化を抑え、語尾まで一定に聞き取れるよう調整。",
     "chapter": 2,
     "scene": "2:observation2",
     "sceneLabel": "観察2｜ルナと四天王",
@@ -5627,7 +5661,7 @@ export const VOICE_REVIEW_CATALOG = [
       "miniEmotion": "laughing",
       "voiceChapter": 2
     },
-    "version": "dcaa27a480f1b57bcd81"
+    "version": "46535c76121086273846"
   },
   {
     "id": "[\"hostess\",\"あははっ！ モクちゃんは？\",\"four-kings-laugh\",false]",
@@ -5712,7 +5746,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"誰が悪徳大家だ！\",\"new-ally-retort\",false]",
     "reviewId": "bc9ecc0728f72fe2",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。音量のばらつきを抑え、勢いのあるツッコミを維持。",
     "chapter": 2,
     "scene": "2:observation1",
     "sceneLabel": "観察1｜新入りの味方",
@@ -5726,7 +5762,7 @@ export const VOICE_REVIEW_CATALOG = [
       "voicePerformance": "new-ally-retort",
       "voiceChapter": 2
     },
-    "version": "f039237533af15f31758"
+    "version": "dc0bbdb9f428ac2c2323"
   },
   {
     "id": "[\"cat\",\"ルナ！ 助けてくれニャー！\",\"new-ally-call\",false]",
@@ -5871,7 +5907,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"冷蔵庫？\",\"new-ally-surprise\",false]",
     "reviewId": "516e517b9e45b5f1",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。冷蔵庫を「れいぞうこ」と明示。",
     "chapter": 2,
     "scene": "2:observation1",
     "sceneLabel": "観察1｜新入りの味方",
@@ -5886,12 +5924,14 @@ export const VOICE_REVIEW_CATALOG = [
       "miniEmotion": "confused",
       "voiceChapter": 2
     },
-    "version": "7b661909738b6ef1d8a7"
+    "version": "5cc5e626b7c9c06e413e"
   },
   {
     "id": "[\"cat\",\"モクの冷蔵庫、ビールでいっぱいになったニャ。\",\"new-ally-proud\",false]",
     "reviewId": "985d5297ecece8fd",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。冷蔵庫を「れいぞうこ」と明示。",
     "chapter": 2,
     "scene": "2:observation1",
     "sceneLabel": "観察1｜新入りの味方",
@@ -5906,7 +5946,7 @@ export const VOICE_REVIEW_CATALOG = [
       "miniEmotion": "laughing",
       "voiceChapter": 2
     },
-    "version": "5ff1d54be33aaccd2bf1"
+    "version": "11a28628bc1540810902"
   },
   {
     "id": "[\"manager\",\"だからって俺の冷蔵庫にまで入れるな！\",\"new-ally-retort\",false]",
@@ -6089,7 +6129,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"お前が味方に呼んだんだろ！\",\"new-ally-retort\",false]",
     "reviewId": "057071eb16551935",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。語尾まで明瞭な声量でツッコミを入れる。",
     "chapter": 2,
     "scene": "2:observation1",
     "sceneLabel": "観察1｜新入りの味方",
@@ -6103,7 +6145,7 @@ export const VOICE_REVIEW_CATALOG = [
       "voicePerformance": "new-ally-retort",
       "voiceChapter": 2
     },
-    "version": "75b2cc9a298473baaa9d"
+    "version": "14fe9b5e03c3cddb5424"
   },
   {
     "id": "[\"cat\",\"ふんっ！ 二人ともグルだったのかニャ！ もう信用しないニャ！\",\"new-ally-protest\",false]",
@@ -6546,7 +6588,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"当然ニャ！\",\"act2-moku-happy\",false]",
     "reviewId": "8a823fc82308a9d7",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。当然を「とうぜん」と明示。",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -6558,7 +6602,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "当然ニャ！",
       "voiceChapter": 2
     },
-    "version": "a125759f907616f6c553"
+    "version": "73421bfd5bd3f9b90c7f"
   },
   {
     "id": "[\"hostess\",\"……本当に、もう来ないかな……。\",\"luna-serious\",false]",
@@ -6580,7 +6624,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"……今度は、どうする……？\",\"act2-manager\",false]",
     "reviewId": "9141330540c5b827",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成。深刻な問いかけを保ち、末尾の異音と音割れを修正。",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -6592,7 +6638,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……今度は、どうする……？",
       "voiceChapter": 2
     },
-    "version": "6f60bcd6040a575621d8"
+    "version": "ba79dc90478bfa9d2ea7"
   },
   {
     "id": "[\"manager\",\"もう大丈夫だろ。今日はゆっくり休め。\",\"act2-manager\",false]",

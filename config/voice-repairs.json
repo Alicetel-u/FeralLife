@@ -210,27 +210,32 @@
     {
       "speaker": "manager",
       "text": "笑ってねぇよ。",
-      "spokenText": "わらってねぇよ。",
+      "spokenText": "笑ってねぇよ。",
       "tags": [
+        "[exasperated]",
         "[conversational]"
       ],
       "settings": {
         "stability": 0.5,
-        "speed": 0.95
-      }
+        "similarity_boost": 0.75,
+        "speed": 1.05
+      },
+      "repairComment": "再生成。自然な反論として抑揚を強める。"
     },
     {
       "speaker": "manager",
       "text": "……入居申込書？",
-      "spokenText": "……にゅうきょもうしこみしょ？",
+      "spokenText": "……入居申込書？",
       "tags": [
         "[surprised]",
         "[conversational]"
       ],
       "settings": {
         "stability": 0.5,
-        "speed": 0.95
-      }
+        "similarity_boost": 0.75,
+        "speed": 1.01
+      },
+      "repairComment": "再生成。入居申込書への驚きと疑問を自然な抑揚で表現。"
     },
     {
       "speaker": "cat",
@@ -455,9 +460,9 @@
       "settings": {
         "stability": 0.5,
         "similarity_boost": 0.75,
-        "speed": 0.97
+        "speed": 1.01
       },
-      "repairComment": "『灰皿』のみ『はいざら』と読み指定し、明瞭な指示口調で再生成。"
+      "repairComment": "再生成。灰皿を「はいざら」と明示し、叫びの音割れを抑える。"
     },
     {
       "speaker": "manager",
@@ -473,6 +478,336 @@
         "speed": 0.98
       },
       "repairComment": "後半の異音を避けるため音声を再生成し、切迫した確認の呼びかけを明瞭にする。"
+    },
+    {
+      "speaker": "manager",
+      "text": "……って、おい！！ 俺のアパートじゃねぇか！！",
+      "spokenText": "……って、おい！！ 俺のアパートじゃねぇか！！",
+      "tags": [
+        "[exasperated]",
+        "[shouting]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.02
+      },
+      "repairComment": "再生成。ツッコミの勢いを残しつつ末尾の異音と音割れを修正。"
+    },
+    {
+      "speaker": "manager",
+      "text": "……戻ってる？ 時間が……？",
+      "spokenText": "……戻ってる？ 時間が……？",
+      "tags": [
+        "[confused]",
+        "[worried]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.02
+      },
+      "repairComment": "再生成。戸惑いを保ちながら声を明瞭に前へ出す。"
+    },
+    {
+      "speaker": "manager",
+      "text": "なんでだ……？ あんなに熱かったのに。煙も、炎も……全部覚えてる。",
+      "spokenText": "なんでだ……？ あんなに熱かったのに。けむりも、炎も……全部覚えてる。",
+      "tags": [
+        "[serious]",
+        "[worried]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.02
+      },
+      "repairComment": "再生成。悲劇の余韻を保ちつつ全体を聞き取りやすくする。"
+    },
+    {
+      "speaker": "manager",
+      "text": "だったら……今度こそ、間違えられねぇ。",
+      "spokenText": "だったら……今度こそ、間違えられねぇ。",
+      "tags": [
+        "[serious]",
+        "[confident]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.02
+      },
+      "repairComment": "再生成。静かな決意を声量を落とさず明瞭に表現。"
+    },
+    {
+      "speaker": "manager",
+      "text": "……また戻った。今度こそ大丈夫だと思ったのに。",
+      "spokenText": "……また戻った。今度こそ大丈夫だと思ったのに。",
+      "tags": [
+        "[sad]",
+        "[serious]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.01
+      },
+      "repairComment": "再生成。喪失感を保ちながら語尾まで聞き取りやすくする。"
+    },
+    {
+      "speaker": "manager",
+      "text": "このアパートだよ！",
+      "spokenText": "このアパートだよ！",
+      "tags": [
+        "[exasperated]",
+        "[shouting]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.07
+      },
+      "repairComment": "再生成。優しい言い方から勢いのある強めのツッコミへ。"
+    },
+    {
+      "speaker": "hostess",
+      "text": "……はぁ、はぁ……っ。",
+      "spokenText": "……はぁ、はぁ……っ。",
+      "tags": [
+        "[strained]",
+        "[worried]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 0.98
+      },
+      "repairComment": "再生成。走った息遣いを自然にし、末尾の異音を修正。"
+    },
+    {
+      "speaker": "hostess",
+      "text": "……入居者、募集……？",
+      "spokenText": "……にゅうきょしゃ、募集……？",
+      "tags": [
+        "[surprised]",
+        "[thoughtful]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 0.98
+      },
+      "repairComment": "再生成。入居者の読みを明示し、募集を見つけた疑問の抑揚へ。"
+    },
+    {
+      "speaker": "hostess",
+      "text": "ううん、なんでもないです！ それより、102号室ってこっちですか？",
+      "spokenText": "ううん、なんでもないです！ それより、いちまるにごうしつってこっちですか？",
+      "tags": [
+        "[conversational]",
+        "[animated]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.04
+      },
+      "repairComment": "再生成。102号室を「いちまるにごうしつ」と発音。"
+    },
+    {
+      "speaker": "manager",
+      "text": "ああ、101号室の隣だ。",
+      "spokenText": "ああ、いちまるいちごうしつの隣だ。",
+      "tags": [
+        "[conversational]",
+        "[confident]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      },
+      "repairComment": "再生成。101号室を「いちまるいちごうしつ」と発音。"
+    },
+    {
+      "speaker": "hostess",
+      "text": "えへへ……ちょっとだけ♡",
+      "spokenText": "えへへ……ちょっとだけ♡",
+      "tags": [
+        "[playful]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      },
+      "repairComment": "再生成。自然な照れ笑いにし、語尾の異音を修正。"
+    },
+    {
+      "speaker": "manager",
+      "text": "笑ってごまかすな！！",
+      "spokenText": "笑ってごまかすな！！",
+      "tags": [
+        "[exasperated]",
+        "[shouting]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.08
+      },
+      "repairComment": "再生成。強いツッコミとして明確な抑揚を付ける。"
+    },
+    {
+      "speaker": "hostess",
+      "text": "……あっ。そうだ♡",
+      "spokenText": "……あっ。そうだ♡",
+      "tags": [
+        "[surprised]",
+        "[playful]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.04
+      },
+      "repairComment": "再生成。ひらめきの自然な声にし、末尾の異音を修正。"
+    },
+    {
+      "speaker": "manager",
+      "text": "ったく……。昨日みたいな騒ぎはもう勘弁してくれよ。",
+      "spokenText": "ったく……。昨日みたいな騒ぎはもう勘弁してくれよ。",
+      "tags": [
+        "[exasperated]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.04
+      },
+      "repairComment": "再生成。呆れた自然な話し方で読みを明瞭にする。"
+    },
+    {
+      "speaker": "manager",
+      "text": "謝ることじゃねぇけど、困ったら早めに言えよ。",
+      "spokenText": "あやまることじゃねぇけど、困ったら早めに言えよ。",
+      "tags": [
+        "[warmly]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      },
+      "repairComment": "再生成。「謝る」を「あやまる」と明示して自然に読む。"
+    },
+    {
+      "speaker": "cat",
+      "text": "もちろんニャ！ ……大家が。",
+      "spokenText": "もちろんニャ！ ……おおやが。",
+      "tags": [
+        "[playful]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.04
+      },
+      "repairComment": "再生成。モクの声量変化を抑え、語尾まで一定に聞き取れるよう調整。"
+    },
+    {
+      "speaker": "manager",
+      "text": "誰が悪徳大家だ！",
+      "spokenText": "誰が悪徳おおやだ！",
+      "tags": [
+        "[exasperated]",
+        "[shouting]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.07
+      },
+      "repairComment": "再生成。音量のばらつきを抑え、勢いのあるツッコミを維持。"
+    },
+    {
+      "speaker": "hostess",
+      "text": "冷蔵庫？",
+      "spokenText": "れいぞうこ？",
+      "tags": [
+        "[surprised]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      },
+      "repairComment": "再生成。冷蔵庫を「れいぞうこ」と明示。"
+    },
+    {
+      "speaker": "cat",
+      "text": "モクの冷蔵庫、ビールでいっぱいになったニャ。",
+      "spokenText": "モクのれいぞうこ、ビールでいっぱいになったニャ。",
+      "tags": [
+        "[animated]",
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.03
+      },
+      "repairComment": "再生成。冷蔵庫を「れいぞうこ」と明示。"
+    },
+    {
+      "speaker": "manager",
+      "text": "お前が味方に呼んだんだろ！",
+      "spokenText": "お前が味方に呼んだんだろ！",
+      "tags": [
+        "[exasperated]",
+        "[animated]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.08
+      },
+      "repairComment": "再生成。語尾まで明瞭な声量でツッコミを入れる。"
+    },
+    {
+      "speaker": "cat",
+      "text": "当然ニャ！",
+      "spokenText": "とうぜんニャ！",
+      "tags": [
+        "[confident]",
+        "[animated]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.05
+      },
+      "repairComment": "再生成。当然を「とうぜん」と明示。"
+    },
+    {
+      "speaker": "manager",
+      "text": "……今度は、どうする……？",
+      "spokenText": "……今度は、どうする……？",
+      "tags": [
+        "[serious]",
+        "[worried]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.02
+      },
+      "repairComment": "再生成。深刻な問いかけを保ち、末尾の異音と音割れを修正。"
     }
   ]
 }

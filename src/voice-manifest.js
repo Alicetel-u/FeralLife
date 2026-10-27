@@ -1726,15 +1726,15 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"灰皿ごと水に沈めろ！\",\"normal\",false]": {
-    "file": "assets/voices/f38d71a18033fd06b1a4649bbbf0b495fc1656cad3bb3fc9baa62df29112d3b2.repair.mp3",
-    "hash": "f38d71a18033fd06b1a4649bbbf0b495fc1656cad3bb3fc9baa62df29112d3b2",
+    "file": "assets/voices/0c91df435482458750dab2847843b3657f7b5e92a9754d3a4d986eebc14b25c0.repair.mp3",
+    "hash": "0c91df435482458750dab2847843b3657f7b5e92a9754d3a4d986eebc14b25c0",
     "source": "act1/ash/water:0",
     "speaker": "manager",
     "text": "灰皿ごと水に沈めろ！",
     "performance": "normal",
     "model": "eleven_v3",
     "repairReview": true,
-    "repairComment": "再生成済み。『灰皿』のみ『はいざら』と読み指定し、明瞭な指示口調で再生成。",
+    "repairComment": "再生成。灰皿を「はいざら」と明示し、叫びの音割れを抑える。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -6,
@@ -2154,13 +2154,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……って、おい！！ 俺のアパートじゃねぇか！！\",\"normal\",false]": {
-    "file": "assets/voices/1f65a763aac71cc99984d68fadca6045bf756bc3954e2bbbb33c0748f0f390db.mp3",
-    "hash": "1f65a763aac71cc99984d68fadca6045bf756bc3954e2bbbb33c0748f0f390db",
+    "file": "assets/voices/687f096559fc1ea8563d0d92c2cf04dfbb59a1cb8fcafdc678d04326eecf3c0f.repair.mp3",
+    "hash": "687f096559fc1ea8563d0d92c2cf04dfbb59a1cb8fcafdc678d04326eecf3c0f",
     "source": "act1/dinner/show:20",
     "speaker": "manager",
     "text": "……って、おい！！ 俺のアパートじゃねぇか！！",
     "performance": "normal",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。ツッコミの勢いを残しつつ末尾の異音と音割れを修正。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"モク！！ 起きろ！！ 火事だぞ！！\",\"normal\",false]": {
     "file": "assets/voices/1a2c0f66e30ea6da658b1dcd885d30144a31a650013e57b29e6ba3433694ffa6.mp3",
@@ -2271,13 +2280,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"なんでだ……？ あんなに熱かったのに。煙も、炎も……全部覚えてる。\",\"inner\",false]": {
-    "file": "assets/voices/f41d5319453c4e45143fa5673b21f9636d7e051484341e1af2cc104df854ee21.mp3",
-    "hash": "f41d5319453c4e45143fa5673b21f9636d7e051484341e1af2cc104df854ee21",
-    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:16",
+    "file": "assets/voices/612204b715ce22221e8331c3bf288284470cacb05949ae6b53daf646a0a7b0c2.repair.mp3",
+    "hash": "612204b715ce22221e8331c3bf288284470cacb05949ae6b53daf646a0a7b0c2",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:13",
     "speaker": "manager",
     "text": "なんでだ……？ あんなに熱かったのに。煙も、炎も……全部覚えてる。",
     "performance": "inner",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。悲劇の余韻を保ちつつ全体を聞き取りやすくする。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"夢……？ いや、違う。あれが夢なわけ……。\",\"inner\",false]": {
     "file": "assets/voices/92013a76a6f6f1b957b61ff27f2327efcf5e2316c334e2139e283baee2e07da1.mp3",
@@ -2307,13 +2325,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……戻ってる？ 時間が……？\",\"inner\",false]": {
-    "file": "assets/voices/1fc171d81c66cdb13f233c018bd0351ece21f504bfcf460ac2b42e4655ff363f.mp3",
-    "hash": "1fc171d81c66cdb13f233c018bd0351ece21f504bfcf460ac2b42e4655ff363f",
-    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:23",
+    "file": "assets/voices/a6b8b5caa3575983f561860ca7361849ed0949d3d0ee21cbbe68925d2f97202e.repair.mp3",
+    "hash": "a6b8b5caa3575983f561860ca7361849ed0949d3d0ee21cbbe68925d2f97202e",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:11",
     "speaker": "manager",
     "text": "……戻ってる？ 時間が……？",
     "performance": "inner",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。戸惑いを保ちながら声を明瞭に前へ出す。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"……ああ。そうだな……。\",\"normal\",false]": {
     "file": "assets/voices/c88a0427c81f105660bad2748ceaf1de9ed0702d3d8763e121a449cdf9a212d3.mp3",
@@ -2352,13 +2379,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"だったら……今度こそ、間違えられねぇ。\",\"inner\",false]": {
-    "file": "assets/voices/029071a6547d5fb546d3f5bfb3ea996e5053b28cf139e977af5a544b7c9d7713.mp3",
-    "hash": "029071a6547d5fb546d3f5bfb3ea996e5053b28cf139e977af5a544b7c9d7713",
-    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:31",
+    "file": "assets/voices/8a395ee7bb9ba312fa2ef5b09efd78cf86761329b9437c0942287f6ec6eb5689.repair.mp3",
+    "hash": "8a395ee7bb9ba312fa2ef5b09efd78cf86761329b9437c0942287f6ec6eb5689",
+    "source": "act1/runtime/attempt-1/ash/trash/rewind/rewind:15",
     "speaker": "manager",
     "text": "だったら……今度こそ、間違えられねぇ。",
     "performance": "inner",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。静かな決意を声量を落とさず明瞭に表現。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"……なあ、モク。\",\"normal\",false]": {
     "file": "assets/voices/5e37e8114bb39c24644604a7272bee2272c6b2424eb1be97bad323914b1e26a7.mp3",
@@ -2523,13 +2559,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……また戻った。今度こそ大丈夫だと思ったのに。\",\"inner\",false]": {
-    "file": "assets/voices/2417a13508bbad65ad1ca1215c3ad7cec13207d82cee4fba6ec25000528523bf.mp3",
-    "hash": "2417a13508bbad65ad1ca1215c3ad7cec13207d82cee4fba6ec25000528523bf",
+    "file": "assets/voices/17152b1f393a946e51f4acc18e1ab393ddc708998e3260241d07a80c126e2cb9.repair.mp3",
+    "hash": "17152b1f393a946e51f4acc18e1ab393ddc708998e3260241d07a80c126e2cb9",
     "source": "act1/runtime/attempt-2/ash/trash/rewind/rewind:1",
     "speaker": "manager",
     "text": "……また戻った。今度こそ大丈夫だと思ったのに。",
     "performance": "inner",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。喪失感を保ちながら語尾まで聞き取りやすくする。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"いや。今度こそ、このアパートを燃やさせねぇ。\",\"normal\",false]": {
     "file": "assets/voices/872035f72a78bfc4debbb25e0c3ba670a7b123a73bb18b817f68a4ba134bc190.mp3",
@@ -2577,13 +2622,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"このアパートだよ！\",\"normal\",false]": {
-    "file": "assets/voices/33ab3a0461422dfd376819b874b74fb85f126515c9cc93d0ad56dbe8e3cc8a79.mp3",
-    "hash": "33ab3a0461422dfd376819b874b74fb85f126515c9cc93d0ad56dbe8e3cc8a79",
+    "file": "assets/voices/8f23f08024b7e0e21964c010e2f6edb5d29c63e82c0ee17df52ec74f4c01431e.repair.mp3",
+    "hash": "8f23f08024b7e0e21964c010e2f6edb5d29c63e82c0ee17df52ec74f4c01431e",
     "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:3",
     "speaker": "manager",
     "text": "このアパートだよ！",
     "performance": "normal",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。優しい言い方から勢いのある強めのツッコミへ。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"そういう意味じゃねぇよ……。\",\"normal\",false]": {
     "file": "assets/voices/3093249211336a888606c68cde9ee3c328521747e3df78a449332579b2f71ffd.mp3",
@@ -2649,16 +2703,21 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"笑ってねぇよ。\",\"normal\",false]": {
-    "file": "assets/voices/4c4c88ad2b14d499c45a712a57ad4b5eef748ad835c18505f30d413d29a5883a.repair.mp3",
-    "hash": "4c4c88ad2b14d499c45a712a57ad4b5eef748ad835c18505f30d413d29a5883a",
+    "file": "assets/voices/529ec3ed242cc37e035b62843a5c2e6ffd22146c624495cfe003a2972b860c7e.repair.mp3",
+    "hash": "529ec3ed242cc37e035b62843a5c2e6ffd22146c624495cfe003a2972b860c7e",
     "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:19",
     "speaker": "manager",
     "text": "笑ってねぇよ。",
     "performance": "normal",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。自然な反論として抑揚を強める。",
     "audioMastering": {
       "integratedLUFS": -18,
-      "truePeakDBTP": -3
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
     }
   },
   "[\"manager\",\"せっかくいい気分だったのに台無しだよ！\",\"normal\",false]": {
@@ -2698,16 +2757,21 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……入居申込書？\",\"normal\",false]": {
-    "file": "assets/voices/2894a6f7e4c6a54a432b77d4b0f315fce21a3aebc53004719e8c52e615b2b96a.repair.mp3",
-    "hash": "2894a6f7e4c6a54a432b77d4b0f315fce21a3aebc53004719e8c52e615b2b96a",
+    "file": "assets/voices/cee899bc510c69e5d8949abcf50c7fe78498b876893a46446d69967fb6e34f71.repair.mp3",
+    "hash": "cee899bc510c69e5d8949abcf50c7fe78498b876893a46446d69967fb6e34f71",
     "source": "act1/runtime/attempt-2/ash/water/dinner/coronation/epilogue:30",
     "speaker": "manager",
     "text": "……入居申込書？",
     "performance": "normal",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。入居申込書への驚きと疑問を自然な抑揚で表現。",
     "audioMastering": {
       "integratedLUFS": -18,
-      "truePeakDBTP": -3
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
     }
   },
   "[\"manager\",\"こんなボロアパートに？\",\"normal\",false]": {
@@ -3262,22 +3326,40 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"hostess\",\"ううん、なんでもないです！ それより、102号室ってこっちですか？\",\"luna-happy\",false]": {
-    "file": "assets/voices/aa50fc5e3218d18ae4beb172bf520f20bc68db5c1b0bc7d76839c7f0a68df331.mp3",
-    "hash": "aa50fc5e3218d18ae4beb172bf520f20bc68db5c1b0bc7d76839c7f0a68df331",
+    "file": "assets/voices/18eebbb94c2fb2cd70cf1cc2f66b71c9d4fea23588df8285031fd4e371d3a9b3.repair.mp3",
+    "hash": "18eebbb94c2fb2cd70cf1cc2f66b71c9d4fea23588df8285031fd4e371d3a9b3",
     "source": "act2/opening:19",
     "speaker": "hostess",
     "text": "ううん、なんでもないです！ それより、102号室ってこっちですか？",
     "performance": "luna-happy",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。102号室を「いちまるにごうしつ」と発音。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"ああ、101号室の隣だ。\",\"act2-manager\",false]": {
-    "file": "assets/voices/0022213a8a3a5d9c9cd37064889d26abfb623ca613047ce3b2cc3d61b5800b9d.mp3",
-    "hash": "0022213a8a3a5d9c9cd37064889d26abfb623ca613047ce3b2cc3d61b5800b9d",
+    "file": "assets/voices/bab39476a5c5697aef21b3ff789c102604daf14b68003a32ec3c761acf4a5b15.repair.mp3",
+    "hash": "bab39476a5c5697aef21b3ff789c102604daf14b68003a32ec3c761acf4a5b15",
     "source": "act2/opening:20",
     "speaker": "manager",
     "text": "ああ、101号室の隣だ。",
     "performance": "act2-manager",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。101号室を「いちまるいちごうしつ」と発音。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"cat\",\"隣人のモクですニャ。よろしくニャ。\",\"act2-moku\",false]": {
     "file": "assets/voices/18e84f0ea3237361665d3153cde716c609c8d350a99dc2f353a2bda356137cb0.mp3",
@@ -4732,13 +4814,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"cat\",\"当然ニャ！\",\"act2-moku-happy\",false]": {
-    "file": "assets/voices/1024e6fa5d9eadbe5c5cc65241d95f50ab0487b93598a4bd3cabbf03944774be.mp3",
-    "hash": "1024e6fa5d9eadbe5c5cc65241d95f50ab0487b93598a4bd3cabbf03944774be",
-    "source": "act2/bag/runtime/1/guarantee:16",
+    "file": "assets/voices/70e3f80b4d2754993983bbb6ee8f7b7a96833bf9a40a767a80a8f1d1fa0893ed.repair.mp3",
+    "hash": "70e3f80b4d2754993983bbb6ee8f7b7a96833bf9a40a767a80a8f1d1fa0893ed",
+    "source": "act2/bag/attempt-1:42",
     "speaker": "cat",
     "text": "当然ニャ！",
     "performance": "act2-moku-happy",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。当然を「とうぜん」と明示。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"hostess\",\"……本当に、もう来ないかな……。\",\"luna-serious\",false]": {
     "file": "assets/voices/ea284b5a4323847a9e6d6d186c20695f4d2cad6581bb2d386cb913ac0e3857bd.mp3",
@@ -5040,13 +5131,22 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"……今度は、どうする……？\",\"act2-manager\",false]": {
-    "file": "assets/voices/6068758d796219e6021dfbdd24d58f99239832771a24fd83eb6ecf9d132128a2.mp3",
-    "hash": "6068758d796219e6021dfbdd24d58f99239832771a24fd83eb6ecf9d132128a2",
+    "file": "assets/voices/c65325fa5f0da88622251ef044cd32a8648450b0513dcb43e608cdc620d4d073.repair.mp3",
+    "hash": "c65325fa5f0da88622251ef044cd32a8648450b0513dcb43e608cdc620d4d073",
     "source": "act2/bag/attempt-2:4",
     "speaker": "manager",
     "text": "……今度は、どうする……？",
     "performance": "act2-manager",
-    "model": "eleven_v3"
+    "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。深刻な問いかけを保ち、末尾の異音と音割れを修正。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"……また戻った。今度こそルナを守る。\",\"act2-manager-firm\",false]": {
     "file": "assets/voices/d45ae1fe0b8b60f6eaffc80cdb91e04dc9ba2a2ac70d524d772d6d2ef04c5c96.mp3",
@@ -5099,16 +5199,21 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"hostess\",\"……はぁ、はぁ……っ。\",\"luna-film-tense\",false]": {
-    "file": "assets/voices/35649652f5248b79557d975e5ee964241318d0f5ca7ac77c5aef4f15aef54c50.film.mp3",
-    "hash": "35649652f5248b79557d975e5ee964241318d0f5ca7ac77c5aef4f15aef54c50",
+    "file": "assets/voices/09085802963e3e511731ee6a61d8044a039b4ef3f2ff129a0794b6202905ce38.repair.mp3",
+    "hash": "09085802963e3e511731ee6a61d8044a039b4ef3f2ff129a0794b6202905ce38",
     "source": "act2/film/heel:0",
     "speaker": "hostess",
     "text": "……はぁ、はぁ……っ。",
     "performance": "luna-film-tense",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。走った息遣いを自然にし、末尾の異音を修正。",
     "audioMastering": {
-      "integratedLUFS": -14,
-      "truePeakDBTP": -1.5
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
     }
   },
   "[\"hostess\",\"……ここまで来れば……。\",\"luna-film-tense\",false]": {
@@ -5156,16 +5261,21 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"hostess\",\"……入居者、募集……？\",\"luna-film-tense\",false]": {
-    "file": "assets/voices/59b4b58e4b9a38149ba45bf483e22201fd90f69a70b32b447364e241b3e8bff0.film.mp3",
-    "hash": "59b4b58e4b9a38149ba45bf483e22201fd90f69a70b32b447364e241b3e8bff0",
+    "file": "assets/voices/e4cede4e888b276329e1c17d5d877d836a633cd137c894018069317a78045301.repair.mp3",
+    "hash": "e4cede4e888b276329e1c17d5d877d836a633cd137c894018069317a78045301",
     "source": "act2/film/notice:0",
     "speaker": "hostess",
     "text": "……入居者、募集……？",
     "performance": "luna-film-tense",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。入居者の読みを明示し、募集を見つけた疑問の抑揚へ。",
     "audioMastering": {
-      "integratedLUFS": -14,
-      "truePeakDBTP": -1.5
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
     }
   },
   "[\"hostess\",\"……ここなら……。\",\"luna-film-tense\",false]": {
@@ -8004,17 +8114,21 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"manager\",\"誰が悪徳大家だ！\",\"new-ally-retort\",false]": {
-    "file": "assets/voices/b67f1952c5699c7236c0aa9975ed6529ed886c1319bfd5c7047bbc3b44ed7daf.four-kings.mp3",
-    "hash": "b67f1952c5699c7236c0aa9975ed6529ed886c1319bfd5c7047bbc3b44ed7daf",
+    "file": "assets/voices/4fe154d7021d3e6d084a348c011f8917eb54a8673509df062f2b0366ba5dcc12.repair.mp3",
+    "hash": "4fe154d7021d3e6d084a348c011f8917eb54a8673509df062f2b0366ba5dcc12",
     "source": "act2/observation/luna-new-ally:2",
     "speaker": "manager",
     "text": "誰が悪徳大家だ！",
     "performance": "new-ally-retort",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。音量のばらつきを抑え、勢いのあるツッコミを維持。",
     "audioMastering": {
-      "integratedLUFS": -17,
-      "truePeakDBTP": -5,
-      "edgeSilenceTrimmed": true
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
     }
   },
   "[\"cat\",\"ルナ！ 助けてくれニャー！\",\"new-ally-call\",false]": {
@@ -8116,31 +8230,39 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"hostess\",\"冷蔵庫？\",\"new-ally-surprise\",false]": {
-    "file": "assets/voices/5ff37edd4f9f28bd7eab31162e511747e4b4990011faefef214417801f857aa4.new-ally.mp3",
-    "hash": "5ff37edd4f9f28bd7eab31162e511747e4b4990011faefef214417801f857aa4",
+    "file": "assets/voices/9f0d1ea261888d09a966b89a15f4a19047d8cd1344b26d4fe09b10b19f70870f.repair.mp3",
+    "hash": "9f0d1ea261888d09a966b89a15f4a19047d8cd1344b26d4fe09b10b19f70870f",
     "source": "act2/observation/luna-new-ally:10",
     "speaker": "hostess",
     "text": "冷蔵庫？",
     "performance": "new-ally-surprise",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。冷蔵庫を「れいぞうこ」と明示。",
     "audioMastering": {
       "integratedLUFS": -18,
-      "truePeakDBTP": -5,
-      "edgeSilenceTrimmed": true
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
     }
   },
   "[\"cat\",\"モクの冷蔵庫、ビールでいっぱいになったニャ。\",\"new-ally-proud\",false]": {
-    "file": "assets/voices/8d4a6a0f036e603a020381752fd0ea54316fa8a0e4ca4c0790d9adffeefc80ad.new-ally.mp3",
-    "hash": "8d4a6a0f036e603a020381752fd0ea54316fa8a0e4ca4c0790d9adffeefc80ad",
+    "file": "assets/voices/b7b3a075718afa3a878f960ecae1c31256302ffb8a852f4c1d56a4790caf1a35.repair.mp3",
+    "hash": "b7b3a075718afa3a878f960ecae1c31256302ffb8a852f4c1d56a4790caf1a35",
     "source": "act2/observation/luna-new-ally:11",
     "speaker": "cat",
     "text": "モクの冷蔵庫、ビールでいっぱいになったニャ。",
     "performance": "new-ally-proud",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。冷蔵庫を「れいぞうこ」と明示。",
     "audioMastering": {
       "integratedLUFS": -18,
-      "truePeakDBTP": -5,
-      "edgeSilenceTrimmed": true
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
     }
   },
   "[\"manager\",\"だからって俺の冷蔵庫にまで入れるな！\",\"new-ally-retort\",false]": {
@@ -8270,17 +8392,21 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"manager\",\"お前が味方に呼んだんだろ！\",\"new-ally-retort\",false]": {
-    "file": "assets/voices/9b24cf276138913be6f0ff82d78c96abd3584b99c491953c977661cb56732046.four-kings.mp3",
-    "hash": "9b24cf276138913be6f0ff82d78c96abd3584b99c491953c977661cb56732046",
+    "file": "assets/voices/a2838b114919557bdcc77204c1988bfcd98ac414e99f41ef92f61533277623d2.repair.mp3",
+    "hash": "a2838b114919557bdcc77204c1988bfcd98ac414e99f41ef92f61533277623d2",
     "source": "act2/observation/luna-new-ally:21",
     "speaker": "manager",
     "text": "お前が味方に呼んだんだろ！",
     "performance": "new-ally-retort",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。語尾まで明瞭な声量でツッコミを入れる。",
     "audioMastering": {
-      "integratedLUFS": -17,
-      "truePeakDBTP": -5,
-      "edgeSilenceTrimmed": true
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
     }
   },
   "[\"cat\",\"ふんっ！ 二人ともグルだったのかニャ！ もう信用しないニャ！\",\"new-ally-protest\",false]": {
@@ -8584,19 +8710,22 @@ export const VOICE_MANIFEST = {
     "observationTempo": 1.18
   },
   "[\"hostess\",\"えへへ……ちょっとだけ♡\",\"four-kings-tease\",false]": {
-    "file": "assets/voices/e7515fb71476b1f2036e62c1e443478ff0c0295feadbabf3326a6b8c6d806852.four-kings-brisk.mp3",
-    "hash": "e7515fb71476b1f2036e62c1e443478ff0c0295feadbabf3326a6b8c6d806852",
+    "file": "assets/voices/2c9b9639389ec4990c1ca2eef342876527a14bfd2a0cdccad9c5b90513f3b91a.repair.mp3",
+    "hash": "2c9b9639389ec4990c1ca2eef342876527a14bfd2a0cdccad9c5b90513f3b91a",
     "source": "act2/observation/luna-four-kings-notice:10",
     "speaker": "hostess",
     "text": "えへへ……ちょっとだけ♡",
     "performance": "four-kings-tease",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。自然な照れ笑いにし、語尾の異音を修正。",
     "audioMastering": {
       "integratedLUFS": -18,
-      "truePeakDBTP": -5,
-      "edgeSilenceTrimmed": true
-    },
-    "observationTempo": 1.18
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"cat\",\"昨日の男は、ただの前座だったニャ。\",\"four-kings-moku\",false]": {
     "file": "assets/voices/e8160b92a22b95f5400b9db986cee2a4b4d8279f1b523b6a8a403904a1f1d486.four-kings-brisk.mp3",
@@ -8689,34 +8818,40 @@ export const VOICE_MANIFEST = {
     "observationTempo": 1.18
   },
   "[\"manager\",\"笑ってごまかすな！！\",\"four-kings-manager-retort\",false]": {
-    "file": "assets/voices/3d42efd40d8099386ec4a7c1a25c410c313229c9103498969fb35a8d3cf1a974.four-kings-brisk.mp3",
-    "hash": "3d42efd40d8099386ec4a7c1a25c410c313229c9103498969fb35a8d3cf1a974",
+    "file": "assets/voices/381ed6a53714651c87c0512329c3b39108a01136ed2ea970c5b72d6508f2c0bf.repair.mp3",
+    "hash": "381ed6a53714651c87c0512329c3b39108a01136ed2ea970c5b72d6508f2c0bf",
     "source": "act2/observation/luna-four-kings-notice:18",
     "speaker": "manager",
     "text": "笑ってごまかすな！！",
     "performance": "four-kings-manager-retort",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。強いツッコミとして明確な抑揚を付ける。",
     "audioMastering": {
-      "integratedLUFS": -17,
-      "truePeakDBTP": -5,
-      "edgeSilenceTrimmed": true
-    },
-    "observationTempo": 1.18
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"manager\",\"ったく……。昨日みたいな騒ぎはもう勘弁してくれよ。\",\"four-kings-manager-alert\",false]": {
-    "file": "assets/voices/42529c10cd86c61a42bd72095aaf3da7589f7bf85bdeeecd2b843fa91a9573bd.four-kings-brisk.mp3",
-    "hash": "42529c10cd86c61a42bd72095aaf3da7589f7bf85bdeeecd2b843fa91a9573bd",
+    "file": "assets/voices/b665954252e33a5945b581c2a5f284ce52f85160fe9b091531a09034104b309a.repair.mp3",
+    "hash": "b665954252e33a5945b581c2a5f284ce52f85160fe9b091531a09034104b309a",
     "source": "act2/observation/luna-four-kings-support:0",
     "speaker": "manager",
     "text": "ったく……。昨日みたいな騒ぎはもう勘弁してくれよ。",
     "performance": "four-kings-manager-alert",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。呆れた自然な話し方で読みを明瞭にする。",
     "audioMastering": {
-      "integratedLUFS": -17,
-      "truePeakDBTP": -5,
-      "edgeSilenceTrimmed": true
-    },
-    "observationTempo": 1.18
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"hostess\",\"……うん。ごめんね、大家さん。\",\"four-kings-confess\",false]": {
     "file": "assets/voices/248ea919046f68125f3a9574ebd6df15fce26135f4ebd5edea29e26ada2d52b6.four-kings-brisk.mp3",
@@ -8734,19 +8869,22 @@ export const VOICE_MANIFEST = {
     "observationTempo": 1.18
   },
   "[\"manager\",\"謝ることじゃねぇけど、困ったら早めに言えよ。\",\"four-kings-manager-warm\",false]": {
-    "file": "assets/voices/c9c825a80ad303786187c35cacab3fbedfc481615999c8f53bd30ffc04be78b7.four-kings-brisk.mp3",
-    "hash": "c9c825a80ad303786187c35cacab3fbedfc481615999c8f53bd30ffc04be78b7",
+    "file": "assets/voices/739f8d60de8d9d309b1c64b959dc2cf628e271ee30197c8902e9493d409f7f3f.repair.mp3",
+    "hash": "739f8d60de8d9d309b1c64b959dc2cf628e271ee30197c8902e9493d409f7f3f",
     "source": "act2/observation/luna-four-kings-support:2",
     "speaker": "manager",
     "text": "謝ることじゃねぇけど、困ったら早めに言えよ。",
     "performance": "four-kings-manager-warm",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。「謝る」を「あやまる」と明示して自然に読む。",
     "audioMastering": {
-      "integratedLUFS": -17,
-      "truePeakDBTP": -5,
-      "edgeSilenceTrimmed": true
-    },
-    "observationTempo": 1.18
+      "integratedLUFS": -18,
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"hostess\",\"……ありがと♡\",\"four-kings-bright\",false]": {
     "file": "assets/voices/39e195b669d1095f6a44cd57f9434ee1cf18c6c73e4776744c2fa3db5732513a.four-kings-brisk.mp3",
@@ -8824,19 +8962,22 @@ export const VOICE_MANIFEST = {
     "observationTempo": 1.18
   },
   "[\"cat\",\"もちろんニャ！ ……大家が。\",\"four-kings-moku-proud\",false]": {
-    "file": "assets/voices/c17bd8909fb2ba82e0a41ffce050f780bae09a29055eac7df5478b8be0625161.four-kings-brisk.mp3",
-    "hash": "c17bd8909fb2ba82e0a41ffce050f780bae09a29055eac7df5478b8be0625161",
+    "file": "assets/voices/7c18571514dd5a625bae9a7e68b33f046e13aae541fb07b008046698dcf73c54.repair.mp3",
+    "hash": "7c18571514dd5a625bae9a7e68b33f046e13aae541fb07b008046698dcf73c54",
     "source": "act2/observation/luna-four-kings-support:8",
     "speaker": "cat",
     "text": "もちろんニャ！ ……大家が。",
     "performance": "four-kings-moku-proud",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。モクの声量変化を抑え、語尾まで一定に聞き取れるよう調整。",
     "audioMastering": {
       "integratedLUFS": -18,
-      "truePeakDBTP": -5,
-      "edgeSilenceTrimmed": true
-    },
-    "observationTempo": 1.18
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   },
   "[\"hostess\",\"あははっ！ モクちゃんは？\",\"four-kings-laugh\",false]": {
     "file": "assets/voices/c5c41218761fdb6bf8aaa43ee9ef29f1f2f838fd3aa45ba0bf04529624658eb4.four-kings-brisk.mp3",
@@ -8959,18 +9100,21 @@ export const VOICE_MANIFEST = {
     "observationTempo": 1.18
   },
   "[\"hostess\",\"……あっ。そうだ♡\",\"four-kings-bright\",false]": {
-    "file": "assets/voices/7d790a56152a70fa16b29c190f8118d5a278945b922dbafb178c054a178c1144.four-kings-brisk.mp3",
-    "hash": "7d790a56152a70fa16b29c190f8118d5a278945b922dbafb178c054a178c1144",
+    "file": "assets/voices/af8d97424394f7fd8c86649268496387d2253bf95e667e05e7627c4f0eb24774.repair.mp3",
+    "hash": "af8d97424394f7fd8c86649268496387d2253bf95e667e05e7627c4f0eb24774",
     "source": "act2/observation/luna-four-kings-reply:3",
     "speaker": "hostess",
     "text": "……あっ。そうだ♡",
     "performance": "four-kings-bright",
     "model": "eleven_v3",
+    "repairReview": true,
+    "repairComment": "再生成。ひらめきの自然な声にし、末尾の異音を修正。",
     "audioMastering": {
       "integratedLUFS": -18,
-      "truePeakDBTP": -5,
-      "edgeSilenceTrimmed": true
-    },
-    "observationTempo": 1.18
+      "truePeakDBTP": -6,
+      "tailPaddingSeconds": 0.25,
+      "fadeInSeconds": 0.004,
+      "fadeOutSeconds": 0.016
+    }
   }
 };
