@@ -62,8 +62,8 @@ test('committed duel clips carry their speed and stay on disk',async()=>{
   lines++;
   const attack=entry.performance.endsWith('-attack');
   if(attack)attacks++;
-  assert.match(entry.fastFile,attack?/\.attack\.mp3$/:/\.pace\.mp3$/);
-  await access(new URL('../'+entry.fastFile,import.meta.url));
+  if(entry.repairReview){assert.match(entry.file,/\.repair\.mp3$/);await access(new URL('../'+entry.file,import.meta.url));}
+  else {assert.match(entry.fastFile,attack?/\.attack\.mp3$/:/\.pace\.mp3$/);await access(new URL('../'+entry.fastFile,import.meta.url));}
  }
  assert.equal(attacks,12);
  assert.ok(lines>attacks);
