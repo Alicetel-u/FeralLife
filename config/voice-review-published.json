@@ -11,6 +11,11 @@
       "version": "d72ade5681e73095eb94",
       "updatedAt": "2026-10-26T18:10:03.937Z"
     },
+    "[\"cat\",\"……じゃあモクも泊まるニャ。\",\"act2-moku\",false]": {
+      "status": "ng",
+      "version": "fa71a4b5348c108c8f65",
+      "updatedAt": "2026-10-27T05:31:39.127Z"
+    },
     "[\"cat\",\"……すぅ……すぅ……。\",\"moku\",false]": {
       "status": "ok",
       "version": "c6be8d656eeb54569bb4",
@@ -306,6 +311,11 @@
       "version": "9524784af60cc83205c5",
       "updatedAt": "2026-10-25T07:26:13.903Z"
     },
+    "[\"cat\",\"便乗して貢がせる相手を増やすなニャ。\",\"duel-moku\",false]": {
+      "status": "ng",
+      "version": "67a68c0d4b85bcfd7555",
+      "updatedAt": "2026-10-27T05:38:38.717Z"
+    },
     "[\"cat\",\"冷蔵庫に何か残ってたはずニャ。まず中を見てみるニャ。\",\"moku\",false]": {
       "status": "ok",
       "version": "6bec90b0053fdb4e666c",
@@ -346,6 +356,11 @@
       "version": "73896fd168d3e6ccaa61",
       "updatedAt": "2026-10-26T17:38:02.354Z"
     },
+    "[\"cat\",\"奥義のあともその構えニャ？ 肩、つるニャ。\",\"duel-moku\",false]": {
+      "status": "ng",
+      "version": "4a8edd89f3fcb3ebf54d",
+      "updatedAt": "2026-10-27T05:41:43.843Z"
+    },
     "[\"cat\",\"寝すぎて疲れたから、気分転換ニャ。\",\"moku\",false]": {
       "status": "ok",
       "version": "003d528870b824ce2169",
@@ -365,6 +380,11 @@
       "status": "ok",
       "version": "f9e6c7475774829379e3",
       "updatedAt": "2026-10-26T17:39:17.580Z"
+    },
+    "[\"cat\",\"忘れ物ひとつで、本人まで回収しに来るなニャ。\",\"duel-moku\",false]": {
+      "status": "ng",
+      "version": "1c680b1f8013aa8c4683",
+      "updatedAt": "2026-10-27T05:43:57.091Z"
     },
     "[\"cat\",\"押せば入るかニャ。……あ、崩れたニャ。\",\"moku-surprised\",false]": {
       "status": "ok",
@@ -436,15 +456,40 @@
       "version": "75bb18b82486e8bcf81d",
       "updatedAt": "2026-10-26T18:14:51.229Z"
     },
+    "[\"cat\",\"煙に巻いてお見送りニャ。大家、ツナ缶は三つニャ。\",\"duel-moku\",false]": {
+      "status": "ng",
+      "version": "62ff60d83f7635918152",
+      "updatedAt": "2026-10-27T05:41:19.941Z"
+    },
+    "[\"cat\",\"煙幕代はツナ缶三つニャ。目、閉じとくニャ！\",\"duel-moku\",false]": {
+      "status": "ng",
+      "version": "89799bd4c2b6eaeb0f82",
+      "updatedAt": "2026-10-27T05:40:13.340Z"
+    },
     "[\"cat\",\"腹が減ったニャ……。でも、まぶたも重いニャ。\",\"moku\",false]": {
       "status": "ok",
       "version": "c377b9306c43fa28855f",
       "updatedAt": "2026-10-26T17:37:58.720Z"
     },
+    "[\"cat\",\"花束、置いてってくれてもよかったニャ。\",\"duel-moku\",false]": {
+      "status": "ng",
+      "version": "48361afcefd8b08f69e0",
+      "updatedAt": "2026-10-27T05:42:48.182Z"
+    },
+    "[\"cat\",\"講座は休講ニャ。いまから実技だけやるニャ。\",\"duel-moku\",false]": {
+      "status": "ng",
+      "version": "dc78caf847ea30c5516d",
+      "updatedAt": "2026-10-27T05:39:33.393Z"
+    },
     "[\"cat\",\"足の裏くらいニャ。\",\"moku\",false]": {
       "status": "ok",
       "version": "c17d65131e36fd1cdfa5",
       "updatedAt": "2026-10-26T17:12:02.137Z"
+    },
+    "[\"cat\",\"迷惑営業、おやすみニャ！！\",\"duel-moku-attack\",false]": {
+      "status": "ng",
+      "version": "a29461e703c9ba3989b9",
+      "updatedAt": "2026-10-27T05:39:47.367Z"
     },
     "[\"cat\",\"食べ終わったら、容器だけでも片づけるニャ。\",\"moku\",false]": {
       "status": "ok",
@@ -456,6 +501,16 @@
       "version": "5868af0353a16916f03b",
       "updatedAt": "2026-10-27T05:12:51.645Z"
     },
+    "[\"hostess\",\"……でも、ちょっと嬉しかったな♡\",\"luna-flirt\",false]": {
+      "status": "ng",
+      "version": "f21fa2e9a91c400f3fec",
+      "updatedAt": "2026-10-27T05:30:48.473Z"
+    },
+    "[\"hostess\",\"……はぁ〜。やっと帰ってくれたぁ……。\",\"luna-normal\",false]": {
+      "status": "ng",
+      "version": "20347f972eb8c5a69918",
+      "updatedAt": "2026-10-27T05:36:21.035Z"
+    },
     "[\"hostess\",\"……はぁ、はぁ……っ。\",\"luna-film-tense\",false]": {
       "status": "ng",
       "version": "0cadf6aba2a1eccd4542",
@@ -466,20 +521,80 @@
       "version": "b9bdc0b33a84929a5b40",
       "updatedAt": "2026-10-27T05:06:45.736Z"
     },
+    "[\"hostess\",\"……通販って便利だよね♡\",\"duel-luna\",false]": {
+      "status": "ng",
+      "version": "2c23a854044274cd2e48",
+      "updatedAt": "2026-10-27T05:44:07.260Z"
+    },
+    "[\"hostess\",\"あははっ♡ 二人ともありがとう。\",\"luna-happy\",false]": {
+      "status": "ng",
+      "version": "18b92672159f26974888",
+      "updatedAt": "2026-10-27T05:31:58.016Z"
+    },
+    "[\"hostess\",\"あんなに必死になって……。\",\"luna-flirt\",false]": {
+      "status": "ng",
+      "version": "67dad3e214fb687fe851",
+      "updatedAt": "2026-10-27T05:51:35.290Z"
+    },
     "[\"hostess\",\"ううん、なんでもないです！ それより、102号室ってこっちですか？\",\"luna-happy\",false]": {
       "status": "ng",
       "version": "9f9c18e2c539cea4be63",
       "updatedAt": "2026-10-27T05:09:41.086Z"
+    },
+    "[\"hostess\",\"うん。昨日は……ありがとね。大家さんのおかげで、ちゃんとみんなに断れたよ。\",\"luna-flirt\",false]": {
+      "status": "ng",
+      "version": "af255f028c4058cd9179",
+      "updatedAt": "2026-10-27T05:49:53.975Z"
     },
     "[\"hostess\",\"えへへ……ちょっとだけ♡\",\"four-kings-tease\",false]": {
       "status": "ng",
       "version": "c4ea7ef6b51bac141508",
       "updatedAt": "2026-10-27T05:11:16.162Z"
     },
+    "[\"hostess\",\"はぁい♡ 頼りにしてるね、大家さん。\",\"luna-happy\",false]": {
+      "status": "ng",
+      "version": "bbd2a3bf5983795153d7",
+      "updatedAt": "2026-10-27T05:36:08.828Z"
+    },
+    "[\"hostess\",\"全部は、ね♡\",\"luna-flirt\",false]": {
+      "status": "ng",
+      "version": "b250b47b646460f499cf",
+      "updatedAt": "2026-10-27T05:52:05.041Z"
+    },
     "[\"hostess\",\"冷蔵庫？\",\"new-ally-surprise\",false]": {
       "status": "ng",
       "version": "7b661909738b6ef1d8a7",
       "updatedAt": "2026-10-27T05:14:42.905Z"
+    },
+    "[\"hostess\",\"大家さ〜ん♡ ちょっとお願いがあるんだけど\",\"luna-happy\",false]": {
+      "status": "ng",
+      "version": "1c650d71ffb36b960c2b",
+      "updatedAt": "2026-10-27T05:35:04.770Z"
+    },
+    "[\"hostess\",\"大家さ〜ん♡ 昨日のこと思い出したら、また好きになっちゃった♡\",\"luna-happy\",false]": {
+      "status": "ng",
+      "version": "bcb30dd3176221dd1ffc",
+      "updatedAt": "2026-10-27T05:48:32.329Z"
+    },
+    "[\"hostess\",\"大家さん、今日は本当にありがとう♡\",\"luna-flirt\",false]": {
+      "status": "ng",
+      "version": "ec6c82ce7a2f9effa6d9",
+      "updatedAt": "2026-10-27T05:27:15.448Z"
+    },
+    "[\"hostess\",\"大家さんのために、お弁当作ったの♡ 朝・昼・晩の三食分♡\",\"luna-flirt\",false]": {
+      "status": "ng",
+      "version": "9cc7d93a47589e90d645",
+      "updatedAt": "2026-10-27T05:48:43.907Z"
+    },
+    "[\"hostess\",\"昨日は昨日。今日は今日♡\",\"luna-happy\",false]": {
+      "status": "ng",
+      "version": "6dc86ba055172d79e8ac",
+      "updatedAt": "2026-10-27T05:35:30.150Z"
+    },
+    "[\"hostess\",\"贈り物を受け取ったら、断っちゃいけない気がしてた。……そこは別でいいんだね。\",\"duel-luna\",false]": {
+      "status": "ng",
+      "version": "5e979ca653f3853b3166",
+      "updatedAt": "2026-10-27T05:42:25.928Z"
     },
     "[\"manager\",\"……。\",\"normal\",false]": {
       "status": "ok",
@@ -556,6 +671,16 @@
       "version": "2172a91462746de47a35",
       "updatedAt": "2026-10-26T18:09:31.465Z"
     },
+    "[\"manager\",\"……ルナが知らないやつと同じアパートに住みたくないかもしれないだろ。\",\"act2-manager-serious\",false]": {
+      "status": "ng",
+      "version": "e0f5398c490fe35c88c6",
+      "updatedAt": "2026-10-27T05:29:09.970Z"
+    },
+    "[\"manager\",\"……ん……？ もう朝か……。\",\"act2-manager\",false]": {
+      "status": "ng",
+      "version": "97d5b4c431c0171ccb9e",
+      "updatedAt": "2026-10-27T05:34:05.136Z"
+    },
     "[\"manager\",\"……今度は、どうする……？\",\"act2-manager\",false]": {
       "status": "ng",
       "version": "6f60bcd6040a575621d8",
@@ -581,6 +706,21 @@
       "version": "1858685af79ec0b54222",
       "updatedAt": "2026-10-27T04:32:20.317Z"
     },
+    "[\"manager\",\"……前も、あいつは帰っていった。\",\"inner\",false]": {
+      "status": "ng",
+      "version": "3c43c40188b46dba7433",
+      "updatedAt": "2026-10-27T05:31:08.119Z"
+    },
+    "[\"manager\",\"……募集しない。\",\"act2-manager-serious\",false]": {
+      "status": "ng",
+      "version": "a858b698f9524dadefdb",
+      "updatedAt": "2026-10-27T05:28:12.412Z"
+    },
+    "[\"manager\",\"……嫌な予感しかしねぇ。\",\"act2-manager\",false]": {
+      "status": "ng",
+      "version": "78072546863cde052462",
+      "updatedAt": "2026-10-27T05:35:10.483Z"
+    },
     "[\"manager\",\"……帰る場所もなくなりそうなんだぞ。\",\"normal\",false]": {
       "status": "ok",
       "version": "1259b031b2e331664fe3",
@@ -595,6 +735,11 @@
       "status": "ng",
       "version": "112d4906fc1c90767ac3",
       "updatedAt": "2026-10-27T04:29:26.149Z"
+    },
+    "[\"manager\",\"……断ってくれ。\",\"act2-manager\",false]": {
+      "status": "ng",
+      "version": "8f62a9107ba95dee7050",
+      "updatedAt": "2026-10-27T05:28:42.364Z"
     },
     "[\"manager\",\"……確かに。なんで冷凍庫なんて言ったんだ、俺。\",\"inner\",false]": {
       "status": "ok",
@@ -645,6 +790,11 @@
       "status": "ok",
       "version": "f9de57ab9529046e056d",
       "updatedAt": "2026-10-26T17:11:54.952Z"
+    },
+    "[\"manager\",\"お前がまともなこと言うなよ……。\",\"act2-manager\",false]": {
+      "status": "ng",
+      "version": "e1f829c756e89aae988d",
+      "updatedAt": "2026-10-27T05:34:51.648Z"
     },
     "[\"manager\",\"お前が味方に呼んだんだろ！\",\"new-ally-retort\",false]": {
       "status": "ng",
@@ -811,6 +961,11 @@
       "version": "ff24f86379363397438b",
       "updatedAt": "2026-10-26T17:39:27.332Z"
     },
+    "[\"manager\",\"余計なこと言うな！！\",\"act2-manager\",false]": {
+      "status": "ng",
+      "version": "8e19c799d2e6da735bc8",
+      "updatedAt": "2026-10-27T05:33:20.393Z"
+    },
     "[\"manager\",\"最初からやれよ！\",\"normal\",false]": {
       "status": "ok",
       "version": "19bf107f1a1c777f2302",
@@ -848,8 +1003,8 @@
     },
     "[\"manager\",\"灰皿ごと水に沈めろ！\",\"normal\",false]": {
       "status": "ng",
-      "version": "f66395e37e6bbcebb192",
-      "updatedAt": "2026-10-27T05:04:40.473Z"
+      "version": "f93444c2b522b5207e34",
+      "updatedAt": "2026-10-27T05:52:19.936Z"
     },
     "[\"manager\",\"灰皿を冷凍庫にぶち込め！ キンキンに冷やせ！\",\"normal\",false]": {
       "status": "ng",
@@ -861,6 +1016,11 @@
       "version": "24f7b3d53ad95d616014",
       "updatedAt": "2026-10-27T03:47:41.522Z"
     },
+    "[\"manager\",\"礼？ いや、別にいいって。\",\"act2-manager\",false]": {
+      "status": "ng",
+      "version": "d36d91951fef5699e039",
+      "updatedAt": "2026-10-27T05:33:43.527Z"
+    },
     "[\"manager\",\"立ってた場所だけじゃねぇか！\",\"normal\",false]": {
       "status": "ok",
       "version": "fd3bdd9e9c162b4b7c8e",
@@ -868,13 +1028,23 @@
     },
     "[\"manager\",\"笑ってごまかすな！！\",\"four-kings-manager-retort\",false]": {
       "status": "ng",
-      "version": "aa3b7a1976880c50785e",
-      "updatedAt": "2026-10-27T05:11:36.040Z"
+      "version": "b8d418b5daebef7e0308",
+      "updatedAt": "2026-10-27T05:53:32.230Z"
     },
     "[\"manager\",\"笑ってねぇよ。\",\"normal\",false]": {
       "status": "ng",
       "version": "dde4815b639b650e7e00",
       "updatedAt": "2026-10-27T04:31:59.576Z"
+    },
+    "[\"manager\",\"花束、モク宛てってことにできない？\",\"duel-manager\",false]": {
+      "status": "ng",
+      "version": "31ef16d64a1312963f7b",
+      "updatedAt": "2026-10-27T05:37:47.135Z"
+    },
+    "[\"manager\",\"見張る相手が違うだろ！！\",\"act2-retort\",false]": {
+      "status": "ng",
+      "version": "7df262fff060aed8f3ba",
+      "updatedAt": "2026-10-27T05:31:51.595Z"
     },
     "[\"manager\",\"誰が悪徳大家だ！\",\"new-ally-retort\",false]": {
       "status": "ng",
@@ -890,6 +1060,11 @@
       "status": "ok",
       "version": "f3346d6813a7513eaead",
       "updatedAt": "2026-10-25T07:26:19.732Z"
+    },
+    "[\"manager\",\"頼む……目を開けてくれ……！\",\"tragedy-grief\",false]": {
+      "status": "ng",
+      "version": "44562dd04e8b5757800e",
+      "updatedAt": "2026-10-27T05:24:52.981Z"
     }
   }
 }

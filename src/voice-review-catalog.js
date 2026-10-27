@@ -1530,7 +1530,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "e7d4d036c7b1a100",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "再生成。灰皿を「はいざら」と明示し、叫びの音割れを抑える。",
+    "repairComment": "再生成済み。音割れ補正",
     "chapter": 1,
     "scene": "1:ash",
     "sceneLabel": "トラブル1｜灰皿の火事",
@@ -1541,7 +1541,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "灰皿ごと水に沈めろ！"
     },
-    "version": "f93444c2b522b5207e34"
+    "version": "e5fbf0a670a43cdd5964"
   },
   {
     "id": "[\"cat\",\"灰皿を溺れさせるニャ！？\",\"moku-surprised\",false]",
@@ -5378,7 +5378,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "91b1f56a2ca0fa73",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "再生成。強いツッコミとして明確な抑揚を付ける。",
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:observation2",
     "sceneLabel": "観察2｜ルナと四天王",
@@ -5392,7 +5392,7 @@ export const VOICE_REVIEW_CATALOG = [
       "voicePerformance": "four-kings-manager-retort",
       "voiceChapter": 2
     },
-    "version": "b8d418b5daebef7e0308"
+    "version": "88a91fe282aad4a467d4"
   },
   {
     "id": "[\"hostess\",\"……え？\",\"four-kings-surprise\",false]",
@@ -6833,7 +6833,8 @@ export const VOICE_REVIEW_CATALOG = [
     "id": "[\"manager\",\"頼む……目を開けてくれ……！\",\"tragedy-grief\",false]",
     "reviewId": "0cb72e63583e9bca",
     "repaired": true,
-    "repairComment": "前後の余分な無音を調整。",
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -6846,7 +6847,7 @@ export const VOICE_REVIEW_CATALOG = [
       "voicePerformance": "tragedy-grief",
       "voiceChapter": 2
     },
-    "version": "44562dd04e8b5757800e"
+    "version": "9541b68c1d30eacd12d4"
   },
   {
     "id": "[\"manager\",\"……くそっ！ 救急車……！\",\"tragedy-panic\",false]",
@@ -7040,7 +7041,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"大家さん、今日は本当にありがとう♡\",\"luna-flirt\",false]",
     "reviewId": "b04ab0a1a92e9dd1",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。異音補正",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -7052,7 +7055,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "大家さん、今日は本当にありがとう♡",
       "voiceChapter": 2
     },
-    "version": "ec6c82ce7a2f9effa6d9"
+    "version": "cb65836055df737bffe7"
   },
   {
     "id": "[\"manager\",\"ああ。まあ、無事でよかったよ。\",\"act2-manager\",false]",
@@ -7346,7 +7349,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"……募集しない。\",\"act2-manager-serious\",false]",
     "reviewId": "8bc32dcba2fb957b",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -7358,7 +7363,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……募集しない。",
       "voiceChapter": 2
     },
-    "version": "a858b698f9524dadefdb"
+    "version": "a8bcaaf00ae88e8f25af"
   },
   {
     "id": "[\"cat\",\"……は？\",\"act2-moku-surprised\",false]",
@@ -7482,7 +7487,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"……断ってくれ。\",\"act2-manager\",false]",
     "reviewId": "131fc135975f3fc9",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -7494,7 +7501,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……断ってくれ。",
       "voiceChapter": 2
     },
-    "version": "8f62a9107ba95dee7050"
+    "version": "dc8a10c5de3fab4c6aab"
   },
   {
     "id": "[\"cat\",\"またニャ！？ これで何人目ニャ！\",\"act2-moku-firm\",false]",
@@ -7550,7 +7557,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"……ルナが知らないやつと同じアパートに住みたくないかもしれないだろ。\",\"act2-manager-serious\",false]",
     "reviewId": "daafed230c763d2e",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。演技補正",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -7562,7 +7571,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……ルナが知らないやつと同じアパートに住みたくないかもしれないだろ。",
       "voiceChapter": 2
     },
-    "version": "e0f5398c490fe35c88c6"
+    "version": "f96ea96e24ec6428d06d"
   },
   {
     "id": "[\"cat\",\"……大家、もうおかしくなってるニャ。\",\"act2-moku-sad\",false]",
@@ -8027,7 +8036,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"……でも、ちょっと嬉しかったな♡\",\"luna-flirt\",false]",
     "reviewId": "de12ca36d00421b9",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。異音補正",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -8039,7 +8050,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……でも、ちょっと嬉しかったな♡",
       "voiceChapter": 2
     },
-    "version": "f21fa2e9a91c400f3fec"
+    "version": "356fc96d87b626eebd6a"
   },
   {
     "id": "[\"manager\",\"……そ、そうか。\",\"act2-manager\",false]",
@@ -8095,7 +8106,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"……前も、あいつは帰っていった。\",\"inner\",false]",
     "reviewId": "cf21ed1ecc2bf49f",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -8108,7 +8121,7 @@ export const VOICE_REVIEW_CATALOG = [
       "innerVoice": true,
       "voiceChapter": 2
     },
-    "version": "3c43c40188b46dba7433"
+    "version": "6a7edc09d50872fb1fc2"
   },
   {
     "id": "[\"manager\",\"……でも、あの夜……。\",\"inner\",false]",
@@ -8268,7 +8281,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"……じゃあモクも泊まるニャ。\",\"act2-moku\",false]",
     "reviewId": "68478baab2e2b14e",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。異音補正",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -8280,7 +8295,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……じゃあモクも泊まるニャ。",
       "voiceChapter": 2
     },
-    "version": "fa71a4b5348c108c8f65"
+    "version": "4fd87fe881de146a459a"
   },
   {
     "id": "[\"manager\",\"……お前も？\",\"act2-manager\",false]",
@@ -8319,7 +8334,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"見張る相手が違うだろ！！\",\"act2-retort\",false]",
     "reviewId": "becede971fd7f6a7",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。演技補正",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -8331,12 +8348,14 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "見張る相手が違うだろ！！",
       "voiceChapter": 2
     },
-    "version": "7df262fff060aed8f3ba"
+    "version": "84fe45961b4e5b8aa4b5"
   },
   {
     "id": "[\"hostess\",\"あははっ♡ 二人ともありがとう。\",\"luna-happy\",false]",
     "reviewId": "ee7544b7136a6171",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -8348,7 +8367,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "あははっ♡ 二人ともありがとう。",
       "voiceChapter": 2
     },
-    "version": "18b92672159f26974888"
+    "version": "12cdcffd6e909af4723e"
   },
   {
     "id": "[\"cat\",\"ふぁぁ……見張りは完璧だったニャ。\",\"act2-moku\",false]",
@@ -8627,7 +8646,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"余計なこと言うな！！\",\"act2-manager\",false]",
     "reviewId": "fa1149c55a36dc16",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。演技補正",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -8639,7 +8660,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "余計なこと言うな！！",
       "voiceChapter": 2
     },
-    "version": "8e19c799d2e6da735bc8"
+    "version": "92afcdd49d0105724baf"
   },
   {
     "id": "[\"hostess\",\"……本当にありがとう。あたし、誰かに守ってもらったの、久しぶりで……。\",\"luna-flirt\",false]",
@@ -8695,7 +8716,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"礼？ いや、別にいいって。\",\"act2-manager\",false]",
     "reviewId": "8d798f4d1ce41482",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -8707,7 +8730,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "礼？ いや、別にいいって。",
       "voiceChapter": 2
     },
-    "version": "d36d91951fef5699e039"
+    "version": "21ba48dc7917f3b0767e"
   },
   {
     "id": "[\"hostess\",\"だめ♡ 二人きりで、ちゃんとお礼したいの。\",\"luna-flirt\",false]",
@@ -8797,7 +8820,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"……ん……？ もう朝か……。\",\"act2-manager\",false]",
     "reviewId": "37671495c7e7c38b",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。異音補正",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -8809,7 +8834,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……ん……？ もう朝か……。",
       "voiceChapter": 2
     },
-    "version": "97d5b4c431c0171ccb9e"
+    "version": "8b91f8002f6604be54bb"
   },
   {
     "id": "[\"manager\",\"……ルナ？\",\"act2-manager\",false]",
@@ -9052,7 +9077,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"お前がまともなこと言うなよ……。\",\"act2-manager\",false]",
     "reviewId": "760daf81bb1688fe",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。異音補正",
     "chapter": 2,
     "scene": "2:bag",
     "sceneLabel": "トラブル1｜夕暮れの待ち伏せ",
@@ -9064,12 +9091,14 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "お前がまともなこと言うなよ……。",
       "voiceChapter": 2
     },
-    "version": "e1f829c756e89aae988d"
+    "version": "811e42cbd23a62fffc8d"
   },
   {
     "id": "[\"hostess\",\"大家さ〜ん♡ ちょっとお願いがあるんだけど\",\"luna-happy\",false]",
     "reviewId": "e268ab17ad8bb24a",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:duel-intro",
     "sceneLabel": "トラブル2｜バトル前後の会話",
@@ -9081,12 +9110,14 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "happy",
       "voiceChapter": 2
     },
-    "version": "1c650d71ffb36b960c2b"
+    "version": "38deb780a7bafe7d42a1"
   },
   {
     "id": "[\"manager\",\"……嫌な予感しかしねぇ。\",\"act2-manager\",false]",
     "reviewId": "6d81c329b4464e9b",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。異音補正",
     "chapter": 2,
     "scene": "2:duel-intro",
     "sceneLabel": "トラブル2｜バトル前後の会話",
@@ -9098,7 +9129,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "voiceChapter": 2
     },
-    "version": "78072546863cde052462"
+    "version": "235ccad1ae039515d1ff"
   },
   {
     "id": "[\"hostess\",\"今日だけ、あたしの彼氏になってくれない？\",\"luna-flirt\",false]",
@@ -9137,7 +9168,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"昨日は昨日。今日は今日♡\",\"luna-happy\",false]",
     "reviewId": "73823abe54b01c3f",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:duel-intro",
     "sceneLabel": "トラブル2｜バトル前後の会話",
@@ -9149,7 +9182,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "happy",
       "voiceChapter": 2
     },
-    "version": "6dc86ba055172d79e8ac"
+    "version": "5b3b19e2537eaa8ec996"
   },
   {
     "id": "[\"cat\",\"大家、彼氏のアルバイト始めたニャ？\",\"act2-moku\",false]",
@@ -9273,7 +9306,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"はぁい♡ 頼りにしてるね、大家さん。\",\"luna-happy\",false]",
     "reviewId": "c7160b76d4d23bb8",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:duel-intro",
     "sceneLabel": "トラブル2｜バトル前後の会話",
@@ -9285,7 +9320,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "happy",
       "voiceChapter": 2
     },
-    "version": "bbd2a3bf5983795153d7"
+    "version": "474e2321e7326feabd99"
   },
   {
     "id": "[\"cat\",\"モクは廊下で見守るニャ。手に負えなかったら呼ぶニャ。\",\"act2-moku\",false]",
@@ -9307,7 +9342,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"……はぁ〜。やっと帰ってくれたぁ……。\",\"luna-normal\",false]",
     "reviewId": "5896d7c52a042c78",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:duel-intro",
     "sceneLabel": "トラブル2｜バトル前後の会話",
@@ -9320,7 +9357,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelEnding": "clear",
       "voiceChapter": 2
     },
-    "version": "20347f972eb8c5a69918"
+    "version": "fc9e360f2660c9f36156"
   },
   {
     "id": "[\"manager\",\"お前なぁ……二度とこんな騒ぎ起こすなよ？\",\"act2-manager\",false]",
@@ -9707,7 +9744,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"花束、モク宛てってことにできない？\",\"duel-manager\",false]",
     "reviewId": "76ddbfc9c6a5c157",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -9721,7 +9760,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 0,
       "voiceChapter": 2
     },
-    "version": "31ef16d64a1312963f7b"
+    "version": "dd18917376f7aacff5c1"
   },
   {
     "id": "[\"cat\",\"勝手にモクの縁談をまとめるなニャ。\",\"duel-moku\",false]",
@@ -9914,7 +9953,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"便乗して貢がせる相手を増やすなニャ。\",\"duel-moku\",false]",
     "reviewId": "91b9d8f44226fabf",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -9928,7 +9969,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 1,
       "voiceChapter": 2
     },
-    "version": "67a68c0d4b85bcfd7555"
+    "version": "399f5778d8da9a81ac90"
   },
   {
     "id": "[\"cat\",\"抱き枕だけ連れて帰るニャ！！\",\"duel-moku-attack\",false]",
@@ -10178,7 +10219,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"講座は休講ニャ。いまから実技だけやるニャ。\",\"duel-moku\",false]",
     "reviewId": "b054c37d94225c6b",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。演技補正",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10192,12 +10235,14 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 2,
       "voiceChapter": 2
     },
-    "version": "dc78caf847ea30c5516d"
+    "version": "edb8366d8e9e4a83604a"
   },
   {
     "id": "[\"cat\",\"迷惑営業、おやすみニャ！！\",\"duel-moku-attack\",false]",
     "reviewId": "1095ba000fbff80e",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10212,7 +10257,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 2,
       "voiceChapter": 2
     },
-    "version": "a29461e703c9ba3989b9"
+    "version": "64a1c9a485ac2dc20e4f"
   },
   {
     "id": "[\"hostess\",\"大家さん、断るところまでモクちゃんに丸投げ……。無料だからって頼りすぎじゃない？\",\"duel-luna\",false]",
@@ -10291,7 +10336,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"煙幕代はツナ缶三つニャ。目、閉じとくニャ！\",\"duel-moku\",false]",
     "reviewId": "bf18dc80f7409676",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10305,7 +10352,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 3,
       "voiceChapter": 2
     },
-    "version": "89799bd4c2b6eaeb0f82"
+    "version": "452f474600df2282160f"
   },
   {
     "id": "[\"cat\",\"モク流奥義・煙ノ肉球乱舞ニャ！！\",\"duel-moku-attack\",false]",
@@ -10351,7 +10398,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"煙に巻いてお見送りニャ。大家、ツナ缶は三つニャ。\",\"duel-moku\",false]",
     "reviewId": "186f70d4b5972e35",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10364,7 +10413,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 3,
       "voiceChapter": 2
     },
-    "version": "62ff60d83f7635918152"
+    "version": "1ed79afd56132f455ede"
   },
   {
     "id": "[\"manager\",\"分かったから、俺の顔に煙を吐くな！！\",\"duel-manager\",false]",
@@ -10426,7 +10475,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"奥義のあともその構えニャ？ 肩、つるニャ。\",\"duel-moku\",false]",
     "reviewId": "5810e1a4db258f18",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10439,7 +10490,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 3,
       "voiceChapter": 2
     },
-    "version": "4a8edd89f3fcb3ebf54d"
+    "version": "40400d939df13c011ec2"
   },
   {
     "id": "[\"manager\",\"……もうつってる。腕が下ろせねぇ。\",\"duel-manager\",false]",
@@ -10598,7 +10649,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"贈り物を受け取ったら、断っちゃいけない気がしてた。……そこは別でいいんだね。\",\"duel-luna\",false]",
     "reviewId": "dfec1491687b45ca",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10612,7 +10665,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 1,
       "voiceChapter": 2
     },
-    "version": "5e979ca653f3853b3166"
+    "version": "33ab4f2a7f53262cc6e5"
   },
   {
     "id": "[\"hostess\",\"もう。断ったときも、それくらい素直に帰ってよね。\",\"duel-luna\",false]",
@@ -10655,7 +10708,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"花束、置いてってくれてもよかったニャ。\",\"duel-moku\",false]",
     "reviewId": "5d6649415eec2300",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10668,7 +10723,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 0,
       "voiceChapter": 2
     },
-    "version": "48361afcefd8b08f69e0"
+    "version": "72e5451c120b51774cad"
   },
   {
     "id": "[\"cat\",\"モクもツナ缶で釣られないようにするニャ。\",\"duel-moku\",false]",
@@ -10909,7 +10964,8 @@ export const VOICE_REVIEW_CATALOG = [
     "id": "[\"cat\",\"忘れ物ひとつで、本人まで回収しに来るなニャ。\",\"duel-moku\",false]",
     "reviewId": "a8d87277861fac67",
     "repaired": true,
-    "repairComment": "音声を再生成し、音量を調整。",
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10922,7 +10978,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 3,
       "voiceChapter": 2
     },
-    "version": "1c680b1f8013aa8c4683"
+    "version": "f8fba5afbd808ca99be1"
   },
   {
     "id": "[\"cat\",\"玄関前の渋滞解消ニャ。\",\"duel-moku\",false]",
@@ -10946,7 +11002,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"……通販って便利だよね♡\",\"duel-luna\",false]",
     "reviewId": "6735c8fd4abaaa66",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。異音補正",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10959,7 +11017,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 1,
       "voiceChapter": 2
     },
-    "version": "2c23a854044274cd2e48"
+    "version": "52dcf81678f0f133d8a3"
   },
   {
     "id": "[\"cat\",\"本人より先に枕が入居しそうニャ。\",\"duel-moku\",false]",
@@ -11750,7 +11808,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"大家さ〜ん♡ 昨日のこと思い出したら、また好きになっちゃった♡\",\"luna-happy\",false]",
     "reviewId": "c0bf0559b7c7563f",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。異音補正",
     "chapter": 2,
     "scene": "2:bad",
     "sceneLabel": "バトル後のBAD END",
@@ -11766,7 +11826,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelEnding": "yandere",
       "voiceChapter": 2
     },
-    "version": "bcb30dd3176221dd1ffc"
+    "version": "4e32575c47bc740cc725"
   },
   {
     "id": "[\"manager\",\"……いや、俺は大家として当然のことをしただけだぞ？\",\"act2-manager\",false]",
@@ -11791,7 +11851,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"大家さんのために、お弁当作ったの♡ 朝・昼・晩の三食分♡\",\"luna-flirt\",false]",
     "reviewId": "bc8c68fc92ed1161",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:bad",
     "sceneLabel": "バトル後のBAD END",
@@ -11807,7 +11869,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelEnding": "yandere",
       "voiceChapter": 2
     },
-    "version": "9cc7d93a47589e90d645"
+    "version": "97cf57ed28fc964c11ef"
   },
   {
     "id": "[\"manager\",\"……ありがたいけど、なんで全部ハート形なんだよ。\",\"act2-manager\",false]",
@@ -12110,7 +12172,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"うん。昨日は……ありがとね。大家さんのおかげで、ちゃんとみんなに断れたよ。\",\"luna-flirt\",false]",
     "reviewId": "c53cdb8312cd6ee2",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。読み補正",
     "chapter": 2,
     "scene": "2:ending",
     "sceneLabel": "エンディング",
@@ -12124,7 +12188,7 @@ export const VOICE_REVIEW_CATALOG = [
       "epilogueShot": "company",
       "voiceChapter": 2
     },
-    "version": "af255f028c4058cd9179"
+    "version": "e9106e0e1e877e04c7e6"
   },
   {
     "id": "[\"manager\",\"……まあ、分かってくれたならいい。\",\"act2-manager\",false]",
@@ -12708,7 +12772,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"あんなに必死になって……。\",\"luna-flirt\",false]",
     "reviewId": "afac06f9634671a2",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。異音補正",
     "chapter": 2,
     "scene": "2:ending",
     "sceneLabel": "エンディング",
@@ -12722,7 +12788,7 @@ export const VOICE_REVIEW_CATALOG = [
       "epilogueShot": "vanity",
       "voiceChapter": 2
     },
-    "version": "67dad3e214fb687fe851"
+    "version": "ed936fa0a7d48ada7350"
   },
   {
     "id": "[\"hostess\",\"……あたしのこと、守ってくれたんだもんね。\",\"luna-flirt\",false]",
@@ -12785,7 +12851,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"hostess\",\"全部は、ね♡\",\"luna-flirt\",false]",
     "reviewId": "0903e97fc1496da4",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "再生成済み。演技補正",
     "chapter": 2,
     "scene": "2:ending",
     "sceneLabel": "エンディング",
@@ -12799,7 +12867,7 @@ export const VOICE_REVIEW_CATALOG = [
       "epilogueShot": "close",
       "voiceChapter": 2
     },
-    "version": "b250b47b646460f499cf"
+    "version": "524772e721eb366848e8"
   }
 ];
 // Historical short IDs are retained for import only, never for playback or review.

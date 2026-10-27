@@ -252,11 +252,16 @@
     {
       "speaker": "cat",
       "text": "忘れ物ひとつで、本人まで回収しに来るなニャ。",
-      "spokenText": "わすれものひとつで、ほんにんまで回収しに来るなニャ。",
+      "spokenText": "忘れ物ひとつで、本人までかいしゅうしに来るなニャ。",
       "tags": [
-        "[animated]",
-        "[lighthearted]"
-      ]
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
     },
     {
       "speaker": "manager",
@@ -454,15 +459,14 @@
       "text": "灰皿ごと水に沈めろ！",
       "spokenText": "はいざらごと水に沈めろ！",
       "tags": [
-        "[serious]",
-        "[shouting]"
+        "[serious]"
       ],
       "settings": {
         "stability": 0.5,
         "similarity_boost": 0.75,
-        "speed": 1.01
+        "speed": 1
       },
-      "repairComment": "再生成。灰皿を「はいざら」と明示し、叫びの音割れを抑える。"
+      "repairComment": "音割れ補正"
     },
     {
       "speaker": "manager",
@@ -647,17 +651,16 @@
     {
       "speaker": "manager",
       "text": "笑ってごまかすな！！",
-      "spokenText": "笑ってごまかすな！！",
+      "spokenText": "わらってごまかすな！！",
       "tags": [
-        "[exasperated]",
-        "[shouting]"
+        "[exasperated]"
       ],
       "settings": {
         "stability": 0.5,
         "similarity_boost": 0.75,
-        "speed": 1.08
+        "speed": 1
       },
-      "repairComment": "再生成。強いツッコミとして明確な抑揚を付ける。"
+      "repairComment": "読み補正"
     },
     {
       "speaker": "hostess",
@@ -808,6 +811,482 @@
         "speed": 1.02
       },
       "repairComment": "再生成。深刻な問いかけを保ち、末尾の異音と音割れを修正。"
+    },
+    {
+      "speaker": "manager",
+      "text": "頼む……目を開けてくれ……！",
+      "spokenText": "頼む……目を開けてくれ……！",
+      "tags": [
+        "[serious]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "hostess",
+      "text": "大家さん、今日は本当にありがとう♡",
+      "spokenText": "大家さん、今日は本当にありがとう♡",
+      "tags": [
+        "[playful]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "異音補正"
+    },
+    {
+      "speaker": "manager",
+      "text": "……募集しない。",
+      "spokenText": "……ぼしゅうしない。",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "manager",
+      "text": "……断ってくれ。",
+      "spokenText": "……ことわってくれ。",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "manager",
+      "text": "……ルナが知らないやつと同じアパートに住みたくないかもしれないだろ。",
+      "spokenText": "……ルナが知らないやつと同じアパートに住みたくないかもしれないだろ。",
+      "tags": [
+        "[serious]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "演技補正"
+    },
+    {
+      "speaker": "hostess",
+      "text": "……でも、ちょっと嬉しかったな♡",
+      "spokenText": "……でも、ちょっと嬉しかったな♡",
+      "tags": [
+        "[playful]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "異音補正"
+    },
+    {
+      "speaker": "manager",
+      "text": "……前も、あいつは帰っていった。",
+      "spokenText": "……まえも、あいつは帰っていった。",
+      "tags": [
+        "[serious]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "cat",
+      "text": "……じゃあモクも泊まるニャ。",
+      "spokenText": "……じゃあモクも泊まるニャ。",
+      "tags": [
+        "[playful]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "異音補正"
+    },
+    {
+      "speaker": "manager",
+      "text": "見張る相手が違うだろ！！",
+      "spokenText": "みはる相手が違うだろ！！",
+      "tags": [
+        "[exasperated]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "演技補正"
+    },
+    {
+      "speaker": "hostess",
+      "text": "あははっ♡ 二人ともありがとう。",
+      "spokenText": "あははっ♡ 二人ともありがとう。",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "manager",
+      "text": "余計なこと言うな！！",
+      "spokenText": "余計なこと言うな！！",
+      "tags": [
+        "[exasperated]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "演技補正"
+    },
+    {
+      "speaker": "manager",
+      "text": "礼？ いや、別にいいって。",
+      "spokenText": "れい？ いや、別にいいって。",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "manager",
+      "text": "……ん……？ もう朝か……。",
+      "spokenText": "……ん……？ もう朝か……。",
+      "tags": [
+        "[serious]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "異音補正"
+    },
+    {
+      "speaker": "manager",
+      "text": "お前がまともなこと言うなよ……。",
+      "spokenText": "お前がまともなこと言うなよ……。",
+      "tags": [
+        "[serious]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "異音補正"
+    },
+    {
+      "speaker": "hostess",
+      "text": "大家さ〜ん♡ ちょっとお願いがあるんだけど",
+      "spokenText": "大家さ〜ん♡ ちょっと、お願いがあるんだけど",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "manager",
+      "text": "……嫌な予感しかしねぇ。",
+      "spokenText": "……嫌なよかんしかしねぇ。",
+      "tags": [
+        "[serious]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "異音補正"
+    },
+    {
+      "speaker": "hostess",
+      "text": "昨日は昨日。今日は今日♡",
+      "spokenText": "きのうはきのう。今日は今日♡",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "hostess",
+      "text": "はぁい♡ 頼りにしてるね、大家さん。",
+      "spokenText": "はぁい♡ たよりにしてるね、大家さん。",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "hostess",
+      "text": "……はぁ〜。やっと帰ってくれたぁ……。",
+      "spokenText": "……はぁ〜。やっと帰ってくれたぁ……。",
+      "tags": [
+        "[serious]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "manager",
+      "text": "花束、モク宛てってことにできない？",
+      "spokenText": "はなたば、モクあてってことにできない？",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "cat",
+      "text": "便乗して貢がせる相手を増やすなニャ。",
+      "spokenText": "びんじょうして貢がせる相手を増やすなニャ。",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "cat",
+      "text": "講座は休講ニャ。いまから実技だけやるニャ。",
+      "spokenText": "こうざはきゅうこうニャ。いまから実技だけやるニャ。",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "演技補正"
+    },
+    {
+      "speaker": "cat",
+      "text": "迷惑営業、おやすみニャ！！",
+      "spokenText": "めいわくえいぎょう、おやすみニャ！！",
+      "tags": [
+        "[excited]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "cat",
+      "text": "煙幕代はツナ缶三つニャ。目、閉じとくニャ！",
+      "spokenText": "えんまく代はツナ缶三つニャ。目、閉じとくニャ！",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "cat",
+      "text": "煙に巻いてお見送りニャ。大家、ツナ缶は三つニャ。",
+      "spokenText": "けむりに巻いてお見送りニャ。大家、ツナ缶は三つニャ。",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "cat",
+      "text": "奥義のあともその構えニャ？ 肩、つるニャ。",
+      "spokenText": "おうぎのあともその構えニャ？ 肩、つるニャ。",
+      "tags": [
+        "[excited]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "hostess",
+      "text": "贈り物を受け取ったら、断っちゃいけない気がしてた。……そこは別でいいんだね。",
+      "spokenText": "おくりものを受け取ったら、断っちゃいけない気がしてた。……そこは別でいいんだね。",
+      "tags": [
+        "[warmly]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "cat",
+      "text": "花束、置いてってくれてもよかったニャ。",
+      "spokenText": "はなたば、置いてってくれてもよかったニャ。",
+      "tags": [
+        "[conversational]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "hostess",
+      "text": "……通販って便利だよね♡",
+      "spokenText": "……つうはんって便利だよね♡",
+      "tags": [
+        "[playful]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "異音補正"
+    },
+    {
+      "speaker": "hostess",
+      "text": "大家さ〜ん♡ 昨日のこと思い出したら、また好きになっちゃった♡",
+      "spokenText": "大家さ〜ん♡ 昨日のこと思い出したら、また好きになっちゃった♡",
+      "tags": [
+        "[playful]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "異音補正"
+    },
+    {
+      "speaker": "hostess",
+      "text": "大家さんのために、お弁当作ったの♡ 朝・昼・晩の三食分♡",
+      "spokenText": "大家さんのために、お弁当作ったの♡ 朝・昼・晩のさんしょくぶん♡",
+      "tags": [
+        "[warmly]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "hostess",
+      "text": "うん。昨日は……ありがとね。大家さんのおかげで、ちゃんとみんなに断れたよ。",
+      "spokenText": "うん。きのうは……ありがとね。大家さんのおかげで、ちゃんとみんなにことわれたよ。",
+      "tags": [
+        "[serious]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "読み補正"
+    },
+    {
+      "speaker": "hostess",
+      "text": "あんなに必死になって……。",
+      "spokenText": "あんなに必死になって……。",
+      "tags": [
+        "[serious]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "異音補正"
+    },
+    {
+      "speaker": "hostess",
+      "text": "全部は、ね♡",
+      "spokenText": "ぜんぶは、ね♡",
+      "tags": [
+        "[playful]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1
+      },
+      "repairComment": "演技補正"
     }
   ]
 }
