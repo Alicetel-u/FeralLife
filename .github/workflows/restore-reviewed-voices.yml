@@ -1,4 +1,5 @@
 name: Restore reviewed voices from completed artifact
+# Retry safely from unchanged, already generated artifact; no TTS calls.
 on:
   push:
     paths:
