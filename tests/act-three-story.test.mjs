@@ -53,7 +53,7 @@ test('real map gates motion, reaches bridge collapse and initiates forced loop',
   for(let n=0;n<11;n++)click('data-dialogue-next');assert.equal(saved.at(-1).mapScene,null);
   click('data-map-next');move();assert.equal(saved.at(-1).mapScene,'crossing');
   for(let n=0;n<6;n++)click('data-dialogue-next');const mid=saved.at(-1);assert.equal(mid.mapCursor,6);
-  stop();stop=startActThreeMap({querySelector:()=>section},{story:true,initialProgress:mid,onProgress:p=>saved.push(p)});await new Promise(resolve=>setImmediate(resolve));assert.equal(saved.at(-1).mapCursor,6);
+  stop();stop=startActThreeMap({querySelector:()=>section},{story:true,initialProgress:mid,onProgress:p=>saved.push(p),onLoop:()=>looped++});await new Promise(resolve=>setImmediate(resolve));assert.equal(saved.at(-1).mapCursor,6);
   for(let n=6;n<11;n++)click('data-dialogue-next');click('data-map-next');move();assert.equal(saved.at(-1).mapStep,2);assert.equal(saved.at(-1).mapScene,'detour');
   for(let n=0;n<ACT_THREE_MAP_SCENES.detour.lines.length;n++)click('data-dialogue-next');assert.deepEqual(saved.at(-1).mapSeen,['departure','crossing','detour']);
   click('data-map-next');move();assert.equal(saved.at(-1).mapScene,'store');
