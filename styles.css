@@ -2498,3 +2498,6 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .act3-map .map-route-barricade.barricade-b{top:62%}
 }
 @media(prefers-reduced-motion:reduce){.act3-map .map-route-zombies img{animation:none}}
+
+/* Landmarks stay in front of the new roadside scenery, with zombies and the party layered above. */
+.act3-map .map-landmark{z-index:3}
