@@ -1,5 +1,5 @@
 export const ACT_THREE_BGM_SRC = 'assets/audio/survival-tombs.mp3';
-// Reserved upload paths: activate these cues only after both MP3 files are added.
+// Third-act exploration and the upcoming convenience-store encounter.
 export const ACT_THREE_MAP_BGM_SRC = 'assets/audio/act3-map.mp3';
 export const MIMI_BGM_SRC = 'assets/audio/mimi-theme.mp3';
 export const DUEL_BGM_SRC = 'assets/audio/duel-ao-wo-isoide.mp3';
@@ -43,6 +43,8 @@ export function bedCue(actOne) {
 export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio, uneasyAudio, victoryAudio, mokuAudio, duelAudio, lunaAudio, openingAudio, actThreeAudio) {
   const tracks = {
     normal: bgmTrack(normalAudio, NORMAL_BGM_SRC),
+    mimi: bgmTrack(typeof Audio === 'undefined' ? normalAudio : null, MIMI_BGM_SRC),
+    act3map: bgmTrack(typeof Audio === 'undefined' ? normalAudio : null, ACT_THREE_MAP_BGM_SRC),
     act3: bgmTrack(actThreeAudio ?? (typeof Audio === 'undefined' ? normalAudio : null), ACT_THREE_BGM_SRC),
     duel: bgmTrack(duelAudio, DUEL_BGM_SRC),
     moku: bgmTrack(mokuAudio, MOKU_BGM_SRC),
@@ -112,7 +114,7 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
     setSuppressed(value) { suppressed = !!value; return sync(); },
     setScene(suppressedValue, nextCue) {
       suppressed = !!suppressedValue;
-      const name = STINGS.has(nextCue) || nextCue === 'uneasy' || nextCue === 'moku' || nextCue === 'luna' ? nextCue : 'normal';
+      const name = STINGS.has(nextCue) || nextCue === 'uneasy' || nextCue === 'moku' || nextCue === 'luna' || nextCue === 'act3map' || nextCue === 'mimi' ? nextCue : 'normal';
       if (STINGS.has(name) && cue !== name) tracks[name].currentTime = 0;
       cue = name;
       warm(name);if(upcoming[name])warm(upcoming[name]);

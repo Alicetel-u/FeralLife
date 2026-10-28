@@ -1,0 +1,103 @@
+import {EVENT_EXPRESSIONS} from './character-art.js';
+import {eventStageHTML} from './event-stage.js';
+import {messagePages} from './message-pages.js';
+import {ACT_THREE_MAP_SCENES,ACT_THREE_STORE_INTERIOR,actThreeStoryProgress,actThreeStorySave} from './act-three-story.js';
+export const ACT_THREE_MAP_PLACES=[
+ {id:'home',name:'けもの荘',image:'assets/events/chapter3/map-home.png',action:'交差点へ',note:'モクとルナを脱出地点まで連れていく'},
+ {id:'crossing',name:'交差点',image:'assets/events/chapter3/map-crossing.png',action:'裏道から回避する',note:'交差点はゾンビの群れで通れない'},
+ {id:'detour',name:'裏道',image:'assets/events/chapter3/map-detour.png',action:'コンビニへ',note:'群れを避け、裏道を進む'},
+ {id:'store',name:'コンビニ',image:'assets/events/chapter3/map-store.png',action:'橋へ向かう',note:'脱出地点は、この先の橋'},
+ {id:'bridge',name:'脱出地点・橋',image:'assets/events/chapter3/map-bridge.png',action:null,note:'橋に到着'}
+];
+export const ACT_THREE_MAP_ZOMBIE='assets/events/chapter3/map-zombie.png';
+export const ACT_THREE_MAP_CAST=[
+ {id:'manager',name:'大家',image:'assets/characters/manager/matched-v3/idle.png'},
+ {id:'cat',name:'モク',image:'assets/characters/cat/observation-v4/stand.png'},
+ {id:'hostess',name:'ルナ',image:'assets/characters/hostess/observation-v4/stand.png'}
+];
+export function actThreeMapCheckpoint(value){return Number.isInteger(value)?Math.max(0,Math.min(ACT_THREE_MAP_PLACES.length-1,value)):0;}
+// Arrival is saved only after motion finishes. Reload during transit returns to departure.
+export function actThreeMapTravel(from,to,t){
+ const start=actThreeMapCheckpoint(from),end=actThreeMapCheckpoint(to),p=Math.min(1,Math.max(0,t)),ease=p*p*(3-2*p);
+ return {position:start+(end-start)*ease,bounce:Math.sin(p*Math.PI)*Math.sin(p*Math.PI*6),finished:p===1};
+}
+export function actThreeMapHTML(){return `<section class="act-screen act3-map" data-act3-map data-chapter="3" tabindex="-1" aria-label="第三幕 街マップ"><h2 id="modal-title" class="visually-hidden">街マップ</h2><div class="map-viewport"><div class="map-world">${ACT_THREE_MAP_PLACES.map((p,i)=>`<div class="map-landmark" data-map-landmark="${i}"><img src="${p.image}" alt="${p.name}" draggable="false"><span class="map-location-label">${p.name}</span></div>`).join('')}<div class="map-zombies" aria-label="交差点を横切るゾンビの群れ">${Array.from({length:6},(_,i)=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--z:${i}" draggable="false">`).join('')}</div></div><div class="map-party" aria-label="大家、モク、ルナ">${ACT_THREE_MAP_CAST.map((c,i)=>`<div class="map-companion map-companion-${c.id}" style="--member:${i}"><img src="${c.image}" alt="${c.name}" draggable="false"></div>`).join('')}</div><div class="map-loading" role="status"><span>マップを読み込んでいます…</span><button type="button" data-map-retry hidden>再読み込み</button></div></div><img class="map-scene-backdrop" alt="荒らされたコンビニの店内" hidden><div class="map-dialogue act3-dialogue" data-renderer="event-stage" hidden></div><nav class="map-dialogue-controls" aria-label="会話操作" hidden><button type="button" data-map-dialogue-back>前へ</button><button type="button" data-map-dialogue-next>次へ</button></nav><div class="map-panel"><div class="map-status visually-hidden"><strong data-map-location>けもの荘</strong><p data-map-status role="status" aria-live="polite"></p></div><nav class="map-actions" aria-label="移動操作"><button type="button" data-map-next class="map-next" disabled>交差点へ <span aria-hidden="true">➜</span></button><button type="button" data-map-pause hidden>一時停止</button><button type="button" data-map-finish class="map-next" hidden>ここまでを読み終える</button><button type="button" data-map-reset hidden>もう一度移動する</button><button type="button" data-map-back>戻る</button></nav></div></section>`;}
+export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=>{},story=false,initialProgress=null,onProgress=()=>{},voice=null,onScene=()=>{}}={}){
+ const section=root.querySelector('[data-act3-map]');if(!section)return ()=>{};
+ const viewport=section.querySelector('.map-viewport'),world=section.querySelector('.map-world'),party=section.querySelector('.map-party'),zombies=section.querySelector('.map-zombies');
+ const next=section.querySelector('[data-map-next]'),pause=section.querySelector('[data-map-pause]'),reset=section.querySelector('[data-map-reset]'),status=section.querySelector('[data-map-status]'),loading=section.querySelector('.map-loading');
+ const dialogue=section.querySelector('.map-dialogue'),dialogueControls=section.querySelector('.map-dialogue-controls'),backdrop=section.querySelector('.map-scene-backdrop');
+ let progress=story?actThreeStoryProgress(initialProgress):null,shownLine=null;
+ const publish=()=>{if(story)onProgress(actThreeStorySave(progress));};
+ const reduced=globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches===true;
+ let step=story?progress.step:actThreeMapCheckpoint(initialStep),position=step,elapsed=0,moving=false,paused=false,ready=false,dead=false,last=null,raf=0,version=0;
+ const paint=()=>{
+  const width=viewport.clientWidth,gap=Math.max(380,Math.min(1100,width*.94)),anchor=width*.48;
+  world.style.transform=`translate3d(${-position*gap}px,0,0)`;
+  section.querySelectorAll('[data-map-landmark]').forEach((el,i)=>{el.style.left=`${anchor+i*gap}px`;el.dataset.current=String(i===step);});
+  zombies.style.left=`${anchor+gap+36}px`;zombies.hidden=position<.6||position>2.5||story&&progress.scene==='crossing'&&!ACT_THREE_MAP_SCENES.crossing.lines[progress.cursor].horde;
+  party.style.left=`${anchor}px`;party.style.setProperty('--bounce',String(moving&&!reduced?Math.sin(elapsed*9)*4:0));party.style.setProperty('--lean',moving&&!paused&&!reduced?'5deg':'0deg');
+  section.dataset.moving=String(moving&&!paused);section.dataset.paused=String(paused||document.hidden);section.dataset.location=ACT_THREE_MAP_PLACES[step].id;
+  next.hidden=(story?step>=3:step===4)||moving||!!progress?.scene;next.disabled=!ready;next.innerHTML=`${ACT_THREE_MAP_PLACES[step].action||''} <span aria-hidden="true">➜</span>`;
+  pause.hidden=!moving;pause.textContent=paused?'移動を再開':'一時停止';pause.setAttribute('aria-pressed',String(paused));reset.hidden=story?true:step!==4||moving;
+  section.querySelector('[data-map-location]').textContent=ACT_THREE_MAP_PLACES[step].name;
+  section.querySelector('[data-map-finish]').hidden=!(story&&step===3&&!progress.scene);
+  if(story)paintDialogue();
+  status.textContent=moving?(paused?'移動を一時停止しています':`${ACT_THREE_MAP_PLACES[step+1].name}へ移動中`):ACT_THREE_MAP_PLACES[step].note;
+ };
+ const paintDialogue=()=>{
+  const scene=progress.scene?ACT_THREE_MAP_SCENES[progress.scene]:null;
+  dialogue.hidden=!scene||!ready;dialogueControls.hidden=!scene||!ready;
+  section.dataset.dialogue=String(!!scene&&ready);
+  section.querySelector('.map-panel').hidden=!!scene;
+  backdrop.hidden=true;
+  if(!scene||!ready){if(shownLine){voice?.stop();shownLine=null;}section.dataset.scene='map';onScene('map');return;}
+  const line=scene.lines[progress.cursor],inside=!!line.inside;
+  section.dataset.scene=inside?'mimi':progress.scene;
+  if(inside){backdrop.src=ACT_THREE_STORE_INTERIOR;backdrop.hidden=false;}
+  const revealed=progress.scene==='store'&&scene.lines.slice(0,progress.cursor+1).some(l=>l.revealMimi);
+  const cast=scene.cast.filter(id=>id!=='rabbit'||revealed);
+  const event={actScene:'act3-'+progress.scene,detail:scene.lines[0].text,lines:scene.lines,cast};
+  dialogue.innerHTML=eventStageHTML(event,[],progress.cursor,progress.page);
+  if(line.speaker==='mystery')dialogue.querySelector('.speaker-name').textContent='？？？';
+  if(line.speaker==='rabbit')dialogue.querySelector('.speaker-name').textContent='ミミ';
+  dialogue.querySelector('.mobile-dialogue-tap')?.remove();
+  const back=section.querySelector('[data-map-dialogue-back]');back.disabled=progress.cursor===0&&progress.page===0;
+  section.querySelector('[data-map-dialogue-next]').textContent=progress.cursor===scene.lines.length-1&&progress.page===messagePages(line.text).length-1?'読み終える':'次へ';
+  if(shownLine!==line){shownLine=line;voice?.stop();if(line.speaker!=='narrator')voice?.play(line,'act3-map:'+progress.scene+':'+progress.cursor);}
+  onScene(inside?'mimi':'map');
+ };
+ function advanceDialogue(back=false){
+  if(!story||!progress.scene||!ready)return;
+  const scene=ACT_THREE_MAP_SCENES[progress.scene],pages=messagePages(scene.lines[progress.cursor].text);
+  if(back){if(progress.page>0)progress.page--;else if(progress.cursor>0){progress.cursor--;progress.page=messagePages(scene.lines[progress.cursor].text).length-1;}}
+  else if(progress.page<pages.length-1)progress.page++;
+  else if(progress.cursor<scene.lines.length-1){progress.cursor++;progress.page=0;}
+  else {if(!progress.seen.includes(progress.scene))progress.seen.push(progress.scene);progress.scene=null;progress.cursor=0;progress.page=0;}
+  if(progress.scene==='store'&&scene.lines[progress.cursor].keyGiven)progress.keyGiven=true;
+  publish();paint();
+ }
+ const stop=()=>{if(dead)return;voice?.stop();voice?.setSuspended(false);dead=true;version++;cancelAnimationFrame(raf);section.removeEventListener('click',click);section.removeEventListener('keydown',key);document.removeEventListener('visibilitychange',visibility);globalThis.removeEventListener('resize',paint);};
+ function click(e){const b=e.target.closest('button');if(!b)return;e.preventDefault();e.stopPropagation();
+  if(b.hasAttribute('data-map-dialogue-next')){advanceDialogue();return;}
+  if(b.hasAttribute('data-map-dialogue-back')){advanceDialogue(true);return;}
+  if(b.hasAttribute('data-map-finish')){stop();onBack();return;}
+  if(b.hasAttribute('data-map-back')){stop();onBack();return;}
+  if(b.hasAttribute('data-map-retry')){load();return;}
+  if(b.hasAttribute('data-map-pause')&&moving){paused=!paused;last=null;paint();return;}
+  if(!ready||moving||progress?.scene)return;
+  if(b.hasAttribute('data-map-reset')){step=0;position=0;elapsed=0;onArrival(step);paint();return;}
+  if(b.hasAttribute('data-map-next')&&step<(story?3:4)){moving=true;paused=false;elapsed=0;last=null;paint();}
+ }
+ function key(e){if(e.repeat||e.target.closest('button')||!progress?.scene)return;if(['Enter','Space','ArrowRight'].includes(e.code)){e.preventDefault();e.stopPropagation();advanceDialogue();}else if(e.code==='ArrowLeft'){e.preventDefault();e.stopPropagation();advanceDialogue(true);}}
+ function visibility(){last=null;voice?.setSuspended(document.hidden);paint();}
+ function tick(now){if(dead)return;const dt=last===null?0:Math.min(.05,(now-last)/1000);last=now;
+  if(ready&&moving&&!paused&&!document.hidden){elapsed+=dt;const f=actThreeMapTravel(step,step+1,elapsed/(reduced?.45:2.4));position=f.position;if(f.finished){step++;moving=false;elapsed=0;if(story){progress.step=step;progress.scene=step===1?'crossing':step===3?'store':null;progress.cursor=0;progress.page=0;publish();}onArrival(step);}paint();}
+  raf=requestAnimationFrame(tick);
+ }
+ function load(){const token=++version;ready=false;loading.hidden=false;loading.querySelector('button').hidden=true;
+  const sources=[...(story?[ACT_THREE_STORE_INTERIOR,...Object.values(EVENT_EXPRESSIONS.rabbit)]:[]),...ACT_THREE_MAP_PLACES.map(p=>p.image),ACT_THREE_MAP_ZOMBIE,...ACT_THREE_MAP_CAST.map(c=>c.image)];
+  Promise.all(sources.map(src=>new Promise((resolve,reject)=>{const img=new Image();img.onload=async()=>{try{await img.decode?.();resolve();}catch(e){reject(e);}};img.onerror=reject;img.src=src;}))).then(()=>{if(dead||token!==version)return;ready=true;loading.hidden=true;publish();paint();}).catch(()=>{if(dead||token!==version)return;loading.querySelector('span').textContent='画像を読み込めませんでした';loading.querySelector('button').hidden=false;});
+ }
+ section.addEventListener('click',click);section.addEventListener('keydown',key);document.addEventListener('visibilitychange',visibility);globalThis.addEventListener('resize',paint);section.focus({preventScroll:true});paint();load();raf=requestAnimationFrame(tick);return stop;
+}

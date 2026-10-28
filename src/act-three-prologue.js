@@ -85,7 +85,7 @@ export function startActThreeTitle(root,onDone,settings,shared){
  const stop=()=>{if(dead)return;dead=true;cancelAnimationFrame(raf);document.removeEventListener('visibilitychange',visibility);sound.stop();};
  const tick=now=>{if(dead)return;const dt=last===null?0:Math.min(.1,(now-last)/1000);last=now;if(!document.hidden)t+=dt;const f=actThreeTitleFrame(t);section.querySelector('p').style.opacity=f.number;section.querySelector('h2').style.opacity=f.title;section.querySelector('.act3-title-black').style.opacity=f.black;if(t>=1.7&&!hit){hit=true;sound.play();}if(f.finished){stop();onDone();return;}raf=requestAnimationFrame(tick);};raf=requestAnimationFrame(tick);return stop;
 }
-export function actThreeCompleteHTML(){return `<section class="act-screen act3-complete" data-chapter="3"><h2 id="modal-title" class="visually-hidden">第3幕プロローグ再生終了</h2><nav aria-label="再生終了メニュー"><button type="button" data-act3-replay>もう一度見る</button><button type="button" data-act3-after-replay>タイムリープ後から見る</button><button type="button" data-act-title>タイトルに戻る</button></nav></section>`;}
+export function actThreeCompleteHTML(){return `<section class="act-screen act3-complete" data-chapter="3"><h2 id="modal-title" class="visually-hidden">第3幕 再生メニュー</h2><nav aria-label="再生終了メニュー"><button type="button" data-act3-map>街マップへ</button><button type="button" data-act3-replay>もう一度見る</button><button type="button" data-act3-after-replay>タイムリープ後から見る</button><button type="button" data-act-title>タイトルに戻る</button></nav></section>`;}
 
 export const ACT_THREE_AFTER_SCENES=[
  {id:'corridor',image:'assets/events/chapter3/chapter3_after_01.png',lines:[

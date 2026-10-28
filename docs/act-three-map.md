@@ -1,0 +1,50 @@
+# 第三幕：街マップとミミとの出会い
+
+2026-10-28 のユーザー指定を実装。参照は `docs/story/master-plot.md` と、チャット「けもの荘プロローグ制作」で提示された出発〜ミミとの別れの台本。
+
+## 再生範囲
+
+プロローグ → 時計 → タイトル → 既存の廊下・武器確認 → 出発の会話 → 交差点 → ゾンビの群れを避ける裏道 → コンビニ → ミミに二階の鍵を渡して別れる、まで。
+
+本編の進行はコンビニで止める。橋のランドマークは将来の接続用であり、現段階の通常プレイからは進めない。脱出成功や二人の倒れる場面、コンビニへの死に戻りはまだ再生しない。ミミの負傷と鍵の授受は今回のユーザー台本に基づく。倒れる原因などの未確定事項は追加していない。
+
+## 表示と操作
+
+- 俯瞰の街一枚絵を採用せず、個別の透過ランドマークを横方向に並べる。
+- けもの荘は `assets/apartments.png` の二階建て・三室ずつの緑の扉・右階段・屋上水槽・左看板を参照。
+- 赤・黒・クリームの簡単な背景。大きなランドマークに大きな三人を重ねる。経路一覧・点線道路・街シルエットは画面に出さない。
+- 大家の `matched-v3/idle.png` とモク・ルナの既存ミニキャラをマップ専用の白フチで表示。歩行素材を変更せず、滑る移動と軽い傾き・上下動を使う。
+- 交差点のゾンビはカウントダウン後に出現。会話を読み終えると「裏道から回避する」が選べる。
+- 台詞は `eventStageHTML` と既存の名前欄・話者色を使用。長い台詞は既存の `messagePages` でページ送りする。
+- マップ用BGMとミミ用BGMを使用。新しい有料音声生成や既存音声の再生成は行っていない。
+
+## 保存と確認
+
+`state.actThree` の `mapStoryRevision:1`、`mapStep`、`mapScene`、`mapCursor`、`mapPage`、`mapSeen`、`mimiKeyGiven` に保存。移動途中は出発側の地点、会話途中は現在の台詞・ページから再開する。古いマップ試作セーブは新しい出発会話から再開し、新設の会話を飛ばせない。
+
+確認URLは `?preview=act-three-map`。`scene=departure|crossing|detour|store|farewell` で実際のシナリオ状態から確認できる。`silent=1` を付けると、その確認画面だけBGM・音声を鳴らさない。プレイヤーの通常ボイス設定は変更しない。開発メニューにも同じ五つの入口があり、通常セーブは変更しない。
+
+`tests/act-three-map.test.mjs` と `tests/act-three-story.test.mjs` で順番、会話中の移動禁止、一時停止、途中再開、鍵の授受、コンビニでの停止を検証する。
+
+## 素材と生成指示
+
+内蔵 imagegen で生成。ランドマークとミミの立ち絵は透過PNG。マップの三人は既存素材を使用。
+
+素材は `assets/events/chapter3/map-{home,crossing,detour,store,bridge,zombie}.png`、`store-interior.png`、`assets/events/busts/mimi-{neutral,scared,happy}.png`。
+
+生成プロンプトの共通仕様：
+
+> Single game-map landmark die-cut sticker on a truly transparent background. Very thick clean white outer cutline, playful hand-drawn 2D anime comic illustration, chunky readable shapes, restrained teal/ochre/rusty-red palette. Front three-quarter shallow perspective, centered isolated composition, little ground and a few attached props. No complete city, rectangular backdrop, UI or people.
+
+各ランドマークの指定：
+
+- けもの荘：既存外観画像を参照。二階建て、各階三つの緑の扉、黒い外廊下、右外階段、右の屋上水槽、アンテナ、左の「けもの荘」縦看板、鉢植え、左の緑のごみ箱、右の駐輪場。別の建物や階数を追加しない。
+- 交差点：日本の四叉路、二方向の横断歩道、簡略化した信号、歩道の角。車や建物で交差点を隠さない。
+- 裏道：低い壁と建物の角を回り込む細道、小さな物置、三角コーン、鉢植え。左右に通じる迂回路。
+- コンビニ：一階建ての平屋根、青緑とオレンジのひさし、ガラス店頭、小さな自販機と駐車場の縁。実在ロゴを使わない。
+- 橋：小さな青緑の川を渡る薄色のトラス橋。左右に通れる道路。脇の柵で道は塞がない。超自然的な境界を描かない。
+- ゾンビ：大きな淡いミント色の顔、非対称の眠そうな目、小さな口と一本の歯、乱れた黒髪、くたびれた茶色の上着と青いズボン、大きな靴、前に伸ばした腕。可愛い全身ステッカー。血・ゴア・武器なし。
+
+ミミの生成仕様：既存 `rabbit/emotions-v1.png` を外見・衣装の参照、ルナの既存バストアップを塗りと構図の参照にする。24歳の猫獣人、ピンク系の短いボブ、猫耳、ピンクの目、花とリボンの髪飾り、くすんだピンクの上着、白いフリルブラウス。腰上の自然な成人頭身、透過、白フチなし。通常・おびえ・安心した笑顔の三種。同じ人物と服装を保つ。
+
+コンビニ店内の生成仕様：夕暮れの青い光、割れた自動ドア、荒らされた商品棚、冷蔵ケース、非常灯。16:9のアニメ背景。人物・ゾンビ・血・武器・文字・実在ロゴなし。下部は会話を置ける余地を確保する。

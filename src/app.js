@@ -1,3 +1,5 @@
+import {actThreeStoryDebug} from './act-three-story.js';
+import {actThreeMapHTML,startActThreeMap} from './act-three-map.js';
 import {actThreeHTML,startActThree,actThreeTitleHTML,startActThreeTitle,actThreeCompleteHTML,actThreeAfterHTML,startActThreeAfter} from './act-three-prologue.js';
 import {mountVoiceReview} from './voice-review.js';
 import {playFourKingsNotice} from './act-two-observation-two.js';
@@ -58,7 +60,8 @@ const escape = text => String(text ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;'
 const yen = n => '¥' + Math.round(n).toLocaleString('ja-JP');
 const managerPreview = new URLSearchParams(location.search).get('preview')==='manager';
 const observationPreview = new URLSearchParams(location.search).get('preview')==='observation';
-const actThreePreview=['act-three','act-three-after'].includes(new URLSearchParams(location.search).get('preview'));
+const actThreePreview=['act-three','act-three-after','act-three-map'].includes(new URLSearchParams(location.search).get('preview'));
+const silentPreview=actThreePreview&&new URLSearchParams(location.search).get('silent')==='1';
 const STORAGE = actThreePreview?'feral-act-three-preview-v1':['act-two-opening','luna-motion'].includes(new URLSearchParams(location.search).get('preview'))?'feral-luna-film-preview-v1':managerPreview?'feral-manager-preview-v1':observationPreview?'feral-observation-preview-v1':'feral-act-one-v1';
 const previewType = new URLSearchParams(location.search).get('preview');
 const eventPreview = previewType === 'events';
@@ -651,11 +654,17 @@ function showNextChapter(){
 function showActThree(){
   const progress=state.actThree||{phase:'film',shot:0};
   if(progress.phase==='after'||progress.phase==='complete'&&!progress.afterSeen){showActThreeAfter();return;}
+  if(progress.phase==='map'){showActThreeMap();return;}
   if(progress.phase==='complete'){openModal(actThreeCompleteHTML());return;}
   if(progress.phase==='title'){showActThreeTitle();return;}
   if(progress.phase==='clock'){showActThreeClock();return;}
   eventView=null;openModal(actThreeHTML());
-  stopOpeningPrologue=startActThree(modal,()=>{state.actThree={phase:'clock',shot:0};save();showActThreeClock();},{settings:normalBgm,shared:()=>characterVoice.audioContext(),voice:characterVoice,initialShot:progress.shot,onShot:shot=>{state.actThree={phase:'film',shot};save();syncNormalBgm();}});
+  stopOpeningPrologue=startActThree(modal,()=>{state.actThree={phase:'clock',shot:0};save();showActThreeClock();},{settings:normalBgm,shared:()=>characterVoice.audioContext(),voice:silentPreview?null:characterVoice,initialShot:progress.shot,onShot:shot=>{state.actThree={phase:'film',shot};save();syncNormalBgm();}});
+}
+function showActThreeMap(){
+  const progress=state.actThree;
+  eventView=null;openModal(actThreeMapHTML());
+  stopOpeningPrologue=startActThreeMap(modal,{story:true,initialProgress:progress,voice:silentPreview?null:characterVoice,onProgress:progress=>{state.actThree=progress;save();},onScene:()=>syncNormalBgm(),onBack:()=>openModal(actThreeCompleteHTML())});
 }
 function showActThreeClock(){
   openModal(rewindTransitionHTML('',1,true,3,true));
@@ -668,7 +677,7 @@ function showActThreeTitle(){
 }
 function showActThreeAfter(){
   const cursor=state.actThree?.cursor||0;eventView=null;openModal(actThreeAfterHTML());
-  stopOpeningPrologue=startActThreeAfter(modal,()=>{state.actThree={phase:'complete',shot:0,afterSeen:true};save();openModal(actThreeCompleteHTML());},{initialCursor:cursor,onCursor:cursor=>{state.actThree={phase:'after',cursor};save();}});
+  stopOpeningPrologue=startActThreeAfter(modal,()=>{state.actThree={phase:'map',mapStep:0,afterSeen:true};save();showActThreeMap();},{initialCursor:cursor,onCursor:cursor=>{state.actThree={phase:'after',cursor};save();}});
 }
 function beginRewind(afterFire=false){
   const secondAct=state.actOne.chapter===2;
@@ -747,8 +756,17 @@ function showDebugObservationSelect(chapter,page=0){
   modal.querySelector('.persona-debug-actions').insertAdjacentHTML('afterend',`<nav class="persona-debug-pagination" aria-label="観察モードのページ切り替え"><button type="button" class="persona-debug-page-button" data-debug-observation-page="${chapter}:${current-1}" ${current===0?'disabled':''}>◀　前へ</button><span class="persona-debug-page-counter">PAGE <strong>${current+1} / ${pages}</strong></span><button type="button" class="persona-debug-page-button persona-debug-page-next" data-debug-observation-page="${chapter}:${current+1}" ${current===pages-1?'disabled':''}>次へ　▶</button></nav>`);
   modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes');
 }
+function showDebugActThreeMap(){
+  debugMenuPage('第三幕｜街マップ','確認したい場面を選択してください。通常セーブには影響しません。',[
+    ['departure','けもの荘・出発の会話','data-debug-act3-map-scene'],
+    ['crossing','交差点・ゾンビを回避','data-debug-act3-map-scene'],
+    ['detour','裏道・コンビニへ移動前','data-debug-act3-map-scene'],
+    ['store','コンビニ到着・ミミとの出会い','data-debug-act3-map-scene'],
+    ['farewell','ミミとの別れ','data-debug-act3-map-scene']
+  ],'data-debug-chapters-back');
+}
 function showDebugChapterSelect(){
-  debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter'],['3','第3幕 — 世界崩壊プロローグ','data-debug-act3'],['3-after','第3幕 — タイムリープ後・空き部屋','data-debug-act3-after']], 'data-debug-tools-back');
+  debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter'],['3','第3幕 — 世界崩壊プロローグ','data-debug-act3'],['3-after','第3幕 — タイムリープ後・空き部屋','data-debug-act3-after'],['3-map','第3幕 — 街マップ・出発〜ミミとの別れ','data-debug-act3-map']], 'data-debug-tools-back');
 }
 function showDebugSectionSelect(chapter){
   if(chapter!=='2'){showDebugSceneSelect(chapter);return;}
@@ -928,6 +946,9 @@ document.addEventListener('click',e=>{
   if(modal.open&&modal.querySelector('.epilogue-transition,.bad-entry-host'))return;
   const button=e.target.closest('button');if(!button)return;
   if(button.hasAttribute('data-debug-hotspot')){const now=performance.now();debugTapCount=now-debugLastTap>2500?1:debugTapCount+1;debugLastTap=now;if(debugTapCount>=3){debugTapCount=0;showDeveloperMenu();}return;}
+  if(button.hasAttribute('data-act3-map')){showActThreeMap();return;}
+  if(button.hasAttribute('data-debug-act3-map')){showDebugActThreeMap();return;}
+  if(button.hasAttribute('data-debug-act3-map-scene')){const progress=actThreeStoryDebug(button.getAttribute('data-debug-act3-map-scene'));if(progress){developerMode=true;state.actThree=progress;showActThreeMap();}return;}
   if(button.hasAttribute('data-act3-replay')){state.actThree={phase:'film',shot:0};save();showActThree();return;}
   if(button.hasAttribute('data-debug-act3-after')){developerMode=true;state.actThree={phase:'after',cursor:0};showActThreeAfter();return;}
   if(button.hasAttribute('data-act3-after-replay')){state.actThree={phase:'after',cursor:0};save();showActThreeAfter();return;}
@@ -1078,6 +1099,7 @@ window.addEventListener('pagehide',save);
 document.addEventListener('visibilitychange',()=>{lastTime=performance.now();if(document.hidden)save();characterVoice.setSuspended(document.hidden);syncNormalBgm();});
 
 const normalBgm=createNormalBgm();
+if(silentPreview)normalBgm.setEnabled(false);
 // Fetch only the title bed while the image/START gate is still visible. No autoplay.
 normalBgm.preload('title');
 function paintSoundButton(){$('sound-button').setAttribute('aria-pressed',String(normalBgm.enabled));$('sound-button').innerHTML=normalBgm.label();}
@@ -1120,7 +1142,7 @@ function syncNormalBgm(){
   // Dedicated scene cues take precedence over character themes.
   const lunaVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="hostess"]');
   const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
-  return normalBgm.setScene(!!modal.querySelector('[data-act3-title],[data-act3-after],.act3-complete')||actThreeQuiet||document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), actThreeFilm?'act3':clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':actTwoTitle?'luna':actOneTitle?'moku':opening?'opening':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
+  return normalBgm.setScene(!!modal.querySelector('[data-act3-title],[data-act3-after],.act3-complete')||actThreeQuiet||document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), modal.querySelector('[data-act3-map][data-scene="mimi"]')?'mimi':modal.querySelector('[data-act3-map]')?'act3map':actThreeFilm?'act3':clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':actTwoTitle?'luna':actOneTitle?'moku':opening?'opening':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
 }
 modal.addEventListener('luna-film-phase',()=>{syncNormalBgm();});
 modal.addEventListener('act3-film-phase',()=>{syncNormalBgm();});
@@ -1267,7 +1289,8 @@ if(entryGate && !previewType){
 }else{
   entryGate?.remove();
   startWorldArt();
-  if(actThreePreview){state.actThree||=new URLSearchParams(location.search).get('preview')==='act-three-after'?{phase:'after',cursor:0}:{phase:'film',shot:0};showActThree();}
+  if(actThreePreview&&new URLSearchParams(location.search).get('preview')==='act-three-map'){state.actThree=actThreeStoryDebug(new URLSearchParams(location.search).get('scene')||'departure');showActThreeMap();}
+  else if(actThreePreview){state.actThree||=new URLSearchParams(location.search).get('preview')==='act-three-after'?{phase:'after',cursor:0}:{phase:'film',shot:0};showActThree();}
   else if(actTwoOpeningPreview)showActTwoOpening();
   else if(firstStalkerPreview||firstFirePreview){const reply=state.events.find(e=>e.actScene==='reply');showEvent(reply.id,Number(new URLSearchParams(location.search).get('line')||0));}
   else if(firstRewindPreview)showActEnding();

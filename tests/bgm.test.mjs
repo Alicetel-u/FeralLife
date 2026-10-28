@@ -347,3 +347,17 @@ test('third-act film selects its track and suppresses it on pause, whiteout, or 
   vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);assert.equal(result.cue,'act3');assert.equal(result.quiet,suppressed);
  }
 });
+
+
+test('map and Mimi cues use their uploaded tracks and preserve their position between lines',async()=>{
+ const previous=globalThis.Audio,created=[];
+ globalThis.Audio=class{constructor(){Object.assign(this,fakeAudio());created.push(this);}};
+ try{
+  const bgm=createNormalBgm(...Array.from({length:12},fakeAudio));
+  const map=created.find(a=>a.src==='assets/audio/act3-map.mp3'),mimi=created.find(a=>a.src==='assets/audio/mimi-theme.mp3');
+  assert.ok(map&&mimi);await bgm.unlock();await bgm.setScene(false,'act3map');assert.equal(map.paused,false);assert.equal(mimi.paused,true);
+  map.currentTime=15;await bgm.setScene(false,'act3map');assert.equal(map.currentTime,15);
+  await bgm.setScene(false,'mimi');assert.equal(map.paused,true);assert.equal(mimi.paused,false);mimi.currentTime=8;
+  await bgm.setScene(false,'mimi');assert.equal(mimi.currentTime,8);await bgm.setEnabled(false);assert.equal(mimi.paused,true);
+ }finally{if(previous===undefined)delete globalThis.Audio;else globalThis.Audio=previous;}
+});

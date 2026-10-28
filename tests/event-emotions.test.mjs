@@ -6,9 +6,11 @@ import { EVENT_EXPRESSIONS, EVENT_ART } from '../src/character-art.js';
 import { eventEmotion, eventStageHTML, EVENT_EMOTION_NAMES } from '../src/event-stage.js';
 
 test('residents retain seven emotion mappings and approved distinct character art',async()=>{
-  assert.equal(Object.keys(EVENT_EXPRESSIONS).length,6);
+  const {rabbit,...originalResidents}=EVENT_EXPRESSIONS;
+  assert.equal(Object.keys(originalResidents).length,6);
+  assert.ok(rabbit,'Mimi has her dedicated portraits');
   const hashes=[];
-  for(const [character,states] of Object.entries(EVENT_EXPRESSIONS)) {
+  for(const [character,states] of Object.entries(originalResidents)) {
     assert.deepEqual(Object.keys(states),Object.keys(EVENT_EMOTION_NAMES));
     assert.equal(new Set(Object.values(states)).size,7);
     if(character==='hostess')assert.equal(states.neutral,EVENT_ART.hostess);
@@ -38,4 +40,13 @@ test('manager dialogue clears listener portraits without losing their later expr
   assert.doesNotMatch(html,/<figure|data-character=/);
   assert.match(eventStageHTML(event,[],1),/data-emotion="angry" data-character="cat"/);
   assert.match(eventStageHTML(event,[],2),/data-emotion="sad" data-character="sister"/);
+});
+
+
+test('Mimi uses dedicated transparent bust portraits in her approved introduction',async()=>{
+ assert.deepEqual(Object.keys(EVENT_EXPRESSIONS.rabbit),['neutral','happy','sad','surprised']);
+ const paths=new Set(Object.values(EVENT_EXPRESSIONS.rabbit));assert.equal(paths.size,3);
+ for(const src of paths){const data=await readFile(new URL('../'+src,import.meta.url));assert.equal(data[25],6);assert.ok(data.readUInt32BE(16)>=512&&data.readUInt32BE(20)>=512);}
+ const line={speaker:'rabbit',text:'……ありがとう！',emotion:'happy'},html=eventStageHTML({detail:line.text,lines:[line],cast:['rabbit']},[],0);
+ assert.match(html,/mimi-happy.png/);assert.match(html,/data-character="rabbit"/);
 });

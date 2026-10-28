@@ -11,6 +11,12 @@ export const EVENT_ART = {
 
 // Dedicated bust portraits: each emotion has its own silhouette and gesture.
 export const EVENT_EXPRESSIONS = {
+  rabbit: {
+    neutral:'assets/events/busts/mimi-neutral.png',
+    happy:'assets/events/busts/mimi-happy.png',
+    sad:'assets/events/busts/mimi-scared.png',
+    surprised:'assets/events/busts/mimi-scared.png'
+  },
   cat: {
     neutral: 'assets/events/busts/cat-neutral.png',
     happy: 'assets/events/busts/cat-happy.png',
