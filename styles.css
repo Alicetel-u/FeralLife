@@ -2465,8 +2465,6 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .act3-map .map-route-zombies.route-zombies-b{top:48%}
  .act3-map .map-route-zombies.route-zombies-c{top:34%}
  .act3-map .map-route-zombies.route-zombies-d{top:44%}
- .act3-map .map-route-barricade.barricade-a{top:59%}
- .act3-map .map-route-barricade.barricade-b{top:62%}
 }
 @media(prefers-reduced-motion:reduce){.act3-map .map-route-zombies img{animation:none}}
 
