@@ -10,6 +10,10 @@ export const ACT_THREE_MAP_PLACES=[
  {id:'store',name:'コンビニ',image:'assets/events/chapter3/map-store.png',action:'橋へ向かう',note:'脱出地点は、この先の橋'},
  {id:'bridge',name:'脱出地点・橋',image:'assets/events/chapter3/map-bridge.png',action:null,note:'橋に到着'}
 ];
+export const ACT_THREE_MAP_EXPLOSION='assets/events/chapter3/map-explosion-v1.png';
+export function actThreeMapVisualState(scene,line){
+ return {hideCharacters:!!line?.hidePortraits||scene==='crossing'&&line?.speaker==='narrator'&&!!line.horde||scene==='detour'&&!!line?.explosion, crossing:scene==='crossing'&&!!line?.horde, explosion:scene==='detour'?(line?.explosion?'blast':line?.aftermath?'smoke':'idle'):'none'};
+}
 export const ACT_THREE_MAP_ZOMBIE='assets/events/chapter3/map-zombie.png';
 export const ACT_THREE_MAP_CAST=[
  {id:'manager',name:'大家',image:'assets/characters/manager/matched-v3/idle.png'},
@@ -34,12 +38,12 @@ export function actThreeMapTravel(from,to,t){
  const start=actThreeMapCheckpoint(from),end=actThreeMapCheckpoint(to),p=Math.min(1,Math.max(0,t)),ease=p*p*(3-2*p);
  return {position:start+(end-start)*ease,bounce:Math.sin(p*Math.PI)*Math.sin(p*Math.PI*6),finished:p===1};
 }
-export function actThreeMapHTML(){return `<section class="act-screen act3-map" data-act3-map data-chapter="3" tabindex="-1" aria-label="第三幕 街マップ"><h2 id="modal-title" class="visually-hidden">街マップ</h2><div class="map-viewport"><div class="map-world">${ACT_THREE_MAP_PLACES.map((p,i)=>`<div class="map-landmark" data-map-landmark="${i}"><img src="${p.image}" alt="${p.name}" draggable="false">${p.id==='detour'?'<div class="map-crash-truck" aria-hidden="true"><span class="truck-cargo"></span><span class="truck-cab"></span><span class="truck-wheel wheel-a"></span><span class="truck-wheel wheel-b"></span><span class="truck-blast"></span><span class="truck-smoke"></span></div>':''}<span class="map-location-label">${p.name}</span></div>`).join('')}<div class="map-zombies" aria-label="交差点を横切るゾンビの群れ">${Array.from({length:6},(_,i)=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--z:${i}" draggable="false">`).join('')}</div><div class="map-bridge-route" aria-label="コンビニから橋までの長い道" role="img">
+export function actThreeMapHTML(){return `<section class="act-screen act3-map" data-act3-map data-chapter="3" tabindex="-1" aria-label="第三幕 街マップ"><h2 id="modal-title" class="visually-hidden">街マップ</h2><div class="map-viewport"><div class="map-world">${ACT_THREE_MAP_PLACES.map((p,i)=>`<div class="map-landmark" data-map-landmark="${i}"><img src="${p.image}" alt="${p.name}" draggable="false"><span class="map-location-label">${p.name}</span></div>`).join('')}<div class="map-zombies" aria-label="交差点を横切るゾンビの群れ">${Array.from({length:6},(_,i)=>`<div class="map-zombie-walker" style="--z:${i};--lane:${i%3}"><img src="${ACT_THREE_MAP_ZOMBIE}" alt="" draggable="false"></div>`).join('')}</div><div class="map-bridge-route" aria-label="コンビニから橋までの長い道" role="img">
   <div class="map-route-zombies route-zombies-a">${[0,1].map(i=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--walker:${i}" draggable="false">`).join('')}</div>
   <div class="map-route-zombies route-zombies-b">${[0,1,2].map(i=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--walker:${i}" draggable="false">`).join('')}</div>
   <div class="map-route-zombies route-zombies-c">${[0,1].map(i=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--walker:${i}" draggable="false">`).join('')}</div>
   <div class="map-route-zombies route-zombies-d">${[0,1,2].map(i=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--walker:${i}" draggable="false">`).join('')}</div>
-</div></div><div class="map-party" aria-label="大家、モク、ルナ">${ACT_THREE_MAP_CAST.map((c,i)=>`<div class="map-companion map-companion-${c.id}" style="--member:${i}"><img src="${c.image}" alt="${c.name}" draggable="false"></div>`).join('')}</div><div class="map-loading" role="status"><span>マップを読み込んでいます…</span><button type="button" data-map-retry hidden>再読み込み</button></div></div><img class="map-scene-backdrop" alt="荒らされたコンビニの店内" hidden><div class="map-dialogue act3-dialogue" data-renderer="event-stage" hidden></div>${chapterDialogueControlsHTML()}<div class="map-panel"><div class="map-status visually-hidden"><strong data-map-location>けもの荘</strong><p data-map-status role="status" aria-live="polite"></p></div><nav class="map-actions" aria-label="移動操作"><button type="button" data-map-next class="map-next" disabled>交差点へ <span aria-hidden="true">➜</span></button><button type="button" data-map-pause hidden>一時停止</button><button type="button" data-map-finish class="map-next" hidden>ここまでを読み終える</button><button type="button" data-map-reset hidden>もう一度移動する</button><button type="button" data-map-back>戻る</button></nav></div></section>`;}
+</div></div><div class="map-explosion-effect" aria-hidden="true"><div class="map-explosion-light"></div><img class="map-explosion-sticker" src="${ACT_THREE_MAP_EXPLOSION}" alt="" draggable="false"><div class="map-explosion-smoke"></div></div><div class="map-party" aria-label="大家、モク、ルナ">${ACT_THREE_MAP_CAST.map((c,i)=>`<div class="map-companion map-companion-${c.id}" style="--member:${i}"><img src="${c.image}" alt="${c.name}" draggable="false"></div>`).join('')}</div><div class="map-loading" role="status"><span>マップを読み込んでいます…</span><button type="button" data-map-retry hidden>再読み込み</button></div></div><img class="map-scene-backdrop" alt="荒らされたコンビニの店内" hidden><div class="map-dialogue act3-dialogue" data-renderer="event-stage" hidden></div>${chapterDialogueControlsHTML()}<div class="map-panel"><div class="map-status visually-hidden"><strong data-map-location>けもの荘</strong><p data-map-status role="status" aria-live="polite"></p></div><nav class="map-actions" aria-label="移動操作"><button type="button" data-map-next class="map-next" disabled>交差点へ <span aria-hidden="true">➜</span></button><button type="button" data-map-pause hidden>一時停止</button><button type="button" data-map-finish class="map-next" hidden>ここまでを読み終える</button><button type="button" data-map-reset hidden>もう一度移動する</button><button type="button" data-map-back>戻る</button></nav></div></section>`;}
 export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=>{},story=false,initialProgress=null,onProgress=()=>{},voice=null,bgm=null,silent=false,onScene=()=>{},onLoop=()=>{}}={}){
  const section=root.querySelector('[data-act3-map]');if(!section)return ()=>{};
  const viewport=section.querySelector('.map-viewport'),world=section.querySelector('.map-world'),party=section.querySelector('.map-party'),zombies=section.querySelector('.map-zombies'),bridgeRoute=section.querySelector('.map-bridge-route');
@@ -61,7 +65,7 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   bridgeRoute.style.left=`${anchor+actThreeMapWorldPosition(3)*gap}px`;
   bridgeRoute.style.width=`${ACT_THREE_BRIDGE_SPAN*gap}px`;
   bridgeRoute.style.transform=`translateY(${-climb}px)`;
-  zombies.style.left=`${anchor+gap+36}px`;zombies.hidden=position<.6||position>2.5||story&&progress.scene==='crossing'&&!ACT_THREE_MAP_SCENES.crossing.lines[progress.cursor].horde;
+  zombies.style.left=`${gap-140}px`;zombies.style.setProperty('--cross-distance',`${width+280}px`);zombies.hidden=position<.6||position>2.5||story&&progress.scene==='crossing'&&!ACT_THREE_MAP_SCENES.crossing.lines[progress.cursor].horde;
   party.style.left=`${anchor}px`;
   const upwardStep=moving&&step===1;
   const upwardProgress=upwardStep?Math.min(1,elapsed/actThreeMapTravelDuration(step,reduced)):0;
@@ -84,17 +88,18 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   section.dataset.dialogue=String(!!scene&&ready);
   section.querySelector('.map-panel').hidden=!!scene;
   backdrop.hidden=true;
-  if(!scene||!ready){section.dataset.collapse='false';section.dataset.explosion='none';if(shownLine){voice?.stop();shownLine=null;}section.dataset.scene='map';onScene('map');return;}
+  if(!scene||!ready){section.dataset.collapse='false';section.dataset.explosion='none';section.dataset.hordeCrossing='false';section.dataset.hidePortraits='false';if(shownLine){voice?.stop();shownLine=null;}section.dataset.scene='map';onScene('map');return;}
   const line=scene.lines[progress.cursor],inside=!!line.inside;
   section.dataset.collapse=progress.scene==='bridge'&&line.collapse?'true':'false';
   if(progress.scene==='bridge'&&line.collapse)bgm?.setSuppressed?.(true);
-  section.dataset.explosion=progress.scene==='detour'?(line.explosion?'blast':line.aftermath?'smoke':'idle'):'none';
+  const visual=actThreeMapVisualState(progress.scene,line);
+  section.dataset.explosion=visual.explosion;section.dataset.hordeCrossing=String(visual.crossing);section.dataset.hidePortraits=String(visual.hideCharacters);
   section.dataset.scene=inside?'mimi':progress.scene;
   if(inside){backdrop.src=ACT_THREE_STORE_INTERIOR;backdrop.hidden=false;}
   const revealed=progress.scene==='return'||progress.scene==='store'&&scene.lines.slice(0,progress.cursor+1).some(l=>l.revealMimi);
   const cast=scene.cast.filter(id=>id!=='rabbit'||revealed);
   const event={actScene:'act3-'+progress.scene,detail:scene.lines[0].text,lines:scene.lines,cast};
-  dialogue.innerHTML=eventStageHTML(event,[],progress.cursor,progress.page);
+  dialogue.innerHTML=eventStageHTML(event,[],progress.cursor,progress.page,{hideCharacters:visual.hideCharacters});
   if(line.speaker==='mystery')dialogue.querySelector('.speaker-name').textContent='？？？';
   if(line.speaker==='rabbit')dialogue.querySelector('.speaker-name').textContent='ミミ';
 
@@ -128,9 +133,9 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   raf=requestAnimationFrame(tick);
  }
  function load(){const token=++version;ready=false;loading.hidden=false;loading.querySelector('button').hidden=true;
-  const sources=[...(story?[ACT_THREE_STORE_INTERIOR,...Object.values(EVENT_EXPRESSIONS.rabbit)]:[]),...ACT_THREE_MAP_PLACES.map(p=>p.image),ACT_THREE_MAP_ZOMBIE,...ACT_THREE_MAP_CAST.map(c=>c.image)];
+  const sources=[...(story?[ACT_THREE_STORE_INTERIOR,...Object.values(EVENT_EXPRESSIONS.rabbit)]:[]),...ACT_THREE_MAP_PLACES.map(p=>p.image),ACT_THREE_MAP_ZOMBIE,ACT_THREE_MAP_EXPLOSION,...ACT_THREE_MAP_CAST.map(c=>c.image)];
   Promise.all(sources.map(src=>new Promise((resolve,reject)=>{const img=new Image();img.onload=async()=>{try{await img.decode?.();resolve();}catch(e){reject(e);}};img.onerror=reject;img.src=src;}))).then(()=>{if(dead||token!==version)return;ready=true;loading.hidden=true;publish();paint();}).catch(()=>{if(dead||token!==version)return;loading.querySelector('span').textContent='画像を読み込めませんでした';loading.querySelector('button').hidden=false;});
  }
- const controls=createChapterDialogueControls(section,{getState:()=>{const scene=progress?.scene?ACT_THREE_MAP_SCENES[progress.scene]:null;return {active:ready&&!!scene,canBack:progress?.cursor>0||progress?.page>0,last:!!scene&&progress.cursor===scene.lines.length-1,line:scene?.lines[progress.cursor],lines:scene?.lines};},onNext:()=>advanceDialogue(),onBack:()=>advanceDialogue(true),onSkip:()=>{if(!progress?.scene)return;progress.cursor=ACT_THREE_MAP_SCENES[progress.scene].lines.length-1;progress.page=messagePages(ACT_THREE_MAP_SCENES[progress.scene].lines[progress.cursor].text).length-1;publish();paint();},voice,bgm,silent});
+ const controls=createChapterDialogueControls(section,{getState:()=>{const scene=progress?.scene?ACT_THREE_MAP_SCENES[progress.scene]:null;return {active:ready&&!!scene,canBack:progress?.cursor>0||progress?.page>0,last:!!scene&&progress.cursor===scene.lines.length-1,line:scene?.lines[progress.cursor],lines:scene?.lines};},onNext:()=>advanceDialogue(),onBack:()=>advanceDialogue(true),onSkip:()=>{if(!progress?.scene)return;progress.cursor=ACT_THREE_MAP_SCENES[progress.scene].lines.length-1;progress.page=messagePages(ACT_THREE_MAP_SCENES[progress.scene].lines[progress.cursor].text).length-1;publish();paint();},voice,bgm,silent,onBlock:blocked=>{section.dataset.effectsPaused=String(blocked);}});
  section.addEventListener('click',click);section.addEventListener('keydown',key);document.addEventListener('visibilitychange',visibility);globalThis.addEventListener('resize',paint);section.focus({preventScroll:true});paint();load();raf=requestAnimationFrame(tick);return stop;
 }

@@ -1,12 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {existsSync} from 'node:fs';
-import {ACT_THREE_MAP_PLACES,ACT_THREE_MAP_CAST,ACT_THREE_MAP_ZOMBIE,actThreeMapCheckpoint,actThreeMapTravel,actThreeMapWorldPosition,actThreeMapVerticalPosition,actThreeMapTravelDirection,actThreeMapTravelDuration,ACT_THREE_BRIDGE_SPAN,actThreeMapHTML,startActThreeMap} from '../src/act-three-map.js';
+import {existsSync,readFileSync} from 'node:fs';
+import {eventStageHTML} from '../src/event-stage.js';
+import {ACT_THREE_MAP_SCENES} from '../src/act-three-story.js';
+import {ACT_THREE_MAP_PLACES,ACT_THREE_MAP_CAST,ACT_THREE_MAP_ZOMBIE,ACT_THREE_MAP_EXPLOSION,actThreeMapVisualState,actThreeMapCheckpoint,actThreeMapTravel,actThreeMapWorldPosition,actThreeMapVerticalPosition,actThreeMapTravelDirection,actThreeMapTravelDuration,ACT_THREE_BRIDGE_SPAN,actThreeMapHTML,startActThreeMap} from '../src/act-three-map.js';
 
 test('escape map requires crossing then bypass before store and bridge; all art is packaged',()=>{
  assert.deepEqual(ACT_THREE_MAP_PLACES.map(p=>p.id),['home','crossing','detour','store','bridge']);
  assert.equal(ACT_THREE_MAP_PLACES[1].action,'裏道から回避する');
- for(const src of [...ACT_THREE_MAP_PLACES.map(p=>p.image),...ACT_THREE_MAP_CAST.map(p=>p.image),ACT_THREE_MAP_ZOMBIE])assert.ok(existsSync(src),src);
+ for(const src of [...ACT_THREE_MAP_PLACES.map(p=>p.image),...ACT_THREE_MAP_CAST.map(p=>p.image),ACT_THREE_MAP_ZOMBIE,ACT_THREE_MAP_EXPLOSION])assert.ok(existsSync(src),src);
  assert.equal(actThreeMapCheckpoint(undefined),0);assert.equal(actThreeMapCheckpoint(-2),0);assert.equal(actThreeMapCheckpoint(99),4);
  assert.match(actThreeMapHTML(),/data-chapter="3"/);assert.ok(!actThreeMapHTML().includes('town-map-v1'));
  assert.equal(ACT_THREE_BRIDGE_SPAN,2.6);
@@ -71,4 +73,21 @@ test('map saves only arrival, pauses motion, resumes bypass and cleans up callba
   assert.ok(section.querySelector('.map-world').style.transform.endsWith('px,0)'));
   stop();assert.equal(frame,null);assert.equal(clicked,null);assert.equal(resize,null);stop();
  }finally{for(const k of keys){if(original[k]===undefined)delete globalThis[k];else globalThis[k]=original[k];}}
+});
+
+
+test('crossing and explosion action beats hide portraits without altering their message window',()=>{
+ for(const [id,index] of [['crossing',5],['detour',8]]){
+  const scene=ACT_THREE_MAP_SCENES[id],visual=actThreeMapVisualState(id,scene.lines[index]);
+  assert.equal(visual.hideCharacters,true);
+  const html=eventStageHTML({detail:scene.lines[0].text,lines:scene.lines,cast:scene.cast},[],index,0,{hideCharacters:visual.hideCharacters});
+  assert.doesNotMatch(html,/<figure|stage-character/);assert.match(html,/stage-bubble/);assert.ok(html.includes(scene.lines[index].text));
+ }
+ assert.equal(actThreeMapVisualState('crossing',ACT_THREE_MAP_SCENES.crossing.lines[4]).crossing,false);
+ assert.equal(actThreeMapVisualState('crossing',ACT_THREE_MAP_SCENES.crossing.lines[6]).hideCharacters,false);
+ assert.equal(actThreeMapVisualState('detour',ACT_THREE_MAP_SCENES.detour.lines[8]).explosion,'blast');
+ const html=actThreeMapHTML(),css=readFileSync(new URL('../styles.css',import.meta.url),'utf8');
+ assert.equal((html.match(/class="map-zombie-walker"/g)||[]).length,6);assert.doesNotMatch(html,/map-crash-truck|truck-cargo|truck-cab/);assert.doesNotMatch(css,/map-crash-truck|truck-cargo|act3-truck/);
+ assert.match(css,/@keyframes map-horde-traverse/);assert.match(css,/data-effects-paused=true/);
+ const png=readFileSync(ACT_THREE_MAP_EXPLOSION);assert.equal(png[25],6);assert.ok(png.length<3*1024*1024,'The effect stays a single small RGBA asset');
 });

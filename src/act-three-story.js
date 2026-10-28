@@ -22,7 +22,7 @@ export const ACT_THREE_MAP_SCENES={
   act3Line('manager','この先は通らない'),
   act3Line('hostess','でも、誰もいないよ？'),
   act3Line('manager','……3、2、1'),
-  act3Line('narrator','交差点にゾンビが現れ、群れが道路を横切っていく。',{horde:true}),
+  act3Line('narrator','交差点にゾンビが現れ、群れが道路を横切っていく。',{horde:true,hidePortraits:true}),
   act3Line('cat','うおっ！？ 出たニャ！！',{emotion:'surprised',horde:true}),
   act3Line('hostess','えっ……なんで分かったの！？',{emotion:'surprised',horde:true}),
   act3Line('manager','いいから静かに。今のうちに裏道へ回る',{horde:true}),
@@ -38,16 +38,16 @@ export const ACT_THREE_MAP_SCENES={
   act3Line('narrator','大家はトラックを見つめ、腕時計を確認する。'),
   act3Line('manager','……そろそろか'),
   act3Line('hostess','何が……？',{emotion:'sad'}),
-  act3Line('narrator','突然、配送トラックが大爆発した。熱風と轟音が狭い路地を駆け抜ける。',{explosion:true}),
+  act3Line('narrator','突然、配送トラックが大爆発した。熱風と轟音が狭い路地を駆け抜ける。',{explosion:true,hidePortraits:true}),
   act3Line('cat','うぎゃああっ！？！？',{emotion:'surprised',aftermath:true}),
   act3Line('hostess','きゃあっ！！',{emotion:'surprised',aftermath:true}),
-  act3Line('narrator','黒煙が立ち上る。大家の指示で立ち止まっていた三人に怪我はなかった。',{aftermath:true}),
+  act3Line('narrator','黒煙が立ち上る。大家の指示で立ち止まっていた三人に怪我はなかった。',{aftermath:true,hidePortraits:true}),
   act3Line('cat','し、死ぬかと思ったニャ！！',{emotion:'surprised',aftermath:true}),
   act3Line('hostess','大家さん……どうして分かったの？',{emotion:'surprised',aftermath:true}),
   act3Line('manager','……前は、ここで失敗したからな',{aftermath:true}),
   act3Line('cat','前って何の話ニャ！？',{emotion:'surprised',aftermath:true}),
   act3Line('manager','……何でもない。行くぞ',{aftermath:true}),
-  act3Line('narrator','燃えるトラックを避け、三人はコンビニへ向かった。',{aftermath:true})
+  act3Line('narrator','燃えるトラックを避け、三人はコンビニへ向かった。',{aftermath:true,hidePortraits:true})
  ]},
  store:{step:3,cast:['cat','hostess','rabbit'],lines:[
   act3Line('cat','はぁ……はぁ……生きた心地がしなかったニャ……',{emotion:'tired'}),
