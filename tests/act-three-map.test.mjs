@@ -55,13 +55,18 @@ test('map saves only arrival, pauses motion, resumes bypass and cleans up callba
   assert.equal(section.dataset.travelDirection,'up');
   assert.ok(section.querySelector('.map-world').style.transform.startsWith('translate3d(-380px,'));
   assert.ok(parseFloat(section.querySelector('.map-bypass-route').style.width)>200);
+  const partyAtPause=section.querySelector('.map-party').style.transform;
   click('data-map-pause');const before=section.querySelector('.map-world').style.transform;
-  for(let n=15;n<80;n++)tick(n*50);assert.equal(section.querySelector('.map-world').style.transform,before);assert.deepEqual(saved,[]);
+  for(let n=15;n<80;n++)tick(n*50);
+  assert.equal(section.querySelector('.map-world').style.transform,before);
+  assert.equal(section.querySelector('.map-party').style.transform,partyAtPause);
+  assert.deepEqual(saved,[]);
   click('data-map-pause');for(let n=80;n<145;n++)tick(n*50);assert.deepEqual(saved,[2]);assert.equal(section.dataset.location,'detour');
   const afterClimb=section.querySelector('.map-world').style.transform;
   click('data-map-next');click('data-map-next');for(let n=145;n<205;n++)tick(n*50);assert.deepEqual(saved,[2,3]);
   assert.equal(section.dataset.travelDirection,'idle');
   assert.notEqual(section.querySelector('.map-world').style.transform,afterClimb);
+  assert.equal(section.querySelector('.map-world').style.transform.split(',')[1],afterClimb.split(',')[1]); // Right turn: same elevation.
   assert.ok(section.querySelector('.map-world').style.transform.endsWith('px,0)'));
   stop();assert.equal(frame,null);assert.equal(clicked,null);assert.equal(resize,null);stop();
  }finally{for(const k of keys){if(original[k]===undefined)delete globalThis[k];else globalThis[k]=original[k];}}
