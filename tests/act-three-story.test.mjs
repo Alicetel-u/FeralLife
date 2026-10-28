@@ -101,7 +101,7 @@ test('post-rewind dialogue advances to existing home landmark and unlocks finish
   assert.equal(saved.at(-1).mapScene,null);
   assert.ok(saved.at(-1).mapSeen.includes('homecoming'));
   assert.equal(section.querySelector('[data-map-finish]').hidden,false);
-  assert.equal(section.dataset.returning,'false');
+  assert.equal(section.dataset.returning,'true','Mimi remains with the party after arrival');
   assert.equal(section.querySelector('[data-map-next]').hidden,true);
   assert.ok(actThreeStoryProgress(saved.at(-1)).seen.includes('homecoming'));
  }finally{stop?.();for(const key of names){if(previous[key]===undefined)delete globalThis[key];else globalThis[key]=previous[key];}}
