@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {ACT_THREE_MAP_SCENES,actThreeStoryProgress,actThreeStorySave,actThreeStoryDebug} from '../src/act-three-story.js';
 import {startActThreeMap} from '../src/act-three-map.js';
-import {ACT_THREE_RETURN_BGM_SRC,CLOCK_BGM_SRC} from '../src/bgm.js';
+import {UNEASY_BGM_SRC,CLOCK_BGM_SRC} from '../src/bgm.js';
 
 test('old map demos cannot skip newly authored story; saves resume the actual unanswered scene and page',()=>{
  assert.equal(actThreeStoryProgress({phase:'map',mapStep:4}).scene,'departure');
@@ -49,7 +49,9 @@ test('bridge rewind starts at surprised landlord, stays in his thoughts, then es
  assert.ok(!lines.some(l=>l.text.includes('二人とも、生きてる')));
  assert.equal(lines.at(-1).text,'四人はコンビニを出て、けもの荘へ向かう。');
  assert.equal(ACT_THREE_MAP_SCENES.homecoming.lines[0].text,'四人は、けもの荘へ戻った。');
- assert.equal(ACT_THREE_RETURN_BGM_SRC,CLOCK_BGM_SRC,'Post-rewind soundtrack reuses BAD END clock composition');
+ assert.equal(UNEASY_BGM_SRC,'assets/audio/uneasy-air.mp3','Regular post-BAD-END BGM is reused');
+ assert.equal(CLOCK_BGM_SRC,'assets/audio/clock-rewind.mp3','Clock sound effect remains reserved for the dial');
+ assert.notEqual(UNEASY_BGM_SRC,CLOCK_BGM_SRC,'Clock SE must never loop as the return-scene BGM');
  const olderReturn={...actThreeStoryDebug('return'),mapStoryRevision:3,mapCursor:2};
  const migrated=actThreeStoryProgress(olderReturn);
  assert.equal(migrated.scene,'return');assert.equal(migrated.cursor,0);
