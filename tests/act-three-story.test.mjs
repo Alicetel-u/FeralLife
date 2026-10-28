@@ -41,7 +41,7 @@ test('real map gates motion, reaches bridge collapse and initiates forced loop',
  const elements=new Map(),section={...el(),focus(){},querySelector(key){if(!elements.has(key))elements.set(key,el());return elements.get(key);},querySelectorAll(){return Array.from({length:5},el);},addEventListener(key,fn){if(key==='click')clicked=fn;},removeEventListener(){clicked=null;}};
  section.querySelector('.map-viewport').clientWidth=390;section.querySelector('.map-viewport').clientHeight=600;
  const click=name=>clicked?.({target:{closest:()=>({hasAttribute:key=>key===name})},preventDefault(){},stopPropagation(){}});
- let clock=0;const move=()=>{for(let n=0;n<65;n++){clock+=50;const fn=frame;frame=null;fn?.(clock);}};
+ let clock=0;const move=(frames=65)=>{for(let n=0;n<frames;n++){clock+=50;const fn=frame;frame=null;fn?.(clock);}};
  let stop;
  try{
   globalThis.Image=class{set src(v){queueMicrotask(()=>this.onload());}decode(){return Promise.resolve();}};
@@ -58,7 +58,9 @@ test('real map gates motion, reaches bridge collapse and initiates forced loop',
   for(let n=0;n<ACT_THREE_MAP_SCENES.detour.lines.length;n++)click('data-dialogue-next');assert.deepEqual(saved.at(-1).mapSeen,['departure','crossing','detour']);
   click('data-map-next');move();assert.equal(saved.at(-1).mapScene,'store');
   for(let n=0;n<100;n++)click('data-dialogue-next');assert.equal(saved.at(-1).mimiKeyGiven,true);assert.deepEqual(saved.at(-1).mapSeen,['departure','crossing','detour','store']);
-  click('data-map-next');move();assert.equal(saved.at(-1).mapStep,4);assert.equal(saved.at(-1).mapScene,'bridge');
+  click('data-map-next');move(60);
+  assert.equal(saved.at(-1).mapStep,3);assert.equal(section.dataset.longTravel,'true');
+  move(120);assert.equal(saved.at(-1).mapStep,4);assert.equal(saved.at(-1).mapScene,'bridge');
   for(let n=0;n<20&&!looped;n++)click('data-dialogue-next');assert.equal(looped,1);
  }finally{stop?.();for(const key of names){if(previous[key]===undefined)delete globalThis[key];else globalThis[key]=previous[key];}}
 });
