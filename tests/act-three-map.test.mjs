@@ -3,12 +3,12 @@ import assert from 'node:assert/strict';
 import {existsSync,readFileSync} from 'node:fs';
 import {eventStageHTML} from '../src/event-stage.js';
 import {ACT_THREE_MAP_SCENES} from '../src/act-three-story.js';
-import {ACT_THREE_MAP_PLACES,ACT_THREE_MAP_CAST,ACT_THREE_MAP_ZOMBIE,ACT_THREE_MAP_EXPLOSION,actThreeMapVisualState,actThreeMapCheckpoint,actThreeMapTravel,actThreeMapWorldPosition,actThreeMapVerticalPosition,actThreeMapTravelDirection,actThreeMapTravelDuration,ACT_THREE_BRIDGE_SPAN,actThreeMapHTML,startActThreeMap} from '../src/act-three-map.js';
+import {ACT_THREE_MAP_PLACES,ACT_THREE_MAP_CAST,ACT_THREE_MIMI_MINI,ACT_THREE_MAP_ZOMBIE,ACT_THREE_MAP_EXPLOSION,actThreeMapVisualState,actThreeMapCheckpoint,actThreeMapTravel,actThreeMapWorldPosition,actThreeMapVerticalPosition,actThreeMapTravelDirection,actThreeMapTravelDuration,ACT_THREE_BRIDGE_SPAN,actThreeMapHTML,startActThreeMap} from '../src/act-three-map.js';
 
 test('escape map requires crossing then bypass before store and bridge; all art is packaged',()=>{
  assert.deepEqual(ACT_THREE_MAP_PLACES.map(p=>p.id),['home','crossing','detour','store','bridge']);
  assert.equal(ACT_THREE_MAP_PLACES[1].action,'裏道から回避する');
- for(const src of [...ACT_THREE_MAP_PLACES.map(p=>p.image),...ACT_THREE_MAP_CAST.map(p=>p.image),ACT_THREE_MAP_ZOMBIE,ACT_THREE_MAP_EXPLOSION])assert.ok(existsSync(src),src);
+ for(const src of [...ACT_THREE_MAP_PLACES.map(p=>p.image),...ACT_THREE_MAP_CAST.map(p=>p.image),ACT_THREE_MAP_ZOMBIE,ACT_THREE_MAP_EXPLOSION,ACT_THREE_MIMI_MINI])assert.ok(existsSync(src),src);
  assert.equal(actThreeMapCheckpoint(undefined),0);assert.equal(actThreeMapCheckpoint(-2),0);assert.equal(actThreeMapCheckpoint(99),4);
  assert.match(actThreeMapHTML(),/data-chapter="3"/);assert.ok(!actThreeMapHTML().includes('town-map-v1'));
  assert.equal(ACT_THREE_BRIDGE_SPAN,2.6);
@@ -26,16 +26,31 @@ test('escape map requires crossing then bypass before store and bridge; all art 
  assert.equal(actThreeMapVerticalPosition(3.5),1);
  assert.equal(actThreeMapTravelDirection(1),'up');
  assert.equal(actThreeMapTravelDirection(2),'right');
+ assert.equal(actThreeMapTravelDirection(3,true),'left');
+ assert.equal(actThreeMapTravelDirection(2,true),'down');
+ assert.equal(actThreeMapTravelDirection(1,true),'left');
  assert.equal(actThreeMapTravelDuration(1),3);
  assert.equal(actThreeMapTravelDuration(2),2.4);
  assert.equal(actThreeMapTravelDuration(3),8.4);
  assert.ok(actThreeMapTravelDuration(3,true)>actThreeMapTravelDuration(2,true));
  const route=actThreeMapHTML();
+ assert.match(route,/map-companion-rabbit/);
+ assert.ok(route.includes(ACT_THREE_MIMI_MINI));
+ assert.ok(!route.includes('assets/events/busts/mimi-neutral.png'));
+ const mini=readFileSync(ACT_THREE_MIMI_MINI);
+ assert.equal(mini.subarray(1,4).toString(),'PNG');
+ assert.equal(mini.readUInt32BE(16),640);assert.equal(mini.readUInt32BE(20),384);
  for(const id of ['route-zombies-a','route-zombies-b','route-zombies-c','route-zombies-d',])assert.match(route,new RegExp(id));
  assert.equal(route.split('assets/events/chapter3/map-zombie.png').length-1,16);
  for(const id of ['map-bypass-route','map-bypass-road','map-bypass-wall','map-detour-exit','map-route-road','map-route-barricade','map-route-debris'])assert.ok(!route.includes(id),id);
  let previous=1;for(let n=0;n<=100;n++){const f=actThreeMapTravel(1,2,n/100);assert.ok(f.position>=previous&&f.position<=2);previous=f.position;}
  assert.equal(actThreeMapTravel(1,2,1).finished,true);assert.equal(actThreeMapTravel(1,2,-1).position,1);
+ assert.equal(actThreeMapTravel(3,2,0).position,3);assert.equal(actThreeMapTravel(3,2,1).position,2);
+ assert.ok(actThreeMapTravel(2,1,.5).position<2);
+ const css=readFileSync(new URL('../styles.css',import.meta.url),'utf8');
+ assert.match(css,/data-returning="true"[^\n]*\.map-companion:not\(\.map-companion-rabbit\)>img\{transform:scaleX\(-1\)\}/);
+ assert.match(css,/data-returning="true"[^\n]*\.map-companion-rabbit/);
+ assert.match(css,/\.map-rabbit-frame img\{[\s\S]*?width:400%;height:200%/);
 });
 
 test('map saves only arrival, pauses motion, resumes bypass and cleans up callbacks',async()=>{
