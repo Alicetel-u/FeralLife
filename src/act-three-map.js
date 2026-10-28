@@ -39,10 +39,10 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   zombies.style.left=`${anchor+gap+36}px`;zombies.hidden=position<.6||position>2.5||story&&progress.scene==='crossing'&&!ACT_THREE_MAP_SCENES.crossing.lines[progress.cursor].horde;
   party.style.left=`${anchor}px`;party.style.setProperty('--bounce',String(moving&&!reduced?Math.sin(elapsed*9)*4:0));party.style.setProperty('--lean',moving&&!paused&&!reduced?'5deg':'0deg');
   section.dataset.moving=String(moving&&!paused);section.dataset.paused=String(paused||document.hidden);section.dataset.location=ACT_THREE_MAP_PLACES[step].id;
-  next.hidden=(story?step>=4:step===4)||moving||!!progress?.scene;next.disabled=!ready;next.innerHTML=`${ACT_THREE_MAP_PLACES[step].action||''} <span aria-hidden="true">➜</span>`;
+  next.hidden=(story?(step>=4||progress?.seen.includes('return')):step===4)||moving||!!progress?.scene;next.disabled=!ready;next.innerHTML=`${ACT_THREE_MAP_PLACES[step].action||''} <span aria-hidden="true">➜</span>`;
   pause.hidden=!moving;pause.textContent=paused?'移動を再開':'一時停止';pause.setAttribute('aria-pressed',String(paused));reset.hidden=story?true:step!==4||moving;
   section.querySelector('[data-map-location]').textContent=ACT_THREE_MAP_PLACES[step].name;
-  section.querySelector('[data-map-finish]').hidden=true;
+  section.querySelector('[data-map-finish]').hidden=!(story&&progress?.seen.includes('return')&&!progress.scene);
   if(story)paintDialogue();else controls.refresh();
   status.textContent=moving?(paused?'移動を一時停止しています':`${ACT_THREE_MAP_PLACES[step+1].name}へ移動中`):ACT_THREE_MAP_PLACES[step].note;
  };
@@ -59,7 +59,7 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   section.dataset.explosion=progress.scene==='detour'?(line.explosion?'blast':line.aftermath?'smoke':'idle'):'none';
   section.dataset.scene=inside?'mimi':progress.scene;
   if(inside){backdrop.src=ACT_THREE_STORE_INTERIOR;backdrop.hidden=false;}
-  const revealed=progress.scene==='store'&&scene.lines.slice(0,progress.cursor+1).some(l=>l.revealMimi);
+  const revealed=progress.scene==='return'||progress.scene==='store'&&scene.lines.slice(0,progress.cursor+1).some(l=>l.revealMimi);
   const cast=scene.cast.filter(id=>id!=='rabbit'||revealed);
   const event={actScene:'act3-'+progress.scene,detail:scene.lines[0].text,lines:scene.lines,cast};
   dialogue.innerHTML=eventStageHTML(event,[],progress.cursor,progress.page);
@@ -87,7 +87,7 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   if(b.hasAttribute('data-map-pause')&&moving){paused=!paused;last=null;paint();return;}
   if(!ready||moving||progress?.scene)return;
   if(b.hasAttribute('data-map-reset')){step=0;position=0;elapsed=0;onArrival(step);paint();return;}
-  if(b.hasAttribute('data-map-next')&&step<4){moving=true;paused=false;elapsed=0;last=null;paint();}
+  if(b.hasAttribute('data-map-next')&&step<4&&!progress?.seen.includes('return')){moving=true;paused=false;elapsed=0;last=null;paint();}
  }
  function key(e){if(e.repeat||e.target.closest('button')||!progress?.scene||controls.blocked)return;if(['Enter','Space','ArrowRight'].includes(e.code)){e.preventDefault();e.stopPropagation();advanceDialogue();}else if(e.code==='ArrowLeft'){e.preventDefault();e.stopPropagation();advanceDialogue(true);}}
  function visibility(){last=null;voice?.setSuspended(document.hidden);paint();}
