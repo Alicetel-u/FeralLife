@@ -23,7 +23,7 @@ export function actThreeMapTravel(from,to,t){
  return {position:start+(end-start)*ease,bounce:Math.sin(p*Math.PI)*Math.sin(p*Math.PI*6),finished:p===1};
 }
 export function actThreeMapHTML(){return `<section class="act-screen act3-map" data-act3-map data-chapter="3" tabindex="-1" aria-label="第三幕 街マップ"><h2 id="modal-title" class="visually-hidden">街マップ</h2><div class="map-viewport"><div class="map-world">${ACT_THREE_MAP_PLACES.map((p,i)=>`<div class="map-landmark" data-map-landmark="${i}"><img src="${p.image}" alt="${p.name}" draggable="false">${p.id==='detour'?'<div class="map-crash-truck" aria-hidden="true"><span class="truck-cargo"></span><span class="truck-cab"></span><span class="truck-wheel wheel-a"></span><span class="truck-wheel wheel-b"></span><span class="truck-blast"></span><span class="truck-smoke"></span></div>':''}<span class="map-location-label">${p.name}</span></div>`).join('')}<div class="map-zombies" aria-label="交差点を横切るゾンビの群れ">${Array.from({length:6},(_,i)=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--z:${i}" draggable="false">`).join('')}</div></div><div class="map-party" aria-label="大家、モク、ルナ">${ACT_THREE_MAP_CAST.map((c,i)=>`<div class="map-companion map-companion-${c.id}" style="--member:${i}"><img src="${c.image}" alt="${c.name}" draggable="false"></div>`).join('')}</div><div class="map-loading" role="status"><span>マップを読み込んでいます…</span><button type="button" data-map-retry hidden>再読み込み</button></div></div><img class="map-scene-backdrop" alt="荒らされたコンビニの店内" hidden><div class="map-dialogue act3-dialogue" data-renderer="event-stage" hidden></div>${chapterDialogueControlsHTML()}<div class="map-panel"><div class="map-status visually-hidden"><strong data-map-location>けもの荘</strong><p data-map-status role="status" aria-live="polite"></p></div><nav class="map-actions" aria-label="移動操作"><button type="button" data-map-next class="map-next" disabled>交差点へ <span aria-hidden="true">➜</span></button><button type="button" data-map-pause hidden>一時停止</button><button type="button" data-map-finish class="map-next" hidden>ここまでを読み終える</button><button type="button" data-map-reset hidden>もう一度移動する</button><button type="button" data-map-back>戻る</button></nav></div></section>`;}
-export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=>{},story=false,initialProgress=null,onProgress=()=>{},voice=null,bgm=null,silent=false,onScene=()=>{}}={}){
+export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=>{},story=false,initialProgress=null,onProgress=()=>{},voice=null,bgm=null,silent=false,onScene=()=>{},onLoop=()=>{}}={}){
  const section=root.querySelector('[data-act3-map]');if(!section)return ()=>{};
  const viewport=section.querySelector('.map-viewport'),world=section.querySelector('.map-world'),party=section.querySelector('.map-party'),zombies=section.querySelector('.map-zombies');
  const next=section.querySelector('[data-map-next]'),pause=section.querySelector('[data-map-pause]'),reset=section.querySelector('[data-map-reset]'),status=section.querySelector('[data-map-status]'),loading=section.querySelector('.map-loading');
@@ -39,10 +39,10 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   zombies.style.left=`${anchor+gap+36}px`;zombies.hidden=position<.6||position>2.5||story&&progress.scene==='crossing'&&!ACT_THREE_MAP_SCENES.crossing.lines[progress.cursor].horde;
   party.style.left=`${anchor}px`;party.style.setProperty('--bounce',String(moving&&!reduced?Math.sin(elapsed*9)*4:0));party.style.setProperty('--lean',moving&&!paused&&!reduced?'5deg':'0deg');
   section.dataset.moving=String(moving&&!paused);section.dataset.paused=String(paused||document.hidden);section.dataset.location=ACT_THREE_MAP_PLACES[step].id;
-  next.hidden=(story?step>=3:step===4)||moving||!!progress?.scene;next.disabled=!ready;next.innerHTML=`${ACT_THREE_MAP_PLACES[step].action||''} <span aria-hidden="true">➜</span>`;
+  next.hidden=(story?step>=4:step===4)||moving||!!progress?.scene;next.disabled=!ready;next.innerHTML=`${ACT_THREE_MAP_PLACES[step].action||''} <span aria-hidden="true">➜</span>`;
   pause.hidden=!moving;pause.textContent=paused?'移動を再開':'一時停止';pause.setAttribute('aria-pressed',String(paused));reset.hidden=story?true:step!==4||moving;
   section.querySelector('[data-map-location]').textContent=ACT_THREE_MAP_PLACES[step].name;
-  section.querySelector('[data-map-finish]').hidden=!(story&&step===3&&!progress.scene);
+  section.querySelector('[data-map-finish]').hidden=true;
   if(story)paintDialogue();else controls.refresh();
   status.textContent=moving?(paused?'移動を一時停止しています':`${ACT_THREE_MAP_PLACES[step+1].name}へ移動中`):ACT_THREE_MAP_PLACES[step].note;
  };
@@ -52,8 +52,10 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   section.dataset.dialogue=String(!!scene&&ready);
   section.querySelector('.map-panel').hidden=!!scene;
   backdrop.hidden=true;
-  if(!scene||!ready){section.dataset.explosion='none';if(shownLine){voice?.stop();shownLine=null;}section.dataset.scene='map';onScene('map');return;}
+  if(!scene||!ready){section.dataset.collapse='false';section.dataset.explosion='none';if(shownLine){voice?.stop();shownLine=null;}section.dataset.scene='map';onScene('map');return;}
   const line=scene.lines[progress.cursor],inside=!!line.inside;
+  section.dataset.collapse=progress.scene==='bridge'&&line.collapse?'true':'false';
+  if(progress.scene==='bridge'&&line.collapse)bgm?.setSuppressed?.(true);
   section.dataset.explosion=progress.scene==='detour'?(line.explosion?'blast':line.aftermath?'smoke':'idle'):'none';
   section.dataset.scene=inside?'mimi':progress.scene;
   if(inside){backdrop.src=ACT_THREE_STORE_INTERIOR;backdrop.hidden=false;}
@@ -73,7 +75,7 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   if(back){if(progress.page>0)progress.page--;else if(progress.cursor>0){progress.cursor--;progress.page=messagePages(scene.lines[progress.cursor].text).length-1;}}
   else if(progress.page<pages.length-1)progress.page++;
   else if(progress.cursor<scene.lines.length-1){progress.cursor++;progress.page=0;}
-  else {if(!progress.seen.includes(progress.scene))progress.seen.push(progress.scene);progress.scene=null;progress.cursor=0;progress.page=0;}
+  else {if(progress.scene==='bridge'){voice?.stop();onLoop();return;}if(!progress.seen.includes(progress.scene))progress.seen.push(progress.scene);progress.scene=null;progress.cursor=0;progress.page=0;}
   if(progress.scene==='store'&&scene.lines[progress.cursor].keyGiven)progress.keyGiven=true;
   publish();paint();
  }
@@ -85,12 +87,12 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   if(b.hasAttribute('data-map-pause')&&moving){paused=!paused;last=null;paint();return;}
   if(!ready||moving||progress?.scene)return;
   if(b.hasAttribute('data-map-reset')){step=0;position=0;elapsed=0;onArrival(step);paint();return;}
-  if(b.hasAttribute('data-map-next')&&step<(story?3:4)){moving=true;paused=false;elapsed=0;last=null;paint();}
+  if(b.hasAttribute('data-map-next')&&step<4){moving=true;paused=false;elapsed=0;last=null;paint();}
  }
  function key(e){if(e.repeat||e.target.closest('button')||!progress?.scene||controls.blocked)return;if(['Enter','Space','ArrowRight'].includes(e.code)){e.preventDefault();e.stopPropagation();advanceDialogue();}else if(e.code==='ArrowLeft'){e.preventDefault();e.stopPropagation();advanceDialogue(true);}}
  function visibility(){last=null;voice?.setSuspended(document.hidden);paint();}
  function tick(now){if(dead)return;const dt=last===null?0:Math.min(.05,(now-last)/1000);last=now;
-  if(ready&&moving&&!paused&&!document.hidden){elapsed+=dt;const f=actThreeMapTravel(step,step+1,elapsed/(reduced?.45:2.4));position=f.position;if(f.finished){step++;moving=false;elapsed=0;if(story){progress.step=step;progress.scene=step===1?'crossing':step===2?'detour':step===3?'store':null;progress.cursor=0;progress.page=0;publish();}onArrival(step);}paint();}
+  if(ready&&moving&&!paused&&!document.hidden){elapsed+=dt;const f=actThreeMapTravel(step,step+1,elapsed/(reduced?.45:2.4));position=f.position;if(f.finished){step++;moving=false;elapsed=0;if(story){progress.step=step;progress.scene=step===1?'crossing':step===2?'detour':step===3?'store':step===4?'bridge':null;progress.cursor=0;progress.page=0;publish();}onArrival(step);}paint();}
   raf=requestAnimationFrame(tick);
  }
  function load(){const token=++version;ready=false;loading.hidden=false;loading.querySelector('button').hidden=true;
