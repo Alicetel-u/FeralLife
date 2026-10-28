@@ -160,6 +160,7 @@ export function actThreeStoryProgress(saved){
  const step=Math.min(max,Math.max(0,Number.isInteger(saved.mapStep)?saved.mapStep:0));
  const required=step===0?'departure':step===1?'crossing':step===2?'detour':step===3?'store':step===4?'bridge':null;
  if(seen.includes('store')&&saved.mapSeen?.includes('return'))seen.push('return');
+ if(seen.includes('return')&&saved.mapSeen?.includes('homecoming'))seen.push('homecoming');
  const scene=saved.mapScene==='return'&&step===3?'return':saved.mapScene==='homecoming'&&step===0&&seen.includes('return')?'homecoming':required&&!seen.includes(required)?required:null;
  const cursor=scene&&scene===saved.mapScene?Math.min(ACT_THREE_MAP_SCENES[scene].lines.length-1,Math.max(0,saved.mapCursor|0)):0;
  const page=scene?Math.min(messagePages(ACT_THREE_MAP_SCENES[scene].lines[cursor].text).length-1,Math.max(0,saved.mapPage|0)):0;
