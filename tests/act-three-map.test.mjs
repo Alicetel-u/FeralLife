@@ -18,7 +18,7 @@ test('escape map requires crossing then bypass before store and bridge; all art 
  assert.ok(actThreeMapTravelDuration(3,true)>actThreeMapTravelDuration(2,true));
  const route=actThreeMapHTML();
  for(const id of ['route-zombies-a','route-zombies-b','route-zombies-c','route-zombies-d','barricade-a','barricade-b'])assert.match(route,new RegExp(id));
- assert.equal((route.match(/assets\\/events\\/chapter3\\/map-zombie\\.png/g)||[]).length,16);
+ assert.equal(route.split('assets/events/chapter3/map-zombie.png').length-1,16);
  let previous=1;for(let n=0;n<=100;n++){const f=actThreeMapTravel(1,2,n/100);assert.ok(f.position>=previous&&f.position<=2);previous=f.position;}
  assert.equal(actThreeMapTravel(1,2,1).finished,true);assert.equal(actThreeMapTravel(1,2,-1).position,1);
 });
