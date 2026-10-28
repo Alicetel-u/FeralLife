@@ -2501,3 +2501,50 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 
 /* Landmarks stay in front of the new roadside scenery, with zombies and the party layered above. */
 .act3-map .map-landmark{z-index:3}
+
+
+/* Act III vertical bypass: crossroad zombies remain on the lower/main street.
+   From the crossing the camera climbs this alley, then follows the perpendicular exit east. */
+.act3-map .map-bypass-route {
+ position:absolute;z-index:2;transform:translateX(-50%);pointer-events:none;
+}
+.act3-map .map-bypass-road {
+ position:absolute;top:0;bottom:0;left:26%;right:26%;
+ background:linear-gradient(90deg,#1c273250 0 8%,#b9b7a441 9% 91%,#1c273250 92% 100%);
+ border-left:4px solid #fff2d5bf;border-right:4px solid #fff2d5bf;
+ box-shadow:0 0 0 6px #1f242533,8px 4px 0 #1919214b;
+}
+.act3-map .map-bypass-road::after {
+ content:"";position:absolute;top:0;bottom:0;left:49%;
+ width:5px;background:repeating-linear-gradient(180deg,#fff5dc9a 0 26px,transparent 26px 72px);
+}
+.act3-map .map-bypass-wall {
+ position:absolute;top:9%;bottom:11%;width:12%;border:4px solid #191921;
+ background:repeating-linear-gradient(180deg,#b87f64 0 30px,#e1b38e 30px 35px);
+ box-shadow:5px 6px 0 #19192144;opacity:.88;
+}
+.act3-map .map-bypass-wall.left{left:9%;transform:rotate(-1deg)}
+.act3-map .map-bypass-wall.right{right:9%;transform:rotate(2deg)}
+.act3-map .map-bypass-turn {
+ position:absolute;left:50%;top:-2%;width:50%;height:22%;
+ border-top:4px solid #fff5d2b5;border-bottom:4px solid #fff5d2b5;
+ background:linear-gradient(0deg,#1b29364b,#c1b9a34d);
+ box-shadow:5px 5px 0 #1919213d;
+}
+.act3-map .map-bypass-chevron{
+ position:absolute;left:50%;font-size:clamp(20px,3vw,38px);font-weight:900;
+ color:#fff9e1;filter:drop-shadow(2px 3px 0 #1919219e);transform:translateX(-50%);opacity:.7;
+}
+.act3-map .map-bypass-chevron.one{top:37%}
+.act3-map .map-bypass-chevron.two{top:66%}
+.act3-map .map-detour-exit{
+ position:absolute;height:19%;z-index:2;pointer-events:none;
+ background:linear-gradient(180deg,#1c293650,#bbb7a349 13% 86%,#1c293650);
+ border-top:4px solid #fff2d5ad;border-bottom:4px solid #fff2d5ad;
+}
+.act3-map .map-detour-exit::after{
+ content:"";position:absolute;top:49%;left:0;right:0;height:5px;
+ background:repeating-linear-gradient(90deg,#fff5dc9a 0 28px,transparent 28px 85px);
+}
+/* The right-turn street and the vertical bypass are background elements, not HUD decorations. */
+@media(prefers-reduced-motion:reduce){.act3-map .map-bypass-chevron{animation:none}}
