@@ -104,9 +104,36 @@ export const ACT_THREE_MAP_SCENES={
   act3Line('narrator','ミミは鍵を両手で握りしめる。大家たちはコンビニを出た。',{inside:true})
  ]},
  return:{step:3,cast:['cat','hostess','rabbit'],lines:[
-  act3Line('narrator','コンビニの店内。大家が目を開く。目の前にはモクとルナ、そして足を怪我したミミがいる。',{inside:true}),
-  act3Line('manager','…………',{inside:true}),
-  act3Line('manager','……は？',{inside:true})
+  // The landlord's awareness carries directly from the bridge to the store.
+  // Nobody speaks to him until he finishes understanding the unexpected rewind.
+  act3Line('manager','……は？',{inside:true}),
+  act3Line('narrator','大家は呆然と周囲を見渡す。',{inside:true,hidePortraits:true}),
+  act3Line('manager','……コンビニ？',{inside:true,innerVoice:true}),
+  act3Line('manager','……待て。何が起きた？',{inside:true,innerVoice:true}),
+  act3Line('narrator','目の前にはモクとルナ、そしてミミがいる。',{inside:true,hidePortraits:true}),
+  act3Line('manager','確かに、あの橋で二人が倒れた……',{inside:true,innerVoice:true}),
+  act3Line('manager','だが、俺は死んでない',{inside:true,innerVoice:true}),
+  act3Line('manager','なのに……時間が戻った？',{inside:true,innerVoice:true}),
+  act3Line('narrator','大家は腕時計を確認する。',{inside:true,hidePortraits:true}),
+  act3Line('manager','……戻り先まで変わってる',{inside:true,innerVoice:true}),
+  act3Line('manager','今度はコンビニが起点なのか……？',{inside:true,innerVoice:true}),
+  act3Line('manager','……何なんだ、これは',{inside:true,innerVoice:true}),
+  act3Line('narrator','大家は足を怪我しているミミに目を向ける。',{inside:true,hidePortraits:true}),
+  act3Line('manager','……予定変更だ。アパートに戻るぞ',{inside:true}),
+  act3Line('cat','ニャ！？ 脱出地点はどうするニャ？',{inside:true,emotion:'surprised'}),
+  act3Line('manager','ミミを一人で帰らせるわけにはいかないだろ',{inside:true}),
+  act3Line('rabbit','えっ……？',{inside:true,emotion:'surprised'}),
+  act3Line('manager','その足じゃ、ゾンビに襲われても逃げられない',{inside:true}),
+  act3Line('hostess','確かに……ミミちゃんを一人にするのは危ないよね',{inside:true,emotion:'sad'}),
+  act3Line('rabbit','でも、みんなは街から逃げるんじゃ……',{inside:true,emotion:'sad'}),
+  act3Line('manager','気にするな。俺たちも一度戻った方がいい',{inside:true}),
+  act3Line('cat','……大家がそう言うなら仕方ないニャ',{inside:true}),
+  act3Line('manager','よし、行くぞ',{inside:true}),
+  act3Line('narrator','ルナがミミに肩を貸す。',{inside:true,hidePortraits:true}),
+  act3Line('narrator','四人はコンビニを出て、けもの荘へ向かう。',{inside:true,hidePortraits:true})
+ ]},
+ homecoming:{step:0,cast:['cat','hostess','rabbit'],lines:[
+  act3Line('narrator','四人は、けもの荘へ戻った。',{hidePortraits:true})
  ]},
  bridge:{step:4,cast:['cat','hostess'],lines:[
   act3Line('cat','街を出たら、まず何するニャ？'),
@@ -132,13 +159,14 @@ export function actThreeStoryProgress(saved){
  const max=!seen.includes('departure')?0:!seen.includes('crossing')?1:!seen.includes('detour')?2:!seen.includes('store')?3:4;
  const step=Math.min(max,Math.max(0,Number.isInteger(saved.mapStep)?saved.mapStep:0));
  const required=step===0?'departure':step===1?'crossing':step===2?'detour':step===3?'store':step===4?'bridge':null;
- const scene=saved.mapScene==='return'&&step===3?'return':required&&!seen.includes(required)?required:null;
+ if(seen.includes('store')&&saved.mapSeen?.includes('return'))seen.push('return');
+ const scene=saved.mapScene==='return'&&step===3?'return':saved.mapScene==='homecoming'&&step===0&&seen.includes('return')?'homecoming':required&&!seen.includes(required)?required:null;
  const cursor=scene&&scene===saved.mapScene?Math.min(ACT_THREE_MAP_SCENES[scene].lines.length-1,Math.max(0,saved.mapCursor|0)):0;
  const page=scene?Math.min(messagePages(ACT_THREE_MAP_SCENES[scene].lines[cursor].text).length-1,Math.max(0,saved.mapPage|0)):0;
- return {step,scene,cursor,page,seen,keyGiven:scene==='return'||seen.includes('store')||scene==='store'&&ACT_THREE_MAP_SCENES.store.lines.slice(0,cursor+1).some(l=>l.keyGiven)};
+ return {step,scene,cursor,page,seen,keyGiven:scene==='return'||scene==='homecoming'||seen.includes('store')||scene==='store'&&ACT_THREE_MAP_SCENES.store.lines.slice(0,cursor+1).some(l=>l.keyGiven)};
 }
 export function actThreeStorySave(progress){return {phase:'map',afterSeen:true,mapStoryRevision:3,mapStep:progress.step,mapScene:progress.scene,mapCursor:progress.cursor,mapPage:progress.page,mapSeen:[...progress.seen],mimiKeyGiven:!!progress.keyGiven};}
 export function actThreeStoryDebug(id){
- const choices={departure:{step:0,scene:'departure',seen:[]},crossing:{step:1,scene:'crossing',seen:['departure']},detour:{step:2,scene:'detour',seen:['departure','crossing']},store:{step:3,scene:'store',seen:['departure','crossing','detour']},return:{step:3,scene:'return',seen:['departure','crossing','detour','store'],keyGiven:true},farewell:{step:3,scene:'store',cursor:42,seen:['departure','crossing','detour'],keyGiven:true},collapse:{step:4,scene:'bridge',cursor:6,seen:['departure','crossing','detour','store'],keyGiven:true},bridge:{step:4,scene:'bridge',seen:['departure','crossing','detour','store'],keyGiven:true}};
+ const choices={departure:{step:0,scene:'departure',seen:[]},crossing:{step:1,scene:'crossing',seen:['departure']},detour:{step:2,scene:'detour',seen:['departure','crossing']},store:{step:3,scene:'store',seen:['departure','crossing','detour']},return:{step:3,scene:'return',seen:['departure','crossing','detour','store'],keyGiven:true},homecoming:{step:0,scene:'homecoming',seen:['departure','crossing','detour','store','return'],keyGiven:true},farewell:{step:3,scene:'store',cursor:42,seen:['departure','crossing','detour'],keyGiven:true},collapse:{step:4,scene:'bridge',cursor:6,seen:['departure','crossing','detour','store'],keyGiven:true},bridge:{step:4,scene:'bridge',seen:['departure','crossing','detour','store'],keyGiven:true}};
  const entry=choices[id];return entry?actThreeStorySave({cursor:0,page:0,keyGiven:false,...entry}):null;
 }
