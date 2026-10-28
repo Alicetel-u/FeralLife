@@ -16,16 +16,29 @@ export const ACT_THREE_MAP_CAST=[
  {id:'cat',name:'モク',image:'assets/characters/cat/observation-v4/stand.png'},
  {id:'hostess',name:'ルナ',image:'assets/characters/hostess/observation-v4/stand.png'}
 ];
+export const ACT_THREE_BRIDGE_SPAN=2.6;
+// The final leg crosses several screens of ruined streets; earlier landmarks retain their original spacing.
+export function actThreeMapWorldPosition(position){return position<=3?position:3+(position-3)*ACT_THREE_BRIDGE_SPAN;}
+export function actThreeMapTravelDuration(step,reduced=false){return step===3?(reduced?4.2:8.4):(reduced?.45:2.4);}
 export function actThreeMapCheckpoint(value){return Number.isInteger(value)?Math.max(0,Math.min(ACT_THREE_MAP_PLACES.length-1,value)):0;}
 // Arrival is saved only after motion finishes. Reload during transit returns to departure.
 export function actThreeMapTravel(from,to,t){
  const start=actThreeMapCheckpoint(from),end=actThreeMapCheckpoint(to),p=Math.min(1,Math.max(0,t)),ease=p*p*(3-2*p);
  return {position:start+(end-start)*ease,bounce:Math.sin(p*Math.PI)*Math.sin(p*Math.PI*6),finished:p===1};
 }
-export function actThreeMapHTML(){return `<section class="act-screen act3-map" data-act3-map data-chapter="3" tabindex="-1" aria-label="第三幕 街マップ"><h2 id="modal-title" class="visually-hidden">街マップ</h2><div class="map-viewport"><div class="map-world">${ACT_THREE_MAP_PLACES.map((p,i)=>`<div class="map-landmark" data-map-landmark="${i}"><img src="${p.image}" alt="${p.name}" draggable="false">${p.id==='detour'?'<div class="map-crash-truck" aria-hidden="true"><span class="truck-cargo"></span><span class="truck-cab"></span><span class="truck-wheel wheel-a"></span><span class="truck-wheel wheel-b"></span><span class="truck-blast"></span><span class="truck-smoke"></span></div>':''}<span class="map-location-label">${p.name}</span></div>`).join('')}<div class="map-zombies" aria-label="交差点を横切るゾンビの群れ">${Array.from({length:6},(_,i)=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--z:${i}" draggable="false">`).join('')}</div></div><div class="map-party" aria-label="大家、モク、ルナ">${ACT_THREE_MAP_CAST.map((c,i)=>`<div class="map-companion map-companion-${c.id}" style="--member:${i}"><img src="${c.image}" alt="${c.name}" draggable="false"></div>`).join('')}</div><div class="map-loading" role="status"><span>マップを読み込んでいます…</span><button type="button" data-map-retry hidden>再読み込み</button></div></div><img class="map-scene-backdrop" alt="荒らされたコンビニの店内" hidden><div class="map-dialogue act3-dialogue" data-renderer="event-stage" hidden></div>${chapterDialogueControlsHTML()}<div class="map-panel"><div class="map-status visually-hidden"><strong data-map-location>けもの荘</strong><p data-map-status role="status" aria-live="polite"></p></div><nav class="map-actions" aria-label="移動操作"><button type="button" data-map-next class="map-next" disabled>交差点へ <span aria-hidden="true">➜</span></button><button type="button" data-map-pause hidden>一時停止</button><button type="button" data-map-finish class="map-next" hidden>ここまでを読み終える</button><button type="button" data-map-reset hidden>もう一度移動する</button><button type="button" data-map-back>戻る</button></nav></div></section>`;}
+export function actThreeMapHTML(){return `<section class="act-screen act3-map" data-act3-map data-chapter="3" tabindex="-1" aria-label="第三幕 街マップ"><h2 id="modal-title" class="visually-hidden">街マップ</h2><div class="map-viewport"><div class="map-world">${ACT_THREE_MAP_PLACES.map((p,i)=>`<div class="map-landmark" data-map-landmark="${i}"><img src="${p.image}" alt="${p.name}" draggable="false">${p.id==='detour'?'<div class="map-crash-truck" aria-hidden="true"><span class="truck-cargo"></span><span class="truck-cab"></span><span class="truck-wheel wheel-a"></span><span class="truck-wheel wheel-b"></span><span class="truck-blast"></span><span class="truck-smoke"></span></div>':''}<span class="map-location-label">${p.name}</span></div>`).join('')}<div class="map-zombies" aria-label="交差点を横切るゾンビの群れ">${Array.from({length:6},(_,i)=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--z:${i}" draggable="false">`).join('')}</div><div class="map-bridge-route" aria-label="コンビニから橋までの長い道" role="img">
+  <div class="map-route-road"></div>
+  <div class="map-route-debris debris-a"></div><div class="map-route-debris debris-b"></div><div class="map-route-debris debris-c"></div>
+  <div class="map-route-barricade barricade-a"><span></span><span></span></div>
+  <div class="map-route-barricade barricade-b"><span></span><span></span></div>
+  <div class="map-route-zombies route-zombies-a">${[0,1].map(i=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--walker:${i}" draggable="false">`).join('')}</div>
+  <div class="map-route-zombies route-zombies-b">${[0,1,2].map(i=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--walker:${i}" draggable="false">`).join('')}</div>
+  <div class="map-route-zombies route-zombies-c">${[0,1].map(i=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--walker:${i}" draggable="false">`).join('')}</div>
+  <div class="map-route-zombies route-zombies-d">${[0,1,2].map(i=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--walker:${i}" draggable="false">`).join('')}</div>
+</div></div><div class="map-party" aria-label="大家、モク、ルナ">${ACT_THREE_MAP_CAST.map((c,i)=>`<div class="map-companion map-companion-${c.id}" style="--member:${i}"><img src="${c.image}" alt="${c.name}" draggable="false"></div>`).join('')}</div><div class="map-loading" role="status"><span>マップを読み込んでいます…</span><button type="button" data-map-retry hidden>再読み込み</button></div></div><img class="map-scene-backdrop" alt="荒らされたコンビニの店内" hidden><div class="map-dialogue act3-dialogue" data-renderer="event-stage" hidden></div>${chapterDialogueControlsHTML()}<div class="map-panel"><div class="map-status visually-hidden"><strong data-map-location>けもの荘</strong><p data-map-status role="status" aria-live="polite"></p></div><nav class="map-actions" aria-label="移動操作"><button type="button" data-map-next class="map-next" disabled>交差点へ <span aria-hidden="true">➜</span></button><button type="button" data-map-pause hidden>一時停止</button><button type="button" data-map-finish class="map-next" hidden>ここまでを読み終える</button><button type="button" data-map-reset hidden>もう一度移動する</button><button type="button" data-map-back>戻る</button></nav></div></section>`;}
 export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=>{},story=false,initialProgress=null,onProgress=()=>{},voice=null,bgm=null,silent=false,onScene=()=>{},onLoop=()=>{}}={}){
  const section=root.querySelector('[data-act3-map]');if(!section)return ()=>{};
- const viewport=section.querySelector('.map-viewport'),world=section.querySelector('.map-world'),party=section.querySelector('.map-party'),zombies=section.querySelector('.map-zombies');
+ const viewport=section.querySelector('.map-viewport'),world=section.querySelector('.map-world'),party=section.querySelector('.map-party'),zombies=section.querySelector('.map-zombies'),bridgeRoute=section.querySelector('.map-bridge-route');
  const next=section.querySelector('[data-map-next]'),pause=section.querySelector('[data-map-pause]'),reset=section.querySelector('[data-map-reset]'),status=section.querySelector('[data-map-status]'),loading=section.querySelector('.map-loading');
  const dialogue=section.querySelector('.map-dialogue'),backdrop=section.querySelector('.map-scene-backdrop');
  let progress=story?actThreeStoryProgress(initialProgress):null,shownLine=null;
@@ -34,17 +47,20 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
  let step=story?progress.step:actThreeMapCheckpoint(initialStep),position=step,elapsed=0,moving=false,paused=false,ready=false,dead=false,last=null,raf=0,version=0;
  const paint=()=>{
   const width=viewport.clientWidth,gap=Math.max(380,Math.min(1100,width*.94)),anchor=width*.48;
-  world.style.transform=`translate3d(${-position*gap}px,0,0)`;
-  section.querySelectorAll('[data-map-landmark]').forEach((el,i)=>{el.style.left=`${anchor+i*gap}px`;el.dataset.current=String(i===step);});
+  world.style.transform=`translate3d(${-actThreeMapWorldPosition(position)*gap}px,0,0)`;
+  section.querySelectorAll('[data-map-landmark]').forEach((el,i)=>{el.style.left=`${anchor+actThreeMapWorldPosition(i)*gap}px`;el.dataset.current=String(i===step);});
+  bridgeRoute.style.left=`${anchor+3*gap}px`;
+  bridgeRoute.style.width=`${ACT_THREE_BRIDGE_SPAN*gap}px`;
   zombies.style.left=`${anchor+gap+36}px`;zombies.hidden=position<.6||position>2.5||story&&progress.scene==='crossing'&&!ACT_THREE_MAP_SCENES.crossing.lines[progress.cursor].horde;
   party.style.left=`${anchor}px`;party.style.setProperty('--bounce',String(moving&&!reduced?Math.sin(elapsed*9)*4:0));party.style.setProperty('--lean',moving&&!paused&&!reduced?'5deg':'0deg');
   section.dataset.moving=String(moving&&!paused);section.dataset.paused=String(paused||document.hidden);section.dataset.location=ACT_THREE_MAP_PLACES[step].id;
+  section.dataset.longTravel=String(moving&&step===3);
   next.hidden=(story?(step>=4||progress?.seen.includes('return')):step===4)||moving||!!progress?.scene;next.disabled=!ready;next.innerHTML=`${ACT_THREE_MAP_PLACES[step].action||''} <span aria-hidden="true">➜</span>`;
   pause.hidden=!moving;pause.textContent=paused?'移動を再開':'一時停止';pause.setAttribute('aria-pressed',String(paused));reset.hidden=story?true:step!==4||moving;
   section.querySelector('[data-map-location]').textContent=ACT_THREE_MAP_PLACES[step].name;
   section.querySelector('[data-map-finish]').hidden=!(story&&progress?.seen.includes('return')&&!progress.scene);
   if(story)paintDialogue();else controls.refresh();
-  status.textContent=moving?(paused?'移動を一時停止しています':`${ACT_THREE_MAP_PLACES[step+1].name}へ移動中`):ACT_THREE_MAP_PLACES[step].note;
+  status.textContent=moving?(paused?'移動を一時停止しています':step===3?'ゾンビのいる長い道を抜け、橋へ移動中':`${ACT_THREE_MAP_PLACES[step+1].name}へ移動中`):ACT_THREE_MAP_PLACES[step].note;
  };
  const paintDialogue=()=>{
   const scene=progress.scene?ACT_THREE_MAP_SCENES[progress.scene]:null;
@@ -92,7 +108,7 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
  function key(e){if(e.repeat||e.target.closest('button')||!progress?.scene||controls.blocked)return;if(['Enter','Space','ArrowRight'].includes(e.code)){e.preventDefault();e.stopPropagation();advanceDialogue();}else if(e.code==='ArrowLeft'){e.preventDefault();e.stopPropagation();advanceDialogue(true);}}
  function visibility(){last=null;voice?.setSuspended(document.hidden);paint();}
  function tick(now){if(dead)return;const dt=last===null?0:Math.min(.05,(now-last)/1000);last=now;
-  if(ready&&moving&&!paused&&!document.hidden){elapsed+=dt;const f=actThreeMapTravel(step,step+1,elapsed/(reduced?.45:2.4));position=f.position;if(f.finished){step++;moving=false;elapsed=0;if(story){progress.step=step;progress.scene=step===1?'crossing':step===2?'detour':step===3?'store':step===4?'bridge':null;progress.cursor=0;progress.page=0;publish();}onArrival(step);}paint();}
+  if(ready&&moving&&!paused&&!document.hidden){elapsed+=dt;const f=actThreeMapTravel(step,step+1,elapsed/actThreeMapTravelDuration(step,reduced));position=f.position;if(f.finished){step++;moving=false;elapsed=0;if(story){progress.step=step;progress.scene=step===1?'crossing':step===2?'detour':step===3?'store':step===4?'bridge':null;progress.cursor=0;progress.page=0;publish();}onArrival(step);}paint();}
   raf=requestAnimationFrame(tick);
  }
  function load(){const token=++version;ready=false;loading.hidden=false;loading.querySelector('button').hidden=true;
