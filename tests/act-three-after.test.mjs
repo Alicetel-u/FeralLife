@@ -19,7 +19,7 @@ test('aftermath resumes the saved line, navigates both scenes and completes once
  const click=name=>listeners.click?.({target:{closest:()=>({hasAttribute:value=>value===name})},preventDefault(){},stopPropagation(){}});
  try{
   const stop=startActThreeAfter(root,()=>complete++,{initialCursor:3,onCursor:value=>saved.push(value)});await new Promise(resolve=>setImmediate(resolve));
-  assert.deepEqual(saved,[3]);assert.equal(section.dataset.cut,'corridor');click('data-act3-after-next');assert.equal(section.dataset.cut,'empty-room');assert.equal(saved.at(-1),4);
-  click('data-act3-after-back');assert.equal(saved.at(-1),3);for(let n=0;n<5;n++)click('data-act3-after-next');assert.equal(complete,1);assert.ok(!listeners.click);stop();assert.equal(complete,1);
+  assert.deepEqual(saved,[3]);assert.equal(section.dataset.cut,'corridor');click('data-dialogue-next');assert.equal(section.dataset.cut,'empty-room');assert.equal(saved.at(-1),4);
+  click('data-dialogue-back');assert.equal(saved.at(-1),3);for(let n=0;n<5;n++)click('data-dialogue-next');assert.equal(complete,1);assert.ok(!listeners.click);stop();assert.equal(complete,1);
  }finally{globalThis.Image=previous;}
 });

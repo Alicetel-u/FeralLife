@@ -41,13 +41,13 @@ test('real map gates motion behind dialogue, resumes mid-conversation and ends b
   stop=startActThreeMap({querySelector:()=>section},{story:true,onProgress:p=>saved.push(p)});
   await new Promise(resolve=>setImmediate(resolve));
   click('data-map-next');move();assert.equal(saved.at(-1).mapStep,0);
-  for(let n=0;n<11;n++)click('data-map-dialogue-next');assert.equal(saved.at(-1).mapScene,null);
+  for(let n=0;n<11;n++)click('data-dialogue-next');assert.equal(saved.at(-1).mapScene,null);
   click('data-map-next');move();assert.equal(saved.at(-1).mapScene,'crossing');
-  for(let n=0;n<6;n++)click('data-map-dialogue-next');const mid=saved.at(-1);assert.equal(mid.mapCursor,6);
+  for(let n=0;n<6;n++)click('data-dialogue-next');const mid=saved.at(-1);assert.equal(mid.mapCursor,6);
   stop();stop=startActThreeMap({querySelector:()=>section},{story:true,initialProgress:mid,onProgress:p=>saved.push(p)});await new Promise(resolve=>setImmediate(resolve));assert.equal(saved.at(-1).mapCursor,6);
-  for(let n=6;n<11;n++)click('data-map-dialogue-next');click('data-map-next');move();assert.equal(saved.at(-1).mapStep,2);assert.equal(saved.at(-1).mapScene,null);
+  for(let n=6;n<11;n++)click('data-dialogue-next');click('data-map-next');move();assert.equal(saved.at(-1).mapStep,2);assert.equal(saved.at(-1).mapScene,null);
   click('data-map-next');move();assert.equal(saved.at(-1).mapScene,'store');
-  for(let n=0;n<100;n++)click('data-map-dialogue-next');assert.equal(saved.at(-1).mimiKeyGiven,true);assert.deepEqual(saved.at(-1).mapSeen,['departure','crossing','store']);
+  for(let n=0;n<100;n++)click('data-dialogue-next');assert.equal(saved.at(-1).mimiKeyGiven,true);assert.deepEqual(saved.at(-1).mapSeen,['departure','crossing','store']);
   click('data-map-next');move();assert.equal(saved.at(-1).mapStep,3);assert.equal(section.querySelector('[data-map-next]').hidden,true);assert.equal(section.querySelector('[data-map-finish]').hidden,false);
  }finally{stop?.();for(const key of names){if(previous[key]===undefined)delete globalThis[key];else globalThis[key]=previous[key];}}
 });

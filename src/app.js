@@ -1,3 +1,4 @@
+import {dialogueAdvanceHTML} from './dialogue-controls.js';
 import {actThreeStoryDebug} from './act-three-story.js';
 import {actThreeMapHTML,startActThreeMap} from './act-three-map.js';
 import {actThreeHTML,startActThree,actThreeTitleHTML,startActThreeTitle,actThreeCompleteHTML,actThreeAfterHTML,startActThreeAfter} from './act-three-prologue.js';
@@ -447,7 +448,7 @@ function showEvent(id,index=null,page=null,afterMorningBlackout=false,afterEpilo
   const trouble=c?.call&&e.kind==='trouble'?troubleCardHTML(c.call,waiting&&cursor===0,state.actOne?.attempt??1):'';
   const firstFire=isFirstFireReply(e,state.actOne),firstStalker=isFirstStalkerReply(e);
   if(firstStalker)prepareFirstStalkerAssets();
-  const forward=last&&e.actScene==='act2-prologue'&&state.actOne.prologuePending?'<button class="primary-button" data-act2-prologue-done aria-label="第二幕へ">'+eventIcon('next')+'</button>':last&&['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'<button class="primary-button" data-epilogue-done aria-label="'+(state.actOne.chapter===2?'第二幕':'第一幕')+'を終える">'+eventIcon('next')+'</button>':last&&['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'<button class="primary-button" data-rewind-resume aria-label="選択肢へ進む">'+eventIcon('next')+'</button>':last&&e.actScene==='prologue'?'<button class="primary-button" data-opening="3" aria-label="タイトル演出へ進む">'+eventIcon('next')+'</button>':last?(waiting?'<button class="event-return" data-close>返事は後で</button>':state.pending&&e.kind==='arrival'&&!e.rooms.length?'<button class="event-return" data-show-candidates>申込書を見る</button>':`<button class="primary-button" data-close aria-label="${firstStalker?'暗闇の先へ':firstFire?'火災の先へ':morningDirection?'結末へ':'観察に戻る'}">${eventIcon('next')}</button>`):`<button class="primary-button" data-dialogue-next aria-label="次のセリフ">${eventIcon('next')}</button>`;
+  const forward=last&&e.actScene==='act2-prologue'&&state.actOne.prologuePending?'<button class="primary-button" data-act2-prologue-done aria-label="第二幕へ">'+eventIcon('next')+'</button>':last&&['epilogue','act2-epilogue'].includes(e.actScene)&&!state.actOne.epilogueSeen?'<button class="primary-button" data-epilogue-done aria-label="'+(state.actOne.chapter===2?'第二幕':'第一幕')+'を終える">'+eventIcon('next')+'</button>':last&&['rewind','act2-rewind'].includes(e.actScene)&&state.actOne.rewindIntroPending?'<button class="primary-button" data-rewind-resume aria-label="選択肢へ進む">'+eventIcon('next')+'</button>':last&&e.actScene==='prologue'?'<button class="primary-button" data-opening="3" aria-label="タイトル演出へ進む">'+eventIcon('next')+'</button>':last?(waiting?'<button class="event-return" data-close>返事は後で</button>':state.pending&&e.kind==='arrival'&&!e.rooms.length?'<button class="event-return" data-show-candidates>申込書を見る</button>':`<button class="primary-button" data-close aria-label="${firstStalker?'暗闇の先へ':firstFire?'火災の先へ':morningDirection?'結末へ':'観察に戻る'}">${eventIcon('next')}</button>`):dialogueAdvanceHTML();
   const showDebugDuelSplash=!!(e.duel&&debugDuelSplash?.id===e.id&&debugDuelSplash.index===cursor&&pageIndex===0);
   if(showDebugDuelSplash)debugDuelSplash=null;
   const stageHTML=epilogueDirection?actTwoEpilogueStageHTML(e,state.residents,cursor,pageIndex):e.duel?duelStageHTML(showDebugDuelSplash?{...e,debugDuelSplash:true}:e,state.residents,cursor,pageIndex):firstStalker?firstStalkerStageHTML(e,state.residents,cursor,pageIndex):firstFire?firstFireStageHTML(e,state.residents,cursor,pageIndex):morningDirection?actTwoMorningStageHTML(e,state.residents,cursor,pageIndex):eventStageHTML(e,state.residents,cursor,pageIndex);
@@ -659,12 +660,12 @@ function showActThree(){
   if(progress.phase==='title'){showActThreeTitle();return;}
   if(progress.phase==='clock'){showActThreeClock();return;}
   eventView=null;openModal(actThreeHTML());
-  stopOpeningPrologue=startActThree(modal,()=>{state.actThree={phase:'clock',shot:0};save();showActThreeClock();},{settings:normalBgm,shared:()=>characterVoice.audioContext(),voice:silentPreview?null:characterVoice,initialShot:progress.shot,onShot:shot=>{state.actThree={phase:'film',shot};save();syncNormalBgm();}});
+  stopOpeningPrologue=startActThree(modal,()=>{state.actThree={phase:'clock',shot:0};save();showActThreeClock();},{settings:normalBgm,shared:()=>characterVoice.audioContext(),voice:silentPreview?null:characterVoice,silent:silentPreview,initialShot:progress.shot,onShot:shot=>{state.actThree={phase:'film',shot};save();syncNormalBgm();}});
 }
 function showActThreeMap(){
   const progress=state.actThree;
   eventView=null;openModal(actThreeMapHTML());
-  stopOpeningPrologue=startActThreeMap(modal,{story:true,initialProgress:progress,voice:silentPreview?null:characterVoice,onProgress:progress=>{state.actThree=progress;save();},onScene:()=>syncNormalBgm(),onBack:()=>openModal(actThreeCompleteHTML())});
+  stopOpeningPrologue=startActThreeMap(modal,{story:true,initialProgress:progress,voice:silentPreview?null:characterVoice,bgm:normalBgm,silent:silentPreview,onProgress:progress=>{state.actThree=progress;save();},onScene:()=>syncNormalBgm(),onBack:()=>openModal(actThreeCompleteHTML())});
 }
 function showActThreeClock(){
   openModal(rewindTransitionHTML('',1,true,3,true));
@@ -677,7 +678,7 @@ function showActThreeTitle(){
 }
 function showActThreeAfter(){
   const cursor=state.actThree?.cursor||0;eventView=null;openModal(actThreeAfterHTML());
-  stopOpeningPrologue=startActThreeAfter(modal,()=>{state.actThree={phase:'map',mapStep:0,afterSeen:true};save();showActThreeMap();},{initialCursor:cursor,onCursor:cursor=>{state.actThree={phase:'after',cursor};save();}});
+  stopOpeningPrologue=startActThreeAfter(modal,()=>{state.actThree={phase:'map',mapStep:0,afterSeen:true};save();showActThreeMap();},{initialCursor:cursor,onCursor:cursor=>{state.actThree={phase:'after',cursor};save();},bgm:normalBgm,silent:silentPreview});
 }
 function beginRewind(afterFire=false){
   const secondAct=state.actOne.chapter===2;

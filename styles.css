@@ -2279,12 +2279,9 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .act3-film[data-cut="news"] .act3-grain{opacity:.38;animation:act3-noise .13s steps(2) infinite}
 .act3-smoke,.act3-title-smoke{position:absolute;inset:-15%;background:radial-gradient(ellipse at 30% 70%,#aeb4bc2a,transparent 45%),radial-gradient(ellipse at 70% 40%,#b0a3a323,transparent 40%);animation:act3-smoke 13s ease-in-out infinite alternate;pointer-events:none}
 .act3-flash{background:#ffe9ba;z-index:3;opacity:0}.act3-white{background:white;z-index:6;opacity:0}
-.act3-dialogue{position:absolute;inset:0;z-index:5;pointer-events:none}.act3-dialogue .event-stage{position:absolute;inset:0;min-height:0;height:100%;background:none!important;pointer-events:none}
-.act3-dialogue .stage-bubble{position:absolute!important;top:auto!important;bottom:max(65px,calc(env(safe-area-inset-bottom) + 56px))!important;left:5%!important;right:5%!important;width:90%!important;max-width:none!important;margin:0!important;transform:none!important}
-.act3-controls{position:absolute;right:max(14px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:10;display:flex;gap:8px}
-.act3-controls button,.act3-complete button{padding:9px 15px;border:1px solid #8a81815c;border-radius:4px;background:#0a090ad9;color:#e6ded8;font-size:13px;cursor:pointer}
+.act3-dialogue{position:absolute;inset:0;z-index:8}.act3-dialogue .event-stage{position:absolute;inset:0;min-height:0;height:100%;background:none!important}
+.act3-complete button{padding:9px 15px;border:1px solid #8a81815c;border-radius:4px;background:#0a090ad9;color:#e6ded8;font-size:13px;cursor:pointer}
 .act3-loading{display:flex;align-items:center;justify-content:center;gap:12px;z-index:12;background:#050506;pointer-events:auto}.act3-loading[hidden]{display:none}
-.act3-film[data-cut="white"] .act3-controls{visibility:hidden}
 .act3-title{display:grid;place-items:center}.act3-title-copy{position:relative;width:100%;text-align:center;z-index:1}
 .act3-title p{opacity:0;font-family:"Yu Mincho",serif;font-size:clamp(20px,3.7vw,38px);letter-spacing:.5em;margin:0 0 28px;color:#b6aaa5;text-shadow:0 2px 8px #a2181b}
 .act3-title h2{opacity:0;margin:0;padding:0 4%;font-family:"Yu Mincho","Hiragino Mincho ProN",serif;font-weight:900;font-size:clamp(48px,12vw,150px);letter-spacing:.13em;line-height:1.35;color:#c0baba;background:repeating-linear-gradient(173deg,transparent 0 17px,#180b0b 18px 19px,transparent 20px 31px),linear-gradient(180deg,#f0eeee 2%,#969598 30%,#444448 49%,#b3a6a5 53%,#701a20 90%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 4px 1px #1e1012) drop-shadow(0 0 17px #8e101b5c)}
@@ -2292,7 +2289,7 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .act3-complete{display:grid;place-items:center}.act3-complete nav{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
 .rewind-screen[data-chapter="3"] .rewind-restored-room{display:none}.rewind-screen[data-chapter="3"] .rewind-white-fade{background:#000}.rewind-screen[data-chapter="3"]:after{content:"";position:absolute;inset:0;background:white;z-index:20;pointer-events:none;animation:act3-clock-entry .9s linear forwards}
 @keyframes act3-clock-entry{to{opacity:0}}@keyframes act3-noise{to{transform:translateY(3px);opacity:.22}}@keyframes act3-smoke{to{transform:translate(8%,-4%) scale(1.12)}}
-@media(max-width:600px){.act3-dialogue .stage-bubble{left:4%!important;right:4%!important;width:92%!important;bottom:max(65px,calc(env(safe-area-inset-bottom) + 55px))!important}.act3-title h2{font-size:clamp(40px,12vw,75px);letter-spacing:.08em}.act3-title p{font-size:22px;margin-bottom:24px}.act3-controls button{padding:8px 12px}.act3-image{object-position:50% 40%}}
+@media(max-width:600px){.act3-title h2{font-size:clamp(40px,12vw,75px);letter-spacing:.08em}.act3-title p{font-size:22px;margin-bottom:24px}.act3-image{object-position:50% 40%}}
 @media(prefers-reduced-motion:reduce){.act3-smoke,.act3-title-smoke,.act3-film[data-cut="news"] .act3-grain{animation:none}.rewind-screen[data-chapter="3"]:after{animation-duration:.1s}}
 .game-ink dialog.act-modal:has(.act3-film,.act3-title,.act3-complete) #modal-content{height:100%;padding:0;overflow:hidden}
 .act3-film[data-paused="true"] .act3-smoke,.act3-film[data-paused="true"] .act3-grain{animation-play-state:paused}
@@ -2300,37 +2297,6 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .act3-film::before,.act3-film::after,.act3-title::before,.act3-title::after,.act3-complete::before,.act3-complete::after{display:none!important}
 @media(max-width:700px) and (orientation:portrait){.act3-rig{bottom:210px}.act3-image{object-fit:contain;object-position:center}}
 
-/* The nameplate must reserve its own space before the spoken line. */
-.game-ink .conversation-modal .act3-dialogue .stage-bubble,
-.game-ink .conversation-modal .act3-dialogue .stage-bubble.narration{
-  display:flex;flex-direction:column;align-items:flex-start;gap:8px;
-  box-sizing:border-box;height:auto!important;min-height:0!important;
-  padding:12px 5% 18px!important;overflow:visible;
-}
-.game-ink .conversation-modal .act3-dialogue .stage-speaker{
-  position:relative;inset:auto;left:auto;top:auto;flex:none;
-  width:auto;min-width:130px;max-width:100%;height:auto;min-height:28px;
-  padding:4px 14px;gap:8px;
-}
-.game-ink .conversation-modal .act3-dialogue .stage-bubble p,
-.game-ink .conversation-modal .act3-dialogue .stage-bubble.narration p{
-  flex:none;width:100%;min-height:0;max-height:none!important;overflow:visible!important;
-  margin:0;padding:0;white-space:pre-wrap;overflow-wrap:anywhere;
-  font-size:clamp(16px,2vw,25px);line-height:1.5;letter-spacing:.035em;
-}
-@media(max-width:700px){
-  .game-ink .conversation-modal .act3-dialogue .stage-bubble,
-  .game-ink .conversation-modal .act3-dialogue .stage-bubble.narration{gap:6px;padding:10px 18px 15px!important}
-  .game-ink .conversation-modal .act3-dialogue .stage-bubble p,
-  .game-ink .conversation-modal .act3-dialogue .stage-bubble.narration p{font-size:clamp(16px,4.4vw,19px);line-height:1.5}
-}
-@media(max-height:450px){
-  .game-ink .conversation-modal .act3-dialogue .stage-bubble,
-  .game-ink .conversation-modal .act3-dialogue .stage-bubble.narration{gap:4px;padding:7px 20px 10px!important}
-  .game-ink .conversation-modal .act3-dialogue .stage-speaker{min-height:24px;padding:2px 12px}
-  .game-ink .conversation-modal .act3-dialogue .stage-bubble p,
-  .game-ink .conversation-modal .act3-dialogue .stage-bubble.narration p{font-size:16px;line-height:1.4}
-}
 .game-ink dialog.act-modal:has(.act3-map){position:fixed;inset:0;margin:0;width:100vw;height:100dvh;max-width:none;max-height:none;padding:0;border:0;border-radius:0;overflow:hidden;background:#192a35}
 .act3-map{position:relative;isolation:isolate;display:flex!important;flex-direction:column;width:100%;height:100dvh;min-height:0!important;box-sizing:border-box;padding:max(14px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left));overflow:hidden;color:#f9f4df;background:#192a35!important}
 .act3-map::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 1px 1px,#ffffff0b 1px,transparent 1.5px) 0 0/7px 7px,linear-gradient(160deg,transparent 62%,#203d47 62% 81%,#d34e43 81% 83%,#14232f 83%)}
@@ -2424,14 +2390,18 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .map-dialogue{z-index:8}
 .game-ink .conversation-modal .map-dialogue .event-stage{height:100%;min-height:0;background:transparent!important}
 .map-dialogue .stage-character{pointer-events:none}
-.map-dialogue-controls{position:absolute;bottom:max(14px,env(safe-area-inset-bottom));right:max(18px,env(safe-area-inset-right));z-index:12;display:flex;gap:12px}
-.map-dialogue-controls button{min-width:80px;min-height:44px;padding:8px 18px;color:#fff4da;background:#20212b;border:2px solid #fff4da;font-size:16px}
 .act3-map[data-dialogue=true] .map-panel{display:none!important}
 .act3-map[data-dialogue=true] .map-party{display:none}
 .act3-map[data-dialogue=true] .map-location-label{display:none}
 .act3-map[data-dialogue=true] .map-world{opacity:.5}
 .act3-map[data-dialogue=true] .map-zombies{z-index:7;opacity:1}
-@media(max-width:600px){.map-dialogue .stage-character{bottom:210px!important;top:auto!important;height:55dvh!important;max-height:500px}.map-dialogue .stage-character img{object-position:center bottom}.map-dialogue-controls{bottom:max(10px,env(safe-area-inset-bottom))}}
-@media(max-height:500px) and (orientation:landscape){.map-dialogue .stage-character{top:0!important;bottom:110px!important;height:auto!important}.map-dialogue-controls button{min-height:36px;font-size:13px;padding:5px 14px}}
+@media(max-width:600px){.map-dialogue .stage-character{bottom:210px!important;top:auto!important;height:55dvh!important;max-height:500px}.map-dialogue .stage-character img{object-position:center bottom}}
 
 @media(max-width:600px){.game-ink .conversation-modal .map-dialogue .stage-character{left:5%!important;right:5%!important;width:90%!important;transform:none!important;max-width:none!important}}
+
+/* Chapter scenes share the ordinary message window and advance-button styling. */
+.chapter-dialogue-controls{position:absolute;inset:0;z-index:12;pointer-events:none}
+.chapter-dialogue-controls button,.chapter-dialogue-controls input,.chapter-dialogue-controls details,.chapter-dialogue-controls .event-menu{pointer-events:auto}
+.act3-film[data-cut="white"] .chapter-dialogue-controls{visibility:hidden}
+.chapter-dialogue-controls .conversation-log{z-index:15}
+@media(max-height:500px) and (orientation:landscape){.map-dialogue .stage-character{top:0!important;bottom:110px!important;height:auto!important}}
