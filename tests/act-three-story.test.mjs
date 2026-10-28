@@ -92,6 +92,13 @@ test('post-rewind dialogue advances to existing home landmark and unlocks finish
   let clock=0;const move=frames=>{for(let n=0;n<frames;n++){clock+=50;const run=frame;frame=null;run?.(clock);}};
   move(60);assert.equal(saved.at(-1).mapStep,2);assert.equal(saved.at(-1).mapScene,null);
   assert.equal(section.dataset.travelDirection,'down');
+  const halfway={...saved.at(-1)};
+  stop();stop=startActThreeMap({querySelector:()=>section},{story:true,initialProgress:halfway,onProgress:p=>saved.push(p)});
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(section.dataset.returning,'true');
+  assert.equal(section.dataset.travelDirection,'down');
+  assert.equal(saved.at(-1).mapStep,2);
+  assert.equal(saved.at(-1).mapScene,null,'Resume reverse movement rather than replaying the truck incident');
   move(70);assert.equal(saved.at(-1).mapStep,1);assert.equal(saved.at(-1).mapScene,null);
   assert.equal(section.dataset.travelDirection,'left');
   move(70);assert.equal(saved.at(-1).mapStep,0);assert.equal(saved.at(-1).mapScene,'homecoming');
