@@ -325,3 +325,25 @@ test('prewarming loads only selected tracks and never unlocks playback or rewind
  await bgm.setScene(true,'bad');assert.equal(bad.paused,true);assert.equal(clock.loads,1);
  await bgm.setScene(false,'clock');assert.equal(clock.loop,false);assert.equal(clock.loads,1);
 });
+
+test('third-act music starts at the prologue, pauses and restarts for a replay',async()=>{
+ const normal=fakeAudio(),film=fakeAudio();
+ const bgm=createNormalBgm(normal,fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),film);
+ await bgm.unlock();await bgm.setScene(false,'act3');assert.equal(film.paused,false);assert.equal(normal.paused,true);assert.equal(film.loop,true);
+ film.currentTime=12;await bgm.setScene(true,'act3');assert.equal(film.paused,true);
+ await bgm.setScene(false,'act3');assert.equal(film.currentTime,12);assert.equal(film.paused,false);
+ await bgm.setVolume(.2);assert.equal(film.volume,.2);await bgm.setEnabled(false);assert.equal(film.paused,true);
+ await bgm.setEnabled(true);await bgm.setScene(false,'clock');assert.equal(film.paused,true);
+ await bgm.setScene(false,'act3');assert.equal(film.currentTime,0);assert.equal(film.paused,false);
+});
+
+test('third-act film selects its track and suppresses it on pause, whiteout, or hidden tab',async()=>{
+ const app=await readFile(new URL('../src/app.js',import.meta.url),'utf8');
+ const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
+ for(const [cut,paused,hidden,suppressed] of [['news','false',false,false],['news','true',false,true],['white','false',false,true],['news','false',true,true]]){
+  let result;const film={dataset:{cut,paused}};
+  const context={document:{hidden},state:{actOne:{chapter:2},events:[]},eventView:null,eventConversation:()=>[],bedCue:()=> 'normal',
+   modal:{open:true,classList:{contains:()=>false},querySelector:s=>s==='[data-act3-film]'?film:null},normalBgm:{setScene:(quiet,cue)=>result={quiet,cue}}};
+  vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);assert.equal(result.cue,'act3');assert.equal(result.quiet,suppressed);
+ }
+});

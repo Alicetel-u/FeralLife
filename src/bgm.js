@@ -1,3 +1,4 @@
+export const ACT_THREE_BGM_SRC = 'assets/audio/survival-tombs.mp3';
 export const DUEL_BGM_SRC = 'assets/audio/duel-ao-wo-isoide.mp3';
 export const NORMAL_BGM_SRC = 'assets/audio/normal-pop.mp3';
 export const LUNA_BGM_SRC = 'assets/audio/luna-odayakana-gogo.mp3';
@@ -25,7 +26,7 @@ function bgmTrack(provided,src){
   return audio;
 }
 
-const STINGS = new Set(['trouble', 'bad', 'title', 'clock', 'victory', 'duel', 'opening']);
+const STINGS = new Set(['trouble', 'bad', 'title', 'clock', 'victory', 'duel', 'opening', 'act3']);
 
 // Observation uses the normal bed; dialogue selects character themes explicitly.
 // The first-rewind dialogue selects uneasy explicitly.
@@ -36,9 +37,10 @@ export function bedCue(actOne) {
 // Moku's theme during ordinary play, uneasy air after the first time leap, countdown on the game title,
 // a persona sting on a trouble card, the result fanfare on a cleared trouble,
 // the fire track through a bad ending, and the clock piece once the rewind dial appears.
-export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio, uneasyAudio, victoryAudio, mokuAudio, duelAudio, lunaAudio, openingAudio) {
+export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio, clockAudio, uneasyAudio, victoryAudio, mokuAudio, duelAudio, lunaAudio, openingAudio, actThreeAudio) {
   const tracks = {
     normal: bgmTrack(normalAudio, NORMAL_BGM_SRC),
+    act3: bgmTrack(actThreeAudio ?? (typeof Audio === 'undefined' ? normalAudio : null), ACT_THREE_BGM_SRC),
     duel: bgmTrack(duelAudio, DUEL_BGM_SRC),
     moku: bgmTrack(mokuAudio, MOKU_BGM_SRC),
     opening: bgmTrack(openingAudio ?? (typeof Audio === 'undefined' ? normalAudio : null), OPENING_BGM_SRC),
