@@ -2407,6 +2407,12 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @media(max-height:500px) and (orientation:landscape){.map-dialogue .stage-character{top:0!important;bottom:110px!important;height:auto!important}}
 
 
+/* The bridge failure has no warning: Moku and Luna drop together, then a white-out. */
+.act3-map[data-collapse="true"] .map-companion-cat,
+.act3-map[data-collapse="true"] .map-companion-hostess{transform:translateY(48px) rotate(85deg);transform-origin:bottom center;transition:transform .16s ease-in;filter:grayscale(.65);opacity:.85}
+.act3-map[data-collapse="true"] .map-party{animation:none}
+@media(prefers-reduced-motion:reduce){.act3-map[data-collapse="true"] .map-companion-cat,.act3-map[data-collapse="true"] .map-companion-hostess{transition:none}}
+
 /* Act III: only existing zombie art is placed in the longer store-to-bridge leg.
    No new street surface, walls, barricades, or direction markers are painted. */
 .act3-map .map-bridge-route{
