@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync} from 'node:fs';
-import {ACT_THREE_MAP_PLACES,ACT_THREE_MAP_CAST,ACT_THREE_MAP_ZOMBIE,actThreeMapCheckpoint,actThreeMapTravel,actThreeMapHTML,startActThreeMap} from '../src/act-three-map.js';
+import {ACT_THREE_MAP_PLACES,ACT_THREE_MAP_CAST,ACT_THREE_MAP_ZOMBIE,actThreeMapCheckpoint,actThreeMapTravel,actThreeMapWorldPosition,actThreeMapTravelDuration,ACT_THREE_BRIDGE_SPAN,actThreeMapHTML,startActThreeMap} from '../src/act-three-map.js';
 
 test('escape map requires crossing then bypass before store and bridge; all art is packaged',()=>{
  assert.deepEqual(ACT_THREE_MAP_PLACES.map(p=>p.id),['home','crossing','detour','store','bridge']);
@@ -9,6 +9,16 @@ test('escape map requires crossing then bypass before store and bridge; all art 
  for(const src of [...ACT_THREE_MAP_PLACES.map(p=>p.image),...ACT_THREE_MAP_CAST.map(p=>p.image),ACT_THREE_MAP_ZOMBIE])assert.ok(existsSync(src),src);
  assert.equal(actThreeMapCheckpoint(undefined),0);assert.equal(actThreeMapCheckpoint(-2),0);assert.equal(actThreeMapCheckpoint(99),4);
  assert.match(actThreeMapHTML(),/data-chapter="3"/);assert.ok(!actThreeMapHTML().includes('town-map-v1'));
+ assert.equal(ACT_THREE_BRIDGE_SPAN,2.6);
+ assert.equal(actThreeMapWorldPosition(3),3);
+ assert.equal(actThreeMapWorldPosition(4),5.6);
+ assert.ok(Math.abs(actThreeMapWorldPosition(3.5)-4.3)<1e-8);
+ assert.equal(actThreeMapTravelDuration(2),2.4);
+ assert.equal(actThreeMapTravelDuration(3),8.4);
+ assert.ok(actThreeMapTravelDuration(3,true)>actThreeMapTravelDuration(2,true));
+ const route=actThreeMapHTML();
+ for(const id of ['route-zombies-a','route-zombies-b','route-zombies-c','route-zombies-d','barricade-a','barricade-b'])assert.match(route,new RegExp(id));
+ assert.equal((route.match(/assets\\/events\\/chapter3\\/map-zombie\\.png/g)||[]).length,16);
  let previous=1;for(let n=0;n<=100;n++){const f=actThreeMapTravel(1,2,n/100);assert.ok(f.position>=previous&&f.position<=2);previous=f.position;}
  assert.equal(actThreeMapTravel(1,2,1).finished,true);assert.equal(actThreeMapTravel(1,2,-1).position,1);
 });
