@@ -2474,3 +2474,25 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @media(max-width:600px){.bridge-collapse-frame{inset:2% 0 44%}.bridge-collapse-art{object-position:50% 75%}}
 @media(max-height:500px) and (orientation:landscape){.bridge-collapse-frame{inset:2% 0 44%}}
 @media(prefers-reduced-motion:reduce){.bridge-collapse-frame{will-change:auto}}
+
+/* Act III homeward journey: flip the existing miniatures, without changing map art. */
+.act3-map .map-companion-rabbit{display:none;left:-110px;bottom:1px;z-index:1}
+.act3-map .map-rabbit-frame{display:block;position:relative;width:100%;height:100%;overflow:hidden}
+.act3-map .map-companion-rabbit .map-rabbit-frame img{
+ position:absolute;left:0;top:0;width:400%;height:200%;max-width:none;
+ object-fit:fill;object-position:left top;
+}
+/* Mimi's existing mini-character PNG is a 4-column, 2-row transparent expression sheet;
+   the top-left full-body frame is cropped by the wrapper above. */
+.act3-map[data-returning="true"] .map-companion-rabbit{display:block}
+.act3-map[data-returning="true"] .map-companion:not(.map-companion-rabbit)>img{transform:scaleX(-1)}
+.act3-map[data-returning="true"] .map-companion-rabbit .map-rabbit-frame{transform:scaleX(-1)}
+.act3-map[data-returning="true"] .map-companion-manager{left:70px}
+.act3-map[data-returning="true"] .map-companion-cat{left:12px}
+.act3-map[data-returning="true"] .map-companion-hostess{left:-50px}
+@media(max-width:600px){
+ .act3-map[data-returning="true"] .map-companion-manager{left:48px}
+ .act3-map[data-returning="true"] .map-companion-cat{left:0}
+ .act3-map[data-returning="true"] .map-companion-hostess{left:-52px}
+ .act3-map[data-returning="true"] .map-companion-rabbit{left:-105px}
+}
