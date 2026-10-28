@@ -1,6 +1,6 @@
 import {eventStageHTML} from './event-stage.js';
 export const ACT_THREE_REVISION='2026.10.27.1';
-const act3Cue=(speaker,text,at,end)=>({speaker,text,at,end});
+const act3Cue=(speaker,text,at,end)=>({speaker,text,at,end,voicePerformance:'act3-urgent'});
 export const ACT_THREE_SHOTS=[
  {id:'news',image:'assets/events/chapter3/chapter3_prologue_01.png',duration:8.4,zoom:1.03,events:[{at:8,type:'gun'}],cues:[act3Cue('announcer','緊急速報です！ 各地で原因不明の暴動が発生！',.3,4.4),act3Cue('announcer','感染は世界各国に拡大し、政府は――',4.5,8.35)]},
  {id:'defend',image:'assets/events/chapter3/chapter3_prologue_02.png',duration:7.8,zoom:1.12,events:[0,.16,.32,1.4,1.56,3.2,3.36,5.5,5.66,6.8].map(at=>({at,type:'gun'})),cues:[act3Cue('cat','まだ来るニャ！！',.3,2.6),act3Cue('hostess','多すぎるって！！',2.7,5),act3Cue('manager','下がってろ！！',5.1,7.6)]},
@@ -39,30 +39,30 @@ export function createActThreeSound(settings,shared=null){
  }catch{}};
  return {play,stop,close(){stop();if(owned)context?.close().catch(()=>{});}};
 }
-export function startActThree(root,onDone,{settings,shared,onShot=()=>{},initialShot=0}={}){
+export function startActThree(root,onDone,{settings,shared,voice,onShot=()=>{},initialShot=0}={}){
  const section=root.querySelector('[data-act3-film]');if(!section)return ()=>{};
  const img=section.querySelector('.act3-image'),rig=section.querySelector('.act3-rig'),dialogue=section.querySelector('.act3-dialogue'),loading=section.querySelector('.act3-loading'),pause=section.querySelector('[data-act3-pause]');
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches,sfx=createActThreeSound(settings,shared),decoded=new Map();
  let index=Math.max(0,Math.min(ACT_THREE_SHOTS.length-1,initialShot|0)),elapsed=0,last=null,raf=0,dead=false,paused=false,ready=false,version=0,shown=undefined,played=new Set();
  const paint=()=>{const f=actThreeFrame(index,elapsed,reduced);img.style.transform=f.transform;rig.style.transform=f.rig;section.querySelector('.act3-flash').style.opacity=paused?0:f.flash;section.querySelector('.act3-white').style.opacity=f.white;
-  if(shown!==f.cue){shown=f.cue;dialogue.innerHTML=f.cue?eventStageHTML({detail:f.cue.text,lines:[f.cue],cast:[]},[],0,0,{hideCharacters:true,cinematic:true}):'';
+  if(shown!==f.cue){shown=f.cue;if(f.cue)voice?.play(f.cue,'act3:'+index+':'+f.cue.at);else voice?.stop();dialogue.innerHTML=f.cue?eventStageHTML({detail:f.cue.text,lines:[f.cue],cast:[]},[],0,0,{hideCharacters:true,cinematic:true}):'';
    const name=dialogue.querySelector('.speaker-name');if(name)name.textContent=({announcer:'アナウンサー',cat:'モク',hostess:'ルナ',manager:'大家'})[f.cue.speaker];
    dialogue.querySelector('.mobile-dialogue-tap')?.remove();dialogue.querySelector('.stage-page')?.remove();}
  };
- const show=()=>{sfx.stop();const shot=ACT_THREE_SHOTS[index];section.dataset.cut=shot.id;img.hidden=!shot.image;if(shot.image){img.src=shot.image;img.alt=({news:'世界各地の混乱を伝える緊急ニュース',defend:'モクとルナを守り迎撃する大家',empty:'弾切れで銃を構える大家',throw:'手榴弾を投げる大家',blast:'廊下を満たす爆炎',horde:'爆煙から迫るゾンビの群れ',escape:'二人を逃がそうとする大家',knife:'ナイフを抜く大家',charge:'群れへ単身で突撃する大家'})[shot.id];}shown=undefined;played=new Set();if(shot.id==='white')sfx.stop();paint();onShot(index);};
- function cleanup(){if(dead)return;dead=true;version++;cancelAnimationFrame(raf);sfx.close();section.removeEventListener('click',click);section.removeEventListener('keydown',key);document.removeEventListener('visibilitychange',visibility);}
+ const show=()=>{sfx.stop();voice?.stop();const shot=ACT_THREE_SHOTS[index];section.dataset.cut=shot.id;img.hidden=!shot.image;if(shot.image){img.src=shot.image;img.alt=({news:'世界各地の混乱を伝える緊急ニュース',defend:'モクとルナを守り迎撃する大家',empty:'弾切れで銃を構える大家',throw:'手榴弾を投げる大家',blast:'廊下を満たす爆炎',horde:'爆煙から迫るゾンビの群れ',escape:'二人を逃がそうとする大家',knife:'ナイフを抜く大家',charge:'群れへ単身で突撃する大家'})[shot.id];}shown=undefined;played=new Set();if(shot.id==='white')sfx.stop();paint();onShot(index);};
+ function cleanup(){if(dead)return;dead=true;version++;cancelAnimationFrame(raf);sfx.close();voice?.stop();voice?.setSuspended(false);section.removeEventListener('click',click);section.removeEventListener('keydown',key);document.removeEventListener('visibilitychange',visibility);}
  const finish=()=>{if(dead)return;cleanup();onDone();};
  const next=()=>{if(!ready||dead)return;if(index===ACT_THREE_SHOTS.length-1){finish();return;}index++;elapsed=0;last=null;show();};
  // Advance one utterance at a time; this control never skips another speaker in a shot.
- const advanceLine=()=>{if(!ready)return;const nextCue=ACT_THREE_SHOTS[index].cues.find(c=>c.at>elapsed+.05);if(nextCue){sfx.stop();elapsed=nextCue.at;ACT_THREE_SHOTS[index].events.forEach((e,n)=>{if(e.at<elapsed)played.add(n);});paint();}else next();};
- const toggle=()=>{if(!ready)return;paused=!paused;pause.textContent=paused?'再生':'一時停止';pause.setAttribute('aria-pressed',String(paused));section.dataset.paused=String(paused);last=null;if(paused)sfx.stop();paint();};
- function click(e){const b=e.target.closest('button');if(!b)return;e.preventDefault();e.stopPropagation();if(b.hasAttribute('data-act3-skip'))finish();else if(b.hasAttribute('data-act3-pause'))toggle();else if(b.hasAttribute('data-act3-retry'))load();else advanceLine();}
+ const advanceLine=()=>{if(!ready)return;const nextCue=ACT_THREE_SHOTS[index].cues.find(c=>c.at>elapsed+.05);if(nextCue){sfx.stop();voice?.stop();elapsed=nextCue.at;ACT_THREE_SHOTS[index].events.forEach((e,n)=>{if(e.at<elapsed)played.add(n);});paint();}else next();};
+ const toggle=()=>{if(!ready)return;paused=!paused;pause.textContent=paused?'再生':'一時停止';pause.setAttribute('aria-pressed',String(paused));section.dataset.paused=String(paused);last=null;voice?.setSuspended(paused||document.hidden);if(paused)sfx.stop();paint();};
+ function click(e){const b=e.target.closest('button');if(!b)return;e.preventDefault();e.stopPropagation();voice?.unlock();if(b.hasAttribute('data-act3-skip'))finish();else if(b.hasAttribute('data-act3-pause'))toggle();else if(b.hasAttribute('data-act3-retry'))load();else advanceLine();}
  function key(e){if(e.repeat||e.target.closest('button'))return;if(e.code==='Space'){e.preventDefault();e.stopPropagation();toggle();}else if(['Enter','ArrowRight'].includes(e.code)){e.preventDefault();e.stopPropagation();advanceLine();}}
- function visibility(){last=null;if(document.hidden)sfx.stop();}
+ function visibility(){last=null;voice?.setSuspended(paused||document.hidden);if(document.hidden)sfx.stop();}
  function load(){const token=++version;ready=false;loading.hidden=false;loading.querySelector('span').textContent='画像を読み込んでいます…';loading.querySelector('button').hidden=true;
   Promise.all(ACT_THREE_SHOTS.filter(s=>s.image).map(s=>new Promise((resolve,reject)=>{const asset=new Image();asset.onload=async()=>{try{await asset.decode?.();decoded.set(s.image,asset);resolve();}catch(e){reject(e);}};asset.onerror=reject;asset.src=s.image;}))).then(()=>{if(dead||version!==token)return;ready=true;last=null;loading.hidden=true;show();}).catch(()=>{if(dead||version!==token)return;loading.querySelector('span').textContent='画像を読み込めませんでした';loading.querySelector('button').hidden=false;});
  }
- function tick(now){if(dead)return;const dt=last===null?0:Math.min(.1,(now-last)/1000);last=now;if(ready&&!paused&&!document.hidden){elapsed+=dt;for(const [n,e]of ACT_THREE_SHOTS[index].events.entries())if(elapsed>=e.at&&!played.has(n)){played.add(n);sfx.play(e.type);}paint();if(elapsed>=ACT_THREE_SHOTS[index].duration)next();}if(!dead)raf=requestAnimationFrame(tick);}
+ function tick(now){if(dead)return;const dt=last===null?0:Math.min(.1,(now-last)/1000);last=now;if(ready&&!paused&&!document.hidden){const cue=actThreeFrame(index,elapsed,reduced).cue;const step=cue&&voice?.busy?Math.min(dt,Math.max(0,cue.end-elapsed-.001)):dt;elapsed+=step;for(const [n,e]of ACT_THREE_SHOTS[index].events.entries())if(elapsed>=e.at&&!played.has(n)){played.add(n);sfx.play(e.type);}paint();if(elapsed>=ACT_THREE_SHOTS[index].duration)next();}if(!dead)raf=requestAnimationFrame(tick);}
  section.addEventListener('click',click);section.addEventListener('keydown',key);document.addEventListener('visibilitychange',visibility);section.focus({preventScroll:true});load();raf=requestAnimationFrame(tick);return cleanup;
 }
 export function actThreeTitleFrame(t){return {number:Math.min(1,Math.max(0,(t-.6)/.8)),title:Math.min(1,Math.max(0,(t-1.7)/.35)),black:Math.min(1,Math.max(0,(t-5.5)/1.2)),finished:t>=7};}

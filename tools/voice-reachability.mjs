@@ -1,3 +1,4 @@
+import {ACT_THREE_SHOTS} from '../src/act-three-prologue.js';
 import {createActOne,advanceActOne,answerActOne,getActOneChoices,rewindBeforeFire} from '../src/act-one.js';
 import {beginActTwo,advanceActTwo,answerActTwo,actTwoChoices,rewindActTwo,resumeActTwoRewind} from '../src/act-two.js';
 import {resumeStoryRewind} from '../src/story-checkpoints.js';
@@ -13,7 +14,7 @@ export function tracePlayableVoiceLines(manifest){
  const lines=new Map(),seen=new Set();let states=0;
  const add=(entries,chapter,source)=>{
   for(const [index,original] of (entries||[]).entries()){
-   if(original.silent||!['manager','cat','hostess'].includes(voiceSpeaker(original)))continue;
+   if(original.silent||!['manager','cat','hostess','announcer'].includes(voiceSpeaker(original)))continue;
    const line=chapter===2?{...original,voiceChapter:2}:original;
    const preferred=voiceLineKey(line),fallback=voiceLineKey(original);
    // Match voice-player's chapter lookup and its unscoped recording fallback.
@@ -32,6 +33,7 @@ export function tracePlayableVoiceLines(manifest){
  for(const beat of OBSERVATION_BEATS)add(beat.lines,1,'observation/'+beat.id);
  for(const beat of ACT_TWO_OBSERVATION_BEATS)add(beat.lines,2,'observation/'+beat.id);
  for(const shot of ACT_TWO_OPENING_SCENES)add(shot.cues,2,'film/'+shot.shot);
+ for(const shot of ACT_THREE_SHOTS)add(shot.cues,3,'act3/film/'+shot.id);
  const walk=(state,chapter,path)=>{
   if(++states>10000)throw Error('Voice reachability exceeded the bounded story graph');
   events(state,chapter,path);

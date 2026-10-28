@@ -21,7 +21,7 @@ test('the voice review catalog contains only current playable lines and content 
  const reachable=tracePlayableVoiceLines(VOICE_MANIFEST);
  const rows=extractCompleteVoiceScript().filter(row=>reachable.lines.has(row.lineKey));assert.equal(VOICE_REVIEW_CATALOG.length,rows.length);
  assert.deepEqual(new Set(VOICE_REVIEW_CATALOG.map(r=>r.id)),new Set(rows.map(r=>r.lineKey)));
- for(const r of VOICE_REVIEW_CATALOG){assert.match(r.version,/^[a-f0-9]{20}$/);assert.ok([1,2].includes(r.chapter));assert.ok(r.sceneLabel);}
+ for(const r of VOICE_REVIEW_CATALOG){assert.match(r.version,/^[a-f0-9]{20}$/);assert.ok([1,2,3].includes(r.chapter));assert.ok(r.sceneLabel);}
  assert.ok(VOICE_REVIEW_CATALOG.some(r=>r.scene==='2:observation2'));
 });
 
@@ -141,7 +141,7 @@ test('old inner-voice speaker spelling migrates without losing a saved note',()=
  voiceReviewMark(state,r,{status:'ng',issues:['quiet'],note:'心の声が小さい'});state.records[r.id].speaker='大家（心の声）';
  const storage=memory();storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));const restored=voiceReviewLoad(storage);
  assert.equal(restored.warning,'');assert.equal(restored.state.records[r.id].speaker,'manager');assert.equal(restored.state.records[r.id].note,'心の声が小さい');
- assert.ok(VOICE_REVIEW_CATALOG.every(r=>['manager','cat','hostess'].includes(r.line.speaker)));
+ assert.ok(VOICE_REVIEW_CATALOG.every(r=>['manager','cat','hostess','announcer'].includes(r.line.speaker)));
 });
 
 test('imported catalog identities cannot inject a speaker attribute into removed-line history',()=>{

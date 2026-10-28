@@ -711,6 +711,18 @@
         "similarity_boost": 0.75,
         "speed": 1.08
       }
+    },
+    "act3-urgent": {
+      "direction": "危機に直面し切迫した声を明瞭に前へ出す。囁かず、コミカルにしない",
+      "tags": [
+        "[urgent]",
+        "[serious]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "speed": 1.0
+      }
     }
   }
 }

@@ -1,3 +1,4 @@
+import {ACT_THREE_SHOTS} from '../src/act-three-prologue.js';
 import {DUEL_ROUNDS,duelChoices,duelEncounterLines,duelReplyLines,duelEndingLines} from '../src/act-two-duel.js';
 import {ACT_TWO_OBSERVATION_BEATS} from '../src/act-two-observation.js';
 import {secondActLife,secondActChat,lunaMutters} from '../src/act-two-life.js';
@@ -21,21 +22,25 @@ export function extractCompleteVoiceScript(){
     const lines=[...(!chat?.observationId?chat?.lines||[]:[]).map(([speaker,text])=>({speaker,text})),...lunaMutters(state).map(text=>({speaker:'hostess',text}))];
     for(const line of lines)ambient.push({source:'act2/ambient/complete',line,speaker:voiceSpeaker(line)});
   }
-  const rows=[...extractVoiceScript('all'),...extractVoiceScript('act2-trouble1'),...ambient].map(row=>{
+  const rows=[...extractVoiceScript('all'),...extractVoiceScript('act2-trouble1'),...extractVoiceScript('act3-prologue'),...ambient].map(row=>{
     const line=row.source.startsWith('act2/')?{...row.line,voiceChapter:2}:row.line;
     return {...row,line,lineKey:voiceLineKey(line),performance:voicePerformance(line)};
   });
   return [...new Map(rows.map(row=>[row.lineKey,row])).values()];
 }
 export function extractVoiceScript(scope='intro') {
-  if(!['intro','act1','act2','act2-trouble1','act2-duel','all'].includes(scope))throw Error('Unknown scope');
+  if(!['intro','act1','act2','act2-trouble1','act2-duel','act3-prologue','all'].includes(scope))throw Error('Unknown scope');
   const result=[];
   const add=(source,lines)=>lines.forEach((line,index)=>{
     if(line.silent)return;
     if(scope==='act2-trouble1')line={...line,voiceChapter:2};
     const speaker=voiceSpeaker(line);
-    if(['cat','manager','hostess'].includes(speaker))result.push({source:source+':'+index,line,speaker,performance:voicePerformance(line),lineKey:voiceLineKey(line)});
+    if(['cat','manager','hostess','announcer'].includes(speaker))result.push({source:source+':'+index,line,speaker,performance:voicePerformance(line),lineKey:voiceLineKey(line)});
   });
+  if(scope==='act3-prologue'){
+    for(const shot of ACT_THREE_SHOTS)add('act3/film/'+shot.id,shot.cues);
+    return result;
+  }
   if(scope==='act2-duel'){
     for(let round=0;round<4;round++){
       add('act2/duel/round-'+round,duelEncounterLines(round));

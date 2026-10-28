@@ -16,6 +16,11 @@
       "voiceId": "0sLdAOQEyDDSrsr4uwND",
       "voiceName": "Tsuyuri - Warm & Intimate",
       "status": "selected-verified"
+    },
+    "announcer": {
+      "name": "アナウンサー",
+      "voiceId": "CtUbzbpXB2NakSL8sYID",
+      "status": "selected-for-act-three"
     }
   }
 }

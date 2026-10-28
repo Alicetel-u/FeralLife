@@ -9405,5 +9405,131 @@ export const VOICE_MANIFEST = {
       "fadeInSeconds": 0.004,
       "fadeOutSeconds": 0.016
     }
+  },
+  "[\"announcer\",\"緊急速報です！ 各地で原因不明の暴動が発生！\",\"act3-urgent\",false]": {
+    "file": "assets/voices/5726de75e07799b69754fb8ae92c18c8da46c616c21f4d87bc4045d0f980644c.mp3",
+    "hash": "5726de75e07799b69754fb8ae92c18c8da46c616c21f4d87bc4045d0f980644c",
+    "source": "act3/film/news:0",
+    "speaker": "announcer",
+    "text": "緊急速報です！ 各地で原因不明の暴動が発生！",
+    "performance": "act3-urgent",
+    "model": "eleven_v3"
+  },
+  "[\"announcer\",\"感染は世界各国に拡大し、政府は――\",\"act3-urgent\",false]": {
+    "file": "assets/voices/a39f5de9e3e99ee458cb3f0d7b4ed2f659531e5b4a7f713ba29cd70835bc609e.mp3",
+    "hash": "a39f5de9e3e99ee458cb3f0d7b4ed2f659531e5b4a7f713ba29cd70835bc609e",
+    "source": "act3/film/news:1",
+    "speaker": "announcer",
+    "text": "感染は世界各国に拡大し、政府は――",
+    "performance": "act3-urgent",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"まだ来るニャ！！\",\"act3-urgent\",false]": {
+    "file": "assets/voices/b46be6ff3d647fbdac2225cf52483de24c6025f52ce2d90c22723fedcb863dd8.mp3",
+    "hash": "b46be6ff3d647fbdac2225cf52483de24c6025f52ce2d90c22723fedcb863dd8",
+    "source": "act3/film/defend:0",
+    "speaker": "cat",
+    "text": "まだ来るニャ！！",
+    "performance": "act3-urgent",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"多すぎるって！！\",\"act3-urgent\",false]": {
+    "file": "assets/voices/7fdc45fb25fdfef97f77e4907a0941965349f1f5a030eb54328ed7102910ccb9.mp3",
+    "hash": "7fdc45fb25fdfef97f77e4907a0941965349f1f5a030eb54328ed7102910ccb9",
+    "source": "act3/film/defend:1",
+    "speaker": "hostess",
+    "text": "多すぎるって！！",
+    "performance": "act3-urgent",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"下がってろ！！\",\"act3-urgent\",false]": {
+    "file": "assets/voices/dd5fa00b055145c2a712ed59e9885aed1b32dd5deefacd01bbfbcf89a3bac0a5.mp3",
+    "hash": "dd5fa00b055145c2a712ed59e9885aed1b32dd5deefacd01bbfbcf89a3bac0a5",
+    "source": "act3/film/defend:2",
+    "speaker": "manager",
+    "text": "下がってろ！！",
+    "performance": "act3-urgent",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"……弾切れか\",\"act3-urgent\",false]": {
+    "file": "assets/voices/3ea0a0ad9aa3b1d254d5d3d07b4260433c31d7e286bf4eb5f31e3aeac082d5fe.mp3",
+    "hash": "3ea0a0ad9aa3b1d254d5d3d07b4260433c31d7e286bf4eb5f31e3aeac082d5fe",
+    "source": "act3/film/empty:0",
+    "speaker": "manager",
+    "text": "……弾切れか",
+    "performance": "act3-urgent",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"減ってないニャ！！\",\"act3-urgent\",false]": {
+    "file": "assets/voices/2b5c8b93763fb71a16a6055617af885dffc5218bb1ba80df80234e3d0f1473b9.mp3",
+    "hash": "2b5c8b93763fb71a16a6055617af885dffc5218bb1ba80df80234e3d0f1473b9",
+    "source": "act3/film/horde:0",
+    "speaker": "cat",
+    "text": "減ってないニャ！！",
+    "performance": "act3-urgent",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"もう無理！！\",\"act3-urgent\",false]": {
+    "file": "assets/voices/bf96eba81c0095eb075e7ac6ce9b986c61c31d6f76edf500a4359c475a8f59d2.mp3",
+    "hash": "bf96eba81c0095eb075e7ac6ce9b986c61c31d6f76edf500a4359c475a8f59d2",
+    "source": "act3/film/horde:1",
+    "speaker": "hostess",
+    "text": "もう無理！！",
+    "performance": "act3-urgent",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"モク、ルナ。裏から行け\",\"act3-urgent\",false]": {
+    "file": "assets/voices/14dfb43e9cbdda34a08884db17f7e00c8404bed90dba7dbe418cc1aa1872920b.mp3",
+    "hash": "14dfb43e9cbdda34a08884db17f7e00c8404bed90dba7dbe418cc1aa1872920b",
+    "source": "act3/film/escape:0",
+    "speaker": "manager",
+    "text": "モク、ルナ。裏から行け",
+    "performance": "act3-urgent",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"大家さんは！？\",\"act3-urgent\",false]": {
+    "file": "assets/voices/4ffbd22f5dd291ff7155df7eb7a2370e9af5ecd1c006530d0148e2aa943dd9b6.mp3",
+    "hash": "4ffbd22f5dd291ff7155df7eb7a2370e9af5ecd1c006530d0148e2aa943dd9b6",
+    "source": "act3/film/escape:1",
+    "speaker": "hostess",
+    "text": "大家さんは！？",
+    "performance": "act3-urgent",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"俺が止める\",\"act3-urgent\",false]": {
+    "file": "assets/voices/f30965a6d265d2570eebdd1997fb07197b0f12b585165b92f70e864027099c51.mp3",
+    "hash": "f30965a6d265d2570eebdd1997fb07197b0f12b585165b92f70e864027099c51",
+    "source": "act3/film/escape:2",
+    "speaker": "manager",
+    "text": "俺が止める",
+    "performance": "act3-urgent",
+    "model": "eleven_v3"
+  },
+  "[\"cat\",\"無茶だニャ！！\",\"act3-urgent\",false]": {
+    "file": "assets/voices/a5ae5cf2d09353a53342838c2fa5a65024edd654bd0c0ea5591172b8eec1d6ca.mp3",
+    "hash": "a5ae5cf2d09353a53342838c2fa5a65024edd654bd0c0ea5591172b8eec1d6ca",
+    "source": "act3/film/escape:3",
+    "speaker": "cat",
+    "text": "無茶だニャ！！",
+    "performance": "act3-urgent",
+    "model": "eleven_v3"
+  },
+  "[\"manager\",\"いいから行け！！\",\"act3-urgent\",false]": {
+    "file": "assets/voices/18404c652b6be852a08654b7d52b9d71fd17eef8eaf035899c3f2db712a04d89.mp3",
+    "hash": "18404c652b6be852a08654b7d52b9d71fd17eef8eaf035899c3f2db712a04d89",
+    "source": "act3/film/escape:4",
+    "speaker": "manager",
+    "text": "いいから行け！！",
+    "performance": "act3-urgent",
+    "model": "eleven_v3"
+  },
+  "[\"hostess\",\"大家さん！！\",\"act3-urgent\",false]": {
+    "file": "assets/voices/50c405e16a0172eb17b4cca590288d5f61aad2922f82d9c4af73eefd3735a73a.mp3",
+    "hash": "50c405e16a0172eb17b4cca590288d5f61aad2922f82d9c4af73eefd3735a73a",
+    "source": "act3/film/knife:0",
+    "speaker": "hostess",
+    "text": "大家さん！！",
+    "performance": "act3-urgent",
+    "model": "eleven_v3"
   }
 };

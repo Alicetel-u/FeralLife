@@ -654,7 +654,7 @@ function showActThree(){
   if(progress.phase==='title'){showActThreeTitle();return;}
   if(progress.phase==='clock'){showActThreeClock();return;}
   eventView=null;openModal(actThreeHTML());
-  stopOpeningPrologue=startActThree(modal,()=>{state.actThree={phase:'clock',shot:0};save();showActThreeClock();},{settings:normalBgm,shared:()=>characterVoice.audioContext(),initialShot:progress.shot,onShot:shot=>{state.actThree={phase:'film',shot};save();}});
+  stopOpeningPrologue=startActThree(modal,()=>{state.actThree={phase:'clock',shot:0};save();showActThreeClock();},{settings:normalBgm,shared:()=>characterVoice.audioContext(),voice:characterVoice,initialShot:progress.shot,onShot:shot=>{state.actThree={phase:'film',shot};save();}});
 }
 function showActThreeClock(){
   openModal(rewindTransitionHTML('',1,true,3,true));

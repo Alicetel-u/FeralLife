@@ -12868,6 +12868,258 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 2
     },
     "version": "524772e721eb366848e8"
+  },
+  {
+    "id": "[\"cat\",\"まだ来るニャ！！\",\"act3-urgent\",false]",
+    "reviewId": "b5e89adda5326447",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:opening",
+    "sceneLabel": "プロローグ・オープニング",
+    "order": 10,
+    "source": "act3/film/defend:0",
+    "line": {
+      "speaker": "cat",
+      "text": "まだ来るニャ！！",
+      "at": 0.3,
+      "end": 2.6,
+      "voicePerformance": "act3-urgent"
+    },
+    "version": "3972185e141216a74c71"
+  },
+  {
+    "id": "[\"hostess\",\"多すぎるって！！\",\"act3-urgent\",false]",
+    "reviewId": "05ea81845b90ba77",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:opening",
+    "sceneLabel": "プロローグ・オープニング",
+    "order": 10,
+    "source": "act3/film/defend:1",
+    "line": {
+      "speaker": "hostess",
+      "text": "多すぎるって！！",
+      "at": 2.7,
+      "end": 5,
+      "voicePerformance": "act3-urgent"
+    },
+    "version": "a45a238452528963e3bf"
+  },
+  {
+    "id": "[\"manager\",\"下がってろ！！\",\"act3-urgent\",false]",
+    "reviewId": "91a95774d4b28402",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:opening",
+    "sceneLabel": "プロローグ・オープニング",
+    "order": 10,
+    "source": "act3/film/defend:2",
+    "line": {
+      "speaker": "manager",
+      "text": "下がってろ！！",
+      "at": 5.1,
+      "end": 7.6,
+      "voicePerformance": "act3-urgent"
+    },
+    "version": "0e0272ad83381421a7cb"
+  },
+  {
+    "id": "[\"manager\",\"……弾切れか\",\"act3-urgent\",false]",
+    "reviewId": "f74e6813ee1eca4f",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:opening",
+    "sceneLabel": "プロローグ・オープニング",
+    "order": 10,
+    "source": "act3/film/empty:0",
+    "line": {
+      "speaker": "manager",
+      "text": "……弾切れか",
+      "at": 0.65,
+      "end": 3.5,
+      "voicePerformance": "act3-urgent"
+    },
+    "version": "396e525e9d5595de18cd"
+  },
+  {
+    "id": "[\"manager\",\"モク、ルナ。裏から行け\",\"act3-urgent\",false]",
+    "reviewId": "4bb96681acfe7def",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:opening",
+    "sceneLabel": "プロローグ・オープニング",
+    "order": 10,
+    "source": "act3/film/escape:0",
+    "line": {
+      "speaker": "manager",
+      "text": "モク、ルナ。裏から行け",
+      "at": 0.3,
+      "end": 3.3,
+      "voicePerformance": "act3-urgent"
+    },
+    "version": "314c7e9e7d75ab315e70"
+  },
+  {
+    "id": "[\"hostess\",\"大家さんは！？\",\"act3-urgent\",false]",
+    "reviewId": "518514c54bffe1dd",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:opening",
+    "sceneLabel": "プロローグ・オープニング",
+    "order": 10,
+    "source": "act3/film/escape:1",
+    "line": {
+      "speaker": "hostess",
+      "text": "大家さんは！？",
+      "at": 3.4,
+      "end": 5.8,
+      "voicePerformance": "act3-urgent"
+    },
+    "version": "816a4ec251abb224ce03"
+  },
+  {
+    "id": "[\"manager\",\"俺が止める\",\"act3-urgent\",false]",
+    "reviewId": "4be7bad180367b4f",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:opening",
+    "sceneLabel": "プロローグ・オープニング",
+    "order": 10,
+    "source": "act3/film/escape:2",
+    "line": {
+      "speaker": "manager",
+      "text": "俺が止める",
+      "at": 5.9,
+      "end": 8.1,
+      "voicePerformance": "act3-urgent"
+    },
+    "version": "39c1e336a7853fe8805c"
+  },
+  {
+    "id": "[\"cat\",\"無茶だニャ！！\",\"act3-urgent\",false]",
+    "reviewId": "ee3e457d3e9c79c9",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:opening",
+    "sceneLabel": "プロローグ・オープニング",
+    "order": 10,
+    "source": "act3/film/escape:3",
+    "line": {
+      "speaker": "cat",
+      "text": "無茶だニャ！！",
+      "at": 8.2,
+      "end": 10.5,
+      "voicePerformance": "act3-urgent"
+    },
+    "version": "6f0730741f7ed5c2afeb"
+  },
+  {
+    "id": "[\"manager\",\"いいから行け！！\",\"act3-urgent\",false]",
+    "reviewId": "333ad7064f6668cc",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:opening",
+    "sceneLabel": "プロローグ・オープニング",
+    "order": 10,
+    "source": "act3/film/escape:4",
+    "line": {
+      "speaker": "manager",
+      "text": "いいから行け！！",
+      "at": 10.6,
+      "end": 13.8,
+      "voicePerformance": "act3-urgent"
+    },
+    "version": "227b319eba83d75530d0"
+  },
+  {
+    "id": "[\"cat\",\"減ってないニャ！！\",\"act3-urgent\",false]",
+    "reviewId": "7f7d8732f9359e48",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:opening",
+    "sceneLabel": "プロローグ・オープニング",
+    "order": 10,
+    "source": "act3/film/horde:0",
+    "line": {
+      "speaker": "cat",
+      "text": "減ってないニャ！！",
+      "at": 0.4,
+      "end": 3,
+      "voicePerformance": "act3-urgent"
+    },
+    "version": "1fa1150ac0962c939129"
+  },
+  {
+    "id": "[\"hostess\",\"もう無理！！\",\"act3-urgent\",false]",
+    "reviewId": "d9408b2d630eb3b2",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:opening",
+    "sceneLabel": "プロローグ・オープニング",
+    "order": 10,
+    "source": "act3/film/horde:1",
+    "line": {
+      "speaker": "hostess",
+      "text": "もう無理！！",
+      "at": 3.1,
+      "end": 5.8,
+      "voicePerformance": "act3-urgent"
+    },
+    "version": "24cea331e8bc5489d173"
+  },
+  {
+    "id": "[\"hostess\",\"大家さん！！\",\"act3-urgent\",false]",
+    "reviewId": "e7d8ebe73f4d55c8",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:opening",
+    "sceneLabel": "プロローグ・オープニング",
+    "order": 10,
+    "source": "act3/film/knife:0",
+    "line": {
+      "speaker": "hostess",
+      "text": "大家さん！！",
+      "at": 0.6,
+      "end": 3.3,
+      "voicePerformance": "act3-urgent"
+    },
+    "version": "a203fc69b9603e31e9d2"
+  },
+  {
+    "id": "[\"announcer\",\"緊急速報です！ 各地で原因不明の暴動が発生！\",\"act3-urgent\",false]",
+    "reviewId": "92c3464a49cb426f",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:opening",
+    "sceneLabel": "プロローグ・オープニング",
+    "order": 10,
+    "source": "act3/film/news:0",
+    "line": {
+      "speaker": "announcer",
+      "text": "緊急速報です！ 各地で原因不明の暴動が発生！",
+      "at": 0.3,
+      "end": 4.4,
+      "voicePerformance": "act3-urgent"
+    },
+    "version": "1e56c4334ccdaff8bdd5"
+  },
+  {
+    "id": "[\"announcer\",\"感染は世界各国に拡大し、政府は――\",\"act3-urgent\",false]",
+    "reviewId": "9b299a6786a64325",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:opening",
+    "sceneLabel": "プロローグ・オープニング",
+    "order": 10,
+    "source": "act3/film/news:1",
+    "line": {
+      "speaker": "announcer",
+      "text": "感染は世界各国に拡大し、政府は――",
+      "at": 4.5,
+      "end": 8.35,
+      "voicePerformance": "act3-urgent"
+    },
+    "version": "f5c19d7d0b03c6b8c143"
   }
 ];
 // Historical short IDs are retained for import only, never for playback or review.

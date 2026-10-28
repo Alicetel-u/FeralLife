@@ -14,7 +14,7 @@ for(const row of extractCompleteVoiceScript()){
  const witness=reachable.lines.get(row.lineKey);
  const replaceSource=/\/freezer:|\/restart\/|\/ambient\/|\/ambient:|\/undefined:/.test(row.source);
  const s=replaceSource&&witness?witness.source:row.source;
- const chapter=s.startsWith('act2/')?2:1,l=row.line;
+ const chapter=s.startsWith('act3/')?3:s.startsWith('act2/')?2:1,l=row.line;
  if(!reachable.lines.has(row.lineKey)){
   // Keep short IDs importable for reports exported before this cleanup. This is
   // an identity index only: no recording, player row or review target is created.

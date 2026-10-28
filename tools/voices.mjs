@@ -93,7 +93,7 @@ if(!args.includes('--quiet'))console.table(report.rows.map((r,i)=>({no:i+1,sourc
 if(!args.includes('--quiet')&&pronunciationReview.length)console.table(pronunciationReview.map(issue=>({term:issue.term,reading:issue.reading,status:issue.status,lines:issue.sources.length})));
 console.log(JSON.stringify({scope,planId,model:config.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true}));
 if(!args.includes('--verify')&&!args.includes('--generate'))process.exit(0);
-const allowedGeneration=repairOnly||fillMissing||scope==='act2-trouble1'||scope==='act2-duel'||scope==='intro'||(scope==='act1'&&(['cat','manager'].includes(speaker)||firstTragedy)&&!sampleMoku&&!pronunciationOnly);
+const allowedGeneration=repairOnly||fillMissing||scope==='act2-trouble1'||scope==='act2-duel'||scope==='act3-prologue'||scope==='intro'||(scope==='act1'&&(['cat','manager'].includes(speaker)||firstTragedy)&&!sampleMoku&&!pronunciationOnly);
 if(args.includes('--generate')&&(!allowedGeneration||!args.includes('--approve='+planId)))throw Error('Generation requires an allowed scope and authorization of the current plan hash');
 function validateRecording(row){
  const probe=spawnSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',join(root,row.file)],{encoding:'utf8',windowsHide:true});
@@ -136,6 +136,7 @@ if(!args.includes('--generate'))process.exit(0);
 if(scope==='act2-trouble1'&&(unique.length>350||estimate>20000))throw Error('Abnormal trouble-one generation volume; review scope before spending');
 if(scope==='act2-duel'&&(unique.length>120||estimate>10000))throw Error('Abnormal mini-game generation volume; review scope before spending');
 if(fillMissing&&(unique.length>700||estimate>40000))throw Error('Abnormal missing-voice generation volume; review scope before spending');
+if(scope==='act3-prologue'&&(unique.length!==14||estimate>1000))throw Error('Unexpected chapter-three voice plan');
 if(pending.some(r=>!r.voiceId))throw Error('Missing voice ID');
 if(!Number.isFinite(before.remaining)||before.remaining<estimate)throw Error('Insufficient or unavailable balance');
 // Exclusive lock and durable intent BEFORE the charged call. An ambiguous failure
