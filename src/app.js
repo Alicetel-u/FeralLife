@@ -659,13 +659,23 @@ function showActThree(){
   if(progress.phase==='complete'){openModal(actThreeCompleteHTML());return;}
   if(progress.phase==='title'){showActThreeTitle();return;}
   if(progress.phase==='clock'){showActThreeClock();return;}
+  if(progress.phase==='bridge-rewind'){state.actThree=actThreeStoryDebug('store');save();showActThreeMap();return;}
   eventView=null;openModal(actThreeHTML());
   stopOpeningPrologue=startActThree(modal,()=>{state.actThree={phase:'clock',shot:0};save();showActThreeClock();},{settings:normalBgm,shared:()=>characterVoice.audioContext(),voice:silentPreview?null:characterVoice,silent:silentPreview,initialShot:progress.shot,onShot:shot=>{state.actThree={phase:'film',shot};save();syncNormalBgm();}});
 }
 function showActThreeMap(){
   const progress=state.actThree;
   eventView=null;openModal(actThreeMapHTML());
-  stopOpeningPrologue=startActThreeMap(modal,{story:true,initialProgress:progress,voice:silentPreview?null:characterVoice,bgm:normalBgm,silent:silentPreview,onProgress:progress=>{state.actThree=progress;save();},onScene:()=>syncNormalBgm(),onBack:()=>openModal(actThreeCompleteHTML())});
+  stopOpeningPrologue=startActThreeMap(modal,{story:true,initialProgress:progress,voice:silentPreview?null:characterVoice,bgm:normalBgm,silent:silentPreview,onProgress:progress=>{state.actThree=progress;save();},onScene:()=>syncNormalBgm(),onLoop:()=>{
+    normalBgm.setSuppressed(true);
+    state.actThree={phase:'bridge-rewind',mapStep:4};save();
+    openModal(rewindTransitionHTML('',1,true,3,true));
+    const sound=normalBgm.enabled;
+    stopFireEnding=startRewindTransition(modal.querySelector('.rewind-screen'),'',()=>{
+      normalBgm.setSuppressed(false);
+      state.actThree=actThreeStoryDebug('store');save();showActThreeMap();
+    },sound,1,17,true,normalBgm.clockAudio,sound?characterVoice.audioContext():null,{clockOnly:true});
+  },onBack:()=>openModal(actThreeCompleteHTML())});
 }
 function showActThreeClock(){
   openModal(rewindTransitionHTML('',1,true,3,true));
