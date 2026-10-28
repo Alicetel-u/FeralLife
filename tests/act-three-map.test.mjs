@@ -29,8 +29,9 @@ test('escape map requires crossing then bypass before store and bridge; all art 
  assert.equal(actThreeMapTravelDuration(3),8.4);
  assert.ok(actThreeMapTravelDuration(3,true)>actThreeMapTravelDuration(2,true));
  const route=actThreeMapHTML();
- for(const id of ['route-zombies-a','route-zombies-b','route-zombies-c','route-zombies-d','barricade-a','barricade-b','map-bypass-route','map-bypass-road','map-detour-exit'])assert.match(route,new RegExp(id));
+ for(const id of ['route-zombies-a','route-zombies-b','route-zombies-c','route-zombies-d',])assert.match(route,new RegExp(id));
  assert.equal(route.split('assets/events/chapter3/map-zombie.png').length-1,16);
+ for(const id of ['map-bypass-route','map-bypass-road','map-bypass-wall','map-detour-exit','map-route-road','map-route-barricade','map-route-debris'])assert.ok(!route.includes(id),id);
  let previous=1;for(let n=0;n<=100;n++){const f=actThreeMapTravel(1,2,n/100);assert.ok(f.position>=previous&&f.position<=2);previous=f.position;}
  assert.equal(actThreeMapTravel(1,2,1).finished,true);assert.equal(actThreeMapTravel(1,2,-1).position,1);
 });
@@ -54,7 +55,7 @@ test('map saves only arrival, pauses motion, resumes bypass and cleans up callba
   click('data-map-next');tick(0);for(let n=1;n<15;n++)tick(n*50);assert.deepEqual(saved,[]);
   assert.equal(section.dataset.travelDirection,'up');
   assert.ok(section.querySelector('.map-world').style.transform.startsWith('translate3d(-380px,'));
-  assert.ok(parseFloat(section.querySelector('.map-bypass-route').style.width)>200);
+  assert.equal(section.dataset.travelDirection,'up');
   const partyAtPause=section.querySelector('.map-party').style.transform;
   click('data-map-pause');const before=section.querySelector('.map-world').style.transform;
   for(let n=15;n<80;n++)tick(n*50);
