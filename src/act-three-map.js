@@ -1,3 +1,4 @@
+import {ACT_THREE_COLLAPSE_ART,ACT_THREE_COLLAPSE_HOLD,actThreeCollapseFrame,actThreeCollapseHTML} from './act-three-collapse.js';
 import {chapterDialogueControlsHTML,createChapterDialogueControls} from './dialogue-controls.js';
 import {EVENT_EXPRESSIONS} from './character-art.js';
 import {eventStageHTML} from './event-stage.js';
@@ -12,7 +13,7 @@ export const ACT_THREE_MAP_PLACES=[
 ];
 export const ACT_THREE_MAP_EXPLOSION='assets/events/chapter3/map-explosion-v1.png';
 export function actThreeMapVisualState(scene,line){
- return {hideCharacters:!!line?.hidePortraits||scene==='crossing'&&line?.speaker==='narrator'&&!!line.horde||scene==='detour'&&!!line?.explosion, crossing:scene==='crossing'&&!!line?.horde, explosion:scene==='detour'?(line?.explosion?'blast':line?.aftermath?'smoke':'idle'):'none'};
+ return {collapse:scene==='bridge'&&!!line?.collapse,hideCharacters:scene==='bridge'&&!!line?.collapse||!!line?.hidePortraits||scene==='crossing'&&line?.speaker==='narrator'&&!!line.horde||scene==='detour'&&!!line?.explosion, crossing:scene==='crossing'&&!!line?.horde, explosion:scene==='detour'?(line?.explosion?'blast':line?.aftermath?'smoke':'idle'):'none'};
 }
 export const ACT_THREE_MAP_ZOMBIE='assets/events/chapter3/map-zombie.png';
 export const ACT_THREE_MAP_CAST=[
@@ -43,12 +44,13 @@ export function actThreeMapHTML(){return `<section class="act-screen act3-map" d
   <div class="map-route-zombies route-zombies-b">${[0,1,2].map(i=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--walker:${i}" draggable="false">`).join('')}</div>
   <div class="map-route-zombies route-zombies-c">${[0,1].map(i=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--walker:${i}" draggable="false">`).join('')}</div>
   <div class="map-route-zombies route-zombies-d">${[0,1,2].map(i=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--walker:${i}" draggable="false">`).join('')}</div>
-</div></div><div class="map-explosion-effect" aria-hidden="true"><div class="map-explosion-light"></div><img class="map-explosion-sticker" src="${ACT_THREE_MAP_EXPLOSION}" alt="" draggable="false"><div class="map-explosion-smoke"></div></div><div class="map-party" aria-label="大家、モク、ルナ">${ACT_THREE_MAP_CAST.map((c,i)=>`<div class="map-companion map-companion-${c.id}" style="--member:${i}"><img src="${c.image}" alt="${c.name}" draggable="false"></div>`).join('')}</div><div class="map-loading" role="status"><span>マップを読み込んでいます…</span><button type="button" data-map-retry hidden>再読み込み</button></div></div><img class="map-scene-backdrop" alt="荒らされたコンビニの店内" hidden><div class="map-dialogue act3-dialogue" data-renderer="event-stage" hidden></div>${chapterDialogueControlsHTML()}<div class="map-panel"><div class="map-status visually-hidden"><strong data-map-location>けもの荘</strong><p data-map-status role="status" aria-live="polite"></p></div><nav class="map-actions" aria-label="移動操作"><button type="button" data-map-next class="map-next" disabled>交差点へ <span aria-hidden="true">➜</span></button><button type="button" data-map-pause hidden>一時停止</button><button type="button" data-map-finish class="map-next" hidden>ここまでを読み終える</button><button type="button" data-map-reset hidden>もう一度移動する</button><button type="button" data-map-back>戻る</button></nav></div></section>`;}
+</div></div><div class="map-explosion-effect" aria-hidden="true"><div class="map-explosion-light"></div><img class="map-explosion-sticker" src="${ACT_THREE_MAP_EXPLOSION}" alt="" draggable="false"><div class="map-explosion-smoke"></div></div><div class="map-party" aria-label="大家、モク、ルナ">${ACT_THREE_MAP_CAST.map((c,i)=>`<div class="map-companion map-companion-${c.id}" style="--member:${i}"><img src="${c.image}" alt="${c.name}" draggable="false"></div>`).join('')}</div><div class="map-loading" role="status"><span>マップを読み込んでいます…</span><button type="button" data-map-retry hidden>再読み込み</button></div></div><img class="map-scene-backdrop" alt="荒らされたコンビニの店内" hidden>${actThreeCollapseHTML()}<div class="map-dialogue act3-dialogue" data-renderer="event-stage" hidden></div>${chapterDialogueControlsHTML()}<div class="map-panel"><div class="map-status visually-hidden"><strong data-map-location>けもの荘</strong><p data-map-status role="status" aria-live="polite"></p></div><nav class="map-actions" aria-label="移動操作"><button type="button" data-map-next class="map-next" disabled>交差点へ <span aria-hidden="true">➜</span></button><button type="button" data-map-pause hidden>一時停止</button><button type="button" data-map-finish class="map-next" hidden>ここまでを読み終える</button><button type="button" data-map-reset hidden>もう一度移動する</button><button type="button" data-map-back>戻る</button></nav></div></section>`;}
 export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=>{},story=false,initialProgress=null,onProgress=()=>{},voice=null,bgm=null,silent=false,onScene=()=>{},onLoop=()=>{}}={}){
  const section=root.querySelector('[data-act3-map]');if(!section)return ()=>{};
  const viewport=section.querySelector('.map-viewport'),world=section.querySelector('.map-world'),party=section.querySelector('.map-party'),zombies=section.querySelector('.map-zombies'),bridgeRoute=section.querySelector('.map-bridge-route');
  const next=section.querySelector('[data-map-next]'),pause=section.querySelector('[data-map-pause]'),reset=section.querySelector('[data-map-reset]'),status=section.querySelector('[data-map-status]'),loading=section.querySelector('.map-loading');
- const dialogue=section.querySelector('.map-dialogue'),backdrop=section.querySelector('.map-scene-backdrop');
+ const dialogue=section.querySelector('.map-dialogue'),backdrop=section.querySelector('.map-scene-backdrop'),collapseScene=section.querySelector('.bridge-collapse-scene');
+ let collapseActive=false,collapseAge=0,collapseReady=false;
  let progress=story?actThreeStoryProgress(initialProgress):null,shownLine=null;
  const publish=()=>{if(story)onProgress(actThreeStorySave(progress));};
  const reduced=globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches===true;
@@ -88,10 +90,13 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   section.dataset.dialogue=String(!!scene&&ready);
   section.querySelector('.map-panel').hidden=!!scene;
   backdrop.hidden=true;
-  if(!scene||!ready){section.dataset.collapse='false';section.dataset.explosion='none';section.dataset.hordeCrossing='false';section.dataset.hidePortraits='false';if(shownLine){voice?.stop();shownLine=null;}section.dataset.scene='map';onScene('map');return;}
+  if(!scene||!ready){collapseActive=false;collapseAge=0;collapseReady=false;collapseScene.hidden=true;section.dataset.collapse='false';section.dataset.explosion='none';section.dataset.hordeCrossing='false';section.dataset.hidePortraits='false';if(shownLine){voice?.stop();shownLine=null;}section.dataset.scene='map';onScene('map');return;}
   const line=scene.lines[progress.cursor],inside=!!line.inside;
-  section.dataset.collapse=progress.scene==='bridge'&&line.collapse?'true':'false';
-  if(progress.scene==='bridge'&&line.collapse)bgm?.setSuppressed?.(true);
+  const collapsing=progress.scene==='bridge'&&!!line.collapse;
+  if(collapsing&&!collapseActive){collapseAge=0;collapseReady=false;}
+  collapseActive=collapsing;section.dataset.collapse=String(collapsing);
+  if(collapsing)bgm?.setSuppressed?.(true);
+  paintCollapse();
   const visual=actThreeMapVisualState(progress.scene,line);
   section.dataset.explosion=visual.explosion;section.dataset.hordeCrossing=String(visual.crossing);section.dataset.hidePortraits=String(visual.hideCharacters);
   section.dataset.scene=inside?'mimi':progress.scene;
@@ -104,10 +109,11 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   if(line.speaker==='rabbit')dialogue.querySelector('.speaker-name').textContent='ミミ';
 
   if(shownLine!==line){shownLine=line;voice?.stop();if(line.speaker!=='narrator')voice?.play(line,'act3-map:'+progress.scene+':'+progress.cursor);}
-  onScene(inside?'mimi':'map');
+  onScene(inside?'mimi':'map');controls.refresh();
  };
+ const paintCollapse=()=>{collapseScene.hidden=!collapseActive;if(!collapseActive)return;const frame=actThreeCollapseFrame(collapseAge,reduced);collapseScene.dataset.phase=frame.phase;collapseScene.querySelector('.bridge-collapse-frame').style.transform=frame.transform;const fall=collapseScene.querySelector('.bridge-collapse-fall'),after=collapseScene.querySelector('.bridge-collapse-after');fall.style.opacity=frame.fallOpacity;after.style.opacity=frame.afterOpacity;fall.hidden=frame.fallOpacity===0;after.hidden=frame.afterOpacity===0;};
  function advanceDialogue(back=false){
-  if(!story||!progress.scene||!ready)return;
+  if(!story||!progress.scene||!ready||!back&&collapseActive&&!actThreeCollapseFrame(collapseAge,reduced).ready)return;
   const scene=ACT_THREE_MAP_SCENES[progress.scene],pages=messagePages(scene.lines[progress.cursor].text);
   if(back){if(progress.page>0)progress.page--;else if(progress.cursor>0){progress.cursor--;progress.page=messagePages(scene.lines[progress.cursor].text).length-1;}}
   else if(progress.page<pages.length-1)progress.page++;
@@ -130,12 +136,13 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
  function visibility(){last=null;voice?.setSuspended(document.hidden);paint();}
  function tick(now){if(dead)return;const dt=last===null?0:Math.min(.05,(now-last)/1000);last=now;
   if(ready&&moving&&!paused&&!document.hidden){elapsed+=dt;const f=actThreeMapTravel(step,step+1,elapsed/actThreeMapTravelDuration(step,reduced));position=f.position;if(f.finished){step++;moving=false;elapsed=0;if(story){progress.step=step;progress.scene=step===1?'crossing':step===2?'detour':step===3?'store':step===4?'bridge':null;progress.cursor=0;progress.page=0;publish();}onArrival(step);}paint();}
+  if(ready&&collapseActive&&!document.hidden&&!controls.blocked){collapseAge=Math.min(ACT_THREE_COLLAPSE_HOLD,collapseAge+dt);paintCollapse();if(!collapseReady&&actThreeCollapseFrame(collapseAge,reduced).ready){collapseReady=true;controls.refresh();}}
   raf=requestAnimationFrame(tick);
  }
  function load(){const token=++version;ready=false;loading.hidden=false;loading.querySelector('button').hidden=true;
-  const sources=[...(story?[ACT_THREE_STORE_INTERIOR,...Object.values(EVENT_EXPRESSIONS.rabbit)]:[]),...ACT_THREE_MAP_PLACES.map(p=>p.image),ACT_THREE_MAP_ZOMBIE,ACT_THREE_MAP_EXPLOSION,...ACT_THREE_MAP_CAST.map(c=>c.image)];
+  const sources=[...(story?[ACT_THREE_STORE_INTERIOR,...Object.values(EVENT_EXPRESSIONS.rabbit)]:[]),...ACT_THREE_MAP_PLACES.map(p=>p.image),ACT_THREE_MAP_ZOMBIE,ACT_THREE_MAP_EXPLOSION,...Object.values(ACT_THREE_COLLAPSE_ART),...ACT_THREE_MAP_CAST.map(c=>c.image)];
   Promise.all(sources.map(src=>new Promise((resolve,reject)=>{const img=new Image();img.onload=async()=>{try{await img.decode?.();resolve();}catch(e){reject(e);}};img.onerror=reject;img.src=src;}))).then(()=>{if(dead||token!==version)return;ready=true;loading.hidden=true;publish();paint();}).catch(()=>{if(dead||token!==version)return;loading.querySelector('span').textContent='画像を読み込めませんでした';loading.querySelector('button').hidden=false;});
  }
- const controls=createChapterDialogueControls(section,{getState:()=>{const scene=progress?.scene?ACT_THREE_MAP_SCENES[progress.scene]:null;return {active:ready&&!!scene,canBack:progress?.cursor>0||progress?.page>0,last:!!scene&&progress.cursor===scene.lines.length-1,line:scene?.lines[progress.cursor],lines:scene?.lines};},onNext:()=>advanceDialogue(),onBack:()=>advanceDialogue(true),onSkip:()=>{if(!progress?.scene)return;progress.cursor=ACT_THREE_MAP_SCENES[progress.scene].lines.length-1;progress.page=messagePages(ACT_THREE_MAP_SCENES[progress.scene].lines[progress.cursor].text).length-1;publish();paint();},voice,bgm,silent,onBlock:blocked=>{section.dataset.effectsPaused=String(blocked);}});
+ const controls=createChapterDialogueControls(section,{getState:()=>{const scene=progress?.scene?ACT_THREE_MAP_SCENES[progress.scene]:null;return {active:ready&&!!scene,canAdvance:!collapseActive||actThreeCollapseFrame(collapseAge,reduced).ready,canBack:progress?.cursor>0||progress?.page>0,last:!!scene&&progress.cursor===scene.lines.length-1,line:scene?.lines[progress.cursor],lines:scene?.lines};},onNext:()=>advanceDialogue(),onBack:()=>advanceDialogue(true),onSkip:()=>{if(!progress?.scene)return;progress.cursor=ACT_THREE_MAP_SCENES[progress.scene].lines.length-1;progress.page=messagePages(ACT_THREE_MAP_SCENES[progress.scene].lines[progress.cursor].text).length-1;publish();paint();},voice,bgm,silent,onBlock:blocked=>{section.dataset.effectsPaused=String(blocked);}});
  section.addEventListener('click',click);section.addEventListener('keydown',key);document.addEventListener('visibilitychange',visibility);globalThis.addEventListener('resize',paint);section.focus({preventScroll:true});paint();load();raf=requestAnimationFrame(tick);return stop;
 }

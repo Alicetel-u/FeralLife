@@ -62,6 +62,9 @@ test('real map gates motion, reaches bridge collapse and initiates forced loop',
   click('data-map-next');move(60);
   assert.equal(saved.at(-1).mapStep,3);assert.equal(section.dataset.longTravel,'true');
   move(120);assert.equal(saved.at(-1).mapStep,4);assert.equal(saved.at(-1).mapScene,'bridge');
-  for(let n=0;n<20&&!looped;n++)click('data-dialogue-next');assert.equal(looped,1);
+  for(let n=0;n<6;n++)click('data-dialogue-next');assert.equal(section.dataset.collapse,'true');assert.equal(section.querySelector('[data-dialogue-next]').disabled,true);assert.doesNotMatch(section.querySelector('.map-dialogue').innerHTML,/<figure/);
+  for(let n=0;n<10;n++)click('data-dialogue-next');assert.equal(looped,0);
+  move(70);assert.equal(section.querySelector('[data-dialogue-next]').disabled,false);
+  for(let n=0;n<3&&!looped;n++)click('data-dialogue-next');assert.equal(looped,1);
  }finally{stop?.();for(const key of names){if(previous[key]===undefined)delete globalThis[key];else globalThis[key]=previous[key];}}
 });

@@ -6,10 +6,10 @@ import {mountVoiceReview} from './voice-review.js';
 import {playFourKingsNotice} from './act-two-observation-two.js';
 import {actTwoObservationPosition} from './act-two-observation.js';
 import {overnightMontageFrame} from './overnight-montage.js';
-import {resumeConversation,rememberConversation,clearConversation,continueDestination} from './conversation-progress.js?v=2026.10.24.5';
+import {resumeConversation,rememberConversation,clearConversation,continueDestination} from './conversation-progress.js?v=2026.10.29.1';
 import {refreshActTwoEpilogue} from './act-two-epilogue-script.js';
 import {actTwoEpilogueDirection,epilogueTransitionFor,actTwoEpilogueStageHTML,actTwoEpilogueCompleteHTML,prepareEpilogueAssets,startEpilogueTransition,playEpilogueSound} from './act-two-epilogue-stage.js';
-import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.24.5';
+import {duelStageHTML,duelBadHTML,playDuelCue,duelChoiceHTML,mountDuelPlayback} from './act-two-duel-stage.js?v=2026.10.29.1';
 import {failedChoiceKeys} from './choice-history.js';
 import {secondActLife} from './act-two-life.js';
 import {developerObservationBeats,createDeveloperObservation} from './debug-observation.js';
@@ -19,7 +19,7 @@ import {isFirstStalkerReply,firstStalkerStageHTML,prepareFirstStalkerAssets,need
 import { LUNA_MINI_EMOTIONS, MOKU_MINI_EMOTIONS } from './mini-emotions.js';
 import {isFirstFireReply,firstFireCut,firstFireStageHTML} from './first-fire-stage.js';
 import {clearLegacyObservationMemo,observationView,observationClockLimit,tickObservation,inheritObservation,firstActSleepClockReady} from './act-one-observation.js';
-import {createVoicePlayer} from './voice-player.js?v=2026.10.24.5';
+import {createVoicePlayer} from './voice-player.js?v=2026.10.29.1';
 const characterVoice=createVoicePlayer({chapter:()=>state?.actOne?.chapter});
 document.addEventListener('pointerdown',()=>characterVoice.unlock(),{capture:true});
 document.addEventListener('keydown',()=>characterVoice.unlock(),{capture:true});
@@ -31,8 +31,8 @@ import { avoidedTrouble, troubleAvoidedHTML, actOneCompleteHTML, startTroubleVic
 import { WorldRenderGate } from './render-policy.js';
 import { INITIAL_MOKU_LINES, openingPrologueHTML, startOpeningPrologue } from './opening-prologue.js';
 import { choiceUIHTML, mountChoiceUI } from './choice-ui.js';
-import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.24.5';
-import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, resumeActTwoRewind, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.24.5';
+import { actTwoOpeningHTML, startActTwoOpening } from './act-two-opening.js?v=2026.10.29.1';
+import { ACT_TWO_TITLE, ACT_TWO_EVENTS, actTwoChoices, actTwoChosen, beginActTwo, advanceActTwo, answerActTwo, rewindActTwo, resumeActTwoRewind, retireActTwoContract, refreshDuelYandereEnding } from './act-two.js?v=2026.10.29.1';
 import { rewindTransitionHTML, startRewindTransition } from './rewind-transition.js';
 import { startBadEndingEntry } from './bad-ending-entry.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
@@ -725,7 +725,7 @@ function showEnding() {
 function restart() {
   state=state.actOne?createActOne():createGame();restored=false;Object.assign(talk, createTalk(0));syncStageCursor();profileKey=null;lastEventId=0;endingShown=false;paused=false;autoFollow=true;renderer.reset();updateCamera();closeModal();updateRooms();updateUI();save();if(state.actOne){showOpening();}else toast('新しい観察記が始まりました。101号室には、いつもの猫。');
 }
-const BUILD_VERSION='2026.10.24.5';
+const BUILD_VERSION='2026.10.29.1';
 const buildTimestamp=document.querySelector('meta[name="build-updated"]')?.content;
 const BUILD_UPDATED=buildTimestamp&&buildTimestamp!=='local'?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(buildTimestamp))+' JST':'ローカル開発版';
 function debugMenuPage(title,subtitle,buttons,back){
@@ -767,17 +767,23 @@ function showDebugObservationSelect(chapter,page=0){
   modal.querySelector('.persona-debug-actions').insertAdjacentHTML('afterend',`<nav class="persona-debug-pagination" aria-label="観察モードのページ切り替え"><button type="button" class="persona-debug-page-button" data-debug-observation-page="${chapter}:${current-1}" ${current===0?'disabled':''}>◀　前へ</button><span class="persona-debug-page-counter">PAGE <strong>${current+1} / ${pages}</strong></span><button type="button" class="persona-debug-page-button persona-debug-page-next" data-debug-observation-page="${chapter}:${current+1}" ${current===pages-1?'disabled':''}>次へ　▶</button></nav>`);
   modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes');
 }
-function showDebugActThreeMap(){
-  debugMenuPage('第三幕｜街マップ','確認したい場面を選択してください。通常セーブには影響しません。',[
+function showDebugActThreeMap(page=0){
+  const entries=[
     ['departure','けもの荘・出発の会話','data-debug-act3-map-scene'],
     ['crossing','交差点・ゾンビを回避','data-debug-act3-map-scene'],
-    ['detour','裏道・コンビニへ移動前','data-debug-act3-map-scene'],
+    ['detour','裏道・トラック爆発','data-debug-act3-map-scene'],
     ['store','コンビニ到着・ミミとの出会い','data-debug-act3-map-scene'],
-    ['farewell','ミミとの別れ','data-debug-act3-map-scene']
-  ],'data-debug-chapters-back');
+    ['farewell','ミミとの別れ','data-debug-act3-map-scene'],
+    ['bridge','橋・脱出直前の会話','data-debug-act3-map-scene'],
+    ['collapse','橋・二人が倒れる瞬間','data-debug-act3-map-scene'],
+    ['return','コンビニ・死に戻り直後','data-debug-act3-map-scene']
+  ],pages=Math.ceil(entries.length/4),current=Math.min(pages-1,Math.max(0,page|0));
+  debugMenuPage('第三幕｜街マップ','確認したい場面を選択してください。通常セーブには影響しません。',entries.slice(current*4,current*4+4),'data-debug-chapters-back');
+  modal.querySelector('.persona-debug-actions').insertAdjacentHTML('afterend',`<nav class="persona-debug-pagination" aria-label="街マップのページ切り替え"><button class="persona-debug-page-button" data-debug-act3-map-page="${current-1}" ${current===0?'disabled':''}>◀ 前へ</button><span class="persona-debug-page-counter">${current+1} / ${pages}</span><button class="persona-debug-page-button" data-debug-act3-map-page="${current+1}" ${current===pages-1?'disabled':''}>次へ ▶</button></nav>`);
+  modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes');
 }
 function showDebugChapterSelect(){
-  debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter'],['3','第3幕 — 世界崩壊プロローグ','data-debug-act3'],['3-after','第3幕 — タイムリープ後・空き部屋','data-debug-act3-after'],['3-map','第3幕 — 街マップ・出発〜ミミとの別れ','data-debug-act3-map']], 'data-debug-tools-back');
+  debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter'],['3','第3幕 — 世界崩壊プロローグ','data-debug-act3'],['3-after','第3幕 — タイムリープ後・空き部屋','data-debug-act3-after'],['3-map','第3幕 — 街マップ・出発〜死に戻り','data-debug-act3-map']], 'data-debug-tools-back');
 }
 function showDebugSectionSelect(chapter){
   if(chapter!=='2'){showDebugSceneSelect(chapter);return;}
@@ -958,6 +964,7 @@ document.addEventListener('click',e=>{
   const button=e.target.closest('button');if(!button)return;
   if(button.hasAttribute('data-debug-hotspot')){const now=performance.now();debugTapCount=now-debugLastTap>2500?1:debugTapCount+1;debugLastTap=now;if(debugTapCount>=3){debugTapCount=0;showDeveloperMenu();}return;}
   if(button.hasAttribute('data-act3-map')){showActThreeMap();return;}
+  if(button.hasAttribute('data-debug-act3-map-page')){showDebugActThreeMap(Number(button.getAttribute('data-debug-act3-map-page')));return;}
   if(button.hasAttribute('data-debug-act3-map')){showDebugActThreeMap();return;}
   if(button.hasAttribute('data-debug-act3-map-scene')){const progress=actThreeStoryDebug(button.getAttribute('data-debug-act3-map-scene'));if(progress){developerMode=true;state.actThree=progress;showActThreeMap();}return;}
   if(button.hasAttribute('data-act3-replay')){state.actThree={phase:'film',shot:0};save();showActThree();return;}
@@ -1147,13 +1154,14 @@ function syncNormalBgm(){
   // Quiet film cuts reduce Foley only; keep the uneasy BGM continuous.
   const actThreeFilm=modal.open?modal.querySelector('[data-act3-film]'):null;
   const filmPaused=!!lunaFilm&&lunaFilm.dataset.paused==='true'||!!actThreeFilm&&actThreeFilm.dataset.paused==='true';
+  const actThreeCollapse=!!modal.querySelector('[data-act3-map][data-collapse="true"]');
   const actThreeQuiet=!!actThreeFilm&&actThreeFilm.dataset.cut==='white';
   const firstRewindUneasy=lunaFilm||!bad&&!clock&&!title&&!victory&&!trouble&&['rewind','act2-rewind'].includes(activeDialogue?.actScene)&&state.actOne?.attempt===2&&state.actOne?.rewindIntroPending;
   // Luna's theme holds through her shared conversations with Moku.
   // Dedicated scene cues take precedence over character themes.
   const lunaVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="hostess"]');
   const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
-  return normalBgm.setScene(!!modal.querySelector('[data-act3-title],[data-act3-after],.act3-complete')||actThreeQuiet||document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), modal.querySelector('[data-act3-map][data-scene="mimi"]')?'mimi':modal.querySelector('[data-act3-map]')?'act3map':actThreeFilm?'act3':clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':actTwoTitle?'luna':actOneTitle?'moku':opening?'opening':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
+  return normalBgm.setScene(actThreeCollapse||!!modal.querySelector('[data-act3-title],[data-act3-after],.act3-complete')||actThreeQuiet||document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), modal.querySelector('[data-act3-map][data-scene="mimi"]')?'mimi':modal.querySelector('[data-act3-map]')?'act3map':actThreeFilm?'act3':clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':actTwoTitle?'luna':actOneTitle?'moku':opening?'opening':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
 }
 modal.addEventListener('luna-film-phase',()=>{syncNormalBgm();});
 modal.addEventListener('act3-film-phase',()=>{syncNormalBgm();});

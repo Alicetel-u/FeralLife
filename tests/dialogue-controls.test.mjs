@@ -19,11 +19,11 @@ test('standard controls gate next while menu is open, restore it, and keep silen
  const previous=globalThis.document;globalThis.document={hidden:false};
  const elements=new Map(),make=()=>({hidden:true,open:false,value:0,textContent:'',disabled:false,setAttribute(){},toggleAttribute(){},addEventListener(){},removeEventListener(){}});
  const section={querySelector:key=>elements.get(key)||elements.set(key,make()).get(key),classList:{toggle(){},remove(){}},addEventListener(){},removeEventListener(){}};
- let advances=0,backs=0,skips=0,changes=0;
- const controller=createChapterDialogueControls(section,{getState:()=>({active:true,canBack:true,line:{text:'確認'},lines:[]}),onNext:()=>advances++,onBack:()=>backs++,onSkip:()=>skips++,voice:{enabled:true,setSuspended(){},setEnabled(){changes++;}},bgm:{enabled:false,setEnabled(){changes++;}},silent:true});
+ let advances=0,backs=0,skips=0,changes=0,canAdvance=true;
+ const controller=createChapterDialogueControls(section,{getState:()=>({active:true,canBack:true,canAdvance,line:{text:'確認'},lines:[]}),onNext:()=>advances++,onBack:()=>backs++,onSkip:()=>skips++,voice:{enabled:true,setSuspended(){},setEnabled(){changes++;}},bgm:{enabled:false,setEnabled(){changes++;}},silent:true});
  const click=name=>controller.click({target:{closest:()=>({hasAttribute:k=>k===name})},preventDefault(){},stopPropagation(){}});
  try{
-  controller.refresh();click('data-dialogue-next');assert.equal(advances,1);
+  controller.refresh();click('data-dialogue-next');assert.equal(advances,1);canAdvance=false;controller.refresh();assert.equal(section.querySelector('[data-dialogue-next]').disabled,true);click('data-dialogue-next');assert.equal(advances,1);canAdvance=true;controller.refresh();
   click('data-event-menu');assert.equal(controller.blocked,true);click('data-dialogue-next');assert.equal(advances,1);
   click('data-dialogue-back');assert.equal(backs,1);click('data-event-menu');assert.equal(controller.blocked,false);
   click('data-dialogue-next');assert.equal(advances,2);click('data-event-skip');assert.equal(skips,1);

@@ -11,13 +11,13 @@ export function createChapterDialogueControls(section,{getState,onNext,onBack,on
  let auto=false,hidden=false,blocked=false,timer=0,dead=false;
  const q=s=>section.querySelector(s),setBlock=()=>{blocked=!!q('.conversation-log')?.open||q('.event-menu')?.hidden===false||hidden;voice?.setSuspended(blocked||document.hidden);onBlock(blocked);};
  const schedule=()=>{clearTimeout(timer);if(dead||!auto||getAuto)return;const state=getState();if(!state?.active)return;
-  timer=setTimeout(()=>{if(dead)return;if(document.hidden||blocked||voice?.busy){schedule();return;}onNext();},Math.max(1200,Math.min(4200,(state.line?.text?.length||0)*65)));timer.unref?.();
+  timer=setTimeout(()=>{if(dead)return;if(document.hidden||blocked||voice?.busy||getState()?.canAdvance===false){schedule();return;}onNext();},Math.max(1200,Math.min(4200,(state.line?.text?.length||0)*65)));timer.unref?.();
  };
  const refresh=()=>{if(dead)return;const s=getState()||{},active=!!s.active;
   const footer=q('.chapter-dialogue-controls .modal-footer');if(footer)footer.hidden=!active;
   const gear=q('.voice-settings-open');if(gear)gear.hidden=!active;
   q('[data-dialogue-back]')?.toggleAttribute?.('disabled',!s.canBack);
-  const next=q('[data-dialogue-next]');next?.setAttribute?.('aria-label',s.last?'会話を終えて進む':'次のセリフ');
+  const next=q('[data-dialogue-next]');if(next)next.disabled=s.canAdvance===false;next?.setAttribute?.('aria-label',s.last?'会話を終えて進む':'次のセリフ');
   const toggle=q('[data-event-auto]');toggle?.setAttribute?.('aria-pressed',String(getAuto?getAuto():auto));
   const voiceButton=q('[data-voice-toggle]');if(voiceButton){voiceButton.textContent='ボイス '+(voice?.enabled?'ON':'OFF');voiceButton.disabled=silent||!voice;}
   const bgmButton=q('[data-bgm-toggle]');if(bgmButton){bgmButton.textContent='BGM '+(bgm?.enabled?'ON':'OFF');bgmButton.disabled=silent||!bgm;}
@@ -25,9 +25,9 @@ export function createChapterDialogueControls(section,{getState,onNext,onBack,on
   schedule();
  };
  const click=e=>{const b=e.target.closest('button');
-  if(!b){if(e.target.closest('.stage-bubble')&&!blocked&&getState()?.active){e.preventDefault();e.stopPropagation();onNext();return true;}return false;}
+  if(!b){if(e.target.closest('.stage-bubble')&&!blocked&&getState()?.active&&getState()?.canAdvance!==false){e.preventDefault();e.stopPropagation();onNext();return true;}return false;}
   const has=a=>b.hasAttribute(a);let handled=true;
-  if(has('data-dialogue-next')){if(getState()?.active&&!blocked)onNext();}
+  if(has('data-dialogue-next')){if(getState()?.active&&!blocked&&getState()?.canAdvance!==false)onNext();}
   else if(has('data-dialogue-back')){if(getState()?.canBack)onBack();}
   else if(has('data-event-menu')){const menu=q('.event-menu');if(menu)menu.hidden=!menu.hidden;setBlock();}
   else if(has('data-event-hide')){hidden=!hidden;section.classList?.toggle('event-ui-hidden',hidden);const restore=q('.event-restore');if(restore)restore.hidden=!hidden;setBlock();}

@@ -2407,12 +2407,6 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @media(max-height:500px) and (orientation:landscape){.map-dialogue .stage-character{top:0!important;bottom:110px!important;height:auto!important}}
 
 
-/* The bridge failure has no warning: Moku and Luna drop together, then a white-out. */
-.act3-map[data-collapse="true"] .map-companion-cat,
-.act3-map[data-collapse="true"] .map-companion-hostess{transform:translateY(48px) rotate(85deg);transform-origin:bottom center;transition:transform .16s ease-in;filter:grayscale(.65);opacity:.85}
-.act3-map[data-collapse="true"] .map-party{animation:none}
-@media(prefers-reduced-motion:reduce){.act3-map[data-collapse="true"] .map-companion-cat,.act3-map[data-collapse="true"] .map-companion-hostess{transition:none}}
-
 /* Act III: only existing zombie art is placed in the longer store-to-bridge leg.
    No new street surface, walls, barricades, or direction markers are painted. */
 .act3-map .map-bridge-route{
@@ -2468,3 +2462,15 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .act3-map[data-effects-paused=true] .map-zombie-walker,.act3-map[data-effects-paused=true] .map-zombie-walker img,.act3-map[data-paused=true] .map-zombie-walker,.act3-map[data-paused=true] .map-zombie-walker img,.act3-map[data-effects-paused=true] .map-explosion-effect *,.act3-map[data-paused=true] .map-explosion-effect *{animation-play-state:paused!important}
 @media(max-width:600px){.act3-map .map-zombies{top:32%}.map-zombie-walker{width:96px;height:122px;top:calc(var(--lane) * 20px)}.map-explosion-sticker{top:13%;height:45%;width:115vw}.map-explosion-smoke{left:10%;right:10%;top:12%;height:40%}}
 @media(prefers-reduced-motion:reduce){.map-zombie-walker{animation:none;left:calc(var(--z) * 16% + 140px);width:clamp(62px,10vw,110px)}.map-zombie-walker img,.map-explosion-sticker,.map-explosion-smoke,.map-explosion-light{animation:none!important}.map-explosion-light{display:none}.act3-map .map-zombies{width:80vw}}
+
+/* The bridge collapse switches from the playful map to two serious full-body CGs. */
+.bridge-collapse-scene{position:absolute;inset:0;z-index:7;background:#0a1019;isolation:isolate;overflow:hidden}
+.bridge-collapse-frame{position:absolute;inset:2% 0 29%;overflow:hidden;transform-origin:50% 60%;will-change:transform}
+.bridge-collapse-art{position:absolute;inset:0;width:100%;height:100%;padding:8px;object-fit:contain;object-position:center;pointer-events:none}
+.bridge-collapse-after{opacity:0}
+.bridge-collapse-shade{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 35%,transparent 32%,#03071050 100%)}
+.act3-map[data-collapse=true]{background:#0a1019!important}
+.act3-map[data-collapse=true]::before,.act3-map[data-collapse=true]::after,.act3-map[data-collapse=true] .map-world,.act3-map[data-collapse=true] .map-party{visibility:hidden}
+@media(max-width:600px){.bridge-collapse-frame{inset:2% 0 44%}.bridge-collapse-art{object-position:50% 75%}}
+@media(max-height:500px) and (orientation:landscape){.bridge-collapse-frame{inset:2% 0 44%}}
+@media(prefers-reduced-motion:reduce){.bridge-collapse-frame{will-change:auto}}

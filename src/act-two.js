@@ -1,7 +1,7 @@
 import {prepareFourKingsMorning} from './act-two-observation-two.js';
 import {ACT_TWO_EPILOGUE_LINES} from './act-two-epilogue-script.js';
 import {failedChoiceKeys} from './choice-history.js';
-import {DUEL_INTRO,duelChoices,duelEncounterLines,duelReplyLines,duelEndingLines,duelOutcome} from './act-two-duel.js?v=2026.10.24.5';
+import {DUEL_INTRO,duelChoices,duelEncounterLines,duelReplyLines,duelEndingLines,duelOutcome} from './act-two-duel.js?v=2026.10.29.1';
 import { saveStoryCheckpoint, storyCheckpointTarget, resumeStoryRewind } from './story-checkpoints.js';
 import { createActOne,advanceActOne,answerActOne } from './act-one.js';
 import {advance,addEvent,admit} from './simulation.js';

@@ -361,3 +361,15 @@ test('map and Mimi cues use their uploaded tracks and preserve their position be
   await bgm.setScene(false,'mimi');assert.equal(mimi.currentTime,8);await bgm.setEnabled(false);assert.equal(mimi.paused,true);
  }finally{if(previous===undefined)delete globalThis.Audio;else globalThis.Audio=previous;}
 });
+
+
+test('bridge collapse remains silent when scene synchronization runs again',async()=>{
+ const app=await readFile(new URL('../src/app.js',import.meta.url),'utf8');
+ const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
+ for(const collapsed of [false,true]){
+  let result;
+  const context={document:{hidden:false},state:{actOne:{chapter:2},events:[]},eventView:null,eventConversation:()=>[],bedCue:()=> 'normal',
+   modal:{open:true,classList:{contains:()=>false},querySelector:s=>s==='[data-act3-map]'||collapsed&&s==='[data-act3-map][data-collapse="true"]'?{}:null},normalBgm:{setScene:(quiet,cue)=>result={quiet,cue}}};
+  vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);assert.equal(result.cue,'act3map');assert.equal(result.quiet,collapsed);
+ }
+});
