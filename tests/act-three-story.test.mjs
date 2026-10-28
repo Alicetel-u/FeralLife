@@ -61,6 +61,8 @@ test('bridge rewind starts at surprised landlord, stays in his thoughts, then es
  assert.equal(stage.step,0);assert.equal(stage.scene,'homecoming');assert.ok(stage.seen.includes('return'));
  const finished=actThreeStoryProgress({...actThreeStorySave(stage),mapScene:null,mapSeen:[...stage.seen,'homecoming']});
  assert.equal(finished.step,0);assert.equal(finished.scene,null);assert.ok(finished.seen.includes('homecoming'));
+ const oldArrival={...actThreeStoryDebug('homecoming'),mapStoryRevision:4,mapScene:null};
+ assert.equal(actThreeStoryProgress(oldArrival).scene,'homecoming','Old instant-return saves must reach final apartment arrival');
 });
 
 test('post-rewind dialogue advances to existing home landmark and unlocks finish without replaying Mimi meeting',async()=>{
@@ -80,13 +82,26 @@ test('post-rewind dialogue advances to existing home landmark and unlocks finish
   assert.equal(saved.at(-1).mapScene,'return');
   assert.equal(section.dataset.rewindReturn,'true');
   for(let i=0;i<110&&saved.at(-1).mapScene==='return';i++)click('data-dialogue-next');
-  assert.equal(saved.at(-1).mapScene,'homecoming');assert.equal(saved.at(-1).mapStep,0);
+  assert.equal(saved.at(-1).mapScene,null);assert.equal(saved.at(-1).mapStep,3);
+  assert.equal(section.dataset.returning,'true');
+  assert.equal(section.dataset.travelDirection,'left');
+  assert.equal(section.dataset.location,'store');
+  assert.equal(section.querySelector('[data-map-finish]').hidden,true);
+  assert.equal(section.querySelector('[data-map-next]').hidden,true);
+  // The original L-shaped route is retraced automatically, without detour/store dialogue.
+  let clock=0;const move=frames=>{for(let n=0;n<frames;n++){clock+=50;const run=frame;frame=null;run?.(clock);}};
+  move(60);assert.equal(saved.at(-1).mapStep,2);assert.equal(saved.at(-1).mapScene,null);
+  assert.equal(section.dataset.travelDirection,'down');
+  move(70);assert.equal(saved.at(-1).mapStep,1);assert.equal(saved.at(-1).mapScene,null);
+  assert.equal(section.dataset.travelDirection,'left');
+  move(70);assert.equal(saved.at(-1).mapStep,0);assert.equal(saved.at(-1).mapScene,'homecoming');
   assert.equal(section.dataset.location,'home');
   assert.equal(section.querySelector('[data-map-finish]').hidden,true);
   click('data-dialogue-next');
   assert.equal(saved.at(-1).mapScene,null);
   assert.ok(saved.at(-1).mapSeen.includes('homecoming'));
   assert.equal(section.querySelector('[data-map-finish]').hidden,false);
+  assert.equal(section.dataset.returning,'false');
   assert.equal(section.querySelector('[data-map-next]').hidden,true);
   assert.ok(actThreeStoryProgress(saved.at(-1)).seen.includes('homecoming'));
  }finally{stop?.();for(const key of names){if(previous[key]===undefined)delete globalThis[key];else globalThis[key]=previous[key];}}
