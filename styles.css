@@ -2438,40 +2438,11 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @media(prefers-reduced-motion:reduce){.act3-map[data-collapse="true"] .map-companion-cat,.act3-map[data-collapse="true"] .map-companion-hostess{transition:none}}
 
 
-/* Act III: the store-to-bridge journey is a longer, populated stretch of ruined road.
-   Scenery scrolls with the landmark world, while the three party sprites remain anchored. */
+/* Act III: only existing zombie art is placed in the longer store-to-bridge leg.
+   No new street surface, walls, barricades, or direction markers are painted. */
 .act3-map .map-bridge-route{
  position:absolute;top:0;height:100%;z-index:2;pointer-events:none;
 }
-.act3-map .map-route-road{
- position:absolute;left:0;right:0;top:69%;height:19%;
- background:linear-gradient(175deg,transparent 0 17%,#30343a66 20% 64%,transparent 70%),
-   repeating-linear-gradient(91deg,transparent 0 115px,#abb6ab46 116px 135px,transparent 136px 290px);
- opacity:.78;transform:skewY(-2deg);
-}
-.act3-map .map-route-road::after{
- content:"";position:absolute;left:3%;right:5%;bottom:8%;height:4px;
- background:repeating-linear-gradient(90deg,#ddd5b78a 0 31px,transparent 31px 88px);
- transform:rotate(-1deg);
-}
-.act3-map .map-route-debris{
- position:absolute;top:76%;width:clamp(85px,14vw,145px);height:22px;
- border-radius:55% 30% 40% 20%;background:#594e4966;
- box-shadow:30px -5px 0 -6px #ab887568,63px 1px 0 -8px #cac0a76c;
-}
-.act3-map .map-route-debris.debris-a{left:14%;transform:rotate(-9deg)}
-.act3-map .map-route-debris.debris-b{left:46%;top:74%;transform:rotate(11deg)}
-.act3-map .map-route-debris.debris-c{left:77%;top:78%;transform:rotate(-3deg)}
-.act3-map .map-route-barricade{
- position:absolute;width:clamp(92px,13vw,125px);height:30px;
- border:4px solid #33353c;z-index:1;background:repeating-linear-gradient(117deg,#c16a42 0 21px,#f7e7be 21px 42px);
- border-radius:5px;filter:drop-shadow(3px 4px 0 #10191b88);transform:rotate(-7deg);
-}
-.act3-map .map-route-barricade span{position:absolute;bottom:-23px;height:20px;width:9px;background:#4e4a4a}
-.act3-map .map-route-barricade span:first-child{left:13px}
-.act3-map .map-route-barricade span:last-child{right:13px}
-.act3-map .map-route-barricade.barricade-a{left:26%;top:57%}
-.act3-map .map-route-barricade.barricade-b{left:65%;top:61%;transform:rotate(8deg) scale(.83)}
 .act3-map .map-route-zombies{
  position:absolute;width:clamp(90px,12vw,145px);height:clamp(85px,14vw,130px);
  z-index:2;opacity:.85;
@@ -2499,52 +2470,5 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 }
 @media(prefers-reduced-motion:reduce){.act3-map .map-route-zombies img{animation:none}}
 
-/* Landmarks stay in front of the new roadside scenery, with zombies and the party layered above. */
+/* Keep original landmark art ahead of the background zombie groups. */
 .act3-map .map-landmark{z-index:3}
-
-
-/* Act III vertical bypass: crossroad zombies remain on the lower/main street.
-   From the crossing the camera climbs this alley, then follows the perpendicular exit east. */
-.act3-map .map-bypass-route {
- position:absolute;z-index:2;transform:translateX(-50%);pointer-events:none;
-}
-.act3-map .map-bypass-road {
- position:absolute;top:0;bottom:0;left:26%;right:26%;
- background:linear-gradient(90deg,#1c273250 0 8%,#b9b7a441 9% 91%,#1c273250 92% 100%);
- border-left:4px solid #fff2d5bf;border-right:4px solid #fff2d5bf;
- box-shadow:0 0 0 6px #1f242533,8px 4px 0 #1919214b;
-}
-.act3-map .map-bypass-road::after {
- content:"";position:absolute;top:0;bottom:0;left:49%;
- width:5px;background:repeating-linear-gradient(180deg,#fff5dc9a 0 26px,transparent 26px 72px);
-}
-.act3-map .map-bypass-wall {
- position:absolute;top:9%;bottom:11%;width:12%;border:4px solid #191921;
- background:repeating-linear-gradient(180deg,#b87f64 0 30px,#e1b38e 30px 35px);
- box-shadow:5px 6px 0 #19192144;opacity:.88;
-}
-.act3-map .map-bypass-wall.left{left:9%;transform:rotate(-1deg)}
-.act3-map .map-bypass-wall.right{right:9%;transform:rotate(2deg)}
-.act3-map .map-bypass-turn {
- position:absolute;left:50%;top:-2%;width:50%;height:22%;
- border-top:4px solid #fff5d2b5;border-bottom:4px solid #fff5d2b5;
- background:linear-gradient(0deg,#1b29364b,#c1b9a34d);
- box-shadow:5px 5px 0 #1919213d;
-}
-.act3-map .map-bypass-chevron{
- position:absolute;left:50%;font-size:clamp(20px,3vw,38px);font-weight:900;
- color:#fff9e1;filter:drop-shadow(2px 3px 0 #1919219e);transform:translateX(-50%);opacity:.7;
-}
-.act3-map .map-bypass-chevron.one{top:37%}
-.act3-map .map-bypass-chevron.two{top:66%}
-.act3-map .map-detour-exit{
- position:absolute;height:19%;z-index:2;pointer-events:none;
- background:linear-gradient(180deg,#1c293650,#bbb7a349 13% 86%,#1c293650);
- border-top:4px solid #fff2d5ad;border-bottom:4px solid #fff2d5ad;
-}
-.act3-map .map-detour-exit::after{
- content:"";position:absolute;top:49%;left:0;right:0;height:5px;
- background:repeating-linear-gradient(90deg,#fff5dc9a 0 28px,transparent 28px 85px);
-}
-/* The right-turn street and the vertical bypass are background elements, not HUD decorations. */
-@media(prefers-reduced-motion:reduce){.act3-map .map-bypass-chevron{animation:none}}
