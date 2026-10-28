@@ -2436,3 +2436,65 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .act3-map[data-collapse="true"] .map-companion-hostess{transform:translateY(48px) rotate(85deg);transform-origin:bottom center;transition:transform .16s ease-in;filter:grayscale(.65);opacity:.85}
 .act3-map[data-collapse="true"] .map-party{animation:none}
 @media(prefers-reduced-motion:reduce){.act3-map[data-collapse="true"] .map-companion-cat,.act3-map[data-collapse="true"] .map-companion-hostess{transition:none}}
+
+
+/* Act III: the store-to-bridge journey is a longer, populated stretch of ruined road.
+   Scenery scrolls with the landmark world, while the three party sprites remain anchored. */
+.act3-map .map-bridge-route{
+ position:absolute;top:0;height:100%;z-index:2;pointer-events:none;
+}
+.act3-map .map-route-road{
+ position:absolute;left:0;right:0;top:69%;height:19%;
+ background:linear-gradient(175deg,transparent 0 17%,#30343a66 20% 64%,transparent 70%),
+   repeating-linear-gradient(91deg,transparent 0 115px,#abb6ab46 116px 135px,transparent 136px 290px);
+ opacity:.78;transform:skewY(-2deg);
+}
+.act3-map .map-route-road::after{
+ content:"";position:absolute;left:3%;right:5%;bottom:8%;height:4px;
+ background:repeating-linear-gradient(90deg,#ddd5b78a 0 31px,transparent 31px 88px);
+ transform:rotate(-1deg);
+}
+.act3-map .map-route-debris{
+ position:absolute;top:76%;width:clamp(85px,14vw,145px);height:22px;
+ border-radius:55% 30% 40% 20%;background:#594e4966;
+ box-shadow:30px -5px 0 -6px #ab887568,63px 1px 0 -8px #cac0a76c;
+}
+.act3-map .map-route-debris.debris-a{left:14%;transform:rotate(-9deg)}
+.act3-map .map-route-debris.debris-b{left:46%;top:74%;transform:rotate(11deg)}
+.act3-map .map-route-debris.debris-c{left:77%;top:78%;transform:rotate(-3deg)}
+.act3-map .map-route-barricade{
+ position:absolute;width:clamp(92px,13vw,125px);height:30px;
+ border:4px solid #33353c;z-index:1;background:repeating-linear-gradient(117deg,#c16a42 0 21px,#f7e7be 21px 42px);
+ border-radius:5px;filter:drop-shadow(3px 4px 0 #10191b88);transform:rotate(-7deg);
+}
+.act3-map .map-route-barricade span{position:absolute;bottom:-23px;height:20px;width:9px;background:#4e4a4a}
+.act3-map .map-route-barricade span:first-child{left:13px}
+.act3-map .map-route-barricade span:last-child{right:13px}
+.act3-map .map-route-barricade.barricade-a{left:26%;top:57%}
+.act3-map .map-route-barricade.barricade-b{left:65%;top:61%;transform:rotate(8deg) scale(.83)}
+.act3-map .map-route-zombies{
+ position:absolute;width:clamp(90px,12vw,145px);height:clamp(85px,14vw,130px);
+ z-index:2;opacity:.85;
+}
+.act3-map .map-route-zombies img{
+ position:absolute;width:clamp(46px,7vw,75px);height:clamp(63px,9vw,102px);
+ object-fit:contain;left:calc(var(--walker) * 32px);bottom:calc(mod(var(--walker),2) * 14px);
+ transform:scaleX(var(--direction,1)) rotate(calc((var(--walker) - 1) * 6deg));
+ filter:drop-shadow(3px 4px 1px #07151b80);
+ animation:map-zombie-sway 1.35s ease-in-out infinite alternate;
+ animation-delay:calc(var(--walker) * -.3s);
+}
+.act3-map .map-route-zombies.route-zombies-a{left:12%;top:44%;--direction:-1;opacity:.58;scale:.84}
+.act3-map .map-route-zombies.route-zombies-b{left:35%;top:52%;--direction:1}
+.act3-map .map-route-zombies.route-zombies-c{left:60%;top:38%;--direction:-1;opacity:.68;scale:.88}
+.act3-map .map-route-zombies.route-zombies-d{left:83%;top:49%;--direction:1}
+.act3-map[data-paused="true"] .map-route-zombies img{animation-play-state:paused}
+@media(max-width:600px){
+ .act3-map .map-route-zombies.route-zombies-a{top:39%}
+ .act3-map .map-route-zombies.route-zombies-b{top:48%}
+ .act3-map .map-route-zombies.route-zombies-c{top:34%}
+ .act3-map .map-route-zombies.route-zombies-d{top:44%}
+ .act3-map .map-route-barricade.barricade-a{top:59%}
+ .act3-map .map-route-barricade.barricade-b{top:62%}
+}
+@media(prefers-reduced-motion:reduce){.act3-map .map-route-zombies img{animation:none}}
