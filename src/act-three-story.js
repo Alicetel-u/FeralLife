@@ -148,8 +148,9 @@ export const ACT_THREE_MAP_SCENES={
 };
 export const ACT_THREE_STORE_INTERIOR='assets/events/chapter3/store-interior.png';
 export function actThreeStoryProgress(saved){
- if(![1,2,3].includes(saved?.mapStoryRevision))return {step:0,scene:'departure',cursor:0,page:0,seen:[],keyGiven:false};
+ if(![1,2,3,4].includes(saved?.mapStoryRevision))return {step:0,scene:'departure',cursor:0,page:0,seen:[],keyGiven:false};
  const legacy=saved.mapStoryRevision===1;
+ const legacyReturn=saved.mapStoryRevision===3&&(saved.mapScene==='return'||saved.mapSeen?.includes('return'));
  const seen=[];for(const id of ['departure','crossing','detour','store','bridge']){
   if(id==='detour'&&legacy&&saved.mapStep>=3){seen.push(id);continue;}
   if(!saved.mapSeen?.includes(id))break;
@@ -159,14 +160,14 @@ export function actThreeStoryProgress(saved){
  const max=!seen.includes('departure')?0:!seen.includes('crossing')?1:!seen.includes('detour')?2:!seen.includes('store')?3:4;
  const step=Math.min(max,Math.max(0,Number.isInteger(saved.mapStep)?saved.mapStep:0));
  const required=step===0?'departure':step===1?'crossing':step===2?'detour':step===3?'store':step===4?'bridge':null;
- if(seen.includes('store')&&saved.mapSeen?.includes('return'))seen.push('return');
+ if(seen.includes('store')&&saved.mapSeen?.includes('return')&&!legacyReturn)seen.push('return');
  if(seen.includes('return')&&saved.mapSeen?.includes('homecoming'))seen.push('homecoming');
- const scene=saved.mapScene==='return'&&step===3?'return':saved.mapScene==='homecoming'&&step===0&&seen.includes('return')?'homecoming':required&&!seen.includes(required)?required:null;
- const cursor=scene&&scene===saved.mapScene?Math.min(ACT_THREE_MAP_SCENES[scene].lines.length-1,Math.max(0,saved.mapCursor|0)):0;
+ const scene=step===3&&(legacyReturn||saved.mapScene==='return')?'return':saved.mapScene==='homecoming'&&step===0&&seen.includes('return')?'homecoming':required&&!seen.includes(required)?required:null;
+ const cursor=scene&&scene===saved.mapScene&&!legacyReturn?Math.min(ACT_THREE_MAP_SCENES[scene].lines.length-1,Math.max(0,saved.mapCursor|0)):0;
  const page=scene?Math.min(messagePages(ACT_THREE_MAP_SCENES[scene].lines[cursor].text).length-1,Math.max(0,saved.mapPage|0)):0;
  return {step,scene,cursor,page,seen,keyGiven:scene==='return'||scene==='homecoming'||seen.includes('store')||scene==='store'&&ACT_THREE_MAP_SCENES.store.lines.slice(0,cursor+1).some(l=>l.keyGiven)};
 }
-export function actThreeStorySave(progress){return {phase:'map',afterSeen:true,mapStoryRevision:3,mapStep:progress.step,mapScene:progress.scene,mapCursor:progress.cursor,mapPage:progress.page,mapSeen:[...progress.seen],mimiKeyGiven:!!progress.keyGiven};}
+export function actThreeStorySave(progress){return {phase:'map',afterSeen:true,mapStoryRevision:4,mapStep:progress.step,mapScene:progress.scene,mapCursor:progress.cursor,mapPage:progress.page,mapSeen:[...progress.seen],mimiKeyGiven:!!progress.keyGiven};}
 export function actThreeStoryDebug(id){
  const choices={departure:{step:0,scene:'departure',seen:[]},crossing:{step:1,scene:'crossing',seen:['departure']},detour:{step:2,scene:'detour',seen:['departure','crossing']},store:{step:3,scene:'store',seen:['departure','crossing','detour']},return:{step:3,scene:'return',seen:['departure','crossing','detour','store'],keyGiven:true},homecoming:{step:0,scene:'homecoming',seen:['departure','crossing','detour','store','return'],keyGiven:true},farewell:{step:3,scene:'store',cursor:42,seen:['departure','crossing','detour'],keyGiven:true},collapse:{step:4,scene:'bridge',cursor:6,seen:['departure','crossing','detour','store'],keyGiven:true},bridge:{step:4,scene:'bridge',seen:['departure','crossing','detour','store'],keyGiven:true}};
  const entry=choices[id];return entry?actThreeStorySave({cursor:0,page:0,keyGiven:false,...entry}):null;
