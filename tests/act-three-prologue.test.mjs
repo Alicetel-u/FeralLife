@@ -37,3 +37,17 @@ test('story entry, preview, debug and Continue share the same implementation',()
  assert.match(app,/data-act2-finish'\)\)showNextChapter\(\)/);assert.match(app,/if\(state.actThree\)\{showActThree\(\);return;/);
  assert.match(app,/clockOnly:true/);assert.match(app,/data-debug-act3/);assert.match(app,/actThreePreview\?'feral-act-three-preview-v1'/);
 });
+
+test('title boom plays once at title reveal and obeys sound settings and visibility',async()=>{
+ const {createActThreeTitleSound,ACT_THREE_TITLE_SOUND}=await import('../src/act-three-prologue.js');
+ const audio={paused:true,volume:1,playCount:0,play(){this.paused=false;this.playCount++;return Promise.resolve();},pause(){this.paused=true;},removeAttribute(){},load(){}};
+ const saved=globalThis.document;globalThis.document={hidden:false};
+ try{
+  const sound=createActThreeTitleSound({enabled:true,volume:.35},null,()=>audio);assert.equal(audio.src,ACT_THREE_TITLE_SOUND);
+  sound.play();sound.play();assert.equal(audio.playCount,1);assert.equal(audio.volume,.35);
+  document.hidden=true;sound.visibility();assert.equal(audio.paused,true);document.hidden=false;sound.visibility();assert.equal(audio.playCount,2);
+  sound.stop();assert.equal(audio.paused,true);sound.visibility();assert.equal(audio.playCount,2);
+  const muted=createActThreeTitleSound({enabled:false,volume:1},null,()=>audio);muted.play();assert.equal(audio.playCount,2);muted.stop();
+  const code=readFileSync(new URL('../src/act-three-prologue.js',import.meta.url),'utf8');assert.match(code,/t>=1\.7&&!hit\)\{hit=true;sound\.play\(\)/);
+ }finally{globalThis.document=saved;}
+});

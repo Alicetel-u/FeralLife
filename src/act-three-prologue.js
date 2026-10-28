@@ -67,9 +67,22 @@ export function startActThree(root,onDone,{settings,shared,voice,onShot=()=>{},i
 }
 export function actThreeTitleFrame(t){return {number:Math.min(1,Math.max(0,(t-.6)/.8)),title:Math.min(1,Math.max(0,(t-1.7)/.35)),black:Math.min(1,Math.max(0,(t-5.5)/1.2)),finished:t>=7};}
 export function actThreeTitleHTML(){return `<section class="act-screen act3-title" data-act3-title data-chapter="3" aria-label="第3幕 世界崩壊"><div class="act3-title-smoke" aria-hidden="true"></div><div class="act3-title-copy"><p>第3幕</p><h2 id="modal-title">世界崩壊</h2></div><div class="act3-title-black" aria-hidden="true"></div></section>`;}
+// Cinematic Boom by DRAGON-STUDIO / Pixabay (Pixabay Content License).
+// https://pixabay.com/sound-effects/film-special-effects-cinematic-boom-335489/
+export const ACT_THREE_TITLE_SOUND='assets/audio/chapter3-cinematic-boom.mp3';
+export function createActThreeTitleSound(settings,shared,makeAudio=()=>new Audio()){
+ const audio=makeAudio();audio.src=ACT_THREE_TITLE_SOUND;audio.preload='auto';let source=null,gain=null,started=false,closed=false;
+ const play=()=>{if(closed||started||!settings?.enabled||settings.volume<=0)return;started=true;
+  try{const context=shared?.();if(context){source=context.createMediaElementSource(audio);gain=context.createGain();gain.gain.value=Math.min(1,settings.volume);source.connect(gain);gain.connect(context.destination);audio.volume=1;}else audio.volume=Math.min(1,settings.volume);Promise.resolve(audio.play()).catch(()=>{});}catch{}
+ };
+ const visibility=()=>{if(!started||closed)return;if(document.hidden)audio.pause();else if(settings?.enabled&&settings.volume>0)Promise.resolve(audio.play()).catch(()=>{});};
+ const stop=()=>{if(closed)return;closed=true;audio.pause();audio.removeAttribute?.('src');audio.load?.();source?.disconnect();gain?.disconnect();};
+ return {play,visibility,stop};
+}
 export function startActThreeTitle(root,onDone,settings,shared){
- const section=root.querySelector('[data-act3-title]'),sfx=createActThreeSound(settings,shared);let t=0,last=null,raf=0,dead=false,hit=false;
- const stop=()=>{dead=true;cancelAnimationFrame(raf);sfx.close();};
- const tick=now=>{if(dead)return;const dt=last===null?0:Math.min(.1,(now-last)/1000);last=now;if(!document.hidden)t+=dt;const f=actThreeTitleFrame(t);section.querySelector('p').style.opacity=f.number;section.querySelector('h2').style.opacity=f.title;section.querySelector('.act3-title-black').style.opacity=f.black;if(t>=1.7&&!hit){hit=true;sfx.play('title');}if(document.hidden)sfx.stop();if(f.finished){stop();onDone();return;}raf=requestAnimationFrame(tick);};raf=requestAnimationFrame(tick);return stop;
+ const section=root.querySelector('[data-act3-title]'),sound=createActThreeTitleSound(settings,shared);let t=0,last=null,raf=0,dead=false,hit=false;
+ const visibility=()=>{last=null;sound.visibility();};document.addEventListener('visibilitychange',visibility);
+ const stop=()=>{if(dead)return;dead=true;cancelAnimationFrame(raf);document.removeEventListener('visibilitychange',visibility);sound.stop();};
+ const tick=now=>{if(dead)return;const dt=last===null?0:Math.min(.1,(now-last)/1000);last=now;if(!document.hidden)t+=dt;const f=actThreeTitleFrame(t);section.querySelector('p').style.opacity=f.number;section.querySelector('h2').style.opacity=f.title;section.querySelector('.act3-title-black').style.opacity=f.black;if(t>=1.7&&!hit){hit=true;sound.play();}if(f.finished){stop();onDone();return;}raf=requestAnimationFrame(tick);};raf=requestAnimationFrame(tick);return stop;
 }
 export function actThreeCompleteHTML(){return `<section class="act-screen act3-complete" data-chapter="3"><h2 id="modal-title" class="visually-hidden">第3幕プロローグ再生終了</h2><nav aria-label="再生終了メニュー"><button type="button" data-act3-replay>もう一度見る</button><button type="button" data-act-title>タイトルに戻る</button></nav></section>`;}
