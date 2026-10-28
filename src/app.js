@@ -672,7 +672,8 @@ function showActThreeMap(){
     openModal(rewindTransitionHTML('',1,true,3,true));
     const sound=normalBgm.enabled;
     stopFireEnding=startRewindTransition(modal.querySelector('.rewind-screen'),'',()=>{
-      normalBgm.setSuppressed(false);
+      // The clock effect has ended. Switch directly to the saved return scene;
+      // openModal selects 'uneasy' before the first map render (no map-BGM blip).
       state.actThree=actThreeStoryDebug('return');save();showActThreeMap();
     },sound,1,17,true,normalBgm.clockAudio,sound?characterVoice.audioContext():null,{clockOnly:true});
   },onBack:()=>openModal(actThreeCompleteHTML())});
@@ -1154,6 +1155,10 @@ function syncNormalBgm(){
   // Quiet film cuts reduce Foley only; keep the uneasy BGM continuous.
   const actThreeFilm=modal.open?modal.querySelector('[data-act3-film]'):null;
   const filmPaused=!!lunaFilm&&lunaFilm.dataset.paused==='true'||!!actThreeFilm&&actThreeFilm.dataset.paused==='true';
+  const actThreeMapOpen=modal.open&&!!modal.querySelector('[data-act3-map]');
+  // openModal synchronizes music before startActThreeMap sets DOM attributes.
+  // Recognize saved post-rewind progress immediately so the map cue never flashes.
+  const actThreePostRewind=actThreeMapOpen&&(state.actThree?.mapScene==='return'||state.actThree?.mapScene==='homecoming'||state.actThree?.mapSeen?.includes('return')||!!modal.querySelector('[data-act3-map][data-rewind-return="true"]'));
   const actThreeCollapse=!!modal.querySelector('[data-act3-map][data-collapse="true"]');
   const actThreeQuiet=!!actThreeFilm&&actThreeFilm.dataset.cut==='white';
   const firstRewindUneasy=lunaFilm||!bad&&!clock&&!title&&!victory&&!trouble&&['rewind','act2-rewind'].includes(activeDialogue?.actScene)&&state.actOne?.attempt===2&&state.actOne?.rewindIntroPending;
@@ -1161,7 +1166,7 @@ function syncNormalBgm(){
   // Dedicated scene cues take precedence over character themes.
   const lunaVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="hostess"]');
   const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
-  return normalBgm.setScene(actThreeCollapse||!!modal.querySelector('[data-act3-title],[data-act3-after],.act3-complete')||actThreeQuiet||document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), modal.querySelector('[data-act3-map][data-rewind-return="true"]')?'return':modal.querySelector('[data-act3-map][data-scene="mimi"]')?'mimi':modal.querySelector('[data-act3-map]')?'act3map':actThreeFilm?'act3':clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':actTwoTitle?'luna':actOneTitle?'moku':opening?'opening':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
+  return normalBgm.setScene(actThreeCollapse||!!modal.querySelector('[data-act3-title],[data-act3-after],.act3-complete')||actThreeQuiet||document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), actThreePostRewind?'uneasy':modal.querySelector('[data-act3-map][data-scene="mimi"]')?'mimi':actThreeMapOpen?'act3map':actThreeFilm?'act3':clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':actTwoTitle?'luna':actOneTitle?'moku':opening?'opening':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
 }
 modal.addEventListener('luna-film-phase',()=>{syncNormalBgm();});
 modal.addEventListener('act3-film-phase',()=>{syncNormalBgm();});
