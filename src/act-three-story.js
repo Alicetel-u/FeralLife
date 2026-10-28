@@ -106,7 +106,7 @@ export const ACT_THREE_MAP_SCENES={
 };
 export const ACT_THREE_STORE_INTERIOR='assets/events/chapter3/store-interior.png';
 export function actThreeStoryProgress(saved){
- if(saved?.![1,2].includes(saved?.mapStoryRevision))return {step:0,scene:'departure',cursor:0,page:0,seen:[],keyGiven:false};
+ if(![1,2].includes(saved?.mapStoryRevision))return {step:0,scene:'departure',cursor:0,page:0,seen:[],keyGiven:false};
  const legacy=saved.mapStoryRevision===1;
  const seen=[];for(const id of ['departure','crossing','detour','store']){
   if(id==='detour'&&legacy&&saved.mapStep>=3){seen.push(id);continue;}
