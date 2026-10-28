@@ -1,5 +1,5 @@
 import {eventStageHTML} from './event-stage.js';
-export const ACT_THREE_REVISION='2026.10.27.1';
+export const ACT_THREE_REVISION='2026.10.28.1';
 const act3Cue=(speaker,text,at,end)=>({speaker,text,at,end,voicePerformance:'act3-urgent'});
 export const ACT_THREE_SHOTS=[
  {id:'news',image:'assets/events/chapter3/chapter3_prologue_01.png',duration:8.4,zoom:1.03,events:[{at:8,type:'gun'}],cues:[act3Cue('announcer','緊急速報です！ 各地で原因不明の暴動が発生！',.3,4.4),act3Cue('announcer','感染は世界各国に拡大し、政府は――',4.5,8.35)]},
@@ -31,11 +31,11 @@ export function createActThreeSound(settings,shared=null){
   context.resume().catch(()=>{});const at=context.currentTime;
   const duration=({gun:.19,blast:1.7,empty:.07,throw:.3,knife:.4,charge:.4,title:2})[type]||.2;
   const gain=context.createGain(),filter=context.createBiquadFilter();nodes.add(gain);nodes.add(filter);filter.type='lowpass';filter.frequency.value=type==='knife'?5500:type==='empty'?3400:type==='gun'?1900:400;
-  gain.gain.setValueAtTime(Math.max(.0001,settings.volume*(type==='blast'?.32:type==='title'?.2:.13)),at);gain.gain.exponentialRampToValueAtTime(.0001,at+duration);
+  gain.gain.setValueAtTime(Math.max(.0001,settings.volume*(type==='blast'?.55:type==='title'?.65:.42)),at);gain.gain.exponentialRampToValueAtTime(.0001,at+duration);
   const source=context.createBufferSource(),buffer=context.createBuffer(1,Math.ceil(context.sampleRate*duration),context.sampleRate),data=buffer.getChannelData(0);
   for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*(type==='empty'?Math.sin(i*.8):1);
   source.buffer=buffer;nodes.add(source);source.connect(filter);filter.connect(gain);gain.connect(context.destination);source.start(at);source.onended=()=>{for(const n of [source,filter,gain]){n.disconnect();nodes.delete(n);}};
-  if(['blast','title'].includes(type)){const osc=context.createOscillator(),low=context.createGain();nodes.add(osc);nodes.add(low);osc.frequency.setValueAtTime(95,at);osc.frequency.exponentialRampToValueAtTime(28,at+duration);low.gain.setValueAtTime(settings.volume*.25,at);low.gain.exponentialRampToValueAtTime(.0001,at+duration);osc.connect(low);low.connect(context.destination);osc.start(at);osc.stop(at+duration);osc.onended=()=>{osc.disconnect();low.disconnect();nodes.delete(osc);nodes.delete(low);};}
+  if(['blast','title'].includes(type)){const osc=context.createOscillator(),low=context.createGain();nodes.add(osc);nodes.add(low);osc.frequency.setValueAtTime(95,at);osc.frequency.exponentialRampToValueAtTime(28,at+duration);low.gain.setValueAtTime(settings.volume*(type==='title'?.45:.38),at);low.gain.exponentialRampToValueAtTime(.0001,at+duration);osc.connect(low);low.connect(context.destination);osc.start(at);osc.stop(at+duration);osc.onended=()=>{osc.disconnect();low.disconnect();nodes.delete(osc);nodes.delete(low);};}
  }catch{}};
  return {play,stop,close(){stop();if(owned)context?.close().catch(()=>{});}};
 }
