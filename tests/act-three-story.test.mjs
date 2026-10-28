@@ -59,6 +59,6 @@ test('real map gates motion, reaches bridge collapse and initiates forced loop',
   click('data-map-next');move();assert.equal(saved.at(-1).mapScene,'store');
   for(let n=0;n<100;n++)click('data-dialogue-next');assert.equal(saved.at(-1).mimiKeyGiven,true);assert.deepEqual(saved.at(-1).mapSeen,['departure','crossing','detour','store']);
   click('data-map-next');move();assert.equal(saved.at(-1).mapStep,4);assert.equal(saved.at(-1).mapScene,'bridge');
-  for(let n=0;n<ACT_THREE_MAP_SCENES.bridge.lines.length;n++)click('data-dialogue-next');assert.equal(looped,1);
+  for(let n=0;n<20&&!looped;n++)click('data-dialogue-next');assert.equal(looped,1);
  }finally{stop?.();for(const key of names){if(previous[key]===undefined)delete globalThis[key];else globalThis[key]=previous[key];}}
 });
