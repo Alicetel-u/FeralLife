@@ -57,7 +57,7 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
  let progress=story?actThreeStoryProgress(initialProgress):null,shownLine=null;
  const publish=()=>{if(story)onProgress(actThreeStorySave(progress));};
  const reduced=globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches===true;
- const returning=()=>!!story&&progress.seen.includes('return')&&!progress.seen.includes('homecoming');
+ const returning=()=>!!story&&progress.seen.includes('return');
  let step=story?progress.step:actThreeMapCheckpoint(initialStep),position=step,elapsed=0,moving=returning()&&!progress.scene&&step>0,paused=false,ready=false,dead=false,last=null,raf=0,version=0;
  const paint=()=>{
   const width=viewport.clientWidth,height=viewport.clientHeight,gap=Math.max(380,Math.min(1100,width*.94)),anchor=width*.48;
