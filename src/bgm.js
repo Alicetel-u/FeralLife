@@ -12,6 +12,8 @@ export const TROUBLE_BGM_SRC = 'assets/audio/trouble-persona.mp3';
 export const BAD_END_BGM_SRC = 'assets/audio/bad-end-fire.mp3';
 export const TITLE_BGM_SRC = 'assets/audio/title-countdown.mp3';
 export const CLOCK_BGM_SRC = 'assets/audio/clock-rewind.mp3';
+// After the third-act bridge rewind, reuse the exact BAD END clock theme, looped during the dialogue.
+export const ACT_THREE_RETURN_BGM_SRC = CLOCK_BGM_SRC;
 export const UNEASY_BGM_SRC = 'assets/audio/uneasy-air.mp3';
 export const VICTORY_BGM_SRC = 'assets/audio/victory-fanfare.mp3';
 
@@ -29,7 +31,7 @@ function bgmTrack(provided,src){
   return audio;
 }
 
-const STINGS = new Set(['trouble', 'bad', 'title', 'clock', 'victory', 'duel', 'opening', 'act3']);
+const STINGS = new Set(['trouble', 'bad', 'title', 'clock', 'victory', 'duel', 'opening', 'act3', 'return']);
 
 // Observation uses the normal bed; dialogue selects character themes explicitly.
 // The first-rewind dialogue selects uneasy explicitly.
@@ -54,6 +56,7 @@ export function createNormalBgm(normalAudio, troubleAudio, badAudio, titleAudio,
     bad: bgmTrack(badAudio, BAD_END_BGM_SRC),
     title: bgmTrack(titleAudio, TITLE_BGM_SRC),
     clock: bgmTrack(clockAudio, CLOCK_BGM_SRC),
+    return: bgmTrack(typeof Audio === 'undefined' ? normalAudio : null, ACT_THREE_RETURN_BGM_SRC),
     uneasy: bgmTrack(uneasyAudio, UNEASY_BGM_SRC),
     victory: bgmTrack(victoryAudio, VICTORY_BGM_SRC),
   };
