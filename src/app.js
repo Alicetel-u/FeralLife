@@ -1,4 +1,4 @@
-import {actThreeHTML,startActThree,actThreeTitleHTML,startActThreeTitle,actThreeCompleteHTML} from './act-three-prologue.js';
+import {actThreeHTML,startActThree,actThreeTitleHTML,startActThreeTitle,actThreeCompleteHTML,actThreeAfterHTML,startActThreeAfter} from './act-three-prologue.js';
 import {mountVoiceReview} from './voice-review.js';
 import {playFourKingsNotice} from './act-two-observation-two.js';
 import {actTwoObservationPosition} from './act-two-observation.js';
@@ -58,7 +58,7 @@ const escape = text => String(text ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;'
 const yen = n => '¥' + Math.round(n).toLocaleString('ja-JP');
 const managerPreview = new URLSearchParams(location.search).get('preview')==='manager';
 const observationPreview = new URLSearchParams(location.search).get('preview')==='observation';
-const actThreePreview=new URLSearchParams(location.search).get('preview')==='act-three';
+const actThreePreview=['act-three','act-three-after'].includes(new URLSearchParams(location.search).get('preview'));
 const STORAGE = actThreePreview?'feral-act-three-preview-v1':['act-two-opening','luna-motion'].includes(new URLSearchParams(location.search).get('preview'))?'feral-luna-film-preview-v1':managerPreview?'feral-manager-preview-v1':observationPreview?'feral-observation-preview-v1':'feral-act-one-v1';
 const previewType = new URLSearchParams(location.search).get('preview');
 const eventPreview = previewType === 'events';
@@ -650,6 +650,7 @@ function showNextChapter(){
 }
 function showActThree(){
   const progress=state.actThree||{phase:'film',shot:0};
+  if(progress.phase==='after'||progress.phase==='complete'&&!progress.afterSeen){showActThreeAfter();return;}
   if(progress.phase==='complete'){openModal(actThreeCompleteHTML());return;}
   if(progress.phase==='title'){showActThreeTitle();return;}
   if(progress.phase==='clock'){showActThreeClock();return;}
@@ -663,7 +664,11 @@ function showActThreeClock(){
 }
 function showActThreeTitle(){
   normalBgm.setSuppressed(false);openModal(actThreeTitleHTML());
-  stopOpeningPrologue=startActThreeTitle(modal,()=>{state.actThree={phase:'complete',shot:0};save();openModal(actThreeCompleteHTML());},normalBgm,()=>characterVoice.audioContext());
+  stopOpeningPrologue=startActThreeTitle(modal,()=>{state.actThree={phase:'after',cursor:0};save();showActThreeAfter();},normalBgm,()=>characterVoice.audioContext());
+}
+function showActThreeAfter(){
+  const cursor=state.actThree?.cursor||0;eventView=null;openModal(actThreeAfterHTML());
+  stopOpeningPrologue=startActThreeAfter(modal,()=>{state.actThree={phase:'complete',shot:0,afterSeen:true};save();openModal(actThreeCompleteHTML());},{initialCursor:cursor,onCursor:cursor=>{state.actThree={phase:'after',cursor};save();}});
 }
 function beginRewind(afterFire=false){
   const secondAct=state.actOne.chapter===2;
@@ -743,7 +748,7 @@ function showDebugObservationSelect(chapter,page=0){
   modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes');
 }
 function showDebugChapterSelect(){
-  debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter'],['3','第3幕 — 世界崩壊プロローグ','data-debug-act3']], 'data-debug-tools-back');
+  debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter'],['3','第3幕 — 世界崩壊プロローグ','data-debug-act3'],['3-after','第3幕 — タイムリープ後・空き部屋','data-debug-act3-after']], 'data-debug-tools-back');
 }
 function showDebugSectionSelect(chapter){
   if(chapter!=='2'){showDebugSceneSelect(chapter);return;}
@@ -924,6 +929,8 @@ document.addEventListener('click',e=>{
   const button=e.target.closest('button');if(!button)return;
   if(button.hasAttribute('data-debug-hotspot')){const now=performance.now();debugTapCount=now-debugLastTap>2500?1:debugTapCount+1;debugLastTap=now;if(debugTapCount>=3){debugTapCount=0;showDeveloperMenu();}return;}
   if(button.hasAttribute('data-act3-replay')){state.actThree={phase:'film',shot:0};save();showActThree();return;}
+  if(button.hasAttribute('data-debug-act3-after')){developerMode=true;state.actThree={phase:'after',cursor:0};showActThreeAfter();return;}
+  if(button.hasAttribute('data-act3-after-replay')){state.actThree={phase:'after',cursor:0};save();showActThreeAfter();return;}
   if(button.hasAttribute('data-debug-act3')){developerMode=true;state.actThree={phase:'film',shot:0};showActThree();return;}
   if(button.hasAttribute('data-debug-back')){showGameTitle();return;}
   if(button.hasAttribute('data-debug-tools-back')){showDeveloperMenu();return;}
@@ -1113,7 +1120,7 @@ function syncNormalBgm(){
   // Dedicated scene cues take precedence over character themes.
   const lunaVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="hostess"]');
   const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
-  return normalBgm.setScene(!!modal.querySelector('[data-act3-title],.act3-complete')||actThreeQuiet||document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), actThreeFilm?'act3':clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':actTwoTitle?'luna':actOneTitle?'moku':opening?'opening':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
+  return normalBgm.setScene(!!modal.querySelector('[data-act3-title],[data-act3-after],.act3-complete')||actThreeQuiet||document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), actThreeFilm?'act3':clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':actTwoTitle?'luna':actOneTitle?'moku':opening?'opening':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
 }
 modal.addEventListener('luna-film-phase',()=>{syncNormalBgm();});
 modal.addEventListener('act3-film-phase',()=>{syncNormalBgm();});
@@ -1260,7 +1267,7 @@ if(entryGate && !previewType){
 }else{
   entryGate?.remove();
   startWorldArt();
-  if(actThreePreview){state.actThree||={phase:'film',shot:0};showActThree();}
+  if(actThreePreview){state.actThree||=new URLSearchParams(location.search).get('preview')==='act-three-after'?{phase:'after',cursor:0}:{phase:'film',shot:0};showActThree();}
   else if(actTwoOpeningPreview)showActTwoOpening();
   else if(firstStalkerPreview||firstFirePreview){const reply=state.events.find(e=>e.actScene==='reply');showEvent(reply.id,Number(new URLSearchParams(location.search).get('line')||0));}
   else if(firstRewindPreview)showActEnding();

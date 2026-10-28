@@ -1,4 +1,4 @@
-import {ACT_THREE_SHOTS} from '../src/act-three-prologue.js';
+import {ACT_THREE_SHOTS,ACT_THREE_AFTER_SCENES} from '../src/act-three-prologue.js';
 import {createActOne,advanceActOne,answerActOne,getActOneChoices,rewindBeforeFire} from '../src/act-one.js';
 import {beginActTwo,advanceActTwo,answerActTwo,actTwoChoices,rewindActTwo,resumeActTwoRewind} from '../src/act-two.js';
 import {resumeStoryRewind} from '../src/story-checkpoints.js';
@@ -34,6 +34,7 @@ export function tracePlayableVoiceLines(manifest){
  for(const beat of ACT_TWO_OBSERVATION_BEATS)add(beat.lines,2,'observation/'+beat.id);
  for(const shot of ACT_TWO_OPENING_SCENES)add(shot.cues,2,'film/'+shot.shot);
  for(const shot of ACT_THREE_SHOTS)add(shot.cues,3,'act3/film/'+shot.id);
+ for(const scene of ACT_THREE_AFTER_SCENES)add(scene.lines,3,'act3/after/'+scene.id);
  const walk=(state,chapter,path)=>{
   if(++states>10000)throw Error('Voice reachability exceeded the bounded story graph');
   events(state,chapter,path);
