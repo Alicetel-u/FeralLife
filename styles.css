@@ -2298,7 +2298,36 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .act3-film[data-paused="true"] .act3-smoke,.act3-film[data-paused="true"] .act3-grain{animation-play-state:paused}
 .game-ink dialog.act-modal:has(.act3-film,.act3-title,.act3-complete){position:fixed;inset:0;margin:0;width:100vw;height:100dvh;max-width:none;max-height:none;padding:0;border:0;border-radius:0;overflow:hidden;background:#030304}
 .act3-film::before,.act3-film::after,.act3-title::before,.act3-title::after,.act3-complete::before,.act3-complete::after{display:none!important}
-.game-ink .conversation-modal .act3-dialogue .stage-bubble{height:auto!important;min-height:136px!important;max-height:none!important;padding:44px 5% 25px!important}
-.game-ink .conversation-modal .act3-dialogue .stage-bubble p{max-height:none!important;overflow:visible!important;margin:0;font-size:clamp(16px,2vw,25px);line-height:1.55}
-@media(max-width:700px) and (orientation:portrait){.act3-rig{bottom:210px}.act3-image{object-fit:contain;object-position:center}.game-ink .conversation-modal .act3-dialogue .stage-bubble{padding:42px 18px 22px!important}.game-ink .conversation-modal .act3-dialogue .stage-bubble p{font-size:17px}}
-@media(max-height:450px){.game-ink .conversation-modal .act3-dialogue .stage-bubble{min-height:100px!important;padding:34px 24px 18px!important}.game-ink .conversation-modal .act3-dialogue .stage-bubble p{font-size:16px}}
+@media(max-width:700px) and (orientation:portrait){.act3-rig{bottom:210px}.act3-image{object-fit:contain;object-position:center}}
+
+/* The nameplate must reserve its own space before the spoken line. */
+.game-ink .conversation-modal .act3-dialogue .stage-bubble,
+.game-ink .conversation-modal .act3-dialogue .stage-bubble.narration{
+  display:flex;flex-direction:column;align-items:flex-start;gap:8px;
+  box-sizing:border-box;height:auto!important;min-height:0!important;
+  padding:12px 5% 18px!important;overflow:visible;
+}
+.game-ink .conversation-modal .act3-dialogue .stage-speaker{
+  position:relative;inset:auto;left:auto;top:auto;flex:none;
+  width:auto;min-width:130px;max-width:100%;height:auto;min-height:28px;
+  padding:4px 14px;gap:8px;
+}
+.game-ink .conversation-modal .act3-dialogue .stage-bubble p,
+.game-ink .conversation-modal .act3-dialogue .stage-bubble.narration p{
+  flex:none;width:100%;min-height:0;max-height:none!important;overflow:visible!important;
+  margin:0;padding:0;white-space:pre-wrap;overflow-wrap:anywhere;
+  font-size:clamp(16px,2vw,25px);line-height:1.5;letter-spacing:.035em;
+}
+@media(max-width:700px){
+  .game-ink .conversation-modal .act3-dialogue .stage-bubble,
+  .game-ink .conversation-modal .act3-dialogue .stage-bubble.narration{gap:6px;padding:10px 18px 15px!important}
+  .game-ink .conversation-modal .act3-dialogue .stage-bubble p,
+  .game-ink .conversation-modal .act3-dialogue .stage-bubble.narration p{font-size:clamp(16px,4.4vw,19px);line-height:1.5}
+}
+@media(max-height:450px){
+  .game-ink .conversation-modal .act3-dialogue .stage-bubble,
+  .game-ink .conversation-modal .act3-dialogue .stage-bubble.narration{gap:4px;padding:7px 20px 10px!important}
+  .game-ink .conversation-modal .act3-dialogue .stage-speaker{min-height:24px;padding:2px 12px}
+  .game-ink .conversation-modal .act3-dialogue .stage-bubble p,
+  .game-ink .conversation-modal .act3-dialogue .stage-bubble.narration p{font-size:16px;line-height:1.4}
+}
