@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
-import { NORMAL_BGM_SRC, MOKU_BGM_SRC, LUNA_BGM_SRC, DUEL_BGM_SRC, OPENING_BGM_SRC, bedCue, createNormalBgm } from '../src/bgm.js';
+import { NORMAL_BGM_SRC, MOKU_BGM_SRC, LUNA_BGM_SRC, DUEL_BGM_SRC, OPENING_BGM_SRC, CLOCK_BGM_SRC, UNEASY_BGM_SRC, bedCue, createNormalBgm } from '../src/bgm.js';
 import {DUEL_INTRO,duelEncounterLines,duelEndingLines} from '../src/act-two-duel.js';
 import {duelStageHTML} from '../src/act-two-duel-stage.js';
 import {eventConversation} from '../src/event-stage.js';
@@ -372,4 +372,50 @@ test('bridge collapse remains silent when scene synchronization runs again',asyn
    modal:{open:true,classList:{contains:()=>false},querySelector:s=>s==='[data-act3-map]'||collapsed&&s==='[data-act3-map][data-collapse="true"]'?{}:null},normalBgm:{setScene:(quiet,cue)=>result={quiet,cue}}};
   vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);assert.equal(result.cue,'act3map');assert.equal(result.quiet,collapsed);
  }
+});
+
+test('act three return uses post-BAD-END uneasy music, not a looping clock SE',async()=>{
+ assert.equal(UNEASY_BGM_SRC,'assets/audio/uneasy-air.mp3');
+ assert.equal(CLOCK_BGM_SRC,'assets/audio/clock-rewind.mp3');
+ const oldAudio=globalThis.Audio,generated=[];
+ globalThis.Audio=class{constructor(){Object.assign(this,fakeAudio());generated.push(this);}};
+ try{
+  const args=Array.from({length:12},()=>fakeAudio()),clock=args[4],uneasy=args[5];
+  const bgm=createNormalBgm(...args);
+  const map=generated.find(a=>a.src==='assets/audio/act3-map.mp3');
+  assert.ok(map);
+  assert.equal(generated.some(a=>a.src===CLOCK_BGM_SRC),false,'No second audio element may loop the clock SE');
+  assert.equal(clock.loop,false);assert.equal(uneasy.loop,true);
+  await bgm.unlock();
+  await bgm.setScene(false,'act3map');assert.equal(map.paused,false);
+  await bgm.setScene(false,'clock');assert.equal(clock.paused,false);assert.equal(map.paused,true);
+  await bgm.setSuppressed(true);assert.equal(clock.paused,true);
+  await bgm.setScene(false,'uneasy');
+  assert.equal(uneasy.paused,false);assert.equal(clock.paused,true);assert.equal(map.paused,true);
+  uneasy.currentTime=17;await bgm.setScene(false,'uneasy');assert.equal(uneasy.currentTime,17);
+ }finally{if(oldAudio===undefined)delete globalThis.Audio;else globalThis.Audio=oldAudio;}
+});
+
+test('post-rewind saves select uneasy before map attributes initialize, with no map BGM flash',async()=>{
+ const app=await readFile(new URL('../src/app.js',import.meta.url),'utf8');
+ const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
+ for(const [progress,selectors,expected] of [
+  [{phase:'map',mapScene:'return',mapSeen:['departure','crossing','detour','store']},['[data-act3-map]'],'uneasy'],
+  [{phase:'map',mapScene:'return',mapSeen:['departure','crossing','detour','store']},['[data-act3-map]','[data-act3-map][data-scene="mimi"]'],'uneasy'],
+  [{phase:'map',mapScene:'homecoming',mapSeen:['departure','crossing','detour','store','return']},['[data-act3-map]'],'uneasy'],
+  [{phase:'map',mapScene:null,mapSeen:['departure','crossing','detour','store','return']},['[data-act3-map]'],'uneasy'],
+  [{phase:'map',mapScene:'store',mapSeen:['departure','crossing','detour']},['[data-act3-map]','[data-act3-map][data-scene="mimi"]'],'mimi'],
+  [{phase:'map',mapScene:'crossing',mapSeen:['departure']},['[data-act3-map]'],'act3map']
+ ]){
+  let result;
+  const context={document:{hidden:false},state:{actOne:{chapter:2},actThree:progress,events:[]},eventView:null,
+   eventConversation:()=>[],bedCue:()=> 'normal',
+   modal:{open:true,classList:{contains:()=>false},querySelector:q=>selectors.includes(q)?{dataset:{}}:null},
+   normalBgm:{setScene:(quiet,cue)=>result={quiet,cue}}};
+  vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);
+  assert.equal(result.cue,expected,JSON.stringify(progress));assert.equal(result.quiet,false);
+ }
+ assert.match(app,/state\.actThree=actThreeStoryDebug\('return'\);save\(\);showActThreeMap\(\)/);
+ const handoff=app.slice(app.indexOf('onLoop:()=>{'),app.indexOf('onBack:()=>openModal(actThreeCompleteHTML())'));
+ assert.ok(!handoff.includes("normalBgm.setSuppressed(false);\n      state.actThree"));
 });
