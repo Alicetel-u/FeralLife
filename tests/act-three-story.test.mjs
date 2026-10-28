@@ -2,10 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {ACT_THREE_MAP_SCENES,actThreeStoryProgress,actThreeStorySave,actThreeStoryDebug} from '../src/act-three-story.js';
 import {startActThreeMap} from '../src/act-three-map.js';
+import {ACT_THREE_RETURN_BGM_SRC,CLOCK_BGM_SRC} from '../src/bgm.js';
 
 test('old map demos cannot skip newly authored story; saves resume the actual unanswered scene and page',()=>{
  assert.equal(actThreeStoryProgress({phase:'map',mapStep:4}).scene,'departure');
- for(const id of ['departure','crossing','detour','store','farewell','bridge','return']){
+ for(const id of ['departure','crossing','detour','store','farewell','bridge','return','homecoming']){
   const saved=actThreeStoryDebug(id),p=actThreeStoryProgress(saved);assert.equal(p.step,saved.mapStep);assert.equal(p.scene,saved.mapScene);assert.equal(p.cursor,saved.mapCursor);
  }
  const saved={...actThreeStoryDebug('store'),mapCursor:37,mapPage:999};
@@ -32,6 +33,56 @@ test('Mimi encounter, bridge collapse and rewind script preserve the specified l
  assert.match(store.at(-1).text,/ミミは鍵を両手で握りしめる/);
  assert.ok(!store.some(l=>/倒れ|脱出成功|薬|前大家/.test(l.text)));
  for(const scene of Object.values(ACT_THREE_MAP_SCENES))for(const line of scene.lines)assert.ok(!/ここからゲーム|画面|シーン\d|選択肢/.test(line.text));
+});
+
+test('bridge rewind starts at surprised landlord, stays in his thoughts, then escorts Mimi home',async()=>{
+ const lines=ACT_THREE_MAP_SCENES.return.lines;
+ assert.equal(lines[0].text,'……は？');
+ assert.equal(lines[0].speaker,'manager');
+ const change=lines.findIndex(l=>l.text==='……予定変更だ。アパートに戻るぞ');
+ assert.ok(change>10);
+ assert.ok(lines.slice(0,change).every(l=>['manager','narrator'].includes(l.speaker)),'Nobody addresses the landlord during the realization');
+ assert.ok(lines.some(l=>l.text==='だが、俺は死んでない'&&l.innerVoice));
+ assert.ok(lines.some(l=>l.text==='今度はコンビニが起点なのか……？'&&l.innerVoice));
+ assert.ok(lines.some(l=>l.text==='ミミを一人で帰らせるわけにはいかないだろ'));
+ assert.ok(lines.some(l=>l.text==='ルナがミミに肩を貸す。'));
+ assert.ok(!lines.some(l=>l.text.includes('二人とも、生きてる')));
+ assert.equal(lines.at(-1).text,'四人はコンビニを出て、けもの荘へ向かう。');
+ assert.equal(ACT_THREE_MAP_SCENES.homecoming.lines[0].text,'四人は、けもの荘へ戻った。');
+ assert.equal(ACT_THREE_RETURN_BGM_SRC,CLOCK_BGM_SRC,'Post-rewind soundtrack reuses BAD END clock composition');
+ const stage=actThreeStoryProgress(actThreeStoryDebug('homecoming'));
+ assert.equal(stage.step,0);assert.equal(stage.scene,'homecoming');assert.ok(stage.seen.includes('return'));
+ const finished=actThreeStoryProgress({...actThreeStorySave(stage),mapScene:null,mapSeen:[...stage.seen,'homecoming']});
+ assert.equal(finished.step,0);assert.equal(finished.scene,null);assert.ok(finished.seen.includes('homecoming'));
+});
+
+test('post-rewind dialogue advances to existing home landmark and unlocks finish without replaying Mimi meeting',async()=>{
+ const names=['Image','requestAnimationFrame','cancelAnimationFrame','document','addEventListener','removeEventListener','matchMedia'];
+ const previous=Object.fromEntries(names.map(k=>[k,globalThis[k]]));let frame,clicked;const saved=[];
+ const el=()=>({style:{setProperty(){}},dataset:{},hidden:false,disabled:false,setAttribute(){},removeAttribute(){},querySelector(){return el();}});
+ const elements=new Map(),section={...el(),focus(){},querySelector(key){if(!elements.has(key))elements.set(key,el());return elements.get(key);},querySelectorAll(){return Array.from({length:5},el);},addEventListener(key,fn){if(key==='click')clicked=fn;},removeEventListener(){clicked=null;}};
+ section.querySelector('.map-viewport').clientWidth=390;section.querySelector('.map-viewport').clientHeight=600;
+ const click=name=>clicked?.({target:{closest:()=>({hasAttribute:key=>key===name})},preventDefault(){},stopPropagation(){}});
+ let stop;
+ try{
+  globalThis.Image=class{set src(v){queueMicrotask(()=>this.onload());}decode(){return Promise.resolve();}};
+  globalThis.requestAnimationFrame=fn=>{frame=fn;return 1;};globalThis.cancelAnimationFrame=()=>frame=null;
+  globalThis.document={hidden:false,addEventListener(){},removeEventListener(){}};globalThis.addEventListener=()=>{};globalThis.removeEventListener=()=>{};globalThis.matchMedia=()=>({matches:false});
+  stop=startActThreeMap({querySelector:()=>section},{story:true,initialProgress:actThreeStoryDebug('return'),onProgress:p=>saved.push(p)});
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(saved.at(-1).mapScene,'return');
+  assert.equal(section.dataset.rewindReturn,'true');
+  for(let i=0;i<110&&saved.at(-1).mapScene==='return';i++)click('data-dialogue-next');
+  assert.equal(saved.at(-1).mapScene,'homecoming');assert.equal(saved.at(-1).mapStep,0);
+  assert.equal(section.dataset.location,'home');
+  assert.equal(section.querySelector('[data-map-finish]').hidden,true);
+  click('data-dialogue-next');
+  assert.equal(saved.at(-1).mapScene,null);
+  assert.ok(saved.at(-1).mapSeen.includes('homecoming'));
+  assert.equal(section.querySelector('[data-map-finish]').hidden,false);
+  assert.equal(section.querySelector('[data-map-next]').hidden,true);
+  assert.ok(actThreeStoryProgress(saved.at(-1)).seen.includes('homecoming'));
+ }finally{stop?.();for(const key of names){if(previous[key]===undefined)delete globalThis[key];else globalThis[key]=previous[key];}}
 });
 
 test('real map gates motion, reaches bridge collapse and initiates forced loop',async()=>{
