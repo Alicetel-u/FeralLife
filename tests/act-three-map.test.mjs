@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync} from 'node:fs';
-import {ACT_THREE_MAP_PLACES,ACT_THREE_MAP_CAST,ACT_THREE_MAP_ZOMBIE,actThreeMapCheckpoint,actThreeMapTravel,actThreeMapWorldPosition,actThreeMapTravelDuration,ACT_THREE_BRIDGE_SPAN,actThreeMapHTML,startActThreeMap} from '../src/act-three-map.js';
+import {ACT_THREE_MAP_PLACES,ACT_THREE_MAP_CAST,ACT_THREE_MAP_ZOMBIE,actThreeMapCheckpoint,actThreeMapTravel,actThreeMapWorldPosition,actThreeMapVerticalPosition,actThreeMapTravelDirection,actThreeMapTravelDuration,ACT_THREE_BRIDGE_SPAN,actThreeMapHTML,startActThreeMap} from '../src/act-three-map.js';
 
 test('escape map requires crossing then bypass before store and bridge; all art is packaged',()=>{
  assert.deepEqual(ACT_THREE_MAP_PLACES.map(p=>p.id),['home','crossing','detour','store','bridge']);
@@ -10,14 +10,26 @@ test('escape map requires crossing then bypass before store and bridge; all art 
  assert.equal(actThreeMapCheckpoint(undefined),0);assert.equal(actThreeMapCheckpoint(-2),0);assert.equal(actThreeMapCheckpoint(99),4);
  assert.match(actThreeMapHTML(),/data-chapter="3"/);assert.ok(!actThreeMapHTML().includes('town-map-v1'));
  assert.equal(ACT_THREE_BRIDGE_SPAN,2.6);
- assert.equal(actThreeMapWorldPosition(3),3);
- assert.equal(actThreeMapWorldPosition(4),5.6);
- assert.ok(Math.abs(actThreeMapWorldPosition(3.5)-4.3)<1e-8);
+ assert.equal(actThreeMapWorldPosition(0),0);
+ assert.equal(actThreeMapWorldPosition(1),1);
+ assert.equal(actThreeMapWorldPosition(1.5),1); // Crossing → detour: no horizontal movement.
+ assert.equal(actThreeMapWorldPosition(2),1);
+ assert.equal(actThreeMapWorldPosition(2.5),1.5); // Detour → store: eastbound.
+ assert.equal(actThreeMapWorldPosition(3),2);
+ assert.ok(Math.abs(actThreeMapWorldPosition(4)-4.6)<1e-8);
+ assert.ok(Math.abs(actThreeMapWorldPosition(3.5)-3.3)<1e-8);
+ assert.equal(actThreeMapVerticalPosition(1),0);
+ assert.equal(actThreeMapVerticalPosition(1.5),.5);
+ assert.equal(actThreeMapVerticalPosition(2),1);
+ assert.equal(actThreeMapVerticalPosition(3.5),1);
+ assert.equal(actThreeMapTravelDirection(1),'up');
+ assert.equal(actThreeMapTravelDirection(2),'right');
+ assert.equal(actThreeMapTravelDuration(1),3);
  assert.equal(actThreeMapTravelDuration(2),2.4);
  assert.equal(actThreeMapTravelDuration(3),8.4);
  assert.ok(actThreeMapTravelDuration(3,true)>actThreeMapTravelDuration(2,true));
  const route=actThreeMapHTML();
- for(const id of ['route-zombies-a','route-zombies-b','route-zombies-c','route-zombies-d','barricade-a','barricade-b'])assert.match(route,new RegExp(id));
+ for(const id of ['route-zombies-a','route-zombies-b','route-zombies-c','route-zombies-d','barricade-a','barricade-b','map-bypass-route','map-bypass-road','map-detour-exit'])assert.match(route,new RegExp(id));
  assert.equal(route.split('assets/events/chapter3/map-zombie.png').length-1,16);
  let previous=1;for(let n=0;n<=100;n++){const f=actThreeMapTravel(1,2,n/100);assert.ok(f.position>=previous&&f.position<=2);previous=f.position;}
  assert.equal(actThreeMapTravel(1,2,1).finished,true);assert.equal(actThreeMapTravel(1,2,-1).position,1);
@@ -40,10 +52,17 @@ test('map saves only arrival, pauses motion, resumes bypass and cleans up callba
   const stop=startActThreeMap({querySelector:()=>section},{initialStep:1,onArrival:v=>saved.push(v)});
   await new Promise(resolve=>setImmediate(resolve));assert.equal(section.dataset.location,'crossing');
   click('data-map-next');tick(0);for(let n=1;n<15;n++)tick(n*50);assert.deepEqual(saved,[]);
+  assert.equal(section.dataset.travelDirection,'up');
+  assert.ok(section.querySelector('.map-world').style.transform.startsWith('translate3d(-380px,'));
+  assert.ok(parseFloat(section.querySelector('.map-bypass-route').style.width)>200);
   click('data-map-pause');const before=section.querySelector('.map-world').style.transform;
   for(let n=15;n<80;n++)tick(n*50);assert.equal(section.querySelector('.map-world').style.transform,before);assert.deepEqual(saved,[]);
   click('data-map-pause');for(let n=80;n<145;n++)tick(n*50);assert.deepEqual(saved,[2]);assert.equal(section.dataset.location,'detour');
+  const afterClimb=section.querySelector('.map-world').style.transform;
   click('data-map-next');click('data-map-next');for(let n=145;n<205;n++)tick(n*50);assert.deepEqual(saved,[2,3]);
+  assert.equal(section.dataset.travelDirection,'idle');
+  assert.notEqual(section.querySelector('.map-world').style.transform,afterClimb);
+  assert.ok(section.querySelector('.map-world').style.transform.endsWith('px,0)'));
   stop();assert.equal(frame,null);assert.equal(clicked,null);assert.equal(resize,null);stop();
  }finally{for(const k of keys){if(original[k]===undefined)delete globalThis[k];else globalThis[k]=original[k];}}
 });
