@@ -29,6 +29,26 @@ export const ACT_THREE_MAP_SCENES={
   act3Line('cat','大家、何者なんだニャ……',{horde:true}),
   act3Line('manager','ただの大家だよ',{horde:true})
  ]},
+ detour:{step:2,cast:['cat','hostess'],lines:[
+  act3Line('narrator','三人は裏道に入る。道端には乗り捨てられた配送トラックが止まっている。'),
+  act3Line('cat','はぁ……やっとゾンビから離れられたニャ',{emotion:'tired'}),
+  act3Line('hostess','でも、こんな細い道で大丈夫かな……',{emotion:'sad'}),
+  act3Line('manager','……二人とも、そこから動くな'),
+  act3Line('cat','またニャ！？',{emotion:'surprised'}),
+  act3Line('narrator','大家はトラックを見つめ、腕時計を確認する。'),
+  act3Line('manager','……そろそろか'),
+  act3Line('hostess','何が……？',{emotion:'sad'}),
+  act3Line('narrator','突然、配送トラックが大爆発した。熱風と轟音が狭い路地を駆け抜ける。',{explosion:true}),
+  act3Line('cat','うぎゃああっ！？！？',{emotion:'surprised',aftermath:true}),
+  act3Line('hostess','きゃあっ！！',{emotion:'surprised',aftermath:true}),
+  act3Line('narrator','黒煙が立ち上る。大家の指示で立ち止まっていた三人に怪我はなかった。',{aftermath:true}),
+  act3Line('cat','し、死ぬかと思ったニャ！！',{emotion:'surprised',aftermath:true}),
+  act3Line('hostess','大家さん……どうして分かったの？',{emotion:'surprised',aftermath:true}),
+  act3Line('manager','……前は、ここで失敗したからな',{aftermath:true}),
+  act3Line('cat','前って何の話ニャ！？',{emotion:'surprised',aftermath:true}),
+  act3Line('manager','……何でもない。行くぞ',{aftermath:true}),
+  act3Line('narrator','燃えるトラックを避け、三人はコンビニへ向かった。',{aftermath:true})
+ ]},
  store:{step:3,cast:['cat','hostess','rabbit'],lines:[
   act3Line('cat','はぁ……はぁ……生きた心地がしなかったニャ……',{emotion:'tired'}),
   act3Line('hostess','でも、本当に一度も襲われなかったね'),
@@ -86,19 +106,19 @@ export const ACT_THREE_MAP_SCENES={
 };
 export const ACT_THREE_STORE_INTERIOR='assets/events/chapter3/store-interior.png';
 export function actThreeStoryProgress(saved){
- if(saved?.mapStoryRevision!==1)return {step:0,scene:'departure',cursor:0,page:0,seen:[],keyGiven:false};
- const seen=[];for(const id of ['departure','crossing','store']){if(!saved.mapSeen?.includes(id))break;seen.push(id);}
+ if(saved?.![1,2].includes(saved?.mapStoryRevision))return {step:0,scene:'departure',cursor:0,page:0,seen:[],keyGiven:false};
+ const seen=[];for(const id of ['departure','crossing',...(saved.mapStoryRevision===2?['detour']:[]),'store']){if(!saved.mapSeen?.includes(id))break;seen.push(id);}
  // Only the authored, played order can unlock a later location.
- const max=!seen.includes('departure')?0:!seen.includes('crossing')?1:3;
+ const max=!seen.includes('departure')?0:!seen.includes('crossing')?1:!seen.includes('detour')&&saved.mapStoryRevision===2?2:3;
  const step=Math.min(max,Math.max(0,Number.isInteger(saved.mapStep)?saved.mapStep:0));
- const required=step===0?'departure':step===1?'crossing':step===3?'store':null;
+ const required=step===0?'departure':step===1?'crossing':step===2&&saved.mapStoryRevision===2?'detour':step===3?'store':null;
  const scene=required&&!seen.includes(required)?required:null;
  const cursor=scene&&scene===saved.mapScene?Math.min(ACT_THREE_MAP_SCENES[scene].lines.length-1,Math.max(0,saved.mapCursor|0)):0;
  const page=scene?Math.min(messagePages(ACT_THREE_MAP_SCENES[scene].lines[cursor].text).length-1,Math.max(0,saved.mapPage|0)):0;
  return {step,scene,cursor,page,seen,keyGiven:seen.includes('store')||scene==='store'&&ACT_THREE_MAP_SCENES.store.lines.slice(0,cursor+1).some(l=>l.keyGiven)};
 }
-export function actThreeStorySave(progress){return {phase:'map',afterSeen:true,mapStoryRevision:1,mapStep:progress.step,mapScene:progress.scene,mapCursor:progress.cursor,mapPage:progress.page,mapSeen:[...progress.seen],mimiKeyGiven:!!progress.keyGiven};}
+export function actThreeStorySave(progress){return {phase:'map',afterSeen:true,mapStoryRevision:2,mapStep:progress.step,mapScene:progress.scene,mapCursor:progress.cursor,mapPage:progress.page,mapSeen:[...progress.seen],mimiKeyGiven:!!progress.keyGiven};}
 export function actThreeStoryDebug(id){
- const choices={departure:{step:0,scene:'departure',seen:[]},crossing:{step:1,scene:'crossing',seen:['departure']},detour:{step:2,scene:null,seen:['departure','crossing']},store:{step:3,scene:'store',seen:['departure','crossing']},farewell:{step:3,scene:'store',cursor:42,seen:['departure','crossing'],keyGiven:true}};
+ const choices={departure:{step:0,scene:'departure',seen:[]},crossing:{step:1,scene:'crossing',seen:['departure']},detour:{step:2,scene:'detour',seen:['departure','crossing']},store:{step:3,scene:'store',seen:['departure','crossing','detour']},farewell:{step:3,scene:'store',cursor:42,seen:['departure','crossing','detour'],keyGiven:true}};
  const entry=choices[id];return entry?actThreeStorySave({cursor:0,page:0,keyGiven:false,...entry}):null;
 }
