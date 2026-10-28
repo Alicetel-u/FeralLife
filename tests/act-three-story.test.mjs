@@ -50,6 +50,11 @@ test('bridge rewind starts at surprised landlord, stays in his thoughts, then es
  assert.equal(lines.at(-1).text,'四人はコンビニを出て、けもの荘へ向かう。');
  assert.equal(ACT_THREE_MAP_SCENES.homecoming.lines[0].text,'四人は、けもの荘へ戻った。');
  assert.equal(ACT_THREE_RETURN_BGM_SRC,CLOCK_BGM_SRC,'Post-rewind soundtrack reuses BAD END clock composition');
+ const olderReturn={...actThreeStoryDebug('return'),mapStoryRevision:3,mapCursor:2};
+ const migrated=actThreeStoryProgress(olderReturn);
+ assert.equal(migrated.scene,'return');assert.equal(migrated.cursor,0);
+ const olderFinished={...olderReturn,mapScene:null,mapSeen:[...olderReturn.mapSeen,'return']};
+ assert.equal(actThreeStoryProgress(olderFinished).scene,'return');
  const stage=actThreeStoryProgress(actThreeStoryDebug('homecoming'));
  assert.equal(stage.step,0);assert.equal(stage.scene,'homecoming');assert.ok(stage.seen.includes('return'));
  const finished=actThreeStoryProgress({...actThreeStorySave(stage),mapScene:null,mapSeen:[...stage.seen,'homecoming']});
