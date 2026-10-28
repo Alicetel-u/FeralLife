@@ -2429,3 +2429,10 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 @keyframes act3-viewport-shudder{0%,100%{translate:0 0}25%{translate:9px -6px}50%{translate:-8px 4px}75%{translate:5px -3px}}
 @keyframes act3-truck-smoke{from{transform:translateY(0) scale(.95);opacity:.75}to{transform:translateY(-18px) scale(1.12);opacity:.95}}
 @media(prefers-reduced-motion:reduce){.act3-map[data-explosion="blast"] .map-viewport,.act3-map[data-explosion="blast"] .map-crash-truck{animation:none}.act3-map[data-explosion="smoke"] .truck-smoke{animation:none}}
+
+
+/* The bridge failure has no warning: Moku and Luna drop together, then a white-out. */
+.act3-map[data-collapse="true"] .map-companion-cat,
+.act3-map[data-collapse="true"] .map-companion-hostess{transform:translateY(48px) rotate(85deg);transform-origin:bottom center;transition:transform .16s ease-in;filter:grayscale(.65);opacity:.85}
+.act3-map[data-collapse="true"] .map-party{animation:none}
+@media(prefers-reduced-motion:reduce){.act3-map[data-collapse="true"] .map-companion-cat,.act3-map[data-collapse="true"] .map-companion-hostess{transition:none}}
