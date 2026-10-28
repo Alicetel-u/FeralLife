@@ -76,7 +76,7 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   party.style.left=`${anchor}px`;
   const upwardStep=moving&&step===1;
   const upwardProgress=upwardStep?Math.min(1,elapsed/actThreeMapTravelDuration(step,reduced)):0;
-  party.style.transform=upwardStep&&!paused&&!reduced?`translateY(${-Math.sin(Math.PI*upwardProgress)*Math.min(64,height*.14)}px)`:'';
+  party.style.transform=upwardStep&&!reduced?`translateY(${-Math.sin(Math.PI*upwardProgress)*Math.min(64,height*.14)}px)`:'';
   party.style.setProperty('--bounce',String(moving&&!reduced?Math.sin(elapsed*9)*4:0));
   party.style.setProperty('--lean',moving&&!paused&&!reduced?(upwardStep?'0deg':'5deg'):'0deg');
   section.dataset.moving=String(moving&&!paused);section.dataset.paused=String(paused||document.hidden);section.dataset.location=ACT_THREE_MAP_PLACES[step].id;
