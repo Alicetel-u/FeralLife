@@ -1,4 +1,7 @@
 export const ACT_THREE_BGM_SRC = 'assets/audio/survival-tombs.mp3';
+// Reserved upload paths: activate these cues only after both MP3 files are added.
+export const ACT_THREE_MAP_BGM_SRC = 'assets/audio/act3-map.mp3';
+export const MIMI_BGM_SRC = 'assets/audio/mimi-theme.mp3';
 export const DUEL_BGM_SRC = 'assets/audio/duel-ao-wo-isoide.mp3';
 export const NORMAL_BGM_SRC = 'assets/audio/normal-pop.mp3';
 export const LUNA_BGM_SRC = 'assets/audio/luna-odayakana-gogo.mp3';
