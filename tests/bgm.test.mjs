@@ -402,6 +402,7 @@ test('post-rewind saves select uneasy before map attributes initialize, with no 
  for(const [progress,selectors,expected] of [
   [{phase:'map',mapScene:'return',mapSeen:['departure','crossing','detour','store']},['[data-act3-map]'],'uneasy'],
   [{phase:'map',mapScene:'return',mapSeen:['departure','crossing','detour','store']},['[data-act3-map]','[data-act3-map][data-scene="mimi"]'],'uneasy'],
+  [{phase:'map',mapScene:null,mapSeen:[]},['[data-act3-map]','[data-act3-map][data-rewind-return="true"]'],'uneasy'],
   [{phase:'map',mapScene:'homecoming',mapSeen:['departure','crossing','detour','store','return']},['[data-act3-map]'],'uneasy'],
   [{phase:'map',mapScene:null,mapSeen:['departure','crossing','detour','store','return']},['[data-act3-map]'],'uneasy'],
   [{phase:'map',mapScene:'store',mapSeen:['departure','crossing','detour']},['[data-act3-map]','[data-act3-map][data-scene="mimi"]'],'mimi'],
