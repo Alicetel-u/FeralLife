@@ -80,7 +80,7 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   next.hidden=(story?(step>=4||progress?.seen.includes('return')):step===4)||moving||!!progress?.scene;next.disabled=!ready;next.innerHTML=`${ACT_THREE_MAP_PLACES[step].action||''} <span aria-hidden="true">➜</span>`;
   pause.hidden=!moving;pause.textContent=paused?'移動を再開':'一時停止';pause.setAttribute('aria-pressed',String(paused));reset.hidden=story?true:step!==4||moving;
   section.querySelector('[data-map-location]').textContent=ACT_THREE_MAP_PLACES[step].name;
-  section.querySelector('[data-map-finish]').hidden=!(story&&progress?.seen.includes('return')&&!progress.scene);
+  section.querySelector('[data-map-finish]').hidden=!(story&&progress?.seen.includes('homecoming')&&!progress.scene);
   if(story)paintDialogue();else controls.refresh();
   status.textContent=moving?(paused?'移動を一時停止しています':step===3?'ゾンビのいる長い道を抜け、橋へ移動中':step===1?'ゾンビを避けて裏道を北へ移動中':`${ACT_THREE_MAP_PLACES[step+1].name}へ移動中`):ACT_THREE_MAP_PLACES[step].note;
  };
@@ -90,7 +90,7 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   section.dataset.dialogue=String(!!scene&&ready);
   section.querySelector('.map-panel').hidden=!!scene;
   backdrop.hidden=true;
-  if(!scene||!ready){collapseActive=false;collapseAge=0;collapseReady=false;collapseScene.hidden=true;section.dataset.collapse='false';section.dataset.explosion='none';section.dataset.hordeCrossing='false';section.dataset.hidePortraits='false';if(shownLine){voice?.stop();shownLine=null;}section.dataset.scene='map';onScene('map');return;}
+  if(!scene||!ready){section.dataset.rewindReturn=String(story&&progress?.seen.includes('return'));collapseActive=false;collapseAge=0;collapseReady=false;collapseScene.hidden=true;section.dataset.collapse='false';section.dataset.explosion='none';section.dataset.hordeCrossing='false';section.dataset.hidePortraits='false';if(shownLine){voice?.stop();shownLine=null;}section.dataset.scene='map';onScene('map');return;}
   const line=scene.lines[progress.cursor],inside=!!line.inside;
   const collapsing=progress.scene==='bridge'&&!!line.collapse;
   if(collapsing&&!collapseActive){collapseAge=0;collapseReady=false;}
@@ -100,6 +100,7 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   const visual=actThreeMapVisualState(progress.scene,line);
   section.dataset.explosion=visual.explosion;section.dataset.hordeCrossing=String(visual.crossing);section.dataset.hidePortraits=String(visual.hideCharacters);
   section.dataset.scene=inside?'mimi':progress.scene;
+  section.dataset.rewindReturn=String(progress.scene==='return'||progress.scene==='homecoming'||progress.seen.includes('return'));
   if(inside){backdrop.src=ACT_THREE_STORE_INTERIOR;backdrop.hidden=false;}
   const revealed=progress.scene==='return'||progress.scene==='store'&&scene.lines.slice(0,progress.cursor+1).some(l=>l.revealMimi);
   const cast=scene.cast.filter(id=>id!=='rabbit'||revealed);
@@ -118,7 +119,16 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
   if(back){if(progress.page>0)progress.page--;else if(progress.cursor>0){progress.cursor--;progress.page=messagePages(scene.lines[progress.cursor].text).length-1;}}
   else if(progress.page<pages.length-1)progress.page++;
   else if(progress.cursor<scene.lines.length-1){progress.cursor++;progress.page=0;}
-  else {if(progress.scene==='bridge'){voice?.stop();onLoop();return;}if(!progress.seen.includes(progress.scene))progress.seen.push(progress.scene);progress.scene=null;progress.cursor=0;progress.page=0;}
+  else {
+    if(progress.scene==='bridge'){voice?.stop();onLoop();return;}
+    if(!progress.seen.includes(progress.scene))progress.seen.push(progress.scene);
+    if(progress.scene==='return'){
+      // Escort Mimi back; show the existing apartment landmark, no new map roads or events.
+      step=0;position=0;moving=false;elapsed=0;last=null;progress.step=0;
+      progress.scene='homecoming';
+    }else progress.scene=null;
+    progress.cursor=0;progress.page=0;
+   }
   if(progress.scene==='store'&&scene.lines[progress.cursor].keyGiven)progress.keyGiven=true;
   publish();paint();
  }
