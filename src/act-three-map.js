@@ -34,11 +34,7 @@ export function actThreeMapTravel(from,to,t){
  const start=actThreeMapCheckpoint(from),end=actThreeMapCheckpoint(to),p=Math.min(1,Math.max(0,t)),ease=p*p*(3-2*p);
  return {position:start+(end-start)*ease,bounce:Math.sin(p*Math.PI)*Math.sin(p*Math.PI*6),finished:p===1};
 }
-export function actThreeMapHTML(){return `<section class="act-screen act3-map" data-act3-map data-chapter="3" tabindex="-1" aria-label="第三幕 街マップ"><h2 id="modal-title" class="visually-hidden">街マップ</h2><div class="map-viewport"><div class="map-world">${ACT_THREE_MAP_PLACES.map((p,i)=>`<div class="map-landmark" data-map-landmark="${i}"><img src="${p.image}" alt="${p.name}" draggable="false">${p.id==='detour'?'<div class="map-crash-truck" aria-hidden="true"><span class="truck-cargo"></span><span class="truck-cab"></span><span class="truck-wheel wheel-a"></span><span class="truck-wheel wheel-b"></span><span class="truck-blast"></span><span class="truck-smoke"></span></div>':''}<span class="map-location-label">${p.name}</span></div>`).join('')}<div class="map-bypass-route" aria-hidden="true"><div class="map-bypass-road"></div><div class="map-bypass-wall left"></div><div class="map-bypass-wall right"></div><div class="map-bypass-turn"></div><div class="map-bypass-chevron one">▲</div><div class="map-bypass-chevron two">▲</div></div><div class="map-detour-exit" aria-hidden="true"></div><div class="map-zombies" aria-label="交差点を横切るゾンビの群れ">${Array.from({length:6},(_,i)=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--z:${i}" draggable="false">`).join('')}</div><div class="map-bridge-route" aria-label="コンビニから橋までの長い道" role="img">
-  <div class="map-route-road"></div>
-  <div class="map-route-debris debris-a"></div><div class="map-route-debris debris-b"></div><div class="map-route-debris debris-c"></div>
-  <div class="map-route-barricade barricade-a"><span></span><span></span></div>
-  <div class="map-route-barricade barricade-b"><span></span><span></span></div>
+export function actThreeMapHTML(){return `<section class="act-screen act3-map" data-act3-map data-chapter="3" tabindex="-1" aria-label="第三幕 街マップ"><h2 id="modal-title" class="visually-hidden">街マップ</h2><div class="map-viewport"><div class="map-world">${ACT_THREE_MAP_PLACES.map((p,i)=>`<div class="map-landmark" data-map-landmark="${i}"><img src="${p.image}" alt="${p.name}" draggable="false">${p.id==='detour'?'<div class="map-crash-truck" aria-hidden="true"><span class="truck-cargo"></span><span class="truck-cab"></span><span class="truck-wheel wheel-a"></span><span class="truck-wheel wheel-b"></span><span class="truck-blast"></span><span class="truck-smoke"></span></div>':''}<span class="map-location-label">${p.name}</span></div>`).join('')}<div class="map-zombies" aria-label="交差点を横切るゾンビの群れ">${Array.from({length:6},(_,i)=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--z:${i}" draggable="false">`).join('')}</div><div class="map-bridge-route" aria-label="コンビニから橋までの長い道" role="img">
   <div class="map-route-zombies route-zombies-a">${[0,1].map(i=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--walker:${i}" draggable="false">`).join('')}</div>
   <div class="map-route-zombies route-zombies-b">${[0,1,2].map(i=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--walker:${i}" draggable="false">`).join('')}</div>
   <div class="map-route-zombies route-zombies-c">${[0,1].map(i=>`<img src="${ACT_THREE_MAP_ZOMBIE}" alt="" style="--walker:${i}" draggable="false">`).join('')}</div>
@@ -46,7 +42,7 @@ export function actThreeMapHTML(){return `<section class="act-screen act3-map" d
 </div></div><div class="map-party" aria-label="大家、モク、ルナ">${ACT_THREE_MAP_CAST.map((c,i)=>`<div class="map-companion map-companion-${c.id}" style="--member:${i}"><img src="${c.image}" alt="${c.name}" draggable="false"></div>`).join('')}</div><div class="map-loading" role="status"><span>マップを読み込んでいます…</span><button type="button" data-map-retry hidden>再読み込み</button></div></div><img class="map-scene-backdrop" alt="荒らされたコンビニの店内" hidden><div class="map-dialogue act3-dialogue" data-renderer="event-stage" hidden></div>${chapterDialogueControlsHTML()}<div class="map-panel"><div class="map-status visually-hidden"><strong data-map-location>けもの荘</strong><p data-map-status role="status" aria-live="polite"></p></div><nav class="map-actions" aria-label="移動操作"><button type="button" data-map-next class="map-next" disabled>交差点へ <span aria-hidden="true">➜</span></button><button type="button" data-map-pause hidden>一時停止</button><button type="button" data-map-finish class="map-next" hidden>ここまでを読み終える</button><button type="button" data-map-reset hidden>もう一度移動する</button><button type="button" data-map-back>戻る</button></nav></div></section>`;}
 export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=>{},story=false,initialProgress=null,onProgress=()=>{},voice=null,bgm=null,silent=false,onScene=()=>{},onLoop=()=>{}}={}){
  const section=root.querySelector('[data-act3-map]');if(!section)return ()=>{};
- const viewport=section.querySelector('.map-viewport'),world=section.querySelector('.map-world'),party=section.querySelector('.map-party'),zombies=section.querySelector('.map-zombies'),bypassRoute=section.querySelector('.map-bypass-route'),detourExit=section.querySelector('.map-detour-exit'),bridgeRoute=section.querySelector('.map-bridge-route');
+ const viewport=section.querySelector('.map-viewport'),world=section.querySelector('.map-world'),party=section.querySelector('.map-party'),zombies=section.querySelector('.map-zombies'),bridgeRoute=section.querySelector('.map-bridge-route');
  const next=section.querySelector('[data-map-next]'),pause=section.querySelector('[data-map-pause]'),reset=section.querySelector('[data-map-reset]'),status=section.querySelector('[data-map-status]'),loading=section.querySelector('.map-loading');
  const dialogue=section.querySelector('.map-dialogue'),backdrop=section.querySelector('.map-scene-backdrop');
  let progress=story?actThreeStoryProgress(initialProgress):null,shownLine=null;
@@ -62,13 +58,6 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
    el.style.transform=`translate(-50%,${-actThreeMapVerticalPosition(i)*climb}px)`;
    el.dataset.current=String(i===step);
   });
-  bypassRoute.style.left=`${anchor+gap}px`;
-  bypassRoute.style.top=`${-climb+height*.5}px`;
-  bypassRoute.style.height=`${climb+height*.16}px`;
-  bypassRoute.style.width=`${Math.min(gap*.72,470)}px`;
-  detourExit.style.left=`${anchor+gap}px`;
-  detourExit.style.top=`${-climb+height*.5}px`;
-  detourExit.style.width=`${gap}px`;
   bridgeRoute.style.left=`${anchor+actThreeMapWorldPosition(3)*gap}px`;
   bridgeRoute.style.width=`${ACT_THREE_BRIDGE_SPAN*gap}px`;
   bridgeRoute.style.transform=`translateY(${-climb}px)`;
