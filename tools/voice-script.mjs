@@ -197,10 +197,17 @@ export function planVoices(rows,ids,config,pronunciations=[],repairs=[]){
     const filmReadings=row.performance==='luna-film-tense'?[{term:'入居者',reading:'にゅうきょしゃ'},{term:'募集',reading:'ぼしゅう'}]:[];
     const repair=repairs.find(r=>r.speaker===row.speaker&&r.text===row.line.text);
     const spokenText=voiceRoomNumberReading(repair?.spokenText??[...filmReadings,...duelReadings,...pronunciations].sort((a,b)=>b.term.length-a.term.length).reduce((text,rule)=>text.replaceAll(rule.term,rule.reading),row.line.text));
-    const tags=repair?.tags||adoptedTags||profile.tags;
+    // Battle Moku must not inherit the languid everyday delivery: he is
+    // actively bantering or shouting moves during the Four Kings mini-game.
+    // Keep his approved voice ID and all non-duel clips/chapters untouched.
+    const battleMoku=adopted?.duelMoku&&row.speaker==='cat'&&
+      row.source.startsWith('act2/duel/')&&['duel-moku','duel-moku-attack'].includes(row.performance)
+      ?adopted.duelMoku:null;
+    const battleTags=battleMoku?.[row.performance==='duel-moku-attack'?'attack':'casual'];
+    const tags=battleTags||repair?.tags||adoptedTags||profile.tags;
     // Keep explicitly authored grief/panic on top of the character's restrained delivery.
     const crisis=adoptedTags&&/shocked|tragedy|film-tense/.test(row.performance)?profile.tags.filter(tag=>/shocked|disbelieving|panicked|urgent|crying|sad/.test(tag)):[];
-    const settings={...profile.settings,...adopted?.settings,...repair?.settings};
+    const settings={...profile.settings,...adopted?.settings,...repair?.settings,...(battleMoku?.settings||{})};
     if(model==='eleven_v4')for(const key of Object.keys(settings))if(!['stability','similarity_boost'].includes(key))delete settings[key];
     const request={text:[...new Set([...crisis,...tags]),spokenText].join(' '),model_id:model,voice_settings:settings};
     if(/\[(?:softly|whispers?|whispering|mumbling)\]/i.test(request.text))throw Error('Voice delivery must be clear and projected; whisper/mumble tags are disabled');
