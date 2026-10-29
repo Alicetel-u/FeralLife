@@ -1,0 +1,19 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><base href="/"><title>ミミ モーション確認</title><style>*{box-sizing:border-box}body{margin:0;height:100dvh;display:flex;flex-direction:column;background:#242632;color:#fff4df;font:14px sans-serif;overflow:hidden}nav{display:flex;gap:6px;flex-wrap:wrap;padding:8px}button,select{min-height:40px;padding:5px 10px}main{flex:1;min-height:0;display:grid;place-items:center}canvas{max-width:100%;max-height:100%;width:auto;height:auto}</style></head><body><nav><select id="set"><option value="actions">日常動作9種</option><option value="emotions">表情9種</option><option value="walk">歩行確認</option></select><button id="direction">向きを変える</button><button id="pause">停止</button><button id="size">実際の表示サイズ</button></nav><main><canvas id="sprites" width="1080" height="960"></canvas></main><script type="module">
+import {CHARACTER_ART} from './src/character-art.js';
+import {MINI_EMOTION_ART,MIMI_MINI_EMOTIONS,MINI_EMOTION_NAMES} from './src/mini-emotions.js';
+import {drawSprite} from './src/renderer.js';
+import {actThreeMimiWalkPose} from './src/act-three-map.js';
+const art=CHARACTER_ART.rabbit,sheet=MINI_EMOTION_ART.rabbit;
+const load=src=>new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=src;});
+art.image=await load(art.src);for(const pose of Object.values(art.poses))pose.image=await load(pose.src);sheet.image=await load(sheet.src);
+const canvas=document.querySelector('canvas'),ctx=canvas.getContext('2d');let dir=1,paused=false,actual=false,distance=0,last=null;
+const actions=['stand','walk_a','walk_b','sit','sleep','eat','drink','clean','chat'];const names=['通常','歩行A','歩行B','座る','眠る','食べる','飲む','掃除','会話'];
+document.querySelector('#direction').onclick=()=>dir*=-1;document.querySelector('#pause').onclick=e=>{paused=!paused;e.target.textContent=paused?'再生':'停止';};document.querySelector('#size').onclick=e=>{actual=!actual;e.target.textContent=actual?'拡大サイズ':'実際の表示サイズ';};
+window.mimiPreview={setMode:mode=>document.querySelector('#set').value=mode,snapshot:()=>({distance,dir,paused}),ready:true};
+function draw(t){const dt=last===null?0:Math.min(.05,(t-last)/1000);last=t;if(!paused&&!document.hidden)distance+=dt*75;ctx.fillStyle='#242632';ctx.fillRect(0,0,1080,960);ctx.textAlign='center';ctx.fillStyle='#fff4df';ctx.font='25px sans-serif';
+const mode=document.querySelector('#set').value;
+if(mode==='walk'){const x=140+(distance%800);ctx.fillText('移動距離でコマ切替・停止で足も停止・左右反転',540,110);drawSprite(ctx,'rabbit',dir===1?x:1080-x,600,distance/75,'outing',actual?1:5,dir,{pose:actThreeMimiWalkPose(distance),poseLocked:true,reduced:true});ctx.fillRect(60,602,960,2);}
+else for(let i=0;i<9;i++){const x=180+(i%3)*360,y=245+Math.floor(i/3)*310;ctx.fillText(mode==='actions'?names[i]:MINI_EMOTION_NAMES[MIMI_MINI_EMOTIONS[i]],x,y+45);const opts=mode==='actions'?{pose:actions[i],poseLocked:true,reduced:true}:{emotion:MIMI_MINI_EMOTIONS[i],reduced:true};drawSprite(ctx,'rabbit',x,y,0,mode==='actions'?actions[i]==='stand'?'idle':actions[i]:'idle',actual?1:4,dir,opts);}
+requestAnimationFrame(draw);}requestAnimationFrame(draw);
+</script></body></html>
+

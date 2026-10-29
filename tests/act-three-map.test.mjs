@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync,readFileSync} from 'node:fs';
+import {CHARACTER_ART} from '../src/character-art.js';
 import {eventStageHTML} from '../src/event-stage.js';
 import {ACT_THREE_MAP_SCENES} from '../src/act-three-story.js';
 import {ACT_THREE_MAP_PLACES,ACT_THREE_MAP_CAST,ACT_THREE_MIMI_MINI,ACT_THREE_MAP_ZOMBIE,ACT_THREE_MAP_EXPLOSION,actThreeMapVisualState,actThreeMapCheckpoint,actThreeMapTravel,actThreeMapWorldPosition,actThreeMapVerticalPosition,actThreeMapTravelDirection,actThreeMapTravelDuration,ACT_THREE_BRIDGE_SPAN,actThreeMapHTML,startActThreeMap} from '../src/act-three-map.js';
@@ -42,7 +43,7 @@ test('escape map requires crossing then bypass before store and bridge; all art 
  const mini=readFileSync(ACT_THREE_MIMI_MINI);
  assert.equal(mini.subarray(1,4).toString(),'PNG');
  assert.equal(mini[25],6,'The standalone miniature has real RGBA transparency');
- assert.ok(mini.readUInt32BE(20)>mini.readUInt32BE(16),'One full-body portrait rather than a wide emotion sheet');
+ assert.equal(mini.readUInt32BE(16),512);assert.equal(mini.readUInt32BE(20),512,'One registered animation frame');
  assert.doesNotMatch(route,/map-rabbit-frame|emotions-v1\.png/);
  for(const id of ['route-zombies-a','route-zombies-b','route-zombies-c','route-zombies-d',])assert.match(route,new RegExp(id));
  assert.equal(route.split('assets/events/chapter3/map-zombie.png').length-1,30);
@@ -103,4 +104,13 @@ test('crossing and explosion action beats hide portraits without altering their 
  assert.equal((html.match(/class="map-zombie-walker"/g)||[]).length,10);assert.doesNotMatch(html,/map-crash-truck|truck-cargo|truck-cab/);assert.doesNotMatch(css,/map-crash-truck|truck-cargo|act3-truck/);
  assert.match(css,/@keyframes map-horde-traverse/);assert.match(css,/data-effects-paused=true/);
  const png=readFileSync(ACT_THREE_MAP_EXPLOSION);assert.equal(png[25],6);assert.ok(png.length<3*1024*1024,'The effect stays a single small RGBA asset');
+});
+
+
+test('only the Act III map uses the rifle landlord; ordinary observation keeps the matched idle',()=>{
+ const source=ACT_THREE_MAP_CAST.find(c=>c.id==='manager').image;
+ assert.equal(source,'assets/characters/manager/matched-v3/map-rifle.png');
+ assert.equal(CHARACTER_ART.manager.src,'assets/characters/manager/matched-v3/idle.png');
+ const png=readFileSync(source);assert.equal(png.readUInt32BE(16),512);assert.equal(png.readUInt32BE(20),512);assert.equal(png[25],6);
+ const registration=JSON.parse(readFileSync('assets/characters/manager/matched-v3/map-rifle.json','utf8'));assert.deepEqual(registration.origin,[256,492]);assert.equal(registration.standingBodyHeight,455);
 });

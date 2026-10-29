@@ -1,4 +1,4 @@
-// Native-resolution action sprites matching the current nine emotional mini sprites.
+// Registered native-resolution action sprites.
 export const OBSERVATION_ACTION_ART = {
   "cat": {
     "stand": {
@@ -164,6 +164,89 @@ export const OBSERVATION_ACTION_ART = {
       ],
       "width": 379,
       "height": 453
+    }
+  },
+  "rabbit": {
+    "stand": {
+      "src": "assets/characters/rabbit/observation-v1/stand.png",
+      "origin": [
+        256,
+        492
+      ],
+      "width": 512,
+      "height": 512
+    },
+    "walk_a": {
+      "src": "assets/characters/rabbit/observation-v1/walk_a.png",
+      "origin": [
+        256,
+        492
+      ],
+      "width": 512,
+      "height": 512
+    },
+    "walk_b": {
+      "src": "assets/characters/rabbit/observation-v1/walk_b.png",
+      "origin": [
+        256,
+        492
+      ],
+      "width": 512,
+      "height": 512
+    },
+    "sit": {
+      "src": "assets/characters/rabbit/observation-v1/sit.png",
+      "origin": [
+        256,
+        492
+      ],
+      "width": 512,
+      "height": 512
+    },
+    "sleep": {
+      "src": "assets/characters/rabbit/observation-v1/sleep.png",
+      "origin": [
+        256,
+        492
+      ],
+      "width": 512,
+      "height": 512
+    },
+    "eat": {
+      "src": "assets/characters/rabbit/observation-v1/eat.png",
+      "origin": [
+        256,
+        492
+      ],
+      "width": 512,
+      "height": 512
+    },
+    "drink": {
+      "src": "assets/characters/rabbit/observation-v1/drink.png",
+      "origin": [
+        256,
+        492
+      ],
+      "width": 512,
+      "height": 512
+    },
+    "clean": {
+      "src": "assets/characters/rabbit/observation-v1/clean.png",
+      "origin": [
+        256,
+        492
+      ],
+      "width": 512,
+      "height": 512
+    },
+    "chat": {
+      "src": "assets/characters/rabbit/observation-v1/chat.png",
+      "origin": [
+        256,
+        492
+      ],
+      "width": 512,
+      "height": 512
     }
   }
 };

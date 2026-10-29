@@ -1,0 +1,25 @@
+{
+  "reference": "idle.png",
+  "frame": [
+    512,
+    512
+  ],
+  "origin": [
+    256,
+    492
+  ],
+  "standingBodyHeight": 455,
+  "sourceAnchor": [
+    619.5,
+    1204
+  ],
+  "packagingScale": 0.40734109221128023,
+  "use": "Act III street map only",
+  "walkScale": 0.781786941580756,
+  "walkCycle": [
+    "walk_a",
+    "walk_pass_a",
+    "walk_b",
+    "walk_pass_b"
+  ]
+}
