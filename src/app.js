@@ -663,20 +663,20 @@ function showActThree(){
   eventView=null;openModal(actThreeHTML());
   stopOpeningPrologue=startActThree(modal,()=>{state.actThree={phase:'clock',shot:0};save();showActThreeClock();},{settings:normalBgm,shared:()=>characterVoice.audioContext(),voice:silentPreview?null:characterVoice,silent:silentPreview,initialShot:progress.shot,onShot:shot=>{state.actThree={phase:'film',shot};save();syncNormalBgm();}});
 }
+function showActThreeBridgeRewind(){
+ normalBgm.setSuppressed(true);
+ state.actThree={phase:'bridge-rewind',mapStep:4};save();
+ openModal(rewindTransitionHTML('',1,true,3,true));
+ const sound=normalBgm.enabled;
+ stopFireEnding=startRewindTransition(modal.querySelector('.rewind-screen'),'',()=>{
+  // The clock effect ends directly in the return scene, without flashing map music.
+  state.actThree=actThreeStoryDebug('return');save();showActThreeMap();
+ },sound,1,17,true,normalBgm.clockAudio,sound?characterVoice.audioContext():null,{clockOnly:true});
+}
 function showActThreeMap(){
-  const progress=state.actThree;
-  eventView=null;openModal(actThreeMapHTML());
-  stopOpeningPrologue=startActThreeMap(modal,{story:true,initialProgress:progress,voice:silentPreview?null:characterVoice,bgm:normalBgm,silent:silentPreview,onProgress:progress=>{state.actThree=progress;save();},onScene:()=>syncNormalBgm(),onLoop:()=>{
-    normalBgm.setSuppressed(true);
-    state.actThree={phase:'bridge-rewind',mapStep:4};save();
-    openModal(rewindTransitionHTML('',1,true,3,true));
-    const sound=normalBgm.enabled;
-    stopFireEnding=startRewindTransition(modal.querySelector('.rewind-screen'),'',()=>{
-      // The clock effect has ended. Switch directly to the saved return scene;
-      // openModal selects 'uneasy' before the first map render (no map-BGM blip).
-      state.actThree=actThreeStoryDebug('return');save();showActThreeMap();
-    },sound,1,17,true,normalBgm.clockAudio,sound?characterVoice.audioContext():null,{clockOnly:true});
-  },onBack:()=>openModal(actThreeCompleteHTML())});
+ const progress=state.actThree;
+ eventView=null;openModal(actThreeMapHTML());
+ stopOpeningPrologue=startActThreeMap(modal,{story:true,initialProgress:progress,voice:silentPreview?null:characterVoice,bgm:normalBgm,silent:silentPreview,onProgress:progress=>{state.actThree=progress;save();},onScene:()=>syncNormalBgm(),onLoop:showActThreeBridgeRewind,onBack:()=>openModal(actThreeCompleteHTML())});
 }
 function showActThreeClock(){
   openModal(rewindTransitionHTML('',1,true,3,true));
@@ -768,23 +768,62 @@ function showDebugObservationSelect(chapter,page=0){
   modal.querySelector('.persona-debug-actions').insertAdjacentHTML('afterend',`<nav class="persona-debug-pagination" aria-label="観察モードのページ切り替え"><button type="button" class="persona-debug-page-button" data-debug-observation-page="${chapter}:${current-1}" ${current===0?'disabled':''}>◀　前へ</button><span class="persona-debug-page-counter">PAGE <strong>${current+1} / ${pages}</strong></span><button type="button" class="persona-debug-page-button persona-debug-page-next" data-debug-observation-page="${chapter}:${current+1}" ${current===pages-1?'disabled':''}>次へ　▶</button></nav>`);
   modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes');
 }
-function showDebugActThreeMap(page=0){
-  const entries=[
-    ['departure','けもの荘・出発の会話','data-debug-act3-map-scene'],
-    ['crossing','交差点・ゾンビを回避','data-debug-act3-map-scene'],
-    ['detour','裏道・トラック爆発','data-debug-act3-map-scene'],
-    ['store','コンビニ到着・ミミとの出会い','data-debug-act3-map-scene'],
-    ['farewell','ミミとの別れ','data-debug-act3-map-scene'],
-    ['bridge','橋・脱出直前の会話','data-debug-act3-map-scene'],
-    ['collapse','橋・二人が倒れる瞬間','data-debug-act3-map-scene'],
-    ['return','コンビニ・死に戻り直後','data-debug-act3-map-scene']
-  ],pages=Math.ceil(entries.length/4),current=Math.min(pages-1,Math.max(0,page|0));
-  debugMenuPage('第三幕｜街マップ','確認したい場面を選択してください。通常セーブには影響しません。',entries.slice(current*4,current*4+4),'data-debug-chapters-back');
-  modal.querySelector('.persona-debug-actions').insertAdjacentHTML('afterend',`<nav class="persona-debug-pagination" aria-label="街マップのページ切り替え"><button class="persona-debug-page-button" data-debug-act3-map-page="${current-1}" ${current===0?'disabled':''}>◀ 前へ</button><span class="persona-debug-page-counter">${current+1} / ${pages}</span><button class="persona-debug-page-button" data-debug-act3-map-page="${current+1}" ${current===pages-1?'disabled':''}>次へ ▶</button></nav>`);
-  modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes');
+// One chronological Act III selector. Every destination is a real implemented entry point.
+const ACT_THREE_DEBUG_GROUPS=[
+ {id:'opening',label:'01　世界崩壊・導入',description:'ニュース、時計、タイトル、武器確認',scenes:[
+  ['film','崩壊ニュース・大家の抗戦','story','第三幕プロローグの冒頭'],
+  ['clock','最初のタイムリープ時計','rewind','プロローグ後の時計演出'],
+  ['title','「世界崩壊」タイトル','story','重厚な第三幕タイトル'],
+  ['after','けもの荘・武器の確認','story','時計後、出発までの会話']
+ ]},
+ {id:'explore',label:'02　出発・街の探索',description:'けもの荘 → 交差点 → 裏道',scenes:[
+  ['departure','けもの荘・出発','start','モクとルナとの出発会話'],
+  ['crossing','交差点・ゾンビ回避','story','群れを見て裏道へ向かう'],
+  ['detour','裏道・トラック爆発','story','爆発を回避してコンビニへ']
+ ]},
+ {id:'escape',label:'03　ミミとの出会い・脱出',description:'コンビニ → ミミとの別れ → 橋',scenes:[
+  ['store','コンビニ・ミミとの出会い','story','コンビニに到着した場面'],
+  ['farewell','コンビニ・ミミとの別れ','story','鍵を渡した後のやり取り'],
+  ['bridge','脱出地点・橋の会話','story','モクとルナが倒れる前'],
+  ['collapse','橋・二人が倒れる瞬間','ending','崩落の専用CGから再生']
+ ]},
+ {id:'loop',label:'04　タイムリープ・帰還',description:'橋の時計 → コンビニ復帰 → けもの荘',scenes:[
+  ['bridge-clock','橋の後のタイムリープ時計','rewind','二人が倒れた後の時計演出'],
+  ['return','コンビニ・死に戻り後の会話','rewind','大家「……は？」から再生'],
+  ['homeward','コンビニ → けもの荘の帰り道','story','ミミを含む四人で自動帰還'],
+  ['homecoming','けもの荘・帰還した場面','ending','四人がアパートへ到着']
+ ]}
+];
+function showDebugActThreeSections(){
+ debugMenuPage('第三幕｜世界崩壊','ストーリーの順番で4つのグループに整理。通常セーブは変更しません。',
+  ACT_THREE_DEBUG_GROUPS.map(g=>[g.id,g.label,'data-debug-act3-group','navigation',g.description]),'data-debug-chapters-back');
+ modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes','persona-debug-act3');
+}
+function showDebugActThreeScenes(groupId){
+ const group=ACT_THREE_DEBUG_GROUPS.find(g=>g.id===groupId);
+ if(!group){showDebugActThreeSections();return;}
+ debugMenuPage('第三幕｜'+group.label.slice(3),'移動先を選択。戻ると4つのグループに戻れます。',
+  group.scenes.map(([id,label,kind,description])=>[id,label,'data-debug-act3-scene',kind,description]),'data-debug-act3-groups-back');
+ modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes','persona-debug-act3');
 }
 function showDebugChapterSelect(){
-  debugMenuPage('シーンセレクト','確認する章を選択してください。通常セーブには影響しません。',[['1','第一幕 — モク編','data-debug-chapter'],['2','第二幕 — ルナ編','data-debug-chapter'],['3','第3幕 — 世界崩壊プロローグ','data-debug-act3'],['3-after','第3幕 — タイムリープ後・空き部屋','data-debug-act3-after'],['3-map','第3幕 — 街マップ・出発〜死に戻り','data-debug-act3-map']], 'data-debug-tools-back');
+ debugMenuPage('シーンセレクト','確認する幕を選択してください。通常セーブには影響しません。',[
+  ['1','第一幕 — モク編','data-debug-chapter'],
+  ['2','第二幕 — ルナ編','data-debug-chapter'],
+  ['3','第三幕 — 世界崩壊','data-debug-act3-groups']
+ ],'data-debug-tools-back');
+}
+function startDebugActThreeScene(id){
+ const valid=ACT_THREE_DEBUG_GROUPS.some(group=>group.scenes.some(([target])=>target===id));
+ if(!valid)return;
+ developerMode=true;
+ if(id==='film'){state.actThree={phase:'film',shot:0};showActThree();return;}
+ if(id==='clock'){state.actThree={phase:'clock',shot:0};showActThreeClock();return;}
+ if(id==='title'){state.actThree={phase:'title',shot:0};showActThreeTitle();return;}
+ if(id==='after'){state.actThree={phase:'after',cursor:0};showActThreeAfter();return;}
+ if(id==='bridge-clock'){showActThreeBridgeRewind();return;}
+ const progress=actThreeStoryDebug(id);
+ if(progress){state.actThree=progress;showActThreeMap();}
 }
 function showDebugSectionSelect(chapter){
   if(chapter!=='2'){showDebugSceneSelect(chapter);return;}
@@ -965,13 +1004,12 @@ document.addEventListener('click',e=>{
   const button=e.target.closest('button');if(!button)return;
   if(button.hasAttribute('data-debug-hotspot')){const now=performance.now();debugTapCount=now-debugLastTap>2500?1:debugTapCount+1;debugLastTap=now;if(debugTapCount>=3){debugTapCount=0;showDeveloperMenu();}return;}
   if(button.hasAttribute('data-act3-map')){showActThreeMap();return;}
-  if(button.hasAttribute('data-debug-act3-map-page')){showDebugActThreeMap(Number(button.getAttribute('data-debug-act3-map-page')));return;}
-  if(button.hasAttribute('data-debug-act3-map')){showDebugActThreeMap();return;}
-  if(button.hasAttribute('data-debug-act3-map-scene')){const progress=actThreeStoryDebug(button.getAttribute('data-debug-act3-map-scene'));if(progress){developerMode=true;state.actThree=progress;showActThreeMap();}return;}
+  if(button.hasAttribute('data-debug-act3-groups')){showDebugActThreeSections();return;}
+  if(button.hasAttribute('data-debug-act3-groups-back')){showDebugActThreeSections();return;}
+  if(button.dataset.debugAct3Group){showDebugActThreeScenes(button.dataset.debugAct3Group);return;}
+  if(button.dataset.debugAct3Scene){startDebugActThreeScene(button.dataset.debugAct3Scene);return;}
   if(button.hasAttribute('data-act3-replay')){state.actThree={phase:'film',shot:0};save();showActThree();return;}
-  if(button.hasAttribute('data-debug-act3-after')){developerMode=true;state.actThree={phase:'after',cursor:0};showActThreeAfter();return;}
   if(button.hasAttribute('data-act3-after-replay')){state.actThree={phase:'after',cursor:0};save();showActThreeAfter();return;}
-  if(button.hasAttribute('data-debug-act3')){developerMode=true;state.actThree={phase:'film',shot:0};showActThree();return;}
   if(button.hasAttribute('data-debug-back')){showGameTitle();return;}
   if(button.hasAttribute('data-debug-tools-back')){showDeveloperMenu();return;}
   if(button.hasAttribute('data-debug-chapters-back')){showDebugChapterSelect();return;}
