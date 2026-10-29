@@ -1,7 +1,7 @@
 import {messagePages} from './message-pages.js';
 // Dialogue supplied by the user in 「けもの荘プロローグ制作」, through Mimi's farewell.
 // Stage directions are represented as effects or in-world observations, never UI narration.
-const act3Line=(speaker,text,extra={})=>({speaker,text,...extra});
+const act3Line=(speaker,text,extra={})=>({speaker,text,voiceChapter:3,...extra});
 export const ACT_THREE_MAP_SCENES={
  departure:{step:0,cast:['cat','hostess'],lines:[
   act3Line('cat','外、えらいことになってるニャ……'),

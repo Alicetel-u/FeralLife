@@ -33,6 +33,8 @@ for(const row of extractCompleteVoiceScript()){
  else if(s.includes('/dinner')){scene='dinner';label='トラブル2｜料理';order=40;}
  else if(s.includes('/bag')){scene='bag';label='トラブル1｜夕暮れの待ち伏せ';order=30;}
  else if(s.startsWith('prologue')||s.startsWith('foyer')||s.includes('/opening')||s.includes('/film/')){scene='opening';label='プロローグ・オープニング';order=10;}
+ if(s.startsWith('act3/map/')){const id=s.split('/')[2].split(':')[0];scene='map-'+id;label=({departure:'出発',crossing:'交差点',detour:'裏道の爆発',store:'コンビニ・ミミ',bridge:'橋の悲劇',return:'コンビニへの帰還'})[id]||id;order=30+['departure','crossing','detour','store','bridge','return'].indexOf(id);}
+ else if(s.startsWith('act3/after/')){scene='after';label='死に戻り後・再出発';order=20;}
  const clip=VOICE_MANIFEST[row.lineKey];if(!clip)throw Error('Voice missing: '+row.source);
  const bytes=await readFile(new URL('../'+(clip.fastFile||clip.file),import.meta.url));
  const repaired=!!clip.audioQuality||/\.repair\.mp3$/.test(clip.file);

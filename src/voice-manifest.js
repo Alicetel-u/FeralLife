@@ -9531,5 +9531,1325 @@ export const VOICE_MANIFEST = {
     "text": "大家さん！！",
     "performance": "act3-urgent",
     "model": "eleven_v3"
+  },
+  "[\"cat\",\"外、えらいことになってるニャ……\",\"act3-alert\",false]": {
+    "file": "assets/voices/d7b51fc48628517ef1109070466b92bdbd1e9b2667c914555cd6ebfbf758cab2.act3.mp3",
+    "hash": "d7b51fc48628517ef1109070466b92bdbd1e9b2667c914555cd6ebfbf758cab2",
+    "source": "act3/map/departure:0",
+    "speaker": "cat",
+    "text": "外、えらいことになってるニャ……",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"ねえ大家さん……本当にここから逃げられるの？\",\"act3-tense\",false]": {
+    "file": "assets/voices/a271b2e3cfa03eef8ce5a52f7dca89a5acefe061f531d9b20fbd02fd1d66db70.act3.mp3",
+    "hash": "a271b2e3cfa03eef8ce5a52f7dca89a5acefe061f531d9b20fbd02fd1d66db70",
+    "source": "act3/map/departure:1",
+    "speaker": "hostess",
+    "text": "ねえ大家さん……本当にここから逃げられるの？",
+    "performance": "act3-tense",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"ああ。脱出地点までの道は分かってる\",\"act3-manager\",false]": {
+    "file": "assets/voices/df4f0ade1934e026f1a83d8e6a83c872c3f275eb6f280e78d9a874b220fc2c75.act3.mp3",
+    "hash": "df4f0ade1934e026f1a83d8e6a83c872c3f275eb6f280e78d9a874b220fc2c75",
+    "source": "act3/map/departure:2",
+    "speaker": "manager",
+    "text": "ああ。脱出地点までの道は分かってる",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"そんな簡単に言って大丈夫なのかニャ？\",\"act3-alert\",false]": {
+    "file": "assets/voices/b31b92a36b31e2ed6c310a9c04f40a3c149ea64dc7f1def3a57dcc78e8aa066d.act3.mp3",
+    "hash": "b31b92a36b31e2ed6c310a9c04f40a3c149ea64dc7f1def3a57dcc78e8aa066d",
+    "source": "act3/map/departure:3",
+    "speaker": "cat",
+    "text": "そんな簡単に言って大丈夫なのかニャ？",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"大丈夫だ。何度も確認してる\",\"act3-manager\",false]": {
+    "file": "assets/voices/e8ab9c82fb1ec54d43b74756499e2ab6895f7c50688e79403f3060081c2226de.act3.mp3",
+    "hash": "e8ab9c82fb1ec54d43b74756499e2ab6895f7c50688e79403f3060081c2226de",
+    "source": "act3/map/departure:4",
+    "speaker": "manager",
+    "text": "大丈夫だ。何度も確認してる",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"……何度も？\",\"act3-alert\",false]": {
+    "file": "assets/voices/454092cbb47059c9c21cfc4e5d05523a7cbdb778c1cc6e72871e48f6dfc4d904.act3.mp3",
+    "hash": "454092cbb47059c9c21cfc4e5d05523a7cbdb778c1cc6e72871e48f6dfc4d904",
+    "source": "act3/map/departure:5",
+    "speaker": "hostess",
+    "text": "……何度も？",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"いや、こっちの話だ\",\"act3-manager\",false]": {
+    "file": "assets/voices/1b4c4156b72dcea6c8660fdbe851b70095f2a2f61fc81d36e1317ebf2833057a.act3.mp3",
+    "hash": "1b4c4156b72dcea6c8660fdbe851b70095f2a2f61fc81d36e1317ebf2833057a",
+    "source": "act3/map/departure:6",
+    "speaker": "manager",
+    "text": "いや、こっちの話だ",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"いいか。何があっても俺から離れるな\",\"act3-resolute\",false]": {
+    "file": "assets/voices/cbd9139f186d76cf685fc1ccefa925876b8c359398ea469fa404d44876670ceb.act3.mp3",
+    "hash": "cbd9139f186d76cf685fc1ccefa925876b8c359398ea469fa404d44876670ceb",
+    "source": "act3/map/departure:7",
+    "speaker": "manager",
+    "text": "いいか。何があっても俺から離れるな",
+    "performance": "act3-resolute",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"分かったニャ！\",\"act3-alert\",false]": {
+    "file": "assets/voices/2b403eb054cbf8dedd88368423c9edbe6386876b56bccb1c3ea1a8e96559da2a.act3.mp3",
+    "hash": "2b403eb054cbf8dedd88368423c9edbe6386876b56bccb1c3ea1a8e96559da2a",
+    "source": "act3/map/departure:8",
+    "speaker": "cat",
+    "text": "分かったニャ！",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"うん。大家さんを信じる\",\"act3-relieved\",false]": {
+    "file": "assets/voices/ad2a128df7db2c559874dfe6948bb8c6fb1d6d8aacb70c5676bf4c3d50a727ac.act3.mp3",
+    "hash": "ad2a128df7db2c559874dfe6948bb8c6fb1d6d8aacb70c5676bf4c3d50a727ac",
+    "source": "act3/map/departure:9",
+    "speaker": "hostess",
+    "text": "うん。大家さんを信じる",
+    "performance": "act3-relieved",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……行くぞ\",\"act3-manager\",false]": {
+    "file": "assets/voices/b3bde480e715226a69f970cc559e7a201aed9bd888c3a2f7b54e03fe9bd1ab0e.act3.mp3",
+    "hash": "b3bde480e715226a69f970cc559e7a201aed9bd888c3a2f7b54e03fe9bd1ab0e",
+    "source": "act3/map/departure:10",
+    "speaker": "manager",
+    "text": "……行くぞ",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"止まれ\",\"act3-resolute\",false]": {
+    "file": "assets/voices/c821bce40b17560f3b1e7588a3f32b8ecb86acca4c564561ab3717c0283a28c5.act3.mp3",
+    "hash": "c821bce40b17560f3b1e7588a3f32b8ecb86acca4c564561ab3717c0283a28c5",
+    "source": "act3/map/crossing:0",
+    "speaker": "manager",
+    "text": "止まれ",
+    "performance": "act3-resolute",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"ど、どうしたニャ？\",\"act3-startled\",false]": {
+    "file": "assets/voices/1edbec5747fa1bf9f97d857862e0facd38db0ce66e1a2c39eb5821de7912c28c.act3.mp3",
+    "hash": "1edbec5747fa1bf9f97d857862e0facd38db0ce66e1a2c39eb5821de7912c28c",
+    "source": "act3/map/crossing:1",
+    "speaker": "cat",
+    "text": "ど、どうしたニャ？",
+    "performance": "act3-startled",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"この先は通らない\",\"act3-manager\",false]": {
+    "file": "assets/voices/b2f3991c722dfd2e88cabfe562d6ed1ae82526ac315d8d0a7c0d501083538e50.act3.mp3",
+    "hash": "b2f3991c722dfd2e88cabfe562d6ed1ae82526ac315d8d0a7c0d501083538e50",
+    "source": "act3/map/crossing:2",
+    "speaker": "manager",
+    "text": "この先は通らない",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"でも、誰もいないよ？\",\"act3-alert\",false]": {
+    "file": "assets/voices/09b4cb304931a79420a09f83642961db627174f39966ef2639593d87ac02230f.act3.mp3",
+    "hash": "09b4cb304931a79420a09f83642961db627174f39966ef2639593d87ac02230f",
+    "source": "act3/map/crossing:3",
+    "speaker": "hostess",
+    "text": "でも、誰もいないよ？",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……3、2、1\",\"act3-manager\",false]": {
+    "file": "assets/voices/61fae14e36e96bd19014b38c222a794e9766b424427aa0aa724c4cb7663d36af.act3.mp3",
+    "hash": "61fae14e36e96bd19014b38c222a794e9766b424427aa0aa724c4cb7663d36af",
+    "source": "act3/map/crossing:4",
+    "speaker": "manager",
+    "text": "……3、2、1",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"うおっ！？ 出たニャ！！\",\"act3-panic\",false]": {
+    "file": "assets/voices/d6a426d8a8137da287751e2aa489807f9b72c374a55355aa543368eb1dcbd542.act3.mp3",
+    "hash": "d6a426d8a8137da287751e2aa489807f9b72c374a55355aa543368eb1dcbd542",
+    "source": "act3/map/crossing:6",
+    "speaker": "cat",
+    "text": "うおっ！？ 出たニャ！！",
+    "performance": "act3-panic",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"えっ……なんで分かったの！？\",\"act3-panic\",false]": {
+    "file": "assets/voices/85b39b93ed3a47e29e45743b75c3e529529dc417ae5907ecf98db27939699572.act3.mp3",
+    "hash": "85b39b93ed3a47e29e45743b75c3e529529dc417ae5907ecf98db27939699572",
+    "source": "act3/map/crossing:7",
+    "speaker": "hostess",
+    "text": "えっ……なんで分かったの！？",
+    "performance": "act3-panic",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"いいから静かに。今のうちに裏道へ回る\",\"act3-manager\",false]": {
+    "file": "assets/voices/a54566911ec2bfcf5b27157095244812345ff33f71e0cca2842a48ae1bbdbd3e.act3.mp3",
+    "hash": "a54566911ec2bfcf5b27157095244812345ff33f71e0cca2842a48ae1bbdbd3e",
+    "source": "act3/map/crossing:8",
+    "speaker": "manager",
+    "text": "いいから静かに。今のうちに裏道へ回る",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"大家、何者なんだニャ……\",\"act3-alert\",false]": {
+    "file": "assets/voices/fb3dc9a8e575fa7a494df5c0894e30ac1c1b67949d8ea06103c633f3402e37dc.act3.mp3",
+    "hash": "fb3dc9a8e575fa7a494df5c0894e30ac1c1b67949d8ea06103c633f3402e37dc",
+    "source": "act3/map/crossing:9",
+    "speaker": "cat",
+    "text": "大家、何者なんだニャ……",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"ただの大家だよ\",\"act3-manager\",false]": {
+    "file": "assets/voices/48a76a5be96ecb364df2246857b976d0f2ff2f0d7d5d10cac04d1c528b7cd7e6.act3.mp3",
+    "hash": "48a76a5be96ecb364df2246857b976d0f2ff2f0d7d5d10cac04d1c528b7cd7e6",
+    "source": "act3/map/crossing:10",
+    "speaker": "manager",
+    "text": "ただの大家だよ",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"はぁ……やっとゾンビから離れられたニャ\",\"act3-tense\",false]": {
+    "file": "assets/voices/176ec9655a54b85a77947ff318ca1a95d07802d5a05e5754480bbf7bd01582c2.act3.mp3",
+    "hash": "176ec9655a54b85a77947ff318ca1a95d07802d5a05e5754480bbf7bd01582c2",
+    "source": "act3/map/detour:1",
+    "speaker": "cat",
+    "text": "はぁ……やっとゾンビから離れられたニャ",
+    "performance": "act3-tense",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"でも、こんな細い道で大丈夫かな……\",\"act3-tense\",false]": {
+    "file": "assets/voices/ab28a5d7bf5e080a3d37071a795d7bb605e921c5ac4f274bf8e0cc921f86622a.act3.mp3",
+    "hash": "ab28a5d7bf5e080a3d37071a795d7bb605e921c5ac4f274bf8e0cc921f86622a",
+    "source": "act3/map/detour:2",
+    "speaker": "hostess",
+    "text": "でも、こんな細い道で大丈夫かな……",
+    "performance": "act3-tense",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……二人とも、そこから動くな\",\"act3-resolute\",false]": {
+    "file": "assets/voices/9a885d4c71939a2503279955c49895dd683fc961d46d93f4b025d1ce45187018.act3.mp3",
+    "hash": "9a885d4c71939a2503279955c49895dd683fc961d46d93f4b025d1ce45187018",
+    "source": "act3/map/detour:3",
+    "speaker": "manager",
+    "text": "……二人とも、そこから動くな",
+    "performance": "act3-resolute",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"またニャ！？\",\"act3-startled\",false]": {
+    "file": "assets/voices/a1b398c3c2be365debbbf86581950e1b03e612c1a230458c70f637ff85160682.act3.mp3",
+    "hash": "a1b398c3c2be365debbbf86581950e1b03e612c1a230458c70f637ff85160682",
+    "source": "act3/map/detour:4",
+    "speaker": "cat",
+    "text": "またニャ！？",
+    "performance": "act3-startled",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……そろそろか\",\"act3-manager\",false]": {
+    "file": "assets/voices/c5751c68eae3208d66719b29b792dfa2fb78fbb17bc5e86a1cdb808e5cd4e5fb.act3.mp3",
+    "hash": "c5751c68eae3208d66719b29b792dfa2fb78fbb17bc5e86a1cdb808e5cd4e5fb",
+    "source": "act3/map/detour:6",
+    "speaker": "manager",
+    "text": "……そろそろか",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"何が……？\",\"act3-tense\",false]": {
+    "file": "assets/voices/b1ff965b0fcae7315388a0617ad02ac42a713bbaf05fdef300a20145e4aabb01.act3.mp3",
+    "hash": "b1ff965b0fcae7315388a0617ad02ac42a713bbaf05fdef300a20145e4aabb01",
+    "source": "act3/map/detour:7",
+    "speaker": "hostess",
+    "text": "何が……？",
+    "performance": "act3-tense",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"うぎゃああっ！？！？\",\"act3-panic\",false]": {
+    "file": "assets/voices/9a922339e6c1c78e6b9a1a8b5e06c2073813efbc4fff84d487038ee5a4156141.act3.mp3",
+    "hash": "9a922339e6c1c78e6b9a1a8b5e06c2073813efbc4fff84d487038ee5a4156141",
+    "source": "act3/map/detour:9",
+    "speaker": "cat",
+    "text": "うぎゃああっ！？！？",
+    "performance": "act3-panic",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"きゃあっ！！\",\"act3-panic\",false]": {
+    "file": "assets/voices/ab6964a13b9cb38136edafe06e4a85d4a6c39d8fc836c5f56f20e51d0d5963cd.act3.mp3",
+    "hash": "ab6964a13b9cb38136edafe06e4a85d4a6c39d8fc836c5f56f20e51d0d5963cd",
+    "source": "act3/map/detour:10",
+    "speaker": "hostess",
+    "text": "きゃあっ！！",
+    "performance": "act3-panic",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"し、死ぬかと思ったニャ！！\",\"act3-panic\",false]": {
+    "file": "assets/voices/a653f6147f7f0fa8de7cf38b2211878e9d357300c8b856a89f693f0d9ff9332e.act3.mp3",
+    "hash": "a653f6147f7f0fa8de7cf38b2211878e9d357300c8b856a89f693f0d9ff9332e",
+    "source": "act3/map/detour:12",
+    "speaker": "cat",
+    "text": "し、死ぬかと思ったニャ！！",
+    "performance": "act3-panic",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"大家さん……どうして分かったの？\",\"act3-panic\",false]": {
+    "file": "assets/voices/f91979fa4c59c07c3102c0efee299a7cd6ca90fcaf0dd996fd310dd247f12593.act3.mp3",
+    "hash": "f91979fa4c59c07c3102c0efee299a7cd6ca90fcaf0dd996fd310dd247f12593",
+    "source": "act3/map/detour:13",
+    "speaker": "hostess",
+    "text": "大家さん……どうして分かったの？",
+    "performance": "act3-panic",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……前は、ここで失敗したからな\",\"act3-manager\",false]": {
+    "file": "assets/voices/c61f7dc773b9a619729e5d58dcb29319c70ddc2f28d8e079136e2563ebaa14fa.act3.mp3",
+    "hash": "c61f7dc773b9a619729e5d58dcb29319c70ddc2f28d8e079136e2563ebaa14fa",
+    "source": "act3/map/detour:14",
+    "speaker": "manager",
+    "text": "……前は、ここで失敗したからな",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"前って何の話ニャ！？\",\"act3-panic\",false]": {
+    "file": "assets/voices/1bcb800330c17127b73d58d31ecab4cd4803ffa068e22bd567e27ea333d3ca4c.act3.mp3",
+    "hash": "1bcb800330c17127b73d58d31ecab4cd4803ffa068e22bd567e27ea333d3ca4c",
+    "source": "act3/map/detour:15",
+    "speaker": "cat",
+    "text": "前って何の話ニャ！？",
+    "performance": "act3-panic",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……何でもない。行くぞ\",\"act3-manager\",false]": {
+    "file": "assets/voices/4736b81269a637745624f8ce7717f73cbe7ce2f6b20b0afd3751f05cbb5d6621.act3.mp3",
+    "hash": "4736b81269a637745624f8ce7717f73cbe7ce2f6b20b0afd3751f05cbb5d6621",
+    "source": "act3/map/detour:16",
+    "speaker": "manager",
+    "text": "……何でもない。行くぞ",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"はぁ……はぁ……生きた心地がしなかったニャ……\",\"act3-tense\",false]": {
+    "file": "assets/voices/e839006f580f1dd18a813dd196260b7d32e9495a19ff36284a85dfcd802144c3.act3.mp3",
+    "hash": "e839006f580f1dd18a813dd196260b7d32e9495a19ff36284a85dfcd802144c3",
+    "source": "act3/map/store:0",
+    "speaker": "cat",
+    "text": "はぁ……はぁ……生きた心地がしなかったニャ……",
+    "performance": "act3-tense",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"でも、本当に一度も襲われなかったね\",\"act3-alert\",false]": {
+    "file": "assets/voices/e68ecf7365c390ef6f9c149853f5a8b9efa1146c544dfa2aea4e659ef13c7e4a.act3.mp3",
+    "hash": "e68ecf7365c390ef6f9c149853f5a8b9efa1146c544dfa2aea4e659ef13c7e4a",
+    "source": "act3/map/store:1",
+    "speaker": "hostess",
+    "text": "でも、本当に一度も襲われなかったね",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"ここまでは予定どおりだ\",\"act3-manager\",false]": {
+    "file": "assets/voices/98e0defa10094a8e2c169b7af806e2a58dd48c18be5972184c4546fe8c1d8486.act3.mp3",
+    "hash": "98e0defa10094a8e2c169b7af806e2a58dd48c18be5972184c4546fe8c1d8486",
+    "source": "act3/map/store:2",
+    "speaker": "manager",
+    "text": "ここまでは予定どおりだ",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"予定どおりって……全部知ってたみたいな言い方ニャ\",\"act3-alert\",false]": {
+    "file": "assets/voices/b34f5c8e4e00630eb563c1b6b9ff4f74d15a35ccb6144179dd35467caa392d45.act3.mp3",
+    "hash": "b34f5c8e4e00630eb563c1b6b9ff4f74d15a35ccb6144179dd35467caa392d45",
+    "source": "act3/map/store:3",
+    "speaker": "cat",
+    "text": "予定どおりって……全部知ってたみたいな言い方ニャ",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……少し休むぞ。必要な物もある\",\"act3-manager\",false]": {
+    "file": "assets/voices/939a535363bb2fa2c74d40c29c3a4409f39b4531f82cf796c8c3fc467d0ffe27.act3.mp3",
+    "hash": "939a535363bb2fa2c74d40c29c3a4409f39b4531f82cf796c8c3fc467d0ffe27",
+    "source": "act3/map/store:4",
+    "speaker": "manager",
+    "text": "……少し休むぞ。必要な物もある",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"あれ？ ねえ、店の中に誰かいる……\",\"act3-alert\",false]": {
+    "file": "assets/voices/daea2be315de683a726b3ecc798c997de2b65f4f70ed0f41f5c416926f95e891.act3.mp3",
+    "hash": "daea2be315de683a726b3ecc798c997de2b65f4f70ed0f41f5c416926f95e891",
+    "source": "act3/map/store:5",
+    "speaker": "hostess",
+    "text": "あれ？ ねえ、店の中に誰かいる……",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……生存者か\",\"act3-manager\",false]": {
+    "file": "assets/voices/37b567c0d80e9fd52320840eef54b185b1f6a5d96843e5f768337d8ff7e214e1.act3.mp3",
+    "hash": "37b567c0d80e9fd52320840eef54b185b1f6a5d96843e5f768337d8ff7e214e1",
+    "source": "act3/map/store:7",
+    "speaker": "manager",
+    "text": "……生存者か",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"……誰かいるの？\",\"act3-alert\",false]": {
+    "file": "assets/voices/1f04aef66bae081fdf8f128337b95abb581e1a46098f8d6ed9bc08dc04c3b309.act3.mp3",
+    "hash": "1f04aef66bae081fdf8f128337b95abb581e1a46098f8d6ed9bc08dc04c3b309",
+    "source": "act3/map/store:9",
+    "speaker": "hostess",
+    "text": "……誰かいるの？",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"ひっ……！？\",\"act3-mimi-afraid\",false]": {
+    "file": "assets/voices/caf7a79ef1f134d8eb6a1c3420588a5d3b5185b1dc43a473a449b95418a82bec.act3.mp3",
+    "hash": "caf7a79ef1f134d8eb6a1c3420588a5d3b5185b1dc43a473a449b95418a82bec",
+    "source": "act3/map/store:10",
+    "speaker": "rabbit",
+    "text": "ひっ……！？",
+    "performance": "act3-mimi-afraid",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"ぞ、ゾンビじゃない……？\",\"act3-mimi-afraid\",false]": {
+    "file": "assets/voices/2c19a438299736eafc09b60e0c75716bc0f0042e13034a9f7af0450887624c26.act3.mp3",
+    "hash": "2c19a438299736eafc09b60e0c75716bc0f0042e13034a9f7af0450887624c26",
+    "source": "act3/map/store:12",
+    "speaker": "rabbit",
+    "text": "ぞ、ゾンビじゃない……？",
+    "performance": "act3-mimi-afraid",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"どこをどう見たらゾンビに見えるニャ！\",\"act3-alert\",false]": {
+    "file": "assets/voices/a7a0523c0eb0dcc687a6adf18c4c833a1542b133749520a27cee7a50bd1572b2.act3.mp3",
+    "hash": "a7a0523c0eb0dcc687a6adf18c4c833a1542b133749520a27cee7a50bd1572b2",
+    "source": "act3/map/store:13",
+    "speaker": "cat",
+    "text": "どこをどう見たらゾンビに見えるニャ！",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"だ、だって！ さっきから怖い人ばっかり来るんだもん！\",\"act3-mimi-afraid\",false]": {
+    "file": "assets/voices/17f5015d446dab35ca80bfd43c00fa88aee4df30e27c843161194443ae678063.act3.mp3",
+    "hash": "17f5015d446dab35ca80bfd43c00fa88aee4df30e27c843161194443ae678063",
+    "source": "act3/map/store:14",
+    "speaker": "rabbit",
+    "text": "だ、だって！ さっきから怖い人ばっかり来るんだもん！",
+    "performance": "act3-mimi-afraid",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"大丈夫だよ。私たちは普通の人だから\",\"act3-alert\",false]": {
+    "file": "assets/voices/0e6d40b7df5a61c2869d17b1054e444529c21ffbdaf5c32bc39c6a50462e6942.act3.mp3",
+    "hash": "0e6d40b7df5a61c2869d17b1054e444529c21ffbdaf5c32bc39c6a50462e6942",
+    "source": "act3/map/store:15",
+    "speaker": "hostess",
+    "text": "大丈夫だよ。私たちは普通の人だから",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"銃！\",\"act3-startled\",false]": {
+    "file": "assets/voices/6c90fc44d8e1a9015c35cfbd0431d45f6b77d5cc4ab971572e5e48ecab38546a.act3.mp3",
+    "hash": "6c90fc44d8e1a9015c35cfbd0431d45f6b77d5cc4ab971572e5e48ecab38546a",
+    "source": "act3/map/store:16",
+    "speaker": "rabbit",
+    "text": "銃！",
+    "performance": "act3-startled",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"ああ…緊急事態だ気にすんな\",\"act3-manager\",false]": {
+    "file": "assets/voices/3e96d9983a76ae929f4fee80fea404f1d36f0c419420ecc0329075431e03e9b5.act3.mp3",
+    "hash": "3e96d9983a76ae929f4fee80fea404f1d36f0c419420ecc0329075431e03e9b5",
+    "source": "act3/map/store:17",
+    "speaker": "manager",
+    "text": "ああ…緊急事態だ気にすんな",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"はい…\",\"act3-mimi-afraid\",false]": {
+    "file": "assets/voices/c059496f681101c2edda8f23af11f33d43aeb14ce22bdc16ae97f1e4bf0f76ec.act3.mp3",
+    "hash": "c059496f681101c2edda8f23af11f33d43aeb14ce22bdc16ae97f1e4bf0f76ec",
+    "source": "act3/map/store:18",
+    "speaker": "rabbit",
+    "text": "はい…",
+    "performance": "act3-mimi-afraid",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……怪我してるのか？\",\"act3-manager\",false]": {
+    "file": "assets/voices/2e743fd9057256da45393275000da05db8eee33231ba80ca22e707e00e75ce92.act3.mp3",
+    "hash": "2e743fd9057256da45393275000da05db8eee33231ba80ca22e707e00e75ce92",
+    "source": "act3/map/store:19",
+    "speaker": "manager",
+    "text": "……怪我してるのか？",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"うん……逃げるときに転んじゃって……\",\"act3-mimi-afraid\",false]": {
+    "file": "assets/voices/0e4ada73b51a7b6f3d998be92ccedd0c2afcac504f043a1ba064e5c97a569130.act3.mp3",
+    "hash": "0e4ada73b51a7b6f3d998be92ccedd0c2afcac504f043a1ba064e5c97a569130",
+    "source": "act3/map/store:21",
+    "speaker": "rabbit",
+    "text": "うん……逃げるときに転んじゃって……",
+    "performance": "act3-mimi-afraid",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"俺たちは街の外に向かってる。一緒に来るか？\",\"act3-manager\",false]": {
+    "file": "assets/voices/ac971a69c0c4b2b56dcf96dfe4c2585d678c56a25a2d676952cd456b345c2852.act3.mp3",
+    "hash": "ac971a69c0c4b2b56dcf96dfe4c2585d678c56a25a2d676952cd456b345c2852",
+    "source": "act3/map/store:22",
+    "speaker": "manager",
+    "text": "俺たちは街の外に向かってる。一緒に来るか？",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"えっ！ 本当に！？\",\"act3-mimi-bright\",false]": {
+    "file": "assets/voices/76c177a5c60a19cb25301b9aa7fafab1f3cc795748e4146c07f5084dd4ee2d1d.act3.mp3",
+    "hash": "76c177a5c60a19cb25301b9aa7fafab1f3cc795748e4146c07f5084dd4ee2d1d",
+    "source": "act3/map/store:23",
+    "speaker": "rabbit",
+    "text": "えっ！ 本当に！？",
+    "performance": "act3-mimi-bright",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"いたっ……！\",\"act3-mimi-afraid\",false]": {
+    "file": "assets/voices/f157cb7d892a64a1a6eec3638f223c02c66146efdaa5ccb7512df11302511c4f.act3.mp3",
+    "hash": "f157cb7d892a64a1a6eec3638f223c02c66146efdaa5ccb7512df11302511c4f",
+    "source": "act3/map/store:25",
+    "speaker": "rabbit",
+    "text": "いたっ……！",
+    "performance": "act3-mimi-afraid",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"無理しないで！\",\"act3-tense\",false]": {
+    "file": "assets/voices/cee60e6e877ebf6163739a4c0612c16f2abdc29b08b10df791f90d06c452781e.act3.mp3",
+    "hash": "cee60e6e877ebf6163739a4c0612c16f2abdc29b08b10df791f90d06c452781e",
+    "source": "act3/map/store:26",
+    "speaker": "hostess",
+    "text": "無理しないで！",
+    "performance": "act3-tense",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"……ごめんなさい。走れそうにない……\",\"act3-mimi-afraid\",false]": {
+    "file": "assets/voices/1a49b744ff2651517b9f8a9061cdd3d55864235ebae0c2c008d4bae318a65401.act3.mp3",
+    "hash": "1a49b744ff2651517b9f8a9061cdd3d55864235ebae0c2c008d4bae318a65401",
+    "source": "act3/map/store:27",
+    "speaker": "rabbit",
+    "text": "……ごめんなさい。走れそうにない……",
+    "performance": "act3-mimi-afraid",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"この外、ゾンビだらけニャ……\",\"act3-alert\",false]": {
+    "file": "assets/voices/695588d154fe53b4249c5976dd21a176fb18c8306b1b77d9dada49ce4f4dfd6d.act3.mp3",
+    "hash": "695588d154fe53b4249c5976dd21a176fb18c8306b1b77d9dada49ce4f4dfd6d",
+    "source": "act3/map/store:28",
+    "speaker": "cat",
+    "text": "この外、ゾンビだらけニャ……",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……ここに残るのも危険だな\",\"act3-resolute\",false]": {
+    "file": "assets/voices/8561247ca5e47e9e14f53e3d9fe470292477674556618eac5e9e45c2d3fdc870.act3.mp3",
+    "hash": "8561247ca5e47e9e14f53e3d9fe470292477674556618eac5e9e45c2d3fdc870",
+    "source": "act3/map/store:30",
+    "speaker": "manager",
+    "text": "……ここに残るのも危険だな",
+    "performance": "act3-resolute",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"少し戻ったところに、俺のアパートがある\",\"act3-manager\",false]": {
+    "file": "assets/voices/c3eb1e9c810842bf6d80ccfb739cfc902fdc9ad6aad3ff5fa17d356e04dd54fb.act3.mp3",
+    "hash": "c3eb1e9c810842bf6d80ccfb739cfc902fdc9ad6aad3ff5fa17d356e04dd54fb",
+    "source": "act3/map/store:31",
+    "speaker": "manager",
+    "text": "少し戻ったところに、俺のアパートがある",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"アパート……？\",\"act3-mimi\",false]": {
+    "file": "assets/voices/060af150d4ded4339d3ad6706728510a21108d9fe66147ab0114ccfd235268a8.act3.mp3",
+    "hash": "060af150d4ded4339d3ad6706728510a21108d9fe66147ab0114ccfd235268a8",
+    "source": "act3/map/store:32",
+    "speaker": "rabbit",
+    "text": "アパート……？",
+    "performance": "act3-mimi",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"二階に空き部屋がある。そこを使っていい\",\"act3-manager\",false]": {
+    "file": "assets/voices/01de2281a3c673f47db13c9446644dd16f618c2cc4c6481bb1f3749185f60a03.act3.mp3",
+    "hash": "01de2281a3c673f47db13c9446644dd16f618c2cc4c6481bb1f3749185f60a03",
+    "source": "act3/map/store:33",
+    "speaker": "manager",
+    "text": "二階に空き部屋がある。そこを使っていい",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"えっ……知らない人なのに、いいの？\",\"act3-mimi\",false]": {
+    "file": "assets/voices/00be18c6f57c2a000b8722f97c33aa725fb3fba45ffab6ccd8fca1b9958ce243.act3.mp3",
+    "hash": "00be18c6f57c2a000b8722f97c33aa725fb3fba45ffab6ccd8fca1b9958ce243",
+    "source": "act3/map/store:35",
+    "speaker": "rabbit",
+    "text": "えっ……知らない人なのに、いいの？",
+    "performance": "act3-mimi",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"ああ。足が治るまで好きに使ってくれ\",\"act3-manager\",false]": {
+    "file": "assets/voices/9cf0be9a164c3a2409afd0b8ebafdf53f1ef10a3bbff21b19e4a705c4f306103.act3.mp3",
+    "hash": "9cf0be9a164c3a2409afd0b8ebafdf53f1ef10a3bbff21b19e4a705c4f306103",
+    "source": "act3/map/store:36",
+    "speaker": "manager",
+    "text": "ああ。足が治るまで好きに使ってくれ",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"……ありがとう！\",\"act3-mimi-bright\",false]": {
+    "file": "assets/voices/9da49918b2d696f77bfd5270bf915ad7865d00c11d11824e87fa79d128c60ef5.act3.mp3",
+    "hash": "9da49918b2d696f77bfd5270bf915ad7865d00c11d11824e87fa79d128c60ef5",
+    "source": "act3/map/store:37",
+    "speaker": "rabbit",
+    "text": "……ありがとう！",
+    "performance": "act3-mimi-bright",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"大家、ずいぶん太っ腹ニャ！\",\"act3-relieved\",false]": {
+    "file": "assets/voices/ed14101dc50ee9dcaea861b72244c93ea1391e1db0f8284979471125ee0a4500.act3.mp3",
+    "hash": "ed14101dc50ee9dcaea861b72244c93ea1391e1db0f8284979471125ee0a4500",
+    "source": "act3/map/store:38",
+    "speaker": "cat",
+    "text": "大家、ずいぶん太っ腹ニャ！",
+    "performance": "act3-relieved",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"お前も少しは見習え\",\"act3-manager\",false]": {
+    "file": "assets/voices/11ce1315521b15049d5c9b11270ee74cbae146b6da3a942960b610fc29de205f.act3.mp3",
+    "hash": "11ce1315521b15049d5c9b11270ee74cbae146b6da3a942960b610fc29de205f",
+    "source": "act3/map/store:39",
+    "speaker": "manager",
+    "text": "お前も少しは見習え",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"なんでモクが怒られるニャ！？\",\"act3-startled\",false]": {
+    "file": "assets/voices/8dfb2113874a844f9368cd805ded977277605e32674620a9d586213927b7284d.act3.mp3",
+    "hash": "8dfb2113874a844f9368cd805ded977277605e32674620a9d586213927b7284d",
+    "source": "act3/map/store:40",
+    "speaker": "cat",
+    "text": "なんでモクが怒られるニャ！？",
+    "performance": "act3-startled",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"ミミちゃん、だったよね？ 無理しないでね\",\"act3-alert\",false]": {
+    "file": "assets/voices/6f108fbd5ab4c10ed0956401ec80a54055f881322fe82aeb9bb67757b8cfad7d.act3.mp3",
+    "hash": "6f108fbd5ab4c10ed0956401ec80a54055f881322fe82aeb9bb67757b8cfad7d",
+    "source": "act3/map/store:42",
+    "speaker": "hostess",
+    "text": "ミミちゃん、だったよね？ 無理しないでね",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"うん！ みんなも気をつけて！\",\"act3-mimi-bright\",false]": {
+    "file": "assets/voices/cd57b7ae586eb97ae3c4cc48ccbd528f3f455a68900ceb2a8559d6c417e6f303.act3.mp3",
+    "hash": "cd57b7ae586eb97ae3c4cc48ccbd528f3f455a68900ceb2a8559d6c417e6f303",
+    "source": "act3/map/store:43",
+    "speaker": "rabbit",
+    "text": "うん！ みんなも気をつけて！",
+    "performance": "act3-mimi-bright",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"表通りは危険だ。裏道を使えばアパートまで行ける\",\"act3-resolute\",false]": {
+    "file": "assets/voices/1893c51fd2aaa8e7a1fbd28a3cf32ead9904ca42b721ada9f54745eb1ce35095.act3.mp3",
+    "hash": "1893c51fd2aaa8e7a1fbd28a3cf32ead9904ca42b721ada9f54745eb1ce35095",
+    "source": "act3/map/store:44",
+    "speaker": "manager",
+    "text": "表通りは危険だ。裏道を使えばアパートまで行ける",
+    "performance": "act3-resolute",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"分かった。……あの！\",\"act3-mimi\",false]": {
+    "file": "assets/voices/36a8b711ad56261c757b23004e1935eedf159634aa25505e09f7ed61e0f89065.act3.mp3",
+    "hash": "36a8b711ad56261c757b23004e1935eedf159634aa25505e09f7ed61e0f89065",
+    "source": "act3/map/store:45",
+    "speaker": "rabbit",
+    "text": "分かった。……あの！",
+    "performance": "act3-mimi",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"ん？\",\"act3-manager\",false]": {
+    "file": "assets/voices/a50a8530eb8b9ec747dd55ecbff6b8cac8b7cebe061cbacef65b32749bd4b077.act3.mp3",
+    "hash": "a50a8530eb8b9ec747dd55ecbff6b8cac8b7cebe061cbacef65b32749bd4b077",
+    "source": "act3/map/store:46",
+    "speaker": "manager",
+    "text": "ん？",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"また……会える？\",\"act3-mimi-afraid\",false]": {
+    "file": "assets/voices/400c867b540d398e7fc3b9416502c3a68613ddd99bcf223aaa83f2273fcb7598.act3.mp3",
+    "hash": "400c867b540d398e7fc3b9416502c3a68613ddd99bcf223aaa83f2273fcb7598",
+    "source": "act3/map/store:47",
+    "speaker": "rabbit",
+    "text": "また……会える？",
+    "performance": "act3-mimi-afraid",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……ああ。きっとな\",\"act3-manager\",false]": {
+    "file": "assets/voices/55780a7b318946bc4f3a91eca9e535272ba11659cd1f9ff4f6080951ac1e86ed.act3.mp3",
+    "hash": "55780a7b318946bc4f3a91eca9e535272ba11659cd1f9ff4f6080951ac1e86ed",
+    "source": "act3/map/store:49",
+    "speaker": "manager",
+    "text": "……ああ。きっとな",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"……うん！\",\"act3-mimi-bright\",false]": {
+    "file": "assets/voices/528af2d69ce036b5c8c01bd68254b9adaf76be8f8f5d33da9bbe79fd5535acc5.act3.mp3",
+    "hash": "528af2d69ce036b5c8c01bd68254b9adaf76be8f8f5d33da9bbe79fd5535acc5",
+    "source": "act3/map/store:50",
+    "speaker": "rabbit",
+    "text": "……うん！",
+    "performance": "act3-mimi-bright",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……は？\",\"act3-shocked\",false]": {
+    "file": "assets/voices/3ddefe481caaaede8d9299c934d5867d94ea7e74d52cf17fe3ae2f32d9739444.act3.mp3",
+    "hash": "3ddefe481caaaede8d9299c934d5867d94ea7e74d52cf17fe3ae2f32d9739444",
+    "source": "act3/map/return:2",
+    "speaker": "manager",
+    "text": "……は？",
+    "performance": "act3-shocked",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"街を出たら、まず何するニャ？\",\"act3-alert\",false]": {
+    "file": "assets/voices/0ede03207d92b7b5553d4bd3a5165b9b91f1cf79a5a2d76e4a919f04d1e11db5.act3.mp3",
+    "hash": "0ede03207d92b7b5553d4bd3a5165b9b91f1cf79a5a2d76e4a919f04d1e11db5",
+    "source": "act3/map/bridge:0",
+    "speaker": "cat",
+    "text": "街を出たら、まず何するニャ？",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"私は……温かいお風呂に入りたいかな\",\"act3-alert\",false]": {
+    "file": "assets/voices/9c3e5c6e86666cc95c24481c8b6056c34c577d76deed3df2628b79f576b57424.act3.mp3",
+    "hash": "9c3e5c6e86666cc95c24481c8b6056c34c577d76deed3df2628b79f576b57424",
+    "source": "act3/map/bridge:1",
+    "speaker": "hostess",
+    "text": "私は……温かいお風呂に入りたいかな",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"モクは冷えた酒が飲みたいニャ！\",\"act3-relieved\",false]": {
+    "file": "assets/voices/089311a1e03dc912c6cde70039202525b95a386037813d21b5b04e935b760b73.act3.mp3",
+    "hash": "089311a1e03dc912c6cde70039202525b95a386037813d21b5b04e935b760b73",
+    "source": "act3/map/bridge:2",
+    "speaker": "cat",
+    "text": "モクは冷えた酒が飲みたいニャ！",
+    "performance": "act3-relieved",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"こんな時までお酒なの？\",\"act3-alert\",false]": {
+    "file": "assets/voices/2db9f9ca623935770f0e522ee7847385ede6d72bc83732b8c24cad0c05f20f1b.act3.mp3",
+    "hash": "2db9f9ca623935770f0e522ee7847385ede6d72bc83732b8c24cad0c05f20f1b",
+    "source": "act3/map/bridge:3",
+    "speaker": "hostess",
+    "text": "こんな時までお酒なの？",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"生きて帰ったら祝杯ニャ！\",\"act3-relieved\",false]": {
+    "file": "assets/voices/a573c7f2768e6e492abc8f659346e26fc47a83cf12924b10b38fbb5cddde52c8.act3.mp3",
+    "hash": "a573c7f2768e6e492abc8f659346e26fc47a83cf12924b10b38fbb5cddde52c8",
+    "source": "act3/map/bridge:4",
+    "speaker": "cat",
+    "text": "生きて帰ったら祝杯ニャ！",
+    "performance": "act3-relieved",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……そうだな\",\"act3-manager\",false]": {
+    "file": "assets/voices/daae291d067c58a8454a00a34f46c57dc634f0f7585cbfac51ccf6d60387949c.act3.mp3",
+    "hash": "daae291d067c58a8454a00a34f46c57dc634f0f7585cbfac51ccf6d60387949c",
+    "source": "act3/map/bridge:5",
+    "speaker": "manager",
+    "text": "……そうだな",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"…………え？\",\"act3-shocked\",false]": {
+    "file": "assets/voices/9577f4b0d2fca4a5d4f8bef12f9ef2b9e13e6d89b97f8a523ac112a7d1318749.act3.mp3",
+    "hash": "9577f4b0d2fca4a5d4f8bef12f9ef2b9e13e6d89b97f8a523ac112a7d1318749",
+    "source": "act3/map/bridge:7",
+    "speaker": "manager",
+    "text": "…………え？",
+    "performance": "act3-shocked",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……また、駄目だったか\",\"act3-manager\",false]": {
+    "file": "assets/voices/11e4d8694bcef318b4667d417dc574c8943d79f113e35729a238839499e7fa84.act3.mp3",
+    "hash": "11e4d8694bcef318b4667d417dc574c8943d79f113e35729a238839499e7fa84",
+    "source": "act3/after/corridor:1",
+    "speaker": "manager",
+    "text": "……また、駄目だったか",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"戻り先は……今回は変わってないな\",\"act3-manager\",false]": {
+    "file": "assets/voices/a8674328e9d4faf2ca24a5900c356cbb6ccf3a1cdf8b7286456dcba83d1e03a9.act3.mp3",
+    "hash": "a8674328e9d4faf2ca24a5900c356cbb6ccf3a1cdf8b7286456dcba83d1e03a9",
+    "source": "act3/after/corridor:3",
+    "speaker": "manager",
+    "text": "戻り先は……今回は変わってないな",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"銃も弾薬もある。準備はできてる\",\"act3-manager\",false]": {
+    "file": "assets/voices/b66e1ee136ef38f3d2f6247c31d6acad21d5e985cd914635863a76fa3b63ebe1.act3.mp3",
+    "hash": "b66e1ee136ef38f3d2f6247c31d6acad21d5e985cd914635863a76fa3b63ebe1",
+    "source": "act3/after/empty-room:2",
+    "speaker": "manager",
+    "text": "銃も弾薬もある。準備はできてる",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……今度こそ、二人とも生き残らせる\",\"act3-resolute\",false]": {
+    "file": "assets/voices/843626fdb87f7d315a4084ff37934af630a38a14a15ef72734a0bee808987496.act3.mp3",
+    "hash": "843626fdb87f7d315a4084ff37934af630a38a14a15ef72734a0bee808987496",
+    "source": "act3/after/empty-room:3",
+    "speaker": "manager",
+    "text": "……今度こそ、二人とも生き残らせる",
+    "performance": "act3-resolute",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
   }
 };

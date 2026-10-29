@@ -721,7 +721,156 @@
       "settings": {
         "stability": 0.5,
         "similarity_boost": 0.75,
-        "speed": 1.0
+        "speed": 1
+      }
+    },
+    "act3-manager": {
+      "model": "eleven_v4",
+      "direction": "第3幕の場面に沿う演技。明瞭で張りのある声。囁き・ぼそぼそ声にしない。",
+      "tags": [
+        "[serious]",
+        "[clear, projected voice]",
+        "[controlled tension]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75
+      }
+    },
+    "act3-resolute": {
+      "model": "eleven_v4",
+      "direction": "第3幕の場面に沿う演技。明瞭で張りのある声。囁き・ぼそぼそ声にしない。",
+      "tags": [
+        "[determined]",
+        "[firm, projected voice]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75
+      }
+    },
+    "act3-alert": {
+      "model": "eleven_v4",
+      "direction": "第3幕の場面に沿う演技。明瞭で張りのある声。囁き・ぼそぼそ声にしない。",
+      "tags": [
+        "[alert]",
+        "[clear, projected voice]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75
+      }
+    },
+    "act3-tense": {
+      "model": "eleven_v4",
+      "direction": "第3幕の場面に沿う演技。明瞭で張りのある声。囁き・ぼそぼそ声にしない。",
+      "tags": [
+        "[worried]",
+        "[clear, projected voice]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75
+      }
+    },
+    "act3-relieved": {
+      "model": "eleven_v4",
+      "direction": "第3幕の場面に沿う演技。明瞭で張りのある声。囁き・ぼそぼそ声にしない。",
+      "tags": [
+        "[relieved]",
+        "[animated]",
+        "[clear, projected voice]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75
+      }
+    },
+    "act3-startled": {
+      "model": "eleven_v4",
+      "direction": "第3幕の場面に沿う演技。明瞭で張りのある声。囁き・ぼそぼそ声にしない。",
+      "tags": [
+        "[surprised]",
+        "[clear, projected voice]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75
+      }
+    },
+    "act3-panic": {
+      "model": "eleven_v4",
+      "direction": "第3幕の場面に沿う演技。明瞭で張りのある声。囁き・ぼそぼそ声にしない。",
+      "tags": [
+        "[panicked]",
+        "[urgent]",
+        "[strong, clear voice]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75
+      }
+    },
+    "act3-shocked": {
+      "model": "eleven_v4",
+      "direction": "第3幕の場面に沿う演技。明瞭で張りのある声。囁き・ぼそぼそ声にしない。",
+      "tags": [
+        "[shocked]",
+        "[disbelieving]",
+        "[clear, audible voice]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75
+      }
+    },
+    "act3-silence": {
+      "model": "eleven_v4",
+      "direction": "第3幕の場面に沿う演技。明瞭で張りのある声。囁き・ぼそぼそ声にしない。",
+      "tags": [
+        "[serious]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75
+      }
+    },
+    "act3-mimi": {
+      "model": "eleven_v4",
+      "direction": "第3幕の場面に沿う演技。明瞭で張りのある声。囁き・ぼそぼそ声にしない。",
+      "tags": [
+        "[youthful, bright voice]",
+        "[clear, projected voice]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75
+      }
+    },
+    "act3-mimi-afraid": {
+      "model": "eleven_v4",
+      "direction": "第3幕の場面に沿う演技。明瞭で張りのある声。囁き・ぼそぼそ声にしない。",
+      "tags": [
+        "[scared]",
+        "[youthful voice]",
+        "[clear, projected voice]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75
+      }
+    },
+    "act3-mimi-bright": {
+      "model": "eleven_v4",
+      "direction": "第3幕の場面に沿う演技。明瞭で張りのある声。囁き・ぼそぼそ声にしない。",
+      "tags": [
+        "[happy]",
+        "[youthful, bright voice]",
+        "[clear, projected voice]"
+      ],
+      "settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75
       }
     }
   }

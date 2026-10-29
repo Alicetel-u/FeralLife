@@ -13120,6 +13120,1497 @@ export const VOICE_REVIEW_CATALOG = [
       "voicePerformance": "act3-urgent"
     },
     "version": "f5c19d7d0b03c6b8c143"
+  },
+  {
+    "id": "[\"manager\",\"……また、駄目だったか\",\"act3-manager\",false]",
+    "reviewId": "503b168b8af0a92e",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:after",
+    "sceneLabel": "死に戻り後・再出発",
+    "order": 20,
+    "source": "act3/after/corridor:1",
+    "line": {
+      "speaker": "manager",
+      "text": "……また、駄目だったか",
+      "voiceChapter": 3
+    },
+    "version": "9efed42bb76f88f42db1"
+  },
+  {
+    "id": "[\"manager\",\"戻り先は……今回は変わってないな\",\"act3-manager\",false]",
+    "reviewId": "bcc70b3318f50018",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:after",
+    "sceneLabel": "死に戻り後・再出発",
+    "order": 20,
+    "source": "act3/after/corridor:3",
+    "line": {
+      "speaker": "manager",
+      "text": "戻り先は……今回は変わってないな",
+      "voiceChapter": 3
+    },
+    "version": "713e5b587d2b1cb94d62"
+  },
+  {
+    "id": "[\"manager\",\"銃も弾薬もある。準備はできてる\",\"act3-manager\",false]",
+    "reviewId": "72216135d256da39",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:after",
+    "sceneLabel": "死に戻り後・再出発",
+    "order": 20,
+    "source": "act3/after/empty-room:2",
+    "line": {
+      "speaker": "manager",
+      "text": "銃も弾薬もある。準備はできてる",
+      "voiceChapter": 3
+    },
+    "version": "c8443b1cd58fa9eb168a"
+  },
+  {
+    "id": "[\"manager\",\"……今度こそ、二人とも生き残らせる\",\"act3-resolute\",false]",
+    "reviewId": "314ae186cd607c69",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:after",
+    "sceneLabel": "死に戻り後・再出発",
+    "order": 20,
+    "source": "act3/after/empty-room:3",
+    "line": {
+      "speaker": "manager",
+      "text": "……今度こそ、二人とも生き残らせる",
+      "voiceChapter": 3
+    },
+    "version": "1075412fbcbee522e872"
+  },
+  {
+    "id": "[\"cat\",\"外、えらいことになってるニャ……\",\"act3-alert\",false]",
+    "reviewId": "30bd45739ee37917",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-departure",
+    "sceneLabel": "出発",
+    "order": 30,
+    "source": "act3/map/departure:0",
+    "line": {
+      "speaker": "cat",
+      "text": "外、えらいことになってるニャ……",
+      "voiceChapter": 3
+    },
+    "version": "78b41f8fa71362668da5"
+  },
+  {
+    "id": "[\"hostess\",\"ねえ大家さん……本当にここから逃げられるの？\",\"act3-tense\",false]",
+    "reviewId": "0ca024394d3ec652",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-departure",
+    "sceneLabel": "出発",
+    "order": 30,
+    "source": "act3/map/departure:1",
+    "line": {
+      "speaker": "hostess",
+      "text": "ねえ大家さん……本当にここから逃げられるの？",
+      "voiceChapter": 3,
+      "emotion": "sad"
+    },
+    "version": "155bf9e04c4d1e8afe24"
+  },
+  {
+    "id": "[\"manager\",\"ああ。脱出地点までの道は分かってる\",\"act3-manager\",false]",
+    "reviewId": "82a1203f4ee9605c",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-departure",
+    "sceneLabel": "出発",
+    "order": 30,
+    "source": "act3/map/departure:2",
+    "line": {
+      "speaker": "manager",
+      "text": "ああ。脱出地点までの道は分かってる",
+      "voiceChapter": 3
+    },
+    "version": "0376e910795e21dc6fe8"
+  },
+  {
+    "id": "[\"cat\",\"そんな簡単に言って大丈夫なのかニャ？\",\"act3-alert\",false]",
+    "reviewId": "307caa743914976f",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-departure",
+    "sceneLabel": "出発",
+    "order": 30,
+    "source": "act3/map/departure:3",
+    "line": {
+      "speaker": "cat",
+      "text": "そんな簡単に言って大丈夫なのかニャ？",
+      "voiceChapter": 3
+    },
+    "version": "ca7d2a084cb0d835c4fa"
+  },
+  {
+    "id": "[\"manager\",\"大丈夫だ。何度も確認してる\",\"act3-manager\",false]",
+    "reviewId": "c442f214163b88b5",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-departure",
+    "sceneLabel": "出発",
+    "order": 30,
+    "source": "act3/map/departure:4",
+    "line": {
+      "speaker": "manager",
+      "text": "大丈夫だ。何度も確認してる",
+      "voiceChapter": 3
+    },
+    "version": "19611d373a7def76580a"
+  },
+  {
+    "id": "[\"hostess\",\"……何度も？\",\"act3-alert\",false]",
+    "reviewId": "2f68e364a3b9d3f9",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-departure",
+    "sceneLabel": "出発",
+    "order": 30,
+    "source": "act3/map/departure:5",
+    "line": {
+      "speaker": "hostess",
+      "text": "……何度も？",
+      "voiceChapter": 3
+    },
+    "version": "8621cf309f4aa259f657"
+  },
+  {
+    "id": "[\"manager\",\"いや、こっちの話だ\",\"act3-manager\",false]",
+    "reviewId": "b1fe353b7146b29c",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-departure",
+    "sceneLabel": "出発",
+    "order": 30,
+    "source": "act3/map/departure:6",
+    "line": {
+      "speaker": "manager",
+      "text": "いや、こっちの話だ",
+      "voiceChapter": 3
+    },
+    "version": "a492533e49a3c896c4b3"
+  },
+  {
+    "id": "[\"manager\",\"いいか。何があっても俺から離れるな\",\"act3-resolute\",false]",
+    "reviewId": "5e0f9bc461d54508",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-departure",
+    "sceneLabel": "出発",
+    "order": 30,
+    "source": "act3/map/departure:7",
+    "line": {
+      "speaker": "manager",
+      "text": "いいか。何があっても俺から離れるな",
+      "voiceChapter": 3
+    },
+    "version": "32d18ba74bcb0e946055"
+  },
+  {
+    "id": "[\"cat\",\"分かったニャ！\",\"act3-alert\",false]",
+    "reviewId": "c96cbe591a464683",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-departure",
+    "sceneLabel": "出発",
+    "order": 30,
+    "source": "act3/map/departure:8",
+    "line": {
+      "speaker": "cat",
+      "text": "分かったニャ！",
+      "voiceChapter": 3
+    },
+    "version": "e393bfa989c255da186d"
+  },
+  {
+    "id": "[\"hostess\",\"うん。大家さんを信じる\",\"act3-relieved\",false]",
+    "reviewId": "ab349cef43e4aa4b",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-departure",
+    "sceneLabel": "出発",
+    "order": 30,
+    "source": "act3/map/departure:9",
+    "line": {
+      "speaker": "hostess",
+      "text": "うん。大家さんを信じる",
+      "voiceChapter": 3,
+      "emotion": "happy"
+    },
+    "version": "f6dcffc9e5b7837ebb08"
+  },
+  {
+    "id": "[\"manager\",\"……行くぞ\",\"act3-manager\",false]",
+    "reviewId": "8189325031d90ecc",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-departure",
+    "sceneLabel": "出発",
+    "order": 30,
+    "source": "act3/map/departure:10",
+    "line": {
+      "speaker": "manager",
+      "text": "……行くぞ",
+      "voiceChapter": 3
+    },
+    "version": "1c5d043f9872ecb55b7a"
+  },
+  {
+    "id": "[\"manager\",\"止まれ\",\"act3-resolute\",false]",
+    "reviewId": "fd0204863637ea74",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-crossing",
+    "sceneLabel": "交差点",
+    "order": 31,
+    "source": "act3/map/crossing:0",
+    "line": {
+      "speaker": "manager",
+      "text": "止まれ",
+      "voiceChapter": 3
+    },
+    "version": "8e22c247d494757b638d"
+  },
+  {
+    "id": "[\"cat\",\"ど、どうしたニャ？\",\"act3-startled\",false]",
+    "reviewId": "777a4efa9ebd0933",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-crossing",
+    "sceneLabel": "交差点",
+    "order": 31,
+    "source": "act3/map/crossing:1",
+    "line": {
+      "speaker": "cat",
+      "text": "ど、どうしたニャ？",
+      "voiceChapter": 3,
+      "emotion": "surprised"
+    },
+    "version": "d413255ae863530cb463"
+  },
+  {
+    "id": "[\"manager\",\"この先は通らない\",\"act3-manager\",false]",
+    "reviewId": "56ba1ccaa837a580",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-crossing",
+    "sceneLabel": "交差点",
+    "order": 31,
+    "source": "act3/map/crossing:2",
+    "line": {
+      "speaker": "manager",
+      "text": "この先は通らない",
+      "voiceChapter": 3
+    },
+    "version": "7d106321ea16babe726c"
+  },
+  {
+    "id": "[\"hostess\",\"でも、誰もいないよ？\",\"act3-alert\",false]",
+    "reviewId": "907d6d9f21ae3d4e",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-crossing",
+    "sceneLabel": "交差点",
+    "order": 31,
+    "source": "act3/map/crossing:3",
+    "line": {
+      "speaker": "hostess",
+      "text": "でも、誰もいないよ？",
+      "voiceChapter": 3
+    },
+    "version": "5c6998c038e0cea8262e"
+  },
+  {
+    "id": "[\"manager\",\"……3、2、1\",\"act3-manager\",false]",
+    "reviewId": "6940069d6b475425",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-crossing",
+    "sceneLabel": "交差点",
+    "order": 31,
+    "source": "act3/map/crossing:4",
+    "line": {
+      "speaker": "manager",
+      "text": "……3、2、1",
+      "voiceChapter": 3
+    },
+    "version": "b226191fccc298fa00bd"
+  },
+  {
+    "id": "[\"cat\",\"うおっ！？ 出たニャ！！\",\"act3-panic\",false]",
+    "reviewId": "3d32b21c2d394d42",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-crossing",
+    "sceneLabel": "交差点",
+    "order": 31,
+    "source": "act3/map/crossing:6",
+    "line": {
+      "speaker": "cat",
+      "text": "うおっ！？ 出たニャ！！",
+      "voiceChapter": 3,
+      "emotion": "surprised",
+      "horde": true
+    },
+    "version": "561394d30f5624c3c727"
+  },
+  {
+    "id": "[\"hostess\",\"えっ……なんで分かったの！？\",\"act3-panic\",false]",
+    "reviewId": "0dc209ce8272b44d",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-crossing",
+    "sceneLabel": "交差点",
+    "order": 31,
+    "source": "act3/map/crossing:7",
+    "line": {
+      "speaker": "hostess",
+      "text": "えっ……なんで分かったの！？",
+      "voiceChapter": 3,
+      "emotion": "surprised",
+      "horde": true
+    },
+    "version": "e235e7f1923a28005653"
+  },
+  {
+    "id": "[\"manager\",\"いいから静かに。今のうちに裏道へ回る\",\"act3-manager\",false]",
+    "reviewId": "98517696f3efd076",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-crossing",
+    "sceneLabel": "交差点",
+    "order": 31,
+    "source": "act3/map/crossing:8",
+    "line": {
+      "speaker": "manager",
+      "text": "いいから静かに。今のうちに裏道へ回る",
+      "voiceChapter": 3,
+      "horde": true
+    },
+    "version": "c4524ca545dbe3d60b08"
+  },
+  {
+    "id": "[\"cat\",\"大家、何者なんだニャ……\",\"act3-alert\",false]",
+    "reviewId": "b54680b0f4debcd0",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-crossing",
+    "sceneLabel": "交差点",
+    "order": 31,
+    "source": "act3/map/crossing:9",
+    "line": {
+      "speaker": "cat",
+      "text": "大家、何者なんだニャ……",
+      "voiceChapter": 3,
+      "horde": true
+    },
+    "version": "6263b201f180bdefc2e8"
+  },
+  {
+    "id": "[\"manager\",\"ただの大家だよ\",\"act3-manager\",false]",
+    "reviewId": "f360b91d3b6ebce0",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-crossing",
+    "sceneLabel": "交差点",
+    "order": 31,
+    "source": "act3/map/crossing:10",
+    "line": {
+      "speaker": "manager",
+      "text": "ただの大家だよ",
+      "voiceChapter": 3,
+      "horde": true
+    },
+    "version": "417abbd1f801a040fea8"
+  },
+  {
+    "id": "[\"cat\",\"はぁ……やっとゾンビから離れられたニャ\",\"act3-tense\",false]",
+    "reviewId": "60da462b1acffd9b",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-detour",
+    "sceneLabel": "裏道の爆発",
+    "order": 32,
+    "source": "act3/map/detour:1",
+    "line": {
+      "speaker": "cat",
+      "text": "はぁ……やっとゾンビから離れられたニャ",
+      "voiceChapter": 3,
+      "emotion": "tired"
+    },
+    "version": "5daf2e18f0f9f236df70"
+  },
+  {
+    "id": "[\"hostess\",\"でも、こんな細い道で大丈夫かな……\",\"act3-tense\",false]",
+    "reviewId": "8fec9d036a32cfda",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-detour",
+    "sceneLabel": "裏道の爆発",
+    "order": 32,
+    "source": "act3/map/detour:2",
+    "line": {
+      "speaker": "hostess",
+      "text": "でも、こんな細い道で大丈夫かな……",
+      "voiceChapter": 3,
+      "emotion": "sad"
+    },
+    "version": "a4f316e71aa4ce820703"
+  },
+  {
+    "id": "[\"manager\",\"……二人とも、そこから動くな\",\"act3-resolute\",false]",
+    "reviewId": "03f97ab8223ba2b2",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-detour",
+    "sceneLabel": "裏道の爆発",
+    "order": 32,
+    "source": "act3/map/detour:3",
+    "line": {
+      "speaker": "manager",
+      "text": "……二人とも、そこから動くな",
+      "voiceChapter": 3
+    },
+    "version": "f15137712f70c5771c16"
+  },
+  {
+    "id": "[\"cat\",\"またニャ！？\",\"act3-startled\",false]",
+    "reviewId": "9370193b887b7472",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-detour",
+    "sceneLabel": "裏道の爆発",
+    "order": 32,
+    "source": "act3/map/detour:4",
+    "line": {
+      "speaker": "cat",
+      "text": "またニャ！？",
+      "voiceChapter": 3,
+      "emotion": "surprised"
+    },
+    "version": "8e597e3d0088711abaa2"
+  },
+  {
+    "id": "[\"manager\",\"……そろそろか\",\"act3-manager\",false]",
+    "reviewId": "21c4175b42565a78",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-detour",
+    "sceneLabel": "裏道の爆発",
+    "order": 32,
+    "source": "act3/map/detour:6",
+    "line": {
+      "speaker": "manager",
+      "text": "……そろそろか",
+      "voiceChapter": 3
+    },
+    "version": "19f6f4ae1e1adb596054"
+  },
+  {
+    "id": "[\"hostess\",\"何が……？\",\"act3-tense\",false]",
+    "reviewId": "2bc1a01c8a22bc9c",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-detour",
+    "sceneLabel": "裏道の爆発",
+    "order": 32,
+    "source": "act3/map/detour:7",
+    "line": {
+      "speaker": "hostess",
+      "text": "何が……？",
+      "voiceChapter": 3,
+      "emotion": "sad"
+    },
+    "version": "e41fb3d33c239cfb1c5f"
+  },
+  {
+    "id": "[\"cat\",\"うぎゃああっ！？！？\",\"act3-panic\",false]",
+    "reviewId": "68b7044ea41a8ca8",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-detour",
+    "sceneLabel": "裏道の爆発",
+    "order": 32,
+    "source": "act3/map/detour:9",
+    "line": {
+      "speaker": "cat",
+      "text": "うぎゃああっ！？！？",
+      "voiceChapter": 3,
+      "emotion": "surprised",
+      "aftermath": true
+    },
+    "version": "b61ab2a50f9860129120"
+  },
+  {
+    "id": "[\"hostess\",\"きゃあっ！！\",\"act3-panic\",false]",
+    "reviewId": "3a629c2f079f3c20",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-detour",
+    "sceneLabel": "裏道の爆発",
+    "order": 32,
+    "source": "act3/map/detour:10",
+    "line": {
+      "speaker": "hostess",
+      "text": "きゃあっ！！",
+      "voiceChapter": 3,
+      "emotion": "surprised",
+      "aftermath": true
+    },
+    "version": "b67f992fa8fd5125c14b"
+  },
+  {
+    "id": "[\"cat\",\"し、死ぬかと思ったニャ！！\",\"act3-panic\",false]",
+    "reviewId": "c3156a44358a93ee",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-detour",
+    "sceneLabel": "裏道の爆発",
+    "order": 32,
+    "source": "act3/map/detour:12",
+    "line": {
+      "speaker": "cat",
+      "text": "し、死ぬかと思ったニャ！！",
+      "voiceChapter": 3,
+      "emotion": "surprised",
+      "aftermath": true
+    },
+    "version": "1891b0d812279d50e5e4"
+  },
+  {
+    "id": "[\"hostess\",\"大家さん……どうして分かったの？\",\"act3-panic\",false]",
+    "reviewId": "85b95b1171736565",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-detour",
+    "sceneLabel": "裏道の爆発",
+    "order": 32,
+    "source": "act3/map/detour:13",
+    "line": {
+      "speaker": "hostess",
+      "text": "大家さん……どうして分かったの？",
+      "voiceChapter": 3,
+      "emotion": "surprised",
+      "aftermath": true
+    },
+    "version": "900cbe6fb0f60b9486de"
+  },
+  {
+    "id": "[\"manager\",\"……前は、ここで失敗したからな\",\"act3-manager\",false]",
+    "reviewId": "4bb29a8447c39517",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-detour",
+    "sceneLabel": "裏道の爆発",
+    "order": 32,
+    "source": "act3/map/detour:14",
+    "line": {
+      "speaker": "manager",
+      "text": "……前は、ここで失敗したからな",
+      "voiceChapter": 3,
+      "aftermath": true
+    },
+    "version": "76ddfad64a41f38732e7"
+  },
+  {
+    "id": "[\"cat\",\"前って何の話ニャ！？\",\"act3-panic\",false]",
+    "reviewId": "e952b426ee64104a",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-detour",
+    "sceneLabel": "裏道の爆発",
+    "order": 32,
+    "source": "act3/map/detour:15",
+    "line": {
+      "speaker": "cat",
+      "text": "前って何の話ニャ！？",
+      "voiceChapter": 3,
+      "emotion": "surprised",
+      "aftermath": true
+    },
+    "version": "157c27d7326ca6386c46"
+  },
+  {
+    "id": "[\"manager\",\"……何でもない。行くぞ\",\"act3-manager\",false]",
+    "reviewId": "aa7d3648bca67f5c",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-detour",
+    "sceneLabel": "裏道の爆発",
+    "order": 32,
+    "source": "act3/map/detour:16",
+    "line": {
+      "speaker": "manager",
+      "text": "……何でもない。行くぞ",
+      "voiceChapter": 3,
+      "aftermath": true
+    },
+    "version": "04744be6992aee9c5ded"
+  },
+  {
+    "id": "[\"cat\",\"はぁ……はぁ……生きた心地がしなかったニャ……\",\"act3-tense\",false]",
+    "reviewId": "cd1c9e3ed92be79a",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:0",
+    "line": {
+      "speaker": "cat",
+      "text": "はぁ……はぁ……生きた心地がしなかったニャ……",
+      "voiceChapter": 3,
+      "emotion": "tired"
+    },
+    "version": "20a4a50094b00559b0d6"
+  },
+  {
+    "id": "[\"hostess\",\"でも、本当に一度も襲われなかったね\",\"act3-alert\",false]",
+    "reviewId": "a94b7913feeb85c9",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:1",
+    "line": {
+      "speaker": "hostess",
+      "text": "でも、本当に一度も襲われなかったね",
+      "voiceChapter": 3
+    },
+    "version": "3b62a7507b833ae170ed"
+  },
+  {
+    "id": "[\"manager\",\"ここまでは予定どおりだ\",\"act3-manager\",false]",
+    "reviewId": "46aaac4444e7e049",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:2",
+    "line": {
+      "speaker": "manager",
+      "text": "ここまでは予定どおりだ",
+      "voiceChapter": 3
+    },
+    "version": "9a63b48d62ba43cd5f34"
+  },
+  {
+    "id": "[\"cat\",\"予定どおりって……全部知ってたみたいな言い方ニャ\",\"act3-alert\",false]",
+    "reviewId": "a2609165a36619ef",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:3",
+    "line": {
+      "speaker": "cat",
+      "text": "予定どおりって……全部知ってたみたいな言い方ニャ",
+      "voiceChapter": 3
+    },
+    "version": "098d06312aa9b44fe059"
+  },
+  {
+    "id": "[\"manager\",\"……少し休むぞ。必要な物もある\",\"act3-manager\",false]",
+    "reviewId": "949f0d03f03b176f",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:4",
+    "line": {
+      "speaker": "manager",
+      "text": "……少し休むぞ。必要な物もある",
+      "voiceChapter": 3
+    },
+    "version": "b3e146c0f57e500927ff"
+  },
+  {
+    "id": "[\"hostess\",\"あれ？ ねえ、店の中に誰かいる……\",\"act3-alert\",false]",
+    "reviewId": "6b0cc350d09c3ba5",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:5",
+    "line": {
+      "speaker": "hostess",
+      "text": "あれ？ ねえ、店の中に誰かいる……",
+      "voiceChapter": 3
+    },
+    "version": "dc5439336d0e129b8fd8"
+  },
+  {
+    "id": "[\"manager\",\"……生存者か\",\"act3-manager\",false]",
+    "reviewId": "93397920cacc1357",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:7",
+    "line": {
+      "speaker": "manager",
+      "text": "……生存者か",
+      "voiceChapter": 3
+    },
+    "version": "740175a304f92e5ee1a3"
+  },
+  {
+    "id": "[\"hostess\",\"……誰かいるの？\",\"act3-alert\",false]",
+    "reviewId": "5e0d1c51b5514f99",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:9",
+    "line": {
+      "speaker": "hostess",
+      "text": "……誰かいるの？",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "26e255d9bea32e8de63e"
+  },
+  {
+    "id": "[\"rabbit\",\"ひっ……！？\",\"act3-mimi-afraid\",false]",
+    "reviewId": "1d1a708f768cbe0c",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:10",
+    "line": {
+      "speaker": "rabbit",
+      "text": "ひっ……！？",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "cfa8b1ac97366ce0a76b"
+  },
+  {
+    "id": "[\"rabbit\",\"ぞ、ゾンビじゃない……？\",\"act3-mimi-afraid\",false]",
+    "reviewId": "d4892cfe811b29de",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:12",
+    "line": {
+      "speaker": "rabbit",
+      "text": "ぞ、ゾンビじゃない……？",
+      "voiceChapter": 3,
+      "emotion": "sad",
+      "inside": true
+    },
+    "version": "26d464c544ff90a51647"
+  },
+  {
+    "id": "[\"cat\",\"どこをどう見たらゾンビに見えるニャ！\",\"act3-alert\",false]",
+    "reviewId": "2e716270c0f14ea2",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:13",
+    "line": {
+      "speaker": "cat",
+      "text": "どこをどう見たらゾンビに見えるニャ！",
+      "voiceChapter": 3,
+      "emotion": "angry",
+      "inside": true
+    },
+    "version": "85a5544f1aa6809ddf9a"
+  },
+  {
+    "id": "[\"rabbit\",\"だ、だって！ さっきから怖い人ばっかり来るんだもん！\",\"act3-mimi-afraid\",false]",
+    "reviewId": "138223aab57e4c4c",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:14",
+    "line": {
+      "speaker": "rabbit",
+      "text": "だ、だって！ さっきから怖い人ばっかり来るんだもん！",
+      "voiceChapter": 3,
+      "emotion": "sad",
+      "inside": true
+    },
+    "version": "3968a27f0e7f8f395356"
+  },
+  {
+    "id": "[\"hostess\",\"大丈夫だよ。私たちは普通の人だから\",\"act3-alert\",false]",
+    "reviewId": "41e599970ebcf350",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:15",
+    "line": {
+      "speaker": "hostess",
+      "text": "大丈夫だよ。私たちは普通の人だから",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "417ba4a92b26237486f6"
+  },
+  {
+    "id": "[\"rabbit\",\"銃！\",\"act3-startled\",false]",
+    "reviewId": "0d19664f328f8e8d",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:16",
+    "line": {
+      "speaker": "rabbit",
+      "text": "銃！",
+      "voiceChapter": 3,
+      "emotion": "surprised",
+      "inside": true
+    },
+    "version": "a3df3546a5d17e354aa7"
+  },
+  {
+    "id": "[\"manager\",\"ああ…緊急事態だ気にすんな\",\"act3-manager\",false]",
+    "reviewId": "e6e29e1a7061449e",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:17",
+    "line": {
+      "speaker": "manager",
+      "text": "ああ…緊急事態だ気にすんな",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "8a5c5caa81e6e5196f40"
+  },
+  {
+    "id": "[\"rabbit\",\"はい…\",\"act3-mimi-afraid\",false]",
+    "reviewId": "713f6160798c53c7",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:18",
+    "line": {
+      "speaker": "rabbit",
+      "text": "はい…",
+      "voiceChapter": 3,
+      "emotion": "sad",
+      "inside": true
+    },
+    "version": "9f784d628bb3c0abbe5a"
+  },
+  {
+    "id": "[\"manager\",\"……怪我してるのか？\",\"act3-manager\",false]",
+    "reviewId": "e08d264f4e5d4c0d",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:19",
+    "line": {
+      "speaker": "manager",
+      "text": "……怪我してるのか？",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "3673d92f7effc67fe3af"
+  },
+  {
+    "id": "[\"rabbit\",\"うん……逃げるときに転んじゃって……\",\"act3-mimi-afraid\",false]",
+    "reviewId": "d8af38d1f88d4b00",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:21",
+    "line": {
+      "speaker": "rabbit",
+      "text": "うん……逃げるときに転んじゃって……",
+      "voiceChapter": 3,
+      "emotion": "sad",
+      "inside": true
+    },
+    "version": "645a1e58885c6520755c"
+  },
+  {
+    "id": "[\"manager\",\"俺たちは街の外に向かってる。一緒に来るか？\",\"act3-manager\",false]",
+    "reviewId": "2c0b91ee528496fb",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:22",
+    "line": {
+      "speaker": "manager",
+      "text": "俺たちは街の外に向かってる。一緒に来るか？",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "666fb55da8507df75066"
+  },
+  {
+    "id": "[\"rabbit\",\"えっ！ 本当に！？\",\"act3-mimi-bright\",false]",
+    "reviewId": "d3699a1c228380d3",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:23",
+    "line": {
+      "speaker": "rabbit",
+      "text": "えっ！ 本当に！？",
+      "voiceChapter": 3,
+      "emotion": "happy",
+      "inside": true
+    },
+    "version": "aea37e323bc35f82de4e"
+  },
+  {
+    "id": "[\"rabbit\",\"いたっ……！\",\"act3-mimi-afraid\",false]",
+    "reviewId": "e41ef55b05ed6d73",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:25",
+    "line": {
+      "speaker": "rabbit",
+      "text": "いたっ……！",
+      "voiceChapter": 3,
+      "emotion": "sad",
+      "inside": true
+    },
+    "version": "9ab8f44eb920b92e73ec"
+  },
+  {
+    "id": "[\"hostess\",\"無理しないで！\",\"act3-tense\",false]",
+    "reviewId": "8caf4736ede2e1c5",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:26",
+    "line": {
+      "speaker": "hostess",
+      "text": "無理しないで！",
+      "voiceChapter": 3,
+      "emotion": "sad",
+      "inside": true
+    },
+    "version": "357921d6b10266c89edf"
+  },
+  {
+    "id": "[\"rabbit\",\"……ごめんなさい。走れそうにない……\",\"act3-mimi-afraid\",false]",
+    "reviewId": "1fcd37f39ec43613",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:27",
+    "line": {
+      "speaker": "rabbit",
+      "text": "……ごめんなさい。走れそうにない……",
+      "voiceChapter": 3,
+      "emotion": "sad",
+      "inside": true
+    },
+    "version": "eab0d3721a4547315b60"
+  },
+  {
+    "id": "[\"cat\",\"この外、ゾンビだらけニャ……\",\"act3-alert\",false]",
+    "reviewId": "55bd2a2c09dd8426",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:28",
+    "line": {
+      "speaker": "cat",
+      "text": "この外、ゾンビだらけニャ……",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "f89600a0ebfc607f7301"
+  },
+  {
+    "id": "[\"manager\",\"……ここに残るのも危険だな\",\"act3-resolute\",false]",
+    "reviewId": "3ae61ae982f42f47",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:30",
+    "line": {
+      "speaker": "manager",
+      "text": "……ここに残るのも危険だな",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "4c6e799df91c4a1318ce"
+  },
+  {
+    "id": "[\"manager\",\"少し戻ったところに、俺のアパートがある\",\"act3-manager\",false]",
+    "reviewId": "71aabb9546f317cc",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:31",
+    "line": {
+      "speaker": "manager",
+      "text": "少し戻ったところに、俺のアパートがある",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "06b4106106a8b34008d9"
+  },
+  {
+    "id": "[\"rabbit\",\"アパート……？\",\"act3-mimi\",false]",
+    "reviewId": "23742582fbcaf577",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:32",
+    "line": {
+      "speaker": "rabbit",
+      "text": "アパート……？",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "db241d9b1f818b173c25"
+  },
+  {
+    "id": "[\"manager\",\"二階に空き部屋がある。そこを使っていい\",\"act3-manager\",false]",
+    "reviewId": "6c91aa1040a9d535",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:33",
+    "line": {
+      "speaker": "manager",
+      "text": "二階に空き部屋がある。そこを使っていい",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "1ddb22359b4589f4bb9b"
+  },
+  {
+    "id": "[\"rabbit\",\"えっ……知らない人なのに、いいの？\",\"act3-mimi\",false]",
+    "reviewId": "957e9627ef685a2b",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:35",
+    "line": {
+      "speaker": "rabbit",
+      "text": "えっ……知らない人なのに、いいの？",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "edca61c14cf67936323b"
+  },
+  {
+    "id": "[\"manager\",\"ああ。足が治るまで好きに使ってくれ\",\"act3-manager\",false]",
+    "reviewId": "d4d18af16416c096",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:36",
+    "line": {
+      "speaker": "manager",
+      "text": "ああ。足が治るまで好きに使ってくれ",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "615e842d9dbcb9448237"
+  },
+  {
+    "id": "[\"rabbit\",\"……ありがとう！\",\"act3-mimi-bright\",false]",
+    "reviewId": "7ebd1534b3a3d7fc",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:37",
+    "line": {
+      "speaker": "rabbit",
+      "text": "……ありがとう！",
+      "voiceChapter": 3,
+      "emotion": "happy",
+      "inside": true,
+      "keyGiven": true
+    },
+    "version": "a40d5d4f6c2705a15b0f"
+  },
+  {
+    "id": "[\"cat\",\"大家、ずいぶん太っ腹ニャ！\",\"act3-relieved\",false]",
+    "reviewId": "1ea58484edcc034f",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:38",
+    "line": {
+      "speaker": "cat",
+      "text": "大家、ずいぶん太っ腹ニャ！",
+      "voiceChapter": 3,
+      "emotion": "happy",
+      "inside": true
+    },
+    "version": "0f57d92445a0c0f48edb"
+  },
+  {
+    "id": "[\"manager\",\"お前も少しは見習え\",\"act3-manager\",false]",
+    "reviewId": "890072b10974bcff",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:39",
+    "line": {
+      "speaker": "manager",
+      "text": "お前も少しは見習え",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "b9b817dd2731591705cf"
+  },
+  {
+    "id": "[\"cat\",\"なんでモクが怒られるニャ！？\",\"act3-startled\",false]",
+    "reviewId": "54bf1192cf7b0c10",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:40",
+    "line": {
+      "speaker": "cat",
+      "text": "なんでモクが怒られるニャ！？",
+      "voiceChapter": 3,
+      "emotion": "surprised",
+      "inside": true
+    },
+    "version": "06a5aac16cf9cbc8d940"
+  },
+  {
+    "id": "[\"hostess\",\"ミミちゃん、だったよね？ 無理しないでね\",\"act3-alert\",false]",
+    "reviewId": "a05a484828bef175",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:42",
+    "line": {
+      "speaker": "hostess",
+      "text": "ミミちゃん、だったよね？ 無理しないでね",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "ef15813af1c30e7feafa"
+  },
+  {
+    "id": "[\"rabbit\",\"うん！ みんなも気をつけて！\",\"act3-mimi-bright\",false]",
+    "reviewId": "aa7f9fd144946e30",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:43",
+    "line": {
+      "speaker": "rabbit",
+      "text": "うん！ みんなも気をつけて！",
+      "voiceChapter": 3,
+      "emotion": "happy",
+      "inside": true
+    },
+    "version": "3cc5af3f96e16472fd72"
+  },
+  {
+    "id": "[\"manager\",\"表通りは危険だ。裏道を使えばアパートまで行ける\",\"act3-resolute\",false]",
+    "reviewId": "ebedf3f20a398912",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:44",
+    "line": {
+      "speaker": "manager",
+      "text": "表通りは危険だ。裏道を使えばアパートまで行ける",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "fff0f3afb309c28375d5"
+  },
+  {
+    "id": "[\"rabbit\",\"分かった。……あの！\",\"act3-mimi\",false]",
+    "reviewId": "02c89e9f28888624",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:45",
+    "line": {
+      "speaker": "rabbit",
+      "text": "分かった。……あの！",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "686f816d3f4b4516087a"
+  },
+  {
+    "id": "[\"manager\",\"ん？\",\"act3-manager\",false]",
+    "reviewId": "20fb898f3d8e77d6",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:46",
+    "line": {
+      "speaker": "manager",
+      "text": "ん？",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "02df4837cfcee14bac3d"
+  },
+  {
+    "id": "[\"rabbit\",\"また……会える？\",\"act3-mimi-afraid\",false]",
+    "reviewId": "7dbbd5a8cd84ef1c",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:47",
+    "line": {
+      "speaker": "rabbit",
+      "text": "また……会える？",
+      "voiceChapter": 3,
+      "emotion": "sad",
+      "inside": true
+    },
+    "version": "c0e3ced5febb22a375af"
+  },
+  {
+    "id": "[\"manager\",\"……ああ。きっとな\",\"act3-manager\",false]",
+    "reviewId": "3ba4f89266d27a1a",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:49",
+    "line": {
+      "speaker": "manager",
+      "text": "……ああ。きっとな",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "c4962404e4106beaf4a1"
+  },
+  {
+    "id": "[\"rabbit\",\"……うん！\",\"act3-mimi-bright\",false]",
+    "reviewId": "a1c86619252a71be",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-store",
+    "sceneLabel": "コンビニ・ミミ",
+    "order": 33,
+    "source": "act3/map/store:50",
+    "line": {
+      "speaker": "rabbit",
+      "text": "……うん！",
+      "voiceChapter": 3,
+      "emotion": "happy",
+      "inside": true
+    },
+    "version": "1e27330810dbebcb5db4"
+  },
+  {
+    "id": "[\"cat\",\"街を出たら、まず何するニャ？\",\"act3-alert\",false]",
+    "reviewId": "bbd979db2f7b732b",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-bridge",
+    "sceneLabel": "橋の悲劇",
+    "order": 34,
+    "source": "act3/map/bridge:0",
+    "line": {
+      "speaker": "cat",
+      "text": "街を出たら、まず何するニャ？",
+      "voiceChapter": 3
+    },
+    "version": "6278a059aa153c3fbc91"
+  },
+  {
+    "id": "[\"hostess\",\"私は……温かいお風呂に入りたいかな\",\"act3-alert\",false]",
+    "reviewId": "912ebbf343c6a0ec",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-bridge",
+    "sceneLabel": "橋の悲劇",
+    "order": 34,
+    "source": "act3/map/bridge:1",
+    "line": {
+      "speaker": "hostess",
+      "text": "私は……温かいお風呂に入りたいかな",
+      "voiceChapter": 3
+    },
+    "version": "dc8e6937cee41693a2ef"
+  },
+  {
+    "id": "[\"cat\",\"モクは冷えた酒が飲みたいニャ！\",\"act3-relieved\",false]",
+    "reviewId": "25dcafbceffe8722",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-bridge",
+    "sceneLabel": "橋の悲劇",
+    "order": 34,
+    "source": "act3/map/bridge:2",
+    "line": {
+      "speaker": "cat",
+      "text": "モクは冷えた酒が飲みたいニャ！",
+      "voiceChapter": 3,
+      "emotion": "happy"
+    },
+    "version": "5738d6c01ce274d71450"
+  },
+  {
+    "id": "[\"hostess\",\"こんな時までお酒なの？\",\"act3-alert\",false]",
+    "reviewId": "b366c51ba6e02a9b",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-bridge",
+    "sceneLabel": "橋の悲劇",
+    "order": 34,
+    "source": "act3/map/bridge:3",
+    "line": {
+      "speaker": "hostess",
+      "text": "こんな時までお酒なの？",
+      "voiceChapter": 3
+    },
+    "version": "f5e6af826082bd79aab1"
+  },
+  {
+    "id": "[\"cat\",\"生きて帰ったら祝杯ニャ！\",\"act3-relieved\",false]",
+    "reviewId": "1c0bbe9c61c3234e",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-bridge",
+    "sceneLabel": "橋の悲劇",
+    "order": 34,
+    "source": "act3/map/bridge:4",
+    "line": {
+      "speaker": "cat",
+      "text": "生きて帰ったら祝杯ニャ！",
+      "voiceChapter": 3,
+      "emotion": "happy"
+    },
+    "version": "dc1a6bf3bbbb52fc08f9"
+  },
+  {
+    "id": "[\"manager\",\"……そうだな\",\"act3-manager\",false]",
+    "reviewId": "fa9bda064535c030",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-bridge",
+    "sceneLabel": "橋の悲劇",
+    "order": 34,
+    "source": "act3/map/bridge:5",
+    "line": {
+      "speaker": "manager",
+      "text": "……そうだな",
+      "voiceChapter": 3
+    },
+    "version": "f71ccae174ddecede838"
+  },
+  {
+    "id": "[\"manager\",\"…………え？\",\"act3-shocked\",false]",
+    "reviewId": "5c875d1da53d3828",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-bridge",
+    "sceneLabel": "橋の悲劇",
+    "order": 34,
+    "source": "act3/map/bridge:7",
+    "line": {
+      "speaker": "manager",
+      "text": "…………え？",
+      "voiceChapter": 3,
+      "collapse": true
+    },
+    "version": "710e608ca24c632a0c89"
+  },
+  {
+    "id": "[\"manager\",\"……は？\",\"act3-shocked\",false]",
+    "reviewId": "2a8d08c13fb92daf",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:2",
+    "line": {
+      "speaker": "manager",
+      "text": "……は？",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "c2d49ee76b69c692ba5b"
   }
 ];
 // Historical short IDs are retained for import only, never for playback or review.

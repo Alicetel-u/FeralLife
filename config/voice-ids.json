@@ -21,6 +21,12 @@
       "name": "アナウンサー",
       "voiceId": "CtUbzbpXB2NakSL8sYID",
       "status": "selected-for-act-three"
+    },
+    "rabbit": {
+      "name": "ミミ",
+      "voiceId": "iTqcz0mjbxzCZAfsqojU",
+      "voiceName": "Nao - Cute, Playful & Bright",
+      "status": "selected-for-act-three"
     }
   }
 }

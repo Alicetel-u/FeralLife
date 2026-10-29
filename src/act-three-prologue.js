@@ -103,24 +103,27 @@ export const ACT_THREE_AFTER_SCENES=[
   {speaker:'manager',text:'……今度こそ、二人とも生き残らせる'}
  ]}
 ];
+for(const scene of ACT_THREE_AFTER_SCENES)for(const line of scene.lines)line.voiceChapter=3;
 export function actThreeAfterEntry(cursor=0){
  const entries=ACT_THREE_AFTER_SCENES.flatMap(scene=>scene.lines.map(line=>({scene,line})));
  return {...entries[Math.max(0,Math.min(entries.length-1,Number.isInteger(cursor)?cursor:0))],count:entries.length};
 }
 export function actThreeAfterHTML(){return `<section class="act-screen act3-film act3-after" data-act3-after data-chapter="3" tabindex="-1" aria-label="第3幕 タイムリープ後"><h2 id="modal-title" class="visually-hidden">第3幕 タイムリープ後</h2><div class="act3-rig"><img class="act3-image" alt=""></div><div class="act3-dialogue" data-renderer="event-stage"></div>${chapterDialogueControlsHTML()}<div class="act3-loading" role="status"><span>画像を読み込んでいます…</span><button type="button" data-act3-after-retry hidden>再読み込み</button></div></section>`;}
-export function startActThreeAfter(root,onDone,{initialCursor=0,onCursor=()=>{},bgm=null,silent=false}={}){
+export function startActThreeAfter(root,onDone,{initialCursor=0,onCursor=()=>{},bgm=null,voice=null,silent=false}={}){
  const section=root.querySelector('[data-act3-after]');if(!section)return ()=>{};
  const img=section.querySelector('.act3-image'),dialogue=section.querySelector('.act3-dialogue'),loading=section.querySelector('.act3-loading');
- let cursor=Math.max(0,Math.min(actThreeAfterEntry().count-1,Number.isInteger(initialCursor)?initialCursor:0)),dead=false,ready=false,version=0;
+ let cursor=Math.max(0,Math.min(actThreeAfterEntry().count-1,Number.isInteger(initialCursor)?initialCursor:0)),dead=false,ready=false,version=0,spoken=null;
  const paint=()=>{
   const {scene,line,count}=actThreeAfterEntry(cursor);section.dataset.cut=scene.id;img.src=scene.image;
   img.alt=scene.id==='corridor'?'静かなけもの荘の廊下で時計を確認する大家':'空き部屋の隠し場所で武器と弾薬を確認する大家';
   const lines=ACT_THREE_AFTER_SCENES.flatMap(scene=>scene.lines);
   dialogue.innerHTML=eventStageHTML({detail:lines[0].text,lines,cast:[]},[],cursor,0,{hideCharacters:true,cinematic:true});
   dialogue.querySelector('.speaker-name').textContent=line.speaker==='manager'?'大家':'けもの荘';
+  if(spoken!==line){spoken=line;voice?.stop();if(line.speaker!=='narrator')voice?.play(line,'act3-after:'+cursor);}
   controls.refresh();onCursor(cursor);
  };
- const stop=()=>{if(dead)return;controls.stop();dead=true;version++;section.removeEventListener('click',click);section.removeEventListener('keydown',key);};
+ const stop=()=>{if(dead)return;controls.stop();voice?.stop();voice?.setSuspended(false);document.removeEventListener('visibilitychange',afterVisibility);dead=true;version++;section.removeEventListener('click',click);section.removeEventListener('keydown',key);};
+ function afterVisibility(){voice?.setSuspended(document.hidden||controls.blocked);}
  const advance=()=>{if(!ready||dead)return;if(cursor===actThreeAfterEntry().count-1){stop();onDone();return;}cursor++;paint();};
  const back=()=>{if(!ready||dead||cursor===0)return;cursor--;paint();};
  function click(e){if(controls.click(e))return;const button=e.target.closest('button');if(!button)return;e.preventDefault();e.stopPropagation();if(button.hasAttribute('data-act3-after-retry'))load();else if(button.hasAttribute('data-act3-after-back'))back();else if(button.hasAttribute('data-act3-after-next'))advance();}
@@ -128,6 +131,6 @@ export function startActThreeAfter(root,onDone,{initialCursor=0,onCursor=()=>{},
  function load(){const token=++version;ready=false;loading.hidden=false;loading.querySelector('button').hidden=true;
   Promise.all(ACT_THREE_AFTER_SCENES.map(scene=>new Promise((resolve,reject)=>{const asset=new Image();asset.onload=async()=>{try{await asset.decode?.();resolve();}catch(e){reject(e);}};asset.onerror=reject;asset.src=scene.image;}))).then(()=>{if(dead||version!==token)return;ready=true;loading.hidden=true;paint();}).catch(()=>{if(dead||version!==token)return;loading.querySelector('span').textContent='画像を読み込めませんでした';loading.querySelector('button').hidden=false;});
  }
- const controls=createChapterDialogueControls(section,{getState:()=>({active:ready,line:actThreeAfterEntry(cursor).line,lines:ACT_THREE_AFTER_SCENES.flatMap(s=>s.lines),canBack:cursor>0,last:cursor===actThreeAfterEntry().count-1}),onNext:advance,onBack:back,onSkip:()=>{cursor=actThreeAfterEntry().count-1;paint();},bgm,silent});
- section.addEventListener('click',click);section.addEventListener('keydown',key);section.focus({preventScroll:true});load();return stop;
+ const controls=createChapterDialogueControls(section,{getState:()=>({active:ready,line:actThreeAfterEntry(cursor).line,lines:ACT_THREE_AFTER_SCENES.flatMap(s=>s.lines),canBack:cursor>0,last:cursor===actThreeAfterEntry().count-1}),onNext:advance,onBack:back,onSkip:()=>{cursor=actThreeAfterEntry().count-1;paint();},voice,bgm,silent});
+ section.addEventListener('click',click);section.addEventListener('keydown',key);document.addEventListener('visibilitychange',afterVisibility);section.focus({preventScroll:true});load();return stop;
 }

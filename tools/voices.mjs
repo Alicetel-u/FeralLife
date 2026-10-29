@@ -78,7 +78,7 @@ const unique=[...new Map(rows.map(r=>[r.hash,r])).values()];
 const pending=[];
 for(const row of unique)if(!await exists(row.file))pending.push(row);
 const estimate=pending.reduce((n,r)=>n+r.billableCharacters*config.estimatedCreditsPerCharacter,0);
-const report={scope,planId,model:config.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true,pronunciationReview,rows:rows.map(({line,request,...row})=>({...row,spokenInput:request.text,settings:request.voice_settings,tags:config.profiles[row.performance].tags}))};
+const report={scope,planId,model:[...new Set(rows.map(row=>row.request.model_id))].join(',')||config.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true,pronunciationReview,rows:rows.map(({line,request,...row})=>({...row,spokenInput:request.text,settings:request.voice_settings,tags:config.profiles[row.performance].tags}))};
 await atomic('.local/voice-plan.json',JSON.stringify(report,null,2)+'\n');
 await atomic('.local/voice-plan.md',[
   fillMissing?'# 第一幕・第二幕の不足ボイス補完':scope==='act2-duel'?'# ミニゲームボイス・生成計画':'# 序盤ボイス・生成前確認',
@@ -91,9 +91,9 @@ await atomic('.local/voice-plan.md',[
 ].join('\n'));
 if(!args.includes('--quiet'))console.table(report.rows.map((r,i)=>({no:i+1,source:r.source,speaker:r.speaker,performance:r.performance,characters:r.characters,text:r.text})));
 if(!args.includes('--quiet')&&pronunciationReview.length)console.table(pronunciationReview.map(issue=>({term:issue.term,reading:issue.reading,status:issue.status,lines:issue.sources.length})));
-console.log(JSON.stringify({scope,planId,model:config.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true}));
+console.log(JSON.stringify({scope,planId,model:report.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true}));
 if(!args.includes('--verify')&&!args.includes('--generate'))process.exit(0);
-const allowedGeneration=repairOnly||fillMissing||scope==='act2-trouble1'||scope==='act2-duel'||scope==='act3-prologue'||scope==='intro'||(scope==='act1'&&(['cat','manager'].includes(speaker)||firstTragedy)&&!sampleMoku&&!pronunciationOnly);
+const allowedGeneration=repairOnly||fillMissing||scope==='act2-trouble1'||scope==='act2-duel'||scope==='act3-prologue'||scope==='act3-current'||scope==='intro'||(scope==='act1'&&(['cat','manager'].includes(speaker)||firstTragedy)&&!sampleMoku&&!pronunciationOnly);
 if(args.includes('--generate')&&(!allowedGeneration||!args.includes('--approve='+planId)))throw Error('Generation requires an allowed scope and authorization of the current plan hash');
 function validateRecording(row){
  const probe=spawnSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',join(root,row.file)],{encoding:'utf8',windowsHide:true});
@@ -123,9 +123,11 @@ async function api(path,options={}){
 async function verify(){
   for(const [speaker,id] of Object.entries(ids))if(id){await api('voices/'+encodeURIComponent(id));console.log('Voice accessible: '+speaker+' / '+id);}
   const models=await (await api('models')).json();
-  const model=models.find(m=>m.model_id===config.model&&m.can_do_text_to_speech);
+  for(const modelId of new Set([config.model,...rows.map(row=>row.request.model_id)])){
+  const model=models.find(m=>m.model_id===modelId&&m.can_do_text_to_speech);
   if(!model||!model.languages?.some(l=>l.language_id==='ja'))throw Error('Selected Japanese TTS model unavailable');
   console.log('Verified Japanese TTS model: '+model.model_id);
+  }
   const balance=await (await api('user/subscription')).json();
   const actual={characterCount:balance.character_count,characterLimit:balance.character_limit,remaining:balance.character_limit-balance.character_count};
   console.log('Actual account balance (separate from estimate): '+JSON.stringify(actual));return actual;
@@ -137,6 +139,7 @@ if(scope==='act2-trouble1'&&(unique.length>350||estimate>20000))throw Error('Abn
 if(scope==='act2-duel'&&(unique.length>120||estimate>10000))throw Error('Abnormal mini-game generation volume; review scope before spending');
 if(fillMissing&&(unique.length>700||estimate>40000))throw Error('Abnormal missing-voice generation volume; review scope before spending');
 if(scope==='act3-prologue'&&(unique.length!==14||estimate>1000))throw Error('Unexpected chapter-three voice plan');
+if(scope==='act3-current'&&(unique.length>200||estimate>15000))throw Error('Unexpected current chapter-three voice plan');
 if(pending.some(r=>!r.voiceId))throw Error('Missing voice ID');
 if(!Number.isFinite(before.remaining)||before.remaining<estimate)throw Error('Insufficient or unavailable balance');
 // Exclusive lock and durable intent BEFORE the charged call. An ambiguous failure
@@ -169,6 +172,6 @@ try{
 async function publish(){
   let manifest={};
   const module=await import('../src/voice-manifest.js?time='+Date.now());manifest={...module.VOICE_MANIFEST};
-  for(const row of rows)if(await exists(row.file))manifest[row.lineKey]={file:row.file,hash:row.hash,source:row.source,speaker:row.speaker,text:row.text,performance:fillMissing?voicePerformance(row.line):row.performance,...(fillMissing?{deliveryProfile:row.performance}:{}),model:config.model};
+  for(const row of rows)if(await exists(row.file))manifest[row.lineKey]={file:row.file,hash:row.hash,source:row.source,speaker:row.speaker,text:row.text,performance:fillMissing?voicePerformance(row.line):row.performance,...(fillMissing?{deliveryProfile:row.performance}:{}),model:row.request.model_id};
   await atomic('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
 }

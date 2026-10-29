@@ -15,7 +15,7 @@ export function tracePlayableVoiceLines(manifest){
  const lines=new Map(),seen=new Set();let states=0;
  const add=(entries,chapter,source)=>{
   for(const [index,original] of (entries||[]).entries()){
-   if(original.silent||!['manager','cat','hostess','announcer'].includes(voiceSpeaker(original)))continue;
+   if(original.silent||original.voiceChapter===3&&!/[\p{L}\p{N}]/u.test(original.text)||!['manager','cat','hostess','announcer','rabbit'].includes(voiceSpeaker(original)))continue;
    const line=chapter===2?{...original,voiceChapter:2}:original;
    const preferred=voiceLineKey(line),fallback=voiceLineKey(original);
    // Match voice-player's chapter lookup and its unscoped recording fallback.

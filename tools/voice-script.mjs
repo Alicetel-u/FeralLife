@@ -1,4 +1,5 @@
-import {ACT_THREE_SHOTS} from '../src/act-three-prologue.js';
+import {ACT_THREE_MAP_SCENES} from '../src/act-three-story.js';
+import {ACT_THREE_SHOTS,ACT_THREE_AFTER_SCENES} from '../src/act-three-prologue.js';
 import {DUEL_ROUNDS,duelChoices,duelEncounterLines,duelReplyLines,duelEndingLines} from '../src/act-two-duel.js';
 import {ACT_TWO_OBSERVATION_BEATS} from '../src/act-two-observation.js';
 import {secondActLife,secondActChat,lunaMutters} from '../src/act-two-life.js';
@@ -22,21 +23,26 @@ export function extractCompleteVoiceScript(){
     const lines=[...(!chat?.observationId?chat?.lines||[]:[]).map(([speaker,text])=>({speaker,text})),...lunaMutters(state).map(text=>({speaker:'hostess',text}))];
     for(const line of lines)ambient.push({source:'act2/ambient/complete',line,speaker:voiceSpeaker(line)});
   }
-  const rows=[...extractVoiceScript('all'),...extractVoiceScript('act2-trouble1'),...extractVoiceScript('act3-prologue'),...ambient].map(row=>{
+  const rows=[...extractVoiceScript('all'),...extractVoiceScript('act2-trouble1'),...extractVoiceScript('act3-prologue'),...extractVoiceScript('act3-current'),...ambient].map(row=>{
     const line=row.source.startsWith('act2/')?{...row.line,voiceChapter:2}:row.line;
     return {...row,line,lineKey:voiceLineKey(line),performance:voicePerformance(line)};
   });
   return [...new Map(rows.map(row=>[row.lineKey,row])).values()];
 }
 export function extractVoiceScript(scope='intro') {
-  if(!['intro','act1','act2','act2-trouble1','act2-duel','act3-prologue','all'].includes(scope))throw Error('Unknown scope');
+  if(!['intro','act1','act2','act2-trouble1','act2-duel','act3-prologue','act3-current','all'].includes(scope))throw Error('Unknown scope');
   const result=[];
   const add=(source,lines)=>lines.forEach((line,index)=>{
-    if(line.silent)return;
+    if(line.silent||line.voiceChapter===3&&!/[\p{L}\p{N}]/u.test(line.text))return;
     if(scope==='act2-trouble1')line={...line,voiceChapter:2};
     const speaker=voiceSpeaker(line);
-    if(['cat','manager','hostess','announcer'].includes(speaker))result.push({source:source+':'+index,line,speaker,performance:voicePerformance(line),lineKey:voiceLineKey(line)});
+    if(['cat','manager','hostess','announcer','rabbit'].includes(speaker))result.push({source:source+':'+index,line,speaker,performance:voicePerformance(line),lineKey:voiceLineKey(line)});
   });
+  if(scope==='act3-current'){
+    for(const scene of ACT_THREE_AFTER_SCENES)add('act3/after/'+scene.id,scene.lines);
+    for(const [id,scene] of Object.entries(ACT_THREE_MAP_SCENES))add('act3/map/'+id,scene.lines);
+    return result;
+  }
   if(scope==='act3-prologue'){
     for(const shot of ACT_THREE_SHOTS)add('act3/film/'+shot.id,shot.cues);
     return result;
@@ -181,13 +187,14 @@ export function planVoices(rows,ids,config,pronunciations=[],repairs=[]){
   ids=normalizeVoiceIds(ids);
   return rows.map(row=>{
     const profile=config.profiles[row.performance];
-    if(config.model!=='eleven_v3'&&profile.tags.length)throw Error('Audio tags require the reviewed eleven_v3 model');
+    const model=profile.model||config.model;
+    if(!['eleven_v3','eleven_v4'].includes(model)&&profile.tags.length)throw Error('Audio tags require the reviewed eleven_v3 model');
     // Change only the spoken spelling; displayed dialogue and lookup keys stay canonical.
     const duelReadings=row.performance.startsWith('duel-')?[{term:'大家流',reading:'おおやりゅう'},{term:'漢気',reading:'おとこぎ'},{term:'煙ノ',reading:'けむりの'},{term:'肉球乱舞',reading:'にくきゅうらんぶ'}]:[];
     const filmReadings=row.performance==='luna-film-tense'?[{term:'入居者',reading:'にゅうきょしゃ'},{term:'募集',reading:'ぼしゅう'}]:[];
     const repair=repairs.find(r=>r.speaker===row.speaker&&r.text===row.line.text);
     const spokenText=voiceRoomNumberReading(repair?.spokenText??[...filmReadings,...duelReadings,...pronunciations].sort((a,b)=>b.term.length-a.term.length).reduce((text,rule)=>text.replaceAll(rule.term,rule.reading),row.line.text));
-    const request={text:[...(repair?.tags||profile.tags),spokenText].join(' '),model_id:config.model,voice_settings:{...profile.settings,...repair?.settings}};
+    const request={text:[...(repair?.tags||profile.tags),spokenText].join(' '),model_id:model,voice_settings:{...profile.settings,...repair?.settings}};
     if(/\[(?:softly|whispers?|whispering|mumbling)\]/i.test(request.text))throw Error('Voice delivery must be clear and projected; whisper/mumble tags are disabled');
     const voiceId=ids[row.speaker]||null;
     const hash=digest({voiceId,request,performance:row.performance,format:config.outputFormat});

@@ -690,7 +690,7 @@ function showActThreeTitle(){
 }
 function showActThreeAfter(){
   const cursor=state.actThree?.cursor||0;eventView=null;openModal(actThreeAfterHTML());
-  stopOpeningPrologue=startActThreeAfter(modal,()=>{state.actThree={phase:'map',mapStep:0,afterSeen:true};save();showActThreeMap();},{initialCursor:cursor,onCursor:cursor=>{state.actThree={phase:'after',cursor};save();},bgm:normalBgm,silent:silentPreview});
+  stopOpeningPrologue=startActThreeAfter(modal,()=>{state.actThree={phase:'map',mapStep:0,afterSeen:true};save();showActThreeMap();},{voice:silentPreview?null:characterVoice,initialCursor:cursor,onCursor:cursor=>{state.actThree={phase:'after',cursor};save();},bgm:normalBgm,silent:silentPreview});
 }
 function beginRewind(afterFire=false){
   const secondAct=state.actOne.chapter===2;
