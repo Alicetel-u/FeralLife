@@ -128,7 +128,7 @@ test('real scene selection starts duel music on entry and gives results priority
   ]){
     let cue;
     const context={document:{hidden:false},state:{actOne:{chapter:2},events:[{id:1,duel:true}]},eventView:{id:1,index:0},
-      eventConversation:()=>[line],bedCue:()=> 'normal',
+      eventConversation:()=>[line],bedCue:()=> 'normal',firstActMokuDialogueTheme,
       modal:{open:true,classList:{contains:()=>true},querySelector:s=>screen&&s.split(',').includes(screen)?{}:null},
       normalBgm:{setScene:(_,name)=>{cue=name;}}};
     vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);assert.equal(cue,expected);
@@ -151,7 +151,7 @@ test('rendered opening, battle and ending transcripts stop the battle audio outs
       const selectors=new Set();
       if(html.includes('class="duel-field"'))selectors.add('.duel-stage .duel-field');
       for(const type of ['hostess','cat'])if(html.includes(`data-character="${type}"`))selectors.add(`.event-stage .stage-character[data-character="${type}"]`);
-      const context={document:{hidden:false},state:{actOne:{chapter:2},events:[event]},eventView:{id:1,index},eventConversation,bedCue,
+      const context={document:{hidden:false},state:{actOne:{chapter:2},events:[event]},eventView:{id:1,index},eventConversation,bedCue,firstActMokuDialogueTheme,
         modal:{open:true,classList:{contains:()=>true},querySelector:s=>s.split(',').some(part=>selectors.has(part))?{dataset:{}}:null},normalBgm:bgm};
       vm.createContext(context);await vm.runInContext(source+'\nsyncNormalBgm();',context);
       const miniGame=selectors.has('.duel-stage .duel-field')&&(!line.duelEnding||line.duelEnding==='clear'||line.duelEnding==='yandere'&&!line.duelEndingPhase);
@@ -350,7 +350,7 @@ test('prologue, logo and chapter title use distinct cue selectors',async()=>{
   [null,'prologue','opening'],['.act-title[data-chapter="1"]',null,'moku'],
   ['.act-title[data-chapter="2"]',null,'luna'],['.game-title',null,'title']]){
    let cue;
-   const context={document:{hidden:false},state:{actOne:{chapter:1},events:[{id:1,actScene:scene}]},eventView:{id:1,index:0},eventConversation:()=>[{}],bedCue:()=> 'normal',
+   const context={document:{hidden:false},state:{actOne:{chapter:1},events:[{id:1,actScene:scene}]},eventView:{id:1,index:0},eventConversation:()=>[{}],bedCue:()=> 'normal',firstActMokuDialogueTheme,
     modal:{open:true,classList:{contains:()=>!!scene},querySelector:q=>q.split(',').some(x=>x===selector)?{dataset:{}}:null},
     normalBgm:{setScene:(_,name)=>{cue=name;}}};
    vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);
@@ -388,7 +388,7 @@ test('third-act film selects its track and suppresses it on pause, whiteout, or 
  const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
  for(const [cut,paused,hidden,suppressed] of [['news','false',false,false],['news','true',false,true],['white','false',false,true],['news','false',true,true]]){
   let result;const film={dataset:{cut,paused}};
-  const context={document:{hidden},state:{actOne:{chapter:2},events:[]},eventView:null,eventConversation:()=>[],bedCue:()=> 'normal',
+  const context={document:{hidden},state:{actOne:{chapter:2},events:[]},eventView:null,eventConversation:()=>[],bedCue:()=> 'normal',firstActMokuDialogueTheme,
    modal:{open:true,classList:{contains:()=>false},querySelector:s=>s==='[data-act3-film]'?film:null},normalBgm:{setScene:(quiet,cue)=>result={quiet,cue}}};
   vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);assert.equal(result.cue,'act3');assert.equal(result.quiet,suppressed);
  }
@@ -414,7 +414,7 @@ test('bridge collapse remains silent when scene synchronization runs again',asyn
  const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
  for(const collapsed of [false,true]){
   let result;
-  const context={document:{hidden:false},state:{actOne:{chapter:2},events:[]},eventView:null,eventConversation:()=>[],bedCue:()=> 'normal',
+  const context={document:{hidden:false},state:{actOne:{chapter:2},events:[]},eventView:null,eventConversation:()=>[],bedCue:()=> 'normal',firstActMokuDialogueTheme,
    modal:{open:true,classList:{contains:()=>false},querySelector:s=>s==='[data-act3-map]'||collapsed&&s==='[data-act3-map][data-collapse="true"]'?{}:null},normalBgm:{setScene:(quiet,cue)=>result={quiet,cue}}};
   vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);assert.equal(result.cue,'act3map');assert.equal(result.quiet,collapsed);
  }
@@ -456,7 +456,7 @@ test('post-rewind saves select uneasy before map attributes initialize, with no 
  ]){
   let result;
   const context={document:{hidden:false},state:{actOne:{chapter:2},actThree:progress,events:[]},eventView:null,
-   eventConversation:()=>[],bedCue:()=> 'normal',
+   eventConversation:()=>[],bedCue:()=> 'normal',firstActMokuDialogueTheme,
    modal:{open:true,classList:{contains:()=>false},querySelector:q=>selectors.includes(q)?{dataset:{}}:null},
    normalBgm:{setScene:(quiet,cue)=>result={quiet,cue}}};
   vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);
