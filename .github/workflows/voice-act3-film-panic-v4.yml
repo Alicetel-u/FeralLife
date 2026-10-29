@@ -57,10 +57,12 @@ jobs:
           if(p.lines!==14||p.unique!==14||p.pending!==14||p.model!=='eleven_v4'||p.rows.length!==14)throw Error('Unexpected film regeneration plan '+JSON.stringify({lines:p.lines,unique:p.unique,pending:p.pending,model:p.model}));
           if(p.estimatedCredits<1||p.estimatedCredits>2500)throw Error('Abnormal estimated ElevenLabs usage '+p.estimatedCredits);
           const bySource=new Map(script.map(x=>[x.source,x]));
+          const readings=JSON.parse(await readFile('config/voice-pronunciation-issues.json','utf8')).issues;
           for(const r of p.rows){
             const source=bySource.get(r.source);
             if(!source||source.line.text!==r.text||source.lineKey!==r.lineKey||!['manager','cat','hostess','announcer'].includes(r.speaker)||!r.deliveryProfile?.endsWith(':film-crisis')||!r.voiceId||r.settings?.stability<.3||r.settings?.stability>.48||r.settings?.similarity_boost!==.85)throw Error('Unauthorized scene/voice/delivery drift: '+r.source);
-            if(!r.spokenInput.endsWith(r.text)||r.tags.length<2||/laugh|chuckle|giggle|comedic|playful|languid/i.test(r.spokenInput))throw Error('Film speech must have script-only spoken words without improvised adlibs: '+r.source);
+            const phonetic=readings.slice().sort((a,b)=>b.term.length-a.term.length).reduce((value,rule)=>value.replaceAll(rule.term,rule.reading),r.text);
+            if(r.spokenInput!==[...r.tags,phonetic].join(' ')||r.tags.length<2||/laugh|chuckle|giggle|comedic|playful|languid/i.test(r.spokenInput))throw Error('Film speech must use only authored words and approved readings: '+r.source);
           }
           await appendFile(process.env.GITHUB_OUTPUT,'id='+p.planId+'\n');
           console.log('Exactly 14 fearful V4 film clips planned; estimated credits '+p.estimatedCredits);
