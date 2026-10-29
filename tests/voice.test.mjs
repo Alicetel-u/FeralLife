@@ -62,7 +62,14 @@ test('committed duel clips carry their speed and stay on disk',async()=>{
   lines++;
   const attack=entry.performance.endsWith('-attack');
   if(attack)attacks++;
-  if(entry.repairReview){assert.match(entry.file,/\.repair\.mp3$/);await access(new URL('../'+entry.file,import.meta.url));}
+  if(entry.deliveryProfile?.startsWith('v3-inspired-v4')){
+   assert.equal(entry.model,'eleven_v4');
+   assert.match(entry.file,/\.duel-v4\.mp3$/);
+   assert.match(entry.fastFile,attack?/\.duel-v4\.attack\.mp3$/:/\.duel-v4\.pace\.mp3$/);
+   assert.ok(entry.audioQuality?.durationSeconds>=.5,'New voice audio has a measured duration');
+   await access(new URL('../'+entry.file,import.meta.url));
+   await access(new URL('../'+entry.fastFile,import.meta.url));
+  }else if(entry.repairReview){assert.match(entry.file,/\.repair\.mp3$/);await access(new URL('../'+entry.file,import.meta.url));}
   else {assert.match(entry.fastFile,attack?/\.attack\.mp3$/:/\.pace\.mp3$/);await access(new URL('../'+entry.fastFile,import.meta.url));}
  }
  assert.equal(attacks,12);
