@@ -41,7 +41,9 @@ test('escape map requires crossing then bypass before store and bridge; all art 
  assert.ok(!route.includes('assets/events/busts/mimi-neutral.png'));
  const mini=readFileSync(ACT_THREE_MIMI_MINI);
  assert.equal(mini.subarray(1,4).toString(),'PNG');
- assert.equal(mini.readUInt32BE(16),640);assert.equal(mini.readUInt32BE(20),384);
+ assert.equal(mini[25],6,'The standalone miniature has real RGBA transparency');
+ assert.ok(mini.readUInt32BE(20)>mini.readUInt32BE(16),'One full-body portrait rather than a wide emotion sheet');
+ assert.doesNotMatch(route,/map-rabbit-frame|emotions-v1\.png/);
  for(const id of ['route-zombies-a','route-zombies-b','route-zombies-c','route-zombies-d',])assert.match(route,new RegExp(id));
  assert.equal(route.split('assets/events/chapter3/map-zombie.png').length-1,30);
  for(const id of ['map-bypass-route','map-bypass-road','map-bypass-wall','map-detour-exit','map-route-road','map-route-barricade','map-route-debris'])assert.ok(!route.includes(id),id);
@@ -52,7 +54,7 @@ test('escape map requires crossing then bypass before store and bridge; all art 
  const css=readFileSync(new URL('../styles.css',import.meta.url),'utf8');
  assert.match(css,/data-returning="true"[^\n]*\.map-companion:not\(\.map-companion-rabbit\)>img\{transform:scaleX\(-1\)\}/);
  assert.match(css,/data-returning="true"[^\n]*\.map-companion-rabbit/);
- assert.match(css,/\.map-rabbit-frame img\{[\s\S]*?width:400%;height:200%/);
+ assert.doesNotMatch(css,/\.map-rabbit-frame/);
 });
 
 test('map saves only arrival, finishes uninterrupted motion and cleans up callbacks',async()=>{

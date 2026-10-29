@@ -2477,16 +2477,8 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 
 /* Act III homeward journey: flip the existing miniatures, without changing map art. */
 .act3-map .map-companion-rabbit{display:none;left:-110px;bottom:1px;z-index:1}
-.act3-map .map-rabbit-frame{display:block;position:relative;width:100%;height:100%;overflow:hidden}
-.act3-map .map-companion-rabbit .map-rabbit-frame img{
- position:absolute;left:0;top:0;width:400%;height:200%;max-width:none;
- object-fit:fill;object-position:left top;
-}
-/* Mimi's existing mini-character PNG is a 4-column, 2-row transparent expression sheet;
-   the top-left full-body frame is cropped by the wrapper above. */
 .act3-map[data-returning="true"] .map-companion-rabbit{display:block}
 .act3-map[data-returning="true"] .map-companion:not(.map-companion-rabbit)>img{transform:scaleX(-1)}
-.act3-map[data-returning="true"] .map-companion-rabbit .map-rabbit-frame{transform:scaleX(-1)}
 .act3-map[data-returning="true"] .map-companion-manager{left:70px}
 .act3-map[data-returning="true"] .map-companion-cat{left:12px}
 .act3-map[data-returning="true"] .map-companion-hostess{left:-50px}
@@ -2546,20 +2538,37 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .persona-debug-act3 footer{grid-column:1;grid-row:3}
 }
 
-/* Keep the travelling group in separate slots, with the landlord leading both ways. */
-.act3-map .map-party{left:50%!important;display:flex;flex-direction:row-reverse;align-items:flex-end;justify-content:center;gap:clamp(8px,2vw,24px);width:max-content;height:auto;translate:-50% 0;bottom:12%;--party-size:clamp(68px,12vw,168px)}
-.act3-map .map-party .map-companion{position:relative;left:auto;bottom:0;flex:none;width:var(--party-size);height:calc(var(--party-size)*1.4);transform:translateY(calc(var(--bounce,0)*1px)) rotate(var(--lean,0deg))}
+/* A compact party with slight silhouette overlap, landlord leading both ways. */
+.act3-map .map-party{left:50%!important;display:flex;flex-direction:row-reverse;align-items:flex-end;justify-content:center;gap:0;width:max-content;height:auto;translate:-50% 0;bottom:12%;--party-size:clamp(68px,12vw,168px)}
+.act3-map .map-party .map-companion{position:relative;left:auto;bottom:0;flex:none;margin-inline:calc(var(--party-size)*-.10);width:var(--party-size);height:calc(var(--party-size)*1.4);transform:translateY(calc(var(--bounce,0)*1px)) rotate(var(--lean,0deg))}
 .act3-map .map-party .map-companion-manager{width:calc(var(--party-size)*1.5);height:calc(var(--party-size)*1.58)}
 .act3-map[data-returning="true"] .map-party{flex-direction:row}
 /* Effects are viewport anchored, so narrow screens retain the complete crossing. */
-.act3-map .map-zombies{left:0;top:14%;width:100%;height:53%;transform:none;overflow:hidden;z-index:7}
+.act3-map .map-zombies{left:52%;top:28%;width:48%;height:35%;transform:none;overflow:hidden;z-index:7}
 .act3-map .map-zombies[hidden]{display:none!important}
-.act3-map .map-zombie-walker{left:var(--start);top:calc(var(--lane)*13%);width:clamp(76px,10vw,145px);height:clamp(100px,14vw,180px);animation:map-horde-traverse var(--pace) linear infinite;animation-delay:calc(var(--z)*-.73s)}
-@keyframes map-horde-traverse{0%{transform:translate(-130px,-12px)}50%{transform:translate(-10px,8px)}100%{transform:translate(130px,28px)}}
+.act3-map .map-zombie-walker{left:calc(var(--start)*.65);top:calc(var(--lane)*13%);width:clamp(60px,8vw,125px);height:clamp(80px,11vw,160px);animation:map-horde-traverse var(--pace) ease-in-out infinite alternate;animation-delay:calc(var(--z)*-.73s)}
+@keyframes map-horde-traverse{0%{transform:translate(0,-8px)}45%{transform:translate(12px,9px)}100%{transform:translate(-10px,18px)}}
 .act3-map .map-route-zombies{width:clamp(190px,26vw,360px);height:180px;opacity:.9;scale:1}
 .act3-map .map-route-zombies img{width:clamp(74px,10vw,125px);height:clamp(104px,14vw,170px);left:calc(var(--walker)*48px);bottom:calc(mod(var(--walker),3)*27px);animation:map-route-roam calc(3.8s + var(--walker)*.6s) ease-in-out infinite alternate;animation-delay:calc(var(--walker)*-1.1s)}
 @keyframes map-route-roam{0%{translate:-45px -12px;rotate:-4deg}55%{translate:8px 10px;rotate:3deg}100%{translate:55px -8px;rotate:-2deg}}
 .act3-map[data-effects-paused=true] .map-route-zombies img{animation-play-state:paused}
-@media(max-width:600px){.act3-map .map-party{bottom:22%;--party-size:clamp(58px,17vw,88px);gap:8px}.act3-map .map-zombies{top:12%;height:48%}}
+@media(max-width:600px){.act3-map .map-party{bottom:22%;--party-size:clamp(58px,17vw,88px);gap:0}.act3-map .map-zombies{top:29%;height:28%}}
 @media(max-height:500px) and (orientation:landscape){.act3-map .map-party{bottom:8%;--party-size:clamp(54px,10vh,85px)}}
-@media(prefers-reduced-motion:reduce){.act3-map .map-zombie-walker{animation:none;left:var(--start)}.act3-map .map-route-zombies img{animation:none}}
+@media(prefers-reduced-motion:reduce){.act3-map .map-zombie-walker{animation:none;left:calc(var(--start)*.65)}.act3-map .map-route-zombies img{animation:none}}
+
+/* Artwork is scenery, never browser-selectable text or draggable image content. */
+.act3-map .map-viewport,.act3-map .map-viewport *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+.act3-map .map-viewport img{pointer-events:none;-webkit-user-drag:none}
+.act3-map .map-party .map-companion-manager{z-index:10}
+.act3-map .map-party .map-companion-cat{z-index:8}
+.act3-map .map-party .map-companion-hostess{z-index:6}
+.act3-map .map-party .map-companion-rabbit{z-index:4}
+/* Keep the original CGs: move the camera closer to the two fallen women. */
+.bridge-collapse-frame{inset:3% 0 auto;height:min(64dvh,64vw)}
+.bridge-collapse-art{inset:auto;left:50%;top:0;width:160%;height:auto;max-width:none;padding:0;object-fit:initial;transform:translate(-50%,-47%)}
+/* A cold load has a quiet dark hold; warm loop handoffs finish before first paint. */
+.act3-map[data-loading=true]{background:#0a1019!important}
+.act3-map[data-loading=true]::before,.act3-map[data-loading=true] .map-world,.act3-map[data-loading=true] .map-party,.act3-map[data-loading=true] .map-panel{visibility:hidden}
+.act3-map .map-loading{background:#0a1019;color:#fff4d7}
+
+@media(max-width:600px){.bridge-collapse-frame{height:min(51dvh,110vw)}.bridge-collapse-art{width:210%}}

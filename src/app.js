@@ -1,6 +1,6 @@
 import {dialogueAdvanceHTML} from './dialogue-controls.js';
 import {actThreeStoryDebug} from './act-three-story.js';
-import {actThreeMapHTML,startActThreeMap} from './act-three-map.js';
+import {actThreeMapHTML,startActThreeMap,prepareActThreeMapAssets} from './act-three-map.js';
 import {actThreeHTML,startActThree,actThreeTitleHTML,startActThreeTitle,actThreeCompleteHTML,actThreeAfterHTML,startActThreeAfter} from './act-three-prologue.js';
 import {mountVoiceReview} from './voice-review.js';
 import {playFourKingsNotice} from './act-two-observation-two.js';
@@ -664,13 +664,14 @@ function showActThree(){
   stopOpeningPrologue=startActThree(modal,()=>{state.actThree={phase:'clock',shot:0};save();showActThreeClock();},{settings:normalBgm,shared:()=>characterVoice.audioContext(),voice:silentPreview?null:characterVoice,silent:silentPreview,initialShot:progress.shot,onShot:shot=>{state.actThree={phase:'film',shot};save();syncNormalBgm();}});
 }
 function showActThreeBridgeRewind(){
+ const mapReady=prepareActThreeMapAssets().catch(()=>{});
  normalBgm.setSuppressed(true);
  state.actThree={phase:'bridge-rewind',mapStep:4};save();
  openModal(rewindTransitionHTML('',1,true,3,true));
- const sound=normalBgm.enabled;
- stopFireEnding=startRewindTransition(modal.querySelector('.rewind-screen'),'',()=>{
-  // The clock effect ends directly in the return scene, without flashing map music.
-  state.actThree=actThreeStoryDebug('return');save();showActThreeMap();
+ const sound=normalBgm.enabled,clockScreen=modal.querySelector('.rewind-screen');
+ stopFireEnding=startRewindTransition(clockScreen,'',()=>{
+  // Hold the clock's final frame until the return scene is decoded.
+  mapReady.then(()=>{if(!modal.open||!clockScreen.isConnected||state.actThree.phase!=='bridge-rewind')return;state.actThree=actThreeStoryDebug('return');save();showActThreeMap();});
  },sound,1,17,true,normalBgm.clockAudio,sound?characterVoice.audioContext():null,{clockOnly:true});
 }
 function showActThreeMap(){
