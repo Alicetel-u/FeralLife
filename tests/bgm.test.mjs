@@ -64,7 +64,7 @@ test('First-act Moku music continues throughout the landlord narration and speec
   const app=await readFile(new URL('../src/app.js',import.meta.url),'utf8');
   const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
   const state=createActOne(1),event=state.events[0],lines=eventConversation(event);
-  const moku=fakeAudio(),normal=fakeAudio(),bgm=createNormalBgm(normal,fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),moku);
+  const moku=fakeAudio(),normal=fakeAudio(),bgm=createNormalBgm(normal,fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),moku,fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio());
   const videos=[];
   const voice=createVoicePlayer({storage:null,manifest:VOICE_MANIFEST,makeAudio:()=>{const item={src:'',play(){return Promise.resolve()},pause(){},removeAttribute(){},load(){}};videos.push(item);return item;}});
   await bgm.unlock();
