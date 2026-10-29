@@ -1,4 +1,5 @@
 name: Re-record all 120 implemented act-three voices in adopted Eleven v4
+# Adopted V4 film estimate allowance: up to 1,400 billable characters.
 on:
   push:
     paths:
