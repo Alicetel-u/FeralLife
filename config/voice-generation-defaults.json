@@ -77,5 +77,116 @@
   },
   "unauthorizedVocalizations": {
     "policy": "For all speakers, speak only the text from the canonical script (or its exact pronunciation replacements). Do not add laughter, chuckles, interjections, repetitions, or sentence endings."
+  },
+  "actThreeFilm": {
+    "purpose": "Chapter three apocalypse cinematic only. Urgent survival panic, fear, desperate protection; no unscripted laughs, gasps, screams, adlibs, or repeated particles. Preserve all 14 canonical spoken scripts.",
+    "defaultSettings": {
+      "stability": 0.38,
+      "similarity_boost": 0.85
+    },
+    "cues": {
+      "act3/film/news:0": {
+        "stability": 0.42,
+        "tags": [
+          "[urgent]",
+          "[alarmed breaking-news report]",
+          "[strained controlled urgency]"
+        ]
+      },
+      "act3/film/news:1": {
+        "stability": 0.39,
+        "tags": [
+          "[alarmed]",
+          "[tense urgent broadcast]",
+          "[fear creeping into the voice]"
+        ]
+      },
+      "act3/film/defend:0": {
+        "tags": [
+          "[panicked]",
+          "[terrified warning]",
+          "[urgent strained shout]"
+        ]
+      },
+      "act3/film/defend:1": {
+        "tags": [
+          "[frightened]",
+          "[desperate]",
+          "[shouting in panic]"
+        ]
+      },
+      "act3/film/defend:2": {
+        "tags": [
+          "[urgent]",
+          "[fearful, forceful warning]",
+          "[desperate command over danger]"
+        ]
+      },
+      "act3/film/empty:0": {
+        "stability": 0.43,
+        "tags": [
+          "[shocked]",
+          "[stunned disbelief under immediate threat]",
+          "[short, strained delivery]"
+        ]
+      },
+      "act3/film/horde:0": {
+        "tags": [
+          "[terrified]",
+          "[panicked]",
+          "[urgent horrified shout]"
+        ]
+      },
+      "act3/film/horde:1": {
+        "tags": [
+          "[terrified]",
+          "[desperate]",
+          "[near breaking point, fearful shout]"
+        ]
+      },
+      "act3/film/escape:0": {
+        "tags": [
+          "[urgent]",
+          "[afraid but determined]",
+          "[breathless desperate command]"
+        ]
+      },
+      "act3/film/escape:1": {
+        "tags": [
+          "[frightened]",
+          "[desperate pleading]",
+          "[urgent disbelief]"
+        ]
+      },
+      "act3/film/escape:2": {
+        "stability": 0.43,
+        "tags": [
+          "[resolute]",
+          "[fear held tightly in check]",
+          "[strained determination]"
+        ]
+      },
+      "act3/film/escape:3": {
+        "tags": [
+          "[panicked]",
+          "[frightened desperate protest]",
+          "[urgent, strained shout]"
+        ]
+      },
+      "act3/film/escape:4": {
+        "tags": [
+          "[desperate]",
+          "[shouting]",
+          "[frantic protective command]"
+        ]
+      },
+      "act3/film/knife:0": {
+        "tags": [
+          "[terrified]",
+          "[desperate]",
+          "[anguished shout]"
+        ]
+      }
+    }
   }
 }
