@@ -2563,15 +2563,15 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .act3-map .map-party .map-companion-cat{z-index:8}
 .act3-map .map-party .map-companion-hostess{z-index:6}
 .act3-map .map-party .map-companion-rabbit{z-index:4}
-/* Keep the original CGs: move the camera closer to the two fallen women. */
+/* Native close-up CGs: preserve face detail without magnifying the old square art. */
 .bridge-collapse-frame{inset:3% 0 auto;height:min(64dvh,64vw)}
-.bridge-collapse-art{inset:auto;left:50%;top:0;width:160%;height:auto;max-width:none;padding:0;object-fit:initial;transform:translate(-50%,-47%)}
+.bridge-collapse-art{inset:0;width:100%;height:100%;max-width:none;padding:0;object-fit:cover;object-position:50% 18%;transform:none}
 /* A cold load has a quiet dark hold; warm loop handoffs finish before first paint. */
 .act3-map[data-loading=true]{background:#0a1019!important}
 .act3-map[data-loading=true]::before,.act3-map[data-loading=true] .map-world,.act3-map[data-loading=true] .map-party,.act3-map[data-loading=true] .map-panel{visibility:hidden}
 .act3-map .map-loading{background:#0a1019;color:#fff4d7}
 
-@media(max-width:600px){.bridge-collapse-frame{height:min(51dvh,110vw)}.bridge-collapse-art{width:210%}}
+@media(max-width:600px){.bridge-collapse-frame{height:min(51dvh,110vw)}.bridge-collapse-art{object-position:50% 42%}}
 
 /* Mimi's entire action set shares one square frame and foot pivot. */
 .act3-map .map-companion-rabbit img{position:absolute;left:50%;bottom:calc(var(--party-size)*-.04);width:calc(var(--party-size)*1.58);height:calc(var(--party-size)*1.58);max-width:none;translate:-50% 0}
