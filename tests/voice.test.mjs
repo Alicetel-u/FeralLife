@@ -153,8 +153,16 @@ test('lively landlord keeps inner voice separate, uses audition settings and pre
  const {VOICE_MANIFEST}=await import('../src/voice-manifest.js');
  const repairs=JSON.parse(await readFile(new URL('../config/voice-repairs.json',import.meta.url))).lines;
  const unchanged=r=>!repairs.some(f=>f.speaker===r.speaker&&f.text===r.text);
- for(const r of plan.filter(r=>r.speaker==='cat'&&r.performance!=='moku'&&unchanged(r)&&!r.source.includes('attempt-1/ash/trash/reply')))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
- for(const r of plan.filter(r=>r.speaker==='manager'&&r.performance!=='inner'&&unchanged(r)&&!r.source.includes('attempt-1/ash/trash/reply')))assert.equal(VOICE_MANIFEST[r.lineKey]?.hash,r.hash);
+ const assertPreservedOrOpeningV4=r=>{
+  const clip=VOICE_MANIFEST[r.lineKey];
+  if(clip?.deliveryProfile?.startsWith('v3-inspired-v4:')){
+   assert.ok(r.source.startsWith('act1/opening:')||r.source.startsWith('foyer:'),'Only authorized first-act opening rerecorded');
+   assert.equal(clip.model,'eleven_v4');
+   assert.match(clip.file,/\.opening-v4\.mp3$/);
+  }else assert.equal(clip?.hash,r.hash,'Unchanged recordings preserve original cache');
+ };
+ for(const r of plan.filter(r=>r.speaker==='cat'&&r.performance!=='moku'&&unchanged(r)&&!r.source.includes('attempt-1/ash/trash/reply')))assertPreservedOrOpeningV4(r);
+ for(const r of plan.filter(r=>r.speaker==='manager'&&r.performance!=='inner'&&unchanged(r)&&!r.source.includes('attempt-1/ash/trash/reply')))assertPreservedOrOpeningV4(r);
 });
 
 test('act1 extraction covers revised branches, epilogue and the complete daily schedule',async()=>{
