@@ -2531,3 +2531,21 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
  .persona-debug-act3 .persona-debug-back{grid-column:1;grid-row:2}
  .persona-debug-act3 footer{grid-column:1;grid-row:3}
 }
+
+/* Keep the travelling group in separate slots, with the landlord leading both ways. */
+.act3-map .map-party{left:50%!important;display:flex;flex-direction:row-reverse;align-items:flex-end;justify-content:center;gap:clamp(8px,2vw,24px);width:max-content;height:auto;translate:-50% 0;bottom:12%;--party-size:clamp(68px,12vw,168px)}
+.act3-map .map-party .map-companion{position:relative;left:auto;bottom:0;flex:none;width:var(--party-size);height:calc(var(--party-size)*1.4);transform:translateY(calc(var(--bounce,0)*1px)) rotate(var(--lean,0deg))}
+.act3-map .map-party .map-companion-manager{width:calc(var(--party-size)*1.5);height:calc(var(--party-size)*1.58)}
+.act3-map[data-returning="true"] .map-party{flex-direction:row}
+/* Effects are viewport anchored, so narrow screens retain the complete crossing. */
+.act3-map .map-zombies{left:0;top:14%;width:100%;height:53%;transform:none;overflow:hidden;z-index:7}
+.act3-map .map-zombies[hidden]{display:none!important}
+.act3-map .map-zombie-walker{left:var(--start);top:calc(var(--lane)*13%);width:clamp(76px,10vw,145px);height:clamp(100px,14vw,180px);animation:map-horde-traverse var(--pace) linear infinite;animation-delay:calc(var(--z)*-.73s)}
+@keyframes map-horde-traverse{0%{transform:translate(-130px,-12px)}50%{transform:translate(-10px,8px)}100%{transform:translate(130px,28px)}}
+.act3-map .map-route-zombies{width:clamp(190px,26vw,360px);height:180px;opacity:.9;scale:1}
+.act3-map .map-route-zombies img{width:clamp(74px,10vw,125px);height:clamp(104px,14vw,170px);left:calc(var(--walker)*48px);bottom:calc(mod(var(--walker),3)*27px);animation:map-route-roam calc(3.8s + var(--walker)*.6s) ease-in-out infinite alternate;animation-delay:calc(var(--walker)*-1.1s)}
+@keyframes map-route-roam{0%{translate:-45px -12px;rotate:-4deg}55%{translate:8px 10px;rotate:3deg}100%{translate:55px -8px;rotate:-2deg}}
+.act3-map[data-effects-paused=true] .map-route-zombies img{animation-play-state:paused}
+@media(max-width:600px){.act3-map .map-party{bottom:22%;--party-size:clamp(58px,17vw,88px);gap:8px}.act3-map .map-zombies{top:12%;height:48%}}
+@media(max-height:500px) and (orientation:landscape){.act3-map .map-party{bottom:8%;--party-size:clamp(54px,10vh,85px)}}
+@media(prefers-reduced-motion:reduce){.act3-map .map-zombie-walker{animation:none;left:var(--start)}.act3-map .map-route-zombies img{animation:none}}

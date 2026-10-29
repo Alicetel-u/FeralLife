@@ -131,9 +131,10 @@ test('real map gates motion, reaches bridge collapse and initiates forced loop',
   await new Promise(resolve=>setImmediate(resolve));
   click('data-map-next');move();assert.equal(saved.at(-1).mapStep,0);
   for(let n=0;n<11;n++)click('data-dialogue-next');assert.equal(saved.at(-1).mapScene,null);
-  click('data-map-next');move();assert.equal(saved.at(-1).mapScene,'crossing');
-  for(let n=0;n<5;n++)click('data-dialogue-next');assert.equal(section.dataset.hordeCrossing,'true');assert.doesNotMatch(section.querySelector('.map-dialogue').innerHTML,/<figure/);click('data-dialogue-next');const mid=saved.at(-1);assert.equal(mid.mapCursor,6);
-  stop();stop=startActThreeMap({querySelector:()=>section},{story:true,initialProgress:mid,onProgress:p=>saved.push(p),onLoop:()=>looped++});await new Promise(resolve=>setImmediate(resolve));assert.equal(saved.at(-1).mapCursor,6);
+  click('data-map-next');move(35);assert.equal(section.querySelector('.map-zombies').hidden,true,'No horde leaks into the approach');move(30);assert.equal(saved.at(-1).mapScene,'crossing');
+  assert.equal(section.querySelector('.map-zombies').hidden,true,'The crossing stays empty before the countdown');
+  for(let n=0;n<5;n++)click('data-dialogue-next');assert.equal(section.dataset.hordeCrossing,'true');assert.equal(section.querySelector('.map-zombies').hidden,false);assert.doesNotMatch(section.querySelector('.map-dialogue').innerHTML,/<figure/);click('data-dialogue-next');const mid=saved.at(-1);assert.equal(mid.mapCursor,6);
+  stop();stop=startActThreeMap({querySelector:()=>section},{story:true,initialProgress:mid,onProgress:p=>saved.push(p),onLoop:()=>looped++});await new Promise(resolve=>setImmediate(resolve));assert.equal(saved.at(-1).mapCursor,6);assert.equal(section.querySelector('.map-zombies').hidden,false,'Reload preserves the revealed horde');
   for(let n=6;n<11;n++)click('data-dialogue-next');click('data-map-next');move();assert.equal(saved.at(-1).mapStep,2);assert.equal(saved.at(-1).mapScene,'detour');
   for(let n=0;n<8;n++)click('data-dialogue-next');assert.equal(section.dataset.explosion,'blast');assert.doesNotMatch(section.querySelector('.map-dialogue').innerHTML,/<figure/);
   for(let n=8;n<ACT_THREE_MAP_SCENES.detour.lines.length;n++)click('data-dialogue-next');assert.deepEqual(saved.at(-1).mapSeen,['departure','crossing','detour']);

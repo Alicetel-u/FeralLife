@@ -35,13 +35,15 @@ test('escape map requires crossing then bypass before store and bridge; all art 
  assert.ok(actThreeMapTravelDuration(3,true)>actThreeMapTravelDuration(2,true));
  const route=actThreeMapHTML();
  assert.match(route,/map-companion-rabbit/);
+ assert.doesNotMatch(route,/data-map-pause|data-map-back/);
+ assert.ok(route.indexOf('class="map-zombies"')>route.indexOf('class="map-bridge-route"')); // Horde stays outside the translated world.
  assert.ok(route.includes(ACT_THREE_MIMI_MINI));
  assert.ok(!route.includes('assets/events/busts/mimi-neutral.png'));
  const mini=readFileSync(ACT_THREE_MIMI_MINI);
  assert.equal(mini.subarray(1,4).toString(),'PNG');
  assert.equal(mini.readUInt32BE(16),640);assert.equal(mini.readUInt32BE(20),384);
  for(const id of ['route-zombies-a','route-zombies-b','route-zombies-c','route-zombies-d',])assert.match(route,new RegExp(id));
- assert.equal(route.split('assets/events/chapter3/map-zombie.png').length-1,16);
+ assert.equal(route.split('assets/events/chapter3/map-zombie.png').length-1,30);
  for(const id of ['map-bypass-route','map-bypass-road','map-bypass-wall','map-detour-exit','map-route-road','map-route-barricade','map-route-debris'])assert.ok(!route.includes(id),id);
  let previous=1;for(let n=0;n<=100;n++){const f=actThreeMapTravel(1,2,n/100);assert.ok(f.position>=previous&&f.position<=2);previous=f.position;}
  assert.equal(actThreeMapTravel(1,2,1).finished,true);assert.equal(actThreeMapTravel(1,2,-1).position,1);
@@ -53,7 +55,7 @@ test('escape map requires crossing then bypass before store and bridge; all art 
  assert.match(css,/\.map-rabbit-frame img\{[\s\S]*?width:400%;height:200%/);
 });
 
-test('map saves only arrival, pauses motion, resumes bypass and cleans up callbacks',async()=>{
+test('map saves only arrival, finishes uninterrupted motion and cleans up callbacks',async()=>{
  const keys=['Image','requestAnimationFrame','cancelAnimationFrame','document','addEventListener','removeEventListener','matchMedia'];
  const original=Object.fromEntries(keys.map(k=>[k,globalThis[k]]));let frame,clicked,resize;const saved=[];
  const element=()=>({style:{setProperty(){}},dataset:{},hidden:false,disabled:false,textContent:'',innerHTML:'',setAttribute(){},removeAttribute(){},remove(){},querySelector(){return element();}});
@@ -73,15 +75,9 @@ test('map saves only arrival, pauses motion, resumes bypass and cleans up callba
   assert.equal(section.dataset.travelDirection,'up');
   assert.ok(section.querySelector('.map-world').style.transform.startsWith('translate3d(-380px,'));
   assert.equal(section.dataset.travelDirection,'up');
-  const partyAtPause=section.querySelector('.map-party').style.transform;
-  click('data-map-pause');const before=section.querySelector('.map-world').style.transform;
-  for(let n=15;n<80;n++)tick(n*50);
-  assert.equal(section.querySelector('.map-world').style.transform,before);
-  assert.equal(section.querySelector('.map-party').style.transform,partyAtPause);
-  assert.deepEqual(saved,[]);
-  click('data-map-pause');for(let n=80;n<145;n++)tick(n*50);assert.deepEqual(saved,[2]);assert.equal(section.dataset.location,'detour');
+  for(let n=15;n<80;n++)tick(n*50);assert.deepEqual(saved,[2]);assert.equal(section.dataset.location,'detour');
   const afterClimb=section.querySelector('.map-world').style.transform;
-  click('data-map-next');click('data-map-next');for(let n=145;n<205;n++)tick(n*50);assert.deepEqual(saved,[2,3]);
+  click('data-map-next');click('data-map-next');for(let n=80;n<145;n++)tick(n*50);assert.deepEqual(saved,[2,3]);
   assert.equal(section.dataset.travelDirection,'idle');
   assert.notEqual(section.querySelector('.map-world').style.transform,afterClimb);
   assert.equal(section.querySelector('.map-world').style.transform.split(',')[1],afterClimb.split(',')[1]); // Right turn: same elevation.
@@ -102,7 +98,7 @@ test('crossing and explosion action beats hide portraits without altering their 
  assert.equal(actThreeMapVisualState('crossing',ACT_THREE_MAP_SCENES.crossing.lines[6]).hideCharacters,false);
  assert.equal(actThreeMapVisualState('detour',ACT_THREE_MAP_SCENES.detour.lines[8]).explosion,'blast');
  const html=actThreeMapHTML(),css=readFileSync(new URL('../styles.css',import.meta.url),'utf8');
- assert.equal((html.match(/class="map-zombie-walker"/g)||[]).length,6);assert.doesNotMatch(html,/map-crash-truck|truck-cargo|truck-cab/);assert.doesNotMatch(css,/map-crash-truck|truck-cargo|act3-truck/);
+ assert.equal((html.match(/class="map-zombie-walker"/g)||[]).length,10);assert.doesNotMatch(html,/map-crash-truck|truck-cargo|truck-cab/);assert.doesNotMatch(css,/map-crash-truck|truck-cargo|act3-truck/);
  assert.match(css,/@keyframes map-horde-traverse/);assert.match(css,/data-effects-paused=true/);
  const png=readFileSync(ACT_THREE_MAP_EXPLOSION);assert.equal(png[25],6);assert.ok(png.length<3*1024*1024,'The effect stays a single small RGBA asset');
 });
