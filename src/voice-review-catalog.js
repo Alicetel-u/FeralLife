@@ -214,9 +214,9 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"manager\",\"古びた鍵と、一通の手紙。\\n……今日から、ここを俺が預かるのか。\",\"inner\",false]",
     "reviewId": "dea92e61fd947f7e",
-    "repaired": false,
+    "repaired": true,
     "repairReview": true,
-    "repairComment": "音声チェックで心の声を通常音声として検索していた不具合を修正。既存の心の声を正しく再生。",
+    "repairComment": "第一幕プロローグの大家の心の声を採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -229,14 +229,14 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "古びた鍵と、一通の手紙。\n……今日から、ここを俺が預かるのか。",
       "innerVoice": true
     },
-    "version": "0a51db0af16748710c47"
+    "version": "a470effcb89936145168"
   },
   {
     "id": "[\"manager\",\"……何があったんだよ、このアパート。\\nまずは、たった一人の住人に会ってみるか。\",\"inner\",false]",
     "reviewId": "96cca414e1e4a62b",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "音声チェックで心の声を通常音声として検索していた不具合を修正。既存の心の声を正しく再生。",
+    "repairComment": "第一幕プロローグの大家の心の声を採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -249,7 +249,7 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……何があったんだよ、このアパート。\nまずは、たった一人の住人に会ってみるか。",
       "innerVoice": true
     },
-    "version": "9c51a545080658c7845e"
+    "version": "ad417cdb7f6fd59a96a1"
   },
   {
     "id": "[\"cat\",\"ふぅ……これで安心ニャ。\",\"moku\",false]",

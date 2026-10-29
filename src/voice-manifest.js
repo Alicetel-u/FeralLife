@@ -1,16 +1,20 @@
 // Generated clips only.
 export const VOICE_MANIFEST = {
   "[\"manager\",\"古びた鍵と、一通の手紙。\\n……今日から、ここを俺が預かるのか。\",\"inner\",false]": {
-    "file": "assets/voices/df2d20cae084400ea8f6a7cecd34467eaf54961054c426221b6a3ccfec21c134.mp3",
-    "hash": "df2d20cae084400ea8f6a7cecd34467eaf54961054c426221b6a3ccfec21c134",
+    "file": "assets/voices/c507800565021222360396987c189344d17193cd470eb0ea21a0497e70628d9a.prologue-v4.mp3",
+    "hash": "c507800565021222360396987c189344d17193cd470eb0ea21a0497e70628d9a",
     "source": "prologue:1",
     "speaker": "manager",
     "text": "古びた鍵と、一通の手紙。\n……今日から、ここを俺が預かるのか。",
     "performance": "inner",
-    "model": "eleven_v3",
-    "reviewRevision": "inner-review-routing-v1",
+    "deliveryProfile": "v3-inspired-v4:casual",
+    "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "音声チェックで心の声を通常音声として検索していた不具合を修正。既存の心の声を正しく再生。"
+    "repairComment": "第一幕プロローグの大家の心の声を採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 6.948571
+    }
   },
   "[\"manager\",\"……何があったんだよ、この家。\\nまずは、たった一人の住人に会ってみるか。\",\"inner\",false]": {
     "file": "assets/voices/7f1baa7805f1a5352c8588b401a76226a26f0d22804517a53a30eee0a57497ee.mp3",
@@ -8151,20 +8155,20 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/a8fdaad46918c68822bc9939dccbfd9c50ff23d9a379725e8419bd7ddef14830.pace.mp3"
   },
   "[\"manager\",\"……何があったんだよ、このアパート。\\nまずは、たった一人の住人に会ってみるか。\",\"inner\",false]": {
-    "file": "assets/voices/6c113219bbbdd5c8f201eb3ab7fb7ab9f25ff22ac46735a475729765af0920a1.repair.mp3",
-    "hash": "6c113219bbbdd5c8f201eb3ab7fb7ab9f25ff22ac46735a475729765af0920a1",
+    "file": "assets/voices/1e8a0df136d7f8e9f49d790c95bd9265af22c7ba0f3f7b7c6f33b3f42b27f2ac.prologue-v4.mp3",
+    "hash": "1e8a0df136d7f8e9f49d790c95bd9265af22c7ba0f3f7b7c6f33b3f42b27f2ac",
     "source": "prologue:5",
     "speaker": "manager",
     "text": "……何があったんだよ、このアパート。\nまずは、たった一人の住人に会ってみるか。",
     "performance": "inner",
-    "model": "eleven_v3",
-    "audioMastering": {
-      "integratedLUFS": -18,
-      "truePeakDBTP": -3
-    },
-    "reviewRevision": "inner-review-routing-v1",
+    "deliveryProfile": "v3-inspired-v4:casual",
+    "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "音声チェックで心の声を通常音声として検索していた不具合を修正。既存の心の声を正しく再生。"
+    "repairComment": "第一幕プロローグの大家の心の声を採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 7.915102
+    }
   },
   "[\"cat\",\"モクですニャ。よろしくニャ。\",\"moku\",false]": {
     "file": "assets/voices/f9a2d50f9381a0c856fb746a7090a81cb4cfd35339c594de044f55e6d0479418.repair.mp3",
