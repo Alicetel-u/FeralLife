@@ -355,7 +355,7 @@ test('duel intro uses portraits until first opponent, including a replay after r
  assert.ok(firstRound>5);
  for(let i=0;i<firstRound;i++){
   const html=duelStageHTML(intro,first.residents,i);
-  if(lines[i].speaker==='manager')assert.doesNotMatch(html,/<figure/);else assert.match(html,/stage-character/,'residents retain full-size portraits');
+  assert.match(html,/stage-character/,'residents remain in the full-size opening scene when the landlord speaks');
   assert.match(html,/class="duel-opening-background" src="assets\/apartments.png"/,'intro takes place outside at the apartment entrance');
   assert.doesNotMatch(html,/duel-field|duel-enemy/,'intro must not show mini-game arena');
  }
@@ -385,7 +385,7 @@ test('Luna high-heart BAD develops through ordinary scenes and reserves the CG f
   const html=duelStageHTML(ending,s.residents,index,page);
   assert.match(html,/stage-bubble/);assert.match(html,/stage-speaker/);
   assert.doesNotMatch(html,/duel-enemy|duel-hud|duel-result/);
-  if(index<reveal){assert.doesNotMatch(html,/assets\/events\/duel\/yandere.png/);if(lines[index].speaker==='manager')assert.doesNotMatch(html,/<figure/);else assert.match(html,/data-character="hostess"/);}
+  if(index<reveal){assert.doesNotMatch(html,/assets\/events\/duel\/yandere.png/);assert.match(html,/data-character="hostess"/);}
   else {assert.match(html,/assets\/events\/duel\/yandere.png/);assert.doesNotMatch(html,/stage-character/);}
  }
  const restored=JSON.parse(JSON.stringify(s)),saved=restored.events.find(e=>e.id===ending.id);
