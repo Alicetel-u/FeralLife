@@ -204,12 +204,17 @@ export function planVoices(rows,ids,config,pronunciations=[],repairs=[]){
       row.source.startsWith('act2/duel/')&&['duel-moku','duel-moku-attack'].includes(row.performance)
       ?adopted.duelMoku:null;
     const battleTags=battleMoku?.[row.performance==='duel-moku-attack'?'attack':'casual'];
+    // The film originally inherited calm everyday voices even during an attack.
+    // Every shot now has a scene-specific fear/survival direction. Restrict the
+    // override to the 14 cinematic cues; later act-three scenes stay untouched.
+    const filmCue=row.source.startsWith('act3/film/')?adopted?.actThreeFilm?.cues?.[row.source]:null;
+    if(row.source.startsWith('act3/film/')&&adopted?.actThreeFilm&&!filmCue)throw Error('Missing film voice direction: '+row.source);
     // A script-only recording must receive no theatrical tags at all: passing
     // [playful], [excited] or [shouting] encouraged improvised laughs and ニャ.
-    const tags=battleMoku?.scriptOnly?[]:battleTags||repair?.tags||adoptedTags||profile.tags;
+    const tags=filmCue?.tags||(battleMoku?.scriptOnly?[]:battleTags||repair?.tags||adoptedTags||profile.tags);
     // Keep explicitly authored grief/panic on top of the character's restrained delivery.
     const crisis=adoptedTags&&/shocked|tragedy|film-tense/.test(row.performance)?profile.tags.filter(tag=>/shocked|disbelieving|panicked|urgent|crying|sad/.test(tag)):[];
-    const settings={...profile.settings,...adopted?.settings,...repair?.settings,...(battleMoku?.settings||{})};
+    const settings={...profile.settings,...adopted?.settings,...repair?.settings,...(battleMoku?.settings||{}),...(filmCue?{...adopted.actThreeFilm.defaultSettings,...(filmCue.stability===undefined?{}:{stability:filmCue.stability})}:{})};
     if(model==='eleven_v4')for(const key of Object.keys(settings))if(!['stability','similarity_boost'].includes(key))delete settings[key];
     // Never insert newly authored laughter or fillers into TTS input. Pronunciation
     // replacements are allowed; spontaneous vocalizations are not.
@@ -220,6 +225,6 @@ export function planVoices(rows,ids,config,pronunciations=[],repairs=[]){
     if(/\[(?:softly|whispers?|whispering|mumbling)\]/i.test(request.text))throw Error('Voice delivery must be clear and projected; whisper/mumble tags are disabled');
     const voiceId=character?.voiceId||ids[row.speaker]||null;
     const hash=digest({voiceId,request,performance:row.performance,format:config.outputFormat});
-    return {...row,...(adopted?{deliveryProfile:adopted.delivery+(character?(tense?':tense':':casual'):'')}:{}),text:row.line.text,voiceId,request,hash,file:'assets/voices/'+hash+'.mp3',characters:Array.from(row.line.text).length,billableCharacters:Array.from(request.text).length,direction:profile.direction};
+    return {...row,...(adopted?{deliveryProfile:adopted.delivery+(filmCue?':film-crisis':character?(tense?':tense':':casual'):'')}:{}),text:row.line.text,voiceId,request,hash,file:'assets/voices/'+hash+'.mp3',characters:Array.from(row.line.text).length,billableCharacters:Array.from(request.text).length,direction:profile.direction};
   });
 }
