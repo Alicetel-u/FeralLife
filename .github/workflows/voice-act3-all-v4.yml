@@ -1,0 +1,201 @@
+name: Re-record all 120 implemented act-three voices in adopted Eleven v4
+on:
+  push:
+    paths:
+      - .github/workflows/voice-act3-all-v4.yml
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: reviewed-voice-automation
+  cancel-in-progress: false
+
+jobs:
+  record:
+    if: github.repository == 'Alicetel-u/FeralLife' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare ffmpeg and source-state backup
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+          mkdir -p .local/act3-all-recovery
+          cp src/voice-manifest.js .local/act3-manifest-before.js
+          cp config/voice-repairs.json .local/act3-repairs-before.json
+      - name: Pin actual third-act script and preserve pronunciation fixes
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,writeFile} from 'node:fs/promises';
+          import {extractVoiceScript} from './tools/voice-script.mjs';
+          const film=extractVoiceScript('act3-prologue');
+          const current=extractVoiceScript('act3-current');
+          if(film.length!==14||current.length!==106)throw Error('Third-act spoken lines changed: '+film.length+' / '+current.length);
+          if(film.some(r=>!r.source.startsWith('act3/film/'))||current.some(r=>!/^act3\/(after|map)\//.test(r.source)))throw Error('Unexpected third-act source');
+          if(new Set([...film,...current].map(r=>r.lineKey)).size!==120)throw Error('Third-act playback keys are not uniquely addressable');
+          if([...film,...current].some(r=>!['announcer','manager','cat','hostess','rabbit'].includes(r.speaker)))throw Error('Unapproved actor');
+          const repairs=JSON.parse(await readFile('config/voice-repairs.json','utf8'));
+          const keys=new Set([...film,...current].map(r=>JSON.stringify([r.speaker,r.line.text])));
+          for(const repair of repairs.lines)if(keys.has(JSON.stringify([repair.speaker,repair.text]))){
+            delete repair.tags;
+            delete repair.settings;
+          }
+          await writeFile('config/voice-repairs.json',JSON.stringify(repairs,null,2)+'\n');
+          console.log('Locked 14 prologue and 106 current-story spoken lines, no silent/narrator clips');
+          JS
+      - name: Calculate both exact plans and maximum expense without paid calls
+        id: plans
+        run: |
+          node tools/voices.mjs --scope=act3-prologue --quiet
+          cp .local/voice-plan.json .local/act3-film-plan.json
+          node tools/voices.mjs --scope=act3-current --quiet
+          cp .local/voice-plan.json .local/act3-current-plan.json
+          node --input-type=module <<'JS'
+          import {readFile,appendFile} from 'node:fs/promises';
+          const film=JSON.parse(await readFile('.local/act3-film-plan.json','utf8'));
+          const current=JSON.parse(await readFile('.local/act3-current-plan.json','utf8'));
+          if(film.lines!==14||current.lines!==106||film.model!=='eleven_v4'||current.model!=='eleven_v4')throw Error('Unexpected plan');
+          if(film.unique!==14||current.unique>106||current.unique<90)throw Error('Unexpected generated identities');
+          const expected=film.estimatedCredits+current.estimatedCredits;
+          if(expected<=0||expected>16000)throw Error('Third-act estimated cost outside allowed 1..16000 credit budget: '+expected);
+          for(const row of [...film.rows,...current.rows]){
+            if(row.settings?.stability!==0.5||row.settings?.similarity_boost!==0.85)throw Error('Wrong approved V4 settings: '+row.source);
+            if(!row.deliveryProfile?.startsWith('v3-inspired-v4'))throw Error('Unapproved voice performance: '+row.source);
+            if(!row.voiceId)throw Error('Missing approved cast voice: '+row.source);
+          }
+          await appendFile(process.env.GITHUB_OUTPUT,'film='+film.planId+'\ncurrent='+current.planId+'\n');
+          console.log('New third-act requests: '+(film.pending+current.pending)+' / 120. Estimated characters: '+expected);
+          JS
+      - name: Confirm real ElevenLabs balance covers the entire re-recording
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          const film=JSON.parse(await readFile('.local/act3-film-plan.json','utf8'));
+          const current=JSON.parse(await readFile('.local/act3-current-plan.json','utf8'));
+          const estimated=film.estimatedCredits+current.estimatedCredits;
+          const response=await fetch('https://api.elevenlabs.io/v1/user/subscription',{headers:{'xi-api-key':process.env.ELEVENLABS_API_KEY},signal:AbortSignal.timeout(30000)});
+          if(!response.ok)throw Error('Unable to verify live credit balance: HTTP '+response.status);
+          const balance=await response.json();
+          const remaining=balance.character_limit-balance.character_count;
+          console.log('Third-act estimate: '+estimated+'; live ElevenLabs remaining: '+remaining);
+          if(!Number.isFinite(remaining)||remaining<estimated)throw Error('Insufficient credits for all 120 new voices. No paid requests were sent.');
+          JS
+      - name: Generate all 14 new V4 film voices
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: node tools/voices.mjs --scope=act3-prologue --quiet --generate --approve=${{ steps.plans.outputs.film }}
+      - name: Generate all 106 newly approved V4 current-story voices
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: node tools/voices.mjs --scope=act3-current --quiet --generate --approve=${{ steps.plans.outputs.current }}
+      - name: Restore durable pronunciation settings, master and integrate all voices
+        run: |
+          cp .local/act3-repairs-before.json config/voice-repairs.json
+          node tools/master-act-three-voices.mjs
+          node --input-type=module <<'JS'
+          import {readFile,writeFile,stat} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {extractVoiceScript} from './tools/voice-script.mjs';
+          import {VOICE_MANIFEST} from './src/voice-manifest.js';
+          const manifest={...VOICE_MANIFEST};
+          const plans=[
+            JSON.parse(await readFile('.local/act3-film-plan.json','utf8')),
+            JSON.parse(await readFile('.local/act3-current-plan.json','utf8'))
+          ];
+          const script=[...extractVoiceScript('act3-prologue'),...extractVoiceScript('act3-current')];
+          const inScope=new Map(script.map(row=>[row.lineKey,row]));
+          const rows=plans.flatMap(p=>p.rows);
+          if(script.length!==120||rows.length!==120)throw Error('A current game line is missing from the new voice plans');
+          let mastered=0;
+          for(const row of rows){
+            if(!inScope.has(row.lineKey))throw Error('Voice no longer matches game story: '+row.source);
+            const clip=manifest[row.lineKey];
+            if(!clip||clip.model!=='eleven_v4'||clip.hash!==row.hash)throw Error('V4 not installed: '+row.source);
+            if(row.source.startsWith('act3/film/')){
+              const output=row.file.replace(/\.mp3$/,'.film-v4.mp3');
+              execFileSync('ffmpeg',['-hide_banner','-loglevel','error','-y','-i',row.file,'-af','loudnorm=I=-18:TP=-5:LRA=7,apad=pad_dur=0.20','-ar','44100','-codec:a','libmp3lame','-b:a','128k',output]);
+              clip.file=output;
+              clip.audioMastering={integratedLUFS:-18,truePeakDBTP:-5,tailPaddingSeconds:0.2};
+            }else{
+              if(!clip.file.endsWith('.act3.mp3')||clip.audioMastering?.tailPaddingSeconds!==.2)throw Error('Map/dialogue mastering missing: '+row.source);
+            }
+            const size=(await stat(clip.file)).size;
+            const seconds=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',clip.file],{encoding:'utf8'}).trim());
+            if(size<1000||!Number.isFinite(seconds)||seconds<0.5||seconds>45)throw Error('Bad mastered third-act recording: '+row.source);
+            clip.repairReview=true;
+            clip.repairComment='第三幕の全台詞を採用済みV3寄せEleven v4で再生成し、音量を調整。';
+            clip.audioQuality={durationSeconds:seconds,masteredForTrial:true};
+            mastered++;
+          }
+          const originalText=await readFile('.local/act3-manifest-before.js','utf8');
+          const original=JSON.parse(originalText.slice(originalText.indexOf('= ')+2).replace(/;\s*$/,''));
+          for(const [key,entry] of Object.entries(original))if(!inScope.has(key)){
+            if(JSON.stringify(manifest[key])!==JSON.stringify(entry))throw Error('An unrelated voice changed: '+key);
+          }
+          if(mastered!==120)throw Error('Third act voice coverage incomplete');
+          await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
+          console.log('Verified and mastered all '+mastered+' latest V4 recordings; unrelated voices unchanged');
+          JS
+      - name: Build review catalog and run entire test suite
+        run: |
+          npm run build
+          npm test
+      - name: Commit exactly the third-act recordings and voice catalog
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          const paths=['src/voice-manifest.js','src/voice-review-catalog.js','src/voice-review-published.js'];
+          for(const [file,suffix] of [['.local/act3-film-plan.json','.film-v4.mp3'],['.local/act3-current-plan.json','.act3.mp3']]){
+            const plan=JSON.parse(await readFile(file,'utf8'));
+            for(const row of plan.rows)paths.push(row.file,row.file.replace(/\.mp3$/,suffix));
+          }
+          execFileSync('git',['add','--',...new Set(paths)],{stdio:'inherit'});
+          JS
+          git diff --cached --stat
+          git diff --cached --quiet && { echo 'No voice changes staged'; exit 1; }
+          git commit -m 'Re-record and publish all 120 implemented third-act lines in approved Eleven v4'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Deploy Pages for the automated voice commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
+      - name: Copy generated files to recoverable failure artifact
+        if: failure()
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,copyFile,mkdir} from 'node:fs/promises';
+          await mkdir('.local/act3-all-recovery',{recursive:true});
+          for(const p of ['.local/act3-film-plan.json','.local/act3-current-plan.json','.local/voice-journal.json']){
+            try{await copyFile(p,'.local/act3-all-recovery/'+p.split('/').at(-1));}catch{}
+          }
+          for(const [path,suffix] of [['.local/act3-film-plan.json','.film-v4.mp3'],['.local/act3-current-plan.json','.act3.mp3']]){
+            let plan;try{plan=JSON.parse(await readFile(path,'utf8'));}catch{continue;}
+            for(const row of plan.rows)for(const file of [row.file,row.file.replace(/\.mp3$/,suffix)]){
+              try{await copyFile(file,'.local/act3-all-recovery/'+file.split('/').at(-1));}catch{}
+            }
+          }
+          JS
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: act3-all-v4-recovery-${{ github.run_id }}
+          path: .local/act3-all-recovery/
+          include-hidden-files: true
+          retention-days: 14
