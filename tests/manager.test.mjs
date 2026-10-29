@@ -28,9 +28,9 @@ test('every approved caretaker pose ships at one foot origin, with distinct walk
  for(const frame of frames){assert.equal(frame.readUInt32BE(16),512);assert.equal(frame.readUInt32BE(20),512);assert.equal(frame[25],6);}
  for(const [a,b] of [['walk_a','walk_b']])assert.notDeepEqual(await readFile(art.poses[a].src),await readFile(art.poses[b].src));
 });
-test('landlord speech hides every resident portrait',()=>{
+test('landlord speech keeps all listener portraits without showing a landlord portrait',()=>{
  const event={detail:'大家さん。',cast:['hostess','cat'],lines:[{speaker:'hostess',text:'大家さん。'},{speaker:'manager',text:'なんで俺が決めるんだよ……。'}]};
- const html=eventStageHTML(event,[],1);for(const id of ['hostess','cat'])assert.ok(!html.includes('data-character="'+id+'"'));
+ const html=eventStageHTML(event,[],1);for(const id of ['hostess','cat'])assert.ok(html.includes('data-character="'+id+'"'));
  assert.ok(!html.includes('data-character="manager"'));assert.ok(!html.includes('assets/characters/manager'));assert.ok(html.includes('なんで俺が決めるんだよ'));assert.ok(!html.includes('observation-story'));
  for(const cast of [[],['cat'],['manager']]){
   const solo=eventStageHTML({...event,cast},[],1);
