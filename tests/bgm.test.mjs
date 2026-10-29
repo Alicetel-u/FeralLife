@@ -91,7 +91,7 @@ test('First-act Moku music continues throughout the landlord narration and speec
       const entry=VOICE_MANIFEST[voiceLineKey(line)];
       assert.ok(entry,'Manager line missing from current manifest: '+line.text);
       assert.equal(entry.model,'eleven_v4');
-      assert.match(entry.file,/\\.opening-v4\\.mp3$/);
+      assert.match(entry.file,/\.opening-v4\.mp3$/);
       voice.play(line,'test:'+i);
       assert.equal(videos.at(-1).src,entry.file,'Player must use the newly installed V4 recording');
     }
