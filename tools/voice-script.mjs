@@ -204,12 +204,19 @@ export function planVoices(rows,ids,config,pronunciations=[],repairs=[]){
       row.source.startsWith('act2/duel/')&&['duel-moku','duel-moku-attack'].includes(row.performance)
       ?adopted.duelMoku:null;
     const battleTags=battleMoku?.[row.performance==='duel-moku-attack'?'attack':'casual'];
-    const tags=battleTags||repair?.tags||adoptedTags||profile.tags;
+    // A script-only recording must receive no theatrical tags at all: passing
+    // [playful], [excited] or [shouting] encouraged improvised laughs and ニャ.
+    const tags=battleMoku?.scriptOnly?[]:battleTags||repair?.tags||adoptedTags||profile.tags;
     // Keep explicitly authored grief/panic on top of the character's restrained delivery.
     const crisis=adoptedTags&&/shocked|tragedy|film-tense/.test(row.performance)?profile.tags.filter(tag=>/shocked|disbelieving|panicked|urgent|crying|sad/.test(tag)):[];
     const settings={...profile.settings,...adopted?.settings,...repair?.settings,...(battleMoku?.settings||{})};
     if(model==='eleven_v4')for(const key of Object.keys(settings))if(!['stability','similarity_boost'].includes(key))delete settings[key];
-    const request={text:[...new Set([...crisis,...tags]),spokenText].join(' '),model_id:model,voice_settings:settings};
+    // Never insert newly authored laughter or fillers into TTS input. Pronunciation
+    // replacements are allowed; spontaneous vocalizations are not.
+    const laughter=/(?:にゃはは|ニャハハ|あはは|アハハ|えへへ|エヘヘ|ふふふ|フフフ|くすくす|クスクス|ははは|ハハハ|へへへ|ヘヘヘ|\[laugh(?:ing)?\]|\[chuckl(?:e|ing)\]|\[giggl(?:e|ing)\])/gi;
+    const extras=[...spokenText.matchAll(laughter)].map(m=>m[0]).filter(cue=>!row.line.text.includes(cue));
+    if(extras.length)throw Error('Unscripted laughter was added to voice input: '+row.source);
+    const request={text:[...new Set(battleMoku?.scriptOnly?[]:[...crisis,...tags]),spokenText].join(' '),model_id:model,voice_settings:settings};
     if(/\[(?:softly|whispers?|whispering|mumbling)\]/i.test(request.text))throw Error('Voice delivery must be clear and projected; whisper/mumble tags are disabled');
     const voiceId=character?.voiceId||ids[row.speaker]||null;
     const hash=digest({voiceId,request,performance:row.performance,format:config.outputFormat});
