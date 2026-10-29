@@ -24,8 +24,6 @@ export const ACT_THREE_MAP_CAST=[
 ];
 // Dedicated full-body Mimi miniature, matched to Moku and Luna's map sprites.
 export const ACT_THREE_MIMI_MINI=OBSERVATION_ACTION_ART.rabbit.stand.src;
-export const ACT_THREE_MIMI_WALK=[OBSERVATION_ACTION_ART.rabbit.walk_a.src,OBSERVATION_ACTION_ART.rabbit.walk_b.src];
-export function actThreeMimiWalkPose(distance,moving=true,reduced=false){return !moving||reduced?'stand':Math.floor(Math.max(0,distance)/20)%2?'walk_b':'walk_a';}
 export const ACT_THREE_BRIDGE_SPAN=2.6;
 // Map route: home → crossing, then straight UP to the detour, then RIGHT to the store and bridge.
 // Coordinates are map-world positions, not the saved story checkpoint (which remains 0–4).
@@ -52,7 +50,7 @@ export function actThreeMapHTML(){return `<section class="act-screen act3-map" d
 </div></div><div class="map-zombies" aria-label="交差点の右側をうろつくゾンビの群れ">${Array.from({length:10},(_,i)=>`<div class="map-zombie-walker" style="--z:${i};--lane:${[1,3,0,2,4,1,4,0,3,2][i]};--start:${[4,29,62,16,79,46,91,35,70,53][i]}%;--pace:${[5.7,7.1,6.3,8.2,6.8,7.7,5.9,8.5,6.5,7.4][i]}s"><img src="${ACT_THREE_MAP_ZOMBIE}" alt="" draggable="false"></div>`).join('')}</div><div class="map-explosion-effect" aria-hidden="true"><div class="map-explosion-light"></div><img class="map-explosion-sticker" src="${ACT_THREE_MAP_EXPLOSION}" alt="" draggable="false"><div class="map-explosion-smoke"></div></div><div class="map-party" aria-label="大家、モク、ルナ">${ACT_THREE_MAP_CAST.map((c,i)=>`<div class="map-companion map-companion-${c.id}" style="--member:${i}"><img src="${c.image}" alt="${c.name}" draggable="false"></div>`).join('')}<div class="map-companion map-companion-rabbit"><img src="${ACT_THREE_MIMI_MINI}" alt="ミミ" draggable="false"></div></div><div class="map-loading" role="status"><span hidden></span><button type="button" data-map-retry hidden>再読み込み</button></div></div><img class="map-scene-backdrop" alt="荒らされたコンビニの店内" hidden>${actThreeCollapseHTML()}<div class="map-dialogue act3-dialogue" data-renderer="event-stage" hidden></div>${chapterDialogueControlsHTML()}<div class="map-panel"><div class="map-status visually-hidden"><strong data-map-location>けもの荘</strong><p data-map-status role="status" aria-live="polite"></p></div><nav class="map-actions" aria-label="移動操作"><button type="button" data-map-next class="map-next" disabled>交差点へ <span aria-hidden="true">➜</span></button><button type="button" data-map-finish class="map-next" hidden>ここまでを読み終える</button><button type="button" data-map-reset hidden>もう一度移動する</button></nav></div></section>`;}
 const mapAssetLoads=new Map();
 export function prepareActThreeMapAssets(story=true){
- const sources=[...(story?[ACT_THREE_STORE_INTERIOR,...Object.values(EVENT_EXPRESSIONS.rabbit)]:[]),...ACT_THREE_MAP_PLACES.map(p=>p.image),ACT_THREE_MAP_ZOMBIE,ACT_THREE_MAP_EXPLOSION,...Object.values(ACT_THREE_COLLAPSE_ART),...ACT_THREE_MAP_CAST.map(c=>c.image),ACT_THREE_MIMI_MINI,...ACT_THREE_MIMI_WALK];
+ const sources=[...(story?[ACT_THREE_STORE_INTERIOR,...Object.values(EVENT_EXPRESSIONS.rabbit)]:[]),...ACT_THREE_MAP_PLACES.map(p=>p.image),ACT_THREE_MAP_ZOMBIE,ACT_THREE_MAP_EXPLOSION,...Object.values(ACT_THREE_COLLAPSE_ART),...ACT_THREE_MAP_CAST.map(c=>c.image),ACT_THREE_MIMI_MINI];
  return Promise.all([...new Set(sources)].map(src=>{
   if(!mapAssetLoads.has(src)){
    const pending=new Promise((resolve,reject)=>{const img=new Image();img.onload=async()=>{try{await img.decode?.();resolve(img);}catch(error){reject(error);}};img.onerror=reject;img.src=src;}).catch(error=>{mapAssetLoads.delete(src);throw error;});
@@ -72,15 +70,9 @@ export function startActThreeMap(root,{initialStep=0,onArrival=()=>{},onBack=()=
  const reduced=globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches===true;
  const returning=()=>!!story&&progress.seen.includes('return');
  let step=story?progress.step:actThreeMapCheckpoint(initialStep),position=step,elapsed=0,moving=returning()&&!progress.scene&&step>0,paused=false,ready=false,dead=false,last=null,raf=0,version=0;
- let walkDistance=0,walkPosition=position;
  const paint=()=>{
   const width=viewport.clientWidth,height=viewport.clientHeight,gap=Math.max(380,Math.min(1100,width*.94)),anchor=width*.48;
   const climb=Math.max(260,height*.84);
-  if(ready&&moving&&!paused&&!document.hidden)walkDistance+=Math.hypot((actThreeMapWorldPosition(position)-actThreeMapWorldPosition(walkPosition))*gap,(actThreeMapVerticalPosition(position)-actThreeMapVerticalPosition(walkPosition))*climb);
-  walkPosition=position;
-  const mimiPose=actThreeMimiWalkPose(walkDistance,ready&&moving,reduced),mimi=section.querySelector('.map-companion-rabbit img');
-  if(mimi.dataset.pose!==mimiPose){mimi.src=OBSERVATION_ACTION_ART.rabbit[mimiPose].src;mimi.dataset.pose=mimiPose;}
-
   world.style.transform=`translate3d(${-actThreeMapWorldPosition(position)*gap}px,${actThreeMapVerticalPosition(position)*climb}px,0)`;
   section.querySelectorAll('[data-map-landmark]').forEach((el,i)=>{
    el.style.left=`${anchor+actThreeMapWorldPosition(i)*gap}px`;

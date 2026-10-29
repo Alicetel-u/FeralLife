@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {CHARACTER_ART} from '../src/character-art.js';
 import {MINI_EMOTION_ART,MIMI_MINI_EMOTIONS,miniEmotionFrameName} from '../src/mini-emotions.js';
 import {resolvePose,drawSprite} from '../src/renderer.js';
-import {actThreeMimiWalkPose} from '../src/act-three-map.js';
+import {actThreeMapHTML} from '../src/act-three-map.js';
 
 test('Mimi has the same nine daily actions and nine reactions as the current mini families, with a common frame and pivot',()=>{
  const art=CHARACTER_ART.rabbit,keys=['stand','walk_a','walk_b','sit','sleep','eat','drink','clean','chat'];
@@ -20,10 +20,11 @@ test('Mimi daily poses are selected through the shared renderer, and a missing f
  assert.equal(resolvePose('rabbit','idle',true,0),'walk_a');assert.equal(resolvePose('rabbit','idle',true,.25),'walk_b');art.poses.walk_b.image=null;assert.equal(resolvePose('rabbit','idle',true,.25),'base');
  }finally{for(const pose of Object.values(art.poses))pose.image=null;}
 });
-test('Mimi map footfalls advance only with distance and rest in stand when stopped or reduced',()=>{
- assert.equal(actThreeMimiWalkPose(0),'walk_a');assert.equal(actThreeMimiWalkPose(19.9),'walk_a');assert.equal(actThreeMimiWalkPose(20),'walk_b');assert.equal(actThreeMimiWalkPose(40),'walk_a');
- assert.equal(actThreeMimiWalkPose(20,false),'stand');assert.equal(actThreeMimiWalkPose(20,true,true),'stand');
- const source=readFileSync(new URL('../src/act-three-map.js',import.meta.url),'utf8');assert.match(source,/!document.hidden\)walkDistance\+=Math.hypot/);
+test('Mimi stays on her standing sprite throughout the Act III map',()=>{
+ const source=readFileSync(new URL('../src/act-three-map.js',import.meta.url),'utf8');
+ assert.doesNotMatch(source,/actThreeMimiWalkPose|ACT_THREE_MIMI_WALK|walkDistance/);
+ assert.doesNotMatch(actThreeMapHTML(),/walk_a|walk_b/);
+ assert.match(actThreeMapHTML(),/observation-v1\/stand\.png/);
 });
 test('Mimi sleeping and sitting retain the single stand scale rather than growing to full standing height',()=>{
  const art=CHARACTER_ART.rabbit,old=art.image;const calls=[];const ctx=new Proxy({}, {get:(_,key)=>(...args)=>{if(key==='drawImage')calls.push(args);},set:()=>true});
