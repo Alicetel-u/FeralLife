@@ -1,0 +1,115 @@
+name: Trial - replace act-one prologue voices with approved v4
+on:
+  push:
+    paths:
+      - .github/workflows/voice-act1-prologue-trial.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: reviewed-voice-automation
+  cancel-in-progress: false
+
+jobs:
+  trial:
+    if: github.ref == 'refs/heads/main' && github.repository == 'Alicetel-u/FeralLife'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify audio tools
+        run: |
+          command -v ffmpeg
+          command -v ffprobe
+      - name: Prepare exact two-line prologue plan, with hard credit cap
+        id: plan
+        run: |
+          node tools/voices.mjs --scope=intro --source-prefix=prologue --quiet
+          node --input-type=module <<'JS'
+          import {readFile,appendFile} from 'node:fs/promises';
+          const plan=JSON.parse(await readFile('.local/voice-plan.json','utf8'));
+          const sources=plan.rows.map(r=>r.source).sort();
+          if(JSON.stringify(sources)!==JSON.stringify(['prologue:1','prologue:5']))throw Error('Unexpected prologue scope: '+JSON.stringify(sources));
+          if(plan.rows.length!==2||plan.pending!==2||plan.unique!==2)throw Error('Trial needs exactly two fresh recorded lines');
+          if(plan.estimatedCredits>750)throw Error('Trial estimated credits exceed 750');
+          for(const row of plan.rows){
+            if(row.speaker!=='manager'||row.model!=='eleven_v4'&&plan.model!=='eleven_v4')throw Error('Unexpected model/speaker');
+            if(row.settings?.stability!==0.5||row.settings?.similarity_boost!==0.85)throw Error('Unexpected settings');
+            if(!row.deliveryProfile?.startsWith('v3-inspired-v4:'))throw Error('Unapproved delivery');
+          }
+          await appendFile(process.env.GITHUB_OUTPUT,'plan_id='+plan.planId+'\n');
+          console.log('Trial plan: '+JSON.stringify({sources,model:plan.model,estimatedCredits:plan.estimatedCredits,pending:plan.pending}));
+          JS
+      - name: Generate only the two prologue recordings in ElevenLabs
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: node tools/voices.mjs --scope=intro --source-prefix=prologue --quiet --generate --approve=${{ steps.plan.outputs.plan_id }}
+      - name: Master both MP3s and install playable files in the current voice manifest
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,writeFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          const plan=JSON.parse(await readFile('.local/voice-plan.json','utf8'));
+          const {VOICE_MANIFEST}=await import('./src/voice-manifest.js');
+          const manifest={...VOICE_MANIFEST};
+          for(const row of plan.rows){
+            const current=manifest[row.lineKey];
+            if(!current||current.file!==row.file||current.model!=='eleven_v4')throw Error('Generated clip not installed: '+row.source);
+            const mastered=row.file.replace(/\.mp3$/,'.prologue-v4.mp3');
+            execFileSync('ffmpeg',['-hide_banner','-loglevel','error','-y','-i',row.file,'-af','loudnorm=I=-18:TP=-5:LRA=11,apad=pad_dur=0.20','-ar','44100','-codec:a','libmp3lame','-b:a','128k',mastered]);
+            const seconds=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',mastered],{encoding:'utf8'}).trim());
+            if(!Number.isFinite(seconds)||seconds<0.5||seconds>45)throw Error('Invalid master duration: '+row.source);
+            manifest[row.lineKey]={...current,file:mastered,repairReview:true,repairComment:'第一幕プロローグの大家の心の声を、採用済みV3寄せV4で再収録し音量を調整。'};
+            console.log('Installed '+row.source+': '+mastered+' ('+seconds.toFixed(2)+'s)');
+          }
+          await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
+          JS
+      - name: Build and run full tests
+        run: |
+          npm run build
+          npm test
+      - name: Publish only the trial audio, manifest and review catalog
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          const plan=JSON.parse(await readFile('.local/voice-plan.json','utf8'));
+          const paths=['src/voice-manifest.js','src/voice-review-catalog.js','src/voice-review-published.js',...plan.rows.flatMap(row=>[row.file,row.file.replace(/\.mp3$/,'.prologue-v4.mp3')])];
+          execFileSync('git',['add','--',...paths],{stdio:'inherit'});
+          JS
+          git diff --cached --stat
+          git diff --cached --quiet && { echo 'No audio or manifest changes'; exit 1; }
+          git commit -m 'Record and publish act-one prologue in approved V3-inspired Eleven v4'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Preserve generated recordings and journal on failure
+        if: failure()
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,mkdir,copyFile} from 'node:fs/promises';
+          await mkdir('.local/trial-recovery',{recursive:true});
+          let plan=null;try{plan=JSON.parse(await readFile('.local/voice-plan.json','utf8'));}catch{}
+          for(const row of plan?.rows||[])for(const file of [row.file,row.file.replace(/\.mp3$/,'.prologue-v4.mp3')]){
+            try{await copyFile(file,'.local/trial-recovery/'+file.split('/').at(-1));}catch{}
+          }
+          for(const file of ['.local/voice-plan.json','.local/voice-journal.json']){
+            try{await copyFile(file,'.local/trial-recovery/'+file.split('/').at(-1));}catch{}
+          }
+          JS
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: act-one-prologue-v4-recovery-${{ github.run_id }}
+          path: .local/trial-recovery/
+          include-hidden-files: true
+          retention-days: 14
