@@ -1,0 +1,101 @@
+name: Publish recovered 68 four-kings V4 voices without new credit spending
+on:
+  push:
+    paths:
+      - .github/workflows/voice-act2-duel-v4-recovery.yml
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: reviewed-voice-automation
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main' && github.repository == 'Alicetel-u/FeralLife'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install audio tools
+        run: |
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+      - name: Restore generated audio masters and pace variants from archived run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .local/duel-v4-restore assets/voices
+          gh run download 40930002519 -n act2-duel-v4-recovery-40930002519 -D .local/duel-v4-restore
+          node --input-type=module <<'JS'
+          import {readFile,writeFile,copyFile,stat} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {extractVoiceScript} from './tools/voice-script.mjs';
+          import {VOICE_MANIFEST as PREVIOUS} from './src/voice-manifest.js';
+          const p=JSON.parse(await readFile('.local/duel-v4-restore/duel-v4-plan.json','utf8'));
+          const game=extractVoiceScript('act2-duel'),current=new Map(game.map(r=>[r.lineKey,r]));
+          if(p.lines!==68||p.rows.length!==68||p.model!=='eleven_v4'||current.size!==68||new Set(p.rows.map(r=>r.lineKey)).size!==68)throw Error('Game voice plan changed since paid generation');
+          const manifest={...PREVIOUS};
+          const paces={'duel-manager-attack':1.5,'duel-moku-attack':1.5,'duel-manager':1.25,'duel-moku':1.16,'duel-luna':1.25};
+          const duration=file=>Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',file],{encoding:'utf8'}).trim());
+          let attack=0;
+          for(const row of p.rows){
+            const g=current.get(row.lineKey);
+            if(!g||g.line.text!==row.text||g.speaker!==row.speaker||!row.source.startsWith('act2/duel/')||!row.deliveryProfile?.startsWith('v3-inspired-v4:')||row.settings?.stability!==.5||row.settings?.similarity_boost!==.85)throw Error('Voice mismatch '+row.source);
+            if(!/^[a-f0-9]{64}$/.test(row.hash)||row.file!=='assets/voices/'+row.hash+'.mp3')throw Error('Unsafe audio filename');
+            const mastered=row.file.replace(/\.mp3$/,'.duel-v4.mp3');
+            const pace=paces[row.performance];
+            const fast=pace?mastered.replace(/\.mp3$/,row.performance.endsWith('-attack')?'.attack.mp3':'.pace.mp3'):null;
+            for(const path of [row.file,mastered,...(fast?[fast]:[])]){
+              const archived='.local/duel-v4-restore/'+path.split('/').at(-1);
+              if((await stat(archived)).size<1000)throw Error('Paid clip absent in archived output: '+path);
+              await copyFile(archived,path);
+            }
+            const seconds=duration(mastered),quick=fast?duration(fast):null;
+            if(!Number.isFinite(seconds)||seconds<.5||seconds>45||fast&&(!Number.isFinite(quick)||quick<Math.max(.25,seconds/pace-.22)))throw Error('Truncated or invalid recording: '+row.source);
+            const clip={file:mastered,hash:row.hash,source:row.source,speaker:row.speaker,text:row.text,performance:row.performance,deliveryProfile:row.deliveryProfile,model:'eleven_v4',repairReview:true,repairComment:'四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。',audioMastering:{integratedLUFS:-18,truePeakDBTP:-5,tailPaddingSeconds:.30},audioQuality:{masteredForTrial:true,durationSeconds:seconds}};
+            if(fast)clip.fastFile=fast;
+            manifest[row.lineKey]=clip;
+            if(row.performance.endsWith('-attack'))attack++;
+          }
+          if(attack!==12)throw Error('Attack line count mismatch');
+          for(const [key,clip] of Object.entries(PREVIOUS))if(!current.has(key)&&JSON.stringify(manifest[key])!==JSON.stringify(clip))throw Error('Outside mini-game modified '+key);
+          await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
+          console.log('Successfully recovered all 68 adopted V4 duel voices incl. 12 attacks, no ElevenLabs API requests');
+          JS
+      - name: Build and verify all tests
+        run: |
+          node tools/build-attack-voices.mjs
+          npm run build
+          npm test
+      - name: Commit targeted original/mastered/tempo audio and review catalog
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {VOICE_MANIFEST} from './src/voice-manifest.js';
+          const p=JSON.parse(await readFile('.local/duel-v4-restore/duel-v4-plan.json','utf8'));
+          const files=['src/voice-manifest.js','src/voice-review-catalog.js','src/voice-review-published.js'];
+          for(const row of p.rows){
+            const clip=VOICE_MANIFEST[row.lineKey];files.push(row.file,clip.file);if(clip.fastFile)files.push(clip.fastFile);
+          }
+          execFileSync('git',['add','--',...new Set(files)],{stdio:'inherit'});
+          JS
+          git diff --cached --stat
+          git diff --cached --quiet && { echo 'Missing recovered audio files'; exit 1; }
+          git commit -m 'Publish all 68 reviewed V4 four-kings battle voices and full attack audio'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Trigger final GitHub Pages deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
