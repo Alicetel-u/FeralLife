@@ -116,3 +116,31 @@ test('Act III section back routing and bridge rewind reuse the real clock transi
  assert.match(rewind,/actThreeStoryDebug\('return'\)/);
  assert.ok(!rewind.includes("normalBgm.setSuppressed(false);"),'Do not flash map audio in the transition');
 });
+
+test('Act III MAP travel checkpoints are clearly mint-colored and distinct from dialogue, loops and endings',()=>{
+ const {context,screens}=environment();
+ vm.runInContext('showDebugActThreeSections()',context);
+ const sections=Object.fromEntries(screens.at(-1).options.map(([id,, ,kind])=>[id,kind]));
+ assert.equal(sections.explore,'map');
+ assert.equal(sections.escape,'map');
+ assert.equal(sections.opening,'story');
+ assert.equal(sections.loop,'rewind');
+
+ const kinds={};
+ for(const group of ['opening','explore','escape','loop']){
+  vm.runInContext('showDebugActThreeScenes('+JSON.stringify(group)+')',context);
+  for(const [id,, ,kind] of screens.at(-1).options)kinds[id]=kind;
+ }
+ for(const id of ['crossing','detour','store','bridge','homeward'])assert.equal(kinds[id],'map',id);
+ for(const id of ['film','after','farewell'])assert.equal(kinds[id],'story',id);
+ for(const id of ['clock','bridge-clock','return'])assert.equal(kinds[id],'rewind',id);
+ for(const id of ['collapse','homecoming'])assert.equal(kinds[id],'ending',id);
+ assert.match(screens.at(-1).subtitle,/青緑＝MAP/);
+
+ const css=readFileSync(new URL('../styles.css',import.meta.url),'utf8');
+ assert.match(css,/\.persona-debug-act3 \.persona-debug-button\.tone-map\{/);
+ assert.match(css,/--debug-tone:#37efc2/);
+ assert.match(css,/\.persona-debug-button\.tone-map \.persona-debug-label strong::before/);
+ assert.match(css,/content:"MAP"/);
+ assert.match(app,/class="persona-debug-button tone-\$\{tone\(id,kind\)\}"/);
+});
