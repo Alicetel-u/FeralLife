@@ -55,7 +55,7 @@ test('Luna conversations keep her theme with Moku present while dedicated scene 
   }
 });
 
-test('First-act Moku music continues throughout the landlord narration and speech without a portrait',async()=>{
+test('First-act Moku portrait and music persist throughout the landlord narration and speech',async()=>{
   const {createActOne}=await import('../src/act-one.js');
   const {eventStageHTML}=await import('../src/event-stage.js');
   const {voiceLineKey}=await import('../src/voice-policy.js');
@@ -71,7 +71,7 @@ test('First-act Moku music continues throughout the landlord narration and speec
   for(let i=0;i<lines.length;i++){
     const line=lines[i],html=eventStageHTML(event,state.residents,i);
     const mokuPortrait=html.includes('data-character="cat"');
-    if(line.speaker==='manager')assert.equal(mokuPortrait,false,'manager does not draw Moku portrait');
+    if(line.speaker==='manager')assert.equal(mokuPortrait,true,'landlord dialogue keeps Moku listening on screen');
     let cue=null;
     const context={document:{hidden:false},state:{actOne:{chapter:1},events:[event]},eventView:{id:event.id,index:i},
       eventConversation:()=>lines,bedCue:()=> 'normal',firstActMokuDialogueTheme,
