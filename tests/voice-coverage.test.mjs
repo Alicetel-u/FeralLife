@@ -16,9 +16,9 @@ test('every authored landlord, Moku and Luna line has a playable recording acros
   await access(new URL('../'+(clip.fastFile||clip.file),import.meta.url));
   if(clip.deliveryProfile){
    assert.equal(clip.performance,voicePerformance(row.line));
-   if(clip.deliveryProfile.startsWith('v3-inspired-v4:')){
+   if(clip.deliveryProfile.startsWith('v3-inspired-v4')){
     assert.equal(clip.model,'eleven_v4','adopted delivery must use Eleven v4');
-    assert.ok(['v3-inspired-v4:casual','v3-inspired-v4:tense'].includes(clip.deliveryProfile),'unknown v4 delivery profile');
+    assert.ok(['v3-inspired-v4','v3-inspired-v4:casual','v3-inspired-v4:tense'].includes(clip.deliveryProfile),'unknown v4 delivery profile');
    }else{
     assert.equal(clip.deliveryProfile,{manager:'duel-manager',cat:'duel-moku',hostess:'duel-luna'}[row.speaker]);
    }
