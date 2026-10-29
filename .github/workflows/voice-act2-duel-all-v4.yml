@@ -1,0 +1,189 @@
+name: Re-record second-act four-kings mini-game dialogue in adopted Eleven V4
+on:
+  push:
+    paths:
+      - .github/workflows/voice-act2-duel-all-v4.yml
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: reviewed-voice-automation
+  cancel-in-progress: false
+jobs:
+  duel:
+    if: github.repository == 'Alicetel-u/FeralLife' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare ffmpeg and backup untouched manuscript settings
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+          mkdir -p .local/duel-v4-recovery
+          cp src/voice-manifest.js .local/duel-v4-original-manifest.js
+          cp config/voice-repairs.json .local/duel-v4-original-repairs.json
+      - name: Pin all four rounds, every choice, Moku assists and victory voices
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,writeFile} from 'node:fs/promises';
+          import {extractVoiceScript} from './tools/voice-script.mjs';
+          const script=extractVoiceScript('act2-duel');
+          if(script.length<60||script.length>120||new Set(script.map(r=>r.lineKey)).size!==script.length)throw Error('Unexpected mini-game line coverage or duplicate keys: '+script.length);
+          if(script.some(r=>!r.source.startsWith('act2/duel/')||!['manager','cat','hostess'].includes(r.speaker)||r.line.silent))throw Error('Non-battle/narration voice included');
+          const attacks=script.filter(r=>r.line.duelAttack);
+          if(attacks.length!==12||attacks.filter(r=>r.speaker==='cat').length!==4)throw Error('Mini-game expected 12 attacks incl. four Moku assists');
+          if(!script.some(r=>r.source.startsWith('act2/duel/victory')))throw Error('Victory dialogue missing');
+          const repairs=JSON.parse(await readFile('config/voice-repairs.json','utf8'));
+          const keys=new Set(script.map(r=>JSON.stringify([r.speaker,r.line.text])));
+          for(const repair of repairs.lines)if(keys.has(JSON.stringify([repair.speaker,repair.text]))){delete repair.tags;delete repair.settings;}
+          await writeFile('config/voice-repairs.json',JSON.stringify(repairs,null,2)+'\n');
+          console.log('Pinned '+script.length+' mini-game voices with 12 attacks, 4 Moku assists and victory. No ending/BAD scenes.');
+          JS
+      - name: Plan exact V4 recordings before any paid request
+        id: plan
+        run: |
+          node tools/voices.mjs --scope=act2-duel --quiet
+          cp .local/voice-plan.json .local/duel-v4-plan.json
+          node --input-type=module <<'JS'
+          import {readFile,appendFile} from 'node:fs/promises';
+          const p=JSON.parse(await readFile('.local/duel-v4-plan.json','utf8'));
+          if(p.lines<60||p.lines>120||p.unique!==p.lines||p.model!=='eleven_v4')throw Error('Unexpected voice plan size/model');
+          if(p.estimatedCredits<1||p.estimatedCredits>10000)throw Error('Planned credit charge exceeds mini-game budget: '+p.estimatedCredits);
+          if(p.rows.some(row=>!row.source.startsWith('act2/duel/')||!['manager','cat','hostess'].includes(row.speaker)||row.settings?.stability!==.5||row.settings?.similarity_boost!==.85||!row.voiceId||!row.deliveryProfile?.startsWith('v3-inspired-v4:')))throw Error('Unapproved V4 parameters');
+          await appendFile(process.env.GITHUB_OUTPUT,'id='+p.planId+'\n');
+          console.log('V4 mini-game dialogue: '+p.lines+' unique '+p.unique+' new '+p.pending+' estimated credits '+p.estimatedCredits);
+          JS
+      - name: Confirm real ElevenLabs balance for all selected voices
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          const p=JSON.parse(await readFile('.local/duel-v4-plan.json','utf8'));
+          const r=await fetch('https://api.elevenlabs.io/v1/user/subscription',{headers:{'xi-api-key':process.env.ELEVENLABS_API_KEY},signal:AbortSignal.timeout(30000)});
+          if(!r.ok)throw Error('Cannot verify ElevenLabs remaining balance, HTTP '+r.status);
+          const x=await r.json(),remaining=x.character_limit-x.character_count;
+          console.log('V4 mini-game estimate '+p.estimatedCredits+' credits; live available '+remaining);
+          if(!Number.isFinite(remaining)||remaining<p.estimatedCredits)throw Error('Insufficient balance for entire mini-game; no paid generation started');
+          JS
+      - name: Generate every mini-game voice only once
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: node tools/voices.mjs --scope=act2-duel --quiet --generate --approve=${{ steps.plan.outputs.id }}
+      - name: Restore original voice repair rules and master without cutting the ending
+        run: |
+          cp .local/duel-v4-original-repairs.json config/voice-repairs.json
+          node --input-type=module <<'JS'
+          import {readFile,writeFile,stat} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {extractVoiceScript} from './tools/voice-script.mjs';
+          import {VOICE_MANIFEST} from './src/voice-manifest.js';
+          const p=JSON.parse(await readFile('.local/duel-v4-plan.json','utf8'));
+          const game=new Map(extractVoiceScript('act2-duel').map(row=>[row.lineKey,row]));
+          const oldText=await readFile('.local/duel-v4-original-manifest.js','utf8');
+          const old=JSON.parse(oldText.slice(oldText.indexOf('= ')+2).replace(/;\s*$/,''));
+          const manifest={...VOICE_MANIFEST};
+          if(game.size!==p.lines)throw Error('Current script changed during voice production');
+          for(const row of p.rows){
+            const source=game.get(row.lineKey),clip=manifest[row.lineKey];
+            if(!source||source.line.text!==row.text||!clip||clip.hash!==row.hash||clip.model!=='eleven_v4')throw Error('Game/voice mismatch: '+row.source);
+            if((await stat(row.file)).size<1000)throw Error('Missing original audio '+row.source);
+            const output=row.file.replace(/\.mp3$/,'.duel-v4.mp3');
+            execFileSync('ffmpeg',['-hide_banner','-loglevel','error','-y','-i',row.file,'-af','loudnorm=I=-18:TP=-5:LRA=11,apad=pad_dur=0.30','-ar','44100','-codec:a','libmp3lame','-b:a','128k',output]);
+            const duration=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',output],{encoding:'utf8'}).trim());
+            if(!Number.isFinite(duration)||duration<0.5||duration>45||(await stat(output)).size<1000)throw Error('Invalid mastered voice '+row.source);
+            manifest[row.lineKey]={
+              file:output,hash:row.hash,source:row.source,speaker:row.speaker,text:row.text,
+              performance:row.performance,deliveryProfile:row.deliveryProfile,model:'eleven_v4',
+              repairReview:true,repairComment:'四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。',
+              audioMastering:{integratedLUFS:-18,truePeakDBTP:-5,tailPaddingSeconds:.30},
+              audioQuality:{masteredForTrial:true,durationSeconds:duration}
+            };
+          }
+          for(const [key,clip] of Object.entries(old))if(!game.has(key)&&JSON.stringify(manifest[key])!==JSON.stringify(clip))throw Error('Unrelated voices changed: '+key);
+          await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
+          console.log('Mastered '+p.rows.length+' complete lines; other chapters and ending scenes unchanged');
+          JS
+      - name: Build pitch-preserving battle tempo files and verify every final syllable
+        run: |
+          node tools/build-attack-voices.mjs
+          node --input-type=module <<'JS'
+          import {readFile,stat} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {VOICE_MANIFEST} from './src/voice-manifest.js';
+          const p=JSON.parse(await readFile('.local/duel-v4-plan.json','utf8'));
+          const pace={'duel-manager-attack':1.5,'duel-moku-attack':1.5,'duel-moku':1.16,'duel-manager':1.25,'duel-luna':1.25};
+          const duration=path=>Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',path],{encoding:'utf8'}).trim());
+          let attack=0;
+          for(const row of p.rows){
+            const clip=VOICE_MANIFEST[row.lineKey];
+            if(!clip||clip.model!=='eleven_v4'||!clip.file.endsWith('.duel-v4.mp3'))throw Error('Non-V4 dialogue '+row.source);
+            if(clip.performance.startsWith('duel-')){
+              if(!clip.fastFile||!clip.fastFile.startsWith('assets/voices/')||(await stat(clip.fastFile)).size<1000)throw Error('Playable mini-game pace missing: '+row.source);
+              const full=duration(clip.file),quick=duration(clip.fastFile),ratio=pace[clip.performance];
+              if(!ratio||!Number.isFinite(quick)||quick<Math.max(.25,full/ratio-.22))throw Error('Truncated duel clip: '+row.source+' '+quick+' / '+full);
+              if(clip.performance.endsWith('-attack'))attack++;
+            }
+          }
+          if(attack!==12)throw Error('Missing new V4 attacks: '+attack);
+          console.log('Verified all '+p.lines+' playable dialogue lines, '+attack+' attacks with complete pace-adjusted audio');
+          JS
+      - name: Full build and tests
+        run: |
+          npm run build
+          npm test
+      - name: Commit only the mini-game voice assets and voice review catalog
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {VOICE_MANIFEST} from './src/voice-manifest.js';
+          const plan=JSON.parse(await readFile('.local/duel-v4-plan.json','utf8'));
+          const paths=['src/voice-manifest.js','src/voice-review-catalog.js','src/voice-review-published.js'];
+          for(const row of plan.rows){
+            const clip=VOICE_MANIFEST[row.lineKey];paths.push(row.file,clip.file);if(clip.fastFile)paths.push(clip.fastFile);
+          }
+          execFileSync('git',['add','--',...new Set(paths)],{stdio:'inherit'});
+          JS
+          git diff --cached --stat
+          git diff --cached --quiet && { echo 'Missing new audio changes'; exit 1; }
+          git commit -m 'Publish V3-inspired Eleven v4 audio for all four-kings mini-game lines'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Deploy new audio to GitHub Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
+      - name: Recover paid clips on failure without retrying ElevenLabs
+        if: failure()
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,copyFile,mkdir} from 'node:fs/promises';
+          await mkdir('.local/duel-v4-recovery',{recursive:true});
+          for(const name of ['.local/duel-v4-plan.json','.local/voice-journal.json'])try{await copyFile(name,'.local/duel-v4-recovery/'+name.split('/').at(-1));}catch{}
+          let p;try{p=JSON.parse(await readFile('.local/duel-v4-plan.json','utf8'));}catch{process.exit(0);}
+          for(const row of p.rows){
+            const raw=row.file,master=raw.replace(/\.mp3$/,'.duel-v4.mp3');
+            for(const f of [raw,master,master.replace(/\.mp3$/,'.attack.mp3'),master.replace(/\.mp3$/,'.pace.mp3')]){
+              try{await copyFile(f,'.local/duel-v4-recovery/'+f.split('/').at(-1));}catch{}
+            }
+          }
+          JS
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: act2-duel-v4-recovery-${{ github.run_id }}
+          path: .local/duel-v4-recovery/
+          include-hidden-files: true
+          retention-days: 14
