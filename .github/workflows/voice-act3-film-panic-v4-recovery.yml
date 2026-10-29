@@ -53,7 +53,7 @@ jobs:
           const result=new Set();
           for(const row of archive.rows){
             const now=plan.get(row.lineKey);
-            if(!now||now.source!==row.source||now.hash!==row.hash||now.voiceId!==row.voiceId||now.text!==row.text||now.deliveryProfile!=='v3-inspired-v4:tense'||row.model!=='eleven_v4'||!row.source.startsWith('act3/film/')||row.settings?.stability<.3||row.settings?.stability>.48||row.settings?.similarity_boost!==.85||result.has(row.lineKey))throw Error('Recovery does not match current approved cinematic source '+row.source);
+            if(!now||now.source!==row.source||now.hash!==row.hash||now.voiceId!==row.voiceId||now.text!==row.text||now.deliveryProfile!=='v3-inspired-v4:tense'||archive.model!=='eleven_v4'||!row.source.startsWith('act3/film/')||row.settings?.stability<.3||row.settings?.stability>.48||row.settings?.similarity_boost!==.85||result.has(row.lineKey))throw Error('Recovery does not match current approved cinematic source '+row.source);
             if(row.file!=='assets/voices/'+row.hash+'.mp3'||!/^[a-f0-9]{64}$/.test(row.hash))throw Error('Invalid original voice identity');
             const master=row.file.replace(/\.mp3$/,'.film-v4.mp3');
             for(const filename of [row.file,master]){
