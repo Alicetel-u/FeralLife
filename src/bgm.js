@@ -37,6 +37,14 @@ export function bedCue(actOne) {
   return 'normal';
 }
 
+// Choose the first-act resident theme from the conversation's cast, not the
+// portrait currently drawn. The landlord has no portrait, but Moku remains
+// in the room while the landlord or narration speaks.
+export function firstActMokuDialogueTheme(event,actOne) {
+  return !!event && actOne?.chapter !== 2 && Array.isArray(event.cast) &&
+    event.cast.includes('cat') && !event.cast.includes('hostess');
+}
+
 // Moku's theme during ordinary play, uneasy air after the first time leap, countdown on the game title,
 // a persona sting on a trouble card, the result fanfare on a cleared trouble,
 // the fire track through a bad ending, and the clock piece once the rewind dial appears.
