@@ -26,8 +26,15 @@ test('active repaired recordings keep new audio identities, repair comments and 
   assert.equal(reported.decisions[row.id].status,'ng');
   assert.notEqual(row.version,reported.decisions[row.id].version,text);
   assert.equal(row.repairReview,true);assert.match(row.repairComment,/再生成/);
-  assert.equal(clip.file,`assets/voices/${clip.hash}.repair.mp3`);
-  assert.equal(clip.audioMastering.tailPaddingSeconds,.25);assert.equal(clip.audioMastering.truePeakDBTP,-6);
+  if(clip.deliveryProfile?.startsWith('v3-inspired-v4:')){
+   assert.equal(clip.model,'eleven_v4');
+   assert.match(clip.file,/\.opening-v4\.mp3$/);
+   assert.equal(clip.audioQuality?.masteredForTrial,true);
+   assert.ok(clip.audioQuality?.durationSeconds>=.5);
+  }else{
+   assert.equal(clip.file,`assets/voices/${clip.hash}.repair.mp3`);
+   assert.equal(clip.audioMastering.tailPaddingSeconds,.25);assert.equal(clip.audioMastering.truePeakDBTP,-6);
+  }
   assert.equal(clip.fastFile,undefined);
  }
 });
@@ -58,7 +65,12 @@ test('smoke, freezer and standing-place corrections are applied only as spoken p
  };
  for(const [text,reading] of Object.entries(readings)){
   const row=planned.find(r=>r.text===text);assert.ok(row.request.text.includes(reading));assert.equal(row.line.text,text);
-  assert.equal(row.hash,VOICE_MANIFEST[row.lineKey].hash);
+  const current=VOICE_MANIFEST[row.lineKey];
+  if(current.deliveryProfile?.startsWith('v3-inspired-v4:')){
+   assert.equal(current.model,'eleven_v4');
+   assert.match(current.file,/\.opening-v4\.mp3$/);
+   assert.equal(current.audioQuality?.masteredForTrial,true);
+  }else assert.equal(row.hash,current.hash);
  }
 });
 
