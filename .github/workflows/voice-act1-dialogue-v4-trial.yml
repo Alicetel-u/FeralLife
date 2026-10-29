@@ -1,0 +1,160 @@
+name: Act 1 dialogue V4 trial - foyer through room before observation
+on:
+  push:
+    paths:
+      - .github/workflows/voice-act1-dialogue-v4-trial.yml
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: reviewed-voice-automation
+  cancel-in-progress: false
+jobs:
+  dialogue:
+    if: github.ref == 'refs/heads/main' && github.repository == 'Alicetel-u/FeralLife'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install audio tools
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+          ffprobe -version
+      - name: Limit generation to opening dialogue and approved V4 delivery
+        run: |
+          mkdir -p .local
+          node --input-type=module <<'JS'
+          import {readFile,writeFile} from 'node:fs/promises';
+          import {extractVoiceScript} from './tools/voice-script.mjs';
+          const selected=extractVoiceScript('intro').filter(r=>r.source.startsWith('foyer:')||r.source.startsWith('act1/opening:'));
+          const foyer=selected.filter(r=>r.source.startsWith('foyer:')),room=selected.filter(r=>r.source.startsWith('act1/opening:'));
+          if(foyer.length!==2||room.length!==11||selected.length!==13)throw Error('Unexpected current opening dialogue scope');
+          if(selected.some(r=>!['cat','manager'].includes(r.speaker)))throw Error('Unexpected voice speaker');
+          const raw=await readFile('config/voice-repairs.json','utf8');
+          await writeFile('.local/original-voice-repairs.json',raw);
+          const repairs=JSON.parse(raw),selectedKeys=new Set(selected.map(r=>JSON.stringify([r.speaker,r.line.text])));
+          for(const repair of repairs.lines)if(selectedKeys.has(JSON.stringify([repair.speaker,repair.text]))){
+            // Keep accepted spoken spelling corrections; the adopted V3-inspired V4 controls tags and settings.
+            delete repair.tags;
+            delete repair.settings;
+          }
+          await writeFile('config/voice-repairs.json',JSON.stringify(repairs,null,2)+'\n');
+          console.log('Verified actual game opening: '+foyer.length+' foyer + '+room.length+' room voices, no observation');
+          JS
+      - name: Prepare both independent plans and enforce one bounded charge
+        id: plans
+        run: |
+          node tools/voices.mjs --scope=intro --source-prefix=foyer --quiet
+          cp .local/voice-plan.json .local/opening-foyer-plan.json
+          node tools/voices.mjs --scope=intro --source-prefix=act1/opening --quiet
+          cp .local/voice-plan.json .local/opening-room-plan.json
+          node --input-type=module <<'JS'
+          import {readFile,appendFile} from 'node:fs/promises';
+          const foyer=JSON.parse(await readFile('.local/opening-foyer-plan.json','utf8'));
+          const room=JSON.parse(await readFile('.local/opening-room-plan.json','utf8'));
+          if(foyer.lines!==2||room.lines!==11||foyer.pending!==2||room.pending!==11||foyer.unique!==2||room.unique!==11)throw Error('Expected 13 newly generated, unique recordings');
+          if(foyer.estimatedCredits+room.estimatedCredits>3000)throw Error('Credit estimate over 3000; stop before paid API call');
+          for(const [p,source] of [[foyer,'foyer:'],[room,'act1/opening:']]){
+            if(p.model!=='eleven_v4')throw Error('Wrong model');
+            for(const row of p.rows){
+              if(!row.source.startsWith(source)||!['manager','cat'].includes(row.speaker))throw Error('Unexpected scope or speaker');
+              if(row.settings.stability!==0.5||row.settings.similarity_boost!==0.85)throw Error('Incorrect approved v4 settings');
+              if(!row.deliveryProfile?.startsWith('v3-inspired-v4:'))throw Error('Unapproved voice delivery');
+            }
+          }
+          await appendFile(process.env.GITHUB_OUTPUT,'foyer='+foyer.planId+'\nroom='+room.planId+'\n');
+          console.log(JSON.stringify({foyer:foyer.lines,room:room.lines,estimate:foyer.estimatedCredits+room.estimatedCredits}));
+          JS
+      - name: Generate only foyer's two spoken lines
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: node tools/voices.mjs --scope=intro --source-prefix=foyer --quiet --generate --approve=${{ steps.plans.outputs.foyer }}
+      - name: Generate only first-attempt room dialogue, ending before observation
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: node tools/voices.mjs --scope=intro --source-prefix=act1/opening --quiet --generate --approve=${{ steps.plans.outputs.room }}
+      - name: Restore existing repair directions and install 13 mastered clips
+        run: |
+          cp .local/original-voice-repairs.json config/voice-repairs.json
+          node --input-type=module <<'JS'
+          import {readFile,writeFile,stat} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          const foyer=JSON.parse(await readFile('.local/opening-foyer-plan.json','utf8')),room=JSON.parse(await readFile('.local/opening-room-plan.json','utf8'));
+          const rows=[...foyer.rows,...room.rows];
+          const {VOICE_MANIFEST}=await import('./src/voice-manifest.js');
+          const manifest={...VOICE_MANIFEST};
+          const duration={};
+          for(const row of rows){
+            const old=manifest[row.lineKey];
+            if(!old||old.file!==row.file||old.model!=='eleven_v4')throw Error('New raw audio not installed: '+row.source);
+            if((await stat(row.file)).size<1000)throw Error('Missing raw audio: '+row.source);
+            const mastered=row.file.replace(/\.mp3$/,'.opening-v4.mp3');
+            execFileSync('ffmpeg',['-hide_banner','-loglevel','error','-y','-i',row.file,'-af','loudnorm=I=-18:TP=-5:LRA=11,apad=pad_dur=0.20','-ar','44100','-codec:a','libmp3lame','-b:a','128k',mastered]);
+            const seconds=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',mastered],{encoding:'utf8'}).trim());
+            if(!Number.isFinite(seconds)||seconds<0.5||seconds>45)throw Error('Invalid generated recording duration: '+row.source);
+            manifest[row.lineKey]={...old,file:mastered,repairReview:true,repairComment:'第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。',audioQuality:{masteredForTrial:true,durationSeconds:seconds}};
+            duration[row.source]=Number(seconds.toFixed(2));
+          }
+          await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
+          console.log('Mastered and installed: '+JSON.stringify(duration));
+          JS
+      - name: Build and run entire test suite
+        run: |
+          npm run build
+          npm test
+      - name: Commit only targeted files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          const paths=['src/voice-manifest.js','src/voice-review-catalog.js','src/voice-review-published.js'];
+          for(const name of ['foyer','room']){
+            const plan=JSON.parse(await readFile('.local/opening-'+name+'-plan.json','utf8'));
+            for(const row of plan.rows)paths.push(row.file,row.file.replace(/\.mp3$/,'.opening-v4.mp3'));
+          }
+          execFileSync('git',['add','--',...paths],{stdio:'inherit'});
+          JS
+          git diff --cached --stat
+          git diff --cached --quiet && { echo 'No audio changes'; exit 1; }
+          git commit -m 'Replace first-act pre-observation dialogue with approved V3-inspired v4 voices'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Deploy Pages explicitly after bot commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
+      - name: Preserve completed audio and journals on failure without retrying paid calls
+        if: failure()
+        run: |
+          mkdir -p .local/opening-recovery
+          node --input-type=module <<'JS'
+          import {readFile,copyFile} from 'node:fs/promises';
+          for(const f of ['.local/opening-foyer-plan.json','.local/opening-room-plan.json','.local/voice-journal.json']){
+            try{await copyFile(f,'.local/opening-recovery/'+f.split('/').at(-1));}catch{}
+          }
+          for(const name of ['foyer','room']){
+            let p;try{p=JSON.parse(await readFile('.local/opening-'+name+'-plan.json','utf8'));}catch{continue;}
+            for(const row of p.rows)for(const f of [row.file,row.file.replace(/\.mp3$/,'.opening-v4.mp3')]){
+              try{await copyFile(f,'.local/opening-recovery/'+f.split('/').at(-1));}catch{}
+            }
+          }
+          JS
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: act1-pre-observation-voice-recovery-${{ github.run_id }}
+          path: .local/opening-recovery/
+          include-hidden-files: true
+          retention-days: 14
