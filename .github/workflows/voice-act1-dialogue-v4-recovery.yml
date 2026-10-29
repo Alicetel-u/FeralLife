@@ -1,0 +1,109 @@
+name: Publish recovered first-act dialogue v4 without additional API charge
+on:
+  push:
+    paths:
+      - .github/workflows/voice-act1-dialogue-v4-recovery.yml
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: reviewed-voice-automation
+  cancel-in-progress: false
+jobs:
+  recover:
+    if: github.ref == 'refs/heads/main' && github.repository == 'Alicetel-u/FeralLife'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install audio inspection tools
+        run: |
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+      - name: Restore thirteen paid recordings from the completed artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .local/recovered
+          gh run download 40914209367 -n act1-pre-observation-voice-recovery-40914209367 -D .local/recovered
+          node --input-type=module <<'JS'
+          import {readFile,writeFile,copyFile,stat,mkdir} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {extractVoiceScript} from './tools/voice-script.mjs';
+          const plans=[];
+          for(const n of ['foyer','room'])plans.push(JSON.parse(await readFile('.local/recovered/opening-'+n+'-plan.json','utf8')));
+          if(plans[0].lines!==2||plans[1].lines!==11||plans.some(p=>p.model!=='eleven_v4'))throw Error('Artifact does not match precisely the planned 13 recorded dialogues');
+          const selected=extractVoiceScript('intro').filter(r=>r.source.startsWith('foyer:')||r.source.startsWith('act1/opening:'));
+          const bySource=new Map(selected.map(r=>[r.source,r]));
+          if(selected.length!==13)throw Error('Current first-act dialogue source has changed');
+          const rows=plans.flatMap(p=>p.rows);
+          if(rows.length!==13||new Set(rows.map(r=>r.lineKey)).size!==13)throw Error('Missing or duplicate audio');
+          const {VOICE_MANIFEST}=await import('./src/voice-manifest.js');
+          const manifest={...VOICE_MANIFEST};
+          await mkdir('assets/voices',{recursive:true});
+          let totalSeconds=0;
+          for(const row of rows){
+            const sourceRow=bySource.get(row.source);
+            if(!sourceRow||row.lineKey!==sourceRow.lineKey||row.text!==sourceRow.line.text)throw Error('Game text changed since paid recordings: '+row.source);
+            if(!['manager','cat'].includes(row.speaker)||row.settings?.stability!==.5||row.settings?.similarity_boost!==.85||!row.deliveryProfile?.startsWith('v3-inspired-v4:'))throw Error('Unapproved voice data');
+            if(!/^[a-f0-9]{64}$/.test(row.hash)||!row.file.endsWith(row.hash+'.mp3'))throw Error('Unexpected hash/file');
+            const raw=row.file,mastered=row.file.replace(/\.mp3$/,'.opening-v4.mp3');
+            for(const file of [raw,mastered]){
+              const sourceFile='.local/recovered/'+file.split('/').at(-1);
+              if((await stat(sourceFile)).size<1000)throw Error('Missing recovered MP3 '+file);
+              await copyFile(sourceFile,file);
+            }
+            const seconds=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',mastered],{encoding:'utf8'}).trim());
+            if(!Number.isFinite(seconds)||seconds<.5||seconds>45)throw Error('Invalid mastered duration for '+row.source);
+            totalSeconds+=seconds;
+            manifest[row.lineKey]={
+              file:mastered,hash:row.hash,source:row.source,speaker:row.speaker,
+              text:row.text,performance:row.performance,deliveryProfile:row.deliveryProfile,
+              model:'eleven_v4',repairReview:true,
+              repairComment:'第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。',
+              audioQuality:{masteredForTrial:true,durationSeconds:seconds}
+            };
+          }
+          const keys=rows.map(r=>r.lineKey);
+          if(keys.some(k=>!manifest[k]?.file.endsWith('.opening-v4.mp3')))throw Error('A first-act voice was not installed');
+          const originalPrologue=Object.values(VOICE_MANIFEST).filter(clip=>clip.source==='prologue:1'||clip.source==='prologue:5');
+          if(originalPrologue.length!==2||originalPrologue.some(clip=>manifest[JSON.stringify([clip.speaker,clip.text,clip.performance,false])]?.file!==clip.file))throw Error('Existing adopted prologue recordings changed unexpectedly');
+          await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
+          console.log('Recovered '+rows.length+' completed clips, '+totalSeconds.toFixed(2)+' seconds, no ElevenLabs request');
+          JS
+      - name: Build and test complete game
+        run: |
+          npm run build
+          npm test
+      - name: Commit only the thirteen recordings and manifest
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          const paths=['src/voice-manifest.js','src/voice-review-catalog.js','src/voice-review-published.js'];
+          for(const name of ['foyer','room']){
+            const p=JSON.parse(await readFile('.local/recovered/opening-'+name+'-plan.json','utf8'));
+            for(const r of p.rows)paths.push(r.file,r.file.replace(/\.mp3$/,'.opening-v4.mp3'));
+          }
+          execFileSync('git',['add','--',...paths],{stdio:'inherit'});
+          JS
+          git diff --cached --stat
+          git diff --cached --quiet && { echo 'Missing audio changes'; exit 1; }
+          git commit -m 'Publish thirteen adopted V4 pre-observation conversation clips'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Trigger final Pages deployment explicitly
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
