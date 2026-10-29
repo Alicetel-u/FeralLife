@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
-import { NORMAL_BGM_SRC, MOKU_BGM_SRC, LUNA_BGM_SRC, DUEL_BGM_SRC, OPENING_BGM_SRC, CLOCK_BGM_SRC, UNEASY_BGM_SRC, bedCue, createNormalBgm } from '../src/bgm.js';
+import { NORMAL_BGM_SRC, MOKU_BGM_SRC, LUNA_BGM_SRC, DUEL_BGM_SRC, OPENING_BGM_SRC, CLOCK_BGM_SRC, UNEASY_BGM_SRC, bedCue, createNormalBgm, firstActMokuDialogueTheme } from '../src/bgm.js';
 import {DUEL_INTRO,duelEncounterLines,duelEndingLines} from '../src/act-two-duel.js';
 import {duelStageHTML} from '../src/act-two-duel-stage.js';
 import {eventConversation} from '../src/event-stage.js';
@@ -48,11 +48,57 @@ test('Luna conversations keep her theme with Moku present while dedicated scene 
   ]){
     let cue;
     const context={document:{hidden:false},state:{actOne:{chapter:2},events:[{id:1,...event}]},eventView:{id:1,index:0},
-      eventConversation:()=>[line],bedCue:()=> 'normal',
+      eventConversation:()=>[line],bedCue:()=> 'normal',firstActMokuDialogueTheme,
       modal:{open:true,classList:{contains:()=>true},querySelector:s=>s.split(',').some(part=>visible.includes(part))?{dataset:{}}:null},
       normalBgm:{setScene:(_,name)=>{cue=name;}}};
     vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);assert.equal(cue,expected);
   }
+});
+
+test('First-act Moku music continues throughout the landlord narration and speech without a portrait',async()=>{
+  const {createActOne}=await import('../src/act-one.js');
+  const {eventStageHTML}=await import('../src/event-stage.js');
+  const {voiceLineKey}=await import('../src/voice-policy.js');
+  const {VOICE_MANIFEST}=await import('../src/voice-manifest.js');
+  const {createVoicePlayer}=await import('../src/voice-player.js');
+  const app=await readFile(new URL('../src/app.js',import.meta.url),'utf8');
+  const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
+  const state=createActOne(1),event=state.events[0],lines=eventConversation(event);
+  const moku=fakeAudio(),normal=fakeAudio(),bgm=createNormalBgm(normal,fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),moku);
+  const videos=[];
+  const voice=createVoicePlayer({storage:null,manifest:VOICE_MANIFEST,makeAudio:()=>{const item={src:'',play(){return Promise.resolve()},pause(){},removeAttribute(){},load(){}};videos.push(item);return item;}});
+  await bgm.unlock();
+  for(let i=0;i<lines.length;i++){
+    const line=lines[i],html=eventStageHTML(event,state.residents,i);
+    const mokuPortrait=html.includes('data-character="cat"');
+    if(line.speaker==='manager')assert.equal(mokuPortrait,false,'manager does not draw Moku portrait');
+    let cue=null;
+    const context={document:{hidden:false},state:{actOne:{chapter:1},events:[event]},eventView:{id:event.id,index:i},
+      eventConversation:()=>lines,bedCue:()=> 'normal',firstActMokuDialogueTheme,
+      modal:{open:true,classList:{contains:()=>true},querySelector:s=>{
+        if(s.includes('stage-character[data-character="cat"]')&&mokuPortrait)return {dataset:{}};
+        return null;
+      }},
+      normalBgm:{setScene:(_,next)=>{cue=next;}}};
+    vm.createContext(context);
+    vm.runInContext(source+'\nsyncNormalBgm();',context);
+    assert.equal(cue,'moku','First-act scene should keep Moku track for '+line.speaker+': '+line.text);
+    await bgm.setScene(false,cue);
+    if(i===1)moku.currentTime=19;
+    assert.equal(moku.paused,false);assert.equal(normal.paused,true);
+    if(i>1)assert.equal(moku.currentTime,19,'Music must not restart on each speaker');
+    if(line.speaker==='manager'){
+      const entry=VOICE_MANIFEST[voiceLineKey(line)];
+      assert.ok(entry,'Manager line missing from current manifest: '+line.text);
+      assert.equal(entry.model,'eleven_v4');
+      assert.match(entry.file,/\\.opening-v4\\.mp3$/);
+      voice.play(line,'test:'+i);
+      assert.equal(videos.at(-1).src,entry.file,'Player must use the newly installed V4 recording');
+    }
+  }
+  voice.stop();
+  assert.equal(firstActMokuDialogueTheme({cast:['cat']},{chapter:2}),false,'Second act is unaffected');
+  assert.equal(firstActMokuDialogueTheme({cast:['hostess']},{chapter:1}),false,'Luna scenes are unaffected');
 });
 
 test('duel music loops continuously across dialogue, obeys controls and stops for results',async()=>{
