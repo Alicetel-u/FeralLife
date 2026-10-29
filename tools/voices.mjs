@@ -19,6 +19,8 @@ const atomic=async(path,data)=>{
 };
 const args=process.argv.slice(2),scope=args.find(a=>a.startsWith('--scope='))?.split('=')[1]||'intro';
 const ids=normalizeVoiceIds(await json('config/voice-ids.json')),config=await json('config/voice-performance.json');
+// Future production generation uses the adopted delivery; playback keys remain unchanged.
+config.generationDefaults=await json('config/voice-generation-defaults.json');
 const sampleMoku=args.includes('--sample-moku');
 if(sampleMoku&&scope!=='intro')throw Error('Moku sample requires intro scope');
 const firstTragedy=args.includes('--first-tragedy');
@@ -78,12 +80,12 @@ const unique=[...new Map(rows.map(r=>[r.hash,r])).values()];
 const pending=[];
 for(const row of unique)if(!await exists(row.file))pending.push(row);
 const estimate=pending.reduce((n,r)=>n+r.billableCharacters*config.estimatedCreditsPerCharacter,0);
-const report={scope,planId,model:[...new Set(rows.map(row=>row.request.model_id))].join(',')||config.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true,pronunciationReview,rows:rows.map(({line,request,...row})=>({...row,spokenInput:request.text,settings:request.voice_settings,tags:config.profiles[row.performance].tags}))};
+const report={scope,planId,model:[...new Set(rows.map(row=>row.request.model_id))].join(',')||config.generationDefaults?.model||config.model,lines:rows.length,unique:unique.length,pending:pending.length,estimatedCredits:estimate,estimateOnly:true,pronunciationReview,rows:rows.map(({line,request,...row})=>({...row,spokenInput:request.text,settings:request.voice_settings,tags:request.text.match(/\[[^\]]+\]/g)||[]}))};
 await atomic('.local/voice-plan.json',JSON.stringify(report,null,2)+'\n');
 await atomic('.local/voice-plan.md',[
   fillMissing?'# 第一幕・第二幕の不足ボイス補完':scope==='act2-duel'?'# ミニゲームボイス・生成計画':'# 序盤ボイス・生成前確認',
   '',`対象: ${scope} / ${rows.length}件 / 新規 ${pending.length}件 / 推定 ${estimate}クレジット（実残高とは別）`,
-  `モデル: ${config.model} / 承認ID: ${planId}`,
+  `モデル: ${report.model} / 承認ID: ${planId}`,
   '', scope==='act2-duel'?'ミニゲーム4戦の掛け合い・全選択肢・奥義と勝利の掛け声が対象。立ち絵の導入・BAD END・ナレーションは含みません。':scope==='intro'?'独り言は操作タイミングで表示順や有無が変わります。ナレーション・手紙・選択肢後の返答は含みません。':'選択肢の全分岐・周回・エピローグを含みます。ナレーション・手紙は除外します。',
   '', '|順|話者|演技|本文文字数|台詞|','|---:|---|---|---:|---|',
   ...rows.map((r,i)=>`|${i+1}|${r.speaker}|${r.performance}|${r.characters}|${r.text.replaceAll('\n',' / ').replaceAll('|','\\|')}|`),
@@ -172,6 +174,6 @@ try{
 async function publish(){
   let manifest={};
   const module=await import('../src/voice-manifest.js?time='+Date.now());manifest={...module.VOICE_MANIFEST};
-  for(const row of rows)if(await exists(row.file))manifest[row.lineKey]={file:row.file,hash:row.hash,source:row.source,speaker:row.speaker,text:row.text,performance:fillMissing?voicePerformance(row.line):row.performance,...(fillMissing?{deliveryProfile:row.performance}:{}),model:row.request.model_id};
+  for(const row of rows)if(await exists(row.file))manifest[row.lineKey]={file:row.file,hash:row.hash,source:row.source,speaker:row.speaker,text:row.text,performance:fillMissing?voicePerformance(row.line):row.performance,...(fillMissing?{deliveryProfile:row.performance}:{}),...(row.deliveryProfile?{deliveryProfile:row.deliveryProfile}:{}),model:row.request.model_id};
   await atomic('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
 }

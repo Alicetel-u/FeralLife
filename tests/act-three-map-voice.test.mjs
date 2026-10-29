@@ -11,7 +11,9 @@ test('implemented third-act dialogue uses projected v4 performances with Mimi an
  const rows=extractVoiceScript('act3-current');
  assert.equal(rows.length,106);
  const load=async p=>JSON.parse(await readFile(new URL('../'+p,import.meta.url),'utf8'));
- const plan=planVoices(rows,await load('config/voice-ids.json'),await load('config/voice-performance.json'),(await load('config/voice-pronunciation-issues.json')).issues,(await load('config/voice-repairs.json')).lines);
+ // These already published recordings predate Mimi's Hina adoption.
+ const historicalIds=await load('config/voice-ids.json');historicalIds.characters.rabbit.voiceId='iTqcz0mjbxzCZAfsqojU';
+ const plan=planVoices(rows,historicalIds,await load('config/voice-performance.json'),(await load('config/voice-pronunciation-issues.json')).issues,(await load('config/voice-repairs.json')).lines);
  const reach=tracePlayableVoiceLines(VOICE_MANIFEST),catalog=new Set(VOICE_REVIEW_CATALOG.map(r=>r.id));
  for(const row of plan){
   assert.equal(row.request.model_id,'eleven_v4');assert.equal(row.request.voice_settings.stability,.5);

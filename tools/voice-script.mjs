@@ -187,17 +187,25 @@ export function planVoices(rows,ids,config,pronunciations=[],repairs=[]){
   ids=normalizeVoiceIds(ids);
   return rows.map(row=>{
     const profile=config.profiles[row.performance];
-    const model=profile.model||config.model;
+    const adopted=config.generationDefaults,character=adopted?.characters?.[row.speaker];
+    const tense=!!row.line.collapse||['sad','surprised','angry','tired'].includes(row.line.emotion)||/panic|shocked|startled|resolute|serious|firm|tense|tragedy|film/.test(row.performance);
+    const adoptedTags=character?.[tense?'tense':'casual'];
+    const model=adopted?.model||profile.model||config.model;
     if(!['eleven_v3','eleven_v4'].includes(model)&&profile.tags.length)throw Error('Audio tags require the reviewed eleven_v3 model');
     // Change only the spoken spelling; displayed dialogue and lookup keys stay canonical.
     const duelReadings=row.performance.startsWith('duel-')?[{term:'大家流',reading:'おおやりゅう'},{term:'漢気',reading:'おとこぎ'},{term:'煙ノ',reading:'けむりの'},{term:'肉球乱舞',reading:'にくきゅうらんぶ'}]:[];
     const filmReadings=row.performance==='luna-film-tense'?[{term:'入居者',reading:'にゅうきょしゃ'},{term:'募集',reading:'ぼしゅう'}]:[];
     const repair=repairs.find(r=>r.speaker===row.speaker&&r.text===row.line.text);
     const spokenText=voiceRoomNumberReading(repair?.spokenText??[...filmReadings,...duelReadings,...pronunciations].sort((a,b)=>b.term.length-a.term.length).reduce((text,rule)=>text.replaceAll(rule.term,rule.reading),row.line.text));
-    const request={text:[...(repair?.tags||profile.tags),spokenText].join(' '),model_id:model,voice_settings:{...profile.settings,...repair?.settings}};
+    const tags=repair?.tags||adoptedTags||profile.tags;
+    // Keep explicitly authored grief/panic on top of the character's restrained delivery.
+    const crisis=adoptedTags&&/shocked|tragedy|film-tense/.test(row.performance)?profile.tags.filter(tag=>/shocked|disbelieving|panicked|urgent|crying|sad/.test(tag)):[];
+    const settings={...profile.settings,...adopted?.settings,...repair?.settings};
+    if(model==='eleven_v4')for(const key of Object.keys(settings))if(!['stability','similarity_boost'].includes(key))delete settings[key];
+    const request={text:[...new Set([...crisis,...tags]),spokenText].join(' '),model_id:model,voice_settings:settings};
     if(/\[(?:softly|whispers?|whispering|mumbling)\]/i.test(request.text))throw Error('Voice delivery must be clear and projected; whisper/mumble tags are disabled');
-    const voiceId=ids[row.speaker]||null;
+    const voiceId=character?.voiceId||ids[row.speaker]||null;
     const hash=digest({voiceId,request,performance:row.performance,format:config.outputFormat});
-    return {...row,text:row.line.text,voiceId,request,hash,file:'assets/voices/'+hash+'.mp3',characters:Array.from(row.line.text).length,billableCharacters:Array.from(request.text).length,direction:profile.direction};
+    return {...row,...(adopted?{deliveryProfile:adopted.delivery+(character?(tense?':tense':':casual'):'')}:{}),text:row.line.text,voiceId,request,hash,file:'assets/voices/'+hash+'.mp3',characters:Array.from(row.line.text).length,billableCharacters:Array.from(request.text).length,direction:profile.direction};
   });
 }

@@ -1,0 +1,68 @@
+{
+  "status": "user-approved",
+  "adoptedAt": "2026-10-30",
+  "model": "eleven_v4",
+  "delivery": "v3-inspired-v4",
+  "settings": {
+    "stability": 0.5,
+    "similarity_boost": 0.85
+  },
+  "characters": {
+    "manager": {
+      "voiceId": "vY4PC2kSleyw73YRUOI6",
+      "name": "大家",
+      "casual": [
+        "[conversational]",
+        "[dry, mildly exasperated delivery]",
+        "[unhurried, clearly audible voice]"
+      ],
+      "tense": [
+        "[serious]",
+        "[restrained, dry delivery]",
+        "[firm, clearly audible voice]"
+      ]
+    },
+    "cat": {
+      "voiceId": "0ptCJp0xgdabdcpVtCB5",
+      "name": "モク",
+      "casual": [
+        "[conversational]",
+        "[languid, mildly sulky delivery]",
+        "[drawn-out sentence endings, clearly audible]"
+      ],
+      "tense": [
+        "[startled]",
+        "[slightly raspy, drawn-out complaint]",
+        "[clear voice]"
+      ]
+    },
+    "hostess": {
+      "voiceId": "0sLdAOQEyDDSrsr4uwND",
+      "name": "ルナ",
+      "casual": [
+        "[playful]",
+        "[sweet, teasing delivery]",
+        "[smiling, lilting sentence endings]"
+      ],
+      "tense": [
+        "[surprised]",
+        "[sweet, expressive voice]",
+        "[clear voice]"
+      ]
+    },
+    "rabbit": {
+      "voiceId": "lhTvHflPVOqgSWyuWQry",
+      "name": "ミミ",
+      "casual": [
+        "[bright, childlike character voice]",
+        "[innocent]",
+        "[clear, full voice]"
+      ],
+      "tense": [
+        "[scared]",
+        "[young, childlike voice]",
+        "[clear, projected voice]"
+      ]
+    }
+  }
+}

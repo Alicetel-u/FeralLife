@@ -10,7 +10,7 @@ test('all four auditions compare the same playable lines, stay out of the game m
  assert.doesNotMatch(page,/autoplay/i);assert.equal((page.match(/preload="none"/g)||[]).length,16);
  const rows=extractVoiceScript('act3-current'),pronunciations=JSON.parse(await readFile('config/voice-pronunciation-issues.json','utf8')).issues;
  const ids=JSON.parse(await readFile('config/voice-ids.json','utf8')).characters;
- assert.notEqual(config.characters.rabbit.voiceId,ids.rabbit.voiceId);
+ assert.equal(config.characters.rabbit.voiceId,ids.rabbit.voiceId);
  for(const [speaker,character] of Object.entries(config.characters)){
   assert.equal(character.samples.length,2);
   if(speaker!=='rabbit')assert.equal(character.voiceId,ids[speaker].voiceId);
