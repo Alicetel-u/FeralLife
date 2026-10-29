@@ -22,7 +22,9 @@ test('every authored landlord, Moku and Luna line has a playable recording acros
    }else{
     assert.equal(clip.deliveryProfile,{manager:'duel-manager',cat:'duel-moku',hostess:'duel-luna'}[row.speaker]);
    }
-   assert.equal(clip.fastFile,undefined,'approved samples play at their recorded speed');
+   if(clip.deliveryProfile.startsWith('v3-inspired-v4')&&String(clip.performance).startsWith('duel-')){
+    assert.match(clip.fastFile,/\.duel-v4\.(attack|pace)\.mp3$/,'Battle voices use mastered tempo files at native player rate');
+   }else assert.equal(clip.fastFile,undefined,'Other approved samples play at their recorded speed');
   }
  }
  assert.ok(rows.some(row=>row.line.epilogueScene==='secret'));
