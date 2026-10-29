@@ -5514,9 +5514,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/e6c73eb37d83ea27f4ab6f70905d62438dd2b1dd5a7e057138e22f04d2eb77e9.duel-v4.pace.mp3"
   },
   "[\"cat\",\"モクも大家におはようって言ったニャ。危なかったニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/46bfcad64b3f83c54fb7b2ba5f2c9bab9f00a57f37ac5d4961a1b84403801ff0.duel-v4.mp3",
-    "fastFile": "assets/voices/46bfcad64b3f83c54fb7b2ba5f2c9bab9f00a57f37ac5d4961a1b84403801ff0.duel-v4.pace.mp3",
-    "hash": "46bfcad64b3f83c54fb7b2ba5f2c9bab9f00a57f37ac5d4961a1b84403801ff0",
+    "file": "assets/voices/565ba289d3a859a20be41f805bc67c576e0b42d21b83bd2188bdccf57f2ad9cd.duel-v4.mp3",
+    "fastFile": "assets/voices/565ba289d3a859a20be41f805bc67c576e0b42d21b83bd2188bdccf57f2ad9cd.duel-v4.pace.mp3",
+    "hash": "565ba289d3a859a20be41f805bc67c576e0b42d21b83bd2188bdccf57f2ad9cd",
     "source": "act2/duel/round-0:2",
     "speaker": "cat",
     "text": "モクも大家におはようって言ったニャ。危なかったニャ。",
@@ -5524,15 +5524,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 6.60898
+      "durationSeconds": 4.519184
     }
   },
   "[\"manager\",\"こいつの明日は、俺が守る！\",\"duel-manager-attack\",false]": {
@@ -5580,9 +5581,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/ef508b6a098315d08dc863e1d845a28272b7d20f9619d80d4e88abf99c790f37.duel-v4.pace.mp3"
   },
   "[\"cat\",\"大家、一日だけの彼氏が明日の予約まで取ってるニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/ae51eed0a4864d9d9d775581cc8cc9238d71be35396c99b03522b08c36b40513.duel-v4.mp3",
-    "fastFile": "assets/voices/ae51eed0a4864d9d9d775581cc8cc9238d71be35396c99b03522b08c36b40513.duel-v4.pace.mp3",
-    "hash": "ae51eed0a4864d9d9d775581cc8cc9238d71be35396c99b03522b08c36b40513",
+    "file": "assets/voices/f28cf70b644c3d31edb90e125b2ef46871e04f5fca690d571515f67b1c55ab00.duel-v4.mp3",
+    "fastFile": "assets/voices/f28cf70b644c3d31edb90e125b2ef46871e04f5fca690d571515f67b1c55ab00.duel-v4.pace.mp3",
+    "hash": "f28cf70b644c3d31edb90e125b2ef46871e04f5fca690d571515f67b1c55ab00",
     "source": "act2/duel/0/vow:3",
     "speaker": "cat",
     "text": "大家、一日だけの彼氏が明日の予約まで取ってるニャ。",
@@ -5590,15 +5591,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 6.844082
+      "durationSeconds": 4.832653
     }
   },
   "[\"manager\",\"警備の話だ！！ 予約は取ってねぇ！\",\"duel-manager\",false]": {
@@ -5690,9 +5692,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/5f3b910c414de52d04ce06d6212312c04e707102b05308cab9303a1ab7a65219.duel-v4.pace.mp3"
   },
   "[\"cat\",\"勝手にモクの縁談をまとめるなニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/6975524fbc7c4674fef8715e5bf6e7270483778fbdcb936ad92e726c35bb7be2.duel-v4.mp3",
-    "fastFile": "assets/voices/6975524fbc7c4674fef8715e5bf6e7270483778fbdcb936ad92e726c35bb7be2.duel-v4.pace.mp3",
-    "hash": "6975524fbc7c4674fef8715e5bf6e7270483778fbdcb936ad92e726c35bb7be2",
+    "file": "assets/voices/afc4a6372c1e49dc064198019022e686565f0df860269f7b0afc74c5631e2657.duel-v4.mp3",
+    "fastFile": "assets/voices/afc4a6372c1e49dc064198019022e686565f0df860269f7b0afc74c5631e2657.duel-v4.pace.mp3",
+    "hash": "afc4a6372c1e49dc064198019022e686565f0df860269f7b0afc74c5631e2657",
     "source": "act2/duel/0/help:1",
     "speaker": "cat",
     "text": "勝手にモクの縁談をまとめるなニャ。",
@@ -5700,21 +5702,22 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 5.250612
+      "durationSeconds": 3.004082
     }
   },
   "[\"cat\",\"その縁談、お断りニャ！！\",\"duel-moku-attack\",false]": {
-    "file": "assets/voices/4704576f6457434dd84c1420b1b4475dc84741701c44f370c70ca7604d487948.duel-v4.mp3",
-    "fastFile": "assets/voices/4704576f6457434dd84c1420b1b4475dc84741701c44f370c70ca7604d487948.duel-v4.attack.mp3",
-    "hash": "4704576f6457434dd84c1420b1b4475dc84741701c44f370c70ca7604d487948",
+    "file": "assets/voices/67b9af8889c2c391dc329de7aab96cef6e0c6f3ce34494d17b69bf2509f1c47a.duel-v4.mp3",
+    "fastFile": "assets/voices/67b9af8889c2c391dc329de7aab96cef6e0c6f3ce34494d17b69bf2509f1c47a.duel-v4.attack.mp3",
+    "hash": "67b9af8889c2c391dc329de7aab96cef6e0c6f3ce34494d17b69bf2509f1c47a",
     "source": "act2/duel/0/help:2",
     "speaker": "cat",
     "text": "その縁談、お断りニャ！！",
@@ -5722,15 +5725,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:tense",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.12
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 5.955918
+      "durationSeconds": 2.586122
     }
   },
   "[\"hostess\",\"あたしの代わりにモクちゃんを差し出すの……？ 大家さん、そこは頑張ってよ。\",\"duel-luna\",false]": {
@@ -5756,9 +5760,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/7f06e5606b88f83a1d4c46580415f8f5301dead99a3c6afdef440cf45c85d84d.duel-v4.pace.mp3"
   },
   "[\"cat\",\"仲人料じゃなくて迷惑料を払うニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/c1330a6bcb7a5f1e9b9c95382d320be7b9797d59fe301a1edb47415f47fef3a5.duel-v4.mp3",
-    "fastFile": "assets/voices/c1330a6bcb7a5f1e9b9c95382d320be7b9797d59fe301a1edb47415f47fef3a5.duel-v4.pace.mp3",
-    "hash": "c1330a6bcb7a5f1e9b9c95382d320be7b9797d59fe301a1edb47415f47fef3a5",
+    "file": "assets/voices/82607a558f604c5413fe22b112fa1f2c98766428f217dc93c12f2463d1f4a3bf.duel-v4.mp3",
+    "fastFile": "assets/voices/82607a558f604c5413fe22b112fa1f2c98766428f217dc93c12f2463d1f4a3bf.duel-v4.pace.mp3",
+    "hash": "82607a558f604c5413fe22b112fa1f2c98766428f217dc93c12f2463d1f4a3bf",
     "source": "act2/duel/0/help:5",
     "speaker": "cat",
     "text": "仲人料じゃなくて迷惑料を払うニャ。",
@@ -5766,15 +5770,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 5.564082
+      "durationSeconds": 3.474286
     }
   },
   "[\"hostess\",\"そんなに買ってたの……？\",\"duel-luna\",false]": {
@@ -5844,9 +5849,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/e9651fddf9c3b9d82e1aac458a0839a9dcd9a4affca8e620beea006a2696b960.duel-v4.pace.mp3"
   },
   "[\"cat\",\"本人より先に枕が入居しそうニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/9e8162f1791e5fb50fdd6fe19fc55ba9dc0fb31a315416bb3e35d1d928eaac5d.duel-v4.mp3",
-    "fastFile": "assets/voices/9e8162f1791e5fb50fdd6fe19fc55ba9dc0fb31a315416bb3e35d1d928eaac5d.duel-v4.pace.mp3",
-    "hash": "9e8162f1791e5fb50fdd6fe19fc55ba9dc0fb31a315416bb3e35d1d928eaac5d",
+    "file": "assets/voices/aab6d5460a39c6ca9c2aa7e2987ae6b1beb92421543e70edf9fff94939385aa4.duel-v4.mp3",
+    "fastFile": "assets/voices/aab6d5460a39c6ca9c2aa7e2987ae6b1beb92421543e70edf9fff94939385aa4.duel-v4.pace.mp3",
+    "hash": "aab6d5460a39c6ca9c2aa7e2987ae6b1beb92421543e70edf9fff94939385aa4",
     "source": "act2/duel/round-1:4",
     "speaker": "cat",
     "text": "本人より先に枕が入居しそうニャ。",
@@ -5854,15 +5859,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 5.799184
+      "durationSeconds": 3.317551
     }
   },
   "[\"manager\",\"金額でこいつの笑顔は買わせねぇ！\",\"duel-manager-attack\",false]": {
@@ -5910,9 +5916,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/ae1a2b7a7858dd3ed54ec4556cd7733ac1a1285f0ee510cec49bab2e7dcb2ff0.duel-v4.pace.mp3"
   },
   "[\"cat\",\"無料の笑顔がいちばん高くつきそうニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/a37ece0b9a0cd3810305f26f8f3f3289b8dd82da2283f37c66b4e909520f47fa.duel-v4.mp3",
-    "fastFile": "assets/voices/a37ece0b9a0cd3810305f26f8f3f3289b8dd82da2283f37c66b4e909520f47fa.duel-v4.pace.mp3",
-    "hash": "a37ece0b9a0cd3810305f26f8f3f3289b8dd82da2283f37c66b4e909520f47fa",
+    "file": "assets/voices/3223baca9dc8c8018ff0f1b0236a7f7d8fcc2c21ba6fce15d1f79e5f137930fc.duel-v4.mp3",
+    "fastFile": "assets/voices/3223baca9dc8c8018ff0f1b0236a7f7d8fcc2c21ba6fce15d1f79e5f137930fc.duel-v4.pace.mp3",
+    "hash": "3223baca9dc8c8018ff0f1b0236a7f7d8fcc2c21ba6fce15d1f79e5f137930fc",
     "source": "act2/duel/1/shield:3",
     "speaker": "cat",
     "text": "無料の笑顔がいちばん高くつきそうニャ。",
@@ -5920,15 +5926,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 5.642449
+      "durationSeconds": 3.395918
     }
   },
   "[\"manager\",\"勝手に見積もるな。俺は買ってねぇ。\",\"duel-manager\",false]": {
@@ -5998,9 +6005,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/8f70acac3e1bb01dda09c1dc43054594ad198b5e0bdc1e26c92b2e6d7a07dad1.duel-v4.pace.mp3"
   },
   "[\"cat\",\"便乗して貢がせる相手を増やすなニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/7f537c04330c70f34c25da2ed4196036a6395cfbdaaffc7c90061d28ac70ef20.duel-v4.mp3",
-    "fastFile": "assets/voices/7f537c04330c70f34c25da2ed4196036a6395cfbdaaffc7c90061d28ac70ef20.duel-v4.pace.mp3",
-    "hash": "7f537c04330c70f34c25da2ed4196036a6395cfbdaaffc7c90061d28ac70ef20",
+    "file": "assets/voices/904729ed735d18b2b786ec023cf4f120e2ea6d6fb01416e38196501361ffa981.duel-v4.mp3",
+    "fastFile": "assets/voices/904729ed735d18b2b786ec023cf4f120e2ea6d6fb01416e38196501361ffa981.duel-v4.pace.mp3",
+    "hash": "904729ed735d18b2b786ec023cf4f120e2ea6d6fb01416e38196501361ffa981",
     "source": "act2/duel/1/discount:1",
     "speaker": "cat",
     "text": "便乗して貢がせる相手を増やすなニャ。",
@@ -6008,21 +6015,22 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 5.250612
+      "durationSeconds": 3.239184
     }
   },
   "[\"cat\",\"寝るだけならモクが無料で教えるニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/7673625c769ae4c6d8b743bf4825bfae9d1abd2a6c154e25f5244505bce0dbf9.duel-v4.mp3",
-    "fastFile": "assets/voices/7673625c769ae4c6d8b743bf4825bfae9d1abd2a6c154e25f5244505bce0dbf9.duel-v4.pace.mp3",
-    "hash": "7673625c769ae4c6d8b743bf4825bfae9d1abd2a6c154e25f5244505bce0dbf9",
+    "file": "assets/voices/9578579fd13eb5707b7b30a16fb7b91a1a92c44e373c2bd5acc9dda480653216.duel-v4.mp3",
+    "fastFile": "assets/voices/9578579fd13eb5707b7b30a16fb7b91a1a92c44e373c2bd5acc9dda480653216.duel-v4.pace.mp3",
+    "hash": "9578579fd13eb5707b7b30a16fb7b91a1a92c44e373c2bd5acc9dda480653216",
     "source": "act2/duel/round-2:2",
     "speaker": "cat",
     "text": "寝るだけならモクが無料で教えるニャ。",
@@ -6030,15 +6038,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 5.485714
+      "durationSeconds": 3.160816
     }
   },
   "[\"manager\",\"こいつの未来に、勝手な値札をつけるな！\",\"duel-manager-attack\",false]": {
@@ -6108,9 +6117,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/f4d8e86353dd8facc8ebfd70c08af6b43f19898c6e9e343b5f1509c87089e020.duel-v4.attack.mp3"
   },
   "[\"cat\",\"モクも掃除当番を断ったら終了でいいニャ？\",\"duel-moku\",false]": {
-    "file": "assets/voices/d7bbadc732845e4d29a8c4cb7cefa0b15c3509b05006c8c2d852700597ae1006.duel-v4.mp3",
-    "fastFile": "assets/voices/d7bbadc732845e4d29a8c4cb7cefa0b15c3509b05006c8c2d852700597ae1006.duel-v4.pace.mp3",
-    "hash": "d7bbadc732845e4d29a8c4cb7cefa0b15c3509b05006c8c2d852700597ae1006",
+    "file": "assets/voices/44c173e3557bcb5c3c420df869c3d2de5be5ab154b239493101f8d5a7a30d571.duel-v4.mp3",
+    "fastFile": "assets/voices/44c173e3557bcb5c3c420df869c3d2de5be5ab154b239493101f8d5a7a30d571.duel-v4.pace.mp3",
+    "hash": "44c173e3557bcb5c3c420df869c3d2de5be5ab154b239493101f8d5a7a30d571",
     "source": "act2/duel/2/cancel:3",
     "speaker": "cat",
     "text": "モクも掃除当番を断ったら終了でいいニャ？",
@@ -6118,15 +6127,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 6.347755
+      "durationSeconds": 3.63102
     }
   },
   "[\"manager\",\"それは勧誘じゃなくて当番だ。ほうきを持て。\",\"duel-manager\",false]": {
@@ -6174,9 +6184,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/e32de7673bba0f9dc5587d4e09ac1e8c170ef998f5edc18443562abcb316f360.duel-v4.pace.mp3"
   },
   "[\"cat\",\"講座は休講ニャ。いまから実技だけやるニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/aacf019ee8a7ae56190258ee567727f591876dc609068393ea07ccece915b98f.duel-v4.mp3",
-    "fastFile": "assets/voices/aacf019ee8a7ae56190258ee567727f591876dc609068393ea07ccece915b98f.duel-v4.pace.mp3",
-    "hash": "aacf019ee8a7ae56190258ee567727f591876dc609068393ea07ccece915b98f",
+    "file": "assets/voices/8ea69b6570321d5d08aed44eccb87a851c73dd23d6a969deb1260b301e7be281.duel-v4.mp3",
+    "fastFile": "assets/voices/8ea69b6570321d5d08aed44eccb87a851c73dd23d6a969deb1260b301e7be281.duel-v4.pace.mp3",
+    "hash": "8ea69b6570321d5d08aed44eccb87a851c73dd23d6a969deb1260b301e7be281",
     "source": "act2/duel/2/sleep:1",
     "speaker": "cat",
     "text": "講座は休講ニャ。いまから実技だけやるニャ。",
@@ -6184,21 +6194,22 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 7.079184
+      "durationSeconds": 3.866122
     }
   },
   "[\"cat\",\"迷惑営業、おやすみニャ！！\",\"duel-moku-attack\",false]": {
-    "file": "assets/voices/92031da8cdd5d93f73cb38e394e38d2cba6934085ba7d28a7e127e2f3e4ee14d.duel-v4.mp3",
-    "fastFile": "assets/voices/92031da8cdd5d93f73cb38e394e38d2cba6934085ba7d28a7e127e2f3e4ee14d.duel-v4.attack.mp3",
-    "hash": "92031da8cdd5d93f73cb38e394e38d2cba6934085ba7d28a7e127e2f3e4ee14d",
+    "file": "assets/voices/79a56b59379409996a265ad48264c90e5ba8828a113cafec302a1bd74454a73a.duel-v4.mp3",
+    "fastFile": "assets/voices/79a56b59379409996a265ad48264c90e5ba8828a113cafec302a1bd74454a73a.duel-v4.attack.mp3",
+    "hash": "79a56b59379409996a265ad48264c90e5ba8828a113cafec302a1bd74454a73a",
     "source": "act2/duel/2/sleep:2",
     "speaker": "cat",
     "text": "迷惑営業、おやすみニャ！！",
@@ -6206,15 +6217,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:tense",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.12
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 4.754286
+      "durationSeconds": 2.690612
     }
   },
   "[\"hostess\",\"大家さん、断るところまでモクちゃんに丸投げ……。無料だからって頼りすぎじゃない？\",\"duel-luna\",false]": {
@@ -6240,9 +6252,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/f8a7b2e6273272128ad8dbcb4da1464a1121d23dffbe7389e4ce45deae1e7852.duel-v4.pace.mp3"
   },
   "[\"cat\",\"無料なのは昼寝だけニャ。起こした分は有料ニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/30669e4f88467f47cc9f077a2c066adc7923d555e52bdf411913acd66e32b075.duel-v4.mp3",
-    "fastFile": "assets/voices/30669e4f88467f47cc9f077a2c066adc7923d555e52bdf411913acd66e32b075.duel-v4.pace.mp3",
-    "hash": "30669e4f88467f47cc9f077a2c066adc7923d555e52bdf411913acd66e32b075",
+    "file": "assets/voices/fe3f2d585dafbcac4bfadf3b407fde9cbbd427225079d764faf67ee97ff686f2.duel-v4.mp3",
+    "fastFile": "assets/voices/fe3f2d585dafbcac4bfadf3b407fde9cbbd427225079d764faf67ee97ff686f2.duel-v4.pace.mp3",
+    "hash": "fe3f2d585dafbcac4bfadf3b407fde9cbbd427225079d764faf67ee97ff686f2",
     "source": "act2/duel/2/sleep:5",
     "speaker": "cat",
     "text": "無料なのは昼寝だけニャ。起こした分は有料ニャ。",
@@ -6250,15 +6262,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 6.269388
+      "durationSeconds": 4.205714
     }
   },
   "[\"manager\",\"さっきまで普通に起きてただろ！\",\"duel-manager\",false]": {
@@ -6350,9 +6363,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/330ad1aa6cd772aa018c45a225430807d37a510f9892b44f2c8c5a0508b99ab3.duel-v4.pace.mp3"
   },
   "[\"cat\",\"奥義のあともその構えニャ？ 肩、つるニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/a90d05279dd17c7d687472c102afa26a3f827bed556c9edf79ed1e7242932589.duel-v4.mp3",
-    "fastFile": "assets/voices/a90d05279dd17c7d687472c102afa26a3f827bed556c9edf79ed1e7242932589.duel-v4.pace.mp3",
-    "hash": "a90d05279dd17c7d687472c102afa26a3f827bed556c9edf79ed1e7242932589",
+    "file": "assets/voices/6913ba3337565abdd30f09f0784ba5cf527ee72db6510755d09cf7e9246e8aaa.duel-v4.mp3",
+    "fastFile": "assets/voices/6913ba3337565abdd30f09f0784ba5cf527ee72db6510755d09cf7e9246e8aaa.duel-v4.pace.mp3",
+    "hash": "6913ba3337565abdd30f09f0784ba5cf527ee72db6510755d09cf7e9246e8aaa",
     "source": "act2/duel/3/ultimate:3",
     "speaker": "cat",
     "text": "奥義のあともその構えニャ？ 肩、つるニャ。",
@@ -6360,15 +6373,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 6.347755
+      "durationSeconds": 4.284082
     }
   },
   "[\"manager\",\"忘れ物だけ返せ。今の暮らしは本人が決める！\",\"duel-manager-attack\",false]": {
@@ -6416,9 +6430,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/6424bd59e1e3a77e861db77a991a9da9b0de28c3b78c4978b6ced85f29e66740.duel-v4.pace.mp3"
   },
   "[\"cat\",\"ついでにモクの暮らしも、昼寝中心に決めたいニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/3e3414a866cf6e1bbc728a75377387e164234bda7da28a57c621a4e4fe4c9ce3.duel-v4.mp3",
-    "fastFile": "assets/voices/3e3414a866cf6e1bbc728a75377387e164234bda7da28a57c621a4e4fe4c9ce3.duel-v4.pace.mp3",
-    "hash": "3e3414a866cf6e1bbc728a75377387e164234bda7da28a57c621a4e4fe4c9ce3",
+    "file": "assets/voices/10bed37cdf35ff148f9b98f7f225b89ea63c73d63e1ec7d4743aa2edd59ee80a.duel-v4.mp3",
+    "fastFile": "assets/voices/10bed37cdf35ff148f9b98f7f225b89ea63c73d63e1ec7d4743aa2edd59ee80a.duel-v4.pace.mp3",
+    "hash": "10bed37cdf35ff148f9b98f7f225b89ea63c73d63e1ec7d4743aa2edd59ee80a",
     "source": "act2/duel/3/leave:3",
     "speaker": "cat",
     "text": "ついでにモクの暮らしも、昼寝中心に決めたいニャ。",
@@ -6426,15 +6440,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 6.347755
+      "durationSeconds": 3.970612
     }
   },
   "[\"manager\",\"お前は最初からそう暮らしてるだろ。\",\"duel-manager\",false]": {
@@ -6460,9 +6475,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/16320fa1570c466ec7121028dd2afba8070d2a99cb80b8f98908925450a8cae9.duel-v4.pace.mp3"
   },
   "[\"cat\",\"煙幕代はツナ缶三つニャ。目、閉じとくニャ！\",\"duel-moku\",false]": {
-    "file": "assets/voices/fc2f8e9b108e8e8e8019916c719a9244a3d4125a0e048fd5a3287460b2c45bf7.duel-v4.mp3",
-    "fastFile": "assets/voices/fc2f8e9b108e8e8e8019916c719a9244a3d4125a0e048fd5a3287460b2c45bf7.duel-v4.pace.mp3",
-    "hash": "fc2f8e9b108e8e8e8019916c719a9244a3d4125a0e048fd5a3287460b2c45bf7",
+    "file": "assets/voices/e4a23953dc5e56cb15f99a73318da0da49a77e4c5f69f216ca2828d509045e08.duel-v4.mp3",
+    "fastFile": "assets/voices/e4a23953dc5e56cb15f99a73318da0da49a77e4c5f69f216ca2828d509045e08.duel-v4.pace.mp3",
+    "hash": "e4a23953dc5e56cb15f99a73318da0da49a77e4c5f69f216ca2828d509045e08",
     "source": "act2/duel/3/catapult:1",
     "speaker": "cat",
     "text": "煙幕代はツナ缶三つニャ。目、閉じとくニャ！",
@@ -6470,21 +6485,22 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 6.60898
+      "durationSeconds": 4.205714
     }
   },
   "[\"cat\",\"モク流奥義・煙ノ肉球乱舞ニャ！！\",\"duel-moku-attack\",false]": {
-    "file": "assets/voices/54f707c5b5263683fe25bb1788211b75adb20f86c78cfdce790693105f1a4344.duel-v4.mp3",
-    "fastFile": "assets/voices/54f707c5b5263683fe25bb1788211b75adb20f86c78cfdce790693105f1a4344.duel-v4.attack.mp3",
-    "hash": "54f707c5b5263683fe25bb1788211b75adb20f86c78cfdce790693105f1a4344",
+    "file": "assets/voices/0bf0715c99319073daff2362b3452a26b0ac6aa0b732dde697f6c56476efd024.duel-v4.mp3",
+    "fastFile": "assets/voices/0bf0715c99319073daff2362b3452a26b0ac6aa0b732dde697f6c56476efd024.duel-v4.attack.mp3",
+    "hash": "0bf0715c99319073daff2362b3452a26b0ac6aa0b732dde697f6c56476efd024",
     "source": "act2/duel/3/catapult:2",
     "speaker": "cat",
     "text": "モク流奥義・煙ノ肉球乱舞ニャ！！",
@@ -6492,21 +6508,22 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:tense",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.12
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 5.407347
+      "durationSeconds": 3.787755
     }
   },
   "[\"cat\",\"煙に巻いてお見送りニャ。大家、ツナ缶は三つニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/26662a01f4f963baf164423d67bc57ac7928f893f2311abb2d531a1c8efaf04b.duel-v4.mp3",
-    "fastFile": "assets/voices/26662a01f4f963baf164423d67bc57ac7928f893f2311abb2d531a1c8efaf04b.duel-v4.pace.mp3",
-    "hash": "26662a01f4f963baf164423d67bc57ac7928f893f2311abb2d531a1c8efaf04b",
+    "file": "assets/voices/86a8bd6fbde2f94a5f0e89eae776a148ba1d01f57f5ba085e36b3411eff5db15.duel-v4.mp3",
+    "fastFile": "assets/voices/86a8bd6fbde2f94a5f0e89eae776a148ba1d01f57f5ba085e36b3411eff5db15.duel-v4.pace.mp3",
+    "hash": "86a8bd6fbde2f94a5f0e89eae776a148ba1d01f57f5ba085e36b3411eff5db15",
     "source": "act2/duel/3/catapult:5",
     "speaker": "cat",
     "text": "煙に巻いてお見送りニャ。大家、ツナ缶は三つニャ。",
@@ -6514,15 +6531,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 7.000816
+      "durationSeconds": 4.989388
     }
   },
   "[\"manager\",\"分かったから、俺の顔に煙を吐くな！！\",\"duel-manager\",false]": {
@@ -6570,9 +6588,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/e80f14f717d3910694926a33465c237316d94502468de9d01858fd6cbac8dd20.duel-v4.pace.mp3"
   },
   "[\"cat\",\"玄関前の渋滞解消ニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/fe9f06616c417a49873d795c62c1eebe434514de929812f1337decea6f82d469.duel-v4.mp3",
-    "fastFile": "assets/voices/fe9f06616c417a49873d795c62c1eebe434514de929812f1337decea6f82d469.duel-v4.pace.mp3",
-    "hash": "fe9f06616c417a49873d795c62c1eebe434514de929812f1337decea6f82d469",
+    "file": "assets/voices/2dd479033955345237917852ac5f79d3352dbbd764a945226da69809e8bc9e37.duel-v4.mp3",
+    "fastFile": "assets/voices/2dd479033955345237917852ac5f79d3352dbbd764a945226da69809e8bc9e37.duel-v4.pace.mp3",
+    "hash": "2dd479033955345237917852ac5f79d3352dbbd764a945226da69809e8bc9e37",
     "source": "act2/duel/victory:2",
     "speaker": "cat",
     "text": "玄関前の渋滞解消ニャ。",
@@ -6580,15 +6598,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 6.60898
+      "durationSeconds": 2.690612
     }
   },
   "[\"manager\",\"なんでお前まで参加するんだよ！！\",\"act2-manager\",false]": {
@@ -8555,9 +8574,9 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"cat\",\"花束、置いてってくれてもよかったニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/1375d8b973e685c1e797e3c6d1968df56ceb20728bf484ce4cf6d4d380211810.duel-v4.mp3",
-    "fastFile": "assets/voices/1375d8b973e685c1e797e3c6d1968df56ceb20728bf484ce4cf6d4d380211810.duel-v4.pace.mp3",
-    "hash": "1375d8b973e685c1e797e3c6d1968df56ceb20728bf484ce4cf6d4d380211810",
+    "file": "assets/voices/ef98af60badfd4f238378385e1ed4f5e479ac4748fa073e8ff1300d574341646.duel-v4.mp3",
+    "fastFile": "assets/voices/ef98af60badfd4f238378385e1ed4f5e479ac4748fa073e8ff1300d574341646.duel-v4.pace.mp3",
+    "hash": "ef98af60badfd4f238378385e1ed4f5e479ac4748fa073e8ff1300d574341646",
     "source": "act2/duel/0/boundary:3",
     "speaker": "cat",
     "text": "花束、置いてってくれてもよかったニャ。",
@@ -8565,15 +8584,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 5.32898
+      "durationSeconds": 3.395918
     }
   },
   "[\"manager\",\"お前が受け取ると、また話がこじれるだろ。\",\"duel-manager\",false]": {
@@ -8621,9 +8641,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/b3be4250f30d5628a044bbb98c1323587ba3c97fb18e6f2125eecdc92938f252.duel-v4.pace.mp3"
   },
   "[\"cat\",\"モクもツナ缶で釣られないようにするニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/462150090f2b572579dc7a3e302215a14e046e4cff5a1d20dc9c8b648a3cf88f.duel-v4.mp3",
-    "fastFile": "assets/voices/462150090f2b572579dc7a3e302215a14e046e4cff5a1d20dc9c8b648a3cf88f.duel-v4.pace.mp3",
-    "hash": "462150090f2b572579dc7a3e302215a14e046e4cff5a1d20dc9c8b648a3cf88f",
+    "file": "assets/voices/d0da9b7c98e1943a0b34a1f6b58ad18024c8365ab10876af61e06ad53380687d.duel-v4.mp3",
+    "fastFile": "assets/voices/d0da9b7c98e1943a0b34a1f6b58ad18024c8365ab10876af61e06ad53380687d.duel-v4.pace.mp3",
+    "hash": "d0da9b7c98e1943a0b34a1f6b58ad18024c8365ab10876af61e06ad53380687d",
     "source": "act2/duel/1/receipt:3",
     "speaker": "cat",
     "text": "モクもツナ缶で釣られないようにするニャ。",
@@ -8631,15 +8651,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 5.32898
+      "durationSeconds": 3.239184
     }
   },
   "[\"manager\",\"お前、三つも積まれたらついていくだろ。\",\"duel-manager\",false]": {
@@ -8687,9 +8708,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/4918470afd60b948f0a7a1d9e3c14fb246f5fe22e6ea1a4096f30365209b65eb.duel-v4.pace.mp3"
   },
   "[\"cat\",\"抱き枕だけ連れて帰るニャ！！\",\"duel-moku-attack\",false]": {
-    "file": "assets/voices/2bd32e892d6869e48a1abbe5bf0c606348dd6e15d8addb9b64a5c18e8ca5fe02.duel-v4.mp3",
-    "fastFile": "assets/voices/2bd32e892d6869e48a1abbe5bf0c606348dd6e15d8addb9b64a5c18e8ca5fe02.duel-v4.attack.mp3",
-    "hash": "2bd32e892d6869e48a1abbe5bf0c606348dd6e15d8addb9b64a5c18e8ca5fe02",
+    "file": "assets/voices/876626fc79016b102ad6d71dbf8ead8f6dc5262d325ad068fe2ed5af2477d734.duel-v4.mp3",
+    "fastFile": "assets/voices/876626fc79016b102ad6d71dbf8ead8f6dc5262d325ad068fe2ed5af2477d734.duel-v4.attack.mp3",
+    "hash": "876626fc79016b102ad6d71dbf8ead8f6dc5262d325ad068fe2ed5af2477d734",
     "source": "act2/duel/1/discount:2",
     "speaker": "cat",
     "text": "抱き枕だけ連れて帰るニャ！！",
@@ -8697,15 +8718,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:tense",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.12
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 4.832653
+      "durationSeconds": 2.507755
     }
   },
   "[\"hostess\",\"ちょっと。あたしを助ける話だったよね？\",\"duel-luna\",false]": {
@@ -8731,9 +8753,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/247004f4531c62ee3815b7dba2b77c0d0d50998443a28b3f96f6a5773210a7aa.duel-v4.pace.mp3"
   },
   "[\"cat\",\"修繕費なら、大家の抱き枕を売って稼ぐニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/bbd98ea3cdd5066eafa34c5f40fb753ce6519cb78f2577a7127287fa47ea6319.duel-v4.mp3",
-    "fastFile": "assets/voices/bbd98ea3cdd5066eafa34c5f40fb753ce6519cb78f2577a7127287fa47ea6319.duel-v4.pace.mp3",
-    "hash": "bbd98ea3cdd5066eafa34c5f40fb753ce6519cb78f2577a7127287fa47ea6319",
+    "file": "assets/voices/7f4ef97a07c3c926f3c985d47c83733d598bf8d76779b1146c0c813d0243fba1.duel-v4.mp3",
+    "fastFile": "assets/voices/7f4ef97a07c3c926f3c985d47c83733d598bf8d76779b1146c0c813d0243fba1.duel-v4.pace.mp3",
+    "hash": "7f4ef97a07c3c926f3c985d47c83733d598bf8d76779b1146c0c813d0243fba1",
     "source": "act2/duel/1/discount:5",
     "speaker": "cat",
     "text": "修繕費なら、大家の抱き枕を売って稼ぐニャ。",
@@ -8741,15 +8763,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 5.877551
+      "durationSeconds": 4.04898
     }
   },
   "[\"manager\",\"誰が買うんだよ！！\",\"duel-manager\",false]": {
@@ -8797,9 +8820,9 @@ export const VOICE_MANIFEST = {
     "fastFile": "assets/voices/9cecf974fac3569bd02f385928fd344c3f90d88e3835c694a5e75dd73dc42633.duel-v4.pace.mp3"
   },
   "[\"cat\",\"大家、ずいぶん先まで面倒見るニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/3dcd1fdff0e7d1c94e2ecd535c19026a8b755b20862df198990b334136b70a34.duel-v4.mp3",
-    "fastFile": "assets/voices/3dcd1fdff0e7d1c94e2ecd535c19026a8b755b20862df198990b334136b70a34.duel-v4.pace.mp3",
-    "hash": "3dcd1fdff0e7d1c94e2ecd535c19026a8b755b20862df198990b334136b70a34",
+    "file": "assets/voices/b37a7adeff028c2c9867dbbdef17bdeecfd9d1fb8076dc2b7e671d400f1d5d69.duel-v4.mp3",
+    "fastFile": "assets/voices/b37a7adeff028c2c9867dbbdef17bdeecfd9d1fb8076dc2b7e671d400f1d5d69.duel-v4.pace.mp3",
+    "hash": "b37a7adeff028c2c9867dbbdef17bdeecfd9d1fb8076dc2b7e671d400f1d5d69",
     "source": "act2/duel/2/future:3",
     "speaker": "cat",
     "text": "大家、ずいぶん先まで面倒見るニャ。",
@@ -8807,15 +8830,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 5.720816
+      "durationSeconds": 3.552653
     }
   },
   "[\"manager\",\"勧誘を断っただけだ！ 話を広げるな！\",\"duel-manager\",false]": {
@@ -8984,9 +9008,9 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"cat\",\"忘れ物ひとつで、本人まで回収しに来るなニャ。\",\"duel-moku\",false]": {
-    "file": "assets/voices/dfc971c98458fde9a5c3006f2f55a7cee70a3f282a55d7bfb7c4b5438038a896.duel-v4.mp3",
-    "fastFile": "assets/voices/dfc971c98458fde9a5c3006f2f55a7cee70a3f282a55d7bfb7c4b5438038a896.duel-v4.pace.mp3",
-    "hash": "dfc971c98458fde9a5c3006f2f55a7cee70a3f282a55d7bfb7c4b5438038a896",
+    "file": "assets/voices/da2f726c63b64555f3ca361b4e987fa1f9527bd97127b6956784969cf1bd93df.duel-v4.mp3",
+    "fastFile": "assets/voices/da2f726c63b64555f3ca361b4e987fa1f9527bd97127b6956784969cf1bd93df.duel-v4.pace.mp3",
+    "hash": "da2f726c63b64555f3ca361b4e987fa1f9527bd97127b6956784969cf1bd93df",
     "source": "act2/duel/round-3:2",
     "speaker": "cat",
     "text": "忘れ物ひとつで、本人まで回収しに来るなニャ。",
@@ -8994,15 +9018,16 @@ export const VOICE_MANIFEST = {
     "deliveryProfile": "v3-inspired-v4:casual",
     "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
+    "repairComment": "台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.4
+      "tailPaddingSeconds": 0.4,
+      "naturalTempo": 1.05
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 6.347755
+      "durationSeconds": 3.787755
     }
   },
   "[\"cat\",\"火は消えてる。お腹もいっぱい。……今度こそ寝るニャ。\",\"moku\",false]": {
