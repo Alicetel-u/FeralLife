@@ -1,0 +1,86 @@
+name: Publish recovered act-one prologue v4 trial without another API charge
+on:
+  push:
+    paths:
+      - .github/workflows/voice-act1-prologue-recovery.yml
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: reviewed-voice-automation
+  cancel-in-progress: false
+jobs:
+  recover:
+    if: github.ref == 'refs/heads/main' && github.repository == 'Alicetel-u/FeralLife'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install ffmpeg
+        run: |
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+      - name: Recover the two already-generated recordings, with NO ElevenLabs API call
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .local/recovered
+          gh run download 40911298934 -n act-one-prologue-v4-recovery-40911298934 -D .local/recovered
+          node --input-type=module <<'JS'
+          import {readFile,writeFile,copyFile,mkdir,stat} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          const plan=JSON.parse(await readFile('.local/recovered/voice-plan.json','utf8'));
+          const sources=plan.rows.map(row=>row.source).sort();
+          if(JSON.stringify(sources)!==JSON.stringify(['prologue:1','prologue:5'])||plan.rows.length!==2||plan.model!=='eleven_v4')throw Error('Unexpected recovered plan');
+          const {VOICE_MANIFEST}=await import('./src/voice-manifest.js');
+          const manifest={...VOICE_MANIFEST};
+          await mkdir('assets/voices',{recursive:true});
+          for(const row of plan.rows){
+            if(row.speaker!=='manager'||row.settings?.stability!==0.5||row.settings?.similarity_boost!==0.85||!row.deliveryProfile?.startsWith('v3-inspired-v4:'))throw Error('Unapproved recovered clip');
+            if(!/^[a-f0-9]{64}$/.test(row.hash))throw Error('Invalid file hash');
+            const raw=row.file,mastered=raw.replace(/\.mp3$/,'.prologue-v4.mp3');
+            const sourceFile=file=>'.local/recovered/'+file.split('/').at(-1);
+            for(const file of [raw,mastered]){
+              if((await stat(sourceFile(file))).size<500)throw Error('Empty artifact '+file);
+              await copyFile(sourceFile(file),file);
+            }
+            const seconds=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',mastered],{encoding:'utf8'}).trim());
+            if(!Number.isFinite(seconds)||seconds<0.5||seconds>45)throw Error('Invalid recovered MP3 duration');
+            manifest[row.lineKey]={file:mastered,hash:row.hash,source:row.source,speaker:row.speaker,text:row.text,performance:row.performance,deliveryProfile:row.deliveryProfile,model:'eleven_v4',repairReview:true,repairComment:'第一幕プロローグの大家の心の声を採用済みV3寄せV4で再生成し、音量を調整。',audioQuality:{masteredForTrial:true}};
+            console.log('Restored '+row.source+' ('+seconds.toFixed(2)+' seconds)');
+          }
+          await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
+          JS
+      - name: Build and test
+        run: |
+          npm run build
+          npm test
+      - name: Commit only the recovered recordings, playback manifest and review catalog
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          const plan=JSON.parse(await readFile('.local/recovered/voice-plan.json','utf8'));
+          const paths=['src/voice-manifest.js','src/voice-review-catalog.js','src/voice-review-published.js',...plan.rows.flatMap(row=>[row.file,row.file.replace(/\.mp3$/,'.prologue-v4.mp3')])];
+          execFileSync('git',['add','--',...paths],{stdio:'inherit'});
+          JS
+          git diff --cached --stat
+          git diff --cached --quiet && { echo 'No voice changes'; exit 1; }
+          git commit -m 'Publish two recovered V3-inspired v4 prologue recordings'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Explicitly start Pages deployment for workflow-authored push
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
