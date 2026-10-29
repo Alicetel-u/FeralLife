@@ -38,9 +38,9 @@ test('Moku gets energetic duel-only V4 direction while his ordinary languid char
   assert.equal(row.request.voice_settings.stability,.35);
   assert.equal(row.request.voice_settings.similarity_boost,.85);
   assert.equal(row.voiceId,ids.characters.cat.voiceId);
-  assert.match(row.request.text,/\\[excited\\]/);
+  assert.ok(row.request.text.includes('[excited]'));
   assert.doesNotMatch(row.request.text,/languid|sulky|drawn-out/i);
-  if(row.performance==='duel-moku-attack')assert.match(row.request.text,/\\[shouting\\]/);
+  if(row.performance==='duel-moku-attack')assert.ok(row.request.text.includes('[shouting]'));
   else assert.match(row.request.text,/upbeat comic banter/);
  }
  const oldConfig=structuredClone(base);
