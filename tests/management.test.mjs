@@ -124,7 +124,7 @@ test('ordinary events and authored requests use left/right portraits with escape
   assert.equal(lines[0].speaker,'narrator');assert.ok(lines.some(l=>l.speaker==='sister'));
   const i=lines.findIndex(l=>l.speaker==='sister');
   const html=eventStageHTML(e,s.residents,i);
-  assert.ok(!html.includes('stage-character left'));assert.ok(html.includes('stage-character right'));
+  assert.ok(html.includes('stage-character left'));assert.ok(html.includes('stage-character right'));
   assert.ok(html.includes('stage-bubble right'));assert.ok(html.includes('assets/events/busts/sister-angry.png'));
   const unsafe={detail:'<script>alert(1)</script>',lines:[{speaker:'cat',text:'<img src=x onerror=bad()>'}],rooms:[101]};
   assert.ok(!eventStageHTML(unsafe,s.residents,1).includes('<img src=x'));
