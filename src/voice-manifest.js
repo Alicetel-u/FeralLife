@@ -10851,5 +10851,275 @@ export const VOICE_MANIFEST = {
       "edgeSilenceTrimmed": true,
       "tailPaddingSeconds": 0.2
     }
+  },
+  "[\"manager\",\"……コンビニ？\",\"act3-manager\",false]": {
+    "file": "assets/voices/0eed49219c720925759f08de8d0db4788027ec4abadd2dd87d5099e09eb27d74.act3.mp3",
+    "hash": "0eed49219c720925759f08de8d0db4788027ec4abadd2dd87d5099e09eb27d74",
+    "source": "act3/map/return:2",
+    "speaker": "manager",
+    "text": "……コンビニ？",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……待て。何が起きた？\",\"act3-manager\",false]": {
+    "file": "assets/voices/96bb2de7b86885f74bbda11476d186a5a0a8ee100d009e57f59bec49ecfa7b7c.act3.mp3",
+    "hash": "96bb2de7b86885f74bbda11476d186a5a0a8ee100d009e57f59bec49ecfa7b7c",
+    "source": "act3/map/return:3",
+    "speaker": "manager",
+    "text": "……待て。何が起きた？",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"確かに、あの橋で二人が倒れた……\",\"act3-manager\",false]": {
+    "file": "assets/voices/b330b6910750108db5b79738e64b30f5096b18ed15aceba0851a88cbc4c80382.act3.mp3",
+    "hash": "b330b6910750108db5b79738e64b30f5096b18ed15aceba0851a88cbc4c80382",
+    "source": "act3/map/return:5",
+    "speaker": "manager",
+    "text": "確かに、あの橋で二人が倒れた……",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"だが、俺は死んでない\",\"act3-manager\",false]": {
+    "file": "assets/voices/7be198ca3aa8f6eca743ada085abf8739fcfac03c9bf50b427a74fca269d9216.act3.mp3",
+    "hash": "7be198ca3aa8f6eca743ada085abf8739fcfac03c9bf50b427a74fca269d9216",
+    "source": "act3/map/return:6",
+    "speaker": "manager",
+    "text": "だが、俺は死んでない",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"なのに……時間が戻った？\",\"act3-manager\",false]": {
+    "file": "assets/voices/3271818f04f33ba03abd70835ddf8cfe1b89a7fbb8e9ee9b76e41ab61bb54adc.act3.mp3",
+    "hash": "3271818f04f33ba03abd70835ddf8cfe1b89a7fbb8e9ee9b76e41ab61bb54adc",
+    "source": "act3/map/return:7",
+    "speaker": "manager",
+    "text": "なのに……時間が戻った？",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……戻り先まで変わってる\",\"act3-manager\",false]": {
+    "file": "assets/voices/389789d1ac87e6ccb153676cacb3d580d30e8f0c137de8488af925d436087224.act3.mp3",
+    "hash": "389789d1ac87e6ccb153676cacb3d580d30e8f0c137de8488af925d436087224",
+    "source": "act3/map/return:9",
+    "speaker": "manager",
+    "text": "……戻り先まで変わってる",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"今度はコンビニが起点なのか……？\",\"act3-manager\",false]": {
+    "file": "assets/voices/07caa462c2d3571114da601a615aa40f75be82f677be98e39f70e8dbab646a29.act3.mp3",
+    "hash": "07caa462c2d3571114da601a615aa40f75be82f677be98e39f70e8dbab646a29",
+    "source": "act3/map/return:10",
+    "speaker": "manager",
+    "text": "今度はコンビニが起点なのか……？",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……何なんだ、これは\",\"act3-manager\",false]": {
+    "file": "assets/voices/62f9dbc80ca21287f68b27974f19ddb088d9fc6e5ab218295898fae6722fe52f.act3.mp3",
+    "hash": "62f9dbc80ca21287f68b27974f19ddb088d9fc6e5ab218295898fae6722fe52f",
+    "source": "act3/map/return:11",
+    "speaker": "manager",
+    "text": "……何なんだ、これは",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"……予定変更だ。アパートに戻るぞ\",\"act3-manager\",false]": {
+    "file": "assets/voices/6982b4902974c9abcbfda90ba7a5c452b961bd4dc058f0f71bbe25418237d5ab.act3.mp3",
+    "hash": "6982b4902974c9abcbfda90ba7a5c452b961bd4dc058f0f71bbe25418237d5ab",
+    "source": "act3/map/return:13",
+    "speaker": "manager",
+    "text": "……予定変更だ。アパートに戻るぞ",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"ニャ！？ 脱出地点はどうするニャ？\",\"act3-startled\",false]": {
+    "file": "assets/voices/000b4e92709304f7a2ffcc71440fb37d639ff1b43e16cf39fc798179cb507147.act3.mp3",
+    "hash": "000b4e92709304f7a2ffcc71440fb37d639ff1b43e16cf39fc798179cb507147",
+    "source": "act3/map/return:14",
+    "speaker": "cat",
+    "text": "ニャ！？ 脱出地点はどうするニャ？",
+    "performance": "act3-startled",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"ミミを一人で帰らせるわけにはいかないだろ\",\"act3-manager\",false]": {
+    "file": "assets/voices/746a2dd58224cd78ab2d4257653c04862f3f05666b23030e6afaf70de7c49574.act3.mp3",
+    "hash": "746a2dd58224cd78ab2d4257653c04862f3f05666b23030e6afaf70de7c49574",
+    "source": "act3/map/return:15",
+    "speaker": "manager",
+    "text": "ミミを一人で帰らせるわけにはいかないだろ",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"えっ……？\",\"act3-startled\",false]": {
+    "file": "assets/voices/dd072f98ce33a17e145c83428c025285162c161560f46ab4ceaa1485bd043ebb.act3.mp3",
+    "hash": "dd072f98ce33a17e145c83428c025285162c161560f46ab4ceaa1485bd043ebb",
+    "source": "act3/map/return:16",
+    "speaker": "rabbit",
+    "text": "えっ……？",
+    "performance": "act3-startled",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"その足じゃ、ゾンビに襲われても逃げられない\",\"act3-manager\",false]": {
+    "file": "assets/voices/c2c7ce8d9ddebba49ed9c6ce644b7cfc67b8141046a6cf7634761e381caad54d.act3.mp3",
+    "hash": "c2c7ce8d9ddebba49ed9c6ce644b7cfc67b8141046a6cf7634761e381caad54d",
+    "source": "act3/map/return:17",
+    "speaker": "manager",
+    "text": "その足じゃ、ゾンビに襲われても逃げられない",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"hostess\",\"確かに……ミミちゃんを一人にするのは危ないよね\",\"act3-tense\",false]": {
+    "file": "assets/voices/656de76a9a0654ed8efa9d63b9e6853a8c3a17827384e40f921ebfc20d238719.act3.mp3",
+    "hash": "656de76a9a0654ed8efa9d63b9e6853a8c3a17827384e40f921ebfc20d238719",
+    "source": "act3/map/return:18",
+    "speaker": "hostess",
+    "text": "確かに……ミミちゃんを一人にするのは危ないよね",
+    "performance": "act3-tense",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"rabbit\",\"でも、みんなは街から逃げるんじゃ……\",\"act3-mimi-afraid\",false]": {
+    "file": "assets/voices/93356cb9ca6a5601ab287a7b83f7035420eccadd895adcacc7430c5db618e57b.act3.mp3",
+    "hash": "93356cb9ca6a5601ab287a7b83f7035420eccadd895adcacc7430c5db618e57b",
+    "source": "act3/map/return:19",
+    "speaker": "rabbit",
+    "text": "でも、みんなは街から逃げるんじゃ……",
+    "performance": "act3-mimi-afraid",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"気にするな。俺たちも一度戻った方がいい\",\"act3-manager\",false]": {
+    "file": "assets/voices/b6bbb1b86e978240ac753c0fafcb3b21a10afcb004c1e32abfe66e02d6050dcf.act3.mp3",
+    "hash": "b6bbb1b86e978240ac753c0fafcb3b21a10afcb004c1e32abfe66e02d6050dcf",
+    "source": "act3/map/return:20",
+    "speaker": "manager",
+    "text": "気にするな。俺たちも一度戻った方がいい",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"cat\",\"……大家がそう言うなら仕方ないニャ\",\"act3-alert\",false]": {
+    "file": "assets/voices/bff43d3455246d3968715a1f6c7d2da78a63799e167fd4d275f5074dcc6d1546.act3.mp3",
+    "hash": "bff43d3455246d3968715a1f6c7d2da78a63799e167fd4d275f5074dcc6d1546",
+    "source": "act3/map/return:21",
+    "speaker": "cat",
+    "text": "……大家がそう言うなら仕方ないニャ",
+    "performance": "act3-alert",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
+  },
+  "[\"manager\",\"よし、行くぞ\",\"act3-manager\",false]": {
+    "file": "assets/voices/ccdf6e4d069dc0e0575ae87024d854d7d3aafd04ad3bc5ef2fd760646e4d558a.act3.mp3",
+    "hash": "ccdf6e4d069dc0e0575ae87024d854d7d3aafd04ad3bc5ef2fd760646e4d558a",
+    "source": "act3/map/return:22",
+    "speaker": "manager",
+    "text": "よし、行くぞ",
+    "performance": "act3-manager",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "edgeSilenceTrimmed": true,
+      "tailPaddingSeconds": 0.2
+    }
   }
 };

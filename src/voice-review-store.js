@@ -1,6 +1,6 @@
 export const VOICE_REVIEW_KEY='kemono-voice-review-v1';
 export const VOICE_REVIEW_ISSUES={reading:'読み間違い',quiet:'声が小さい',flat:'棒読み・演技',clipping:'音割れ',timing:'間・速さ',missing:'異音'};
-export const VOICE_REVIEW_SPEAKERS={manager:'大家',cat:'モク',hostess:'ルナ',announcer:'アナウンサー'};
+export const VOICE_REVIEW_SPEAKERS={manager:'大家',cat:'モク',hostess:'ルナ',rabbit:'ミミ',announcer:'アナウンサー'};
 export function voiceReviewEmpty(){return {schema:1,records:{},cursorId:null,filters:{chapter:'all',scene:'all',speaker:'all',status:'all',search:'',sort:'scene'},catalogEntries:null};}
 export function voiceReviewHasRepair(row,record){return !!(row.repaired||row.catalogChanged||record?.repaired||record?.history?.some(h=>h.status==='ng')||!!record&&record.version!==row.version);}
 export function voiceReviewNeedsRecheck(row,record){
@@ -46,7 +46,7 @@ export function voiceReviewRows(catalog,state){
  const known=new Set([...Object.keys(state.catalogEntries||{}),...Object.keys(state.records)]);
  for(const id of known)if(!ids.has(id)){
   const record=state.records[id],entry=state.catalogEntries?.[id];let key;try{key=JSON.parse(id);}catch{continue;}
-  if(!Array.isArray(key)||key.length!==4||!['manager','cat','hostess','announcer'].includes(key[0])||typeof key[1]!=='string')continue;
+  if(!Array.isArray(key)||key.length!==4||!['manager','cat','hostess','announcer','rabbit'].includes(key[0])||typeof key[1]!=='string')continue;
   rows.push({id,chapter:entry?.chapter||record?.chapter||1,scene:entry?.scene||String(record?.chapter||1)+':removed',sceneLabel:entry?.sceneLabel||record?.scene||'旧台詞',source:entry?.source||record?.source||'',version:entry?.version||record?.version||'',line:{speaker:key[0],text:key[1]},removed:true,repaired:!!entry?.repaired});
  }
  return rows;
@@ -66,13 +66,13 @@ export function voiceReviewImport(state,payload,catalog=[]){
  for(const [id,r] of Object.entries(payload.records)){
   let key;try{key=JSON.parse(id);}catch{throw Error('記録の識別キーが不正です。');}
   const speaker=r?.speaker==='大家（心の声）'?'manager':r?.speaker;
-  if(!Array.isArray(key)||key.length!==4||!['manager','cat','hostess','announcer'].includes(key[0])||typeof key[2]!=='string'||typeof key[3]!=='boolean'||typeof key[1]!=='string'||!r||!['manager','cat','hostess','announcer'].includes(speaker)||speaker!==key[0]||!['todo','ok','ng'].includes(r.status)||typeof r.version!=='string'||r.version.length>128||typeof r.note!=='string'||r.note.length>2000||!Array.isArray(r.issues)||r.issues.some(v=>!Object.hasOwn(VOICE_REVIEW_ISSUES,v))||!Number.isFinite(Date.parse(r.updatedAt)))throw Error('バックアップの記録形式が不正です。');
+  if(!Array.isArray(key)||key.length!==4||!['manager','cat','hostess','announcer','rabbit'].includes(key[0])||typeof key[2]!=='string'||typeof key[3]!=='boolean'||typeof key[1]!=='string'||!r||!['manager','cat','hostess','announcer','rabbit'].includes(speaker)||speaker!==key[0]||!['todo','ok','ng'].includes(r.status)||typeof r.version!=='string'||r.version.length>128||typeof r.note!=='string'||r.note.length>2000||!Array.isArray(r.issues)||r.issues.some(v=>!Object.hasOwn(VOICE_REVIEW_ISSUES,v))||!Number.isFinite(Date.parse(r.updatedAt)))throw Error('バックアップの記録形式が不正です。');
   incoming[id]={id,chapter:r.chapter,speaker,text:String(r.text||'').slice(0,3000),scene:String(r.scene||'').slice(0,200),source:String(r.source||'').slice(0,500),version:r.version,status:r.status,issues:[...new Set(r.issues)],note:r.note,updatedAt:r.updatedAt,repaired:!!r.repaired,...(Array.isArray(r.history)?{history:r.history.slice(-10).map(h=>({version:String(h.version||'').slice(0,128),status:['todo','ng','ok'].includes(h.status)?h.status:'todo',issues:Array.isArray(h.issues)?h.issues.filter(v=>Object.hasOwn(VOICE_REVIEW_ISSUES,v)):[],note:String(h.note||'').slice(0,2000),updatedAt:String(h.updatedAt||'')}))}:{}),...(typeof r.listenedVersion==='string'?{listenedVersion:r.listenedVersion}:{})};
  }
  const snapshots={};
  if(payload.catalogEntries&&typeof payload.catalogEntries==='object'&&!Array.isArray(payload.catalogEntries))for(const [id,entry] of Object.entries(payload.catalogEntries)){
   let key;try{key=JSON.parse(id);}catch{throw Error('台詞一覧の識別キーが不正です。');}
-  if(!Array.isArray(key)||key.length!==4||!['manager','cat','hostess','announcer'].includes(key[0])||typeof key[1]!=='string'||typeof key[2]!=='string'||typeof key[3]!=='boolean'||!entry||![1,2,3].includes(entry.chapter)||typeof entry.version!=='string')throw Error('台詞一覧の形式が不正です。');
+  if(!Array.isArray(key)||key.length!==4||!['manager','cat','hostess','announcer','rabbit'].includes(key[0])||typeof key[1]!=='string'||typeof key[2]!=='string'||typeof key[3]!=='boolean'||!entry||![1,2,3].includes(entry.chapter)||typeof entry.version!=='string')throw Error('台詞一覧の形式が不正です。');
   snapshots[id]={chapter:entry.chapter,scene:String(entry.scene||'').slice(0,200),sceneLabel:String(entry.sceneLabel||'').slice(0,200),source:String(entry.source||'').slice(0,500),version:entry.version.slice(0,128),repaired:!!entry.repaired,added:!!entry.added,changed:!!entry.changed};
  }
  if(payload.catalogEntries){state.catalogEntries ||= {};for(const [id,entry] of Object.entries(snapshots))if(!state.catalogEntries[id])state.catalogEntries[id]=entry;}

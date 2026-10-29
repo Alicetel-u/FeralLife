@@ -4,7 +4,7 @@ export function voiceReviewValidatePublished(payload){
  if(payload?.schema!==1||!payload.decisions||typeof payload.decisions!=='object'||Array.isArray(payload.decisions))throw Error('公開用の音声判定形式が不正です。');
  for(const [id,r] of Object.entries(payload.decisions)){
   const key=JSON.parse(id);
-  if(!Array.isArray(key)||key.length!==4||!['manager','cat','hostess','announcer'].includes(key[0])||typeof key[1]!=='string'||typeof key[2]!=='string'||typeof key[3]!=='boolean'||!['ok','ng'].includes(r?.status)||!r.version||typeof r.version!=='string'||r.version.length>128||!Number.isFinite(Date.parse(r.updatedAt)))throw Error('公開用の音声判定が不正です。');
+  if(!Array.isArray(key)||key.length!==4||!['manager','cat','hostess','announcer','rabbit'].includes(key[0])||typeof key[1]!=='string'||typeof key[2]!=='string'||typeof key[3]!=='boolean'||!['ok','ng'].includes(r?.status)||!r.version||typeof r.version!=='string'||r.version.length>128||!Number.isFinite(Date.parse(r.updatedAt)))throw Error('公開用の音声判定が不正です。');
   if(Object.keys(r).some(name=>!['status','version','updatedAt'].includes(name)))throw Error('公開用の判定にメモなどの非公開情報を含めないでください。');
  }
  if(Object.keys(payload).some(name=>!['schema','decisions'].includes(name)))throw Error('公開用データに余分な情報があります。');

@@ -141,7 +141,7 @@ test('old inner-voice speaker spelling migrates without losing a saved note',()=
  voiceReviewMark(state,r,{status:'ng',issues:['quiet'],note:'心の声が小さい'});state.records[r.id].speaker='大家（心の声）';
  const storage=memory();storage.setItem(VOICE_REVIEW_KEY,voiceReviewBackup(state));const restored=voiceReviewLoad(storage);
  assert.equal(restored.warning,'');assert.equal(restored.state.records[r.id].speaker,'manager');assert.equal(restored.state.records[r.id].note,'心の声が小さい');
- assert.ok(VOICE_REVIEW_CATALOG.every(r=>['manager','cat','hostess','announcer'].includes(r.line.speaker)));
+ assert.ok(VOICE_REVIEW_CATALOG.every(r=>['manager','cat','hostess','announcer','rabbit'].includes(r.line.speaker)));
 });
 
 test('imported catalog identities cannot inject a speaker attribute into removed-line history',()=>{

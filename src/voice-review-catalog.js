@@ -13898,7 +13898,8 @@ export const VOICE_REVIEW_CATALOG = [
       "speaker": "rabbit",
       "text": "ひっ……！？",
       "voiceChapter": 3,
-      "inside": true
+      "inside": true,
+      "voicePerformance": "act3-mimi-afraid"
     },
     "version": "cfa8b1ac97366ce0a76b"
   },
@@ -14603,7 +14604,7 @@ export const VOICE_REVIEW_CATALOG = [
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
     "order": 35,
-    "source": "act3/map/return:2",
+    "source": "act3/map/return:0",
     "line": {
       "speaker": "manager",
       "text": "……は？",
@@ -14611,6 +14612,324 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true
     },
     "version": "c2d49ee76b69c692ba5b"
+  },
+  {
+    "id": "[\"manager\",\"……コンビニ？\",\"act3-manager\",false]",
+    "reviewId": "2bceedefd28e8911",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:2",
+    "line": {
+      "speaker": "manager",
+      "text": "……コンビニ？",
+      "voiceChapter": 3,
+      "inside": true,
+      "innerVoice": true
+    },
+    "version": "8298ad8b988eecf94098"
+  },
+  {
+    "id": "[\"manager\",\"……待て。何が起きた？\",\"act3-manager\",false]",
+    "reviewId": "52836203a3b33948",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:3",
+    "line": {
+      "speaker": "manager",
+      "text": "……待て。何が起きた？",
+      "voiceChapter": 3,
+      "inside": true,
+      "innerVoice": true
+    },
+    "version": "2ca40e884b8333db72e3"
+  },
+  {
+    "id": "[\"manager\",\"確かに、あの橋で二人が倒れた……\",\"act3-manager\",false]",
+    "reviewId": "39bbb5c267afca3a",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:5",
+    "line": {
+      "speaker": "manager",
+      "text": "確かに、あの橋で二人が倒れた……",
+      "voiceChapter": 3,
+      "inside": true,
+      "innerVoice": true
+    },
+    "version": "505e736e0f94c46f3305"
+  },
+  {
+    "id": "[\"manager\",\"だが、俺は死んでない\",\"act3-manager\",false]",
+    "reviewId": "54cef78ef9b8310e",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:6",
+    "line": {
+      "speaker": "manager",
+      "text": "だが、俺は死んでない",
+      "voiceChapter": 3,
+      "inside": true,
+      "innerVoice": true
+    },
+    "version": "5f9a52369947fba4c65d"
+  },
+  {
+    "id": "[\"manager\",\"なのに……時間が戻った？\",\"act3-manager\",false]",
+    "reviewId": "35eceb6c2550baf6",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:7",
+    "line": {
+      "speaker": "manager",
+      "text": "なのに……時間が戻った？",
+      "voiceChapter": 3,
+      "inside": true,
+      "innerVoice": true
+    },
+    "version": "ee7a7f9e7bb4f66b1b94"
+  },
+  {
+    "id": "[\"manager\",\"……戻り先まで変わってる\",\"act3-manager\",false]",
+    "reviewId": "3383f768cf34186f",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:9",
+    "line": {
+      "speaker": "manager",
+      "text": "……戻り先まで変わってる",
+      "voiceChapter": 3,
+      "inside": true,
+      "innerVoice": true
+    },
+    "version": "27341a6c35567965ee7b"
+  },
+  {
+    "id": "[\"manager\",\"今度はコンビニが起点なのか……？\",\"act3-manager\",false]",
+    "reviewId": "c945d673ab756a35",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:10",
+    "line": {
+      "speaker": "manager",
+      "text": "今度はコンビニが起点なのか……？",
+      "voiceChapter": 3,
+      "inside": true,
+      "innerVoice": true
+    },
+    "version": "6b1282c1199844b2f6df"
+  },
+  {
+    "id": "[\"manager\",\"……何なんだ、これは\",\"act3-manager\",false]",
+    "reviewId": "3457465d5d4c4f5d",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:11",
+    "line": {
+      "speaker": "manager",
+      "text": "……何なんだ、これは",
+      "voiceChapter": 3,
+      "inside": true,
+      "innerVoice": true
+    },
+    "version": "65a5d915e858439310c0"
+  },
+  {
+    "id": "[\"manager\",\"……予定変更だ。アパートに戻るぞ\",\"act3-manager\",false]",
+    "reviewId": "cf36c88ff0b16e96",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:13",
+    "line": {
+      "speaker": "manager",
+      "text": "……予定変更だ。アパートに戻るぞ",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "e5312290c23153b6ce5d"
+  },
+  {
+    "id": "[\"cat\",\"ニャ！？ 脱出地点はどうするニャ？\",\"act3-startled\",false]",
+    "reviewId": "5b0356d56d8c3637",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:14",
+    "line": {
+      "speaker": "cat",
+      "text": "ニャ！？ 脱出地点はどうするニャ？",
+      "voiceChapter": 3,
+      "inside": true,
+      "emotion": "surprised"
+    },
+    "version": "cd6cb14b07831dcf2151"
+  },
+  {
+    "id": "[\"manager\",\"ミミを一人で帰らせるわけにはいかないだろ\",\"act3-manager\",false]",
+    "reviewId": "ff4b01567eb1de55",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:15",
+    "line": {
+      "speaker": "manager",
+      "text": "ミミを一人で帰らせるわけにはいかないだろ",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "2396a91ac05601d728bb"
+  },
+  {
+    "id": "[\"rabbit\",\"えっ……？\",\"act3-startled\",false]",
+    "reviewId": "1c6ca096affb2709",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:16",
+    "line": {
+      "speaker": "rabbit",
+      "text": "えっ……？",
+      "voiceChapter": 3,
+      "inside": true,
+      "emotion": "surprised"
+    },
+    "version": "407802f9ac025a2cb522"
+  },
+  {
+    "id": "[\"manager\",\"その足じゃ、ゾンビに襲われても逃げられない\",\"act3-manager\",false]",
+    "reviewId": "033fc920947d26d7",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:17",
+    "line": {
+      "speaker": "manager",
+      "text": "その足じゃ、ゾンビに襲われても逃げられない",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "8007d71233cbf588f89b"
+  },
+  {
+    "id": "[\"hostess\",\"確かに……ミミちゃんを一人にするのは危ないよね\",\"act3-tense\",false]",
+    "reviewId": "3e34d7801e2007d6",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:18",
+    "line": {
+      "speaker": "hostess",
+      "text": "確かに……ミミちゃんを一人にするのは危ないよね",
+      "voiceChapter": 3,
+      "inside": true,
+      "emotion": "sad"
+    },
+    "version": "8ae4e5aa481b40adb47f"
+  },
+  {
+    "id": "[\"rabbit\",\"でも、みんなは街から逃げるんじゃ……\",\"act3-mimi-afraid\",false]",
+    "reviewId": "9f6287dd2a506969",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:19",
+    "line": {
+      "speaker": "rabbit",
+      "text": "でも、みんなは街から逃げるんじゃ……",
+      "voiceChapter": 3,
+      "inside": true,
+      "emotion": "sad"
+    },
+    "version": "2db0f8568f8b13300563"
+  },
+  {
+    "id": "[\"manager\",\"気にするな。俺たちも一度戻った方がいい\",\"act3-manager\",false]",
+    "reviewId": "4506ef1850540744",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:20",
+    "line": {
+      "speaker": "manager",
+      "text": "気にするな。俺たちも一度戻った方がいい",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "9a9bef4d811236107c47"
+  },
+  {
+    "id": "[\"cat\",\"……大家がそう言うなら仕方ないニャ\",\"act3-alert\",false]",
+    "reviewId": "7d12d0781b89b783",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:21",
+    "line": {
+      "speaker": "cat",
+      "text": "……大家がそう言うなら仕方ないニャ",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "41fbabbc5d2d0b7cd480"
+  },
+  {
+    "id": "[\"manager\",\"よし、行くぞ\",\"act3-manager\",false]",
+    "reviewId": "ba932778398f594e",
+    "repaired": false,
+    "chapter": 3,
+    "scene": "3:map-return",
+    "sceneLabel": "コンビニへの帰還",
+    "order": 35,
+    "source": "act3/map/return:22",
+    "line": {
+      "speaker": "manager",
+      "text": "よし、行くぞ",
+      "voiceChapter": 3,
+      "inside": true
+    },
+    "version": "e00bf8ccfefe45887792"
   }
 ];
 // Historical short IDs are retained for import only, never for playback or review.

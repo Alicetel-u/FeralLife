@@ -9,7 +9,7 @@ import {tracePlayableVoiceLines} from '../tools/voice-reachability.mjs';
 import {VOICE_REVIEW_CATALOG} from '../src/voice-review-catalog.js';
 test('implemented third-act dialogue uses projected v4 performances with Mimi and real review reachability',async()=>{
  const rows=extractVoiceScript('act3-current');
- assert.equal(rows.length,88);
+ assert.equal(rows.length,106);
  const load=async p=>JSON.parse(await readFile(new URL('../'+p,import.meta.url),'utf8'));
  const plan=planVoices(rows,await load('config/voice-ids.json'),await load('config/voice-performance.json'),(await load('config/voice-pronunciation-issues.json')).issues,(await load('config/voice-repairs.json')).lines);
  const reach=tracePlayableVoiceLines(VOICE_MANIFEST),catalog=new Set(VOICE_REVIEW_CATALOG.map(r=>r.id));
@@ -47,4 +47,14 @@ test('after-rewind dialogue plays once, stops on narration and exit, and uses th
   next();assert.equal(calls.length,1);assert.equal(calls[0].voiceChapter,3);
   next();assert.equal(calls.length,1);assert.ok(stopped>=3);
  }finally{stop?.();globalThis.Image=oldImage;globalThis.document=oldDocument;}
+});
+test('Mimi review decisions survive backup and published decision validation',async()=>{
+ const {voiceReviewEmpty,voiceReviewMark,voiceReviewBackup,voiceReviewLoad}=await import('../src/voice-review-store.js');
+ const {voiceReviewValidatePublished}=await import('../src/voice-review-release.js');
+ const row=VOICE_REVIEW_CATALOG.find(row=>row.line.speaker==='rabbit');
+ const state=voiceReviewEmpty();voiceReviewMark(state,row,{status:'ok'});
+ const loaded=voiceReviewLoad({getItem:()=>voiceReviewBackup(state)}).state;
+ assert.equal(loaded.records[row.id].status,'ok');
+ const record=loaded.records[row.id];
+ assert.ok(voiceReviewValidatePublished({schema:1,decisions:{[row.id]:{status:'ok',version:record.version,updatedAt:record.updatedAt}}}));
 });

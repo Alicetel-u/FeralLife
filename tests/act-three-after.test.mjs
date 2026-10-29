@@ -10,6 +10,7 @@ test('time-leap aftermath preserves the requested dialogue and separates its two
  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');assert.match(app,/startActThreeTitle\(modal,\(\)=>\{state.actThree=\{phase:'after',cursor:0\}/);assert.match(app,/initialCursor:cursor,onCursor:cursor=>\{state.actThree=\{phase:'after',cursor\}/);assert.match(app,/progress.phase==='complete'&&!progress.afterSeen/);
 });
 test('aftermath resumes the saved line, navigates both scenes and completes once without replaying the film',async()=>{
+ const previousDocument=globalThis.document;globalThis.document={hidden:false,addEventListener(){},removeEventListener(){}};
  const previous=globalThis.Image;globalThis.Image=class{set src(value){queueMicrotask(()=>this.onload());}decode(){return Promise.resolve();}};
  const elements=new Map();const el=()=>({hidden:false,disabled:false,textContent:'',src:'',alt:'',remove(){}});
  const dialogue={html:'',set innerHTML(value){this.html=value;},querySelector(){return el();}};
@@ -21,5 +22,5 @@ test('aftermath resumes the saved line, navigates both scenes and completes once
   const stop=startActThreeAfter(root,()=>complete++,{initialCursor:3,onCursor:value=>saved.push(value)});await new Promise(resolve=>setImmediate(resolve));
   assert.deepEqual(saved,[3]);assert.equal(section.dataset.cut,'corridor');click('data-dialogue-next');assert.equal(section.dataset.cut,'empty-room');assert.equal(saved.at(-1),4);
   click('data-dialogue-back');assert.equal(saved.at(-1),3);for(let n=0;n<5;n++)click('data-dialogue-next');assert.equal(complete,1);assert.ok(!listeners.click);stop();assert.equal(complete,1);
- }finally{globalThis.Image=previous;}
+ }finally{globalThis.Image=previous;globalThis.document=previousDocument;}
 });
