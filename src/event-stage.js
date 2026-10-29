@@ -8,11 +8,11 @@ import { CHARACTERS } from './simulation.js';
 export const eventEscape = value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const eventSpeakerName = speaker=>speaker==='manager'?'あなた · 管理人':speaker==='narrator'?'けもの荘の記録':speaker==='mystery'?'謎の声':CHARACTERS[speaker]?.name||'住人';
 
-// Spoken dialogue owns its portrait; participants never substitute for a speaker.
-// Narration retains authored scene composition, and the landlord stays off camera.
+// Keep the entire cast visible throughout a conversation, including when the
+// off-camera landlord speaks. Speaker changes only the highlight and expression;
+// cinematic cuts can still explicitly hide portraits.
 export function eventPortraitVisible(type,line,{hideCharacters=false}={}) {
-  if(hideCharacters||!type||type==='manager'||line?.speaker==='manager')return false;
-  return !CHARACTERS[line?.speaker]||type===line.speaker;
+  return !hideCharacters&&!!type&&type!=='manager';
 }
 
 // Vector ornaments keep their shape at any display size, without platform emoji.
