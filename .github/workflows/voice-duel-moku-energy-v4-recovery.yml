@@ -1,0 +1,111 @@
+name: Recover and publish 25 energetic Moku V4 battle voices without new API costs
+on:
+  push:
+    paths:
+      - .github/workflows/voice-duel-moku-energy-v4-recovery.yml
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: reviewed-voice-automation
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    if: github.ref == 'refs/heads/main' && github.repository == 'Alicetel-u/FeralLife'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install ffprobe/ffmpeg
+        run: |
+          if ! command -v ffprobe >/dev/null 2>&1 || ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+      - name: Restore only Moku's 25 paid original/master/tempo recordings
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .local/moku-energy-restore assets/voices
+          gh run download 40935619708 -n moku-energy-v4-recovery-40935619708 -D .local/moku-energy-restore
+          node --input-type=module <<'JS'
+          import {readFile,writeFile,copyFile,stat} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {extractVoiceScript,planVoices} from './tools/voice-script.mjs';
+          import {VOICE_MANIFEST as OLD} from './src/voice-manifest.js';
+          const json=async p=>JSON.parse(await readFile(p,'utf8'));
+          const archive='.local/moku-energy-restore/';
+          const p=await json(archive+'moku-energy-plan.json');
+          const script=extractVoiceScript('act2-duel').filter(r=>r.speaker==='cat');
+          if(script.length!==25||p.rows.length!==25||p.lines!==25||p.model!=='eleven_v4'||new Set(p.rows.map(r=>r.lineKey)).size!==25)throw Error('25-line Moku scope no longer matches game source');
+          const config=await json('config/voice-performance.json');
+          config.generationDefaults=await json('config/voice-generation-defaults.json');
+          const planned=planVoices(script,await json('config/voice-ids.json'),config,(await json('config/voice-pronunciation-issues.json')).issues,(await json('config/voice-repairs.json')).lines);
+          const fresh=new Map(planned.map(r=>[r.lineKey,r]));
+          const manifest={...OLD};
+          const duration=file=>Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',file],{encoding:'utf8'}).trim());
+          let attacks=0;
+          for(const row of p.rows){
+            const current=fresh.get(row.lineKey);
+            if(!current||current.hash!==row.hash||current.line.text!==row.text||current.speaker!=='cat'||current.voiceId!=='0ptCJp0xgdabdcpVtCB5'||row.settings?.stability!==.35||row.settings?.similarity_boost!==.85||!['duel-moku','duel-moku-attack'].includes(row.performance)||!row.source.startsWith('act2/duel/'))throw Error('Audio/game V4 plan mismatch '+row.source);
+            if(!/^[a-f0-9]{64}$/.test(row.hash)||row.file!=='assets/voices/'+row.hash+'.mp3')throw Error('Unsafe audio file identity');
+            const master=row.file.replace(/\.mp3$/,'.duel-v4.mp3');
+            const attack=row.performance==='duel-moku-attack';
+            const fast=master.replace(/\.mp3$/,attack?'.attack.mp3':'.pace.mp3');
+            for(const path of [row.file,master,fast]){
+              const source=archive+path.split('/').at(-1);
+              if((await stat(source)).size<1000)throw Error('Previously generated paid audio missing '+path);
+              await copyFile(source,path);
+            }
+            const fullSeconds=duration(master),quickSeconds=duration(fast),rate=attack?1.5:1.16;
+            if(!Number.isFinite(fullSeconds)||fullSeconds<.5||fullSeconds>45||!Number.isFinite(quickSeconds)||quickSeconds<Math.max(.28,fullSeconds/rate-.22))throw Error('Invalid or truncated battle audio '+row.source);
+            manifest[row.lineKey]={
+              file:master,fastFile:fast,hash:row.hash,source:row.source,speaker:'cat',text:row.text,
+              performance:row.performance,deliveryProfile:row.deliveryProfile,model:'eleven_v4',
+              repairReview:true,repairComment:'モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。',
+              audioMastering:{integratedLUFS:-18,truePeakDBTP:-5,tailPaddingSeconds:.40},
+              audioQuality:{masteredForTrial:true,durationSeconds:fullSeconds}
+            };
+            if(attack)attacks++;
+          }
+          if(attacks!==4||Object.keys(manifest).length!==Object.keys(OLD).length)throw Error('Unexpected Moku scope count');
+          for(const [key,entry] of Object.entries(OLD))if(!fresh.has(key)&&JSON.stringify(manifest[key])!==JSON.stringify(entry))throw Error('Non-battle Moku or unrelated actor modified '+key);
+          await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
+          console.log('Restored 25 fully mastered Moku V4 performances, 4 complete attacks; no new paid API requests');
+          JS
+      - name: Run audio packaging and the complete game regression suite
+        run: |
+          node tools/build-attack-voices.mjs
+          npm run build
+          npm test
+      - name: Commit new Moku audio and voice debug catalog
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {VOICE_MANIFEST} from './src/voice-manifest.js';
+          const p=JSON.parse(await readFile('.local/moku-energy-restore/moku-energy-plan.json','utf8'));
+          const paths=['src/voice-manifest.js','src/voice-review-catalog.js','src/voice-review-published.js'];
+          for(const r of p.rows){const clip=VOICE_MANIFEST[r.lineKey];paths.push(r.file,clip.file,clip.fastFile);}
+          execFileSync('git',['add','--',...new Set(paths)],{stdio:'inherit'});
+          JS
+          git diff --cached --stat
+          git diff --cached --quiet && { echo 'No Moku voice changes staged'; exit 1; }
+          git commit -m 'Publish energetic V4 Moku battle dialogue and attack vocals'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Dispatch deployment for the final audio commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
