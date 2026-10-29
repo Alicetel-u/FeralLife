@@ -5,6 +5,7 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 import {storyScreenHTML} from '../src/story-screens.js';
 import { ACT_ONE_EVENTS } from '../src/act-one.js';
+import {firstActMokuDialogueTheme} from '../src/bgm.js';
 import { ACT_TWO_EVENTS } from '../src/act-two.js';
 test('only authored safe replies trigger victory in either chapter; seen replies never repeat',()=>{
   for(const [chapter,events] of [[1,ACT_ONE_EVENTS],[2,ACT_TWO_EVENTS]])for(const [scene,event] of Object.entries(events))for(const choice of event.choices){
@@ -24,7 +25,7 @@ test('first-act completion has one forward action and shares the victory soundtr
   const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
   for(const screen of ['.trouble-victory','.act-one-complete']){
     let cue;
-    const context={document:{hidden:false},state:{actOne:{chapter:1}},modal:{open:true,classList:{contains:()=>false},querySelector:s=>s.split(',').includes(screen)?{}:null},normalBgm:{setScene:(silent,name)=>{assert.equal(silent,false);cue=name;}}};
+    const context={document:{hidden:false},state:{actOne:{chapter:1}},firstActMokuDialogueTheme,modal:{open:true,classList:{contains:()=>false},querySelector:s=>s.split(',').includes(screen)?{}:null},normalBgm:{setScene:(silent,name)=>{assert.equal(silent,false);cue=name;}}};
     vm.createContext(context);vm.runInContext(source+'\nsyncNormalBgm();',context);
     assert.equal(cue,'victory');
   }
