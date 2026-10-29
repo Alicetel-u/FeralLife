@@ -66,7 +66,7 @@ test('second-act Luna BGM and both resident portraits persist across every speak
   {speaker:'cat',text:'モクも聞くニャ'},
   {speaker:'manager',text:'二人とも落ち着け'}
  ];
- const event={id:371,actScene:'reply',cast:['hostess','cat'],detail:lines[0].text,lines};
+ const event={id:371,actScene:'conversation',cast:['hostess','cat'],detail:lines[0].text,lines};
  const luna=fakeAudio(),normal=fakeAudio(),moku=fakeAudio();
  const bgm=createNormalBgm(normal,fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),moku,fakeAudio(),luna);
  await bgm.unlock();
