@@ -1,0 +1,165 @@
+name: Re-record Moku battle naturally without scripted additions
+on:
+  push:
+    paths:
+      - .github/workflows/voice-duel-moku-natural-v4.yml
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: reviewed-voice-automation
+  cancel-in-progress: false
+
+jobs:
+  natural:
+    if: github.repository == 'Alicetel-u/FeralLife' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify natural battle script and pass the full test suite BEFORE paid generation
+        run: |
+          npm test
+          node --input-type=module <<'JS'
+          import {extractVoiceScript} from './tools/voice-script.mjs';
+          const rows=extractVoiceScript('act2-duel').filter(r=>r.speaker==='cat');
+          if(rows.length!==25||new Set(rows.map(r=>r.lineKey)).size!==25||rows.filter(r=>r.performance==='duel-moku-attack').length!==4)throw Error('Battle transcript/attack coverage changed');
+          for(const row of rows){
+            if(!row.source.startsWith('act2/duel/')||/^(?:にゃはは|ニャハハ|あはは|えへへ|フフ)/.test(row.line.text))throw Error('Unexpected scripted ad-lib');
+          }
+          console.log('Canonical 25 Moku lines contain no added laughter. Four attack lines retained.');
+          JS
+      - name: Prepare ffmpeg for original, mastered and stage-speed recordings
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+          mkdir -p .local/moku-natural-recovery
+          cp src/voice-manifest.js .local/moku-natural-original-manifest.js
+      - name: Pin all 25 neutral Moku recordings and enforce exact spoken text
+        id: plan
+        run: |
+          node tools/voices.mjs --scope=act2-duel --speaker=cat --quiet
+          cp .local/voice-plan.json .local/moku-natural-plan.json
+          node --input-type=module <<'JS'
+          import {readFile,appendFile} from 'node:fs/promises';
+          const p=JSON.parse(await readFile('.local/moku-natural-plan.json','utf8'));
+          if(p.lines!==25||p.unique!==25||p.pending!==25||p.model!=='eleven_v4')throw Error('Expected 25 fresh Moku-only V4 lines');
+          if(p.estimatedCredits<1||p.estimatedCredits>3900)throw Error('Abnormal credit estimate '+p.estimatedCredits);
+          let attacks=0;
+          for(const r of p.rows){
+            if(r.speaker!=='cat'||!r.source.startsWith('act2/duel/')||r.settings?.stability!==.65||r.settings?.similarity_boost!==.85||!['duel-moku','duel-moku-attack'].includes(r.performance)||!r.voiceId||!r.deliveryProfile?.startsWith('v3-inspired-v4:'))throw Error('Scope or delivery drift');
+            if(r.tags.length||/\[[^\]]+\]/.test(r.spokenInput)||/\b(?:excited|shouting|playful)\b/i.test(r.spokenInput))throw Error('Improvised performance tags would violate the exact text policy');
+            if(r.performance==='duel-moku-attack')attacks++;
+          }
+          if(attacks!==4)throw Error('Four Moku attacks required');
+          await appendFile(process.env.GITHUB_OUTPUT,'id='+p.planId+'\n');
+          console.log('Natural exact-script Moku V4: '+p.lines+' voices, '+p.estimatedCredits+' estimated credits, four attacks.');
+          JS
+      - name: Confirm live ElevenLabs balance before any charged calls
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          const p=JSON.parse(await readFile('.local/moku-natural-plan.json','utf8'));
+          const r=await fetch('https://api.elevenlabs.io/v1/user/subscription',{headers:{'xi-api-key':process.env.ELEVENLABS_API_KEY},signal:AbortSignal.timeout(30000)});
+          if(!r.ok)throw Error('Live ElevenLabs balance unavailable: '+r.status);
+          const j=await r.json(),balance=j.character_limit-j.character_count;
+          console.log('Live balance: '+balance+'; estimated cost: '+p.estimatedCredits);
+          if(!Number.isFinite(balance)||balance<p.estimatedCredits)throw Error('Insufficient credits. No voices generated.');
+          JS
+      - name: Generate natural Moku speech, exactly the authored text
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: node tools/voices.mjs --scope=act2-duel --speaker=cat --quiet --generate --approve=${{ steps.plan.outputs.id }}
+      - name: Restore quiet, balanced master with protected natural endings
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,writeFile,stat} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {extractVoiceScript} from './tools/voice-script.mjs';
+          import {VOICE_MANIFEST} from './src/voice-manifest.js';
+          const p=JSON.parse(await readFile('.local/moku-natural-plan.json','utf8'));
+          const oldText=await readFile('.local/moku-natural-original-manifest.js','utf8');
+          const OLD=JSON.parse(oldText.slice(oldText.indexOf('= ')+2).replace(/;\s*$/,''));
+          const script=new Map(extractVoiceScript('act2-duel').filter(r=>r.speaker==='cat').map(r=>[r.lineKey,r]));
+          const manifest={...OLD};
+          for(const row of p.rows){
+            const line=script.get(row.lineKey),entry=VOICE_MANIFEST[row.lineKey];
+            if(!line||line.line.text!==row.text||entry?.hash!==row.hash||entry.model!=='eleven_v4'||(await stat(row.file)).size<1000)throw Error('Game line and regenerated audio differ');
+            const master=row.file.replace(/\.mp3$/,'.duel-v4.mp3');
+            execFileSync('ffmpeg',['-hide_banner','-loglevel','error','-y','-i',row.file,'-af','loudnorm=I=-18:TP=-5:LRA=11,apad=pad_dur=0.4','-ar','44100','-codec:a','libmp3lame','-b:a','128k',master]);
+            const normal=row.performance==='duel-moku-attack'?1.12:1.05;
+            const fast=master.replace(/\.mp3$/,row.performance==='duel-moku-attack'?'.attack.mp3':'.pace.mp3');
+            execFileSync('ffmpeg',['-hide_banner','-loglevel','error','-y','-i',master,'-af','atempo='+normal+',apad=pad_dur=0.15','-ar','44100','-codec:a','libmp3lame','-q:a','3',fast]);
+            const duration=file=>Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',file],{encoding:'utf8'}).trim());
+            const masterDur=duration(master),fastDur=duration(fast);
+            if(!Number.isFinite(masterDur)||masterDur<.5||masterDur>40||!Number.isFinite(fastDur)||fastDur<Math.max(.3,masterDur/normal-.2))throw Error('Unintended ending truncation: '+row.source);
+            manifest[row.lineKey]={
+              file:master,fastFile:fast,hash:row.hash,source:row.source,speaker:'cat',text:row.text,performance:row.performance,deliveryProfile:row.deliveryProfile,model:'eleven_v4',
+              repairReview:true,repairComment:'台本の文字だけを入力して自然な会話テンションで再収録。勝手な笑い声・掛け声・ニャの付け足し指示なし。',
+              audioMastering:{integratedLUFS:-18,truePeakDBTP:-5,tailPaddingSeconds:0.4,naturalTempo:normal},
+              audioQuality:{masteredForTrial:true,durationSeconds:masterDur}
+            };
+          }
+          if(Object.keys(OLD).length!==Object.keys(manifest).length)throw Error('Voice identity count changed');
+          for(const [key,item] of Object.entries(OLD))if(!script.has(key)&&JSON.stringify(manifest[key])!==JSON.stringify(item))throw Error('Unrelated actors/voices changed: '+key);
+          await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
+          console.log('25 moderate Moku V4 clips mastered, with 1.05x banter and 1.12x attacks; no other voices replaced.');
+          JS
+      - name: Validate offline speed clips and complete game test suite
+        run: |
+          node tools/build-attack-voices.mjs
+          npm run build
+          npm test
+      - name: Publish precisely the 25 Moku audio replacements
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {VOICE_MANIFEST} from './src/voice-manifest.js';
+          const p=JSON.parse(await readFile('.local/moku-natural-plan.json','utf8'));
+          const files=['src/voice-manifest.js','src/voice-review-catalog.js','src/voice-review-published.js'];
+          for(const r of p.rows){const e=VOICE_MANIFEST[r.lineKey];files.push(r.file,e.file,e.fastFile);}
+          execFileSync('git',['add','--',...new Set(files)],{stdio:'inherit'});
+          JS
+          git diff --cached --quiet && { echo 'No Moku recordings staged'; exit 1; }
+          git diff --cached --stat
+          git commit -m 'Replace overexcited Moku battle voices with natural script-only V4 acting'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Trigger Pages deployment of the new audio commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
+      - name: Retain each paid recording for recovery without duplicate charges
+        if: failure()
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,copyFile,mkdir} from 'node:fs/promises';
+          const dir='.local/moku-natural-recovery';await mkdir(dir,{recursive:true});
+          for(const p of ['.local/moku-natural-plan.json','.local/voice-journal.json'])try{await copyFile(p,dir+'/'+p.split('/').at(-1));}catch{}
+          let p;try{p=JSON.parse(await readFile('.local/moku-natural-plan.json','utf8'));}catch{process.exit(0);}
+          for(const r of p.rows){
+            const m=r.file.replace(/\.mp3$/,'.duel-v4.mp3');
+            for(const file of [r.file,m,m.replace(/\.mp3$/,'.attack.mp3'),m.replace(/\.mp3$/,'.pace.mp3')])try{await copyFile(file,dir+'/'+file.split('/').at(-1));}catch{}
+          }
+          JS
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: moku-natural-v4-recovery-${{ github.run_id }}
+          path: .local/moku-natural-recovery/
+          retention-days: 14
