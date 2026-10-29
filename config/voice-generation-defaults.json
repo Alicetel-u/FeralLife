@@ -64,5 +64,24 @@
         "[clear, projected voice]"
       ]
     }
+  },
+  "duelMoku": {
+    "purpose": "Act 2 four-kings mini-game only. Preserve Moku's actor and ordinary languid persona outside battles.",
+    "casual": [
+      "[excited]",
+      "[playful, upbeat comic banter]",
+      "[bright, energetic projected voice with crisp punchy syllables]",
+      "[lively and clearly audible final ニャ]"
+    ],
+    "attack": [
+      "[excited]",
+      "[shouting]",
+      "[high-energy, triumphant comic battle cry]",
+      "[powerful clear voice through the very last ニャ]"
+    ],
+    "settings": {
+      "stability": 0.35,
+      "similarity_boost": 0.85
+    }
   }
 }
