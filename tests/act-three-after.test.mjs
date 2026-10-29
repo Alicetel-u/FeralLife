@@ -6,6 +6,10 @@ test('time-leap aftermath preserves the requested dialogue and separates its two
  assert.deepEqual(ACT_THREE_AFTER_SCENES.flatMap(scene=>scene.lines.map(line=>line.text)),['静寂に包まれたけもの荘。','……また、駄目だったか','時計を確認する。','戻り先は……今回は変わってないな','大家は無言で空き部屋へ向かう。','隠し場所を開け、武器と弾薬を確認する。','銃も弾薬もある。準備はできてる','……今度こそ、二人とも生き残らせる']);
  assert.equal(actThreeAfterEntry(3).scene.id,'corridor');assert.equal(actThreeAfterEntry(4).scene.id,'empty-room');assert.equal(actThreeAfterEntry(999).line.text,'……今度こそ、二人とも生き残らせる');
  for(const scene of ACT_THREE_AFTER_SCENES)assert.ok(existsSync(scene.image),scene.image);
+ assert.equal(actThreeAfterEntry(0).watch,false);assert.equal(actThreeAfterEntry(1).watch,false);
+ assert.equal(actThreeAfterEntry(2).watch,true);assert.equal(actThreeAfterEntry(3).watch,true);
+ assert.notEqual(actThreeAfterEntry(0).image,actThreeAfterEntry(2).image);
+ assert.ok(existsSync(actThreeAfterEntry(2).image));
  assert.ok(!actThreeAfterHTML().includes('シーン2'));
  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');assert.match(app,/startActThreeTitle\(modal,\(\)=>\{state.actThree=\{phase:'after',cursor:0\}/);assert.match(app,/initialCursor:cursor,onCursor:cursor=>\{state.actThree=\{phase:'after',cursor\}/);assert.match(app,/progress.phase==='complete'&&!progress.afterSeen/);
 });

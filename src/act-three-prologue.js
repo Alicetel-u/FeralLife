@@ -90,13 +90,13 @@ export function startActThreeTitle(root,onDone,settings,shared){
 export function actThreeCompleteHTML(){return `<section class="act-screen act3-complete" data-chapter="3"><h2 id="modal-title" class="visually-hidden">第3幕 再生メニュー</h2><nav aria-label="再生終了メニュー"><button type="button" data-act3-map>街マップへ</button><button type="button" data-act3-replay>もう一度見る</button><button type="button" data-act3-after-replay>タイムリープ後から見る</button><button type="button" data-act-title>タイトルに戻る</button></nav></section>`;}
 
 export const ACT_THREE_AFTER_SCENES=[
- {id:'corridor',image:'assets/events/chapter3/chapter3_after_01.png',lines:[
+ {id:'corridor',image:'assets/events/chapter3/chapter3-after-awake-v2.png',watchImage:'assets/events/chapter3/chapter3-after-watch-v2.png',lines:[
   {speaker:'narrator',text:'静寂に包まれたけもの荘。'},
   {speaker:'manager',text:'……また、駄目だったか'},
   {speaker:'narrator',text:'時計を確認する。'},
   {speaker:'manager',text:'戻り先は……今回は変わってないな'}
  ]},
- {id:'empty-room',image:'assets/events/chapter3/chapter3_after_02.png',lines:[
+ {id:'empty-room',image:'assets/events/chapter3/chapter3-after-room-v2.png',lines:[
   {speaker:'narrator',text:'大家は無言で空き部屋へ向かう。'},
   {speaker:'narrator',text:'隠し場所を開け、武器と弾薬を確認する。'},
   {speaker:'manager',text:'銃も弾薬もある。準備はできてる'},
@@ -106,7 +106,9 @@ export const ACT_THREE_AFTER_SCENES=[
 for(const scene of ACT_THREE_AFTER_SCENES)for(const line of scene.lines)line.voiceChapter=3;
 export function actThreeAfterEntry(cursor=0){
  const entries=ACT_THREE_AFTER_SCENES.flatMap(scene=>scene.lines.map(line=>({scene,line})));
- return {...entries[Math.max(0,Math.min(entries.length-1,Number.isInteger(cursor)?cursor:0))],count:entries.length};
+ const entry=entries[Math.max(0,Math.min(entries.length-1,Number.isInteger(cursor)?cursor:0))];
+ const watch=!!entry.scene.watchImage&&entry.scene.lines.indexOf(entry.line)>=2;
+ return {...entry,image:watch?entry.scene.watchImage:entry.scene.image,watch,count:entries.length};
 }
 export function actThreeAfterHTML(){return `<section class="act-screen act3-film act3-after" data-act3-after data-chapter="3" tabindex="-1" aria-label="第3幕 タイムリープ後"><h2 id="modal-title" class="visually-hidden">第3幕 タイムリープ後</h2><div class="act3-rig"><img class="act3-image" alt=""></div><div class="act3-dialogue" data-renderer="event-stage"></div>${chapterDialogueControlsHTML()}<div class="act3-loading" role="status"><span>画像を読み込んでいます…</span><button type="button" data-act3-after-retry hidden>再読み込み</button></div></section>`;}
 export function startActThreeAfter(root,onDone,{initialCursor=0,onCursor=()=>{},bgm=null,voice=null,silent=false}={}){
@@ -114,8 +116,8 @@ export function startActThreeAfter(root,onDone,{initialCursor=0,onCursor=()=>{},
  const img=section.querySelector('.act3-image'),dialogue=section.querySelector('.act3-dialogue'),loading=section.querySelector('.act3-loading');
  let cursor=Math.max(0,Math.min(actThreeAfterEntry().count-1,Number.isInteger(initialCursor)?initialCursor:0)),dead=false,ready=false,version=0,spoken=null;
  const paint=()=>{
-  const {scene,line,count}=actThreeAfterEntry(cursor);section.dataset.cut=scene.id;img.src=scene.image;
-  img.alt=scene.id==='corridor'?'静かなけもの荘の廊下で時計を確認する大家':'空き部屋の隠し場所で武器と弾薬を確認する大家';
+  const {scene,line,image,watch,count}=actThreeAfterEntry(cursor);section.dataset.cut=scene.id;img.src=image;
+  img.alt=scene.id==='corridor'?(watch?'古いけもの荘の廊下に座り込み、震える手で腕時計を確かめる大家':'ゾンビに襲われた恐怖を引きずり、けもの荘の古い廊下で喉元を押さえて息をのむ大家'):'けもの荘の古い空き部屋で、恐怖をこらえて床の隠し場所の武器と弾薬を確かめる大家';
   const lines=ACT_THREE_AFTER_SCENES.flatMap(scene=>scene.lines);
   dialogue.innerHTML=eventStageHTML({detail:lines[0].text,lines,cast:[]},[],cursor,0,{hideCharacters:true,cinematic:true});
   dialogue.querySelector('.speaker-name').textContent=line.speaker==='manager'?'大家':'けもの荘';
@@ -129,7 +131,7 @@ export function startActThreeAfter(root,onDone,{initialCursor=0,onCursor=()=>{},
  function click(e){if(controls.click(e))return;const button=e.target.closest('button');if(!button)return;e.preventDefault();e.stopPropagation();if(button.hasAttribute('data-act3-after-retry'))load();else if(button.hasAttribute('data-act3-after-back'))back();else if(button.hasAttribute('data-act3-after-next'))advance();}
  function key(e){if(e.repeat||e.target.closest('button')||controls.blocked)return;if(['Enter','ArrowRight','Space'].includes(e.code)){e.preventDefault();e.stopPropagation();advance();}else if(e.code==='ArrowLeft'){e.preventDefault();e.stopPropagation();back();}}
  function load(){const token=++version;ready=false;loading.hidden=false;loading.querySelector('button').hidden=true;
-  Promise.all(ACT_THREE_AFTER_SCENES.map(scene=>new Promise((resolve,reject)=>{const asset=new Image();asset.onload=async()=>{try{await asset.decode?.();resolve();}catch(e){reject(e);}};asset.onerror=reject;asset.src=scene.image;}))).then(()=>{if(dead||version!==token)return;ready=true;loading.hidden=true;paint();}).catch(()=>{if(dead||version!==token)return;loading.querySelector('span').textContent='画像を読み込めませんでした';loading.querySelector('button').hidden=false;});
+  Promise.all(ACT_THREE_AFTER_SCENES.flatMap(scene=>[scene.image,scene.watchImage].filter(Boolean)).map(src=>new Promise((resolve,reject)=>{const asset=new Image();asset.onload=async()=>{try{await asset.decode?.();resolve();}catch(e){reject(e);}};asset.onerror=reject;asset.src=src;}))).then(()=>{if(dead||version!==token)return;ready=true;loading.hidden=true;paint();}).catch(()=>{if(dead||version!==token)return;loading.querySelector('span').textContent='画像を読み込めませんでした';loading.querySelector('button').hidden=false;});
  }
  const controls=createChapterDialogueControls(section,{getState:()=>({active:ready,line:actThreeAfterEntry(cursor).line,lines:ACT_THREE_AFTER_SCENES.flatMap(s=>s.lines),canBack:cursor>0,last:cursor===actThreeAfterEntry().count-1}),onNext:advance,onBack:back,onSkip:()=>{cursor=actThreeAfterEntry().count-1;paint();},voice,bgm,silent});
  section.addEventListener('click',click);section.addEventListener('keydown',key);document.addEventListener('visibilitychange',afterVisibility);section.focus({preventScroll:true});load();return stop;
