@@ -26,7 +26,7 @@ test('future production uses the adopted V3-style V4 requests and approved Mimi 
  assert.equal(future.request.model_id,'eleven_v4');assert.equal(future.lineKey,older.lineKey);
 });
 
-test('Moku gets energetic duel-only V4 direction while his ordinary languid character and other actors remain unchanged',async()=>{
+test('Moku uses natural script-only V4 battle speech without extra laughter or overacting',async()=>{
  const ids=await json('config/voice-ids.json'),base=await json('config/voice-performance.json');
  base.generationDefaults=await json('config/voice-generation-defaults.json');
  const script=extractVoiceScript('act2-duel'),all=planVoices(script,ids,base);
@@ -35,13 +35,13 @@ test('Moku gets energetic duel-only V4 direction while his ordinary languid char
  assert.equal(attacks.length,4,'all four Moku attack/ultimate calls');
  for(const row of moku){
   assert.equal(row.request.model_id,'eleven_v4');
-  assert.equal(row.request.voice_settings.stability,.35);
+  assert.equal(row.request.voice_settings.stability,.65);
   assert.equal(row.request.voice_settings.similarity_boost,.85);
   assert.equal(row.voiceId,ids.characters.cat.voiceId);
-  assert.ok(row.request.text.includes('[excited]'));
-  assert.doesNotMatch(row.request.text,/languid|sulky|drawn-out/i);
-  if(row.performance==='duel-moku-attack')assert.ok(row.request.text.includes('[shouting]'));
-  else assert.match(row.request.text,/upbeat comic banter/);
+  assert.equal(row.request.text,row.request.text.trim());
+  assert.doesNotMatch(row.request.text,/\\[[^\\]]+\\]|excited|playful|shouting|languid|sulky|laugh|chuckl|giggl/i);
+  assert.ok(row.request.text.includes('ニャ'),'No extra laughter or repeated ニャ is prompted');
+  assert.equal(row.request.text.replace(/[^ニ]/g,'').length>=1,true);
  }
  const oldConfig=structuredClone(base);
  delete oldConfig.generationDefaults.duelMoku;
@@ -57,4 +57,15 @@ test('Moku gets energetic duel-only V4 direction while his ordinary languid char
  assert.equal(normalVoice.request.voice_settings.stability,.5);
  assert.match(normalVoice.request.text,/languid, mildly sulky/);
  assert.doesNotMatch(normalVoice.request.text,/upbeat comic banter/);
+ assert.equal(base.generationDefaults.unauthorizedVocalizations.policy.includes('Do not add laughter'),true);
+});
+
+test('future voice planning rejects unscripted laughs from any character pronunciation repairs',async()=>{
+ const ids=await json('config/voice-ids.json'),base=await json('config/voice-performance.json');
+ base.generationDefaults=await json('config/voice-generation-defaults.json');
+ const row=extractVoiceScript('act2-duel').find(r=>r.speaker==='hostess');
+ assert.ok(row);
+ assert.throws(()=>planVoices([row],ids,base,[],[{speaker:'hostess',text:row.line.text,spokenText:'あはは。'+row.line.text}]),/Unscripted laughter/);
+ const normal=planVoices([row],ids,base,[]);
+ assert.equal(normal[0].text,row.line.text,'displayed dialogue and voice lookup stay unchanged');
 });
