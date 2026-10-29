@@ -113,4 +113,7 @@ test('only the Act III map uses the rifle landlord; ordinary observation keeps t
  assert.equal(CHARACTER_ART.manager.src,'assets/characters/manager/matched-v3/idle.png');
  const png=readFileSync(source);assert.equal(png.readUInt32BE(16),512);assert.equal(png.readUInt32BE(20),512);assert.equal(png[25],6);
  const registration=JSON.parse(readFileSync('assets/characters/manager/matched-v3/map-rifle.json','utf8'));assert.deepEqual(registration.origin,[256,492]);assert.equal(registration.standingBodyHeight,455);
+ const mapSource=readFileSync(new URL('../src/act-three-map.js',import.meta.url),'utf8');
+ assert.doesNotMatch(mapSource,/map-rifle-walk/);
+ assert.equal((actThreeMapHTML().match(/map-rifle\.png/g)||[]).length,1);
 });
