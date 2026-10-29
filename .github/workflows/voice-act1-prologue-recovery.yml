@@ -54,7 +54,7 @@ jobs:
             }
             const seconds=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',mastered],{encoding:'utf8'}).trim());
             if(!Number.isFinite(seconds)||seconds<0.5||seconds>45)throw Error('Invalid recovered MP3 duration');
-            manifest[row.lineKey]={file:mastered,hash:row.hash,source:row.source,speaker:row.speaker,text:row.text,performance:row.performance,deliveryProfile:row.deliveryProfile,model:'eleven_v4',repairReview:true,repairComment:'第一幕プロローグの大家の心の声を採用済みV3寄せV4で再生成し、音量を調整。',audioQuality:{masteredForTrial:true}};
+            manifest[row.lineKey]={file:mastered,hash:row.hash,source:row.source,speaker:row.speaker,text:row.text,performance:row.performance,deliveryProfile:row.deliveryProfile,model:'eleven_v4',repairReview:true,repairComment:'第一幕プロローグの大家の心の声を採用済みV3寄せV4で再生成し、音量を調整。',audioQuality:{masteredForTrial:true,durationSeconds:seconds}};
             console.log('Restored '+row.source+' ('+seconds.toFixed(2)+' seconds)');
           }
           await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
