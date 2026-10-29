@@ -12895,7 +12895,7 @@ export const VOICE_REVIEW_CATALOG = [
   {
     "id": "[\"cat\",\"まだ来るニャ！！\",\"act3-urgent\",false]",
     "reviewId": "b5e89adda5326447",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -12908,12 +12908,12 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 2.6,
       "voicePerformance": "act3-urgent"
     },
-    "version": "3972185e141216a74c71"
+    "version": "943372b830b1170b18b9"
   },
   {
     "id": "[\"hostess\",\"多すぎるって！！\",\"act3-urgent\",false]",
     "reviewId": "05ea81845b90ba77",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -12926,12 +12926,12 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 5,
       "voicePerformance": "act3-urgent"
     },
-    "version": "a45a238452528963e3bf"
+    "version": "230184eb6d0e813fe167"
   },
   {
     "id": "[\"manager\",\"下がってろ！！\",\"act3-urgent\",false]",
     "reviewId": "91a95774d4b28402",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -12944,12 +12944,12 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 7.6,
       "voicePerformance": "act3-urgent"
     },
-    "version": "0e0272ad83381421a7cb"
+    "version": "43302b4645b4a716922d"
   },
   {
     "id": "[\"manager\",\"……弾切れか\",\"act3-urgent\",false]",
     "reviewId": "f74e6813ee1eca4f",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -12962,12 +12962,12 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 3.5,
       "voicePerformance": "act3-urgent"
     },
-    "version": "396e525e9d5595de18cd"
+    "version": "7384bb13c514fdd86492"
   },
   {
     "id": "[\"manager\",\"モク、ルナ。裏から行け\",\"act3-urgent\",false]",
     "reviewId": "4bb96681acfe7def",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -12980,12 +12980,12 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 3.3,
       "voicePerformance": "act3-urgent"
     },
-    "version": "314c7e9e7d75ab315e70"
+    "version": "ca0af46e96da00bc6dcd"
   },
   {
     "id": "[\"hostess\",\"大家さんは！？\",\"act3-urgent\",false]",
     "reviewId": "518514c54bffe1dd",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -12998,12 +12998,12 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 5.8,
       "voicePerformance": "act3-urgent"
     },
-    "version": "816a4ec251abb224ce03"
+    "version": "63de7cedb6fbc0a47ef9"
   },
   {
     "id": "[\"manager\",\"俺が止める\",\"act3-urgent\",false]",
     "reviewId": "4be7bad180367b4f",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13016,12 +13016,12 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 8.1,
       "voicePerformance": "act3-urgent"
     },
-    "version": "39c1e336a7853fe8805c"
+    "version": "e61d657b94c3dcb1dfe3"
   },
   {
     "id": "[\"cat\",\"無茶だニャ！！\",\"act3-urgent\",false]",
     "reviewId": "ee3e457d3e9c79c9",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13034,12 +13034,12 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 10.5,
       "voicePerformance": "act3-urgent"
     },
-    "version": "6f0730741f7ed5c2afeb"
+    "version": "f77ce79fa8d5cecb5cb5"
   },
   {
     "id": "[\"manager\",\"いいから行け！！\",\"act3-urgent\",false]",
     "reviewId": "333ad7064f6668cc",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13052,12 +13052,12 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 13.8,
       "voicePerformance": "act3-urgent"
     },
-    "version": "227b319eba83d75530d0"
+    "version": "072c569cf88eece59880"
   },
   {
     "id": "[\"cat\",\"減ってないニャ！！\",\"act3-urgent\",false]",
     "reviewId": "7f7d8732f9359e48",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13070,12 +13070,12 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 3,
       "voicePerformance": "act3-urgent"
     },
-    "version": "1fa1150ac0962c939129"
+    "version": "27f846015c2a468ba192"
   },
   {
     "id": "[\"hostess\",\"もう無理！！\",\"act3-urgent\",false]",
     "reviewId": "d9408b2d630eb3b2",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13088,12 +13088,12 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 5.8,
       "voicePerformance": "act3-urgent"
     },
-    "version": "24cea331e8bc5489d173"
+    "version": "6c53a03376a1cbf34aa7"
   },
   {
     "id": "[\"hostess\",\"大家さん！！\",\"act3-urgent\",false]",
     "reviewId": "e7d8ebe73f4d55c8",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13106,12 +13106,12 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 3.3,
       "voicePerformance": "act3-urgent"
     },
-    "version": "a203fc69b9603e31e9d2"
+    "version": "5dcf639f47b9ed6145cd"
   },
   {
     "id": "[\"announcer\",\"緊急速報です！ 各地で原因不明の暴動が発生！\",\"act3-urgent\",false]",
     "reviewId": "92c3464a49cb426f",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13124,12 +13124,12 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 4.4,
       "voicePerformance": "act3-urgent"
     },
-    "version": "1e56c4334ccdaff8bdd5"
+    "version": "26b11011582a02e674fc"
   },
   {
     "id": "[\"announcer\",\"感染は世界各国に拡大し、政府は――\",\"act3-urgent\",false]",
     "reviewId": "9b299a6786a64325",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13142,12 +13142,12 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 8.35,
       "voicePerformance": "act3-urgent"
     },
-    "version": "f5c19d7d0b03c6b8c143"
+    "version": "6c62e5fbdf50833d8106"
   },
   {
     "id": "[\"manager\",\"……また、駄目だったか\",\"act3-manager\",false]",
     "reviewId": "503b168b8af0a92e",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:after",
     "sceneLabel": "死に戻り後・再出発",
@@ -13158,12 +13158,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……また、駄目だったか",
       "voiceChapter": 3
     },
-    "version": "9efed42bb76f88f42db1"
+    "version": "40f62d14b801d641066e"
   },
   {
     "id": "[\"manager\",\"戻り先は……今回は変わってないな\",\"act3-manager\",false]",
     "reviewId": "bcc70b3318f50018",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:after",
     "sceneLabel": "死に戻り後・再出発",
@@ -13174,12 +13174,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "戻り先は……今回は変わってないな",
       "voiceChapter": 3
     },
-    "version": "713e5b587d2b1cb94d62"
+    "version": "81d1e1dd798fb44a264c"
   },
   {
     "id": "[\"manager\",\"銃も弾薬もある。準備はできてる\",\"act3-manager\",false]",
     "reviewId": "72216135d256da39",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:after",
     "sceneLabel": "死に戻り後・再出発",
@@ -13190,12 +13190,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "銃も弾薬もある。準備はできてる",
       "voiceChapter": 3
     },
-    "version": "c8443b1cd58fa9eb168a"
+    "version": "5d7a170c38194415b728"
   },
   {
     "id": "[\"manager\",\"……今度こそ、二人とも生き残らせる\",\"act3-resolute\",false]",
     "reviewId": "314ae186cd607c69",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:after",
     "sceneLabel": "死に戻り後・再出発",
@@ -13206,12 +13206,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……今度こそ、二人とも生き残らせる",
       "voiceChapter": 3
     },
-    "version": "1075412fbcbee522e872"
+    "version": "e823661475cde2cf0394"
   },
   {
     "id": "[\"cat\",\"外、えらいことになってるニャ……\",\"act3-alert\",false]",
     "reviewId": "30bd45739ee37917",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-departure",
     "sceneLabel": "出発",
@@ -13222,12 +13222,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "外、えらいことになってるニャ……",
       "voiceChapter": 3
     },
-    "version": "78b41f8fa71362668da5"
+    "version": "eadb9f6acce373fa21c5"
   },
   {
     "id": "[\"hostess\",\"ねえ大家さん……本当にここから逃げられるの？\",\"act3-tense\",false]",
     "reviewId": "0ca024394d3ec652",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-departure",
     "sceneLabel": "出発",
@@ -13239,12 +13239,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "emotion": "sad"
     },
-    "version": "155bf9e04c4d1e8afe24"
+    "version": "de2951b0d33db5536778"
   },
   {
     "id": "[\"manager\",\"ああ。脱出地点までの道は分かってる\",\"act3-manager\",false]",
     "reviewId": "82a1203f4ee9605c",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-departure",
     "sceneLabel": "出発",
@@ -13255,12 +13255,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "ああ。脱出地点までの道は分かってる",
       "voiceChapter": 3
     },
-    "version": "0376e910795e21dc6fe8"
+    "version": "71d8b223df87135c272c"
   },
   {
     "id": "[\"cat\",\"そんな簡単に言って大丈夫なのかニャ？\",\"act3-alert\",false]",
     "reviewId": "307caa743914976f",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-departure",
     "sceneLabel": "出発",
@@ -13271,12 +13271,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "そんな簡単に言って大丈夫なのかニャ？",
       "voiceChapter": 3
     },
-    "version": "ca7d2a084cb0d835c4fa"
+    "version": "1705105d0b3169b8b123"
   },
   {
     "id": "[\"manager\",\"大丈夫だ。何度も確認してる\",\"act3-manager\",false]",
     "reviewId": "c442f214163b88b5",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-departure",
     "sceneLabel": "出発",
@@ -13287,12 +13287,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "大丈夫だ。何度も確認してる",
       "voiceChapter": 3
     },
-    "version": "19611d373a7def76580a"
+    "version": "07b655db1c8301e2582c"
   },
   {
     "id": "[\"hostess\",\"……何度も？\",\"act3-alert\",false]",
     "reviewId": "2f68e364a3b9d3f9",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-departure",
     "sceneLabel": "出発",
@@ -13303,12 +13303,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……何度も？",
       "voiceChapter": 3
     },
-    "version": "8621cf309f4aa259f657"
+    "version": "95219f7fd8bed9616b4c"
   },
   {
     "id": "[\"manager\",\"いや、こっちの話だ\",\"act3-manager\",false]",
     "reviewId": "b1fe353b7146b29c",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-departure",
     "sceneLabel": "出発",
@@ -13319,12 +13319,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "いや、こっちの話だ",
       "voiceChapter": 3
     },
-    "version": "a492533e49a3c896c4b3"
+    "version": "3cf291d40c1fef0e6598"
   },
   {
     "id": "[\"manager\",\"いいか。何があっても俺から離れるな\",\"act3-resolute\",false]",
     "reviewId": "5e0f9bc461d54508",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-departure",
     "sceneLabel": "出発",
@@ -13335,12 +13335,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "いいか。何があっても俺から離れるな",
       "voiceChapter": 3
     },
-    "version": "32d18ba74bcb0e946055"
+    "version": "2aa0ad6db47bef893b1f"
   },
   {
     "id": "[\"cat\",\"分かったニャ！\",\"act3-alert\",false]",
     "reviewId": "c96cbe591a464683",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-departure",
     "sceneLabel": "出発",
@@ -13351,12 +13351,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "分かったニャ！",
       "voiceChapter": 3
     },
-    "version": "e393bfa989c255da186d"
+    "version": "d769f8dfebb3d6a76b82"
   },
   {
     "id": "[\"hostess\",\"うん。大家さんを信じる\",\"act3-relieved\",false]",
     "reviewId": "ab349cef43e4aa4b",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-departure",
     "sceneLabel": "出発",
@@ -13368,12 +13368,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "emotion": "happy"
     },
-    "version": "f6dcffc9e5b7837ebb08"
+    "version": "24306f630e0e84e96317"
   },
   {
     "id": "[\"manager\",\"……行くぞ\",\"act3-manager\",false]",
     "reviewId": "8189325031d90ecc",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-departure",
     "sceneLabel": "出発",
@@ -13384,12 +13384,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……行くぞ",
       "voiceChapter": 3
     },
-    "version": "1c5d043f9872ecb55b7a"
+    "version": "db1dd191b5a5d58cedc3"
   },
   {
     "id": "[\"manager\",\"止まれ\",\"act3-resolute\",false]",
     "reviewId": "fd0204863637ea74",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-crossing",
     "sceneLabel": "交差点",
@@ -13400,12 +13400,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "止まれ",
       "voiceChapter": 3
     },
-    "version": "8e22c247d494757b638d"
+    "version": "3c9788c49b777584c96a"
   },
   {
     "id": "[\"cat\",\"ど、どうしたニャ？\",\"act3-startled\",false]",
     "reviewId": "777a4efa9ebd0933",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-crossing",
     "sceneLabel": "交差点",
@@ -13417,12 +13417,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "emotion": "surprised"
     },
-    "version": "d413255ae863530cb463"
+    "version": "ba0452a0c365e3719fc6"
   },
   {
     "id": "[\"manager\",\"この先は通らない\",\"act3-manager\",false]",
     "reviewId": "56ba1ccaa837a580",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-crossing",
     "sceneLabel": "交差点",
@@ -13433,12 +13433,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "この先は通らない",
       "voiceChapter": 3
     },
-    "version": "7d106321ea16babe726c"
+    "version": "8e45439e8743f37a04a6"
   },
   {
     "id": "[\"hostess\",\"でも、誰もいないよ？\",\"act3-alert\",false]",
     "reviewId": "907d6d9f21ae3d4e",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-crossing",
     "sceneLabel": "交差点",
@@ -13449,12 +13449,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "でも、誰もいないよ？",
       "voiceChapter": 3
     },
-    "version": "5c6998c038e0cea8262e"
+    "version": "f1028a7fefa22d7d8db8"
   },
   {
     "id": "[\"manager\",\"……3、2、1\",\"act3-manager\",false]",
     "reviewId": "6940069d6b475425",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-crossing",
     "sceneLabel": "交差点",
@@ -13465,12 +13465,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……3、2、1",
       "voiceChapter": 3
     },
-    "version": "b226191fccc298fa00bd"
+    "version": "f39d44e431d3697918b7"
   },
   {
     "id": "[\"cat\",\"うおっ！？ 出たニャ！！\",\"act3-panic\",false]",
     "reviewId": "3d32b21c2d394d42",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-crossing",
     "sceneLabel": "交差点",
@@ -13483,12 +13483,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "surprised",
       "horde": true
     },
-    "version": "561394d30f5624c3c727"
+    "version": "32ddf5f5a46ca58ecafa"
   },
   {
     "id": "[\"hostess\",\"えっ……なんで分かったの！？\",\"act3-panic\",false]",
     "reviewId": "0dc209ce8272b44d",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-crossing",
     "sceneLabel": "交差点",
@@ -13501,12 +13501,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "surprised",
       "horde": true
     },
-    "version": "e235e7f1923a28005653"
+    "version": "574f4a546d0d2c35362c"
   },
   {
     "id": "[\"manager\",\"いいから静かに。今のうちに裏道へ回る\",\"act3-manager\",false]",
     "reviewId": "98517696f3efd076",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-crossing",
     "sceneLabel": "交差点",
@@ -13518,12 +13518,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "horde": true
     },
-    "version": "c4524ca545dbe3d60b08"
+    "version": "2df2d86a3609feb73f0e"
   },
   {
     "id": "[\"cat\",\"大家、何者なんだニャ……\",\"act3-alert\",false]",
     "reviewId": "b54680b0f4debcd0",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-crossing",
     "sceneLabel": "交差点",
@@ -13535,12 +13535,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "horde": true
     },
-    "version": "6263b201f180bdefc2e8"
+    "version": "5f10fc5b365dbe142629"
   },
   {
     "id": "[\"manager\",\"ただの大家だよ\",\"act3-manager\",false]",
     "reviewId": "f360b91d3b6ebce0",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-crossing",
     "sceneLabel": "交差点",
@@ -13552,12 +13552,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "horde": true
     },
-    "version": "417abbd1f801a040fea8"
+    "version": "e78d475720a0805f1a74"
   },
   {
     "id": "[\"cat\",\"はぁ……やっとゾンビから離れられたニャ\",\"act3-tense\",false]",
     "reviewId": "60da462b1acffd9b",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-detour",
     "sceneLabel": "裏道の爆発",
@@ -13569,12 +13569,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "emotion": "tired"
     },
-    "version": "5daf2e18f0f9f236df70"
+    "version": "77c10ce5ddff1d3f361f"
   },
   {
     "id": "[\"hostess\",\"でも、こんな細い道で大丈夫かな……\",\"act3-tense\",false]",
     "reviewId": "8fec9d036a32cfda",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-detour",
     "sceneLabel": "裏道の爆発",
@@ -13586,12 +13586,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "emotion": "sad"
     },
-    "version": "a4f316e71aa4ce820703"
+    "version": "4cc16d5aea2a846604bd"
   },
   {
     "id": "[\"manager\",\"……二人とも、そこから動くな\",\"act3-resolute\",false]",
     "reviewId": "03f97ab8223ba2b2",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-detour",
     "sceneLabel": "裏道の爆発",
@@ -13602,12 +13602,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……二人とも、そこから動くな",
       "voiceChapter": 3
     },
-    "version": "f15137712f70c5771c16"
+    "version": "9dcc57a9eb595557571b"
   },
   {
     "id": "[\"cat\",\"またニャ！？\",\"act3-startled\",false]",
     "reviewId": "9370193b887b7472",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-detour",
     "sceneLabel": "裏道の爆発",
@@ -13619,12 +13619,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "emotion": "surprised"
     },
-    "version": "8e597e3d0088711abaa2"
+    "version": "060bb9c58f14034e52d9"
   },
   {
     "id": "[\"manager\",\"……そろそろか\",\"act3-manager\",false]",
     "reviewId": "21c4175b42565a78",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-detour",
     "sceneLabel": "裏道の爆発",
@@ -13635,12 +13635,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……そろそろか",
       "voiceChapter": 3
     },
-    "version": "19f6f4ae1e1adb596054"
+    "version": "e433b89f72a295ea4077"
   },
   {
     "id": "[\"hostess\",\"何が……？\",\"act3-tense\",false]",
     "reviewId": "2bc1a01c8a22bc9c",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-detour",
     "sceneLabel": "裏道の爆発",
@@ -13652,12 +13652,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "emotion": "sad"
     },
-    "version": "e41fb3d33c239cfb1c5f"
+    "version": "e04f3480ecc03efcd484"
   },
   {
     "id": "[\"cat\",\"うぎゃああっ！？！？\",\"act3-panic\",false]",
     "reviewId": "68b7044ea41a8ca8",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-detour",
     "sceneLabel": "裏道の爆発",
@@ -13670,12 +13670,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "surprised",
       "aftermath": true
     },
-    "version": "b61ab2a50f9860129120"
+    "version": "0bd0435b0e3480273ef2"
   },
   {
     "id": "[\"hostess\",\"きゃあっ！！\",\"act3-panic\",false]",
     "reviewId": "3a629c2f079f3c20",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-detour",
     "sceneLabel": "裏道の爆発",
@@ -13688,12 +13688,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "surprised",
       "aftermath": true
     },
-    "version": "b67f992fa8fd5125c14b"
+    "version": "25e731e883b61f0bc0f1"
   },
   {
     "id": "[\"cat\",\"し、死ぬかと思ったニャ！！\",\"act3-panic\",false]",
     "reviewId": "c3156a44358a93ee",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-detour",
     "sceneLabel": "裏道の爆発",
@@ -13706,12 +13706,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "surprised",
       "aftermath": true
     },
-    "version": "1891b0d812279d50e5e4"
+    "version": "9169d5c89621d2e7a1c2"
   },
   {
     "id": "[\"hostess\",\"大家さん……どうして分かったの？\",\"act3-panic\",false]",
     "reviewId": "85b95b1171736565",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-detour",
     "sceneLabel": "裏道の爆発",
@@ -13724,12 +13724,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "surprised",
       "aftermath": true
     },
-    "version": "900cbe6fb0f60b9486de"
+    "version": "daeec556014cd32d854e"
   },
   {
     "id": "[\"manager\",\"……前は、ここで失敗したからな\",\"act3-manager\",false]",
     "reviewId": "4bb29a8447c39517",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-detour",
     "sceneLabel": "裏道の爆発",
@@ -13741,12 +13741,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "aftermath": true
     },
-    "version": "76ddfad64a41f38732e7"
+    "version": "d9bc0614beecbfecddfa"
   },
   {
     "id": "[\"cat\",\"前って何の話ニャ！？\",\"act3-panic\",false]",
     "reviewId": "e952b426ee64104a",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-detour",
     "sceneLabel": "裏道の爆発",
@@ -13759,12 +13759,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "surprised",
       "aftermath": true
     },
-    "version": "157c27d7326ca6386c46"
+    "version": "804bd48f6227e5efec4f"
   },
   {
     "id": "[\"manager\",\"……何でもない。行くぞ\",\"act3-manager\",false]",
     "reviewId": "aa7d3648bca67f5c",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-detour",
     "sceneLabel": "裏道の爆発",
@@ -13776,12 +13776,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "aftermath": true
     },
-    "version": "04744be6992aee9c5ded"
+    "version": "8408f2264704d89cc152"
   },
   {
     "id": "[\"cat\",\"はぁ……はぁ……生きた心地がしなかったニャ……\",\"act3-tense\",false]",
     "reviewId": "cd1c9e3ed92be79a",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -13793,12 +13793,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "emotion": "tired"
     },
-    "version": "20a4a50094b00559b0d6"
+    "version": "a3b3949f341c324618e2"
   },
   {
     "id": "[\"hostess\",\"でも、本当に一度も襲われなかったね\",\"act3-alert\",false]",
     "reviewId": "a94b7913feeb85c9",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -13809,12 +13809,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "でも、本当に一度も襲われなかったね",
       "voiceChapter": 3
     },
-    "version": "3b62a7507b833ae170ed"
+    "version": "417bd0b11431247dc698"
   },
   {
     "id": "[\"manager\",\"ここまでは予定どおりだ\",\"act3-manager\",false]",
     "reviewId": "46aaac4444e7e049",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -13825,12 +13825,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "ここまでは予定どおりだ",
       "voiceChapter": 3
     },
-    "version": "9a63b48d62ba43cd5f34"
+    "version": "9fcb53b3e9b2c7e036c2"
   },
   {
     "id": "[\"cat\",\"予定どおりって……全部知ってたみたいな言い方ニャ\",\"act3-alert\",false]",
     "reviewId": "a2609165a36619ef",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -13841,12 +13841,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "予定どおりって……全部知ってたみたいな言い方ニャ",
       "voiceChapter": 3
     },
-    "version": "098d06312aa9b44fe059"
+    "version": "94d3b59cc8d92dfe8e80"
   },
   {
     "id": "[\"manager\",\"……少し休むぞ。必要な物もある\",\"act3-manager\",false]",
     "reviewId": "949f0d03f03b176f",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -13857,12 +13857,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……少し休むぞ。必要な物もある",
       "voiceChapter": 3
     },
-    "version": "b3e146c0f57e500927ff"
+    "version": "fafb6f071c38ae15ee47"
   },
   {
     "id": "[\"hostess\",\"あれ？ ねえ、店の中に誰かいる……\",\"act3-alert\",false]",
     "reviewId": "6b0cc350d09c3ba5",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -13873,12 +13873,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "あれ？ ねえ、店の中に誰かいる……",
       "voiceChapter": 3
     },
-    "version": "dc5439336d0e129b8fd8"
+    "version": "79165e2d6285ba32c0fb"
   },
   {
     "id": "[\"manager\",\"……生存者か\",\"act3-manager\",false]",
     "reviewId": "93397920cacc1357",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -13889,12 +13889,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……生存者か",
       "voiceChapter": 3
     },
-    "version": "740175a304f92e5ee1a3"
+    "version": "cac808a3f79eabee555d"
   },
   {
     "id": "[\"hostess\",\"……誰かいるの？\",\"act3-alert\",false]",
     "reviewId": "5e0d1c51b5514f99",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -13906,12 +13906,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "26e255d9bea32e8de63e"
+    "version": "10675aae9dae9e4f2e40"
   },
   {
     "id": "[\"rabbit\",\"ひっ……！？\",\"act3-mimi-afraid\",false]",
     "reviewId": "1d1a708f768cbe0c",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -13924,12 +13924,12 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true,
       "voicePerformance": "act3-mimi-afraid"
     },
-    "version": "cfa8b1ac97366ce0a76b"
+    "version": "37ba072d517be8ab4b2d"
   },
   {
     "id": "[\"rabbit\",\"ぞ、ゾンビじゃない……？\",\"act3-mimi-afraid\",false]",
     "reviewId": "d4892cfe811b29de",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -13942,12 +13942,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "sad",
       "inside": true
     },
-    "version": "26d464c544ff90a51647"
+    "version": "0f9339dbe3f9805712cf"
   },
   {
     "id": "[\"cat\",\"どこをどう見たらゾンビに見えるニャ！\",\"act3-alert\",false]",
     "reviewId": "2e716270c0f14ea2",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -13960,12 +13960,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "angry",
       "inside": true
     },
-    "version": "85a5544f1aa6809ddf9a"
+    "version": "283b80c46dfbed3b308e"
   },
   {
     "id": "[\"rabbit\",\"だ、だって！ さっきから怖い人ばっかり来るんだもん！\",\"act3-mimi-afraid\",false]",
     "reviewId": "138223aab57e4c4c",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -13978,12 +13978,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "sad",
       "inside": true
     },
-    "version": "3968a27f0e7f8f395356"
+    "version": "6c65dfdaaac4155c3095"
   },
   {
     "id": "[\"hostess\",\"大丈夫だよ。私たちは普通の人だから\",\"act3-alert\",false]",
     "reviewId": "41e599970ebcf350",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -13995,12 +13995,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "417ba4a92b26237486f6"
+    "version": "a057d643335fb4b54428"
   },
   {
     "id": "[\"rabbit\",\"銃！\",\"act3-startled\",false]",
     "reviewId": "0d19664f328f8e8d",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14013,12 +14013,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "surprised",
       "inside": true
     },
-    "version": "a3df3546a5d17e354aa7"
+    "version": "8dc1d70ebcaade6e3a21"
   },
   {
     "id": "[\"manager\",\"ああ…緊急事態だ気にすんな\",\"act3-manager\",false]",
     "reviewId": "e6e29e1a7061449e",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14030,12 +14030,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "8a5c5caa81e6e5196f40"
+    "version": "832c114c4d3c1fed7fe5"
   },
   {
     "id": "[\"rabbit\",\"はい…\",\"act3-mimi-afraid\",false]",
     "reviewId": "713f6160798c53c7",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14048,12 +14048,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "sad",
       "inside": true
     },
-    "version": "9f784d628bb3c0abbe5a"
+    "version": "2d0a8c96a37a116c8811"
   },
   {
     "id": "[\"manager\",\"……怪我してるのか？\",\"act3-manager\",false]",
     "reviewId": "e08d264f4e5d4c0d",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14065,12 +14065,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "3673d92f7effc67fe3af"
+    "version": "9faba16a8a3bd3e75415"
   },
   {
     "id": "[\"rabbit\",\"うん……逃げるときに転んじゃって……\",\"act3-mimi-afraid\",false]",
     "reviewId": "d8af38d1f88d4b00",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14083,12 +14083,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "sad",
       "inside": true
     },
-    "version": "645a1e58885c6520755c"
+    "version": "70cca74d4b7d8beedc7e"
   },
   {
     "id": "[\"manager\",\"俺たちは街の外に向かってる。一緒に来るか？\",\"act3-manager\",false]",
     "reviewId": "2c0b91ee528496fb",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14100,12 +14100,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "666fb55da8507df75066"
+    "version": "8a106543a0cba90317da"
   },
   {
     "id": "[\"rabbit\",\"えっ！ 本当に！？\",\"act3-mimi-bright\",false]",
     "reviewId": "d3699a1c228380d3",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14118,12 +14118,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "happy",
       "inside": true
     },
-    "version": "aea37e323bc35f82de4e"
+    "version": "6292446a3c3a808b5df0"
   },
   {
     "id": "[\"rabbit\",\"いたっ……！\",\"act3-mimi-afraid\",false]",
     "reviewId": "e41ef55b05ed6d73",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14136,12 +14136,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "sad",
       "inside": true
     },
-    "version": "9ab8f44eb920b92e73ec"
+    "version": "a70a40b33a87be72ff44"
   },
   {
     "id": "[\"hostess\",\"無理しないで！\",\"act3-tense\",false]",
     "reviewId": "8caf4736ede2e1c5",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14154,12 +14154,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "sad",
       "inside": true
     },
-    "version": "357921d6b10266c89edf"
+    "version": "d04b2c3f415469a2454b"
   },
   {
     "id": "[\"rabbit\",\"……ごめんなさい。走れそうにない……\",\"act3-mimi-afraid\",false]",
     "reviewId": "1fcd37f39ec43613",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14172,12 +14172,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "sad",
       "inside": true
     },
-    "version": "eab0d3721a4547315b60"
+    "version": "e6bc047a71af12736090"
   },
   {
     "id": "[\"cat\",\"この外、ゾンビだらけニャ……\",\"act3-alert\",false]",
     "reviewId": "55bd2a2c09dd8426",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14189,12 +14189,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "f89600a0ebfc607f7301"
+    "version": "2c5a5321e9ac94cc17a4"
   },
   {
     "id": "[\"manager\",\"……ここに残るのも危険だな\",\"act3-resolute\",false]",
     "reviewId": "3ae61ae982f42f47",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14206,12 +14206,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "4c6e799df91c4a1318ce"
+    "version": "ea1127b0afabdaa8ede3"
   },
   {
     "id": "[\"manager\",\"少し戻ったところに、俺のアパートがある\",\"act3-manager\",false]",
     "reviewId": "71aabb9546f317cc",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14223,12 +14223,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "06b4106106a8b34008d9"
+    "version": "61927ae07a5a8b0e5ae8"
   },
   {
     "id": "[\"rabbit\",\"アパート……？\",\"act3-mimi\",false]",
     "reviewId": "23742582fbcaf577",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14240,12 +14240,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "db241d9b1f818b173c25"
+    "version": "00ffbc53c34e890815e5"
   },
   {
     "id": "[\"manager\",\"二階に空き部屋がある。そこを使っていい\",\"act3-manager\",false]",
     "reviewId": "6c91aa1040a9d535",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14257,12 +14257,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "1ddb22359b4589f4bb9b"
+    "version": "53f8b821e6eaadc06a65"
   },
   {
     "id": "[\"rabbit\",\"えっ……知らない人なのに、いいの？\",\"act3-mimi\",false]",
     "reviewId": "957e9627ef685a2b",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14274,12 +14274,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "edca61c14cf67936323b"
+    "version": "cfcc9e3e1ffcc878cc54"
   },
   {
     "id": "[\"manager\",\"ああ。足が治るまで好きに使ってくれ\",\"act3-manager\",false]",
     "reviewId": "d4d18af16416c096",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14291,12 +14291,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "615e842d9dbcb9448237"
+    "version": "9deeee193847b9dc327d"
   },
   {
     "id": "[\"rabbit\",\"……ありがとう！\",\"act3-mimi-bright\",false]",
     "reviewId": "7ebd1534b3a3d7fc",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14310,12 +14310,12 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true,
       "keyGiven": true
     },
-    "version": "a40d5d4f6c2705a15b0f"
+    "version": "e6ff6b37e97ae67585fd"
   },
   {
     "id": "[\"cat\",\"大家、ずいぶん太っ腹ニャ！\",\"act3-relieved\",false]",
     "reviewId": "1ea58484edcc034f",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14328,12 +14328,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "happy",
       "inside": true
     },
-    "version": "0f57d92445a0c0f48edb"
+    "version": "8103a3a80b279ffaae31"
   },
   {
     "id": "[\"manager\",\"お前も少しは見習え\",\"act3-manager\",false]",
     "reviewId": "890072b10974bcff",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14345,12 +14345,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "b9b817dd2731591705cf"
+    "version": "8b81beb6bd13673437cb"
   },
   {
     "id": "[\"cat\",\"なんでモクが怒られるニャ！？\",\"act3-startled\",false]",
     "reviewId": "54bf1192cf7b0c10",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14363,12 +14363,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "surprised",
       "inside": true
     },
-    "version": "06a5aac16cf9cbc8d940"
+    "version": "6390fef550320bbc0949"
   },
   {
     "id": "[\"hostess\",\"ミミちゃん、だったよね？ 無理しないでね\",\"act3-alert\",false]",
     "reviewId": "a05a484828bef175",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14380,12 +14380,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "ef15813af1c30e7feafa"
+    "version": "f5b7671301f848d9c7e2"
   },
   {
     "id": "[\"rabbit\",\"うん！ みんなも気をつけて！\",\"act3-mimi-bright\",false]",
     "reviewId": "aa7f9fd144946e30",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14398,12 +14398,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "happy",
       "inside": true
     },
-    "version": "3cc5af3f96e16472fd72"
+    "version": "da871361f7274fe19909"
   },
   {
     "id": "[\"manager\",\"表通りは危険だ。裏道を使えばアパートまで行ける\",\"act3-resolute\",false]",
     "reviewId": "ebedf3f20a398912",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14415,12 +14415,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "fff0f3afb309c28375d5"
+    "version": "778b8811fe9d3c630eff"
   },
   {
     "id": "[\"rabbit\",\"分かった。……あの！\",\"act3-mimi\",false]",
     "reviewId": "02c89e9f28888624",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14432,12 +14432,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "686f816d3f4b4516087a"
+    "version": "8ad68c1a2c7912f8f62e"
   },
   {
     "id": "[\"manager\",\"ん？\",\"act3-manager\",false]",
     "reviewId": "20fb898f3d8e77d6",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14449,12 +14449,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "02df4837cfcee14bac3d"
+    "version": "2f6ffce9fa78b7c97991"
   },
   {
     "id": "[\"rabbit\",\"また……会える？\",\"act3-mimi-afraid\",false]",
     "reviewId": "7dbbd5a8cd84ef1c",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14467,12 +14467,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "sad",
       "inside": true
     },
-    "version": "c0e3ced5febb22a375af"
+    "version": "71c8e4d207a675c1dfc2"
   },
   {
     "id": "[\"manager\",\"……ああ。きっとな\",\"act3-manager\",false]",
     "reviewId": "3ba4f89266d27a1a",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14484,12 +14484,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "c4962404e4106beaf4a1"
+    "version": "223fb733b1a37ef4f566"
   },
   {
     "id": "[\"rabbit\",\"……うん！\",\"act3-mimi-bright\",false]",
     "reviewId": "a1c86619252a71be",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-store",
     "sceneLabel": "コンビニ・ミミ",
@@ -14502,12 +14502,12 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "happy",
       "inside": true
     },
-    "version": "1e27330810dbebcb5db4"
+    "version": "7b14c8a92467fb26f6e3"
   },
   {
     "id": "[\"cat\",\"街を出たら、まず何するニャ？\",\"act3-alert\",false]",
     "reviewId": "bbd979db2f7b732b",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-bridge",
     "sceneLabel": "橋の悲劇",
@@ -14518,12 +14518,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "街を出たら、まず何するニャ？",
       "voiceChapter": 3
     },
-    "version": "6278a059aa153c3fbc91"
+    "version": "df0532a5dcdea1762f43"
   },
   {
     "id": "[\"hostess\",\"私は……温かいお風呂に入りたいかな\",\"act3-alert\",false]",
     "reviewId": "912ebbf343c6a0ec",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-bridge",
     "sceneLabel": "橋の悲劇",
@@ -14534,12 +14534,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "私は……温かいお風呂に入りたいかな",
       "voiceChapter": 3
     },
-    "version": "dc8e6937cee41693a2ef"
+    "version": "2c2ad79fe849fe38563e"
   },
   {
     "id": "[\"cat\",\"モクは冷えた酒が飲みたいニャ！\",\"act3-relieved\",false]",
     "reviewId": "25dcafbceffe8722",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-bridge",
     "sceneLabel": "橋の悲劇",
@@ -14551,12 +14551,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "emotion": "happy"
     },
-    "version": "5738d6c01ce274d71450"
+    "version": "dcc88925e2d2367236ab"
   },
   {
     "id": "[\"hostess\",\"こんな時までお酒なの？\",\"act3-alert\",false]",
     "reviewId": "b366c51ba6e02a9b",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-bridge",
     "sceneLabel": "橋の悲劇",
@@ -14567,12 +14567,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "こんな時までお酒なの？",
       "voiceChapter": 3
     },
-    "version": "f5e6af826082bd79aab1"
+    "version": "31fc0d583980efeca089"
   },
   {
     "id": "[\"cat\",\"生きて帰ったら祝杯ニャ！\",\"act3-relieved\",false]",
     "reviewId": "1c0bbe9c61c3234e",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-bridge",
     "sceneLabel": "橋の悲劇",
@@ -14584,12 +14584,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "emotion": "happy"
     },
-    "version": "dc1a6bf3bbbb52fc08f9"
+    "version": "e85733766676c321149a"
   },
   {
     "id": "[\"manager\",\"……そうだな\",\"act3-manager\",false]",
     "reviewId": "fa9bda064535c030",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-bridge",
     "sceneLabel": "橋の悲劇",
@@ -14600,12 +14600,12 @@ export const VOICE_REVIEW_CATALOG = [
       "text": "……そうだな",
       "voiceChapter": 3
     },
-    "version": "f71ccae174ddecede838"
+    "version": "38e203278c22b896a4e2"
   },
   {
     "id": "[\"manager\",\"…………え？\",\"act3-shocked\",false]",
     "reviewId": "5c875d1da53d3828",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-bridge",
     "sceneLabel": "橋の悲劇",
@@ -14617,12 +14617,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "collapse": true
     },
-    "version": "710e608ca24c632a0c89"
+    "version": "7268741820bf9a9ff895"
   },
   {
     "id": "[\"manager\",\"……は？\",\"act3-shocked\",false]",
     "reviewId": "2a8d08c13fb92daf",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14634,12 +14634,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "c2d49ee76b69c692ba5b"
+    "version": "07f2929e0b8f03022332"
   },
   {
     "id": "[\"manager\",\"……コンビニ？\",\"act3-manager\",false]",
     "reviewId": "2bceedefd28e8911",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14652,12 +14652,12 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true,
       "innerVoice": true
     },
-    "version": "8298ad8b988eecf94098"
+    "version": "712da3d781afbdef4f3d"
   },
   {
     "id": "[\"manager\",\"……待て。何が起きた？\",\"act3-manager\",false]",
     "reviewId": "52836203a3b33948",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14670,12 +14670,12 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true,
       "innerVoice": true
     },
-    "version": "2ca40e884b8333db72e3"
+    "version": "30379973d477b57f2736"
   },
   {
     "id": "[\"manager\",\"確かに、あの橋で二人が倒れた……\",\"act3-manager\",false]",
     "reviewId": "39bbb5c267afca3a",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14688,12 +14688,12 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true,
       "innerVoice": true
     },
-    "version": "505e736e0f94c46f3305"
+    "version": "d738c5163f7425b23ce7"
   },
   {
     "id": "[\"manager\",\"だが、俺は死んでない\",\"act3-manager\",false]",
     "reviewId": "54cef78ef9b8310e",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14706,12 +14706,12 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true,
       "innerVoice": true
     },
-    "version": "5f9a52369947fba4c65d"
+    "version": "c53875ac2e1601512c15"
   },
   {
     "id": "[\"manager\",\"なのに……時間が戻った？\",\"act3-manager\",false]",
     "reviewId": "35eceb6c2550baf6",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14724,12 +14724,12 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true,
       "innerVoice": true
     },
-    "version": "ee7a7f9e7bb4f66b1b94"
+    "version": "1613ff8f0b797a6fbe85"
   },
   {
     "id": "[\"manager\",\"……戻り先まで変わってる\",\"act3-manager\",false]",
     "reviewId": "3383f768cf34186f",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14742,12 +14742,12 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true,
       "innerVoice": true
     },
-    "version": "27341a6c35567965ee7b"
+    "version": "a91d891c457e223bfb04"
   },
   {
     "id": "[\"manager\",\"今度はコンビニが起点なのか……？\",\"act3-manager\",false]",
     "reviewId": "c945d673ab756a35",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14760,12 +14760,12 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true,
       "innerVoice": true
     },
-    "version": "6b1282c1199844b2f6df"
+    "version": "fb4dbdc9febd4e3911a9"
   },
   {
     "id": "[\"manager\",\"……何なんだ、これは\",\"act3-manager\",false]",
     "reviewId": "3457465d5d4c4f5d",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14778,12 +14778,12 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true,
       "innerVoice": true
     },
-    "version": "65a5d915e858439310c0"
+    "version": "36af6e2c5752c2ee0b7a"
   },
   {
     "id": "[\"manager\",\"……予定変更だ。アパートに戻るぞ\",\"act3-manager\",false]",
     "reviewId": "cf36c88ff0b16e96",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14795,12 +14795,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "e5312290c23153b6ce5d"
+    "version": "dee5eb8a81e845de4d22"
   },
   {
     "id": "[\"cat\",\"ニャ！？ 脱出地点はどうするニャ？\",\"act3-startled\",false]",
     "reviewId": "5b0356d56d8c3637",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14813,12 +14813,12 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true,
       "emotion": "surprised"
     },
-    "version": "cd6cb14b07831dcf2151"
+    "version": "2947f522e4dcfb2b9f15"
   },
   {
     "id": "[\"manager\",\"ミミを一人で帰らせるわけにはいかないだろ\",\"act3-manager\",false]",
     "reviewId": "ff4b01567eb1de55",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14830,12 +14830,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "2396a91ac05601d728bb"
+    "version": "e0ea2a87558881f44e2f"
   },
   {
     "id": "[\"rabbit\",\"えっ……？\",\"act3-startled\",false]",
     "reviewId": "1c6ca096affb2709",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14848,12 +14848,12 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true,
       "emotion": "surprised"
     },
-    "version": "407802f9ac025a2cb522"
+    "version": "558469c063ef165798fc"
   },
   {
     "id": "[\"manager\",\"その足じゃ、ゾンビに襲われても逃げられない\",\"act3-manager\",false]",
     "reviewId": "033fc920947d26d7",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14865,12 +14865,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "8007d71233cbf588f89b"
+    "version": "2e0d011581c6a3ccb33d"
   },
   {
     "id": "[\"hostess\",\"確かに……ミミちゃんを一人にするのは危ないよね\",\"act3-tense\",false]",
     "reviewId": "3e34d7801e2007d6",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14883,12 +14883,12 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true,
       "emotion": "sad"
     },
-    "version": "8ae4e5aa481b40adb47f"
+    "version": "df8a66d6fa011c05b9b5"
   },
   {
     "id": "[\"rabbit\",\"でも、みんなは街から逃げるんじゃ……\",\"act3-mimi-afraid\",false]",
     "reviewId": "9f6287dd2a506969",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14901,12 +14901,12 @@ export const VOICE_REVIEW_CATALOG = [
       "inside": true,
       "emotion": "sad"
     },
-    "version": "2db0f8568f8b13300563"
+    "version": "396b21fc2405171fbb71"
   },
   {
     "id": "[\"manager\",\"気にするな。俺たちも一度戻った方がいい\",\"act3-manager\",false]",
     "reviewId": "4506ef1850540744",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14918,12 +14918,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "9a9bef4d811236107c47"
+    "version": "4d43ed1aac2531a6676e"
   },
   {
     "id": "[\"cat\",\"……大家がそう言うなら仕方ないニャ\",\"act3-alert\",false]",
     "reviewId": "7d12d0781b89b783",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14935,12 +14935,12 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "41fbabbc5d2d0b7cd480"
+    "version": "0de85350b0aefec3f64e"
   },
   {
     "id": "[\"manager\",\"よし、行くぞ\",\"act3-manager\",false]",
     "reviewId": "ba932778398f594e",
-    "repaired": false,
+    "repaired": true,
     "chapter": 3,
     "scene": "3:map-return",
     "sceneLabel": "コンビニへの帰還",
@@ -14952,7 +14952,7 @@ export const VOICE_REVIEW_CATALOG = [
       "voiceChapter": 3,
       "inside": true
     },
-    "version": "e00bf8ccfefe45887792"
+    "version": "ddce101700a6e2657837"
   }
 ];
 // Historical short IDs are retained for import only, never for playback or review.
