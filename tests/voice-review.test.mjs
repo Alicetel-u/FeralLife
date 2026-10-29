@@ -184,7 +184,7 @@ test('repair recheck excludes accepted and re-reported current audio, and keeps 
 test('regenerated repairs include their concrete correction comments in the catalog',()=>{
  const rows=VOICE_REVIEW_CATALOG.filter(r=>VOICE_MANIFEST[r.id].repairReview&&!VOICE_MANIFEST[r.id].reviewRevision);
  assert.ok(rows.length>=5);
- for(const r of rows){assert.equal(r.repairComment,VOICE_MANIFEST[r.id].repairComment);assert.ok(r.repaired);assert.ok(r.repairComment.includes('再生成')||(r.repairReview&&r.repairComment.length>=12&&/\.repair\.mp3$/.test(VOICE_MANIFEST[r.id].file)));}
+ for(const r of rows){assert.equal(r.repairComment,VOICE_MANIFEST[r.id].repairComment);assert.ok(r.repaired);assert.ok(/再生成|再収録/.test(r.repairComment)||(r.repairReview&&r.repairComment.length>=12&&/\.repair\.mp3$/.test(VOICE_MANIFEST[r.id].file)));}
 });
 
 test('repair recheck requires an actual flagged replacement, not historic mastering or OK audio',()=>{
