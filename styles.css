@@ -2498,6 +2498,20 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 }
 
 
+/* MAP waypoints and movement are mint; dialogue is blue and rewinds purple. */
+.persona-debug-act3 .persona-debug-button.tone-map{--debug-tone:#37efc2;background:linear-gradient(108deg,#0e3d3b,#102334 70%)}
+.persona-debug-act3 .persona-debug-button.tone-map .persona-debug-label strong::before{
+ content:"MAP";display:inline-block;vertical-align:middle;margin:0 8px 2px 0;
+ padding:2px 6px;border:1px solid #94ffe1;background:#37efc2;color:#06241c;
+ font:900 10px/1.25 system-ui;letter-spacing:.08em;transform:skew(-5deg)
+}
+.persona-debug-act3 .persona-debug-button.tone-map .persona-debug-label small{color:#b0ffec}
+.persona-debug-act3 .persona-debug-button.tone-map:hover,
+.persona-debug-act3 .persona-debug-button.tone-map:focus-visible{background:#17534c}
+@media(max-width:700px){
+ .persona-debug-act3 .persona-debug-button.tone-map .persona-debug-label strong::before{font-size:9px;padding:2px 5px;margin-right:6px}
+}
+
 /* Act III: one clearly labelled, non-paginated scene menu at every level. */
 .persona-debug-act3{gap:clamp(7px,1.4dvh,14px);overflow:hidden}
 .persona-debug-act3 .persona-debug-actions{max-height:none;overflow:visible;gap:clamp(6px,1dvh,10px)}
