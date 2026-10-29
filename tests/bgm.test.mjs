@@ -55,6 +55,40 @@ test('Luna conversations keep her theme with Moku present while dedicated scene 
   }
 });
 
+test('second-act Luna BGM and both resident portraits persist across every speaker, including landlord',async()=>{
+ const {eventStageHTML}=await import('../src/event-stage.js');
+ const {eventPortraitVisible}=await import('../src/event-stage.js');
+ const app=await readFile(new URL('../src/app.js',import.meta.url),'utf8');
+ const source=app.slice(app.indexOf('function syncNormalBgm(){'),app.indexOf("modal.addEventListener('luna-film-phase'"));
+ const lines=[
+  {speaker:'hostess',text:'大家さん、相談があるの'},
+  {speaker:'manager',text:'どうした？'},
+  {speaker:'cat',text:'モクも聞くニャ'},
+  {speaker:'manager',text:'二人とも落ち着け'}
+ ];
+ const event={id:371,actScene:'reply',cast:['hostess','cat'],detail:lines[0].text,lines};
+ const luna=fakeAudio(),normal=fakeAudio(),moku=fakeAudio();
+ const bgm=createNormalBgm(normal,fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),fakeAudio(),moku,fakeAudio(),luna);
+ await bgm.unlock();
+ for(let index=0;index<lines.length;index++){
+  const html=eventStageHTML(event,[],index);
+  assert.match(html,/data-character="hostess"/);
+  assert.match(html,/data-character="cat"/);
+  assert.equal((html.match(/<figure class="stage-character /g)||[]).length,2,'two actors remain visible on '+lines[index].speaker);
+  const context={document:{hidden:false},state:{actOne:{chapter:2},events:[event]},eventView:{id:371,index},
+   eventConversation,bedCue,firstActMokuDialogueTheme,eventPortraitVisible,
+   modal:{open:true,classList:{contains:()=>true},querySelector:selector=>selector.split(',').some(part=>part.includes('stage-character[data-character="hostess"]')&&html.includes('data-character="hostess"')||part.includes('stage-character[data-character="cat"]')&&html.includes('data-character="cat"'))?{dataset:{}}:null},
+   normalBgm:bgm};
+  vm.createContext(context);
+  await vm.runInContext(source+'\nsyncNormalBgm();',context);
+  assert.equal(bgm.cue,'luna','Luna theme remains through '+lines[index].speaker+' line');
+  assert.equal(luna.paused,false);
+  assert.equal(normal.paused,true);
+  if(index===0)luna.currentTime=27;
+  else assert.equal(luna.currentTime,27,'No song restart when manager starts talking');
+ }
+});
+
 test('First-act Moku portrait and music persist throughout the landlord narration and speech',async()=>{
   const {createActOne}=await import('../src/act-one.js');
   const {eventStageHTML}=await import('../src/event-stage.js');
