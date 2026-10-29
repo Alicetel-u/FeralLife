@@ -39,7 +39,10 @@ publishedSource.set('play.html',`<!doctype html>
 <script>location.replace('./'+location.search+location.hash);</script>
 <noscript><meta http-equiv="refresh" content="0;url=./"></noscript>
 </head><body><p>ゲームを開いています。<a href="./">通常版を開く</a></p></body></html>`);
-const files=[...sourceFiles,'src/game-bundle.js',...assets,'play.html'];
+// Isolated, opt-in cast comparison. Publish only its page and mastered audio.
+const castTestFolder='assets/voice-tests/act3-v4-cast';
+const castTests=existsSync(join(projectRoot,castTestFolder))?(await readdir(join(projectRoot,castTestFolder))).filter(name=>name==='index.html'||/^[a-f0-9]{64}\.mp3$/.test(name)).map(name=>castTestFolder+'/'+name):[];
+const files=[...sourceFiles,'src/game-bundle.js',...assets,'play.html',...castTests];
 let bytes=0;
 // A small concurrency limit avoids a burst of image IO on Windows and CI.
 for(let index=0;index<files.length;index+=8)await Promise.all(files.slice(index,index+8).map(async path=>{

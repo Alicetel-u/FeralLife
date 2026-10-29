@@ -1,0 +1,108 @@
+{
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "similarityBoost": 0.85,
+  "characters": {
+    "manager": {
+      "name": "大家",
+      "voiceId": "vY4PC2kSleyw73YRUOI6",
+      "description": "気だるい間と乾いたツッコミ。声ははっきり。",
+      "samples": [
+        {
+          "kind": "普段の掛け合い",
+          "text": "ただの大家だよ",
+          "tags": [
+            "world-weary, deadpan delivery",
+            "dryly sarcastic",
+            "clear, full voice"
+          ]
+        },
+        {
+          "kind": "緊迫した場面",
+          "text": "いいか。何があっても俺から離れるな",
+          "tags": [
+            "firm",
+            "world-weary, matter-of-fact voice",
+            "clear, projected voice"
+          ]
+        }
+      ]
+    },
+    "cat": {
+      "name": "モク",
+      "voiceId": "0ptCJp0xgdabdcpVtCB5",
+      "description": "けだるく、少し面倒くさそうな猫の軽口。語尾は明瞭に。",
+      "samples": [
+        {
+          "kind": "普段の掛け合い",
+          "text": "そんな簡単に言って大丈夫なのかニャ？",
+          "tags": [
+            "dry, laid-back delivery",
+            "slightly drawn-out, wry tone",
+            "clear, full voice"
+          ]
+        },
+        {
+          "kind": "緊迫した場面",
+          "text": "し、死ぬかと思ったニャ！！",
+          "tags": [
+            "startled",
+            "wry, slightly weary voice",
+            "clear, projected voice"
+          ]
+        }
+      ]
+    },
+    "hostess": {
+      "name": "ルナ",
+      "voiceId": "0sLdAOQEyDDSrsr4uwND",
+      "description": "小悪魔っぽく可愛い、笑みのあるからかい声。",
+      "samples": [
+        {
+          "kind": "普段の掛け合い",
+          "text": "こんな時までお酒なの？",
+          "tags": [
+            "mischievously",
+            "cute, teasing smile in the voice",
+            "clear, full voice"
+          ]
+        },
+        {
+          "kind": "緊迫した場面",
+          "text": "えっ……なんで分かったの！？",
+          "tags": [
+            "surprised",
+            "youthful, playful timbre",
+            "clear, projected voice"
+          ]
+        }
+      ]
+    },
+    "rabbit": {
+      "name": "ミミ",
+      "voiceId": "lhTvHflPVOqgSWyuWQry",
+      "voiceName": "Hina – cute and friendly",
+      "description": "Hinaを新候補に、子供っぽく無邪気で可愛い声。",
+      "samples": [
+        {
+          "kind": "普段の掛け合い",
+          "text": "うん！ みんなも気をつけて！",
+          "tags": [
+            "bright, childlike character voice",
+            "innocent",
+            "clear, full voice"
+          ]
+        },
+        {
+          "kind": "緊迫した場面",
+          "text": "だ、だって！ さっきから怖い人ばっかり来るんだもん！",
+          "tags": [
+            "scared",
+            "young, childlike voice",
+            "clear, projected voice"
+          ]
+        }
+      ]
+    }
+  }
+}
