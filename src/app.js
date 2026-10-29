@@ -37,7 +37,7 @@ import { rewindTransitionHTML, startRewindTransition } from './rewind-transition
 import { startBadEndingEntry } from './bad-ending-entry.js';
 import { fireEndingHTML, startFireEnding } from './fire-ending.js';
 import { debtEndingHTML, startDebtEnding } from './debt-ending.js';
-import { bedCue, createNormalBgm } from './bgm.js';
+import { bedCue, createNormalBgm, firstActMokuDialogueTheme } from './bgm.js';
 import { createGame, advance, admit, addEvent, ROOMS, CHARACTERS, NEEDS, ACTIONS, dateAt, formatTime, atmosphere, validateSave } from './simulation.js';
 import { createTalk, stepTalk, claimAutomaticScene, rememberReadScenes, automaticChapterScene } from './dialogue.js';
 import { WorldRenderer, roomBounds, drawPortrait, prefersReducedMotion } from './renderer.js';
@@ -1205,7 +1205,8 @@ function syncNormalBgm(){
   // Dedicated scene cues take precedence over character themes.
   const lunaVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="hostess"]');
   const mokuVisible=!!activeDialogue&&!!modal.querySelector('.event-stage .stage-character[data-character="cat"]');
-  return normalBgm.setScene(actThreeCollapse||!!modal.querySelector('[data-act3-title],[data-act3-after],.act3-complete')||actThreeQuiet||document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), actThreePostRewind?'uneasy':modal.querySelector('[data-act3-map][data-scene="mimi"]')?'mimi':actThreeMapOpen?'act3map':actThreeFilm?'act3':clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':actTwoTitle?'luna':actOneTitle?'moku':opening?'opening':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':mokuVisible?'moku':bedCue(state?.actOne));
+  const firstActMokuConversation=firstActMokuDialogueTheme(activeDialogue,state.actOne);
+  return normalBgm.setScene(actThreeCollapse||!!modal.querySelector('[data-act3-title],[data-act3-after],.act3-complete')||actThreeQuiet||document.hidden||epilogueQuiet||!!modal.querySelector('.first-stalker-preface')||morningQuiet||filmPaused||stalkerSilent||firstActMemorySilence||!!firstFireStage&&['departure','collapse','plea','silence'].includes(firstFireStage.dataset.cut), actThreePostRewind?'uneasy':modal.querySelector('[data-act3-map][data-scene="mimi"]')?'mimi':actThreeMapOpen?'act3map':actThreeFilm?'act3':clock?'clock':bad||yandereReveal||dominationEnding?'bad':title?'title':actTwoTitle?'luna':actOneTitle?'moku':opening?'opening':victory?'victory':morningStage&&['days','months'].includes(morningStage.dataset.cut)?'uneasy':firstStalkerUneasy?'uneasy':epilogueStage?epilogueStage.dataset.cue:duel?'duel':trouble?'trouble':firstRewindUneasy?'uneasy':lunaVisible?'luna':firstActMokuConversation||mokuVisible?'moku':bedCue(state?.actOne));
 }
 modal.addEventListener('luna-film-phase',()=>{syncNormalBgm();});
 modal.addEventListener('act3-film-phase',()=>{syncNormalBgm();});
