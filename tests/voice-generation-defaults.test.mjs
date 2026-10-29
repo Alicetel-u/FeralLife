@@ -87,7 +87,7 @@ test('fourteen apocalypse film voices have fear-and-survival acting for each sce
   assert.equal(row.request.model_id,'eleven_v4');
   assert.equal(row.request.voice_settings.similarity_boost,.85);
   assert.equal(row.request.voice_settings.stability,cue.stability??.38);
-  assert.equal(row.deliveryProfile,'v3-inspired-v4:film-crisis');
+  assert.equal(row.deliveryProfile,'v3-inspired-v4:tense','film crisis uses the supported tense metadata while keeping unique shot directions');
   const phonetic=readings.slice().sort((a,b)=>b.term.length-a.term.length).reduce((value,rule)=>value.replaceAll(rule.term,rule.reading),row.text);
   assert.equal(row.request.text,[...cue.tags,phonetic].join(' '),'only approved acting tags and exact script with approved phonetic readings');
   assert.ok(row.request.text.endsWith(phonetic),'speak the original dialogue with its existing pronunciation replacement');
