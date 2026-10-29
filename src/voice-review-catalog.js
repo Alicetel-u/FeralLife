@@ -9790,7 +9790,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "db46b2efb7780000",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -9804,14 +9804,14 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 0,
       "voiceChapter": 2
     },
-    "version": "d8bf8f59173c5836d1be"
+    "version": "f07c79184eb82e0bef85"
   },
   {
     "id": "[\"cat\",\"その縁談、お断りニャ！！\",\"duel-moku-attack\",false]",
     "reviewId": "a36c8744611c1d9d",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -9826,7 +9826,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 0,
       "voiceChapter": 2
     },
-    "version": "a9c42b42df0333fba795"
+    "version": "cabd853b070cb35f52f8"
   },
   {
     "id": "[\"hostess\",\"あたしの代わりにモクちゃんを差し出すの……？ 大家さん、そこは頑張ってよ。\",\"duel-luna\",false]",
@@ -9854,7 +9854,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "7897be49a494a971",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -9867,7 +9867,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 0,
       "voiceChapter": 2
     },
-    "version": "8721334c769feed40858"
+    "version": "b89504924ffe5a7f9704"
   },
   {
     "id": "[\"manager\",\"悪かった！ お前を巻き込むんじゃなかった！\",\"duel-manager\",false]",
@@ -9937,7 +9937,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "b7df794197c63dfb",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -9950,7 +9950,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 0,
       "voiceChapter": 2
     },
-    "version": "15fa56ed7b7b870249d1"
+    "version": "718cdf9fbf95ee543d63"
   },
   {
     "id": "[\"manager\",\"警備の話だ！！ 予約は取ってねぇ！\",\"duel-manager\",false]",
@@ -9998,7 +9998,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "91b9d8f44226fabf",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10012,14 +10012,14 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 1,
       "voiceChapter": 2
     },
-    "version": "3352d559ef4b6e4b4648"
+    "version": "6714ea7268026ff3afd2"
   },
   {
     "id": "[\"cat\",\"抱き枕だけ連れて帰るニャ！！\",\"duel-moku-attack\",false]",
     "reviewId": "3c97811f24c2505b",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10034,7 +10034,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 1,
       "voiceChapter": 2
     },
-    "version": "245bce210d5ce76ac32e"
+    "version": "057e110fafe9dfa6ad97"
   },
   {
     "id": "[\"hostess\",\"ちょっと。あたしを助ける話だったよね？\",\"duel-luna\",false]",
@@ -10062,7 +10062,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "7ec62ba3e80bbc08",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10075,7 +10075,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 1,
       "voiceChapter": 2
     },
-    "version": "a16a852b8b144b3fa2e0"
+    "version": "88d9cbdd9996f16b8b38"
   },
   {
     "id": "[\"manager\",\"誰が買うんだよ！！\",\"duel-manager\",false]",
@@ -10145,7 +10145,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "19c9486d70f6ecbe",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10158,7 +10158,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 1,
       "voiceChapter": 2
     },
-    "version": "b0c10fcefd261ef8a245"
+    "version": "51641c45b27cc2a77747"
   },
   {
     "id": "[\"manager\",\"勝手に見積もるな。俺は買ってねぇ。\",\"duel-manager\",false]",
@@ -10228,7 +10228,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "52d621745c1cb7e4",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10241,7 +10241,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 2,
       "voiceChapter": 2
     },
-    "version": "1d57f184e4e928c66839"
+    "version": "1d8ae352cf49d02360cd"
   },
   {
     "id": "[\"manager\",\"勧誘を断っただけだ！ 話を広げるな！\",\"duel-manager\",false]",
@@ -10289,7 +10289,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "b054c37d94225c6b",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10303,14 +10303,14 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 2,
       "voiceChapter": 2
     },
-    "version": "a854c94d50d549a34e7e"
+    "version": "8114168d64270764b2c0"
   },
   {
     "id": "[\"cat\",\"迷惑営業、おやすみニャ！！\",\"duel-moku-attack\",false]",
     "reviewId": "1095ba000fbff80e",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10325,7 +10325,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 2,
       "voiceChapter": 2
     },
-    "version": "492aa3acfceed576720b"
+    "version": "810da98d3a8f649adad0"
   },
   {
     "id": "[\"hostess\",\"大家さん、断るところまでモクちゃんに丸投げ……。無料だからって頼りすぎじゃない？\",\"duel-luna\",false]",
@@ -10353,7 +10353,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "2a22a539e16f9036",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10366,7 +10366,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 2,
       "voiceChapter": 2
     },
-    "version": "3f8ad18c62243c8079da"
+    "version": "5c5795420df7f77a4f1b"
   },
   {
     "id": "[\"manager\",\"さっきまで普通に起きてただろ！\",\"duel-manager\",false]",
@@ -10414,7 +10414,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "bf18dc80f7409676",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10428,14 +10428,14 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 3,
       "voiceChapter": 2
     },
-    "version": "6bb58d99f0184f23bfa5"
+    "version": "3f957dd1d2550ed16ffe"
   },
   {
     "id": "[\"cat\",\"モク流奥義・煙ノ肉球乱舞ニャ！！\",\"duel-moku-attack\",false]",
     "reviewId": "3e505d4a9dcd62ec",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10451,7 +10451,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 3,
       "voiceChapter": 2
     },
-    "version": "4c1f3df73a9860e7675c"
+    "version": "69cb1269731014359b9f"
   },
   {
     "id": "[\"hostess\",\"……大家さん。あたしをかばったまま、モクちゃんのほう見ないでよ。\",\"duel-luna\",false]",
@@ -10479,7 +10479,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "186f70d4b5972e35",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10492,7 +10492,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 3,
       "voiceChapter": 2
     },
-    "version": "6189eadc633b943b80b4"
+    "version": "92e9097055c0a2f38af6"
   },
   {
     "id": "[\"manager\",\"分かったから、俺の顔に煙を吐くな！！\",\"duel-manager\",false]",
@@ -10562,7 +10562,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "5810e1a4db258f18",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10575,7 +10575,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 3,
       "voiceChapter": 2
     },
-    "version": "c6303999fbbd0d628a9f"
+    "version": "868a89aee9399767a09d"
   },
   {
     "id": "[\"manager\",\"……もうつってる。腕が下ろせねぇ。\",\"duel-manager\",false]",
@@ -10622,7 +10622,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "f5b257623e80e4d5",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10635,7 +10635,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 0,
       "voiceChapter": 2
     },
-    "version": "dabf6f585bbe14225891"
+    "version": "a755a91bd6f2a407b05c"
   },
   {
     "id": "[\"manager\",\"好みと約束は別だ。本人の返事を聞け！\",\"duel-manager-attack\",false]",
@@ -10814,7 +10814,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "5d6649415eec2300",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10827,14 +10827,14 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 0,
       "voiceChapter": 2
     },
-    "version": "046a880d6b0525514e3c"
+    "version": "c0d36998f6c6bfd3693a"
   },
   {
     "id": "[\"cat\",\"モクもツナ缶で釣られないようにするニャ。\",\"duel-moku\",false]",
     "reviewId": "d60de37350e53f10",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10847,14 +10847,14 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 1,
       "voiceChapter": 2
     },
-    "version": "d4ffae80270d243fe1c0"
+    "version": "43c72d63ebe2f9f3d614"
   },
   {
     "id": "[\"cat\",\"モクも掃除当番を断ったら終了でいいニャ？\",\"duel-moku\",false]",
     "reviewId": "9a168226197fb202",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10867,14 +10867,14 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 2,
       "voiceChapter": 2
     },
-    "version": "9493a828e78c238dd63e"
+    "version": "48d72485c49d5c5ad4c2"
   },
   {
     "id": "[\"cat\",\"ついでにモクの暮らしも、昼寝中心に決めたいニャ。\",\"duel-moku\",false]",
     "reviewId": "e6cd579b1b926576",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -10887,7 +10887,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 3,
       "voiceChapter": 2
     },
-    "version": "6514848599eda6fc87d3"
+    "version": "93cbd7e5ce4a2faf6938"
   },
   {
     "id": "[\"manager\",\"お前が受け取ると、また話がこじれるだろ。\",\"duel-manager\",false]",
@@ -11075,7 +11075,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "579e7ec844c61c49",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -11088,14 +11088,14 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 2,
       "voiceChapter": 2
     },
-    "version": "9d8078f5b2fad2317bfd"
+    "version": "7aa08cec92b05e127477"
   },
   {
     "id": "[\"cat\",\"忘れ物ひとつで、本人まで回収しに来るなニャ。\",\"duel-moku\",false]",
     "reviewId": "a8d87277861fac67",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -11108,14 +11108,14 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 3,
       "voiceChapter": 2
     },
-    "version": "360756b248ec845c7ed2"
+    "version": "e0ebf8207e47abd2ed4a"
   },
   {
     "id": "[\"cat\",\"玄関前の渋滞解消ニャ。\",\"duel-moku\",false]",
     "reviewId": "fef06cc2bdde6054",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -11129,7 +11129,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelDefeated": true,
       "voiceChapter": 2
     },
-    "version": "e7030464fe91a2fb5d35"
+    "version": "867d80fd0df8d2ace59b"
   },
   {
     "id": "[\"hostess\",\"……通販って便利だよね♡\",\"duel-luna\",false]",
@@ -11156,7 +11156,7 @@ export const VOICE_REVIEW_CATALOG = [
     "reviewId": "eb1ab7dc7a647773",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "四天王ミニゲームの掛け合い・攻撃・援護・勝利を採用済みV3寄せV4で再収録。語尾の保護と音量調整。",
+    "repairComment": "モクのバトル掛け合い・援護・奥義を高テンション演技で再生成。語尾まで声を張り、末尾を保護。",
     "chapter": 2,
     "scene": "2:battle",
     "sceneLabel": "ミニゲームバトル",
@@ -11169,7 +11169,7 @@ export const VOICE_REVIEW_CATALOG = [
       "duelRound": 1,
       "voiceChapter": 2
     },
-    "version": "6d4ec197cc19e5259ce1"
+    "version": "214a6b47b85f1c44581a"
   },
   {
     "id": "[\"manager\",\"……っ！？\",\"tragedy-shock\",false]",
