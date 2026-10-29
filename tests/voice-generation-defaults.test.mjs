@@ -69,3 +69,32 @@ test('future voice planning rejects unscripted laughs from any character pronunc
  const normal=planVoices([row],ids,base,[]);
  assert.equal(normal[0].text,row.line.text,'displayed dialogue and voice lookup stay unchanged');
 });
+
+test('fourteen apocalypse film voices have fear-and-survival acting for each scene without script changes or adlibs',async()=>{
+ const config=await json('config/voice-performance.json');
+ config.generationDefaults=await json('config/voice-generation-defaults.json');
+ const ids=await json('config/voice-ids.json'),readings=(await json('config/voice-pronunciation-issues.json')).issues,repairs=(await json('config/voice-repairs.json')).lines;
+ const film=extractVoiceScript('act3-prologue'),withDirections=planVoices(film,ids,config,readings,repairs);
+ const ordinary=structuredClone(config);delete ordinary.generationDefaults.actThreeFilm;
+ const without=planVoices(film,ids,ordinary,readings,repairs);
+ assert.equal(film.length,14);
+ assert.deepEqual(new Set(film.map(r=>r.source)),new Set(Object.keys(config.generationDefaults.actThreeFilm.cues)),'Every film line has exactly one acting direction');
+ for(let i=0;i<film.length;i++){
+  const row=withDirections[i],prev=without[i],cue=config.generationDefaults.actThreeFilm.cues[row.source];
+  assert.equal(row.lineKey,prev.lineKey);
+  assert.equal(row.voiceId,prev.voiceId,'keep each original voice actor');
+  assert.equal(row.text,prev.text,'do not rewrite the dialogue');
+  assert.equal(row.request.model_id,'eleven_v4');
+  assert.equal(row.request.voice_settings.similarity_boost,.85);
+  assert.equal(row.request.voice_settings.stability,cue.stability??.38);
+  assert.equal(row.deliveryProfile,'v3-inspired-v4:film-crisis');
+  assert.deepEqual(row.request.text.match(/\\[[^\\]]+\\]/g),cue.tags,'only approved cinematic acting tags are used');
+  assert.ok(row.request.text.endsWith(row.text),'speak the exact canonical script after acting cues');
+  assert.doesNotMatch(row.request.text,/laugh|chuckle|giggle|playful|smiling|languid|comedic/i);
+  assert.notEqual(row.hash,prev.hash,'every cinematic recording must be regenerated');
+ }
+ const normal=extractVoiceScript('act3-current');
+ const original=planVoices(normal,ids,ordinary,readings,repairs),revised=planVoices(normal,ids,config,readings,repairs);
+ assert.equal(normal.length,106);
+ assert.deepEqual(revised.map(r=>r.hash),original.map(r=>r.hash),'third-act map/after voices must remain unchanged');
+});
