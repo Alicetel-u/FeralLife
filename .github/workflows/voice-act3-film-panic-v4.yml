@@ -1,0 +1,162 @@
+name: Re-record 14 zombie-apocalypse prologue voices with scene-specific fear and desperation
+on:
+  push:
+    paths:
+      - .github/workflows/voice-act3-film-panic-v4.yml
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: third-act-film-crisis-voice
+  cancel-in-progress: false
+
+jobs:
+  film:
+    if: github.repository == 'Alicetel-u/FeralLife' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify original story and all game regressions before spending credits
+        run: |
+          npm run build
+          npm test
+          node --input-type=module <<'JS'
+          import {extractVoiceScript} from './tools/voice-script.mjs';
+          const film=extractVoiceScript('act3-prologue'),count={};
+          for(const row of film)count[row.speaker]=(count[row.speaker]||0)+1;
+          if(film.length!==14||new Set(film.map(r=>r.lineKey)).size!==14||film.some(r=>!r.source.startsWith('act3/film/')||r.performance!=='act3-urgent'))throw Error('Cinematic source or voice keys changed');
+          if(count.announcer!==2||count.cat!==3||count.hostess!==4||count.manager!==5)throw Error('Expected original five-manager, four-Luna, three-Moku, two-news cast: '+JSON.stringify(count));
+          console.log('14 live film lines remain unchanged. Only their voice recordings will be replaced.');
+          JS
+      - name: Prepare audio mastering and the existing manifest backup
+        run: |
+          if ! command -v ffprobe >/dev/null 2>&1 || ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+          mkdir -p .local/act3-film-crisis-recovery
+          cp src/voice-manifest.js .local/act3-film-original-manifest.js
+      - name: Plan exactly the 14 feared-and-desperate cinematic readings
+        id: plan
+        run: |
+          node tools/voices.mjs --scope=act3-prologue --quiet
+          cp .local/voice-plan.json .local/act3-film-crisis-plan.json
+          node --input-type=module <<'JS'
+          import {readFile,appendFile} from 'node:fs/promises';
+          import {extractVoiceScript,planVoices} from './tools/voice-script.mjs';
+          const p=JSON.parse(await readFile('.local/act3-film-crisis-plan.json','utf8'));
+          const script=extractVoiceScript('act3-prologue');
+          if(p.lines!==14||p.unique!==14||p.pending!==14||p.model!=='eleven_v4'||p.rows.length!==14)throw Error('Unexpected film regeneration plan '+JSON.stringify({lines:p.lines,unique:p.unique,pending:p.pending,model:p.model}));
+          if(p.estimatedCredits<1||p.estimatedCredits>2500)throw Error('Abnormal estimated ElevenLabs usage '+p.estimatedCredits);
+          const bySource=new Map(script.map(x=>[x.source,x]));
+          for(const r of p.rows){
+            const source=bySource.get(r.source);
+            if(!source||source.line.text!==r.text||source.lineKey!==r.lineKey||!['manager','cat','hostess','announcer'].includes(r.speaker)||!r.deliveryProfile?.endsWith(':film-crisis')||!r.voiceId||r.settings?.stability<.3||r.settings?.stability>.48||r.settings?.similarity_boost!==.85)throw Error('Unauthorized scene/voice/delivery drift: '+r.source);
+            if(!r.spokenInput.endsWith(r.text)||r.tags.length<2||/laugh|chuckle|giggle|comedic|playful|languid/i.test(r.spokenInput))throw Error('Film speech must have script-only spoken words without improvised adlibs: '+r.source);
+          }
+          await appendFile(process.env.GITHUB_OUTPUT,'id='+p.planId+'\n');
+          console.log('Exactly 14 fearful V4 film clips planned; estimated credits '+p.estimatedCredits);
+          JS
+      - name: Verify live ElevenLabs quota prior to any synthesis
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          const p=JSON.parse(await readFile('.local/act3-film-crisis-plan.json','utf8'));
+          const r=await fetch('https://api.elevenlabs.io/v1/user/subscription',{headers:{'xi-api-key':process.env.ELEVENLABS_API_KEY},signal:AbortSignal.timeout(30000)});
+          if(!r.ok)throw Error('Balance verification unavailable; no paid requests sent: '+r.status);
+          const balance=await r.json(),left=balance.character_limit-balance.character_count;
+          console.log('Real remaining credits '+left+'; estimated need '+p.estimatedCredits);
+          if(!Number.isFinite(left)||left<p.estimatedCredits)throw Error('Insufficient actual balance. Stopped before synthesis.');
+          JS
+      - name: Re-record only the 14 third-act film lines with terrifying survival delivery
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: node tools/voices.mjs --scope=act3-prologue --quiet --generate --approve=${{ steps.plan.outputs.id }}
+      - name: Master and install 14 complete panicked cinematic recordings
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,writeFile,stat} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {extractVoiceScript} from './tools/voice-script.mjs';
+          import {VOICE_MANIFEST as NEW} from './src/voice-manifest.js';
+          const p=JSON.parse(await readFile('.local/act3-film-crisis-plan.json','utf8'));
+          const prev=await readFile('.local/act3-film-original-manifest.js','utf8');
+          const OLD=JSON.parse(prev.slice(prev.indexOf('= ')+2).replace(/;\s*$/,''));
+          const film=new Map(extractVoiceScript('act3-prologue').map(r=>[r.lineKey,r]));
+          if(film.size!==14||p.rows.length!==14)throw Error('Film source changed during generation');
+          const manifest={...OLD};
+          for(const row of p.rows){
+            const source=film.get(row.lineKey),clip=NEW[row.lineKey];
+            if(!source||source.source!==row.source||source.line.text!==row.text||clip?.hash!==row.hash||clip?.model!=='eleven_v4'||(await stat(row.file)).size<1000)throw Error('Voice not generated for current film text '+row.source);
+            const master=row.file.replace(/\.mp3$/,'.film-v4.mp3');
+            execFileSync('ffmpeg',['-hide_banner','-loglevel','error','-y','-i',row.file,'-af','loudnorm=I=-18:TP=-5:LRA=7,apad=pad_dur=0.35','-ar','44100','-codec:a','libmp3lame','-b:a','128k',master]);
+            const seconds=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',master],{encoding:'utf8'}).trim());
+            if(!Number.isFinite(seconds)||seconds<.5||seconds>30||(await stat(master)).size<1500)throw Error('Invalid or clipped cinematic voice '+row.source);
+            manifest[row.lineKey]={
+              file:master,hash:row.hash,source:row.source,speaker:row.speaker,text:row.text,performance:row.performance,
+              deliveryProfile:row.deliveryProfile,model:'eleven_v4',
+              repairReview:true,repairComment:'第3幕ゾンビ襲撃の恐怖・焦り・必死さを場面ごとに演じ直した14本。台詞や語尾の追加指定なし。',
+              audioMastering:{integratedLUFS:-18,truePeakDBTP:-5,tailPaddingSeconds:.35},
+              audioQuality:{masteredForTrial:true,durationSeconds:seconds}
+            };
+          }
+          if(Object.keys(manifest).length!==Object.keys(OLD).length)throw Error('Unexpected manifest key changes');
+          for(const [key,item] of Object.entries(OLD))if(!film.has(key)&&JSON.stringify(manifest[key])!==JSON.stringify(item))throw Error('Unrelated chapter or character voice changed '+key);
+          await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
+          console.log('Mastered 14 escalating panic, fear and sacrifice voices. Every non-film recording is identical.');
+          JS
+      - name: Build final film audio and run the complete game regression suite
+        run: |
+          npm run build
+          npm test
+      - name: Commit exactly 14 cinematic audio pairs and the voice catalog
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          const p=JSON.parse(await readFile('.local/act3-film-crisis-plan.json','utf8'));
+          const files=['src/voice-manifest.js','src/voice-review-catalog.js','src/voice-review-published.js'];
+          for(const r of p.rows)files.push(r.file,r.file.replace(/\.mp3$/,'.film-v4.mp3'));
+          execFileSync('git',['add','--',...new Set(files)],{stdio:'inherit'});
+          JS
+          git diff --cached --stat
+          git diff --cached --quiet && { echo 'No new film voices to publish'; exit 1; }
+          git commit -m 'Give all 14 third-act zombie-apocalypse voices urgent fear and desperate acting'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Request deployment for the new film recordings
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
+      - name: Preserve paid recordings after any failure for credit-free recovery
+        if: failure()
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,copyFile,mkdir} from 'node:fs/promises';
+          const dir='.local/act3-film-crisis-recovery';await mkdir(dir,{recursive:true});
+          for(const p of ['.local/act3-film-crisis-plan.json','.local/voice-journal.json'])try{await copyFile(p,dir+'/'+p.split('/').at(-1));}catch{}
+          let plan;try{plan=JSON.parse(await readFile('.local/act3-film-crisis-plan.json','utf8'));}catch{process.exit(0);}
+          for(const row of plan.rows)for(const file of [row.file,row.file.replace(/\.mp3$/,'.film-v4.mp3')]){
+            try{await copyFile(file,dir+'/'+file.split('/').at(-1));}catch{}
+          }
+          JS
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: act3-film-crisis-recovery-${{ github.run_id }}
+          path: .local/act3-film-crisis-recovery/
+          include-hidden-files: true
+          retention-days: 14
