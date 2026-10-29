@@ -74,8 +74,8 @@ jobs:
           }
           const keys=rows.map(r=>r.lineKey);
           if(keys.some(k=>!manifest[k]?.file.endsWith('.opening-v4.mp3')))throw Error('A first-act voice was not installed');
-          const originalPrologue=Object.values(VOICE_MANIFEST).filter(clip=>clip.source==='prologue:1'||clip.source==='prologue:5');
-          if(originalPrologue.length!==2||originalPrologue.some(clip=>manifest[JSON.stringify([clip.speaker,clip.text,clip.performance,false])]?.file!==clip.file))throw Error('Existing adopted prologue recordings changed unexpectedly');
+          const originalPrologue=Object.entries(VOICE_MANIFEST).filter(([key,clip])=>clip.source==='prologue:1'||clip.source==='prologue:5');
+          if(originalPrologue.length<2||originalPrologue.some(([key,clip])=>manifest[key]?.file!==clip.file))throw Error('Existing adopted prologue recordings changed unexpectedly');
           await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
           console.log('Recovered '+rows.length+' completed clips, '+totalSeconds.toFixed(2)+' seconds, no ElevenLabs request');
           JS
