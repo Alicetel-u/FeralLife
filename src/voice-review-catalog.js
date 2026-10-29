@@ -4,7 +4,8 @@ export const VOICE_REVIEW_CATALOG = [
     "id": "[\"cat\",\"モクですニャ。よろしくニャ。\",\"moku\",false]",
     "reviewId": "e2019f7642df2b72",
     "repaired": true,
-    "repairComment": "音声を再生成し、音量を調整。",
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -15,14 +16,14 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "モクですニャ。よろしくニャ。"
     },
-    "version": "fd5200743d5501479d0e"
+    "version": "f7a6f850f22c2ad7efc3"
   },
   {
     "id": "[\"manager\",\"うわっくっせぇ！！煙だらけじゃねーか！\",\"retort\",false]",
     "reviewId": "df354aade68c6890",
     "repaired": true,
     "repairReview": true,
-    "repairComment": "「煙」を「けむり」と明示して再生成。明瞭なツッコミを維持し、末尾に余白を追加。",
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -33,12 +34,14 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "うわっくっせぇ！！煙だらけじゃねーか！"
     },
-    "version": "f9b6c20725fd4de8e6f3"
+    "version": "e8ca65b3ba84330975b1"
   },
   {
     "id": "[\"cat\",\"大丈夫ニャ。換気扇は昨日から回してるニャ。\",\"moku-happy\",false]",
     "reviewId": "d769a9dede528ca6",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -49,12 +52,14 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "happy",
       "text": "大丈夫ニャ。換気扇は昨日から回してるニャ。"
     },
-    "version": "b7556f8ba0720936d5f3"
+    "version": "367b61f80e653144f3b4"
   },
   {
     "id": "[\"manager\",\"換気扇より先にタバコ止めろよ！\",\"retort\",false]",
     "reviewId": "a0176923bfca7bfe",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -65,12 +70,14 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "換気扇より先にタバコ止めろよ！"
     },
-    "version": "393717122905b9471d8d"
+    "version": "c54d2a178b33e3574b56"
   },
   {
     "id": "[\"manager\",\"まぁよろしく。……ずいぶん自由に暮らしてるな。\",\"normal\",false]",
     "reviewId": "3e9c2e1f4d404a0a",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -81,12 +88,14 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "まぁよろしく。……ずいぶん自由に暮らしてるな。"
     },
-    "version": "6061d32aed6beab2c194"
+    "version": "d32cb416c8b903ed9aec"
   },
   {
     "id": "[\"cat\",\"他に誰もいないからニャ。静かで最高ニャ。\",\"moku\",false]",
     "reviewId": "1c43f8ee4506af91",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -97,12 +106,14 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "tired",
       "text": "他に誰もいないからニャ。静かで最高ニャ。"
     },
-    "version": "9524784af60cc83205c5"
+    "version": "54711c2e402ef7390376"
   },
   {
     "id": "[\"manager\",\"部屋、少しは片づけたらどうだ？\",\"normal\",false]",
     "reviewId": "ae95ce6f315e77dd",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -113,12 +124,14 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "部屋、少しは片づけたらどうだ？"
     },
-    "version": "f3346d6813a7513eaead"
+    "version": "b99187012c3b2a8ceced"
   },
   {
     "id": "[\"cat\",\"明日からやるニャ。今日は準備の日ニャ。\",\"moku\",false]",
     "reviewId": "1d1d1df823cf31d9",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -129,12 +142,14 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "tired",
       "text": "明日からやるニャ。今日は準備の日ニャ。"
     },
-    "version": "14fdfbe9a48d86df6282"
+    "version": "b0760800d4ccc5ce3875"
   },
   {
     "id": "[\"manager\",\"……何の準備だ？\",\"normal\",false]",
     "reviewId": "ef59c399817e610a",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -145,12 +160,14 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "……何の準備だ？"
     },
-    "version": "6306eebd5b71231aea1a"
+    "version": "6ddf356718a4ad861125"
   },
   {
     "id": "[\"cat\",\"明日から頑張るために、今日は休む準備ニャ。\",\"moku\",false]",
     "reviewId": "d96640a69d1a46f2",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -161,12 +178,14 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "shy",
       "text": "明日から頑張るために、今日は休む準備ニャ。"
     },
-    "version": "8fe7f3f64b53bf31dce3"
+    "version": "cccc869f9358b71835b5"
   },
   {
     "id": "[\"manager\",\"……まぁ、家賃さえ払ってくれりゃいいか。\",\"normal\",false]",
     "reviewId": "32c248fd8febd78a",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -177,12 +196,14 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "……まぁ、家賃さえ払ってくれりゃいいか。"
     },
-    "version": "624b3431b8b41f7d0e02"
+    "version": "25a44ae2495284541a5c"
   },
   {
     "id": "[\"cat\",\"お、新しい大家かニャ？\",\"moku\",false]",
     "reviewId": "487e18d4751b3cd5",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -193,12 +214,14 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "お、新しい大家かニャ？"
     },
-    "version": "793523afdd720317cc58"
+    "version": "b675cc562f65197562af"
   },
   {
     "id": "[\"cat\",\"よろしく頼むニャ。家賃は来月から払うニャ。\",\"moku\",false]",
     "reviewId": "5fcd0b7e74da0397",
-    "repaired": false,
+    "repaired": true,
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
     "chapter": 1,
     "scene": "1:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -209,7 +232,7 @@ export const VOICE_REVIEW_CATALOG = [
       "emotion": "neutral",
       "text": "よろしく頼むニャ。家賃は来月から払うニャ。"
     },
-    "version": "38d8dfe3259015770d1a"
+    "version": "6535a9025e42258c25a3"
   },
   {
     "id": "[\"manager\",\"古びた鍵と、一通の手紙。\\n……今日から、ここを俺が預かるのか。\",\"inner\",false]",

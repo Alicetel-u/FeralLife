@@ -26,22 +26,36 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"cat\",\"お、新しい大家かニャ？\",\"moku\",false]": {
-    "file": "assets/voices/319f8be2f948add7014e6dcc478267af247b6efcb15b7b57779a5ea44c66929f.mp3",
-    "hash": "319f8be2f948add7014e6dcc478267af247b6efcb15b7b57779a5ea44c66929f",
+    "file": "assets/voices/bf709d36509abbc3a563ca94ec7055be578db92b1a887257f32560149a13305b.opening-v4.mp3",
+    "hash": "bf709d36509abbc3a563ca94ec7055be578db92b1a887257f32560149a13305b",
     "source": "foyer:0",
     "speaker": "cat",
     "text": "お、新しい大家かニャ？",
     "performance": "moku",
-    "model": "eleven_v3"
+    "deliveryProfile": "v3-inspired-v4:casual",
+    "model": "eleven_v4",
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 4.310204
+    }
   },
   "[\"cat\",\"よろしく頼むニャ。家賃は来月から払うニャ。\",\"moku\",false]": {
-    "file": "assets/voices/a521bb2c5cb6924e2c187e35d314f36478f3b3b9dbbe508e126c3f8808e35100.mp3",
-    "hash": "a521bb2c5cb6924e2c187e35d314f36478f3b3b9dbbe508e126c3f8808e35100",
+    "file": "assets/voices/fc9b6decdc7418d3911f794729eaeed451ddaafc2af4d1848976c3ffb33d5c78.opening-v4.mp3",
+    "hash": "fc9b6decdc7418d3911f794729eaeed451ddaafc2af4d1848976c3ffb33d5c78",
     "source": "foyer:1",
     "speaker": "cat",
     "text": "よろしく頼むニャ。家賃は来月から払うニャ。",
     "performance": "moku",
-    "model": "eleven_v3"
+    "deliveryProfile": "v3-inspired-v4:casual",
+    "model": "eleven_v4",
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 4.884898
+    }
   },
   "[\"cat\",\"新しい大家？ モクですニャ。よろしくニャ。\",\"moku\",false]": {
     "file": "assets/voices/9373264b0c7bd506c928151c8cb3bd6139579c434ab44666ddf314d695cd6601.mp3",
@@ -53,103 +67,164 @@ export const VOICE_MANIFEST = {
     "model": "eleven_v3"
   },
   "[\"manager\",\"うわっくっせぇ！！煙だらけじゃねーか！\",\"retort\",false]": {
-    "file": "assets/voices/abe597dd823e0200c0639259e88d174238fc00480c5c6db5266b60b595260140.repair.mp3",
-    "hash": "abe597dd823e0200c0639259e88d174238fc00480c5c6db5266b60b595260140",
+    "file": "assets/voices/dc024bfa083673dd9ea41736b81d0810974345bda3cf834bc1a21a861087b431.opening-v4.mp3",
+    "hash": "dc024bfa083673dd9ea41736b81d0810974345bda3cf834bc1a21a861087b431",
     "source": "act1/opening:2",
     "speaker": "manager",
     "text": "うわっくっせぇ！！煙だらけじゃねーか！",
     "performance": "retort",
-    "model": "eleven_v3",
+    "deliveryProfile": "v3-inspired-v4:casual",
+    "model": "eleven_v4",
     "repairReview": true,
-    "repairComment": "「煙」を「けむり」と明示して再生成。明瞭なツッコミを維持し、末尾に余白を追加。",
-    "audioMastering": {
-      "integratedLUFS": -18,
-      "truePeakDBTP": -6,
-      "tailPaddingSeconds": 0.25,
-      "fadeInSeconds": 0.004,
-      "fadeOutSeconds": 0.016
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 4.388571
     }
   },
   "[\"cat\",\"大丈夫ニャ。換気扇は昨日から回してるニャ。\",\"moku-happy\",false]": {
-    "file": "assets/voices/37fa0c69b1b2e6d13b153b7c9e5efeec0e2d10f5f30cf01303c8299f607e282a.mp3",
-    "hash": "37fa0c69b1b2e6d13b153b7c9e5efeec0e2d10f5f30cf01303c8299f607e282a",
+    "file": "assets/voices/6f86fa26ebfcb3699d6dbd0eea42ba97060416d01954ebac0831d750b0f206a2.opening-v4.mp3",
+    "hash": "6f86fa26ebfcb3699d6dbd0eea42ba97060416d01954ebac0831d750b0f206a2",
     "source": "act1/opening:3",
     "speaker": "cat",
     "text": "大丈夫ニャ。換気扇は昨日から回してるニャ。",
     "performance": "moku-happy",
-    "model": "eleven_v3"
+    "deliveryProfile": "v3-inspired-v4:casual",
+    "model": "eleven_v4",
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 4.806531
+    }
   },
   "[\"manager\",\"換気扇より先にタバコ止めろよ！\",\"retort\",false]": {
-    "file": "assets/voices/b54a502d337f0804c4d755449ce44d00989b7eaf3be459fc5fce10badb0ed7ea.mp3",
-    "hash": "b54a502d337f0804c4d755449ce44d00989b7eaf3be459fc5fce10badb0ed7ea",
+    "file": "assets/voices/e046ac54033e3b535c7233cf0887f156e1e305941adbbb07243171bcc1bcc593.opening-v4.mp3",
+    "hash": "e046ac54033e3b535c7233cf0887f156e1e305941adbbb07243171bcc1bcc593",
     "source": "act1/opening:4",
     "speaker": "manager",
     "text": "換気扇より先にタバコ止めろよ！",
     "performance": "retort",
-    "model": "eleven_v3"
+    "deliveryProfile": "v3-inspired-v4:casual",
+    "model": "eleven_v4",
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 3.369796
+    }
   },
   "[\"manager\",\"まぁよろしく。……ずいぶん自由に暮らしてるな。\",\"normal\",false]": {
-    "file": "assets/voices/ec29ca7d0d4e3b2da109aab697b1ca2e56835b5b5550e1da457da295fdc64922.mp3",
-    "hash": "ec29ca7d0d4e3b2da109aab697b1ca2e56835b5b5550e1da457da295fdc64922",
+    "file": "assets/voices/fdab4506ebfb82897fd9c8d6f5cc9e60537606f5f04f4496e2c218c638206413.opening-v4.mp3",
+    "hash": "fdab4506ebfb82897fd9c8d6f5cc9e60537606f5f04f4496e2c218c638206413",
     "source": "act1/opening:5",
     "speaker": "manager",
     "text": "まぁよろしく。……ずいぶん自由に暮らしてるな。",
     "performance": "normal",
-    "model": "eleven_v3"
+    "deliveryProfile": "v3-inspired-v4:casual",
+    "model": "eleven_v4",
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 4.466939
+    }
   },
   "[\"cat\",\"他に誰もいないからニャ。静かで最高ニャ。\",\"moku\",false]": {
-    "file": "assets/voices/9219b2e2046673ffc8ef9a00ef4647496a1919b420aa76c87e4d1c3bce3604f6.mp3",
-    "hash": "9219b2e2046673ffc8ef9a00ef4647496a1919b420aa76c87e4d1c3bce3604f6",
+    "file": "assets/voices/e4fa9f54bd62c364f4b3bea7fa1c2734c7bbf4d223c312a8fcf73407651916a7.opening-v4.mp3",
+    "hash": "e4fa9f54bd62c364f4b3bea7fa1c2734c7bbf4d223c312a8fcf73407651916a7",
     "source": "act1/opening:6",
     "speaker": "cat",
     "text": "他に誰もいないからニャ。静かで最高ニャ。",
     "performance": "moku",
-    "model": "eleven_v3"
+    "deliveryProfile": "v3-inspired-v4:tense",
+    "model": "eleven_v4",
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 5.746939
+    }
   },
   "[\"manager\",\"部屋、少しは片づけたらどうだ？\",\"normal\",false]": {
-    "file": "assets/voices/b272e30f6e5637773e29c8c515b52140edfec6b5aa1a23d8f14b4528c6c00eba.mp3",
-    "hash": "b272e30f6e5637773e29c8c515b52140edfec6b5aa1a23d8f14b4528c6c00eba",
+    "file": "assets/voices/32e1601ecedb473036550b0081b0622c54269a302e567c63eb1affb1a0ecdcfe.opening-v4.mp3",
+    "hash": "32e1601ecedb473036550b0081b0622c54269a302e567c63eb1affb1a0ecdcfe",
     "source": "act1/opening:7",
     "speaker": "manager",
     "text": "部屋、少しは片づけたらどうだ？",
     "performance": "normal",
-    "model": "eleven_v3"
+    "deliveryProfile": "v3-inspired-v4:casual",
+    "model": "eleven_v4",
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 3.369796
+    }
   },
   "[\"cat\",\"明日からやるニャ。今日は準備の日ニャ。\",\"moku\",false]": {
-    "file": "assets/voices/33e96d7cdb3f99916d773e5df8dc267133e645e6c61c0feb0cee04d4764ca547.mp3",
-    "hash": "33e96d7cdb3f99916d773e5df8dc267133e645e6c61c0feb0cee04d4764ca547",
+    "file": "assets/voices/61dba31630766b34874a57f3ba88d4f1bf2c3a671034ff82eaf96f8d5162703c.opening-v4.mp3",
+    "hash": "61dba31630766b34874a57f3ba88d4f1bf2c3a671034ff82eaf96f8d5162703c",
     "source": "act1/opening:8",
     "speaker": "cat",
     "text": "明日からやるニャ。今日は準備の日ニャ。",
     "performance": "moku",
-    "model": "eleven_v3"
+    "deliveryProfile": "v3-inspired-v4:tense",
+    "model": "eleven_v4",
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 5.041633
+    }
   },
   "[\"manager\",\"……何の準備だ？\",\"normal\",false]": {
-    "file": "assets/voices/d6e64e1249d1dd5d677c1b6634ece1441651d7994b394d8b3d0090b36c30e587.mp3",
-    "hash": "d6e64e1249d1dd5d677c1b6634ece1441651d7994b394d8b3d0090b36c30e587",
+    "file": "assets/voices/b90e0aa9ac1efac67814955cd15b7f6226e5eb22025b7bf10e1e88e44bdcce4f.opening-v4.mp3",
+    "hash": "b90e0aa9ac1efac67814955cd15b7f6226e5eb22025b7bf10e1e88e44bdcce4f",
     "source": "act1/opening:9",
     "speaker": "manager",
     "text": "……何の準備だ？",
     "performance": "normal",
-    "model": "eleven_v3"
+    "deliveryProfile": "v3-inspired-v4:casual",
+    "model": "eleven_v4",
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 2.481633
+    }
   },
   "[\"cat\",\"明日から頑張るために、今日は休む準備ニャ。\",\"moku\",false]": {
-    "file": "assets/voices/88deaf9105d88797b382dcf6ae057b1a0d518e094bd3b088e4225bfad4608a85.mp3",
-    "hash": "88deaf9105d88797b382dcf6ae057b1a0d518e094bd3b088e4225bfad4608a85",
+    "file": "assets/voices/e5c1b2cfa4f642e660e9caabf0205c22aff3c77fd217cd32310854f842bf22f6.opening-v4.mp3",
+    "hash": "e5c1b2cfa4f642e660e9caabf0205c22aff3c77fd217cd32310854f842bf22f6",
     "source": "act1/opening:10",
     "speaker": "cat",
     "text": "明日から頑張るために、今日は休む準備ニャ。",
     "performance": "moku",
-    "model": "eleven_v3"
+    "deliveryProfile": "v3-inspired-v4:casual",
+    "model": "eleven_v4",
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 4.806531
+    }
   },
   "[\"manager\",\"……まぁ、家賃さえ払ってくれりゃいいか。\",\"normal\",false]": {
-    "file": "assets/voices/4968b228677461d3dee14c7221d76ab2706662c5b2ff7a8e86678841f7955a4c.mp3",
-    "hash": "4968b228677461d3dee14c7221d76ab2706662c5b2ff7a8e86678841f7955a4c",
+    "file": "assets/voices/b6471809081a6f9aa94f1192f8c086db10da3bcd773b9932903f4b69ca54c482.opening-v4.mp3",
+    "hash": "b6471809081a6f9aa94f1192f8c086db10da3bcd773b9932903f4b69ca54c482",
     "source": "act1/opening:12",
     "speaker": "manager",
     "text": "……まぁ、家賃さえ払ってくれりゃいいか。",
     "performance": "normal",
-    "model": "eleven_v3"
+    "deliveryProfile": "v3-inspired-v4:casual",
+    "model": "eleven_v4",
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 3.761633
+    }
   },
   "[\"cat\",\"少し歩くニャ。座りっぱなしで足が固まったニャ。\",\"moku\",false]": {
     "file": "assets/voices/832074c854991c5918aa66dd8f32f2f499e75172e10e3695dfc27190f87ed6c0.mp3",
@@ -8171,16 +8246,19 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"cat\",\"モクですニャ。よろしくニャ。\",\"moku\",false]": {
-    "file": "assets/voices/f9a2d50f9381a0c856fb746a7090a81cb4cfd35339c594de044f55e6d0479418.repair.mp3",
-    "hash": "f9a2d50f9381a0c856fb746a7090a81cb4cfd35339c594de044f55e6d0479418",
+    "file": "assets/voices/73d94a5ef9ee8bc1a42834db49c4519d04329a25f7ebefe5fece38e5cefb7789.opening-v4.mp3",
+    "hash": "73d94a5ef9ee8bc1a42834db49c4519d04329a25f7ebefe5fece38e5cefb7789",
     "source": "act1/opening:1",
     "speaker": "cat",
     "text": "モクですニャ。よろしくニャ。",
     "performance": "moku",
-    "model": "eleven_v3",
-    "audioMastering": {
-      "integratedLUFS": -18,
-      "truePeakDBTP": -3
+    "deliveryProfile": "v3-inspired-v4:casual",
+    "model": "eleven_v4",
+    "repairReview": true,
+    "repairComment": "第一幕の観察開始前の会話を、採用済みV3寄せV4で再生成し、音量を調整。",
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 3.84
     }
   },
   "[\"cat\",\"大家、やっぱり頼りになるニャ。\",\"moku\",false]": {
