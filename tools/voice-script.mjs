@@ -225,6 +225,6 @@ export function planVoices(rows,ids,config,pronunciations=[],repairs=[]){
     if(/\[(?:softly|whispers?|whispering|mumbling)\]/i.test(request.text))throw Error('Voice delivery must be clear and projected; whisper/mumble tags are disabled');
     const voiceId=character?.voiceId||ids[row.speaker]||null;
     const hash=digest({voiceId,request,performance:row.performance,format:config.outputFormat});
-    return {...row,...(adopted?{deliveryProfile:adopted.delivery+(filmCue?':film-crisis':character?(tense?':tense':':casual'):'')}:{}),text:row.line.text,voiceId,request,hash,file:'assets/voices/'+hash+'.mp3',characters:Array.from(row.line.text).length,billableCharacters:Array.from(request.text).length,direction:profile.direction};
+    return {...row,...(adopted?{deliveryProfile:adopted.delivery+(filmCue?':tense':character?(tense?':tense':':casual'):'')}:{}),text:row.line.text,voiceId,request,hash,file:'assets/voices/'+hash+'.mp3',characters:Array.from(row.line.text).length,billableCharacters:Array.from(request.text).length,direction:profile.direction};
   });
 }
