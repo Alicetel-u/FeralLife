@@ -93,7 +93,7 @@ const catPose = (src, origin = [48, 126]) => ({ src, origin, image: null });
 // across every pose; ears, hair and seated silhouettes remain part of the art.
 function observationCharacterArt(type){
  const actions=OBSERVATION_ACTION_ART[type],stand=actions.stand;
- return {src:stand.src,portraitSrc:stand.src,displayHeight:type==='cat'?44:45,origin:stand.origin,image:null,portrait:null,
+ return {src:stand.src,portraitSrc:stand.src,displayHeight:type==='rabbit'?44*512/455:type==='cat'?44:45,origin:stand.origin,image:null,portrait:null,
   poses:Object.fromEntries(Object.entries(actions).map(([name,pose])=>[name,catPose(pose.src,pose.origin)])),
   actionPoses:{idle:['base','sit','base','chat'],tv:'sit',sleep:'sleep',eat:'eat',drink:'drink',clean:'clean',fight:'base',chat:'chat',counsel:'chat',shop:'base',outing:'base',smoke:'base'},
   ...(type==='cat'?{smokeTip:{base:[18,-56]}}:{})};
@@ -200,6 +200,7 @@ export const CHARACTER_ART = {
   },
   hostess:observationCharacterArt('hostess'),
   cat:observationCharacterArt('cat'),
+  rabbit:observationCharacterArt('rabbit'),
   fox: {
     src: 'assets/characters/fox/base-game.png', portraitSrc: 'assets/characters/fox/portrait-game.png', displayHeight: 44, origin: [64, 126], image: null, portrait: null,
     poses: {

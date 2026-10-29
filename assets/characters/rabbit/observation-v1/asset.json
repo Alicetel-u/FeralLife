@@ -1,0 +1,34 @@
+{
+  "canvas": [
+    512,
+    512
+  ],
+  "origin": [
+    256,
+    492
+  ],
+  "actionScale": 1.002202643171806,
+  "emotionScale": 1.058139534883721,
+  "actions": [
+    "stand",
+    "walk_a",
+    "walk_b",
+    "sit",
+    "sleep",
+    "eat",
+    "drink",
+    "clean",
+    "chat"
+  ],
+  "emotions": [
+    "happy",
+    "angry",
+    "sad",
+    "surprised",
+    "confused",
+    "scared",
+    "relieved",
+    "shy",
+    "exasperated"
+  ]
+}

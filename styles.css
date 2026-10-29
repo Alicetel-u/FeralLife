@@ -2572,3 +2572,6 @@ body.conversation-active .scene-caption.story-observation{visibility:hidden}
 .act3-map .map-loading{background:#0a1019;color:#fff4d7}
 
 @media(max-width:600px){.bridge-collapse-frame{height:min(51dvh,110vw)}.bridge-collapse-art{width:210%}}
+
+/* Mimi's entire action set shares one square frame and foot pivot. */
+.act3-map .map-companion-rabbit img{position:absolute;left:50%;bottom:calc(var(--party-size)*-.04);width:calc(var(--party-size)*1.58);height:calc(var(--party-size)*1.58);max-width:none;translate:-50% 0}

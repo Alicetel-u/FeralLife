@@ -11,7 +11,7 @@ import {readFile} from 'node:fs/promises';
 import {CHARACTERS} from '../src/simulation.js';
 import {CHARACTER_ART} from '../src/character-art.js';
 import {drawSprite,WorldRenderer} from '../src/renderer.js';
-import {MINI_EMOTIONS,LUNA_MINI_EMOTIONS,MOKU_MINI_EMOTIONS,MOKU_EXTRA_EMOTIONS,MINI_EMOTION_ART,MINI_PERSONALITY,miniLineEmotion,miniDailyEmotion,miniEmotionMotion,MiniReactionState,miniEmotionFrameName} from '../src/mini-emotions.js';
+import {MINI_EMOTIONS,LUNA_MINI_EMOTIONS,MOKU_MINI_EMOTIONS,MIMI_MINI_EMOTIONS,MOKU_EXTRA_EMOTIONS,MINI_EMOTION_ART,MINI_PERSONALITY,miniLineEmotion,miniDailyEmotion,miniEmotionMotion,MiniReactionState,miniEmotionFrameName} from '../src/mini-emotions.js';
 
 const pen=()=>{const calls=[];const ctx=new Proxy({}, {get:(_,key)=>(...args)=>calls.push([key,...args]),set:()=>true});return {ctx,calls};};
 
@@ -23,7 +23,7 @@ test('all eleven residents, landlord and visitor ship bounded transparent reacti
   const art=MINI_EMOTION_ART[type],png=await readFile(art.src);
   assert.equal(png.subarray(1,4).toString(),'PNG');assert.equal(png[25],6);
   const width=png.readUInt32BE(16),height=png.readUInt32BE(20);
-  assert.deepEqual(Object.keys(art.frames),type==='hostess'?LUNA_MINI_EMOTIONS:type==='cat'?MOKU_MINI_EMOTIONS:MINI_EMOTIONS);
+  assert.deepEqual(Object.keys(art.frames),type==='hostess'?LUNA_MINI_EMOTIONS:type==='cat'?MOKU_MINI_EMOTIONS:type==='rabbit'?MIMI_MINI_EMOTIONS:MINI_EMOTIONS);
   for(const [x,y,w,h] of Object.values(art.frames)){
    assert.ok(w>0&&h>0&&x>=0&&y>=0&&x+w<=width&&y+h<=height,type);
    assert.ok(h<=art.height);

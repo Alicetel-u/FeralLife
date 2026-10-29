@@ -6,6 +6,7 @@ export const LUNA_EXTRA_EMOTIONS = ['charm','flirt-wink','wicked'];
 export const LUNA_MINI_EMOTIONS = ['happy','angry','sad','surprised','scared','confused',...LUNA_EXTRA_EMOTIONS];
 export const MOKU_EXTRA_EMOTIONS = ['furious','panic','despair','pleading','stunned','laughing','exasperated','rejecting'];
 export const MOKU_MINI_EMOTIONS = [...MINI_EMOTIONS,'exasperated'];
+export const MIMI_MINI_EMOTIONS = [...MINI_EMOTIONS,'exasperated'];
 export const MINI_EMOTION_NAMES = {charm:'お色気',wicked:'悪い顔',neutral:'通常',happy:'喜び',angry:'怒り',sad:'悲しみ',surprised:'驚き',confused:'困惑',scared:'恐怖',relieved:'安心',shy:'照れ',tired:'疲れ',furious:'激怒',panic:'恐慌',despair:'絶望',pleading:'必死の訴え',stunned:'愕然',laughing:'大笑い','flirt-wink':'誘惑・ウインク','flirt-lean':'誘惑・甘える',exasperated:'強い呆れ',rejecting:'拒絶'};
 export const MINI_EMOTION_ART = {
   cat: {src:'assets/characters/cat/emotions-v4.png',image:null,height:454,frames:{
@@ -90,16 +91,7 @@ export const MINI_EMOTION_ART = {
     relieved:[339,202,121,180],
     shy:[503,203,114,179],
   }},
-  rabbit: {src:'assets/characters/rabbit/emotions-v1.png',image:null,height:180,frames:{
-    happy:[21,13,118,177],
-    angry:[181,25,117,165],
-    sad:[343,27,113,163],
-    surprised:[499,10,121,180],
-    confused:[22,205,115,177],
-    scared:[182,217,116,165],
-    relieved:[342,209,115,173],
-    shy:[508,208,103,174],
-  }},
+  rabbit: {src:'assets/characters/rabbit/emotions-v2.png',image:null,height:512,frames:{"happy":[0,0,512,512],"angry":[512,0,512,512],"sad":[1024,0,512,512],"surprised":[0,512,512,512],"confused":[512,512,512,512],"scared":[1024,512,512,512],"relieved":[0,1024,512,512],"shy":[512,1024,512,512],"exasperated":[1024,1024,512,512]}},
   wolf: {src:'assets/characters/wolf/emotions-v1.png',image:null,height:180,frames:{
     happy:[16,10,128,180],
     angry:[176,12,128,178],
@@ -290,7 +282,7 @@ function miniCutoutImage(art){
 // Old semantic directions and saves resolve to current art without loading retired sheets.
 export function miniEmotionFrameName(type,emotion){
  const art=MINI_EMOTION_ART[type];if(Object.hasOwn(art?.frames||{},emotion))return emotion;
- if(!['cat','hostess'].includes(type))return null;
+ if(!['cat','hostess','rabbit'].includes(type))return null;
  const aliases={furious:'angry',panic:'scared',despair:'sad',pleading:'scared',stunned:'surprised',laughing:'happy',rejecting:'exasperated',tired:'sad','flirt-lean':'charm',shy:'confused',relieved:'happy',exasperated:'angry'};
  const target=aliases[emotion];return art?.frames[target]?target:art?.frames[aliases[target]]?aliases[target]:null;
 }
