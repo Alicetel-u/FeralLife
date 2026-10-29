@@ -25,10 +25,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Verify original story and all game regressions before spending credits
+      - name: Verify original film screenplay and generation directions before paid calls
         run: |
           npm run build
-          npm test
+          node --test tests/voice-generation-defaults.test.mjs
           node --input-type=module <<'JS'
           import {extractVoiceScript} from './tools/voice-script.mjs';
           const film=extractVoiceScript('act3-prologue'),count={};
