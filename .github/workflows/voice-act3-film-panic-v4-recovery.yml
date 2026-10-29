@@ -1,0 +1,105 @@
+name: Recover and release 14 dramatic zombie-prologue V4 voices without new paid synthesis
+on:
+  push:
+    paths:
+      - .github/workflows/voice-act3-film-panic-v4-recovery.yml
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: third-act-film-crisis-voice-recovery
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    if: github.repository == 'Alicetel-u/FeralLife' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Obtain existing charged recordings from the first successful 14-voice synthesis
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .local/act3-film-crisis-recovered assets/voices
+          gh run download 40956737134 -n act3-film-crisis-recovery-40956737134 -D .local/act3-film-crisis-recovered
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+      - name: Verify recorded audio against the exact current script and install all 14 crisis performances
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,writeFile,copyFile,stat} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {extractVoiceScript,planVoices} from './tools/voice-script.mjs';
+          import {VOICE_MANIFEST as OLD} from './src/voice-manifest.js';
+          const root='.local/act3-film-crisis-recovered/';
+          const json=async p=>JSON.parse(await readFile(p,'utf8'));
+          const archive=await json(root+'act3-film-crisis-plan.json');
+          const film=extractVoiceScript('act3-prologue');
+          const config=await json('config/voice-performance.json');
+          config.generationDefaults=await json('config/voice-generation-defaults.json');
+          const current=planVoices(film,await json('config/voice-ids.json'),config,(await json('config/voice-pronunciation-issues.json')).issues,(await json('config/voice-repairs.json')).lines);
+          const plan=new Map(current.map(r=>[r.lineKey,r])),manifest={...OLD};
+          if(archive.lines!==14||archive.rows.length!==14||archive.unique!==14||film.length!==14||plan.size!==14)throw Error('Expected exactly 14 existing source and recovered voices');
+          const result=new Set();
+          for(const row of archive.rows){
+            const now=plan.get(row.lineKey);
+            if(!now||now.source!==row.source||now.hash!==row.hash||now.voiceId!==row.voiceId||now.text!==row.text||now.deliveryProfile!=='v3-inspired-v4:tense'||row.model!=='eleven_v4'||!row.source.startsWith('act3/film/')||row.settings?.stability<.3||row.settings?.stability>.48||row.settings?.similarity_boost!==.85||result.has(row.lineKey))throw Error('Recovery does not match current approved cinematic source '+row.source);
+            if(row.file!=='assets/voices/'+row.hash+'.mp3'||!/^[a-f0-9]{64}$/.test(row.hash))throw Error('Invalid original voice identity');
+            const master=row.file.replace(/\.mp3$/,'.film-v4.mp3');
+            for(const filename of [row.file,master]){
+              const input=root+filename.split('/').at(-1);
+              if((await stat(input)).size<1500)throw Error('Missing original paid recording: '+filename);
+              await copyFile(input,filename);
+            }
+            const seconds=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',master],{encoding:'utf8'}).trim());
+            if(!Number.isFinite(seconds)||seconds<.5||seconds>30)throw Error('Broken or too short cinematic recording '+row.source);
+            manifest[row.lineKey]={
+              file:master,hash:row.hash,source:row.source,speaker:row.speaker,text:row.text,performance:row.performance,
+              deliveryProfile:now.deliveryProfile,model:'eleven_v4',
+              repairComment:'第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。',
+              audioMastering:{integratedLUFS:-18,truePeakDBTP:-5,tailPaddingSeconds:.35},
+              audioQuality:{masteredForTrial:true,durationSeconds:seconds}
+            };
+            result.add(row.lineKey);
+          }
+          if(result.size!==14||Object.keys(manifest).length!==Object.keys(OLD).length)throw Error('Unexpected recovered audio coverage');
+          for(const [key,item] of Object.entries(OLD))if(!result.has(key)&&JSON.stringify(manifest[key])!==JSON.stringify(item))throw Error('Changed an unrelated voice '+key);
+          await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
+          console.log('Recovered 14 already paid fear-and-survival film voices. No ElevenLabs API calls; no other clips changed.');
+          JS
+      - name: Rebuild the actual review queue and pass every game and audio test
+        run: |
+          npm run build
+          npm test
+      - name: Commit precisely the 14 old-source/new-voice replacements and review catalog
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          const p=JSON.parse(await readFile('.local/act3-film-crisis-recovered/act3-film-crisis-plan.json','utf8'));
+          const files=['src/voice-manifest.js','src/voice-review-catalog.js','src/voice-review-published.js'];
+          for(const r of p.rows)files.push(r.file,r.file.replace(/\.mp3$/,'.film-v4.mp3'));
+          execFileSync('git',['add','--',...new Set(files)],{stdio:'inherit'});
+          JS
+          git diff --cached --stat
+          git diff --cached --quiet && { echo 'No new recordings were staged'; exit 1; }
+          git commit -m 'Publish terrifying and desperate chapter-three prologue voices, all 14 cues'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Deploy the final published 14 film voices
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
