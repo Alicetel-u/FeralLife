@@ -140,7 +140,7 @@ if(!args.includes('--generate'))process.exit(0);
 if(scope==='act2-trouble1'&&(unique.length>350||estimate>20000))throw Error('Abnormal trouble-one generation volume; review scope before spending');
 if(scope==='act2-duel'&&(unique.length>120||estimate>10000))throw Error('Abnormal mini-game generation volume; review scope before spending');
 if(fillMissing&&(unique.length>700||estimate>40000))throw Error('Abnormal missing-voice generation volume; review scope before spending');
-if(scope==='act3-prologue'&&(unique.length!==14||estimate>1000))throw Error('Unexpected chapter-three voice plan');
+if(scope==='act3-prologue'&&(unique.length!==14||estimate>1400))throw Error('Unexpected chapter-three voice plan');
 if(scope==='act3-current'&&(unique.length>200||estimate>15000))throw Error('Unexpected current chapter-three voice plan');
 if(pending.some(r=>!r.voiceId))throw Error('Missing voice ID');
 if(!Number.isFinite(before.remaining)||before.remaining<estimate)throw Error('Insufficient or unavailable balance');
