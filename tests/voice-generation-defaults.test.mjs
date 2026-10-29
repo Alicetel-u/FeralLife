@@ -88,8 +88,9 @@ test('fourteen apocalypse film voices have fear-and-survival acting for each sce
   assert.equal(row.request.voice_settings.similarity_boost,.85);
   assert.equal(row.request.voice_settings.stability,cue.stability??.38);
   assert.equal(row.deliveryProfile,'v3-inspired-v4:film-crisis');
-  assert.equal(row.request.text,[...cue.tags,row.text].join(' '),'only approved cinematic acting tags and exact script are used');
-  assert.ok(row.request.text.endsWith(row.text),'speak the exact canonical script after acting cues');
+  const phonetic=readings.slice().sort((a,b)=>b.term.length-a.term.length).reduce((value,rule)=>value.replaceAll(rule.term,rule.reading),row.text);
+  assert.equal(row.request.text,[...cue.tags,phonetic].join(' '),'only approved acting tags and exact script with approved phonetic readings');
+  assert.ok(row.request.text.endsWith(phonetic),'speak the original dialogue with its existing pronunciation replacement');
   assert.doesNotMatch(row.request.text,/laugh|chuckle|giggle|playful|smiling|languid|comedic/i);
   assert.notEqual(row.hash,prev.hash,'every cinematic recording must be regenerated');
  }
