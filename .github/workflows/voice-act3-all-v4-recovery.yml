@@ -1,0 +1,127 @@
+name: Publish recovered all 120 third-act V4 recordings without new API requests
+on:
+  push:
+    paths:
+      - .github/workflows/voice-act3-all-v4-recovery.yml
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: reviewed-voice-automation
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    if: github.ref == 'refs/heads/main' && github.repository == 'Alicetel-u/FeralLife'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install audio inspection tool
+        run: |
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+      - name: Restore all 120 audio files and register every live third-act line
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .local/act3-all-recovered
+          gh run download 40923174009 -n act3-all-v4-recovery-40923174009 -D .local/act3-all-recovered
+          node --input-type=module <<'JS'
+          import {readFile,writeFile,copyFile,stat,mkdir} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {extractVoiceScript} from './tools/voice-script.mjs';
+          import {VOICE_MANIFEST as OLD_MANIFEST} from './src/voice-manifest.js';
+          const roots=[
+            {name:'act3-film-plan.json',count:14,prefix:'act3/film/',suffix:'.film-v4.mp3'},
+            {name:'act3-current-plan.json',count:106,prefix:'act3/',suffix:'.act3.mp3'}
+          ];
+          const scripts=[...extractVoiceScript('act3-prologue'),...extractVoiceScript('act3-current')];
+          if(scripts.length!==120)throw Error('Source dialogue changed');
+          const source=new Map(scripts.map(row=>[row.lineKey,row]));
+          if(source.size!==120)throw Error('Duplicate game voice key');
+          const manifest={...OLD_MANIFEST},keys=new Set();
+          await mkdir('assets/voices',{recursive:true});
+          let count=0;
+          for(const root of roots){
+            const plan=JSON.parse(await readFile('.local/act3-all-recovered/'+root.name,'utf8'));
+            if(plan.model!=='eleven_v4'||plan.lines!==root.count||plan.rows.length!==root.count)throw Error('Recovered voice plan does not match 120-line script');
+            for(const row of plan.rows){
+              if(keys.has(row.lineKey)||!source.has(row.lineKey)||source.get(row.lineKey).line.text!==row.text)throw Error('Generated speech does not match live story '+row.source);
+              if(!row.source.startsWith(root.prefix)||root.name==='act3-current-plan.json'&&!/^act3\/(after|map)\//.test(row.source))throw Error('Wrong scene '+row.source);
+              if(!['announcer','manager','cat','hostess','rabbit'].includes(row.speaker)||row.settings?.stability!==.5||row.settings?.similarity_boost!==.85||!row.deliveryProfile?.startsWith('v3-inspired-v4'))throw Error('Wrong approved V4 voice: '+row.source);
+              if(!/^[a-f0-9]{64}$/.test(row.hash)||row.file!=='assets/voices/'+row.hash+'.mp3')throw Error('Wrong audio identity');
+              const final=row.file.replace(/\.mp3$/,root.suffix);
+              for(const path of [row.file,final]){
+                const from='.local/act3-all-recovered/'+path.split('/').at(-1);
+                if((await stat(from)).size<1000)throw Error('Recovered MP3 missing: '+path);
+                await copyFile(from,path);
+              }
+              const seconds=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',final],{encoding:'utf8'}).trim());
+              if(!Number.isFinite(seconds)||seconds<.5||seconds>45)throw Error('Recovered audio duration invalid '+row.source);
+              manifest[row.lineKey]={
+                file:final,hash:row.hash,source:row.source,speaker:row.speaker,text:row.text,performance:row.performance,
+                deliveryProfile:row.deliveryProfile,model:'eleven_v4',
+                audioMastering:{integratedLUFS:-18,truePeakDBTP:-5,tailPaddingSeconds:.2,...(root.count===106?{edgeSilenceTrimmed:true}:{})},
+                audioQuality:{masteredForTrial:true,durationSeconds:seconds}
+              };
+              keys.add(row.lineKey);count++;
+            }
+          }
+          if(count!==120)throw Error('Not all third-act audio restored');
+          for(const [key,clip] of Object.entries(OLD_MANIFEST))if(!keys.has(key)&&JSON.stringify(manifest[key])!==JSON.stringify(clip))throw Error('Unrelated recordings modified');
+          let html=await readFile('assets/voice-tests/act3-v4-cast/index.html','utf8');
+          const cast=JSON.parse(await readFile('config/voice-cast-test.json','utf8')).characters;
+          let replaced=0;
+          for(const [speaker,character] of Object.entries(cast))for(const sample of character.samples){
+            const line=scripts.find(row=>row.speaker===speaker&&row.line.text===sample.text);
+            if(!line)throw Error('Audition line no longer in the game');
+            const oldFile=OLD_MANIFEST[line.lineKey]?.file?.split('/').at(-1);
+            const newFile=manifest[line.lineKey]?.file?.split('/').at(-1);
+            if(!oldFile||!newFile||!html.includes(oldFile))throw Error('Audition comparison still expects obsolete file: '+sample.text);
+            html=html.replace(oldFile,newFile);
+            replaced++;
+          }
+          if(replaced!==8)throw Error('Expected eight existing audition baselines');
+          html=html.replace('本編の声はまだ変更していません。','本編の声は新V4に更新済みです。');
+          await writeFile('assets/voice-tests/act3-v4-cast/index.html',html);
+          await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
+          console.log('Restored exactly '+count+' new third-act V4 clips and updated all '+replaced+' audition baselines; zero API requests.');
+          JS
+      - name: Build and test new third-act voices
+        run: |
+          npm run build
+          npm test
+      - name: Publish only restored 120 voice pairs, manifest and audition references
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          const paths=['src/voice-manifest.js','src/voice-review-catalog.js','src/voice-review-published.js','assets/voice-tests/act3-v4-cast/index.html'];
+          for(const [name,suffix] of [['act3-film-plan.json','.film-v4.mp3'],['act3-current-plan.json','.act3.mp3']]){
+            const plan=JSON.parse(await readFile('.local/act3-all-recovered/'+name,'utf8'));
+            for(const row of plan.rows)paths.push(row.file,row.file.replace(/\.mp3$/,suffix));
+          }
+          execFileSync('git',['add','--',...new Set(paths)],{stdio:'inherit'});
+          JS
+          git diff --cached --stat
+          git diff --cached --quiet && { echo 'No audio staged'; exit 1; }
+          git commit -m 'Publish all 120 re-recorded third-act V4 voices and updated audition references'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Start Pages deployment of the final audio commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
