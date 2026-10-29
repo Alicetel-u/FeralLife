@@ -778,31 +778,31 @@ const ACT_THREE_DEBUG_GROUPS=[
  ]},
  {id:'explore',label:'02　出発・街の探索',description:'けもの荘 → 交差点 → 裏道',scenes:[
   ['departure','けもの荘・出発','start','モクとルナとの出発会話'],
-  ['crossing','交差点・ゾンビ回避','story','群れを見て裏道へ向かう'],
-  ['detour','裏道・トラック爆発','story','爆発を回避してコンビニへ']
+  ['crossing','交差点・ゾンビ回避','map','群れを見て裏道へ向かう'],
+  ['detour','裏道・トラック爆発','map','爆発を回避してコンビニへ']
  ]},
  {id:'escape',label:'03　ミミとの出会い・脱出',description:'コンビニ → ミミとの別れ → 橋',scenes:[
-  ['store','コンビニ・ミミとの出会い','story','コンビニに到着した場面'],
+  ['store','コンビニ・ミミとの出会い','map','コンビニに到着した場面'],
   ['farewell','コンビニ・ミミとの別れ','story','鍵を渡した後のやり取り'],
-  ['bridge','脱出地点・橋の会話','story','モクとルナが倒れる前'],
+  ['bridge','脱出地点・橋の会話','map','モクとルナが倒れる前'],
   ['collapse','橋・二人が倒れる瞬間','ending','崩落の専用CGから再生']
  ]},
  {id:'loop',label:'04　タイムリープ・帰還',description:'橋の時計 → コンビニ復帰 → けもの荘',scenes:[
   ['bridge-clock','橋の後のタイムリープ時計','rewind','二人が倒れた後の時計演出'],
   ['return','コンビニ・死に戻り後の会話','rewind','大家「……は？」から再生'],
-  ['homeward','コンビニ → けもの荘の帰り道','story','ミミを含む四人で自動帰還'],
+  ['homeward','コンビニ → けもの荘の帰り道','map','ミミを含む四人で自動帰還'],
   ['homecoming','けもの荘・帰還した場面','ending','四人がアパートへ到着']
  ]}
 ];
 function showDebugActThreeSections(){
  debugMenuPage('第三幕｜世界崩壊','ストーリーの順番で4つのグループに整理。通常セーブは変更しません。',
-  ACT_THREE_DEBUG_GROUPS.map(g=>[g.id,g.label,'data-debug-act3-group','navigation',g.description]),'data-debug-chapters-back');
+  ACT_THREE_DEBUG_GROUPS.map(g=>[g.id,g.label,'data-debug-act3-group',g.id==='explore'||g.id==='escape'?'map':g.id==='loop'?'rewind':'story',g.description]),'data-debug-chapters-back');
  modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes','persona-debug-act3');
 }
 function showDebugActThreeScenes(groupId){
  const group=ACT_THREE_DEBUG_GROUPS.find(g=>g.id===groupId);
  if(!group){showDebugActThreeSections();return;}
- debugMenuPage('第三幕｜'+group.label.slice(3),'移動先を選択。戻ると4つのグループに戻れます。',
+ debugMenuPage('第三幕｜'+group.label.slice(3),'青緑＝MAP・移動地点 ／ 青＝会話 ／ 紫＝タイムループ ／ ピンク＝演出',
   group.scenes.map(([id,label,kind,description])=>[id,label,'data-debug-act3-scene',kind,description]),'data-debug-act3-groups-back');
  modal.querySelector('.persona-debug')?.classList.add('persona-debug-scenes','persona-debug-act3');
 }
