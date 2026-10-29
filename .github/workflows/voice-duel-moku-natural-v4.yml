@@ -27,6 +27,7 @@ jobs:
           node-version: '22'
       - name: Verify natural battle script and pass the full test suite BEFORE paid generation
         run: |
+          npm run build
           npm test
           node --input-type=module <<'JS'
           import {extractVoiceScript} from './tools/voice-script.mjs';
