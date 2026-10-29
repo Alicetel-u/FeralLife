@@ -10227,269 +10227,283 @@ export const VOICE_MANIFEST = {
     }
   },
   "[\"announcer\",\"緊急速報です！ 各地で原因不明の暴動が発生！\",\"act3-urgent\",false]": {
-    "file": "assets/voices/f421885c5105134076002938949be6a75a78316073a2ed8593a6b0b11684e47b.film-v4.mp3",
-    "hash": "f421885c5105134076002938949be6a75a78316073a2ed8593a6b0b11684e47b",
+    "file": "assets/voices/3c22cd8a6428d50356281e0deebc39c05ddc55781b13229d0c04650a2a814e8c.film-v4.mp3",
+    "hash": "3c22cd8a6428d50356281e0deebc39c05ddc55781b13229d0c04650a2a814e8c",
     "source": "act3/film/news:0",
     "speaker": "announcer",
     "text": "緊急速報です！ 各地で原因不明の暴動が発生！",
     "performance": "act3-urgent",
-    "deliveryProfile": "v3-inspired-v4",
+    "deliveryProfile": "v3-inspired-v4:tense",
     "model": "eleven_v4",
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.2
+      "tailPaddingSeconds": 0.35
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 4.153469
+      "durationSeconds": 4.545306
     }
   },
   "[\"announcer\",\"感染は世界各国に拡大し、政府は――\",\"act3-urgent\",false]": {
-    "file": "assets/voices/7b3af9174efbe5f85520d03c05f9538343b6a171bc3ec46baed17b5cae9ef4f3.film-v4.mp3",
-    "hash": "7b3af9174efbe5f85520d03c05f9538343b6a171bc3ec46baed17b5cae9ef4f3",
+    "file": "assets/voices/9fadc1a31e7bc0f088735b80d83c41f9f14d062f654ed48e3552f73fc0fbca3d.film-v4.mp3",
+    "hash": "9fadc1a31e7bc0f088735b80d83c41f9f14d062f654ed48e3552f73fc0fbca3d",
     "source": "act3/film/news:1",
     "speaker": "announcer",
     "text": "感染は世界各国に拡大し、政府は――",
     "performance": "act3-urgent",
-    "deliveryProfile": "v3-inspired-v4",
+    "deliveryProfile": "v3-inspired-v4:tense",
     "model": "eleven_v4",
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.2
+      "tailPaddingSeconds": 0.35
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 3.604898
+      "durationSeconds": 3.996735
     }
   },
   "[\"cat\",\"まだ来るニャ！！\",\"act3-urgent\",false]": {
-    "file": "assets/voices/732edfd1063f0c05954ba49852649f55d0f276da7100d89969ce11f1b3215f2b.film-v4.mp3",
-    "hash": "732edfd1063f0c05954ba49852649f55d0f276da7100d89969ce11f1b3215f2b",
+    "file": "assets/voices/479e03a973f07b676b93ccf25fdc77cdf1b5b365183e447b57b075460905bb63.film-v4.mp3",
+    "hash": "479e03a973f07b676b93ccf25fdc77cdf1b5b365183e447b57b075460905bb63",
     "source": "act3/film/defend:0",
     "speaker": "cat",
     "text": "まだ来るニャ！！",
     "performance": "act3-urgent",
-    "deliveryProfile": "v3-inspired-v4:casual",
+    "deliveryProfile": "v3-inspired-v4:tense",
     "model": "eleven_v4",
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.2
+      "tailPaddingSeconds": 0.35
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 2.56
+      "durationSeconds": 1.985306
     }
   },
   "[\"hostess\",\"多すぎるって！！\",\"act3-urgent\",false]": {
-    "file": "assets/voices/d4a8f4a1b6aa36ceedb9c87a8afcfb84037d9ac66f39ff17a2d24e8019114670.film-v4.mp3",
-    "hash": "d4a8f4a1b6aa36ceedb9c87a8afcfb84037d9ac66f39ff17a2d24e8019114670",
+    "file": "assets/voices/fcdce2f93c50188ffd1d409c2fdff5f687023e141b25089778d23ecce9aba560.film-v4.mp3",
+    "hash": "fcdce2f93c50188ffd1d409c2fdff5f687023e141b25089778d23ecce9aba560",
     "source": "act3/film/defend:1",
     "speaker": "hostess",
     "text": "多すぎるって！！",
     "performance": "act3-urgent",
-    "deliveryProfile": "v3-inspired-v4:casual",
+    "deliveryProfile": "v3-inspired-v4:tense",
     "model": "eleven_v4",
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.2
+      "tailPaddingSeconds": 0.35
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 2.481633
+      "durationSeconds": 2.142041
     }
   },
   "[\"manager\",\"下がってろ！！\",\"act3-urgent\",false]": {
-    "file": "assets/voices/c74ddd619dd76b40ae4afd12be65fb104cb481ebe19229775bc8bc43f8889c39.film-v4.mp3",
-    "hash": "c74ddd619dd76b40ae4afd12be65fb104cb481ebe19229775bc8bc43f8889c39",
+    "file": "assets/voices/1dc3187dbdc5c9d977a82bd347bbdf475f34029d2afc25b7e239b560ce929f73.film-v4.mp3",
+    "hash": "1dc3187dbdc5c9d977a82bd347bbdf475f34029d2afc25b7e239b560ce929f73",
     "source": "act3/film/defend:2",
     "speaker": "manager",
     "text": "下がってろ！！",
     "performance": "act3-urgent",
-    "deliveryProfile": "v3-inspired-v4:casual",
+    "deliveryProfile": "v3-inspired-v4:tense",
     "model": "eleven_v4",
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.2
+      "tailPaddingSeconds": 0.35
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 2.246531
+      "durationSeconds": 1.671837
     }
   },
   "[\"manager\",\"……弾切れか\",\"act3-urgent\",false]": {
-    "file": "assets/voices/84d653b43ecc328187b70a36894d53bc9a9489630a8b3117fa22c4cd171295e9.film-v4.mp3",
-    "hash": "84d653b43ecc328187b70a36894d53bc9a9489630a8b3117fa22c4cd171295e9",
+    "file": "assets/voices/b630f7f5576a5522a24200f3445547c51e46d28b4e538869315195ec9956f1be.film-v4.mp3",
+    "hash": "b630f7f5576a5522a24200f3445547c51e46d28b4e538869315195ec9956f1be",
     "source": "act3/film/empty:0",
     "speaker": "manager",
     "text": "……弾切れか",
     "performance": "act3-urgent",
-    "deliveryProfile": "v3-inspired-v4:casual",
+    "deliveryProfile": "v3-inspired-v4:tense",
     "model": "eleven_v4",
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.2
+      "tailPaddingSeconds": 0.35
+    },
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 3.578776
+    }
+  },
+  "[\"cat\",\"減ってないニャ！！\",\"act3-urgent\",false]": {
+    "file": "assets/voices/d13374fddc04e9ca47e5100cf2cdbaa69a30fbeb98b889964c045d58c407761b.film-v4.mp3",
+    "hash": "d13374fddc04e9ca47e5100cf2cdbaa69a30fbeb98b889964c045d58c407761b",
+    "source": "act3/film/horde:0",
+    "speaker": "cat",
+    "text": "減ってないニャ！！",
+    "performance": "act3-urgent",
+    "deliveryProfile": "v3-inspired-v4:tense",
+    "model": "eleven_v4",
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "tailPaddingSeconds": 0.35
+    },
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 2.142041
+    }
+  },
+  "[\"hostess\",\"もう無理！！\",\"act3-urgent\",false]": {
+    "file": "assets/voices/2638286e05efde6d9d4d97f94eacf081e3faf7de15fad34ce209d2414ffb44d8.film-v4.mp3",
+    "hash": "2638286e05efde6d9d4d97f94eacf081e3faf7de15fad34ce209d2414ffb44d8",
+    "source": "act3/film/horde:1",
+    "speaker": "hostess",
+    "text": "もう無理！！",
+    "performance": "act3-urgent",
+    "deliveryProfile": "v3-inspired-v4:tense",
+    "model": "eleven_v4",
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "tailPaddingSeconds": 0.35
+    },
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 2.220408
+    }
+  },
+  "[\"manager\",\"モク、ルナ。裏から行け\",\"act3-urgent\",false]": {
+    "file": "assets/voices/6c5832d3911c16a191db2ca6c74f9168b7eaeab900ac38cead6a38fb4e953fab.film-v4.mp3",
+    "hash": "6c5832d3911c16a191db2ca6c74f9168b7eaeab900ac38cead6a38fb4e953fab",
+    "source": "act3/film/escape:0",
+    "speaker": "manager",
+    "text": "モク、ルナ。裏から行け",
+    "performance": "act3-urgent",
+    "deliveryProfile": "v3-inspired-v4:tense",
+    "model": "eleven_v4",
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "tailPaddingSeconds": 0.35
+    },
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 2.873469
+    }
+  },
+  "[\"hostess\",\"大家さんは！？\",\"act3-urgent\",false]": {
+    "file": "assets/voices/56e5cb19180b039f1dd9de2705e354a5ee7cfd2abd180ed20272fd26b4fc5b2d.film-v4.mp3",
+    "hash": "56e5cb19180b039f1dd9de2705e354a5ee7cfd2abd180ed20272fd26b4fc5b2d",
+    "source": "act3/film/escape:1",
+    "speaker": "hostess",
+    "text": "大家さんは！？",
+    "performance": "act3-urgent",
+    "deliveryProfile": "v3-inspired-v4:tense",
+    "model": "eleven_v4",
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "tailPaddingSeconds": 0.35
     },
     "audioQuality": {
       "masteredForTrial": true,
       "durationSeconds": 1.906939
     }
   },
-  "[\"cat\",\"減ってないニャ！！\",\"act3-urgent\",false]": {
-    "file": "assets/voices/66c678aeb8e1a3076b2c250c7df59d17c77abe6f5cf26b778c0c1dfd614bb674.film-v4.mp3",
-    "hash": "66c678aeb8e1a3076b2c250c7df59d17c77abe6f5cf26b778c0c1dfd614bb674",
-    "source": "act3/film/horde:0",
-    "speaker": "cat",
-    "text": "減ってないニャ！！",
-    "performance": "act3-urgent",
-    "deliveryProfile": "v3-inspired-v4:casual",
-    "model": "eleven_v4",
-    "audioMastering": {
-      "integratedLUFS": -18,
-      "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.2
-    },
-    "audioQuality": {
-      "masteredForTrial": true,
-      "durationSeconds": 2.324898
-    }
-  },
-  "[\"hostess\",\"もう無理！！\",\"act3-urgent\",false]": {
-    "file": "assets/voices/dcfde351b93134bd1cd5d5f526ffcdc4c5e50e7b976741732254dfe6a737241f.film-v4.mp3",
-    "hash": "dcfde351b93134bd1cd5d5f526ffcdc4c5e50e7b976741732254dfe6a737241f",
-    "source": "act3/film/horde:1",
-    "speaker": "hostess",
-    "text": "もう無理！！",
-    "performance": "act3-urgent",
-    "deliveryProfile": "v3-inspired-v4:casual",
-    "model": "eleven_v4",
-    "audioMastering": {
-      "integratedLUFS": -18,
-      "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.2
-    },
-    "audioQuality": {
-      "masteredForTrial": true,
-      "durationSeconds": 2.324898
-    }
-  },
-  "[\"manager\",\"モク、ルナ。裏から行け\",\"act3-urgent\",false]": {
-    "file": "assets/voices/f43f93292f166b3cf6143b11050eec8bcb552569a83de1912e4e7aee551211fe.film-v4.mp3",
-    "hash": "f43f93292f166b3cf6143b11050eec8bcb552569a83de1912e4e7aee551211fe",
-    "source": "act3/film/escape:0",
-    "speaker": "manager",
-    "text": "モク、ルナ。裏から行け",
-    "performance": "act3-urgent",
-    "deliveryProfile": "v3-inspired-v4:casual",
-    "model": "eleven_v4",
-    "audioMastering": {
-      "integratedLUFS": -18,
-      "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.2
-    },
-    "audioQuality": {
-      "masteredForTrial": true,
-      "durationSeconds": 3.030204
-    }
-  },
-  "[\"hostess\",\"大家さんは！？\",\"act3-urgent\",false]": {
-    "file": "assets/voices/d9e695b2e539ff3751c7d55b41b4947c00398a087b442e8f176ebcfbc97bdf21.film-v4.mp3",
-    "hash": "d9e695b2e539ff3751c7d55b41b4947c00398a087b442e8f176ebcfbc97bdf21",
-    "source": "act3/film/escape:1",
-    "speaker": "hostess",
-    "text": "大家さんは！？",
-    "performance": "act3-urgent",
-    "deliveryProfile": "v3-inspired-v4:casual",
-    "model": "eleven_v4",
-    "audioMastering": {
-      "integratedLUFS": -18,
-      "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.2
-    },
-    "audioQuality": {
-      "masteredForTrial": true,
-      "durationSeconds": 2.011429
-    }
-  },
   "[\"manager\",\"俺が止める\",\"act3-urgent\",false]": {
-    "file": "assets/voices/c54b601e019a118a02aeb7fc2ab9eb3d1e05037bd6962de993a661bc3eee10f8.film-v4.mp3",
-    "hash": "c54b601e019a118a02aeb7fc2ab9eb3d1e05037bd6962de993a661bc3eee10f8",
+    "file": "assets/voices/83f205dccbb4c73baff3e7e48816cd04e67200c405ba04840a6cabaf34d60742.film-v4.mp3",
+    "hash": "83f205dccbb4c73baff3e7e48816cd04e67200c405ba04840a6cabaf34d60742",
     "source": "act3/film/escape:2",
     "speaker": "manager",
     "text": "俺が止める",
     "performance": "act3-urgent",
-    "deliveryProfile": "v3-inspired-v4:casual",
+    "deliveryProfile": "v3-inspired-v4:tense",
     "model": "eleven_v4",
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.2
+      "tailPaddingSeconds": 0.35
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 1.828571
+      "durationSeconds": 3.500408
     }
   },
   "[\"cat\",\"無茶だニャ！！\",\"act3-urgent\",false]": {
-    "file": "assets/voices/31f9b7471651252333f09d2a03b8658f6ed48f984d91b5c12a5bcce74abb71bf.film-v4.mp3",
-    "hash": "31f9b7471651252333f09d2a03b8658f6ed48f984d91b5c12a5bcce74abb71bf",
+    "file": "assets/voices/7042616ad958eeed785591534b5adfbe50775ee1fb92e061d5e1c6f1c3199aed.film-v4.mp3",
+    "hash": "7042616ad958eeed785591534b5adfbe50775ee1fb92e061d5e1c6f1c3199aed",
     "source": "act3/film/escape:3",
     "speaker": "cat",
     "text": "無茶だニャ！！",
     "performance": "act3-urgent",
-    "deliveryProfile": "v3-inspired-v4:casual",
+    "deliveryProfile": "v3-inspired-v4:tense",
     "model": "eleven_v4",
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.2
+      "tailPaddingSeconds": 0.35
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 2.638367
+      "durationSeconds": 2.56
     }
   },
   "[\"manager\",\"いいから行け！！\",\"act3-urgent\",false]": {
-    "file": "assets/voices/75939f20c9bb8d4c88e06f75b5068568c81c373421dd83d009d4fe5449d190a9.film-v4.mp3",
-    "hash": "75939f20c9bb8d4c88e06f75b5068568c81c373421dd83d009d4fe5449d190a9",
+    "file": "assets/voices/b9b95872e31042c787606cdf722c1378543dd781901784fc0c407134218ecf66.film-v4.mp3",
+    "hash": "b9b95872e31042c787606cdf722c1378543dd781901784fc0c407134218ecf66",
     "source": "act3/film/escape:4",
     "speaker": "manager",
     "text": "いいから行け！！",
     "performance": "act3-urgent",
-    "deliveryProfile": "v3-inspired-v4:casual",
+    "deliveryProfile": "v3-inspired-v4:tense",
     "model": "eleven_v4",
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.2
+      "tailPaddingSeconds": 0.35
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 2.089796
+      "durationSeconds": 1.906939
     }
   },
   "[\"hostess\",\"大家さん！！\",\"act3-urgent\",false]": {
-    "file": "assets/voices/b089da8b9c02bc5abba315e31de3c08366a42a1ab1d278689f7954a8a68820ea.film-v4.mp3",
-    "hash": "b089da8b9c02bc5abba315e31de3c08366a42a1ab1d278689f7954a8a68820ea",
+    "file": "assets/voices/2bf1cc58759b412af797d803bd3325aebf7c95b85c131f0aaa87e4b887f6fbff.film-v4.mp3",
+    "hash": "2bf1cc58759b412af797d803bd3325aebf7c95b85c131f0aaa87e4b887f6fbff",
     "source": "act3/film/knife:0",
     "speaker": "hostess",
     "text": "大家さん！！",
     "performance": "act3-urgent",
-    "deliveryProfile": "v3-inspired-v4:casual",
+    "deliveryProfile": "v3-inspired-v4:tense",
     "model": "eleven_v4",
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "audioMastering": {
       "integratedLUFS": -18,
       "truePeakDBTP": -5,
-      "tailPaddingSeconds": 0.2
+      "tailPaddingSeconds": 0.35
     },
     "audioQuality": {
       "masteredForTrial": true,
-      "durationSeconds": 2.168163
+      "durationSeconds": 1.906939
     }
   },
   "[\"cat\",\"外、えらいことになってるニャ……\",\"act3-alert\",false]": {

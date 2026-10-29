@@ -13007,6 +13007,7 @@ export const VOICE_REVIEW_CATALOG = [
     "id": "[\"cat\",\"まだ来るニャ！！\",\"act3-urgent\",false]",
     "reviewId": "b5e89adda5326447",
     "repaired": true,
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13019,12 +13020,13 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 2.6,
       "voicePerformance": "act3-urgent"
     },
-    "version": "943372b830b1170b18b9"
+    "version": "abbe5f7144caa1e8ccb4"
   },
   {
     "id": "[\"hostess\",\"多すぎるって！！\",\"act3-urgent\",false]",
     "reviewId": "05ea81845b90ba77",
     "repaired": true,
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13037,12 +13039,13 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 5,
       "voicePerformance": "act3-urgent"
     },
-    "version": "230184eb6d0e813fe167"
+    "version": "5479e72a364a0446a2d5"
   },
   {
     "id": "[\"manager\",\"下がってろ！！\",\"act3-urgent\",false]",
     "reviewId": "91a95774d4b28402",
     "repaired": true,
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13055,12 +13058,13 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 7.6,
       "voicePerformance": "act3-urgent"
     },
-    "version": "43302b4645b4a716922d"
+    "version": "b4dcf5e3a3b7d8faf726"
   },
   {
     "id": "[\"manager\",\"……弾切れか\",\"act3-urgent\",false]",
     "reviewId": "f74e6813ee1eca4f",
     "repaired": true,
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13073,12 +13077,13 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 3.5,
       "voicePerformance": "act3-urgent"
     },
-    "version": "7384bb13c514fdd86492"
+    "version": "4ee39c616d0facbce89a"
   },
   {
     "id": "[\"manager\",\"モク、ルナ。裏から行け\",\"act3-urgent\",false]",
     "reviewId": "4bb96681acfe7def",
     "repaired": true,
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13091,12 +13096,13 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 3.3,
       "voicePerformance": "act3-urgent"
     },
-    "version": "ca0af46e96da00bc6dcd"
+    "version": "2e130bad013c1664719f"
   },
   {
     "id": "[\"hostess\",\"大家さんは！？\",\"act3-urgent\",false]",
     "reviewId": "518514c54bffe1dd",
     "repaired": true,
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13109,12 +13115,13 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 5.8,
       "voicePerformance": "act3-urgent"
     },
-    "version": "63de7cedb6fbc0a47ef9"
+    "version": "0e1a068209ab1feeedb5"
   },
   {
     "id": "[\"manager\",\"俺が止める\",\"act3-urgent\",false]",
     "reviewId": "4be7bad180367b4f",
     "repaired": true,
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13127,12 +13134,13 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 8.1,
       "voicePerformance": "act3-urgent"
     },
-    "version": "e61d657b94c3dcb1dfe3"
+    "version": "69ed06b656d4a13032ff"
   },
   {
     "id": "[\"cat\",\"無茶だニャ！！\",\"act3-urgent\",false]",
     "reviewId": "ee3e457d3e9c79c9",
     "repaired": true,
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13145,12 +13153,13 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 10.5,
       "voicePerformance": "act3-urgent"
     },
-    "version": "f77ce79fa8d5cecb5cb5"
+    "version": "97831bf83e5db5b3cfc0"
   },
   {
     "id": "[\"manager\",\"いいから行け！！\",\"act3-urgent\",false]",
     "reviewId": "333ad7064f6668cc",
     "repaired": true,
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13163,12 +13172,13 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 13.8,
       "voicePerformance": "act3-urgent"
     },
-    "version": "072c569cf88eece59880"
+    "version": "2d99e5acfb8c1ff9f513"
   },
   {
     "id": "[\"cat\",\"減ってないニャ！！\",\"act3-urgent\",false]",
     "reviewId": "7f7d8732f9359e48",
     "repaired": true,
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13181,12 +13191,13 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 3,
       "voicePerformance": "act3-urgent"
     },
-    "version": "27f846015c2a468ba192"
+    "version": "8b656fae2ff8bc328984"
   },
   {
     "id": "[\"hostess\",\"もう無理！！\",\"act3-urgent\",false]",
     "reviewId": "d9408b2d630eb3b2",
     "repaired": true,
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13199,12 +13210,13 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 5.8,
       "voicePerformance": "act3-urgent"
     },
-    "version": "6c53a03376a1cbf34aa7"
+    "version": "82a9828affc4cd715362"
   },
   {
     "id": "[\"hostess\",\"大家さん！！\",\"act3-urgent\",false]",
     "reviewId": "e7d8ebe73f4d55c8",
     "repaired": true,
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13217,12 +13229,13 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 3.3,
       "voicePerformance": "act3-urgent"
     },
-    "version": "5dcf639f47b9ed6145cd"
+    "version": "c58062e6b51342ad925d"
   },
   {
     "id": "[\"announcer\",\"緊急速報です！ 各地で原因不明の暴動が発生！\",\"act3-urgent\",false]",
     "reviewId": "92c3464a49cb426f",
     "repaired": true,
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13235,12 +13248,13 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 4.4,
       "voicePerformance": "act3-urgent"
     },
-    "version": "26b11011582a02e674fc"
+    "version": "bc40cce51cd9fb1c9af1"
   },
   {
     "id": "[\"announcer\",\"感染は世界各国に拡大し、政府は――\",\"act3-urgent\",false]",
     "reviewId": "9b299a6786a64325",
     "repaired": true,
+    "repairComment": "第3幕のゾンビ襲撃プロローグを、恐怖・焦り・必死さを込めた演技で再収録。台本・台詞はそのまま。",
     "chapter": 3,
     "scene": "3:opening",
     "sceneLabel": "プロローグ・オープニング",
@@ -13253,7 +13267,7 @@ export const VOICE_REVIEW_CATALOG = [
       "end": 8.35,
       "voicePerformance": "act3-urgent"
     },
-    "version": "6c62e5fbdf50833d8106"
+    "version": "7884f504b84a29048a44"
   },
   {
     "id": "[\"manager\",\"……また、駄目だったか\",\"act3-manager\",false]",
