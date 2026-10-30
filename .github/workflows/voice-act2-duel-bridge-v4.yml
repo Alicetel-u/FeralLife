@@ -1,4 +1,5 @@
 name: Voice only the shared post-battle bridge before all three Act 2 endings
+# Generate a single neutral narration; never re-record the three endings.
 on:
   push:
     paths:
