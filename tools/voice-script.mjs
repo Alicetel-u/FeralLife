@@ -214,7 +214,7 @@ export function planVoices(rows,ids,config,pronunciations=[],repairs=[]){
     const tags=filmCue?.tags||(battleMoku?.scriptOnly?[]:battleTags||repair?.tags||adoptedTags||profile.tags);
     // Keep explicitly authored grief/panic on top of the character's restrained delivery.
     const crisis=adoptedTags&&/shocked|tragedy|film-tense/.test(row.performance)?profile.tags.filter(tag=>/shocked|disbelieving|panicked|urgent|crying|sad/.test(tag)):[];
-    const settings={...profile.settings,...adopted?.settings,...repair?.settings,...(battleMoku?.settings||{}),...(filmCue?{...adopted.actThreeFilm.defaultSettings,...(filmCue.stability===undefined?{}:{stability:filmCue.stability})}:{})};
+    const settings={...profile.settings,...adopted?.settings,...repair?.settings,...(battleMoku?.settings||{}),...(filmCue?{...adopted.actThreeFilm.defaultSettings,...(filmCue.stability===undefined?{}:{stability:filmCue.stability})}:{}),...(row.performance==='act2-victory-narration'?profile.settings:{})};
     if(model==='eleven_v4')for(const key of Object.keys(settings))if(!['stability','similarity_boost'].includes(key))delete settings[key];
     // Never insert newly authored laughter or fillers into TTS input. Pronunciation
     // replacements are allowed; spontaneous vocalizations are not.
