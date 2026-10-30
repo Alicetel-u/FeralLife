@@ -99,3 +99,40 @@ test('fourteen apocalypse film voices have fear-and-survival acting for each sce
  assert.equal(normal.length,106);
  assert.deepEqual(revised.map(r=>r.hash),original.map(r=>r.hash),'third-act map/after voices must remain unchanged');
 });
+
+test('the shared post-duel bridge has exactly one missing narrator voice, without extending voice generation into the three endings',async()=>{
+ const {duelEndingLines}=await import('../src/act-two-duel.js');
+ const {voiceSpeaker,voicePerformance,voiceLineKey}=await import('../src/voice-policy.js');
+ const ids=await json('config/voice-ids.json'),cfg=await json('config/voice-performance.json');
+ cfg.generationDefaults=await json('config/voice-generation-defaults.json');
+ const readings=(await json('config/voice-pronunciation-issues.json')).issues;
+ const repairs=(await json('config/voice-repairs.json')).lines;
+ const endings=['yandere','domination','clear'].map(type=>duelEndingLines(type));
+ for(const lines of endings){
+  assert.equal(lines.length>3,true);
+  assert.equal(lines[0].text,'四人の足音が遠ざかり、けもの荘の前に静けさが戻った。');
+  assert.equal(lines[0].speaker,'narrator');
+  assert.equal(voiceSpeaker(lines[0]),'announcer');
+  assert.equal(voicePerformance(lines[0]),'act2-victory-narration');
+  assert.equal(voiceSpeaker(lines[1]),'manager');
+  assert.equal(voiceSpeaker(lines[2]),'cat');
+  assert.equal(lines[3].duelEnding!==undefined,true,'the actual ending begins after exactly three battle-bridge lines');
+  assert.equal(voiceSpeaker(lines[3]),lines[3].speaker,'do not revoice the start of the ending itself');
+ }
+ const shared=endings.map(lines=>voiceLineKey(lines[0]));
+ assert.equal(new Set(shared).size,1,'all three endings reuse the same paid recording');
+ const all=extractVoiceScript('act2-duel');
+ const bridges=all.filter(r=>r.source==='act2/duel/victory:0');
+ assert.equal(bridges.length,1);
+ const [row]=planVoices(bridges,ids,cfg,readings,repairs);
+ assert.equal(row.voiceId,ids.characters.announcer.voiceId);
+ assert.equal(row.request.model_id,'eleven_v4');
+ assert.equal(row.request.voice_settings.stability,.67);
+ assert.equal(row.request.voice_settings.similarity_boost,.85);
+ assert.equal(row.request.text,row.text,'literal authored narration, no laughter, tags or fillers');
+ assert.equal(row.lineKey,shared[0]);
+ assert.equal(row.deliveryProfile,'v3-inspired-v4');
+ const claimed=all.filter(r=>r.source.startsWith('act2/duel/victory:'));
+ assert.equal(claimed.length,3,'existing Moku and landlord V4 battle bridge lines stay untouched');
+ assert.ok(!all.some(r=>/act2\\/duel\\/(?:yandere|domination|clear):/.test(r.source)),'do not request ANY ending-story line');
+});
