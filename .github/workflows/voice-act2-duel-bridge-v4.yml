@@ -1,5 +1,6 @@
 name: Voice only the shared post-battle bridge before all three Act 2 endings
 # Generate a single neutral narration; never re-record the three endings.
+# The neutral V4 voice has its own stability setting, verified before synthesis.
 on:
   push:
     paths:
