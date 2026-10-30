@@ -10970,6 +10970,26 @@ export const VOICE_REVIEW_CATALOG = [
     "version": "ad08e99bf79a7ccfc3a6"
   },
   {
+    "id": "[\"announcer\",\"四人の足音が遠ざかり、けもの荘の前に静けさが戻った。\",\"act2-victory-narration\",false]",
+    "reviewId": "c22497134fc63fb1",
+    "repaired": true,
+    "chapter": 2,
+    "scene": "2:battle",
+    "sceneLabel": "ミニゲームバトル",
+    "order": 60,
+    "source": "act2/runtime/attempt-1/bag/loan/duel/duel:5",
+    "line": {
+      "speaker": "announcer",
+      "text": "四人の足音が遠ざかり、けもの荘の前に静けさが戻った。",
+      "emotion": "neutral",
+      "duelRound": 3,
+      "duelDefeated": true,
+      "duelVictoryResult": "clear",
+      "voiceChapter": 2
+    },
+    "version": "1313785438d6e8ab9b0a"
+  },
+  {
     "id": "[\"hostess\",\"そんなに買ってたの……？\",\"duel-luna\",false]",
     "reviewId": "49c06471f78caa99",
     "repaired": true,

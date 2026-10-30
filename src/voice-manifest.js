@@ -12625,5 +12625,24 @@ export const VOICE_MANIFEST = {
       "masteredForTrial": true,
       "durationSeconds": 1.567347
     }
+  },
+  "[\"announcer\",\"四人の足音が遠ざかり、けもの荘の前に静けさが戻った。\",\"act2-victory-narration\",false]": {
+    "file": "assets/voices/ea8532244b2738b939569094957215cf93e1d4a84661b39a9b02f1bb3ae364ba.bridge-v4.mp3",
+    "hash": "ea8532244b2738b939569094957215cf93e1d4a84661b39a9b02f1bb3ae364ba",
+    "source": "act2/duel/victory:0",
+    "speaker": "announcer",
+    "text": "四人の足音が遠ざかり、けもの荘の前に静けさが戻った。",
+    "performance": "act2-victory-narration",
+    "deliveryProfile": "v3-inspired-v4",
+    "model": "eleven_v4",
+    "audioMastering": {
+      "integratedLUFS": -18,
+      "truePeakDBTP": -5,
+      "tailPaddingSeconds": 0.3
+    },
+    "audioQuality": {
+      "masteredForTrial": true,
+      "durationSeconds": 5.537959
+    }
   }
 };
