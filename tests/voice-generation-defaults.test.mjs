@@ -134,5 +134,5 @@ test('the shared post-duel bridge has exactly one missing narrator voice, withou
  assert.equal(row.deliveryProfile,'v3-inspired-v4');
  const claimed=all.filter(r=>r.source.startsWith('act2/duel/victory:'));
  assert.equal(claimed.length,3,'existing Moku and landlord V4 battle bridge lines stay untouched');
- assert.ok(!all.some(r=>/act2\\/duel\\/(?:yandere|domination|clear):/.test(r.source)),'do not request ANY ending-story line');
+ assert.ok(!all.some(r=>['yandere','domination','clear'].some(type=>r.source.startsWith('act2/duel/'+type+':'))),'do not request ANY ending-story line');
 });
