@@ -1,0 +1,103 @@
+name: Publish recovered shared victory narration without spending ElevenLabs credits twice
+on:
+  push:
+    paths:
+      - .github/workflows/voice-act2-duel-bridge-v4-recovery.yml
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: voice-act2-duel-bridge-recovery
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    if: github.repository == 'Alicetel-u/FeralLife' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Restore already generated narrator MP3s and plan from the first paid synthesis
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .local/act2-duel-bridge-restored assets/voices
+          gh run download 40999882405 -n act2-duel-bridge-v4-recovery-40999882405 -D .local/act2-duel-bridge-restored
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+      - name: Install exactly one previously recorded, approved, original-script victory narration
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,writeFile,copyFile,stat} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {extractVoiceScript,planVoices} from './tools/voice-script.mjs';
+          import {VOICE_MANIFEST as BEFORE} from './src/voice-manifest.js';
+          import {duelEndingLines} from './src/act-two-duel.js';
+          const root='.local/act2-duel-bridge-restored/';
+          const json=async p=>JSON.parse(await readFile(p,'utf8'));
+          const archive=await json(root+'act2-duel-bridge-plan.json');
+          const config=await json('config/voice-performance.json');
+          config.generationDefaults=await json('config/voice-generation-defaults.json');
+          const script=extractVoiceScript('act2-duel').filter(r=>r.source==='act2/duel/victory:0');
+          const [now]=planVoices(script,await json('config/voice-ids.json'),config,(await json('config/voice-pronunciation-issues.json')).issues,(await json('config/voice-repairs.json')).lines);
+          if(archive.model!=='eleven_v4'||archive.lines!==1||archive.rows.length!==1||script.length!==1||!now)throw Error('Expected precisely one recorded battle-bridge sentence');
+          const row=archive.rows[0];
+          if(row.lineKey!==now.lineKey||row.hash!==now.hash||row.voiceId!==now.voiceId||row.text!==now.text||row.source!=='act2/duel/victory:0'||row.performance!=='act2-victory-narration'||now.request.text!==row.text||row.settings?.stability!==.67||row.settings?.similarity_boost!==.85||row.tags?.length!==0||BEFORE[row.lineKey])throw Error('Archived narration differs from approved original script or is already present');
+          for(const outcome of ['yandere','domination','clear']){
+            const lines=duelEndingLines(outcome);
+            if(lines[0]?.text!==row.text||lines[1]?.speaker!=='manager'||lines[2]?.speaker!=='cat'||!lines[3]?.duelEnding)throw Error('Story branch boundary changed: '+outcome);
+          }
+          if(row.file!=='assets/voices/'+row.hash+'.mp3'||!/^[0-9a-f]{64}$/.test(row.hash))throw Error('Invalid content-addressed narrator file');
+          const master=row.file.replace(/\.mp3$/,'.bridge-v4.mp3');
+          for(const path of [row.file,master]){
+            const input=root+path.split('/').at(-1);
+            if((await stat(input)).size<1000)throw Error('Saved audio artifact missing: '+path);
+            await copyFile(input,path);
+          }
+          const seconds=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',master],{encoding:'utf8'}).trim());
+          if(!Number.isFinite(seconds)||seconds<.5||seconds>20)throw Error('Incomplete decoded original narration');
+          const newClip={
+            file:master,hash:row.hash,source:row.source,speaker:'announcer',text:row.text,
+            performance:row.performance,deliveryProfile:row.deliveryProfile,model:'eleven_v4',
+            audioMastering:{integratedLUFS:-18,truePeakDBTP:-5,tailPaddingSeconds:.30},
+            audioQuality:{masteredForTrial:true,durationSeconds:seconds}
+          };
+          const manifest={...BEFORE,[row.lineKey]:newClip};
+          if(Object.keys(manifest).length!==Object.keys(BEFORE).length+1)throw Error('Unexpected number of new clips');
+          for(const [key,clip] of Object.entries(BEFORE))if(JSON.stringify(manifest[key])!==JSON.stringify(clip))throw Error('An ending, previous battle, or other chapter voice changed: '+key);
+          await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
+          console.log('One existing paid V4 voice recovered before all three endings. Zero new ElevenLabs requests.');
+          JS
+      - name: Rebuild review index and test every game route and audio key
+        run: |
+          npm run build
+          npm test
+      - name: Commit only the bridge narration and matching review registration
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          const row=JSON.parse(await readFile('.local/act2-duel-bridge-restored/act2-duel-bridge-plan.json','utf8')).rows[0];
+          execFileSync('git',['add','--','src/voice-manifest.js','src/voice-review-catalog.js','src/voice-review-published.js',row.file,row.file.replace(/\.mp3$/,'.bridge-v4.mp3')],{stdio:'inherit'});
+          JS
+          git diff --cached --stat
+          git diff --cached --quiet && { echo 'No new narration staged'; exit 1; }
+          git commit -m 'Publish one voiced victory narration shared by all three second-act duel endings'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Deploy the battle-complete recording to GitHub Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
