@@ -872,6 +872,14 @@
         "stability": 0.5,
         "similarity_boost": 0.75
       }
+    },
+    "act2-victory-narration": {
+      "direction": "ミニゲーム4人撃退直後の状況描写。余韻と安心を短く自然に語り、ニュース調や大げさな叫び、台本外の笑い・相づちは入れない。",
+      "tags": [],
+      "settings": {
+        "stability": 0.67,
+        "similarity_boost": 0.85
+      }
     }
   }
 }
