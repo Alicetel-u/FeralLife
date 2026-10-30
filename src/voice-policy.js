@@ -1,10 +1,15 @@
 // Shared by extraction and playback; never infer anger from punctuation or sprite emotion.
 export function voiceSpeaker(line) {
   if(line.voiceChapter===3&&line.speaker==='mystery')return 'rabbit';
+  // The one shared post-battle scene has a spoken neutral narration.
+  // Keep the visible transcript speaker as narrator; borrow the existing
+  // announcer voice only for its sound, not the ending dialogue.
+  if(line.speaker==='narrator'&&line.duelVictoryResult&&line.duelDefeated)return 'announcer';
   return line.speaker==='大家（心の声）'?'manager':line.speaker;
 }
 export function voicePerformance(line) {
   if(line.voicePerformance)return line.voicePerformance;
+  if(line.speaker==='narrator'&&line.duelVictoryResult&&line.duelDefeated)return 'act2-victory-narration';
   if(line.voiceChapter===3)return actThreeVoicePerformance(line);
   if(line.innerVoice||line.speaker==='大家（心の声）')return 'inner';
   if(Number.isInteger(line.duelRound)&&!line.duelEnding){
