@@ -9,7 +9,9 @@ export function voiceSpeaker(line) {
 }
 export function voicePerformance(line) {
   if(line.voicePerformance)return line.voicePerformance;
-  if(line.speaker==='narrator'&&line.duelVictoryResult&&line.duelDefeated)return 'act2-victory-narration';
+  // The voice-review catalog stores this voiced narration under its audio actor
+  // (announcer) while the game still displays it as narrator. Keep its key stable.
+  if(['narrator','announcer'].includes(line.speaker)&&line.duelVictoryResult&&line.duelDefeated)return 'act2-victory-narration';
   if(line.voiceChapter===3)return actThreeVoicePerformance(line);
   if(line.innerVoice||line.speaker==='大家（心の声）')return 'inner';
   if(Number.isInteger(line.duelRound)&&!line.duelEnding){
