@@ -1,0 +1,148 @@
+name: Voice only the shared post-battle bridge before all three Act 2 endings
+on:
+  push:
+    paths:
+      - .github/workflows/voice-act2-duel-bridge-v4.yml
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: voice-act2-duel-bridge-only
+  cancel-in-progress: false
+
+jobs:
+  record-bridge:
+    if: github.repository == 'Alicetel-u/FeralLife' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify one shared narrator line and all three existing outcomes before any paid calls
+        run: |
+          node --test tests/voice-generation-defaults.test.mjs
+          node --input-type=module <<'JS'
+          import {duelEndingLines} from './src/act-two-duel.js';
+          import {extractVoiceScript} from './tools/voice-script.mjs';
+          import {VOICE_MANIFEST} from './src/voice-manifest.js';
+          const outcomes=['yandere','domination','clear'],sets=outcomes.map(duelEndingLines);
+          if(sets.some(lines=>lines.length<4||lines[0].speaker!=='narrator'||lines[0].text!=='四人の足音が遠ざかり、けもの荘の前に静けさが戻った。'||lines[1].speaker!=='manager'||lines[2].speaker!=='cat'||!lines[3].duelEnding))throw Error('Battle/end boundary no longer matches the three original routes');
+          const all=extractVoiceScript('act2-duel').filter(row=>row.source.startsWith('act2/duel/victory:'));
+          if(all.length!==3||all[0].speaker!=='announcer'||all[1].speaker!=='manager'||all[2].speaker!=='cat')throw Error('Unexpected shared bridge voice actors');
+          if(VOICE_MANIFEST[all[0].lineKey])throw Error('The narration is already recorded, do not regenerate');
+          if(!all.slice(1).every(row=>VOICE_MANIFEST[row.lineKey]?.model==='eleven_v4'))throw Error('Existing battle voices must be preserved');
+          console.log('Only the unvoiced three-branch narration will be recorded; two existing V4 voices stay unchanged.');
+          JS
+      - name: Ensure ffmpeg and back up manifest for strict isolation checks
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+          mkdir -p .local/act2-duel-bridge-recovery
+          cp src/voice-manifest.js .local/act2-duel-bridge-before.js
+      - name: Plan exactly one original-script narration voice
+        id: plan
+        run: |
+          node tools/voices.mjs --scope=act2-duel --source-prefix=act2/duel/victory:0 --quiet
+          cp .local/voice-plan.json .local/act2-duel-bridge-plan.json
+          node --input-type=module <<'JS'
+          import {readFile,appendFile} from 'node:fs/promises';
+          const p=JSON.parse(await readFile('.local/act2-duel-bridge-plan.json','utf8'));
+          if(p.model!=='eleven_v4'||p.lines!==1||p.unique!==1||p.pending!==1||p.rows.length!==1)throw Error('Exactly one new V4 narration expected');
+          if(p.estimatedCredits<1||p.estimatedCredits>250)throw Error('Unexpected credit estimate '+p.estimatedCredits);
+          const row=p.rows[0];
+          if(row.source!=='act2/duel/victory:0'||row.speaker!=='announcer'||row.text!=='四人の足音が遠ざかり、けもの荘の前に静けさが戻った。'||row.performance!=='act2-victory-narration'||row.spokenInput!==row.text||row.tags.length!==0||row.settings?.stability!==.67||row.settings?.similarity_boost!==.85||!row.voiceId)throw Error('Narration plan added a line, tag, voice, or other scene');
+          await appendFile(process.env.GITHUB_OUTPUT,'id='+p.planId+'\n');
+          console.log('One short neutral battle bridge: '+p.estimatedCredits+' estimated credits.');
+          JS
+      - name: Check ElevenLabs balance before the one charged narration call
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          const p=JSON.parse(await readFile('.local/act2-duel-bridge-plan.json','utf8'));
+          const r=await fetch('https://api.elevenlabs.io/v1/user/subscription',{headers:{'xi-api-key':process.env.ELEVENLABS_API_KEY},signal:AbortSignal.timeout(30000)});
+          if(!r.ok)throw Error('Cannot verify available credits: '+r.status);
+          const j=await r.json(),balance=j.character_limit-j.character_count;
+          console.log('Verified balance: '+balance+' credits; estimate '+p.estimatedCredits);
+          if(!Number.isFinite(balance)||balance<p.estimatedCredits)throw Error('Insufficient credits. No synthesis sent.');
+          JS
+      - name: Generate precisely the shared post-victory narrator sentence
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY1 || secrets.ELEVENLABS_API_KEY }}
+        run: node tools/voices.mjs --scope=act2-duel --source-prefix=act2/duel/victory:0 --quiet --generate --approve=${{ steps.plan.outputs.id }}
+      - name: Master the single original narration and prove no end-dialogue changed
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,writeFile,stat} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          import {VOICE_MANIFEST as NEW} from './src/voice-manifest.js';
+          import {extractVoiceScript} from './tools/voice-script.mjs';
+          const p=JSON.parse(await readFile('.local/act2-duel-bridge-plan.json','utf8'));
+          const prior=await readFile('.local/act2-duel-bridge-before.js','utf8'),old=JSON.parse(prior.slice(prior.indexOf('= ')+2).replace(/;\s*$/,''));
+          const row=p.rows[0],script=extractVoiceScript('act2-duel').find(item=>item.source==='act2/duel/victory:0');
+          const generated=NEW[row.lineKey];
+          if(!script||script.lineKey!==row.lineKey||script.line.text!==row.text||generated?.hash!==row.hash||generated?.model!=='eleven_v4'||(await stat(row.file)).size<1000)throw Error('Generated narrator mismatches original branch');
+          const master=row.file.replace(/\.mp3$/,'.bridge-v4.mp3');
+          execFileSync('ffmpeg',['-hide_banner','-loglevel','error','-y','-i',row.file,'-af','loudnorm=I=-18:TP=-5:LRA=9,apad=pad_dur=0.30','-ar','44100','-codec:a','libmp3lame','-b:a','128k',master]);
+          const seconds=Number(execFileSync('ffprobe',['-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',master],{encoding:'utf8'}).trim());
+          if(!Number.isFinite(seconds)||seconds<.5||seconds>20||(await stat(master)).size<1000)throw Error('Invalid bridge narration master');
+          const manifest={...old,[row.lineKey]:{
+            file:master,hash:row.hash,source:row.source,speaker:'announcer',text:row.text,performance:row.performance,deliveryProfile:row.deliveryProfile,model:'eleven_v4',
+            audioMastering:{integratedLUFS:-18,truePeakDBTP:-5,tailPaddingSeconds:.30},
+            audioQuality:{masteredForTrial:true,durationSeconds:seconds}
+          }};
+          if(Object.keys(manifest).length!==Object.keys(old).length+1)throw Error('Unexpected number of voice additions');
+          for(const [key,clip] of Object.entries(old))if(JSON.stringify(manifest[key])!==JSON.stringify(clip))throw Error('Existing battle voice or ending clip changed: '+key);
+          await writeFile('src/voice-manifest.js','// Generated clips only.\nexport const VOICE_MANIFEST = '+JSON.stringify(manifest,null,2)+';\n');
+          console.log('Installed one new voiced narration before all three endings. No old clips, story lines or ending voices changed.');
+          JS
+      - name: Build final voice review index and test every branch
+        run: |
+          npm run build
+          npm test
+      - name: Commit only the narrator MP3 files, manifest and rebuilt review catalog
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          import {execFileSync} from 'node:child_process';
+          const row=JSON.parse(await readFile('.local/act2-duel-bridge-plan.json','utf8')).rows[0];
+          execFileSync('git',['add','--','src/voice-manifest.js','src/voice-review-catalog.js','src/voice-review-published.js',row.file,row.file.replace(/\.mp3$/,'.bridge-v4.mp3')],{stdio:'inherit'});
+          JS
+          git diff --cached --stat
+          git diff --cached --quiet && { echo 'Narrator MP3 not staged'; exit 1; }
+          git commit -m 'Voice only the shared second-act battle-to-three-endings narration'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Deploy the final narration onto the live site
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/deploy-pages.yml/dispatches --method POST -f ref=main
+      - name: Preserve the already paid generated narration if another step fails
+        if: failure()
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,copyFile,mkdir} from 'node:fs/promises';
+          const dir='.local/act2-duel-bridge-recovery';await mkdir(dir,{recursive:true});
+          for(const path of ['.local/act2-duel-bridge-plan.json','.local/voice-journal.json'])try{await copyFile(path,dir+'/'+path.split('/').at(-1));}catch{}
+          let plan;try{plan=JSON.parse(await readFile('.local/act2-duel-bridge-plan.json','utf8'));}catch{process.exit(0);}
+          for(const row of plan.rows)for(const file of [row.file,row.file.replace(/\.mp3$/,'.bridge-v4.mp3')])try{await copyFile(file,dir+'/'+file.split('/').at(-1));}catch{}
+          JS
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: act2-duel-bridge-v4-recovery-${{ github.run_id }}
+          path: .local/act2-duel-bridge-recovery/
+          include-hidden-files: true
+          retention-days: 14
